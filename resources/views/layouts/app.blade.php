@@ -42,8 +42,8 @@
                 <div class="p-2">powered by  <a href="mailto:alex.arregui@hotmail.es" class="text-blue-800 underline">alex.arregui@hotmail.es</a></div>
             </footer>
 
-            {{-- <x-notification /> --}}
-            {{-- <x-notificationred /> --}}
+            <x-notification />
+            <x-notificationred />
 
         </div>
 

@@ -3,7 +3,7 @@
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 <div class="">
-                    @livewire('menu')
+                    {{-- @livewire('menu') --}}
                     <div class="p-1 mx-2">
                         <div class="flex flex-row">
                             <h1 class="ml-2 text-2xl font-semibold text-gray-900">Permisos del Rol: {{ $role->name }}</h1>
@@ -58,14 +58,14 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                </div>
                                     <div class="card-footer">
-                                        <x-jet-secondary-button  onclick="location.href = '{{route('administracion.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                                        <x-jet-secondary-button  onclick="location.href = '{{route('seguridad')}}'">{{ __('Volver') }}</x-jet-secondary-button>
                                         <x-jet-button class="bg-blue-600">
                                             {{ __('Actualizar') }}
                                         </x-jet-button>
                                     </div>
 
-                                </div>
                             </div>
                         </form>
                     </div>

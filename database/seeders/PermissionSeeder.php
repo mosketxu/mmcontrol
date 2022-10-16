@@ -23,11 +23,32 @@ class PermissionSeeder extends Seeder
         // \DB::table('permissions')->delete();
 
         // Users
-        Permission::create(['name'=>'user.index'])->syncRoles($admin,$gestion);
-        Permission::create(['name'=>'user.create'])->syncRoles($admin,$gestion);
-        Permission::create(['name'=>'user.edit'])->syncRoles($admin,$gestion);
-        Permission::create(['name'=>'user.update'])->syncRoles($admin,$gestion);
-        Permission::create(['name'=>'user.delete'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'user.index'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'user.create'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'user.edit'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'user.update'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'user.delete'])->syncRoles($admin,$gestion);
+
+        // Roles
+        // Permission::create(['name'=>'role.index'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'role.create'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'role.edit'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'role.update'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'role.delete'])->syncRoles($admin,$gestion);
+
+
+        // Permisos
+        Permission::create(['name'=>'permiso.index'])->syncRoles($admin,$gestion);
+        Permission::create(['name'=>'permiso.create'])->syncRoles($admin,$gestion);
+        Permission::create(['name'=>'permiso.edit'])->syncRoles($admin,$gestion);
+        Permission::create(['name'=>'permiso.update'])->syncRoles($admin,$gestion);
+        Permission::create(['name'=>'permiso.delete'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'permiso.index','description'=>'Lista todos los permisos del sistema'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'permiso.create','description'=>'Permite Crear un permiso'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'permiso.edit','description'=>'Permite Editar una permiso'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'permiso.update','description'=>'Permite Actualizar una permiso'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'permiso.delete','description'=>'Permite Borrar un permiso'])->syncRoles($admin,$gestion);
+
         // Permission::create(['name'=>'user.index','description'=>'Lista todos los usuarios del sistema'])->syncRoles($admin,$gestion);
         // Permission::create(['name'=>'user.create','description'=>'Permite Crear un usuario'])->syncRoles($admin,$gestion);
         // Permission::create(['name'=>'user.edit','description'=>'Permite Editar un usuario'])->syncRoles($admin,$gestion);

@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Livewire;
-
-use Spatie\Permission\Models\Role;
+namespace App\Http\Livewire\Seguridad;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
-class Roles extends Component
+
+class Permisos extends Component
 {
-    public $titulo='Roles';
+    public $titulo='Permisos';
+    public $search='';
     public $nombre='';
     public $nombrecorto='web';
     public $campo1='Guarda';
@@ -19,52 +20,57 @@ class Roles extends Component
     protected function rules()
     {
         return [
-            'nombre'=>'required|unique:roles,name',
+            'nombre'=>'required|unique:permissions,name',
             'nombrecorto'=>'required',
         ];
     }
 
     public function render()
     {
-        $valores=Role::select('id','name as nombre','guard_name as nombrecorto')->orderBy('name')->get();
+
+        $valores=Permission::select('id','name as nombre','guard_name as nombrecorto')
+        ->search('name',$this->search)
+        ->orSearch('guard_name',$this->search)
+        ->orderBy('name')->get();
+
         return view('livewire.auxiliarcard',compact('valores'));
     }
 
-    public function changeCorto(Role $valor,$nombrecorto)
+    public function changeCorto(Permission $valor,$nombrecorto)
     {
 
         Validator::make(['nombrecorto'=>$nombrecorto],[
             'nombrecorto'=>'required',
         ])->validate();
 
-        $p=Role::find($valor->id);
+        $p=Permission::find($valor->id);
         $p->guard_name=$nombrecorto;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Role Actualizado.');
+        $this->dispatchBrowserEvent('notify', 'Permiso Actualizado.');
     }
 
-    public function changeNombre(Role $valor,$nombre)
+    public function changeNombre(Permission $valor,$nombre)
     {
         Validator::make(['nombre'=>$nombre],[
             'nombre'=>'required|unique:roles,name',
         ])->validate();
 
-        $p=Role::find($valor->id);
+        $p=Permission::find($valor->id);
         $p->name=$nombre;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Role Actualizado.');
+        $this->dispatchBrowserEvent('notify', 'Permiso Actualizado.');
     }
 
     public function save()
     {
         $this->validate();
 
-        Role::create([
+        Permission::create([
             'name'=>$this->nombre,
             'guard_name'=>$this->nombrecorto,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Role añadido con éxito');
+        $this->dispatchBrowserEvent('notify', 'Permiso añadido con éxito');
 
         $this->emit('refresh');
         $this->nombre='';
@@ -73,11 +79,12 @@ class Roles extends Component
 
     public function delete($valorId)
     {
-        $borrar = Role::find($valorId);
+        $borrar = Permission::find($valorId);
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Role eliminado!');
+            $this->dispatchBrowserEvent('notify', 'Permiso eliminado!');
         }
     }
 }
+

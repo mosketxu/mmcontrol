@@ -26,9 +26,40 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('roles.index');
+        //
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -39,7 +70,7 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions=Permission::all();
-        return view('roles.edit',compact('role','permissions'));
+        return view('seguridad.rolepermisos',compact('role','permissions'));
     }
 
     /**
@@ -56,5 +87,14 @@ class RoleController extends Controller
         return redirect()->route('roles.edit',$role)->with('info','Permisos Actualizados');
 
     }
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 }

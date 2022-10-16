@@ -1,5 +1,5 @@
-    <div class="relative bg-white border rounded">
-        <div class="p-4 ">
+    <div class="relative bg-white border rounded p-2">
+        <div class="">
             <div class="flex justify-between">
                 <div>
                     <h3 class="text-lg font-bold">{{ $titulo }}</h3>
@@ -26,33 +26,50 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
                         <tr>
-                            <th class="w-1/6 px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($campo1) }}</th>
-                            <th class="w-4/6 px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($campo2) }} </th>
-                            <th class="w-1/6 px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" ></th>
+                            @if ($campo1visible==1)
+                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo1) }}</th>
+                            @endif
+                            @if ($campo2visible==1)
+                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo2) }} </th>
+                            @endif
+                            @if ($campo3visible==1)
+                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo3) }} </th>
+                            @endif
+                            <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" ></th>
                         </tr>
                     </thead>
                 </table>
-
             </div>
             <div class="h-64 min-w-full overflow-x-auto overflow-y-auto align-middle shadow sm:rounded-b-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <tbody class="bg-white divide-y divide-gray-200 ">
                         @foreach ($valores as $valor)
                             <tr wire:loading.class.delay="opacity-50">
-                                <td class="w-3/12 px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                    <input type="text" value="{{ $valor->nombrecorto }}"
-                                    wire:change="changeCorto({{ $valor }},$event.target.value)"
+                                @if ($campo1visible==1)
+                                <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
+                                    <input type="text" value="{{ $valor->valorcampo1 }}"
+                                    wire:change="changeCampo({{ $valor }},'{{ $campo1 }}',$event.target.value)"
                                     class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
                                 </td>
-                                <td class="w-8/12 px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
-                                    <input type="text" value="{{ $valor->nombre }}"
-                                    wire:change="changeNombre({{ $valor }},$event.target.value)"
+                                @endif
+                                @if ($campo2visible==1)
+                                <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
+                                    <input type="text" value="{{ $valor->valorcampo2 }}"
+                                    wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)"
                                     class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
                                 </td>
-                                <td  class="w-1/12 px-4">
+                                @endif
+                                @if ($campo3visible==1)
+                                <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
+                                    <input type="text" value="{{ $valor->valorcampo3 }}"
+                                    wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
+                                    class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
+                                </td>
+                                @endif
+                                <td  class="px-4">
                                     <div class="flex items-center justify-center space-x-3">
-                                        @if($titulo=="Roles")
-                                            <x-icon.edit-a href="{{route('roles.edit',$valor) }}" class="pl-1"  title="Editar Role"/>
+                                        @if($editarvisible==1)
+                                            <x-icon.edit-a wire:click="editar({{ $valor->id }})" class="pl-1"  title="Editar {{ $titulo }}"/>
                                         @endif
                                         <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"  title="Eliminar detalle"/>
                                     </div>
@@ -67,14 +84,24 @@
                     <table min-w-full divide-y divide-gray-200>
                         <tbody>
                             <tr>
-                                <td class="w-3/12 p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                    <input type="text" wire:model.defer="nombrecorto"
+                                @if ($campo1visible==1)
+                                <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
+                                    <input type="text" wire:model.defer="valorcampo1"
                                     class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
-                                <td class="w-8/12 p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                    <input type="text" wire:model.defer="nombre"
+                                @endif
+                                @if ($campo2visible==1)
+                                <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
+                                    <input type="text" wire:model.defer="valorcampo2"
                                     class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
+                                @endif
+                                @if ($campo3visible==1)
+                                <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
+                                    <input type="text" wire:model.defer="valorcampo3"
+                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                </td>
+                                @endif
                                 <td  class="p-2 ">
                                     <button type="submit" class="items-center pl-1 mx-0 mt-2 text-center w-7 "><x-icon.save-a class="text-blue"></x-icon.save-a></button>
                                 </td>
@@ -85,4 +112,3 @@
             </div>
         </div>
     </div>
-{{-- </div> --}}

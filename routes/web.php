@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController};
+use App\Http\Controllers\{RoleController, PedidoController, UserController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,13 +32,14 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     })->name('pedidos');
 
     //Seguridad
-    Route::get('/seguridad', function () {return view('seguridad');})->name('seguridad');
+    Route::get('/seguridad', function () {return view('seguridad.seguridad');})->name('seguridad');
+    // Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:administracion')->name('seguridad');
 
-    // Route::resource('roles', RoleController::class)->names('roles');
+    Route::resource('roles', RoleController::class)->names('roles');
     // Route::get('administracion', [AdministracionController::class,'index'])->middleware('can:administracion')->name('administracion.index');
 
     //Users
-    // Route::resource('users', UserController::class)->names('users'); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
+    Route::resource('users', UserController::class)->names('users'); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
 
     //Pedidos
     Route::resource('pedido', PedidoController::class);
