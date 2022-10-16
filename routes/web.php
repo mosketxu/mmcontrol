@@ -32,14 +32,12 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     })->name('pedidos');
 
     //Seguridad
-    Route::get('/seguridad', function () {return view('seguridad.seguridad');})->name('seguridad');
-    // Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:administracion')->name('seguridad');
+    Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:seguridad.index')->name('seguridad');
 
-    Route::resource('roles', RoleController::class)->names('roles');
-    // Route::get('administracion', [AdministracionController::class,'index'])->middleware('can:administracion')->name('administracion.index');
+    Route::resource('roles', RoleController::class)->only(['edit','update'])->names('roles');
 
     //Users
-    Route::resource('users', UserController::class)->names('users'); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
+    Route::resource('users', UserController::class)->except(['create'])->names('users'); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
 
     //Pedidos
     Route::resource('pedido', PedidoController::class);

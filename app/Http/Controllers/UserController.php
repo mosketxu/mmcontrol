@@ -13,11 +13,11 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
 
-    // public function __construct()
-    // {
-    //     $this->middleware('can:user.index')->only('index');
-    //     $this->middleware('can:user.edit')->only('edit','update');
-    // }
+    public function __construct()
+    {
+        $this->middleware('can:user.index')->only('index');
+        $this->middleware('can:user.edit')->only('edit','update');
+    }
 
     /**
      * Display a listing of the resource.
@@ -28,17 +28,6 @@ class UserController extends Controller
     {
         return view('users.index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
 
     /**
      * Store a newly created resource in storage.

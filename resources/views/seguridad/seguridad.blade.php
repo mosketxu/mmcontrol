@@ -11,7 +11,7 @@
                 <div class="grid grid-cols-1 bg-gray-200 bg-opacity-25 md:grid-cols-3">
                     @livewire('seguridad.usuarios')
                     @livewire('seguridad.roles')
-                    {{-- @livewire('seguridad.permisos') --}}
+                    @livewire('seguridad.permisos')
                 </div>
             </div>
         </div>

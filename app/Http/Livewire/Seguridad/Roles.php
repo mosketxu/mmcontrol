@@ -35,7 +35,7 @@ class Roles extends Component
     public function messages()
     {
         return [
-            'valorcampo2.required' => 'El rol es necesario',
+            'valorcampo2.required' => 'El nombre del rol es necesario',
             'valorcampo2.unique' => 'El rol ya existe. Elige otro nombre para el rol',
         ];
     }
