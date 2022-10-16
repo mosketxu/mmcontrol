@@ -16,9 +16,9 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $admin=Role::find(1);
-        $gestion=Role::find(2);
-        $usuario=Role::find(3);
+        $admin=Role::where('name','Admin');
+        $gestion=Role::where('name','Gestion');
+        $usuario=Role::where('name','Milimetrica');
 
         // \DB::table('permissions')->delete();
 
@@ -44,27 +44,25 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name'=>'permiso.delete'])->syncRoles($admin,$gestion);
 
         // Seguridad
-        Permission::create(['name'=>'seguridad.index'])->syncRoles($admin,$gestion);
-        Permission::create(['name'=>'seguridad.create'])->syncRoles($admin,$gestion);
-        Permission::create(['name'=>'seguridad.edit'])->syncRoles($admin,$gestion);
-        Permission::create(['name'=>'seguridad.update'])->syncRoles($admin,$gestion);
-        Permission::create(['name'=>'seguridad.delete'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'seguridad.index'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'seguridad.create'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'seguridad.edit'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'seguridad.update'])->syncRoles($admin,$gestion);
+        // Permission::create(['name'=>'seguridad.delete'])->syncRoles($admin,$gestion);
 
-        // hasta aqui
+        // Entidades
+        // Permission::create(['name'=>'entidad.index'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'entidad.create'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'entidad.edit'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'entidad.update'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'entidad.delete'])->syncRoles($admin,$gestion,$usuario);
 
-        // // Entidades
-        // Permission::create(['name'=>'entidad.index','description'=>'Lista todos las entidades del sistema'])->syncRoles($admin,$gestion);
-        // Permission::create(['name'=>'entidad.create','description'=>'Permite Crear una entidad'])->syncRoles($admin,$gestion);
-        // Permission::create(['name'=>'entidad.edit','description'=>'Permite Editar una entidad'])->syncRoles($admin,$gestion);
-        // Permission::create(['name'=>'entidad.update','description'=>'Permite Actualizar una entidad'])->syncRoles($admin,$gestion);
-        // Permission::create(['name'=>'entidad.delete','description'=>'Permite Borrar una entidad'])->syncRoles($admin,$gestion);
-
-        // // Entidades contactos
-        // Permission::create(['name'=>'entidadcontacto.index','description'=>'Lista todos los contactos de las entidades del sistema'])->syncRoles($admin,$gestion,$comercial);
-        // Permission::create(['name'=>'entidadcontacto.create','description'=>'Permite Crear un contacto'])->syncRoles($admin,$gestion,$comercial);
-        // Permission::create(['name'=>'entidadcontacto.edit','description'=>'Permite Editar un contacto'])->syncRoles($admin,$gestion,$comercial);
-        // Permission::create(['name'=>'entidadcontacto.update','description'=>'Permite Actualizar un contacto'])->syncRoles($admin,$gestion,$comercial);
-        // Permission::create(['name'=>'entidadcontacto.delete','description'=>'Permite Borrar un contacto'])->syncRoles($admin,$gestion,$comercial);
+        // Entidades contactos
+        // Permission::create(['name'=>'entidadcontacto.index'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'entidadcontacto.create'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'entidadcontacto.edit'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'entidadcontacto.update'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'entidadcontacto.delete'])->syncRoles($admin,$gestion,$usuario);
 
         // // Pedidos
         // Permission::create(['name'=>'pedido.index','description'=>'Lista todos los pedidos del sistema'])->syncRoles($admin,$gestion);
