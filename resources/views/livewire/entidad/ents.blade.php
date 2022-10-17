@@ -30,7 +30,7 @@
                                 @endforeach
                             </select>
                             @if($filtroresponsable!='')
-                            <x-icon.filter-slash-a wire:click="$set('filtroresponsable', '')" class="pb-1" title="reset filter"/>
+                                <x-icon.filter-slash-a wire:click="$set('filtroresponsable', '')" class="pb-1 w-12" title="reset filter"/>
                             @endif
                         </div>
                     </div>

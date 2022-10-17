@@ -2,41 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EntidadContacto;
-use App\Http\Requests\StoreEntidadContactoRequest;
-use App\Http\Requests\UpdateEntidadContactoRequest;
+use App\Models\{EntidadContacto, Entidad};
 
 class EntidadContactoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        //
+        $this->middleware('can:entidadcontacto.index')->only('show');
+        $this->middleware('can:entidadcontacto.edit')->only('edit','nuevo');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function nuevo(Entidad $entidad)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreEntidadContactoRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreEntidadContactoRequest $request)
-    {
-        //
+        return view('entidad.contactonuevo',compact(['entidad']));
     }
 
     /**
@@ -45,42 +23,21 @@ class EntidadContactoController extends Controller
      * @param  \App\Models\EntidadContacto  $entidadContacto
      * @return \Illuminate\Http\Response
      */
-    public function show(EntidadContacto $entidadContacto)
+    public function show($id)
     {
-        //
+        return view('entidad.contactos',compact(['id']));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\EntidadContacto  $entidadContacto
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(EntidadContacto $entidadContacto)
+    public function edit($id)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateEntidadContactoRequest  $request
-     * @param  \App\Models\EntidadContacto  $entidadContacto
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateEntidadContactoRequest $request, EntidadContacto $entidadContacto)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\EntidadContacto  $entidadContacto
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(EntidadContacto $entidadContacto)
-    {
-        //
+        $contacto=EntidadContacto::find($id);
+        $entidad=Entidad::find($contacto->entidad_id);
+        return view('entidad.contacto',compact(['contacto','entidad']));
     }
 }
