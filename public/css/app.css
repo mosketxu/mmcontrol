@@ -2127,6 +2127,9 @@ select {
 .pr-10 {
   padding-right: 2.5rem;
 }
+.pl-4 {
+  padding-left: 1rem;
+}
 .text-left {
   text-align: left;
 }
@@ -3079,6 +3082,18 @@ select {
 
   .lg\:w-2\/4 {
     width: 50%;
+  }
+
+  .lg\:w-1\/12 {
+    width: 8.333333%;
+  }
+
+  .lg\:w-2\/12 {
+    width: 16.666667%;
+  }
+
+  .lg\:w-4\/12 {
+    width: 33.333333%;
   }
 
   .lg\:flex-auto {

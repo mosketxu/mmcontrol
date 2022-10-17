@@ -44,11 +44,11 @@
                         <div class="w-5/12  flex lg:w-3/12" >{{ __('Entidad') }}</div>
                         <div class="w-1/12  hidden lg:flex " >{{ __('Tipo') }}</div>
                         <div class="w-1/12  hidden md:flex" >{{ __('Nif') }} </div>
-                        <div class="w-2/12  hidden text-left lg:flex" >{{ __('Tfno.') }}</div>
+                        <div class="w-2/12  hidden lg:flex" >{{ __('Tfno.') }}</div>
                         <div class="w-5/12  flex lg:w-3/12" >{{ __('Email.') }}</div>
                         <div class="w-2/12  flex" ></div>
                     </div>
-                    {{-- <div class="flex"> --}}
+                    <div>
                         @forelse ($entidades as $entidad)
                             <div class="w-full flex text-sm text-left border-y border-t-0" wire:loading.class.delay="opacity-50">
                                 <div class="w-5/12 flex lg:w-3/12">
@@ -67,11 +67,9 @@
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->emailgral }}"  readonly/>
                                 </div>
                                 <div class="w-2/12 flex">
-                                    {{-- <div class="flex items-center justify-center space-x-3"> --}}
-                                        <x-icon.edit-a href="{{ route('entidad.edit',$entidad) }}"  title="Editar"/>
-                                        <x-icon.usergroup href="{{ route('entidadcontacto.show',$entidad->id) }}"  title="Contactos"/>
-                                        <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
-                                    {{-- </div> --}}
+                                    <x-icon.edit-a href="{{ route('entidad.edit',$entidad) }}"  title="Editar"/>
+                                    <x-icon.usergroup href="{{ route('entidadcontacto.show',$entidad->id) }}"  title="Contactos"/>
+                                    <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                                 </div>
                             </div>
                         @empty
@@ -86,7 +84,7 @@
                                 </div>
                             </div>
                         @endforelse
-                    {{-- </div> --}}
+                    </div>
                 </div>
                 <div>
                     {{ $entidades->links() }}

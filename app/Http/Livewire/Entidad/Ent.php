@@ -49,6 +49,7 @@ class Ent extends Component
             'entidad.observaciones'=>'nullable',
         ];
     }
+
     public function messages()
     {
         return [
@@ -62,6 +63,7 @@ class Ent extends Component
             'entidad.diafactura.diavencimienti' => 'El dia de vencimieneto debe ser numérico',
         ];
     }
+
     public function mount(Entidad $entidad,$entidadtipoId)
     {
         $this->entidad=$entidad;
