@@ -37,6 +37,5 @@ class DatabaseSeeder extends Seeder
        // $this->call(ProductosTableSeeder::class);
        // $this->call(AccionTipoSeeder::class);
        // $this->call(AccionesTableSeeder::class);
-       // $this->call(EmpresaTipoSeeder::class);
     }
 }

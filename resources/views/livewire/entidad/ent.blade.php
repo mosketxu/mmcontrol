@@ -1,5 +1,5 @@
 <div class="">
-    @livewire('menu',['entidad'=>$entidad],key($entidad->id))
+    {{-- @livewire('menu',['entidad'=>$entidad],key($entidad->id)) --}}
 
     <div class="p-1 mx-2">
         <div class="flex flex-row">
@@ -13,7 +13,7 @@
                         @endif
                     </div>
                     <div class="ml-3">
-                        <x-select wire:model.lazy="entidad.entidadtipo_id" class="text-xl" selectname="entidadtipo_id" required>
+                        <x-select wire:model.lazy="entidad.entidadtipo_id" class="text-xl py-1" selectname="entidadtipo_id" required>
                             @foreach ($tiposentidad as $tipoentidad)
                             <option value="{{ $tipoentidad->id }}">{{ $tipoentidad->nombre }}</option>
                             @endforeach
@@ -42,7 +42,7 @@
                 <span>×</span>
             </button>
         </div>
-    @endif
+        @endif
         @if (session()->has('message'))
             <div id="alert" class="relative px-6 py-2 mb-2 text-white bg-green-200 border-green-500 rounded border-1" >
                 <span class="inline-block mx-8 align-middle" >
@@ -76,6 +76,17 @@
                     <x-jet-input-error for="nif" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
+                    <x-jet-label for="pais">{{ __('Responsable') }}</x-jet-label>
+                    <x-select wire:model.defer="entidad.responsable_id" selectname="responsable_id" class="w-full">
+                        <option value="">-- choose --</option>
+                        @foreach ($responsables as $responsable)
+                            <option value="{{ $responsable->id }}">{{ $responsable->name }}</option>
+                        @endforeach
+                    </x-select>
+                </div>
+            </div>
+            <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                <div class="w-full form-item">
                     <x-jet-label for="emailgral">{{ __('Email Gral') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.emailgral" type="text" id="emailgral" name="emailgral" :value="old('emailgral')" class="w-full"/>
                 </div>
@@ -93,7 +104,7 @@
                 </div>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                <div class="w-full form-item">
+                <div class="w-5/12 form-item">
                     <x-jet-label for="tfno">{{ __('Tfno.') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.tfno" type="text" id="tfno" name="tfno" :value="old('tfno')" class="w-full"/>
                 </div>
@@ -101,15 +112,15 @@
                     <x-jet-label for="direccion">{{ __('Dirección') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.direccion" type="text" id="direccion" name="direccion" :value="old('direccion')" class="w-full"/>
                 </div>
-                <div class="w-full form-item">
+                <div class="w-2/12 form-item">
                     <x-jet-label for="cp">{{ __('C.P.') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.cp" type="text" id="cp" name="cp" :value="old('cp')" class="w-full"/>
                 </div>
-                <div class="w-full form-item">
+                <div class="w-4/12 form-item">
                     <x-jet-label for="localidad">{{ __('Localidad') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.localidad" type="text" id="localidad" name="localidad" :value="old('localidad')" class="w-full"/>
                 </div>
-                <div class="w-full form-item">
+                <div class="w-4/12 form-item">
                     <x-jet-label for="provincia">{{ __('Provincia') }}</x-jet-label>
                     <x-select wire:model.defer="entidad.provincia_id" selectname="provincia_id" class="w-full">
                         <option value="">-- choose --</option>
@@ -118,7 +129,7 @@
                         @endforeach
                     </x-select>
                 </div>
-                <div class="w-full form-item">
+                <div class="w-3/12 form-item">
                     <x-jet-label for="pais">{{ __('Pais') }}</x-jet-label>
                     <x-select wire:model.defer="entidad.pais_id" selectname="pais_id" class="w-full">
                         <option value="">-- choose --</option>
@@ -127,52 +138,11 @@
                         @endforeach
                     </x-select>
                 </div>
-                <div class="w-full form-item">
-                    <x-jet-label for="pais">{{ __('Responsable') }}</x-jet-label>
-                    <x-select wire:model.defer="entidad.responsable_id" selectname="responsable_id" class="w-full">
-                        <option value="">-- choose --</option>
-                        @foreach ($responsables as $responsable)
-                            <option value="{{ $responsable->id }}">{{ $responsable->name }}</option>
-                        @endforeach
-                    </x-select>
-                </div>
-            </div>
-            <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                <div class="form-item">
-                    <x-jet-label for="presupuesto">{{ __('Disp en Presupuestos') }}</x-jet-label>
-                    <input type="checkbox" id="presupuesto" name="presupuesto" wire:model.defer="entidad.presupuesto">
-                </div>
-                <div class="form-item">
-                    <x-jet-label for="categoriza">{{ __('Categorización.') }}</x-jet-label>
-                    <x-select wire:model.lazy="entidad.entidadcategoria_id" selectname="entidadcategoria_id" class="w-full">
-                        <option value="">-- choose --</option>
-                        @foreach ($tiposcategoria as $tipocat)
-                            <option value="{{ $tipocat->id }}">{{ $tipocat->nombre }}</option>
-                        @endforeach
-                    </x-select>
-                </div>
-                <div class="form-item">
-                    <x-jet-label for="fechacliente" class="text-center">{{ __('Fecha conversión a cliente') }}</x-jet-label>
-                    <input type="date" id="fechacli" wire:model.defer="fechacli"
-                        class="py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                        @error('fechacli') <span class="text-red-500">{{ $message }}</span>@enderror
-                </div>
             </div>
             <div class="px-2 mx-2 my-2 rounded-md bg-blue-50">
                 <h3 class="font-semibold ">Datos Facturación</h3>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                <div class="w-full form-item">
-                    <x-jet-label >{{ __('Cat.Empresa') }}</x-jet-label>
-                    <select wire:model.defer="entidad.empresatipo_id" selectname="empresatipo_id"
-                    class="w-full text-xs text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                        {{ Auth::user()->hasRole(['Admin', 'Gestion']) ? '' : 'disabled' }}>
-                        <option value="">-- choose --</option>
-                        @foreach ($tiposempresa as $tipoempresa)
-                            <option value="{{ $tipoempresa->id }}">{{ $tipoempresa->nombre }}</option>
-                        @endforeach
-                    </select>
-                </div>
                 <div class="w-full form-item">
                     <x-jet-label for="banco1" >{{ __('Banco 1') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.banco1" type="text" id="banco1" name="banco1" :value="old('banco1')" class="w-full"/>
@@ -228,22 +198,12 @@
                     <x-jet-input  wire:model.defer="entidad.diavencimiento" type="number" id="diavencimiento" name="diavencimiento" :value="old('diavencimiento')" class="w-full"/>
                     <x-jet-input-error for="diavencimiento" class="mt-2" />
                 </div>
-                <div class="w-full form-item">
-                    <x-jet-label for="usuaroi" >{{ __('Usuario web') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.usuario" type="text" id="usuaroi" name="usuaroi" :value="old('usuaroi')" class="w-full"/>
-                    <x-jet-input-error for="usuaroi" class="mt-2" />
-                </div>
-                <div class="w-full form-item">
-                    <x-jet-label for="password" >{{ __('Password') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.password" type="text" id="password" name="password" :value="old('password')" class="w-full"/>
-                    <x-jet-input-error for="password" class="mt-2" />
-                </div>
             </div>
 
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 <div class="w-full form-item">
                     <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>
-                    <textarea wire:model.defer="entidad.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="3">{{ old('observaciones') }} </textarea>
+                    <textarea wire:model.defer="entidad.observaciones" class="w-full text-sm border-gray-300 rounded-md" rows="3">{{ old('observaciones') }} </textarea>
                     <x-jet-input-error for="observaciones" class="mt-2" />
                 </div>
             </div>

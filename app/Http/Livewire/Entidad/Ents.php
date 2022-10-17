@@ -15,7 +15,6 @@ class Ents extends Component
     public $Fini='';
     public $Ffin='';
     public $entidadtipo_id='';
-    public $empresatipo_id='';
     public Entidad $entidad;
 
     public function render()
@@ -25,7 +24,6 @@ class Ents extends Component
 
         $entidades=Entidad::query()
             ->with('entidadtipo')
-            ->with('empresatipo')
             ->with('responsable')
             ->filtrosEntidad($this->search,$this->filtroresponsable,$this->entidadtipo_id,$this->Fini,$this->Ffin)
             ->orderBy('entidad','asc')

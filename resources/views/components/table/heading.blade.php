@@ -16,7 +16,7 @@ LA HE MODIFICADO
     'multiColumn' => null,
 ])
 
-<th {{ $attributes->merge(['class' => 'px-1 py-3 bg-blue-50']) }}>
+<th {{ $attributes->merge(['class' => 'px-1 py-1 bg-blue-50']) }}>
     @unless ($sortable)
         <span class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 ">{{ $slot }}</span>
     @else

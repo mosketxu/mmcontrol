@@ -37,14 +37,12 @@
                                 <x-jet-dropdown-link href="{{ route('entidad.tipo','4') }}" class="text-left">
                                     {{ __('Prospección') }}
                                 </x-jet-dropdown-link>
-                                @if(Auth::user()->hasRole('Milimetrica')==false)
                                 <x-jet-dropdown-link href="{{ route('entidad.tipo','2') }}" class="text-left">
                                     {{ __('Proveedores') }}
                                 </x-jet-dropdown-link>
                                 <x-jet-dropdown-link href="{{ route('entidad.tipo','0') }}" class="text-left">
                                     {{ __('Todos') }}
                                 </x-jet-dropdown-link>
-                                @endif
                             </div>
                         </x-slot>
                     </x-jet-dropdown>
@@ -199,14 +197,12 @@
                             <x-jet-dropdown-link href="{{ route('entidad.tipo','4') }}" class="text-right">
                                 {{ __('Prospección') }}
                             </x-jet-dropdown-link>
-                            @if(Auth::user()->hasRole('Milimetrica')==false)
                             <x-jet-dropdown-link href="{{ route('entidad.tipo','2') }}" class="text-right">
                                 {{ __('Proveedores') }}
                             </x-jet-dropdown-link>
                             <x-jet-dropdown-link href="{{ route('entidad.tipo','0') }}" class="text-right">
                                 {{ __('Todos') }}
                             </x-jet-dropdown-link>
-                            @endif
                         </div>
                     </x-slot>
                 </x-jet-dropdown>

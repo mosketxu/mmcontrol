@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Entidad;
 
-use App\Models\{Entidad, EntidadTipo, EmpresaTipo, EntidadCategoria, MetodoPago,Pais,Provincia, User};
+use App\Models\{Entidad, EntidadTipo,  MetodoPago,Pais,Provincia, User};
 // use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
@@ -22,8 +22,6 @@ class Ent extends Component
             'entidad.id'=>'nullable',
             'entidad.entidad'=>'required',
             'entidad.entidadtipo_id'=>'required',
-            'entidad.empresatipo_id'=>'nullable',
-            'entidad.entidadcategoria_id'=>'nullable',
             'entidad.responsable_id'=>'nullable|numeric',
             'entidad.nif'=>'nullable|max:12',
             'entidad.presupuesto'=>'nullable',
@@ -49,17 +47,26 @@ class Ent extends Component
             'entidad.diafactura'=>'numeric|nullable',
             'entidad.diavencimiento'=>'numeric|nullable',
             'entidad.observaciones'=>'nullable',
-            'entidad.usuario'=>'nullable',
-            'entidad.password'=>'nullable',
         ];
     }
-
+    public function messages()
+    {
+        return [
+            'entidad.entidad.required' => 'El nombre de la entidad es necesario',
+            'entidad.entidadtipo_id.required' => 'El tipo es necesario',
+            'entidad.nif.max' => 'El Nif debe ser inferior a 12 caracteres',
+            'entidad.cuentactblepro.numeric' => 'La cuenta contable del proveedor debe ser numérica',
+            'entidad.cuentactblecli.numeric' => 'La cuenta contable del cliente debe ser numérica',
+            'entidad.cp.max' => 'El código postal debe ser inferior a 8 caracteres',
+            'entidad.diafactura.diafactura' => 'El dia factura debe ser numérico',
+            'entidad.diafactura.diavencimienti' => 'El dia de vencimieneto debe ser numérico',
+        ];
+    }
     public function mount(Entidad $entidad,$entidadtipoId)
     {
         $this->entidad=$entidad;
         $this->fechacli=$this->entidad->fechacliente;
         $this->entidad->entidadtipo_id=$entidadtipoId;
-        if(!$this->entidad->empresatipo_id) $this->entidad->empresatipo_id='3';
         $this->entidadtipo=EntidadTipo::find($entidadtipoId);
         if(Auth::user()->hasRole('Milimetrica')) $this->entidad->responsable_id=Auth::user()->id;
     }
@@ -73,29 +80,9 @@ class Ent extends Component
         $metodopagos=MetodoPago::all();
         $provincias=Provincia::all();
         $paises=Pais::all();
-        $paises=Pais::all();
         $tiposentidad=EntidadTipo::orderBy('id')->get();
-        $tiposempresa=EmpresaTipo::orderBy('nombrecorto')->get();
-        $tiposcategoria=EntidadCategoria::orderBy('nombrecorto')->get();
-        return view('livewire.ent',compact('metodopagos','provincias','paises','tiposentidad','tiposempresa','tiposcategoria','responsables'));
+        return view('livewire.entidad.ent',compact('metodopagos','provincias','paises','tiposentidad','responsables'));
     }
-
-    public function UpdatedEntidadEntidadcategoriaId()
-    {
-        if($this->entidad->entidadcategoria_id==''){
-            $this->entidad->entidadcategoria_id=null;
-        }
-    }
-
-    public function UpdatedEntidadEntidadtipoId()
-    {
-        // if ($this->entidad->entidadtipo_id=='1' || $this->entidad->entidadtipo_id=='3') {
-        //     if ($this->fechacli== null) {
-        $this->fechacli=now()->format('Y-m-d');
-            // }
-        // }
-    }
-
 
     public function save()
     {
@@ -138,10 +125,7 @@ class Ent extends Component
             'entidad'=>$this->entidad->entidad,
             'responsable_id'=>$this->entidad->responsable_id,
             'entidadtipo_id'=>$this->entidad->entidadtipo_id,
-            'empresatipo_id'=>$this->entidad->empresatipo_id,
-            'entidadcategoria_id'=>$this->entidad->entidadcategoria_id,
-            'presupuesto'=>$this->entidad->presupuesto,
-            'fechacliente'=>$this->fechacli,
+            'responsable_id'=>$this->entidad->responsable_id,
             'nif'=>$this->entidad->nif,
             'direccion'=>$this->entidad->direccion,
             'cp'=>$this->entidad->cp,
@@ -166,8 +150,6 @@ class Ent extends Component
             'observaciones'=>$this->entidad->observaciones,
             'cuentactblepro'=>$this->entidad->cuentactblepro,
             'cuentactblecli'=>$this->entidad->cuentactblecli,
-            'usuario'=>$this->entidad->usuario,
-            'password'=>$this->entidad->password,
             ]
         );
         if(!$this->entidad->id){

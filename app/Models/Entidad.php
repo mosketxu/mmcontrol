@@ -12,7 +12,7 @@ class Entidad extends Model
 {
     use HasFactory;
     protected $table = 'entidades';
-    protected $fillable=['entidad','entidadtipo_id','empresatipo_id','responsable_id','direccion','cp','localidad','provincia_id','pais_id',
+    protected $fillable=['entidad','entidadtipo_id','responsable_id','direccion','cp','localidad','provincia_id','pais_id',
                         'nif','tfno','emailgral','emailadm','emailaux','web','idioma',
                         'banco1','iban1','banco2','iban2','banco3','iban3','factor',
                         'metodopago_id','diafactura','diavencimiento',
@@ -30,9 +30,6 @@ class Entidad extends Model
     // public function movimientos(){return $this->belongsTo(StockMovimiento::class);}
     public function responsable(){return $this->belongsTo(User::class,'responsable_id');}
 
-    public function empresatipo(){
-        return $this->belongsTo(EmpresaTipo::class,'empresatipo_id');
-    }
 
     public function scopeFiltrosEntidad(Builder $query, $search, $filtroresponsable, $entidadtipo_id,$fini,$ffin) : Builder
     {
