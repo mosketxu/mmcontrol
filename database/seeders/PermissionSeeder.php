@@ -16,9 +16,9 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $admin=Role::where('name','Admin');
-        $gestion=Role::where('name','Gestion');
-        $usuario=Role::where('name','Milimetrica');
+        $admin=Role::where('id','1');
+        $gestion=Role::where('id','3');
+        $usuario=Role::where('id','2');
 
         // \DB::table('permissions')->delete();
 
@@ -64,6 +64,13 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name'=>'entidadcontacto.update'])->syncRoles($admin,$gestion,$usuario);
         // Permission::create(['name'=>'entidadcontacto.delete'])->syncRoles($admin,$gestion,$usuario);
 
+        // Productos
+        // Permission::create(['name'=>'producto.index'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'producto.create'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'producto.edit'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'producto.update'])->syncRoles($admin,$gestion,$usuario);
+        // Permission::create(['name'=>'producto.delete'])->syncRoles($admin,$gestion,$usuario);
+
         // // Pedidos
         // Permission::create(['name'=>'pedido.index','description'=>'Lista todos los pedidos del sistema'])->syncRoles($admin,$gestion);
         // Permission::create(['name'=>'pedido.create','description'=>'Permite Crear un pedido'])->syncRoles($admin,$gestion);
@@ -71,19 +78,6 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name'=>'pedido.update','description'=>'Permite Actualizar un pedido'])->syncRoles($admin,$gestion);
         // Permission::create(['name'=>'pedido.delete','description'=>'Permite Borrar un pedido'])->syncRoles($admin,$gestion);
 
-        // // PeticionStock
-        // Permission::create(['name'=>'stockpeticion.index','description'=>'Lista todas las peticiones de stock del sistema'])->syncRoles($admin,$gestion,$usuario);
-        // Permission::create(['name'=>'stockpeticion.create','description'=>'Permite Crear una Peticion de stock'])->syncRoles($admin,$gestion,$usuario);
-        // Permission::create(['name'=>'stockpeticion.edit','description'=>'Permite Editar una Peticion de stock'])->syncRoles($admin,$gestion,$usuario);
-        // Permission::create(['name'=>'stockpeticion.update','description'=>'Permite Actualizar una Peticion de stock'])->syncRoles($admin,$gestion,$usuario);
-        // Permission::create(['name'=>'stockpeticion.delete','description'=>'Permite Borrar una Peticion de stock'])->syncRoles($admin,$gestion,$usuario);
-
-        // // Stock
-        // Permission::create(['name'=>'stock.index','description'=>'Lista el stock del sistema'])->syncRoles($admin,$gestion,$usuario);
-        // Permission::create(['name'=>'stock.create','description'=>'Permite Crear un movimiento en el stock'])->syncRoles($admin,$gestion,$usuario);
-        // Permission::create(['name'=>'stock.edit','description'=>'Permite Editar un movimiento del stock'])->syncRoles($admin,$gestion,$usuario);
-        // Permission::create(['name'=>'stock.update','description'=>'Permite Actualizar un movimiento del stock'])->syncRoles($admin,$gestion,$usuario);
-        // Permission::create(['name'=>'stock.delete','description'=>'Permite Borrar un movimiento del stock'])->syncRoles($admin,$gestion,$usuario);
 
         // // Productos
         // Permission::create(['name'=>'producto.index','description'=>'Lista todos los productos del sistema'])->syncRoles($admin,$gestion);

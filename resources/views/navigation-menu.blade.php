@@ -16,8 +16,15 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
                 </div>
-                {{-- @can('entidad.index') --}}
-                <div class="hidden pt-2 text-left space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                @can('producto.index')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('producto.index') }}" :active="request()->routeIs('producto.index')">
+                        {{ __('Catálogo') }}
+                    </x-jet-nav-link>
+                </div>
+                @endcan
+                @can('entidad.index')
+                <div class="hidden pt-2 space-x-8 text-left sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-dropdown  align="left" width="60" >
                         <x-slot name="trigger">
                             <span class="inline-flex rounded-md">
@@ -34,9 +41,6 @@
                                 <x-jet-dropdown-link href="{{ route('entidad.tipo','1') }}" class="text-left">
                                     {{ __('Clientes') }}
                                 </x-jet-dropdown-link>
-                                <x-jet-dropdown-link href="{{ route('entidad.tipo','4') }}" class="text-left">
-                                    {{ __('Prospección') }}
-                                </x-jet-dropdown-link>
                                 <x-jet-dropdown-link href="{{ route('entidad.tipo','2') }}" class="text-left">
                                     {{ __('Proveedores') }}
                                 </x-jet-dropdown-link>
@@ -47,7 +51,7 @@
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
-                {{-- @endcan             --}}
+                @endcan
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -176,6 +180,9 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('producto.index') }}" :active="request()->routeIs('producto.index')">
+                {{ __('Catálogo') }}
+            </x-jet-responsive-nav-link>
             @can('entidad.index')
             <div class="relative mt-3 ml-3">
                 <x-jet-dropdown align="right" width="60" >
@@ -193,9 +200,6 @@
                         <div class="w-44">
                             <x-jet-dropdown-link href="{{ route('entidad.tipo','1') }}" class="text-right">
                                 {{ __('Clientes') }}
-                            </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('entidad.tipo','4') }}" class="text-right">
-                                {{ __('Prospección') }}
                             </x-jet-dropdown-link>
                             <x-jet-dropdown-link href="{{ route('entidad.tipo','2') }}" class="text-right">
                                 {{ __('Proveedores') }}

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController, UserController,EntidadController,EntidadContactoController};
+use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,EntidadContactoController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -51,6 +51,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     //Entidades contacto
     Route::get('entidadcontacto/{entidad}/nuevo', [EntidadContactoController::class,'nuevo'])->name('entidadcontacto.nuevo');
     Route::resource('entidadcontacto', EntidadContactoController::class)->only(['show','edit','store']);
+
+    // Producto
+    Route::resource('producto', ProductoController::class);
 
     //Pedidos
     Route::resource('pedido', PedidoController::class);
