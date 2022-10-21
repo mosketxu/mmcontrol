@@ -24,10 +24,11 @@
                     <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
                         <div class="flex w-5/12 font-light lg:w-3/12" >{{ $entidadtipo->nombre }}</div>
                         <div class="hidden w-1/12 font-light lg:flex " >{{ __('Tipo') }}</div>
+                        <div class="hidden w-2/12 font-light md:w-2/12" >{{ __('Responsable') }}</div>
                         <div class="hidden w-1/12 font-light md:flex" >{{ __('Nif') }} </div>
                         <div class="hidden w-2/12 font-light lg:flex" >{{ __('Tfno.') }}</div>
                         <div class="flex w-5/12 font-light lg:w-3/12" >{{ __('Email') }}</div>
-                        <div class="flex w-2/12" ></div>
+                        <div class="flex " ></div>
                     </div>
                     <div>
                         @forelse ($entidades as $entidad)
@@ -38,6 +39,9 @@
                                 <div class="hidden w-1/12 lg:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->entidadtipo->nombrecorto ?? '-'}}"  readonly/>
                                 </div>
+                                <div class="hidden w-2/12 md:w-2/12">
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->responsable->name}}"  readonly/>
+                                </div>
                                 <div class="hidden w-1/12 md:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->nif }}" readonly/>
                                 </div>
@@ -47,7 +51,7 @@
                                 <div class="flex w-5/12 lg:w-3/12">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->emailgral }}"  readonly/>
                                 </div>
-                                <div class="flex w-2/12">
+                                <div class="flex ">
                                     <x-icon.edit-a href="{{ route('entidad.edit',$entidad) }}"  title="Editar"/>
                                     <x-icon.usergroup href="{{ route('entidadcontacto.show',$entidad->id) }}"  title="Contactos"/>
                                     <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
