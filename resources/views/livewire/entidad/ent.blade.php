@@ -13,7 +13,7 @@
                         @endif
                     </div>
                     <div class="ml-3">
-                        <x-select wire:model.lazy="entidad.entidadtipo_id" class="text-xl py-1" selectname="entidadtipo_id" required>
+                        <x-select wire:model.lazy="entidad.entidadtipo_id" class="py-1 text-xl" selectname="entidadtipo_id" required>
                             @foreach ($tiposentidad as $tipoentidad)
                             <option value="{{ $tipoentidad->id }}">{{ $tipoentidad->nombre }}</option>
                             @endforeach
