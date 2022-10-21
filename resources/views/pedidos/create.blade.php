@@ -1,10 +1,9 @@
-<x-app-layout2>
+<x-app-layout>
     <div class="p-2">
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                Pedidos
-                @livewire('pedido.pedidos')
+                @livewire('pedido.pedido')
             </div>
         </div>
     </div>
-</x-app-layout2>
+</x-app-layout>

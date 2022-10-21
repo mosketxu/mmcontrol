@@ -57,7 +57,4 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     //Pedidos
     Route::resource('pedido', PedidoController::class);
-
-
-
 });

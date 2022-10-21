@@ -25,8 +25,6 @@ class Prods extends Component
     public function render()
     {
         $this->producto= new Producto;
-        $provs = array('2','3');
-        $clis = array('1','3');
 
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['2','3']);

@@ -23,6 +23,13 @@
                     </x-jet-nav-link>
                 </div>
                 @endcan
+                @can('pedido.index')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('pedido.index') }}" :active="request()->routeIs('pedido.index')">
+                        {{ __('Pedidos') }}
+                    </x-jet-nav-link>
+                </div>
+                @endcan
                 @can('entidad.index')
                 <div class="hidden pt-2 space-x-8 text-left sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-dropdown  align="left" width="60" >
@@ -38,15 +45,11 @@
                         </x-slot>
                         <x-slot name="content">
                             <div class="w-44">
-                                <x-jet-dropdown-link href="{{ route('entidad.tipo','1') }}" class="text-left">
-                                    {{ __('Clientes') }}
+                                @foreach($tiposentidad as $tipoentidad)
+                                <x-jet-dropdown-link href="{{ route('entidad.tipo',$tipoentidad->id ) }}" class="text-left">
+                                    {{ $tipoentidad->nombreplural }}
                                 </x-jet-dropdown-link>
-                                <x-jet-dropdown-link href="{{ route('entidad.tipo','2') }}" class="text-left">
-                                    {{ __('Proveedores') }}
-                                </x-jet-dropdown-link>
-                                <x-jet-dropdown-link href="{{ route('entidad.tipo','0') }}" class="text-left">
-                                    {{ __('Todos') }}
-                                </x-jet-dropdown-link>
+                                @endforeach
                             </div>
                         </x-slot>
                     </x-jet-dropdown>
@@ -179,6 +182,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('pedido.index') }}" :active="request()->routeIs('pedido.index')">
+                {{ __('Pedidos') }}
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('producto.index') }}" :active="request()->routeIs('producto.index')">
                 {{ __('Catálogo') }}

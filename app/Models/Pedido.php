@@ -16,12 +16,12 @@ class Pedido extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable=['pedido','responsable_id','cliente_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
-                        'tiradaprevista','tiradareal','parcial','estado','facturado','cd_dvd','distribucion','cajas','incidencias','retardos','otros'
+                        'tiradaprevista','tiradareal','precio','preciototal','parcial','estado','facturado','cd_dvd','distribucion','cajas','incidencias','retardos','otros','fichapedido'
                         ];
 
-    public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}
-    public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id');}
-    public function responsable(){return $this->belongsTo(User::class,'responsable_id','id');}
+    public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
+    public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
+    public function responsable(){return $this->belongsTo(User::class,'responsable_id','id')->withDefault(['name'=>'-']);}
 
     public function getFechapedAttribute(){return Carbon::parse($this->fechapedido)->format('d-m-Y');}
     public function getFechaarchAttribute(){return Carbon::parse($this->fechaarchivos)->format('d-m-Y');}

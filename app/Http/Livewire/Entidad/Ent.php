@@ -82,8 +82,9 @@ class Ent extends Component
         $metodopagos=MetodoPago::all();
         $provincias=Provincia::all();
         $paises=Pais::all();
-        $tiposentidad=EntidadTipo::orderBy('id')->get();
+        // $tiposentidad=EntidadTipo::orderBy('id')->get();
         return view('livewire.entidad.ent',compact('metodopagos','provincias','paises','tiposentidad','responsables'));
+        return view('livewire.entidad.ent',compact('metodopagos','provincias','paises','responsables'));
     }
 
     public function save()

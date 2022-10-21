@@ -26,6 +26,8 @@ class CreatePedidosTable extends Migration
             $table->date('fechaentrega')->nullable();
             $table->bigInteger('tiradaprevista')->default(0);
             $table->bigInteger('tiradareal')->default(0);
+            $table->double('precio', 15, 2)->nullable()->default(0.00);
+            $table->double('preciototal', 15, 2)->nullable()->default(0.00);
             $table->string('parcial')->nullable();
             $table->integer('estado')->default('0');
             $table->boolean('facturado')->default(false);
@@ -35,6 +37,7 @@ class CreatePedidosTable extends Migration
             $table->string('incidencias')->nullable();
             $table->string('retardos')->nullable();
             $table->string('otros')->nullable();
+            $table->string('fichapedido')->nullable();
             $table->timestamps();
         });
     }

@@ -22,12 +22,12 @@
             <div class="flex-col space-y-4">
                 <div>
                     <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
-                        <div class="flex w-3/12 lg:w-3/12" >{{ __('ISBN') }}</div>
-                        <div class="flex w-4/12 lg:flex " >{{ __('Referencia') }}</div>
-                        <div class="hidden w-2/12 md:flex" >{{ __('Cliente') }} </div>
-                        <div class="hidden w-2/12 lg:flex" >{{ __('Proveedor') }}</div>
-                        <div class="flex w-1/12 lg:w-1/12" >{{ __('Precio') }}</div>
-                        <div class="hidden w-5/12 lg:flex" >{{ __('Observaciones') }}</div>
+                        <div class="flex w-3/12 font-light lg:w-3/12" >{{ __('ISBN') }}</div>
+                        <div class="flex w-4/12 font-light lg:flex " >{{ __('Referencia') }}</div>
+                        <div class="hidden w-2/12 font-light md:flex" >{{ __('Cliente') }} </div>
+                        <div class="hidden w-2/12 font-light lg:flex" >{{ __('Proveedor') }}</div>
+                        <div class="flex w-1/12 font-light lg:w-1/12" >{{ __('Precio') }}</div>
+                        <div class="hidden w-5/12 font-light lg:flex" >{{ __('Observaciones') }}</div>
                         <div class="flex w-2/12" ></div>
                     </div>
                     <div>

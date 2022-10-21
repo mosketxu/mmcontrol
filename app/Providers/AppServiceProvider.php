@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\EntidadTipo;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -24,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        // Using view composer to set following variables globally
+        view()->composer('*',function($view) {
+                $view->with('tiposentidad', EntidadTipo::orderBy('id')->get());
+        });
         Builder::macro('search', function ($field, $string) {
             return $string ? $this->where($field, 'like', '%'.$string.'%') : $this;
         });

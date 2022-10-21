@@ -20,15 +20,15 @@ class Entidad extends Model
 
     public function pais(){ return $this->belongsTo(Pais::class);}
     public function provincia(){return $this->belongsTo(Provincia::class);}
-    public function entidadtipo(){return $this->belongsTo(EntidadTipo::class);}
     public function metodopago(){return $this->belongsTo(MetodoPago::class);}
-    public function contactos(){return $this->hasMany(EntidadContacto::class);}
+    public function contactos(){return $this->hasMany(EntidadContacto::class)->withDefault(['contacto'=>'-']);}
+    public function entidadtipo(){return $this->belongsTo(EntidadTipo::class);}
     // public function pedidos(){return $this->hasMany(Pedido::class);}
     // public function presupuestos(){return $this->hasMany(Presupuesto::class);}
     // public function presuplindetalleproveedor(){return $this->hasMany(PresupuestoLineaDetalle::class);}
     // public function productos(){return $this->hasMany(Producto::class);}
     // public function movimientos(){return $this->belongsTo(StockMovimiento::class);}
-    public function responsable(){return $this->belongsTo(User::class,'responsable_id');}
+    public function responsable(){return $this->belongsTo(User::class,'responsable_id')->withDefault(['name'=>'-']);}
 
 
     public function scopeFiltrosEntidad(Builder $query, $search, $filtroresponsable, $entidadtipo_id,$fini,$ffin) : Builder
