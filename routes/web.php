@@ -44,8 +44,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     // })->name('pedidos');
 
     //Seguridad
-    // Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:seguridad.index')->name('seguridad');
-    Route::get('/seguridad', function () {return view('seguridad.seguridad');})->name('seguridad');
+    Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:seguridad.index')->name('seguridad');
 
     Route::resource('roles', RoleController::class)->only(['edit','update'])->names('roles');
 
