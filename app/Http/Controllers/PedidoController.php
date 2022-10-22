@@ -6,11 +6,11 @@ use App\Models\Pedido;
 
 class PedidoController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('can:pedido.index');
-        $this->middleware('can:pedido.edit')->only('edit','update','composicion');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('can:pedido.index');
+    //     $this->middleware('can:pedido.edit')->only('edit','update','composicion');
+    // }
 
     /**
      * Display a listing of the resource.
