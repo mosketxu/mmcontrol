@@ -4,17 +4,9 @@
     <div class="h-full p-1 mx-2">
         <h1 class="text-2xl font-semibold text-gray-900">Productos</h1>
         <div class="py-1 space-y-4">
-            @if (session()->has('message'))
-                <div id="alert" class="relative px-6 py-2 mb-2 text-white bg-red-200 border-red-500 rounded border-1">
-                    <span class="inline-block mx-8 align-middle">
-                        {{ session('message') }}
-                    </span>
-                    <button class="absolute top-0 right-0 mt-2 mr-6 text-2xl font-semibold leading-none bg-transparent outline-none focus:outline-none" onclick="document.getElementById('alert').remove();">
-                        <span>×</span>
-                    </button>
-                </div>
-            @endif
-            <x-jet-validation-errors></x-jet-validation-errors>
+            <div class="">
+                @include('errores')
+            </div>
             <div class="">
                 @include('producto.productofilters')
             </div>
@@ -49,9 +41,9 @@
                                 </div>
                                 <div  class="flex w-2/12">
                                     @if($producto->fichaproducto)
-                                        <x-icon.pdf-a wire:click="presentaPDF({{ $producto }})" title="PDF"/>
+                                        <x-icon.clip-a class="text-green-500 hover:text-green-700 " wire:click="presentaPDF({{ $producto }})" title="Archivo"/>
                                     @else
-                                        <x-icon.pdf-b class="text-blue-100 " title="PDF"/>
+                                        <x-icon.clip-b class="text-gray-500" title="No hay adjunto"/>
                                     @endif
 
                                     @can('producto.edit')

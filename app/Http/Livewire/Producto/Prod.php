@@ -96,9 +96,7 @@ class Prod extends Component
         // $filename=$this->ficheropdf->storeAs('/','pp.pdf','fichasproducto');
         $filename="";
         if ($this->ficheropdf) {
-            // dd('Definir bien el nombre');
-            $nombre=$this->producto->referencia.'.'.$this->ficheropdf->extension();
-            // $nombre='pp.pdf';
+            $nombre=$this->producto->id.'.'.$this->ficheropdf->extension();
             $filename=$this->ficheropdf->storeAs('/', $nombre, 'fichasproducto');
         }
 
