@@ -13,11 +13,11 @@ use Spatie\Permission\Models\Permission;
 class RoleController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('can:role.index')->only('index');
-        $this->middleware('can:role.edit')->only('edit','update');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('can:role.index')->only('index');
+    //     $this->middleware('can:role.edit')->only('edit','update');
+    // }
 
     /**
      * Show the form for editing the specified resource.

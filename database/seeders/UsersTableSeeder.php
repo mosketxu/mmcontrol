@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         User::create(['name' => 'Gestor', 'email' => 'gestor@gestor.com','password'=>bcrypt('12345678'),
         ])->assignRole('Gestor');
 
-        User::create(['name' => 'Milimetrica','email' => 'milimetrica@Milimetrica.com','password' => bcrypt('12345678'),
+        User::create(['name' => 'Milimetrica','email' => 'milimetrica@milimetrica.com','password' => bcrypt('12345678'),
         ])->assignRole('Milimetrica');
 
 
