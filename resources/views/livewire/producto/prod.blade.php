@@ -55,11 +55,11 @@
                     </div>
                     <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                         <div class="w-2/12 form-item">
-                            <x-jet-label for="isbn">{{ __('ISBN') }}</x-jet-label>
+                            <x-jet-label for="isbn">{{ __('ISBN/Código') }}</x-jet-label>
                             <input wire:model="producto.isbn" type="text" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
                         </div>
                         <div class="w-10/12 form-item">
-                            <x-jet-label for="referencia">{{ __('Descripción') }}</x-jet-label>
+                            <x-jet-label for="referencia">{{ __('Título/Referencia') }}</x-jet-label>
                             <input wire:model.defer="producto.referencia" type="text" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" autofocus/>
                         </div>
                     </div>
@@ -69,24 +69,15 @@
                         <div class="w-full form-item">
                             <x-jet-label for="entidad_id">{{ __('Cliente') }}</x-jet-label>
                             <x-select wire:model.lazy="producto.cliente_id" selectname="cliente_id" class="w-full" >
-                                <option value="">-- Selecciona cliente --</option>
+                                <option value=''>-- Selecciona cliente --</option>
                                 @foreach ($clientes as $cliente)
                                 <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
                                 @endforeach
                             </x-select>
                         </div>
                         <div class="w-full form-item">
-                            <x-jet-label for="entidad_id">{{ __('Proveedor') }}</x-jet-label>
-                            <x-select wire:model.lazy="producto.proveedor_id" selectname="proveedor_id" class="w-full" >
-                                <option value="">-- Selecciona cliente --</option>
-                                @foreach ($proveedores as $proveedor)
-                                <option value="{{ $proveedor->id }}">{{ $proveedor->entidad }}</option>
-                                @endforeach
-                            </x-select>
-                        </div>
-                        <div class="w-full form-item">
                             <x-jet-label for="precio">{{ __('€ Precio') }}</x-jet-label>
-                            <input  wire:model="producto.precio" type="text" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                            <input  wire:model="producto.precio" type="number" step="any" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                     </div>
                 </div>
@@ -100,14 +91,16 @@
                     </div>
                 </div>
                 <div class="p-2 m-2 ">
-                    <div class="w-full form-item">
-                        <x-jet-label for="ficheropdf">{{ __('Ficha producto') }}</x-jet-label>
-                        <div class="flex">
-                            <input type="file" wire:model="ficheropdf">
-                            @if($producto->fichaproducto)
-                                <x-icon.pdf-a wire:click="presentaPDF({{ $producto }})" class="pt-2 ml-2" title="PDF"/>
-                            @endif
-                            @error('ficheropdf') <p class="text-red-500">{{ $message }}</p> @enderror
+                    <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                        <div class="w-full form-item">
+                            <x-jet-label for="ficheropdf">{{ __('Ficha producto') }}</x-jet-label>
+                            <div class="flex">
+                                <input type="file" wire:model="ficheropdf">
+                                @if($producto->fichaproducto)
+                                    <x-icon.pdf-a wire:click="presentaPDF({{ $producto }})" class="pt-2 ml-2" title="PDF"/>
+                                @endif
+                                @error('ficheropdf') <p class="text-red-500">{{ $message }}</p> @enderror
+                            </div>
                         </div>
                     </div>
                 </div>

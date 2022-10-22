@@ -22,7 +22,15 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     // Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
     Route::get('/dashboard', function () {
-        return redirect()->route('entidad.tipo','2');
+        if (Auth::user()->hasRole('Admin')) {
+            return redirect()->route('seguridad');
+        } elseif (Auth::user()->hasRole('Gestor')) {
+            return redirect()->route('pedido.index');
+        } else {
+            return redirect()->route('pedido.index');
+        }
+
+        // return redirect()->route('entidad.tipo','2');
     })->name('dashboard');
 
     // Route::get('/pedidos', function () {

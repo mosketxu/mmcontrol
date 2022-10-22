@@ -21,8 +21,7 @@ class Prod extends Component
         return [
             'producto.id'=>'nullable',
             'producto.cliente_id'=>'nullable',
-            'producto.proveedor_id'=>'nullable',
-            'producto.isbn'=>'nullable||size:13||unique:productos,isbn',
+            'producto.isbn'=>'nullable||unique:productos,isbn',
             'producto.referencia'=>'required||unique:productos,referencia',
             'producto.precio'=>'nullable|numeric',
             'producto.observaciones'=>'nullable',
@@ -35,7 +34,6 @@ class Prod extends Component
             'producto.referencia.required' => 'La referencia es necesaria.',
             'producto.referencia.unique' => 'Esta referencia ya existe.',
             'producto.isbn.unique' => 'El ISBN ya existe.',
-            'producto.isbn.size' => 'El ISBN debe ser de longitud 13.',
             'producto.precio.numeric' => 'El precio debe ser numérico',
         ];
     }
@@ -48,9 +46,8 @@ class Prod extends Component
     {
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['2','3']);
-        $proveedores=$entidades->whereIn('entidadtipo_id',['1','2']);
 
-        return view('livewire.producto.prod',compact('proveedores','clientes'));
+        return view('livewire.producto.prod',compact('clientes'));
     }
 
     public function updatedProductoPrecio()
@@ -73,6 +70,7 @@ class Prod extends Component
 
     public function save()
     {
+        if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
         if($this->producto->id){
             $i=$this->producto->id;
             $this->validate([
@@ -98,8 +96,9 @@ class Prod extends Component
         // $filename=$this->ficheropdf->storeAs('/','pp.pdf','fichasproducto');
         $filename="";
         if ($this->ficheropdf) {
-            dd('Definir bien el nombre');
+            // dd('Definir bien el nombre');
             $nombre=$this->producto->referencia.'.'.$this->ficheropdf->extension();
+            // $nombre='pp.pdf';
             $filename=$this->ficheropdf->storeAs('/', $nombre, 'fichasproducto');
         }
 
@@ -111,7 +110,6 @@ class Prod extends Component
             'isbn'=>$this->producto->isbn,
             'referencia'=>$this->producto->referencia,
             'cliente_id'=>$this->producto->cliente_id,
-            'proveedor_id'=>$this->producto->proveedor_id,
             'precio'=>$this->producto->precio,
             'observaciones'=>$this->producto->observaciones,
             ]

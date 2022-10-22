@@ -28,24 +28,6 @@
     <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Proveedor
-            </label>
-            <div class="flex">
-                <select wire:model="filtroproveedor" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($proveedores as $proveedor)
-                    <option value="{{ $proveedor->id }}">{{ $proveedor->entidad }}</option>
-                    @endforeach
-                </select>
-                @if($filtroproveedor!='')
-                    <x-icon.filter-slash-a wire:click="$set('filtroproveedor', '')" class="pb-1" title="reset filter"/>
-                @endif
-            </div>
-        </div>
-    </div>
-    <div class="flex w-2/12 ">
-        <div class="w-full">
-            <label class="px-1 text-sm text-gray-600">
                 Cliente
             </label>
             <div class="flex">
@@ -56,7 +38,7 @@
                     @endforeach
                 </select>
                 @if($filtrocliente!='')
-                    <x-icon.filter-slash-a wire:click="$set('filtroproveedot', '')" class="pb-1" title="reset filter"/>
+                    <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif
             </div>
         </div>

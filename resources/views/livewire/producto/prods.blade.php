@@ -25,7 +25,6 @@
                         <div class="flex w-3/12 font-light lg:w-3/12" >{{ __('ISBN') }}</div>
                         <div class="flex w-4/12 font-light lg:flex " >{{ __('Referencia') }}</div>
                         <div class="hidden w-2/12 font-light md:flex" >{{ __('Cliente') }} </div>
-                        <div class="hidden w-2/12 font-light lg:flex" >{{ __('Proveedor') }}</div>
                         <div class="flex w-1/12 font-light lg:w-1/12" >{{ __('Precio') }}</div>
                         <div class="hidden w-5/12 font-light lg:flex" >{{ __('Observaciones') }}</div>
                         <div class="flex w-2/12" ></div>
@@ -41,9 +40,6 @@
                                 </div>
                                 <div class="hidden w-2/12 lg:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->cliente->entidad }}"  readonly/>
-                                </div>
-                                <div class="hidden w-2/12 lg:flex">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->proveedor->entidad }}"  readonly/>
                                 </div>
                                 <div class="flex w-1/12 lg:w-1/12">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->precio }}"  readonly/>

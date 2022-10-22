@@ -34,6 +34,12 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
+        'fichasproducto' => [
+            'driver' => 'local',
+            'root' => storage_path('app/fichasproducto'),
+            'url' => env('APP_URL').'/fichasproducto',
+            'visibility' => 'public',
+        ],
 
         'public' => [
             'driver' => 'local',
