@@ -16,10 +16,10 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $admin=Role::where('id','1');
-        $gestor=Role::where('id','2');
-        $milimetrica=Role::where('id','3');
-
+        $admin=Role::find('1');
+        $gestor=Role::find('2');
+        $milimetrica=Role::find('3');
+        // dd($admin . '-'. $gestor .'-'.$milimetrica);
         // \DB::table('permissions')->delete();
 
         // Users

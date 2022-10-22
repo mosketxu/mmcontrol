@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
 
         \DB::table('users')->delete();
 
-        User::create(['name' => 'Administrador','email' => 'mosketxu@gmail.com','password' => bcrypt('12345678'),
+        User::create(['name' => 'Administrador','email' => 'admin@admin.com','password' => bcrypt('12345678'),
         ])->assignRole('Admin');
 
         User::create(['name' => 'Gestor', 'email' => 'gestor@gestor.com','password'=>bcrypt('12345678'),
