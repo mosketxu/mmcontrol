@@ -96,7 +96,6 @@
                             </div>
                             <div class="w-1/12 lg:w-1/12">
                                 <x-icon.edit-a href="{{ route('pedido.edit',$pedido) }}"  title="Editar"/>
-                                <x-icon.usergroup href="{{ route('entidadcontacto.show',$pedido->id) }}"  title="Contactos"/>
                                 <x-icon.delete-a wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                             </div>
                         </div>
