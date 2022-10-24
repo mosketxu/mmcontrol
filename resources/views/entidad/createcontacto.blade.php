@@ -2,9 +2,9 @@
     <div class="p-2">
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                {{-- @livewire('entidad.ent-contacto',['entidad'=>$entidad]) --}}
-                @livewire('entidad.ent',['entidad'=>$entidad])
+                @livewire('ent',['contacto'=>$contacto],key($contacto->id))
             </div>
         </div>
     </div>
 </x-app-layout>
+

@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class EntidadContacto extends Model
 {
-    protected $fillable=['entidad_id','contacto','cargo','movil','telefono','email'];
+    protected $fillable = ['entidad_id','contacto_id','departamento','comentarios'];
 
-    public function entidad()
+    public function entidadcontacto()
     {
         return $this->belongsTo(Entidad::class);
     }

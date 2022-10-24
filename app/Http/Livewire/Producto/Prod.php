@@ -23,7 +23,8 @@ class Prod extends Component
             'producto.cliente_id'=>'nullable',
             'producto.isbn'=>'nullable||unique:productos,isbn',
             'producto.referencia'=>'required||unique:productos,referencia',
-            'producto.precio'=>'nullable|numeric',
+            'producto.preciocoste'=>'nullable|numeric',
+            'producto.precioventa'=>'nullable|numeric',
             'producto.observaciones'=>'nullable',
         ];
     }
@@ -34,7 +35,8 @@ class Prod extends Component
             'producto.referencia.required' => 'La referencia es necesaria.',
             'producto.referencia.unique' => 'Esta referencia ya existe.',
             'producto.isbn.unique' => 'El ISBN ya existe.',
-            'producto.precio.numeric' => 'El precio debe ser numérico',
+            'producto.preciocoste.numeric' => 'El precio de compra debe ser numérico',
+            'producto.precioventa.numeric' => 'El precio de venta debe ser numérico',
         ];
     }
     public function mount(Producto $producto)
@@ -45,16 +47,21 @@ class Prod extends Component
     public function render()
     {
         $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id',['2','3']);
+        $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
 
         return view('livewire.producto.prod',compact('clientes'));
     }
 
-    public function updatedProductoPrecio()
+    public function updatedProductoPreciocompra()
     {
-        // dd($this->producto->precio);
-        $this->producto->precio=str_replace(',','.',$this->producto->precio);
-        $this->validateOnly('producto.precio');
+        $this->producto->preciocoste=str_replace(',','.',$this->producto->preciocoste);
+        $this->validateOnly('producto.preciocoste');
+    }
+
+    public function updatedProductoPrecioventa()
+    {
+        $this->producto->precioventa=str_replace(',','.',$this->producto->precioventa);
+        $this->validateOnly('producto.precioventa');
     }
 
     public function updatedficheropdf()
@@ -108,13 +115,13 @@ class Prod extends Component
             'isbn'=>$this->producto->isbn,
             'referencia'=>$this->producto->referencia,
             'cliente_id'=>$this->producto->cliente_id,
-            'precio'=>$this->producto->precio,
+            'preciocoste'=>$this->producto->preciocoste,
+            'precioventa'=>$this->producto->precioventa,
             'observaciones'=>$this->producto->observaciones,
             ]
         );
         if($this->ficheropdf){
             $prod->fichaproducto=$filename;
-            // dd($prod->fichaproducto);
             $prod->save();
         }
 

@@ -25,14 +25,14 @@ class Pedidos extends Component
     public $fechaentrega;
     public $tiradaprevista;
     public $tiradareal;
-    public $precio;
+    public $preciocoste;
+    public $precioventa;
     public $preciototal;
     public $parcial;
     public $estado;
     public $facturado;
-    public $cd_dvd;
     public $distribucion;
-    public $cajas;
+    public $uds_caja;
     public $incidencias;
     public $retardos;
     public $otros;
@@ -67,13 +67,13 @@ class Pedidos extends Component
             'fechaentrega'=>'required|date',
             'tiradaprevista'=>'required|numeric',
             'tiradareal'=>'nullable|numeric',
-            'precio'=>'nullable|numeric',
+            'preciocoste'=>'nullable|numeric',
+            'precioventa'=>'nullable|numeric',
             'preciototal'=>'nullable|numeric',
             'estado'=>'nullable',
             'facturado'=>'nullable',
-            'cd_dvd'=>'nullable',
             'distribucion'=>'nullable',
-            'cajas'=>'nullable',
+            'uds_caja'=>'nullable',
             'incidencias'=>'nullable',
             'retardos'=>'nullable',
             'otros'=>'nullable',
@@ -96,8 +96,9 @@ class Pedidos extends Component
             'tiradaprevista.required'=>'La tirada prevista es necesaria',
             'tiradaprevista.numeric'=>'El valor de la tirada prevista debe ser numérico',
             'tiradareal.numeric'=>'El valor de la tirada real debe ser numérico',
-            'precio.numeric'=>'El valor del precio real debe ser numérico',
-            'preciototal.numeric'=>'El valor del precio total real debe ser numérico',
+            'preciocoste.numeric'=>'El valor del precio de compra debe ser numérico',
+            'precioventa.numeric'=>'El valor del precio de venta  debe ser numérico',
+            'preciototal.numeric'=>'El valor del precio total debe ser numérico',
         ];
     }
 
@@ -105,8 +106,8 @@ class Pedidos extends Component
     public function render()
     {
         $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id',['2','3']);
-        $proveedores=$entidades->whereIn('entidadtipo_id',['1','2']);
+        $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
+        $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $responsables=User::role('Milimetrica')->orderBy('name')->get();
 
         if($this->selectAll) $this->selectPageRows();
@@ -177,11 +178,11 @@ class Pedidos extends Component
         $this->fechapedido='';
         $this->refgrafitex='';
         $this->refcliente='';
-        $this->precioventa='0';
         $this->preciocoste='0';
-        $this->unidades='0';
-        $this->incremento='0';
-        $this->iva='0.21';
+        $this->precioventa='0';
+        $this->preciototal='0';
+        $this->tiradaprevista='0';
+        $this->tiradareal='0';
         $this->ruta='';
         $this->fichero='';
         $this->estado='0';
@@ -250,7 +251,6 @@ class Pedidos extends Component
     public function edit($id) {
         dd('en proceso');
         $pedido = Pedido::findOrFail($id);
-        $this->pedido_id=$prpedidoid;
         $this->pedido=$pedido->pedido;
         $this->descripcion=$pedido->descripcion;
         $this->entidad_id=$pedido->entidad_id;
@@ -274,10 +274,12 @@ class Pedidos extends Component
 
     public function numpedido()
     {
+        dd('a');
         $anyo= Carbon::parse($this->fechapedido)->year;
         $anyo2= Carbon::parse($this->fechapedido)->format('y');
-        $p=Pedido::withTrashed()->whereYear('fechapedido', $anyo)->max('pedido') ;
-        $this->prespedido ? $p + 1 : ($anyo2 * 100000 +1) ;
+        $p=Pedido::withTrashed()->whereYear('fechapedido', $anyo)->max('id') ;
+        $this->pedido ? $p + 1 : ($anyo2 * 100000 +1) ;
+        dd($this->pedido);
     }
 
 
@@ -312,7 +314,7 @@ class Pedidos extends Component
             ->searchMes('fechapedido',$this->filtromes)
             ->search('pedidos.referencia',$this->filtroreferencia)
             ->search('pedidos.isbn',$this->filtroisbn)
-            ->search('pedidos.pedido',$this->search)
+            ->search('pedidos.id',$this->search)
             ->orderBy('pedidos.fechapedido','desc')
             ->orderBy('pedidos.id','desc');
 

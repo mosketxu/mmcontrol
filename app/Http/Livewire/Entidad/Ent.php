@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Entidad;
 
-use App\Models\{Entidad, EntidadTipo,  MetodoPago,Pais,Provincia, User};
+use App\Models\{Entidad, EntidadContacto, EntidadTipo,  MetodoPago,Pais,Provincia, User};
 // use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
@@ -15,6 +15,9 @@ class Ent extends Component
     public $entidad;
     public $entidadtipo;
     public $fechacli;
+    public $contactoId;
+    public $departamento;
+    public $comentario;
 
     protected function rules()
     {
@@ -64,9 +67,11 @@ class Ent extends Component
         ];
     }
 
-    public function mount(Entidad $entidad,$entidadtipoId)
+    public function mount(Entidad $entidad, Entidad $contacto,$entidadtipoId)
     {
         $this->entidad=$entidad;
+        $this->contacto=$contacto;
+
         $this->fechacli=$this->entidad->fechacliente;
         $this->entidad->entidadtipo_id=$entidadtipoId;
         $this->entidadtipo=EntidadTipo::find($entidadtipoId);
@@ -76,8 +81,11 @@ class Ent extends Component
 
     public function render()
     {
-        if (!$this->entidad->estado) $this->entidad->estado=true;
+        if (!$this->entidad->estado) $this->entidad->estado=0;
         $entidad=$this->entidad;
+        $contacto=$this->contacto;
+        $this->contactoId=$contacto->id;
+
         $responsables=User::role('Milimetrica')->orderBy('name')->get();
         $metodopagos=MetodoPago::all();
         $provincias=Provincia::all();
@@ -159,6 +167,17 @@ class Ent extends Component
             $this->entidad->id=$ent->id;
         }
 
+        if($this->contactoId){
+            EntidadContacto::create([
+                 'contacto_id'=>$this->entidad->id,
+                 'entidad_id'=>$this->contactoId,
+                 'departamento'=>$this->departamento,
+                 'comentarios'=>$this->comentario,
+            ]);
+            $this->dispatchBrowserEvent('notify', 'Contacto añadido con éxito');
+        }
+
+        $this->emitSelf('notify-saved');
         $this->dispatchBrowserEvent('notify', $mensaje);
     }
 }

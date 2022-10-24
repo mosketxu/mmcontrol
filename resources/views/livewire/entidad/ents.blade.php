@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="flex ">
                                     <x-icon.edit-a href="{{ route('entidad.edit',$entidad) }}"  title="Editar"/>
-                                    <x-icon.usergroup href="{{ route('entidadcontacto.show',$entidad->id) }}"  title="Contactos"/>
+                                    <x-icon.usergroup href="{{ route('entidad.contactos',$entidad) }}"  title="Contactos"/>
                                     <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                                 </div>
                             </div>

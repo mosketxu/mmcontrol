@@ -10,7 +10,7 @@ class Producto extends Model
     use HasFactory;
     protected $table = 'productos';
 
-    protected $fillable=['cliente_id','isbn','referencia','precio','observaciones'];
+    protected $fillable=['cliente_id','isbn','referencia','preciocoste','precioventa','observaciones'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}

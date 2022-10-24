@@ -18,7 +18,8 @@ class CreateProductosTable extends Migration
             $table->foreignId('cliente_id')->nullable()->constrained('entidades');
             $table->string('isbn')->nullable()->unique()->index();
             $table->string('referencia',150)->unique()->index();
-            $table->double('precio', 15, 2)->nullable()->default(0.00);
+            $table->double('preciocoste', 15, 2)->nullable()->default(0.00);
+            $table->double('precioventa', 15, 2)->nullable()->default(0.00);
             $table->string('fichaproducto')->nullable();
             $table->longText('observaciones')->nullable();
             $table->timestamps();

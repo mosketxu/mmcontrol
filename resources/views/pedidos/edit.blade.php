@@ -2,8 +2,8 @@
     <div class="p-2">
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                {{-- @livewire('entidad.ent-contacto',['entidad'=>$entidad]) --}}
-                @livewire('entidad.ent',['entidad'=>$entidad])
+                {{-- @livewire('pedido.pedido') --}}
+                @livewire('pedido.pedido',['pedidoid'=>$pedido->id])
             </div>
         </div>
     </div>

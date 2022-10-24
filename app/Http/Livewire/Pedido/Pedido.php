@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Producto,EntidadContacto,Entidad,User,Pedido as ModelsPedido};
+use App\Models\{Producto,EntidadContacto,Entidad,User,Pedido as ModeloPedido};
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 
 class Pedido extends Component
 {
-    public $pedido;
+    public $pedidoid='';
     public $responsable_id;
     public $cliente_id;
     public $proveedor_id;
@@ -16,28 +17,34 @@ class Pedido extends Component
     public $fechaarchivos;
     public $fechaplotter;
     public $fechaentrega;
-    public $tiradaprevista;
-    public $tiradareal;
-    public $precio;
-    public $preciototal;
-    public $parcial;
-    public $estado;
+    public $tiradaprevista=0;
+    public $tiradareal=0;
+    public $preciocoste=0;
+    public $precioventa=0;
+    public $preciototal=0;
+    public $parcial=0;
+    public $estado=0;
     public $facturado;
-    public $cd_dvd;
     public $distribucion;
-    public $cajas;
+    public $uds_caja;
     public $incidencias;
     public $retardos;
     public $otros;
-    public $fichapedido;
+
     public $mesagge;
+    public $filtroisbn;
+    public $filtroreferencia;
+    public $filtrocliente;
+
+    public $titulo='';
     public $contactos;
+    public $productos;
 
     public $showPDFModal=false;
 
     protected function rules(){
         return [
-            'pedido'=>'required',
+            'pedidoid'=>'required',
             'responsable_id'=>'required',
             'cliente_id'=>'required',
             'proveedor_id'=>'nullable',
@@ -47,75 +54,134 @@ class Pedido extends Component
             'fechaentrega'=>'required|date',
             'tiradaprevista'=>'required|numeric',
             'tiradareal'=>'nullable|numeric',
-            'precio'=>'nullable|numeric',
+            'preciocoste'=>'nullable|numeric',
+            'precioventa'=>'nullable|numeric',
             'preciototal'=>'nullable|numeric',
             'estado'=>'nullable',
             'facturado'=>'nullable',
-            'cd_dvd'=>'nullable',
             'distribucion'=>'nullable',
-            'cajas'=>'nullable',
+            'uds_caja'=>'nullable',
             'incidencias'=>'nullable',
             'retardos'=>'nullable',
             'otros'=>'nullable',
-            'fichapedido'=>'nullable',
         ];
     }
 
     public function messages()
     {
         return [
-            'pedido.required'=>'El número de pedido es necesario',
+            'pedidoid.required'=>'El número de pedido es necesario',
             'responsable_id.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
             'proveedor_id.nullable'=>'',
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
-            'fechapedido.requiered'=>'La fecha del pedido es necesaria',
+            'fechapedido.required'=>'La fecha del pedido es necesaria',
             'fechaarchivos.date'=>'La fecha de los archivos debe ser válida',
             'fechaplotter.date'=>'La fecha del plotter debe ser válida',
             'fechaentrega.date'=>'La fecha de entrega debe ser válida',
-            'fechaentrega.requiered'=>'La fecha de entrega es necesaria',
+            'fechaentrega.required'=>'La fecha de entrega es necesaria',
             'tiradaprevista.required'=>'La tirada prevista es necesaria',
             'tiradaprevista.numeric'=>'El valor de la tirada prevista debe ser numérico',
             'tiradareal.numeric'=>'El valor de la tirada real debe ser numérico',
-            'precio.numeric'=>'El valor del precio real debe ser numérico',
-            'preciototal.numeric'=>'El valor del precio total real debe ser numérico',
+            'preciocoste.numeric'=>'El valor del precio de compra debe ser numérico',
+            'precioventa.numeric'=>'El valor del precio de venta debe ser numérico',
+            'preciototal.numeric'=>'El valor del precio total debe ser numérico',
         ];
     }
 
-    public function mount(Pedido $pedido)
+    public function mount($pedidoid)
     {
-        $this->pedido=$pedido->pedido;
-        $this->responsable_id=$pedido->responsable_id;
-        $this->cliente_id=$pedido->cliente_id;
-        $this->proveedor_id=$pedido->proveedor_id;
-        $this->fechapedido=$pedido->fechapedido;
-        $this->fechaarchivos=$pedido->fechaarchivos;
-        $this->fechaplotter=$pedido->fechaplotter;
-        $this->fechaentrega=$pedido->fechaentrega;
-        $this->tiradaprevista=$pedido->tiradaprevista;
-        $this->tiradareal=$pedido->tiradareal;
-        $this->precio=$pedido->precio;
-        $this->preciototal=$pedido->preciototal;
-        $this->estado=$pedido->estado;
-        $this->facturado=$pedido->facturado;
-        $this->cd_dvd=$pedido->cd_dvd;
-        $this->distribucion=$pedido->distribucion;
-        $this->cajas=$pedido->cajas;
-        $this->incidencias=$pedido->incidencias;
-        $this->retardos=$pedido->retardos;
-        $this->otros=$pedido->otros;
-        $this->fichapedido=$pedido->fichapedido;
+        $this->titulo='Nuevo Pedido:';
+        if ($pedidoid!='') {
+            $pedido=ModeloPedido::find($pedidoid);
+            $this->pedidoid=$pedido->id;
+            $this->responsable_id=$pedido->responsable_id;
+            $this->cliente_id=$pedido->cliente_id;
+            $this->proveedor_id=$pedido->proveedor_id;
+            $this->producto_id=$pedido->producto_id;
+            $this->fechapedido=$pedido->fechapedido;
+            $this->fechaarchivos=$pedido->fechaarchivos;
+            $this->fechaplotter=$pedido->fechaplotter;
+            $this->fechaentrega=$pedido->fechaentrega;
+            $this->tiradaprevista=$pedido->tiradaprevista;
+            $this->tiradareal=$pedido->tiradareal;
+            $this->preciocoste=$pedido->preciocoste;
+            $this->precioventa=$pedido->precioventa;
+            $this->preciototal=$pedido->preciototal;
+            $this->estado=$pedido->estado;
+            $this->facturado=$pedido->facturado;
+            $this->distribucion=$pedido->distribucion;
+            $this->uds_caja=$pedido->uds_caja;
+            $this->incidencias=$pedido->incidencias;
+            $this->retardos=$pedido->retardos;
+            $this->otros=$pedido->otros;
+            $this->titulo='Pedido';
+        }
     }
 
     public function render()
     {
-        // $this->contactos=EntidadContacto::where('entidad_id',$pedido->cliente_id)->orderBy('contacto')->get();
         $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id',['2','3']);
-        $proveedores=$entidades->whereIn('entidadtipo_id',['1','2']);
+        $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
+        $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $responsables=User::role('Milimetrica')->orderBy('name')->get();
-        $productos=Producto::select('id','isbn','referencia');
-        return view('livewire.pedido.pedido',compact(['productos','clientes','proveedores','responsables']));
+        $this->productos=Producto::query()
+            ->with('cliente')
+            ->when($this->filtroisbn!='', function ($query){
+                $query->where('isbn', 'like', '%'.$this->filtroisbn.'%');
+                })
+            ->when($this->filtroreferencia!='', function ($query){
+                $query->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
+                })
+            ->when($this->filtrocliente!='', function ($query){
+                $query->where('cliente_id',$this->filtrocliente);
+                })
+            ->orderBy('referencia','asc')
+            ->get();
+
+            return view('livewire.pedido.pedido',compact(['clientes','proveedores','responsables']));
+
+        }
+
+    public function updatedClienteId(){
+        $this->contactos=EntidadContacto::where('entidad_id', $this->cliente_id)->orderBy('contacto')->get();
+    }
+
+    public function updatedProductoId(){
+        if ($this->producto_id=='') {
+            $this->preciocoste=0;
+        } else {
+            $p=Producto::find($this->producto_id);
+            $this->precioventa=$p->precioventa;
+            $this->preciocoste=$p->preciocoste;
+        }
+    }
+
+    public function updatedPreciocoste(){
+        $this->preciocoste= $this->preciocoste=='' ? $this->preciocoste=0 : $this->preciocoste;
+    }
+
+    public function updatedPrecioventa(){
+        $this->precioventa= $this->precioventa=='' ? $this->precioventa=0 : $this->precioventa;
+        $this->preciototal=$this->precioventa*$this->tiradareal;
+    }
+
+    public function updatedTiradaprevista(){
+        $this->tiradaprevista= $this->tiradaprevista=='' ? $this->tiradaprevista=0 : $this->tiradaprevista;
+    }
+
+    public function updatedTiradareal(){
+        $this->tiradareal= $this->tiradareal=='' ? $this->tiradareal=0 : $this->tiradareal;
+        $this->preciototal=$this->precioventa*$this->tiradareal;
+    }
+
+    public function numpedido(){
+        $anyo= substr($this->fechapedido, 0,4);
+        $anyo2= substr($anyo, -2);
+        // if (!isset($this->pedidoid)){
+            $ped=ModeloPedido::whereYear('fechapedido', $anyo)->max('id') ;
+            return !isset($ped) ? ($anyo2 * 100000 +1) :$ped + 1 ;
+        // }
     }
 
     public function openPDFModal(){
@@ -128,40 +194,51 @@ class Pedido extends Component
 
     public function save()
     {
+        $mensaje="Pedido creado satisfactoriamente";
+        $i="";
+        if ($this->pedidoid!='') {
+            $i=$this->pedidoid;
+            $mensaje="Pedido actualizado satisfactoriamente";
+            $this->validate([
+                'pedidoid'=>[
+                    'required',
+                    Rule::unique('pedidos', 'id')->ignore($this->pedidoid)
+                ],],);
+        }else{
+            $this->pedidoid=$this->numpedido();
+            $i=$this->pedidoid;
+        }
         $this->validate();
-
-        $mensaje="Pedido actualizado satisfactoriamente";
-
-        $presup=Pedido::findOrFail($this->Pedido->id)
-            ->update([
-                'pedido'=>$this->pedido,
-                'responsable_id'=>$this->responsable_id,
-                'cliente_id'=>$this->cliente_id,
-                'proveedor_id'=>$this->proveedor_id,
-                'fechapedido'=>$this->fechapedido,
-                'fechaarchivos'=>$this->fechaarchivos,
-                'fechaplotter'=>$this->fechaplotter,
-                'fechaentrega'=>$this->fechaentrega,
-                'tiradaprevista'=>$this->tiradaprevista,
-                'tiradareal'=>$this->tiradareal,
-                'precio'=>$this->precio,
-                'preciototal'=>$this->preciototal,
-                'estado'=>$this->estado,
-                'facturado'=>$this->facturado,
-                'cd_dvd'=>$this->cd_dvd,
-                'distribucion'=>$this->distribucion,
-                'cajas'=>$this->cajas,
-                'incidencias'=>$this->incidencias,
-                'retardos'=>$this->retardos,
-                'otros'=>$this->otros,
+        $ped=ModeloPedido::updateOrCreate([
+            'id'=>$i
+            ],
+            [
+            'id'=>$this->pedidoid,
+            'responsable_id'=>$this->responsable_id,
+            'cliente_id'=>$this->cliente_id,
+            'proveedor_id'=>$this->proveedor_id == '' ? null : $this->proveedor_id ,
+            'producto_id'=>$this->producto_id,
+            'fechapedido'=>$this->fechapedido,
+            'fechaarchivos'=>$this->fechaarchivos,
+            'fechaplotter'=>$this->fechaplotter,
+            'fechaentrega'=>$this->fechaentrega,
+            'tiradaprevista'=>$this->tiradaprevista,
+            'tiradareal'=>$this->tiradareal,
+            'preciocoste'=>$this->preciocoste,
+            'precioventa'=>$this->precioventa,
+            'preciototal'=>$this->preciototal,
+            'estado'=>$this->estado,
+            'facturado'=>$this->facturado,
+            'distribucion'=>$this->distribucion,
+            'uds_caja'=>$this->uds_caja,
+            'incidencias'=>$this->incidencias,
+            'retardos'=>$this->retardos,
+            'otros'=>$this->otros,
         ]);
 
-        $pedido=Pedido::find($this->pedido->id);
-
-        // $presup->recalculo();
-
+        $this->titulo='Pedido:';
+        $pedido=ModeloPedido::find($ped->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
 
-        // return redirect()->route('presupuesto.edit',$presup);
     }
 }

@@ -34,4 +34,16 @@ class EntidadController extends Controller
         return view('entidad.edit',compact('entidad','entidadtipoId'));
     }
 
+    public function contactos(Entidad $entidad)
+    {
+        return view('entidad.contactos',compact('entidad'));
+    }
+
+    public function createcontacto($contactoId)
+    {
+        $contacto=Entidad::find($contactoId);
+        return view('entidad.createcontacto',compact('contacto'));
+    }
+
+
 }

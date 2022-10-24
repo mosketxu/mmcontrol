@@ -15,12 +15,10 @@ class CreateEntidadContactosTable extends Migration
     {
         Schema::create('entidad_contactos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entidad_id')->constrained('entidades')->onDelete('cascade');
-            $table->string('contacto');
-            $table->string('cargo')->nullable();
-            $table->string('telefono')->nullable();
-            $table->string('movil')->nullable();
-            $table->string('email')->nullable();
+            $table->unsignedBigInteger('entidad_id');
+            $table->unsignedBigInteger('contacto_id');
+            $table->string('departamento', 50)->nullable();
+            $table->string('comentarios')->nullable();
             $table->timestamps();
         });
     }

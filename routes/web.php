@@ -52,13 +52,12 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('users', UserController::class)->except(['create'])->names('users'); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
 
     // Entidades
+    Route::get('/entidad/contactos/{entidad}', [EntidadController::class, 'contactos'])->name('entidad.contactos');
+    Route::get('/entidad/nuevocontacto/{entidad}', [EntidadController::class, 'createcontacto'])->name('entidad.createcontacto');
     Route::get('entidad/{tipo}/tipo', [EntidadController::class,'tipo'])->middleware('can:entidad.index')->name('entidad.tipo'); //
     Route::get('entidad/{entidadtipo_id}/nueva', [EntidadController::class,'nueva'])->name('entidad.nueva');
     Route::resource('entidad', EntidadController::class)->only(['index','create', 'edit']); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
 
-    //Entidades contacto
-    Route::get('entidadcontacto/{entidad}/nuevo', [EntidadContactoController::class,'nuevo'])->name('entidadcontacto.nuevo');
-    Route::resource('entidadcontacto', EntidadContactoController::class)->only(['show','edit','store']);
 
     // Producto
     Route::resource('producto', ProductoController::class);

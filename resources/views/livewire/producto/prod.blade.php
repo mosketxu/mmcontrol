@@ -35,11 +35,11 @@
                     <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                         <div class="w-2/12 form-item">
                             <x-jet-label for="isbn">{{ __('ISBN/Código') }}</x-jet-label>
-                            <input wire:model="producto.isbn" type="text" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
+                            <input wire:model.lazy="producto.isbn" type="text" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
                         </div>
                         <div class="w-10/12 form-item">
                             <x-jet-label for="referencia">{{ __('Título/Referencia') }}</x-jet-label>
-                            <input wire:model.defer="producto.referencia" type="text" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" autofocus/>
+                            <input wire:model.lazy="producto.referencia" type="text" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" autofocus/>
                         </div>
                     </div>
                 </div>
@@ -55,8 +55,12 @@
                             </x-select>
                         </div>
                         <div class="w-full form-item">
-                            <x-jet-label for="precio">{{ __('€ Precio') }}</x-jet-label>
-                            <input  wire:model="producto.precio" type="number" step="any" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                            <x-jet-label for="preciocoste">{{ __('€ Precio Compra') }}</x-jet-label>
+                            <input  wire:model.lazy="producto.preciocoste" type="number" step="any" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                        </div>
+                        <div class="w-full form-item">
+                            <x-jet-label for="precioventa">{{ __('€ Precio Venta') }}</x-jet-label>
+                            <input  wire:model.lazy="producto.precioventa" type="number" step="any" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                     </div>
                 </div>
@@ -74,7 +78,7 @@
                         <div class="w-full form-item">
                             <x-jet-label for="ficheropdf">{{ __('Ficha producto') }}</x-jet-label>
                             <div class="flex">
-                                <input type="file" wire:model="ficheropdf">
+                                <input type="file" wire:model.lazy="ficheropdf">
                                 @if($producto->fichaproducto)
                                     <x-icon.pdf-a wire:click="presentaPDF({{ $producto }})" class="pt-2 ml-2" title="PDF"/>
                                 @endif

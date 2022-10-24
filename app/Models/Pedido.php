@@ -7,16 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Carbon;
 
-
-
 class Pedido extends Model
 {
     use HasFactory;
 
-    protected $dates = ['deleted_at'];
+    public $incrementing = false;
 
-    protected $fillable=['pedido','responsable_id','cliente_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
-                        'tiradaprevista','tiradareal','precio','preciototal','parcial','estado','facturado','cd_dvd','distribucion','cajas','incidencias','retardos','otros','fichapedido'
+    protected $fillable=['id','responsable_id','cliente_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
+                        'tiradaprevista','tiradareal','precio','preciototal','parcial','estado','facturado','distribucion','uds_caja','incidencias','retardos','otros'
                         ];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}

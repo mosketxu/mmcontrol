@@ -14,8 +14,10 @@ class CreatePedidosTable extends Migration
     public function up()
     {
         Schema::create('pedidos', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('pedido')->index();
+            // $table->id();
+            // $table->unsignedBigInteger('id')->primary();
+            $table->bigInteger('id')->unsigned(); // to remove primary key
+            $table->primary('id'); //to add primary key
             $table->foreignId('responsable_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('cliente_id')->constrained('entidades');
             $table->foreignId('proveedor_id')->nullable()->constrained('entidades');
@@ -31,13 +33,11 @@ class CreatePedidosTable extends Migration
             $table->string('parcial')->nullable();
             $table->integer('estado')->default('0');
             $table->boolean('facturado')->default(false);
-            $table->string('cd_dvd')->nullable();
             $table->string('distribucion')->nullable();
-            $table->string('cajas')->nullable();
+            $table->string('uds_caja')->nullable();
             $table->string('incidencias')->nullable();
             $table->string('retardos')->nullable();
             $table->string('otros')->nullable();
-            $table->string('fichapedido')->nullable();
             $table->timestamps();
         });
     }
