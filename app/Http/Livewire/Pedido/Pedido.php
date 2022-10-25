@@ -12,6 +12,7 @@ class Pedido extends Component
     public $responsable_id;
     public $cliente_id;
     public $proveedor_id;
+    public $contacto_id;
     public $producto_id;
     public $fechapedido;
     public $fechaarchivos;
@@ -47,7 +48,9 @@ class Pedido extends Component
             'pedidoid'=>'required',
             'responsable_id'=>'required',
             'cliente_id'=>'required',
+            'contacto_id'=>'nullable',
             'proveedor_id'=>'nullable',
+            'producto_id'=>'required',
             'fechapedido'=>'required|date',
             'fechaarchivos'=>'nullable|date',
             'fechaplotter'=>'nullable|date',
@@ -71,6 +74,7 @@ class Pedido extends Component
     {
         return [
             'pedidoid.required'=>'El número de pedido es necesario',
+            'producto_id.required'=>'Debes elegir un producto',
             'responsable_id.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
             'proveedor_id.nullable'=>'',
@@ -89,14 +93,14 @@ class Pedido extends Component
         ];
     }
 
-    public function mount($pedidoid)
-    {
+    public function mount($pedidoid){
         $this->titulo='Nuevo Pedido:';
         if ($pedidoid!='') {
             $pedido=ModeloPedido::find($pedidoid);
             $this->pedidoid=$pedido->id;
             $this->responsable_id=$pedido->responsable_id;
             $this->cliente_id=$pedido->cliente_id;
+            $this->contacto_id=$pedido->contacto_id;
             $this->proveedor_id=$pedido->proveedor_id;
             $this->producto_id=$pedido->producto_id;
             $this->fechapedido=$pedido->fechapedido;
@@ -116,11 +120,11 @@ class Pedido extends Component
             $this->retardos=$pedido->retardos;
             $this->otros=$pedido->otros;
             $this->titulo='Pedido';
+            if($this->contacto_id) $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         }
     }
 
-    public function render()
-    {
+    public function render(){
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
@@ -144,7 +148,8 @@ class Pedido extends Component
         }
 
     public function updatedClienteId(){
-        $this->contactos=EntidadContacto::where('entidad_id', $this->cliente_id)->orderBy('contacto')->get();
+        $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
+        if(!$this->fechapedido) $this->fechapedido=now()->format('Y-m-d');
     }
 
     public function updatedProductoId(){
@@ -197,7 +202,7 @@ class Pedido extends Component
         $mensaje="Pedido creado satisfactoriamente";
         $i="";
         if ($this->pedidoid!='') {
-            $i=$this->pedidoid;
+    $i=$this->pedidoid;
             $mensaje="Pedido actualizado satisfactoriamente";
             $this->validate([
                 'pedidoid'=>[
@@ -216,6 +221,7 @@ class Pedido extends Component
             'id'=>$this->pedidoid,
             'responsable_id'=>$this->responsable_id,
             'cliente_id'=>$this->cliente_id,
+            'contacto_id'=>$this->contacto_id,
             'proveedor_id'=>$this->proveedor_id == '' ? null : $this->proveedor_id ,
             'producto_id'=>$this->producto_id,
             'fechapedido'=>$this->fechapedido,
@@ -228,7 +234,7 @@ class Pedido extends Component
             'precioventa'=>$this->precioventa,
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
-            'facturado'=>$this->facturado,
+            'facturado'=>$this->facturado == '' ? '0' : $this->facturado,
             'distribucion'=>$this->distribucion,
             'uds_caja'=>$this->uds_caja,
             'incidencias'=>$this->incidencias,

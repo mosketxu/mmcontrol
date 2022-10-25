@@ -21,14 +21,11 @@ class Entidad extends Model
     public function pais(){ return $this->belongsTo(Pais::class);}
     public function provincia(){return $this->belongsTo(Provincia::class);}
     public function metodopago(){return $this->belongsTo(MetodoPago::class);}
+    public function responsable(){return $this->belongsTo(User::class,'responsable_id')->withDefault(['name'=>'-']);}
     public function contactos(){return $this->hasMany(EntidadContacto::class)->withDefault(['contacto'=>'-']);}
     public function entidadtipo(){return $this->belongsTo(EntidadTipo::class);}
-    // public function pedidos(){return $this->hasMany(Pedido::class);}
+    public function productos(){return $this->hasMany(Producto::class);}
     // public function presupuestos(){return $this->hasMany(Presupuesto::class);}
-    // public function presuplindetalleproveedor(){return $this->hasMany(PresupuestoLineaDetalle::class);}
-    // public function productos(){return $this->hasMany(Producto::class);}
-    // public function movimientos(){return $this->belongsTo(StockMovimiento::class);}
-    public function responsable(){return $this->belongsTo(User::class,'responsable_id')->withDefault(['name'=>'-']);}
 
 
     public function scopeFiltrosEntidad(Builder $query, $search, $filtroresponsable, $entidadtipo_id,$fini,$ffin) : Builder
@@ -37,10 +34,14 @@ class Entidad extends Model
         ->when($filtroresponsable!='', function ($query) use($filtroresponsable){
             $query->where('responsable_id',$filtroresponsable);
         })
+        //  para el valor 0 no pongo condicion, salen todos
         ->when($entidadtipo_id=='1', function ($query){
-            $query->whereIn('entidadtipo_id',[1,3]);
+            $query->whereIn('entidadtipo_id',[1,2]);
         })
         ->when($entidadtipo_id=='2', function ($query){
+            $query->whereIn('entidadtipo_id',[1,2,3]);
+        })
+        ->when($entidadtipo_id=='3', function ($query){
             $query->whereIn('entidadtipo_id',[2,3]);
         })
         ->when($entidadtipo_id=='4', function ($query){

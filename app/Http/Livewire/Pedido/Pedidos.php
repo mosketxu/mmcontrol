@@ -127,6 +127,12 @@ class Pedidos extends Component
     public function updatingFiltroestado(){$this->resetPage();}
     public function updatingFiltrofacturado(){$this->resetPage();}
 
+    public function changeValor(Pedido $pedido,$campo,$valor)
+    {
+        $pedido->update([$campo=>$valor]);
+        $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
+    }
+
     public function create(){
         $this->resetInputFields();
         $this->fechapedido=now()->format('Y-m-d');
@@ -272,15 +278,6 @@ class Pedidos extends Component
         $this->openNewModal();
     }
 
-    public function numpedido()
-    {
-        dd('a');
-        $anyo= Carbon::parse($this->fechapedido)->year;
-        $anyo2= Carbon::parse($this->fechapedido)->format('y');
-        $p=Pedido::withTrashed()->whereYear('fechapedido', $anyo)->max('id') ;
-        $this->pedido ? $p + 1 : ($anyo2 * 100000 +1) ;
-        dd($this->pedido);
-    }
 
 
     public function getRowsQueryProperty(){
@@ -288,18 +285,28 @@ class Pedidos extends Component
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->join('productos','pedidos.producto_id','=','productos.id')
             ->select('pedidos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia')
-            // ->when($this->entidad->id!='', function ($query){
-            //     $query->where('entidad_id',$this->entidad->id);
-            //     })
-            // ->when($this->filtroclipro!='', function ($query){
-            //     $query->where('entidad_id',$this->filtroclipro);
-            //     })
-            // ->when($this->filtrosolicitante!='', function ($query){
-            //     $query->where('solicitante_id',$this->filtrosolicitante);
-            //     })
-            // ->when($this->filtroestado!='', function ($query){
-            //     $query->where('pedidos.estado',$this->filtroestado);
-            // })
+            ->search('pedidos.id',$this->search)
+            ->when($this->filtroreferencia!='', function ($query){
+                $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
+            })
+            ->when($this->filtroisbn!='', function ($query){
+                $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
+            })
+            ->when($this->filtroresponsable!='', function ($query){
+                $query->where('pedidos.responsable_id',$this->filtroresponsable);
+            })
+            ->when($this->filtrocliente!='', function ($query){
+                $query->where('pedidos.cliente_id',$this->filtrocliente);
+                })
+            ->when($this->filtroproveedor!='', function ($query){
+                $query->where('pedidos.proveedor_id',$this->filtroproveedor);
+                })
+            ->when($this->filtroestado!='', function ($query){
+                $query->where('pedidos.estado',$this->filtroestado);
+            })
+            ->when($this->filtrofacturado!='', function ($query){
+                $query->where('pedidos.facturado',$this->filtrofacturado);
+            })
             // ->when(Auth::user()->hasRole('Comercial'),function ($query){
             //     $query->when(!Auth::user()->hasRole('Admin'),function ($q){
             //     // $q->where('solicitante_id',Auth::user()->id);});
@@ -312,9 +319,6 @@ class Pedidos extends Component
 
             ->searchYear('fechapedido',$this->filtroanyo)
             ->searchMes('fechapedido',$this->filtromes)
-            ->search('pedidos.referencia',$this->filtroreferencia)
-            ->search('pedidos.isbn',$this->filtroisbn)
-            ->search('pedidos.id',$this->search)
             ->orderBy('pedidos.fechapedido','desc')
             ->orderBy('pedidos.id','desc');
 

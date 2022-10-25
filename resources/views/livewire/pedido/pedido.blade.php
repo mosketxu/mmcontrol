@@ -41,7 +41,7 @@
                                         @if (isset($contactos))
                                             <option value="">-- Selecciona contacto --</option>
                                             @foreach ($contactos as $contacto)
-                                            <option value="{{ $contacto->id }}">{{ $contacto->entidad->name }}</option>
+                                            <option value="{{ $contacto->id }}">{{ $contacto->entidadcontacto->entidad }}</option>
                                             @endforeach
                                         @else
                                             <option value="">-- Selecciona primero un cliente --</option>

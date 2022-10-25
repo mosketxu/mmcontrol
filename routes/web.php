@@ -29,19 +29,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
         } else {
             return redirect()->route('pedido.index');
         }
-
-        // return redirect()->route('entidad.tipo','2');
     })->name('dashboard');
 
-    // Route::get('/pedidos', function () {
-    //     if (Auth::user()->hasRole('Usuario')) {
-    //         return redirect()->route('dashboard');
-    //     } elseif (Auth::user()->hasRole('Gestion')) {
-    //         return redirect()->route('pedidos.index');
-    //     } else {
-    //         return redirect()->route('pedidos.index');
-    //     }
-    // })->name('pedidos');
 
     //Seguridad
     Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:seguridad.index')->name('seguridad');

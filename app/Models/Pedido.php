@@ -13,26 +13,36 @@ class Pedido extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','responsable_id','cliente_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
+    protected $fillable=['id','responsable_id','cliente_id','contacto_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
                         'tiradaprevista','tiradareal','precio','preciototal','parcial','estado','facturado','distribucion','uds_caja','incidencias','retardos','otros'
                         ];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
     public function responsable(){return $this->belongsTo(User::class,'responsable_id','id')->withDefault(['name'=>'-']);}
+    public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
+
+    public function parciales(){return $this->hasMany(Pedido::class,'parcial_id','id');}
 
     public function getFechapedAttribute(){return Carbon::parse($this->fechapedido)->format('d-m-Y');}
     public function getFechaarchAttribute(){return Carbon::parse($this->fechaarchivos)->format('d-m-Y');}
     public function getFechaplotdAttribute(){return Carbon::parse($this->fechaplotter)->format('d-m-Y');}
     public function getFechaentredAttribute(){return Carbon::parse($this->fechaentrega)->format('d-m-Y');}
 
-    public function getStatusColorAttribute()
-    {
+    public function getStatusColorAttribute(){
         return [
             '0'=>['gray','En curso'],
             '1'=>['green','Finalizado'],
             '2'=>['red','Anulado']
         ][$this->estado] ?? ['gray',''];
+    }
+
+    public function getFacturadoColorAttribute(){
+        return [
+            '0'=>['red','No'],
+            '1'=>['green','Sí'],
+            '2'=>['yellow','Parcial']
+        ][$this->facturado] ?? ['gray',''];
     }
 
 

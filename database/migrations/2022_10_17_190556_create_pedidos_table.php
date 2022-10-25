@@ -20,6 +20,7 @@ class CreatePedidosTable extends Migration
             $table->primary('id'); //to add primary key
             $table->foreignId('responsable_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('cliente_id')->constrained('entidades');
+            $table->foreignId('contacto_id')->nullable()->constrained('entidades');
             $table->foreignId('proveedor_id')->nullable()->constrained('entidades');
             $table->foreignId('producto_id')->constrained('productos');
             $table->date('fechapedido');
