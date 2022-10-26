@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PedidoParcial extends Model
+class PedidoFacturacion extends Model
 {
     use HasFactory;
 
-    protected $table = 'pedido_parciales';
+    protected $table = 'pedido_facturaciones';
 
     protected $fillable = ['pedido_id','fecha','cantidad','importe','comentario'];
 
@@ -17,5 +17,4 @@ class PedidoParcial extends Model
     {
         return $this->belongsTo(Pedido::class,'pedido_id');
     }
-
 }

@@ -31,18 +31,18 @@ class Pedido extends Model
 
     public function getStatusColorAttribute(){
         return [
-            '0'=>['gray','En curso'],
-            '1'=>['green','Finalizado'],
-            '2'=>['red','Anulado']
-        ][$this->estado] ?? ['gray',''];
+            '0'=>['gray-200','En curso'],
+            '1'=>['green-500','Finalizado'],
+            '2'=>['red-500','Anulado']
+        ][$this->estado] ?? ['gray-100',''];
     }
 
     public function getFacturadoColorAttribute(){
         return [
-            '0'=>['red','No'],
-            '1'=>['green','Sí'],
-            '2'=>['yellow','Parcial']
-        ][$this->facturado] ?? ['gray',''];
+            '0'=>['red-500','No'],
+            '1'=>['green-500','Sí'],
+            '2'=>['yellow-400','Parcial']
+        ][$this->facturado] ?? ['gray-100',''];
     }
 
 

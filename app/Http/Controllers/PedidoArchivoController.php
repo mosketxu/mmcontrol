@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PedidoParcial;
-use App\Http\Requests\StorePedidoParcialRequest;
-use App\Http\Requests\UpdatePedidoParcialRequest;
+use App\Models\PedidoArchivo;
+use App\Http\Requests\StorePedidoArchivoRequest;
+use App\Http\Requests\UpdatePedidoArchivoRequest;
 
-class PedidoParcialController extends Controller
+class PedidoArchivoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class PedidoParcialController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePedidoParcialRequest  $request
+     * @param  \App\Http\Requests\StorePedidoArchivoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePedidoParcialRequest $request)
+    public function store(StorePedidoArchivoRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class PedidoParcialController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PedidoParcial  $pedidoParcial
+     * @param  \App\Models\PedidoArchivo  $pedidoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function show(PedidoParcial $pedidoParcial)
+    public function show(PedidoArchivo $pedidoArchivo)
     {
         //
     }
@@ -53,10 +53,10 @@ class PedidoParcialController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\PedidoParcial  $pedidoParcial
+     * @param  \App\Models\PedidoArchivo  $pedidoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function edit(PedidoParcial $pedidoParcial)
+    public function edit(PedidoArchivo $pedidoArchivo)
     {
         //
     }
@@ -64,11 +64,11 @@ class PedidoParcialController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePedidoParcialRequest  $request
-     * @param  \App\Models\PedidoParcial  $pedidoParcial
+     * @param  \App\Http\Requests\UpdatePedidoArchivoRequest  $request
+     * @param  \App\Models\PedidoArchivo  $pedidoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePedidoParcialRequest $request, PedidoParcial $pedidoParcial)
+    public function update(UpdatePedidoArchivoRequest $request, PedidoArchivo $pedidoArchivo)
     {
         //
     }
@@ -76,10 +76,10 @@ class PedidoParcialController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PedidoParcial  $pedidoParcial
+     * @param  \App\Models\PedidoArchivo  $pedidoArchivo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PedidoParcial $pedidoParcial)
+    public function destroy(PedidoArchivo $pedidoArchivo)
     {
         //
     }

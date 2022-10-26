@@ -3,17 +3,9 @@
     <div class="h-full p-1 mx-2">
         <h1 class="text-2xl font-semibold text-gray-900">Pedidos</h1>
         <div class="py-1 space-y-4">
-            @if (session()->has('message'))
-                <div id="alert" class="relative px-6 py-2 mb-2 text-white bg-red-200 border-red-500 rounded border-1">
-                    <span class="inline-block mx-8 align-middle">
-                        {{ session('message') }}
-                    </span>
-                    <button class="absolute top-0 right-0 mt-2 mr-6 text-2xl font-semibold leading-none bg-transparent outline-none focus:outline-none" onclick="document.getElementById('alert').remove();">
-                        <span>×</span>
-                    </button>
-                </div>
-            @endif
-            <x-jet-validation-errors></x-jet-validation-errors>
+            <div class="">
+                @include('errores')
+            </div>
             <div class="">
                 @include('pedidos.pedidosfilters')
             </div>
@@ -33,19 +25,22 @@
                         <div class="w-2/12 font-light text-left" >
                             <div class=""><p> {{ __('ISBN') }}</p><p class="italic text-green-600"> {{ __('Referencia') }}</p></div>
                         </div>
-                        <div class="w-2/12 font-light text-left" >
+                        <div class="w-1/12 font-light text-left" >
                             <div class=""><p> {{ __('F.Pedido') }}</p><p class="italic text-green-600"> {{ __('F.Entrega') }}</p></div>
                         </div>
-                        <div class="w-2/12 font-light text-left" >
+                        <div class="w-1/12 font-light text-left" >
                             <div class=""><p> {{ __('F.Archivos') }}</p><p class="italic text-green-600"> {{ __('F.Plotters') }}</p></div>
                         </div>
                         <div class="w-1/12 font-light text-left" >
+                            <div class=""><p> {{ __('Proveedor') }}</p><p class="italic text-green-600"> {{ __('Presupuesto') }}</p></div>
+                        </div>
+                        <div class="w-1/12 font-light text-right pr-3 mr-1" >
                             <div class=""><p> {{ __('Q.Prevista') }}</p><p class="italic text-green-600"> {{ __('Q.Total') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-left" >
+                        <div class="w-1/12 font-light text-right pr-3 mr-1" >
                             <div class=""><p> {{ __('€ Ud.') }}</p><p class="italic text-green-600"> {{ __('€ Total') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-left" >
+                        <div class="w-1/12 font-light text-center" >
                             <div class=""><p> {{ __('Estado') }}</p><p class="italic text-green-600"> {{ __('Facturado') }}</p></div>
                         </div>
                         <div class="w-1/12 font-light text-left" ></div>
@@ -86,13 +81,13 @@
                                 <input type="text" class="w-full p-1 text-sm italic font-thin text-green-600 border-0 rounded-md"
                                         value="{{ $pedido->referencia }}"  readonly/>
                             </div>
-                            <div class="flex-col w-2/12 text-left">
+                            <div class="flex-col w-1/12 text-left">
                                 <input type="date" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
                                     value="{{ $pedido->fechapedido }}"  readonly/>
                                 <input type="date" class="w-full p-1 text-sm italic font-thin text-green-600 border-0 rounded-md"
                                     value="{{ $pedido->fechaentrega }}"  readonly/>
                             </div>
-                            <div class="flex-col w-2/12 text-left">
+                            <div class="flex-col w-1/12 text-left">
                                 <input type="date" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
                                     value="{{ $pedido->fechaarchivos }}"  readonly/>
                                 <input type="date" class="w-full p-1 text-sm italic font-thin text-green-600 border-0 rounded-md"
@@ -100,25 +95,30 @@
                             </div>
                             <div class="flex-col w-1/12 text-left">
                                 <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
+                                    value="{{ $pedido->proveedor->entidad }}"  readonly/>
+                                    <a class="text-blue-500 underline" href="">Presupuesto</a>
+                            </div>
+                            <div class="flex-col w-1/12 text-right pr-3 mr-1">
+                                <input type="text" class="w-full text-right p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
                                     value="{{ $pedido->tiradaprevista }}"  readonly/>
-                                <input type="text" class="w-full p-1 text-sm italic font-thin text-green-600 border-0 rounded-md"
+                                <input type="text" class="w-full p-1 text-right text-sm italic font-thin text-green-600 border-0 rounded-md"
                                     value="{{ $pedido->tiradareal }}"  readonly/>
                             </div>
-                            <div class="flex-col w-1/12 text-left">
-                                <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
+                            <div class="flex-col w-1/12 text-right pr-3 mr-1">
+                                <input type="text" class="w-full text-right p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
                                     value="{{ $pedido->precio }}"  readonly/>
-                                <input type="text" class="w-full p-1 text-sm italic font-thin text-green-600 border-0 rounded-md"
+                                <input type="text" class="w-full p-1 text-right text-sm italic font-thin text-green-600 border-0 rounded-md"
                                     value="{{ $pedido->preciototal }}"  readonly/>
                             </div>
-                            <div class="flex-col w-1/12 text-left">
+                            <div class="flex-col w-1/12 text-center">
                                 <select wire:change="changeValor({{ $pedido }},'estado',$event.target.value)"
-                                    class="w-full py-0 mt-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $pedido->status_color[0] }}-100 border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                                    class="w-full text-center py-0 mt-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $pedido->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                                     <option value="0" {{ $pedido->estado== '0'? 'selected' : '' }}>En curso</option>
                                     <option value="1" {{ $pedido->estado== '1'? 'selected' : '' }}>Finalizado</option>
                                     <option value="2" {{ $pedido->estado== '2'? 'selected' : '' }}>Cancelado</option>
                                 </select>
                                 <select wire:change="changeValor({{ $pedido }},'facturado',$event.target.value)"
-                                    class="w-full py-0 mt-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $pedido->facturado_color[0] }}-100 border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                                    class="w-full text-center py-0 mt-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $pedido->facturado_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                                     {{-- class="w-full py-0 mt-1 text-xs text-gray-600 placeholder-gray-300 bg-yellow-100 border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"> --}}
                                     <option value="0" {{ $pedido->facturado== '0'? 'selected' : '' }}>No</option>
                                     <option value="1" {{ $pedido->facturado== '1'? 'selected' : '' }}>Sí</option>

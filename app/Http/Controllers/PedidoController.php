@@ -9,7 +9,7 @@ class PedidoController extends Controller
     public function __construct()
     {
         $this->middleware('can:pedido.index');
-        $this->middleware('can:pedido.edit')->only('edit','update','composicion');
+        $this->middleware('can:pedido.edit')->only('edit','update','parcial');
     }
 
     /**
@@ -42,5 +42,20 @@ class PedidoController extends Controller
     public function edit(Pedido $pedido)
     {
         return view('pedidos.edit',compact('pedido'));
+    }
+
+    public function parciales(Pedido $pedido)
+    {
+        return view('pedidos.parciales',compact('pedido'));
+    }
+
+    public function facturaciones(Pedido $pedido)
+    {
+        return view('pedidos.facturaciones',compact('pedido'));
+    }
+
+    public function archivos(Pedido $pedido)
+    {
+        return view('pedidos.archivos',compact('pedido'));
     }
 }

@@ -2,10 +2,16 @@
     {{-- @livewire('menu',['pedido'=>$pedido],key($pedido->id)) --}}
 
     <div class="h-full p-1 mx-2">
-        <div class=""></div>
-        <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }}
-            <input  class="text-gray-500 border border-blue-300 rounded shadow-md" wire:model.lazy="pedidoid" type="number" readonly/>
-        </h1>
+        <div class=" flex space-x-3">
+            <div class="">
+                <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }}
+                    <input  class="w-28 text-gray-500 border border-blue-300 rounded shadow-md" wire:model.lazy="pedidoid" type="number" readonly/>
+                </h1>
+            </div>
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.parciales',$pedidoid)}}'">{{ __('Parciales') }}</x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.facturaciones',$pedidoid)}}'">{{ __('facturaciones') }}</x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.archivos',$pedidoid)}}'">{{ __('archivos') }}</x-jet-secondary-button>
+        </div>
         <div class="py-1 space-y-4">
             <div class="">
                 @include('errores')
@@ -210,6 +216,7 @@
                     </div>
                 </form>
             </div>
-            {{-- </div> --}}
+        </div>
+    </div>
 </div>
 

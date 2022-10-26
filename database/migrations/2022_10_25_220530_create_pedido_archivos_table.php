@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePedidoParcialesTable extends Migration
+class CreatePedidoArchivosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePedidoParcialesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pedido_parciales', function (Blueprint $table) {
+        Schema::create('pedido_archivos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pedido_id');
-            $table->date('fecha')->nullable();
-            $table->bigInteger('cantidad')->nullable()->default(0);
-            $table->bigInteger('importe')->nullable()->default(0);
+    $table->string('archivo');
             $table->string('comentario')->nullable();
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ class CreatePedidoParcialesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedido_parciales');
+        Schema::dropIfExists('pedido_archivos');
     }
 }
