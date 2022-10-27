@@ -18,7 +18,7 @@ class PedidoParcial extends Component
     public $valorcampo2='0';
     public $valorcampo3='0';
     public $valorcampo4='';
-    public $valorimg='';
+    public $valorcampoimg;
     public $campofecha='fecha';
     public $campo2='cantidad';
     public $campo3='importe';

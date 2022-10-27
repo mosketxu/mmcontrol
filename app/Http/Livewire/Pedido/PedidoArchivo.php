@@ -3,25 +3,30 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\PedidoArchivo as ModelsPedidoArchivo;
+use Illuminate\Support\Facades\Storage;
+use Livewire\WithFileUploads;
+
 use Livewire\Component;
 
 class PedidoArchivo extends Component
 {
+    use WithFileUploads;
+
     public $titulo='Archivos';
     public $pedidoid;
     public $titcampofecha='';
     public $titcampo2='';
     public $titcampo3='';
     public $titcampo4='Comentario';
-    public $titcampoimg='Ficheros';
+    public $titcampoimg='Fichero';
     public $valorcampofecha='';
     public $valorcampo2='';
     public $valorcampo3='';
     public $valorcampo4='';
-    public $valorimg='';
+    public $valorcampoimg;
     public $campofecha='';
     public $campo2='';
-    public $campo3='';
+    public $campo3='nombrearchivooriginal';
     public $campo4='comentario';
     public $campoimg='archivo';
     public $campofechavisible=0;
@@ -29,6 +34,11 @@ class PedidoArchivo extends Component
     public $campo3visible=0;
     public $campo4visible=1;
     public $campoimgvisible=1;
+    public $campofechadisabled='';
+    public $campo2disabled='';
+    public $campo3disabled='disabled';
+    public $campo4disabled='';
+    public $campoimgdisabled='';
     public $editarvisible=0;
     public $search='';
 
@@ -39,7 +49,7 @@ class PedidoArchivo extends Component
         return [
             // 'valorcampofecha'=>'required||date',
             // 'valorcampo2'=>'nullable',
-            // 'valorcampo3'=>'nullable',
+            'valorcampo3'=>'nullable',
             'valorcampo4'=>'required',
             'valorcampoimg'=>'required',
         ];
@@ -57,9 +67,9 @@ public function render()
 {
     $valores=ModelsPedidoArchivo::query()
     ->search('comentario', $this->search)
-    ->select('id', 'comentario as valorcampo4', 'archivo as valorcampoimg')
+    ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
     ->orderBy('comentario')
-    ->get();
+    ->paginate(10);
 
     return view('livewire.auxiliarfechacard', compact('valores'));
 }
@@ -72,24 +82,48 @@ public function render()
         $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
     }
 
+    public function updatedValorcampoimg()
+    {
+        $this->validate(['valorcampoimg'=>'file|max:5000']);
+    }
+
+    public function presentaPDF($pedidoarchivoid){
+        $parchivo=ModelsPedidoArchivo::find($pedidoarchivoid);
+        $existe=Storage::disk('archivospedido')->exists($parchivo->archivo);
+        // dd($this->pedidoid.'/'.$pedidoarchivoid->id);
+        if ($existe)
+            return Storage::disk('archivospedido')->download($parchivo->archivo);
+        else{
+            $this->dispatchBrowserEvent('notifyred', 'Ha habido un problema con el fichero');
+        }
+    }
+
     public function save()
     {
         $this->validate();
-        ModelsPedidoArchivo::create([
+        $filename="";
+        $extension="";
+
+$pedidoarchivo=ModelsPedidoArchivo::create([
             'pedido_id'=>$this->pedidoid,
             'comentario'=>$this->valorcampo4,
+            'nombrearchivooriginal'=>$this->valorcampoimg->getClientOriginalName(),
+            'archivo'=>'',
         ]);
+
+        if($this->campoimgvisible=='1'){
+            if ($this->valorcampoimg) {
+                $nombre=$this->pedidoid.'/'.$pedidoarchivo->id.'.'.$this->valorcampoimg->extension();
+                $filename=$this->valorcampoimg->storeAs('/', $nombre, 'archivospedido');
+                $pedidoarchivo->archivo=$nombre;
+                $pedidoarchivo->save();
+            }
+        }
+
 
         $this->dispatchBrowserEvent('notify', 'Archivo añadido con éxito');
 
-        $this->valorcampo4='';
-        $this->valorcampoimg='';
-        $this->campofechavisible=1;
-        $this->campo2visible=1;
-        $this->campo3visible=1;
-        $this->campo4visible=1;
-        $this->campoimgvisible=0;
-        $this->emit('refresh');
+        return redirect()->route('pedido.archivos',$this->pedidoid);
     }
 
     public function delete($valorId)

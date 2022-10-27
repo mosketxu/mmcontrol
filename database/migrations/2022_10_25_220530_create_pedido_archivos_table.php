@@ -16,7 +16,8 @@ class CreatePedidoArchivosTable extends Migration
         Schema::create('pedido_archivos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pedido_id');
-    $table->string('archivo');
+            $table->string('nombrearchivooriginal');
+            $table->string('archivo');
             $table->string('comentario')->nullable();
             $table->timestamps();
         });

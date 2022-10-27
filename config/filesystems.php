@@ -41,6 +41,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'archivospedido' => [
+            'driver' => 'local',
+            'root' => storage_path('app/archivospedido'),
+            'url' => env('APP_URL').'/archivospedido',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

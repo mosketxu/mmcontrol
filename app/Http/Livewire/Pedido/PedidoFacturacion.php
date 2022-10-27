@@ -18,7 +18,7 @@ class PedidoFacturacion extends Component
     public $valorcampo2='0';
     public $valorcampo3='0';
     public $valorcampo4='';
-    public $valorimg='';
+    public $valorcampoimg='';
     public $campofecha='fecha';
     public $campo2='cantidad';
     public $campo3='importe';
@@ -63,7 +63,7 @@ class PedidoFacturacion extends Component
         ->search('comentario',$this->search)
         ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
         ->orderBy('fecha')
-        ->get();
+        ->paginate(10);
 
         return view('livewire.auxiliarfechacard',compact('valores'));
     }

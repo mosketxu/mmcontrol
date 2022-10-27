@@ -9,7 +9,7 @@ class PedidoArchivo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['pedido_id','archivo','comentario'];
+    protected $fillable = ['pedido_id','nombrearchivooriginal','archivo','comentario'];
 
     public function pedido()
     {
