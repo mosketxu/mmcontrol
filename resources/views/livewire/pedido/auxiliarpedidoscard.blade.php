@@ -142,6 +142,10 @@
         </div>
     </div>
     <div class="m-2">
-        <x-jet-secondary-button  onclick="location.href = '{{route('pedido.edit',$pedidoid)}}'">{{ __('Volver') }}</x-jet-secondary-button>
+        @if($ruta=='i')
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+        @else
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.edit',$pedidoid)}}'">{{ __('Volver') }}</x-jet-secondary-button>
+        @endif
     </div>
 </div>

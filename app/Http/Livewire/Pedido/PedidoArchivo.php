@@ -13,6 +13,7 @@ class PedidoArchivo extends Component
     use WithFileUploads;
 
     public $titulo='Archivos';
+    public $ruta;
     public $pedidoid;
     public $titcampofecha='';
     public $titcampo2='';
@@ -63,16 +64,24 @@ class PedidoArchivo extends Component
         ];
     }
 
-public function render()
-{
-    $valores=ModelsPedidoArchivo::query()
-    ->search('comentario', $this->search)
-    ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
-    ->orderBy('comentario')
-    ->paginate(10);
+    // public function mount($ruta)
+    // {
+    //     if($ruta='i') $this->ruta='pedidos.index';
+    //     elseif($ruta='e') $this->ruta='pedidos.create';
+    //     elseif($ruta='n') $this->ruta='pedidos.edit';
+    //     else $this->ruta='pedidos.index';
+    // }
 
-    return view('livewire.auxiliarfechacard', compact('valores'));
-}
+    public function render()
+    {
+        $valores=ModelsPedidoArchivo::query()
+        ->search('comentario', $this->search)
+        ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
+        ->orderBy('comentario')
+        ->paginate(10);
+
+        return view('livewire.pedido.auxiliarpedidoscard', compact('valores'));
+    }
 
     public function changeCampo(ModelsPedidoArchivo $valor, $campo, $valorcampo)
     {

@@ -44,18 +44,18 @@ class PedidoController extends Controller
         return view('pedidos.edit',compact('pedido'));
     }
 
-    public function parciales(Pedido $pedido)
+    public function parciales(Pedido $pedido, $ruta)
     {
-        return view('pedidos.parciales',compact('pedido'));
+    return view('pedidos.parciales',compact('pedido','ruta'));
     }
 
-    public function facturaciones(Pedido $pedido)
+    public function facturaciones(Pedido $pedido, $ruta)
     {
-        return view('pedidos.facturaciones',compact('pedido'));
+        return view('pedidos.facturaciones',compact('pedido','ruta'));
     }
 
-    public function archivos(Pedido $pedido)
+    public function archivos(Pedido $pedido, $ruta)
     {
-        return view('pedidos.archivos',compact('pedido'));
+        return view('pedidos.archivos',compact('pedido','ruta'));
     }
 }

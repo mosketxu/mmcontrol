@@ -8,7 +8,8 @@ use Livewire\Component;
 class PedidoParcial extends Component
 {
     public $titulo='Entregas Parciales del pedido:';
-    PUBLIC $pedidoid;
+    public $ruta;
+    public $pedidoid;
     public $titcampofecha='Fecha';
     public $titcampo2='Cantidad';
     public $titcampo3='Importe';
@@ -29,6 +30,11 @@ class PedidoParcial extends Component
     public $campo3visible=1;
     public $campo4visible=1;
     public $campoimgvisible=0;
+    public $campofechadisabled='';
+    public $campo2disabled='';
+    public $campo3disabled='disabled';
+    public $campo4disabled='';
+    public $campoimgdisabled='';
     public $editarvisible=0;
     public $search='';
 
@@ -65,7 +71,7 @@ class PedidoParcial extends Component
         ->orderBy('fecha')
         ->paginate(10);
 
-        return view('livewire.auxiliarfechacard',compact('valores'));
+        return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));
     }
 
     public function changeCampo(ModelsPedidoParcial $valor,$campo,$valorcampo)

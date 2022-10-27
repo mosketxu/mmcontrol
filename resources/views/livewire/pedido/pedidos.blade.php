@@ -34,16 +34,16 @@
                         <div class="w-1/12 font-light text-left" >
                             <div class=""><p> {{ __('Proveedor') }}</p><p class="italic text-green-600"> {{ __('Presupuesto') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-right pr-3 mr-1" >
+                        <div class="w-1/12 pr-3 mr-1 font-light text-right" >
                             <div class=""><p> {{ __('Q.Prevista') }}</p><p class="italic text-green-600"> {{ __('Q.Total') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-right pr-3 mr-1" >
+                        <div class="w-1/12 pr-3 mr-1 font-light text-right" >
                             <div class=""><p> {{ __('€ Ud.') }}</p><p class="italic text-green-600"> {{ __('€ Total') }}</p></div>
                         </div>
                         <div class="w-1/12 font-light text-center" >
                             <div class=""><p> {{ __('Estado') }}</p><p class="italic text-green-600"> {{ __('Facturado') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-left" ></div>
+                        <div class="w-2/12 font-light text-left" ></div>
                     </div>
                     <div>
                         @if($selectPage)
@@ -98,16 +98,16 @@
                                     value="{{ $pedido->proveedor->entidad }}"  readonly/>
                                     <a class="text-blue-500 underline" href="">Presupuesto</a>
                             </div>
-                            <div class="flex-col w-1/12 text-right pr-3 mr-1">
-                                <input type="text" class="w-full text-right p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
+                            <div class="flex-col w-1/12 pr-3 mr-1 text-right">
+                                <input type="text" class="w-full p-1 text-sm font-thin text-right text-gray-500 border-0 rounded-md"
                                     value="{{ $pedido->tiradaprevista }}"  readonly/>
-                                <input type="text" class="w-full p-1 text-right text-sm italic font-thin text-green-600 border-0 rounded-md"
+                                <input type="text" class="w-full p-1 text-sm italic font-thin text-right text-green-600 border-0 rounded-md"
                                     value="{{ $pedido->tiradareal }}"  readonly/>
                             </div>
-                            <div class="flex-col w-1/12 text-right pr-3 mr-1">
-                                <input type="text" class="w-full text-right p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
+                            <div class="flex-col w-1/12 pr-3 mr-1 text-right">
+                                <input type="text" class="w-full p-1 text-sm font-thin text-right text-gray-500 border-0 rounded-md"
                                     value="{{ $pedido->precio }}"  readonly/>
-                                <input type="text" class="w-full p-1 text-right text-sm italic font-thin text-green-600 border-0 rounded-md"
+                                <input type="text" class="w-full p-1 text-sm italic font-thin text-right text-green-600 border-0 rounded-md"
                                     value="{{ $pedido->preciototal }}"  readonly/>
                             </div>
                             <div class="flex-col w-1/12 text-center">
@@ -125,9 +125,12 @@
                                     <option value="2" {{ $pedido->facturado== '2'? 'selected' : '' }}>Parcial</option>
                                 </select>
                             </div>
-                            <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
+                            <div class="flex flex-row-reverse w-2/12 pr-2 mt-2">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
-                                    <x-icon.edit-a href="{{ route('pedido.edit',$pedido) }}"  title="Editar"/>
+                                <x-icon.edit-a href="{{ route('pedido.edit',$pedido) }}"  title="Editar"/>
+                                <x-icon.cubes-a class="w-5 text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Parciales"/>
+                                <x-icon.euro-a class="w-5 text-orange-500 hover:text-orange-700 " onclick="location.href = '{{route('pedido.facturaciones',[$pedido->id,'i'])}}'" title="Facturaciones"/>
+                                <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
                             </div>
                         </div>
                         @empty

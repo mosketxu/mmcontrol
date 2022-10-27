@@ -52,9 +52,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('producto', ProductoController::class);
 
     //Pedidos
-    Route::get('/pedido/{pedido}/parciales', [PedidoController::class, 'parciales'])->name('pedido.parciales');
-    Route::get('/pedido/{pedido}/facturaciones', [PedidoController::class, 'facturaciones'])->name('pedido.facturaciones');
-    Route::get('/pedido/{pedido}/archivos', [PedidoController::class, 'archivos'])->name('pedido.archivos');
+    Route::get('/pedido/{pedido}/parciales/{ruta}', [PedidoController::class, 'parciales'])->name('pedido.parciales');
+    Route::get('/pedido/{pedido}/facturaciones/{ruta}', [PedidoController::class, 'facturaciones'])->name('pedido.facturaciones');
+    Route::get('/pedido/{pedido}/archivos/{ruta}', [PedidoController::class, 'archivos'])->name('pedido.archivos');
     Route::resource('pedido', PedidoController::class);
 
 

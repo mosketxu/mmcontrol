@@ -2,15 +2,15 @@
     {{-- @livewire('menu',['pedido'=>$pedido],key($pedido->id)) --}}
 
     <div class="h-full p-1 mx-2">
-        <div class=" flex space-x-3">
+        <div class="flex space-x-3 ">
             <div class="">
                 <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }}
-                    <input  class="w-28 text-gray-500 border border-blue-300 rounded shadow-md" wire:model.lazy="pedidoid" type="number" readonly/>
+                    <input  class="text-gray-500 border border-blue-300 rounded shadow-md w-28" wire:model.lazy="pedidoid" type="number" readonly/>
                 </h1>
             </div>
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.parciales',$pedidoid)}}'">{{ __('Parciales') }}</x-jet-secondary-button>
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.facturaciones',$pedidoid)}}'">{{ __('facturaciones') }}</x-jet-secondary-button>
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.archivos',$pedidoid)}}'">{{ __('archivos') }}</x-jet-secondary-button>
+            <x-icon.cubes-a class="text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedidoid,'e'])}}'" title="Parciales"/>
+            <x-icon.euro-a class="text-orange-500 hover:text-orange-700 " onclick="location.href = '{{route('pedido.archivos',[$pedidoid,'e'])}}'" title="Parciales"/>
+            <x-icon.clip-a class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedidoid,'e'])}}'" title="Archivo"/>
         </div>
         <div class="py-1 space-y-4">
             <div class="">
