@@ -6,8 +6,8 @@ use Livewire\Component;
 
 use App\Models\{Entidad,Producto };
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 
 class Prod extends Component
 {
