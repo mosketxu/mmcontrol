@@ -1418,6 +1418,9 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
+.ml-5 {
+  margin-left: 1.25rem;
+}
 .mt-0 {
   margin-top: 0px;
 }
@@ -1429,9 +1432,6 @@ select {
 }
 .mb-0 {
   margin-bottom: 0px;
-}
-.ml-5 {
-  margin-left: 1.25rem;
 }
 .block {
   display: block;
@@ -1484,8 +1484,8 @@ select {
 .h-20 {
   height: 5rem;
 }
-.h-64 {
-  height: 16rem;
+.h-96 {
+  height: 24rem;
 }
 .h-full {
   height: 100%;
@@ -1498,6 +1498,9 @@ select {
 }
 .h-7 {
   height: 1.75rem;
+}
+.h-64 {
+  height: 16rem;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -1592,6 +1595,9 @@ select {
 .w-4\/6 {
   width: 66.666667%;
 }
+.w-1\/6 {
+  width: 16.666667%;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -1615,6 +1621,9 @@ select {
 }
 .max-w-sm {
   max-width: 24rem;
+}
+.max-w-3xl {
+  max-width: 48rem;
 }
 .flex-1 {
   flex: 1 1 0%;
@@ -2042,6 +2051,9 @@ select {
 .p-4 {
   padding: 1rem;
 }
+.p-5 {
+  padding: 1.25rem;
+}
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -2101,6 +2113,10 @@ select {
 .py-0 {
   padding-top: 0px;
   padding-bottom: 0px;
+}
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
 }
 .pt-6 {
   padding-top: 1.5rem;
@@ -2229,6 +2245,9 @@ select {
 .font-normal {
   font-weight: 400;
 }
+.font-extrabold {
+  font-weight: 800;
+}
 .uppercase {
   text-transform: uppercase;
 }
@@ -2346,17 +2365,17 @@ select {
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
-.text-red-400 {
+.text-pink-500 {
   --tw-text-opacity: 1;
-  color: rgb(248 113 113 / var(--tw-text-opacity));
+  color: rgb(236 72 153 / var(--tw-text-opacity));
 }
 .text-orange-500 {
   --tw-text-opacity: 1;
   color: rgb(249 115 22 / var(--tw-text-opacity));
 }
-.text-pink-500 {
+.text-red-400 {
   --tw-text-opacity: 1;
-  color: rgb(236 72 153 / var(--tw-text-opacity));
+  color: rgb(248 113 113 / var(--tw-text-opacity));
 }
 .text-yellow-500 {
   --tw-text-opacity: 1;
@@ -2567,13 +2586,13 @@ select {
   --tw-text-opacity: 1;
   color: rgb(21 128 61 / var(--tw-text-opacity));
 }
-.hover\:text-orange-700:hover {
-  --tw-text-opacity: 1;
-  color: rgb(194 65 12 / var(--tw-text-opacity));
-}
 .hover\:text-pink-700:hover {
   --tw-text-opacity: 1;
   color: rgb(190 24 93 / var(--tw-text-opacity));
+}
+.hover\:text-orange-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(194 65 12 / var(--tw-text-opacity));
 }
 .hover\:text-yellow-600:hover {
   --tw-text-opacity: 1;
@@ -2859,6 +2878,10 @@ select {
     width: 50%;
   }
 
+  .sm\:w-1\/6 {
+    width: 16.666667%;
+  }
+
   .sm\:max-w-md {
     max-width: 28rem;
   }
@@ -2912,6 +2935,10 @@ select {
 
   .sm\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .sm\:items-start {
@@ -3005,6 +3032,16 @@ select {
     padding-bottom: 1.25rem;
   }
 
+  .sm\:py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .sm\:py-24 {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+
   .sm\:pt-0 {
     padding-top: 0px;
   }
@@ -3030,8 +3067,17 @@ select {
     line-height: 1.25rem;
   }
 
+  .sm\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
   .sm\:leading-5 {
     line-height: 1.25rem;
+  }
+
+  .sm\:tracking-tight {
+    letter-spacing: -0.025em;
   }
 }
 @media (min-width: 768px) {
@@ -3152,6 +3198,16 @@ select {
   .lg\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .lg\:py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .lg\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
   }
 }
 

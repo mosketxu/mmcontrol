@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Producto;
 
 use Livewire\Component;
 
-use App\Models\{Entidad,Producto };
+use App\Models\{Caja, Encuadernacion, Entidad, Formato, Gramaje, Material, Plastificado, Producto, Tinta};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
@@ -14,19 +14,67 @@ class Prod extends Component
     use WithFileUploads;
 
     public $producto;
+    public $formatos;
+    public $listaformatos;
+    public $gramajesinterior;
+    public $tintasinterior;
+    public $materialesinterior;
+    public $gramajescubierta;
+    public $tintascubierta;
+    public $materialescubierta;
+    public $plastificados;
+    public $encuadernados;
     public $ficheropdf;
+    public $tipo;
+    public $titulo;
+    public $formatoselected;
+    public $gramajeinteriorselected;
+    public $materialinteriorselected;
+    public $tintainteriorselected;
+    public $gramajecubiertaselected;
+    public $materialcubiertaselected;
+    public $tintacubiertaselected;
+    public $encuadernadoselected;
+    public $cajaselected;
+    public $plastificadoselected;
+
 
     protected function rules()
     {
         return [
             'producto.id'=>'nullable',
+            'producto.tipo'=>'required',
             'producto.cliente_id'=>'nullable',
             'producto.isbn'=>'nullable||unique:productos,isbn',
             'producto.referencia'=>'required||unique:productos,referencia',
             'producto.preciocoste'=>'nullable|numeric',
             'producto.precioventa'=>'nullable|numeric',
+            'producto.tirada'=>'nullable|numeric',
+            'producto.formato'=>'nullable',
+            'producto.FSC'=>'nullable',
+            'producto.materialinterior'=>'nullable',
+            'producto.tintainterior'=>'nullable',
+            'producto.gramajeinterior'=>'nullable',
+            'producto.materialcubierta'=>'nullable',
+            'producto.tintacubierta'=>'nullable',
+            'producto.gramajecubierta'=>'nullable',
+            'producto.paginas'=>'nullable',
+            'producto.plastificado'=>'nullable',
+            'producto.encuadernado'=>'nullable',
+            'producto.solapa'=>'nullable',
+            'producto.descripsolapa'=>'nullable',
+            'producto.guardas'=>'nullable',
+            'producto.descripguardas'=>'nullable',
+            'producto.cd'=>'nullable',
+            'producto.descripcd'=>'nullable',
+            'producto.novedad'=>'nullable',
+            'producto.descripnovedad'=>'nullable',
+            'producto.caja'=>'nullable',
+            'producto.udxcaja'=>'nullable|numeric',
+            'producto.especiflogistica'=>'nullable',
+            'producto.precioventa'=>'nullable|numeric',
             'producto.observaciones'=>'nullable',
-        ];
+                ];
     }
 
     public function messages()
@@ -46,6 +94,26 @@ class Prod extends Component
 
     public function render()
     {
+        if($this->tipo==1){
+            $this->titulo='Nuevo producto editorial';
+            if($this->producto->id) $this->titulo='Ficha del libro:'. $this->producto->referencia;
+        }elseif($this->tipo==2){
+            $this->titulo='Nuevo producto';
+            if($this->producto->id) $this->titulo='Ficha del producto:'. $this->producto->referencia;
+        }
+        $this->formatos=Formato::orderBy('name')->get();
+        $gramajes=Gramaje::orderBy('name')->get();
+        $this->gramajesinterior=$gramajes->whereIn('familia',['','INT']);
+        $this->gramajescubierta=$gramajes->whereIn('familia',['','CUB']);
+        $materiales=Material::orderBy('name')->get();
+        $this->materialesinterior=$materiales->whereIn('familia',['','INT']);
+        $this->materialescubierta=$materiales->whereIn('familia',['','CUB']);
+        $tintas=Tinta::orderBy('name')->get();
+        $this->tintasinterior=$tintas->whereIn('familia',['','INT']);
+        $this->tintascubierta=$tintas->whereIn('familia',['','CUB']);
+        $this->plastificados=Plastificado::orderBy('name')->get();
+        $this->encuadernaciones=Encuadernacion::orderBy('name')->get();
+        $this->cajas=Caja::orderBy('name')->get();
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
 
@@ -77,7 +145,9 @@ class Prod extends Component
 
     public function save()
     {
+
         if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
+        if($this->tipo) $this->producto->tipo=$this->tipo;
         if($this->producto->id){
             $i=$this->producto->id;
             $this->validate([
@@ -115,6 +185,31 @@ class Prod extends Component
             'isbn'=>$this->producto->isbn,
             'referencia'=>$this->producto->referencia,
             'cliente_id'=>$this->producto->cliente_id,
+            'tipo'=>$this->producto->tipo,
+            'tirada'=>$this->producto->tirada,
+            'formato'=>$this->formatoselected,
+            'FSC'=>$this->producto->FSC,
+            'materialinterior'=>$this->materialinteriorselected,
+            'tintainterior'=>$this->tintainteriorselected,
+            'gramajeinterior'=>$this->gramajeinteriorselected,
+            'materialcubierta'=>$this->materialcubiertaselected,
+            'tintacubierta'=>$this->tintacubiertaselected,
+            'gramajecubierta'=>$this->gramajecubiertaselected,
+            'paginas'=>$this->producto->paginas,
+            'plastificado'=>$this->plastificadoselected,
+            'plastificado'=>$this->plastificadoselected,
+            'solapa'=>$this->producto->solapa,
+            'descripsolapa'=>$this->producto->descripsolapa,
+            'guardas'=>$this->producto->guardas,
+            'descripguardas'=>$this->producto->descripguardas,
+            'cd'=>$this->producto->cd,
+            'descripcd'=>$this->producto->descripcd,
+            'novedad'=>$this->producto->novedad,
+            'descripnovedad'=>$this->producto->descripnovedad,
+            'caja'=>$this->cajaselected,
+            'udxcaja'=>$this->producto->udxcaja,
+            'especiflogistica'=>$this->producto->especiflogistica,
+            'observaciones'=>$this->producto->especiflogistica,
             'preciocoste'=>$this->producto->preciocoste,
             'precioventa'=>$this->producto->precioventa,
             'observaciones'=>$this->producto->observaciones,

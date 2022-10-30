@@ -2,7 +2,7 @@
     {{-- @livewire('menu',['producto'=>$producto],key($producto->id)) --}}
 
     <div class="h-full p-1 mx-2">
-        <h1 class="text-2xl font-semibold text-gray-900">Productos</h1>
+        <h1 class="text-2xl font-semibold text-gray-900">{{ $titulo }}</h1>
         <div class="py-1 space-y-4">
             <div class="">
                 @include('errores')

@@ -18,11 +18,16 @@ class Prods extends Component
     public $filtroisbn='';
     public $filtroreferencia='';
     public $filtrocliente='';
+    public $tipo;
 
     public Producto $producto;
 
     public function render()
     {
+        if($this->tipo=='1') $titulo="Catálogo Editorial";
+        elseif($this->tipo=='2') $titulo="Catálogo otros productos";
+        else $titulo="Catálogo de Milimétrica";
+
         $this->producto= new Producto;
 
         $entidades=Entidad::orderBy('entidad')->get();
@@ -30,6 +35,9 @@ class Prods extends Component
 
         $productos=Producto::query()
             ->with('cliente')
+            ->when($this->tipo!='', function ($query){
+                $query->where('tipo',$this->tipo);
+                })
             ->when($this->filtroisbn!='', function ($query){
                 $query->where('isbn', 'like', '%'.$this->filtroisbn.'%');
                 })
@@ -42,7 +50,7 @@ class Prods extends Component
             ->orderBy('referencia','asc')
             ->paginate(15);
 
-            return view('livewire.producto.prods',compact('productos','clientes'));
+            return view('livewire.producto.prods',compact('productos','clientes','titulo'));
     }
 
     public function updatingFiltroisbn(){$this->resetPage();}

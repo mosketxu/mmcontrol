@@ -48,7 +48,7 @@ class Usuarios extends Component
     }
     public function render()
     {
-        $valores=User::query()
+$valores=User::query()
             ->search('name',$this->search)
             ->orSearch('email',$this->search)
             ->select('id','name as valorcampo1','email as valorcampo2','password as valorcampo3')

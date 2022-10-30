@@ -45,7 +45,7 @@
     </div>
     <div class="flex flex-row-reverse w-2/12 ">
         <div class="mt-3">
-            <x-button.button  onclick="location.href = '{{ route('producto.create') }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
+            <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
         </div>
     </div>
 </div>

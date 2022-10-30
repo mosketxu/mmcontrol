@@ -21,21 +21,14 @@ class DatabaseSeeder extends Seeder
         // $this->call(MetodoPagoSeeder::class);
         // $this->call(EntidadTipoSeeder::class);
 
-        $this->call(PermissionSeeder::class);
+        // $this->call(PermissionSeeder::class);
 
-       // $this->call(UbicacionesSeeder::class);
-       // $this->call(UnidadSeeder::class);
-       // $this->call(SolicitantesTableSeeder::class);
-       // $this->call(EntidadesTableSeeder::class);
-       // $this->call(ProductoTipoSeeder::class);
-       // $this->call(ProductoMaterialesSeeder::class);
-       // $this->call(ProductoAcabadoSeeder::class);
-       // $this->call(UnidadCosteSeeder::class);
-       // $this->call(ProductoGrupoproduccionSeeder::class);
-       // $this->call(ProductoFamiliaSeeder::class);
-       // $this->call(ProductoCajaSeeder::class);
-       // $this->call(ProductosTableSeeder::class);
-       // $this->call(AccionTipoSeeder::class);
-       // $this->call(AccionesTableSeeder::class);
+    //    $this->call(CajaSeeder::class);
+    //    $this->call(EncuadernacionSeeder::class);
+    //    $this->call(GramajeSeeder::class);
+    //    $this->call(MaterialSeeder::class);
+    //    $this->call(PlastificadoSeeder::class);
+    //    $this->call(TintaSeeder::class);
+
     }
 }

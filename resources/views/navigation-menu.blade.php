@@ -16,21 +16,69 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
                 </div>
-                {{-- @can('producto.index') --}}
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                @can('producto.index')
+                <div class="hidden pt-2 space-x-8 text-left sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-dropdown  align="left" width="60" >
+                        <x-slot name="trigger">
+                            <span class="inline-flex rounded-md">
+                                <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md bg-blu hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-blue-700">
+                                    Catálogo
+                                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </span>
+                        </x-slot>
+                        <x-slot name="content">
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('producto.tipo','1' ) }}" class="text-left">
+                                    Editorial
+                                </x-jet-dropdown-link>
+                            </div>
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('producto.tipo','2' ) }}" class="text-left">
+                                    Otros productos
+                                </x-jet-dropdown-link>
+                            </div>
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('producto.tipo','0' ) }}" class="text-left">
+                                    Todos
+                                </x-jet-dropdown-link>
+                            </div>
+                            <div class="border-t border-gray-100"></div>
+                            @can('administracion.index')
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('administracion' ) }}" class="text-left bg-gray-100">
+                                    Administración
+                                </x-jet-dropdown-link>
+                            </div>
+                            @endcan
+                        </x-slot>
+                    </x-jet-dropdown>
+                </div>
+                @endcan
+
+
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('producto.index') }}" :active="request()->routeIs('producto.index')">
                         {{ __('Catálogo') }}
                     </x-jet-nav-link>
+                </div> --}}
+                {{-- @can('administracion.index')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('administracion') }}" :active="request()->routeIs('administracion')">
+                        {{ __('Administración') }}
+                    </x-jet-nav-link>
                 </div>
-                {{-- @endcan --}}
-                {{-- @can('pedido.index') --}}
+                @endcan --}}
+                @can('pedido.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('pedido.index') }}" :active="request()->routeIs('pedido.index')">
                         {{ __('Pedidos') }}
                     </x-jet-nav-link>
                 </div>
-                {{-- @endcan --}}
-                {{-- @can('entidad.index') --}}
+                @endcan
+                @can('entidad.index')
                 <div class="hidden pt-2 space-x-8 text-left sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-dropdown  align="left" width="60" >
                         <x-slot name="trigger">
@@ -54,7 +102,7 @@
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
-                {{-- @endcan --}}
+                @endcan
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -86,11 +134,11 @@
                                         {{ __('Team Settings') }}
                                     </x-jet-dropdown-link>
 
-                                    {{-- @can('create', Laravel\Jetstream\Jetstream::newTeamModel()) --}}
+                                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                         <x-jet-dropdown-link href="{{ route('teams.create') }}">
                                             {{ __('Create New Team') }}
                                         </x-jet-dropdown-link>
-                                    {{-- @endcan --}}
+                                    @endcan
 
                                     <div class="border-t border-gray-100"></div>
 
@@ -138,11 +186,11 @@
                             <x-jet-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}
                             </x-jet-dropdown-link>
-
+                            @can('seguridad.index')
                             <x-jet-dropdown-link href="{{ route('seguridad') }}">
                                 {{ __('Seguridad') }}
                             </x-jet-dropdown-link>
-
+                            @endcan
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                                 <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}
@@ -156,7 +204,7 @@
                                 @csrf
 
                                 <x-jet-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
+                                        @click.prevent="$root.submit();">
                                     {{ __('Log Out') }}
                                 </x-jet-dropdown-link>
                             </form>
@@ -180,16 +228,60 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+            @can('pedido.index')
             <x-jet-responsive-nav-link href="{{ route('pedido.index') }}" :active="request()->routeIs('pedido.index')">
                 {{ __('Pedidos') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('producto.index') }}" :active="request()->routeIs('producto.index')">
+            @endcan
+            @can('producto.index')
+            <div class="relative mt-3 ml-3">
+                <x-jet-dropdown align="right" width="60" >
+                    <x-slot name="trigger">
+                        <span class="inline-flex rounded-md">
+                            <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md bg-blu hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-blue-700">
+                                Catálogoss
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </span>
+                    </x-slot>
+                    <x-slot name="content">
+                        <div class="w-44">
+                            <x-jet-dropdown-link href="{{ route('producto.tipo','1') }}" class="text-right">
+                                {{ __('Editorial') }}
+                            </x-jet-dropdown-link>
+                            <x-jet-dropdown-link href="{{ route('producto.tipo','2') }}" class="text-right">
+                                {{ __('Otros productos') }}
+                            </x-jet-dropdown-link>
+                            <x-jet-dropdown-link href="{{ route('producto.index') }}" class="text-right">
+                                {{ __('Todos') }}
+                            </x-jet-dropdown-link>
+                            <div class="border-t border-gray-100"></div>
+                            @can('administracion.index')
+                            <x-jet-dropdown-link href="{{ route('administracion') }}" class="text-right">
+                               {{ __('Administración') }}
+                            </x-jet-dropdown-link>
+                            @endcan
+                        </div>
+                    </x-slot>
+                </x-jet-dropdown>
+            </div>
+
+            {{-- <x-jet-responsive-nav-link href="{{ route('producto.index') }}" :active="request()->routeIs('producto.index')">
                 {{ __('Catálogo') }}
+            </x-jet-responsive-nav-link> --}}
+            @endcan
+            @can('administracion.index')
+            <x-jet-responsive-nav-link href="{{ route('administracion') }}" :active="request()->routeIs('administracion')">
+                {{ __('Admnistración') }}
             </x-jet-responsive-nav-link>
-            {{-- @can('entidad.index') --}}
+            @endcan
+            @can('entidad.index')
             <div class="relative mt-3 ml-3">
                 <x-jet-dropdown align="right" width="60" >
                     <x-slot name="trigger">
@@ -217,7 +309,7 @@
                     </x-slot>
                 </x-jet-dropdown>
             </div>
-            {{-- @endcan --}}
+            @endcan
         </div>
 
         <!-- Responsive Settings Options -->
@@ -241,10 +333,11 @@
                     {{ __('Profile') }}
                 </x-jet-responsive-nav-link>
 
+                @can('seguridad.index')
                 <x-jet-responsive-nav-link href="{{ route('seguridad') }}" :active="request()->routeIs('seguridad')">
                     {{ __('Seguridad') }}
                 </x-jet-dropdown-link>
-
+                @endcan
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                     <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
                         {{ __('API Tokens') }}

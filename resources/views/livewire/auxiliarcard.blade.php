@@ -27,20 +27,20 @@
                     <thead>
                         <tr>
                             @if ($campo1visible==1)
-                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo1) }}</th>
+                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 bg-blue-50" >{{ __($titcampo1) }}</th>
                             @endif
                             @if ($campo2visible==1)
-                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo2) }} </th>
+                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 bg-blue-50" >{{ __($titcampo2) }} </th>
                             @endif
                             @if ($campo3visible==1)
-                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo3) }} </th>
+                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 bg-blue-50" >{{ __($titcampo3) }} </th>
                             @endif
                             <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" ></th>
                         </tr>
                     </thead>
                 </table>
             </div>
-            <div class="h-64 min-w-full overflow-x-auto overflow-y-auto align-middle shadow sm:rounded-b-lg">
+            <div class="h-96 min-w-full overflow-x-auto overflow-y-auto align-middle shadow sm:rounded-b-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <tbody class="bg-white divide-y divide-gray-200 ">
                         @foreach ($valores as $valor)

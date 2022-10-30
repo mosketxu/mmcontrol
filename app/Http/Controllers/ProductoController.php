@@ -11,7 +11,7 @@ class ProductoController extends Controller
     public function __construct()
     {
         $this->middleware('can:producto.index')->only('index');
-        $this->middleware('can:producto.edit')->only('edit','update');
+        $this->middleware('can:producto.edit')->only('nuevo','edit','update');
     }
 
     /**
@@ -21,17 +21,18 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return view('producto.index');
+        $tipo='';
+        return view('producto.index',compact('tipo'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function tipo($tipo)
     {
-        return view('producto.create');
+        return view('producto.index',compact('tipo'));
+    }
+
+    public function nuevo($tipo)
+    {
+        return view('producto.create',compact('tipo'));
     }
 
 

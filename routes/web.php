@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     // Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
     Route::get('/dashboard', function () {
@@ -35,6 +36,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     //Seguridad
     Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:seguridad.index')->name('seguridad');
 
+    //administracion
+    Route::get('/administracion/{tipo?}', function ($tipo = 'gramaje') {return view('seguridad.administracion',compact('tipo'));})->middleware('can:administracion.index')->name('administracion');
+
     Route::resource('roles', RoleController::class)->only(['edit','update'])->names('roles');
 
     //Users
@@ -49,6 +53,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
 
     // Producto
+    Route::get('producto/{tipo}', [ProductoController::class,'tipo'])->middleware('can:producto.index')->name('producto.tipo');;
+    Route::get('/producto/{tipo}/nuevo', [ProductoController::class, 'nuevo'])->name('producto.nuevo');
     Route::resource('producto', ProductoController::class);
 
     //Pedidos
