@@ -46,7 +46,7 @@ class CreateProductosTable extends Migration
 
             $table->double('preciocoste', 15, 2)->nullable()->default(0.00);
             $table->double('precioventa', 15, 2)->nullable()->default(0.00);
-            $table->string('fichaproducto')->nullable();
+            $table->string('adjunto')->nullable();
             $table->timestamps();
         });
     }

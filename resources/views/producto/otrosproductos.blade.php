@@ -8,12 +8,12 @@
         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-4">
             {{-- isbn --}}
             <div class="w-full form-item sm:w-2/12">
-                <x-jet-label for="isbn">{{ __('ISBN') }}</x-jet-label>
+                <x-jet-label for="isbn">{{ __('Código') }}</x-jet-label>
                 <input wire:model.lazy="producto.isbn" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
             </div>
             {{-- titulo --}}
             <div class="w-full form-item sm:w-4/12">
-                <x-jet-label for="referencia">{{ __('Título') }}</x-jet-label>
+                <x-jet-label for="referencia">{{ __('Referencia') }}</x-jet-label>
                 <input wire:model.lazy="producto.referencia" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" autofocus/>
             </div>
             {{-- cliente --}}

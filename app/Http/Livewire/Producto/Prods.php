@@ -25,8 +25,7 @@ class Prods extends Component
     public function render()
     {
         if($this->tipo=='1') $titulo="Catálogo Editorial";
-        elseif($this->tipo=='2') $titulo="Catálogo otros productos";
-        else $titulo="Catálogo de Milimétrica";
+        else $titulo="Catálogo otros productos";
 
         $this->producto= new Producto;
 
@@ -57,10 +56,10 @@ class Prods extends Component
     public function updatingFiltroreferencia(){$this->resetPage();}
     public function updatingFiltrocliente(){$this->resetPage();}
 
-    public function presentaPDF(Producto $producto){
-        $existe=Storage::disk('fichasproducto')->exists($producto->fichaproducto);
+    public function presentaAdjunto(Producto $producto){
+        $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
         if ($existe)
-            return Storage::disk('fichasproducto')->download($producto->fichaproducto);
+            return Storage::disk('fichasproducto')->download($producto->adjunto);
     }
 
     public function delete($productoId)

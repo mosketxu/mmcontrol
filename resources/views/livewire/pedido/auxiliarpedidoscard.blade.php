@@ -78,7 +78,7 @@
                         <div class="flex-col w-2/12 text-left">
                             @if($valor->valorcampoimg)
                             <span class="text-green-500 "> {{ $valor->valorcampo3 }}</span>
-                                <x-icon.clip-a class="text-green-500 hover:text-green-700 " wire:click="presentaPDF({{ $valor->id }})" title="Archivo"/>
+                                <x-icon.clip-a class="text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $valor->id }})" title="Archivo"/>
                             {{-- @else
                                 <x-icon.clip-b class="text-gray-500" title="No hay adjunto"/> --}}
                             @endif

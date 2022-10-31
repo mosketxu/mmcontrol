@@ -40,11 +40,6 @@
                                     Otros productos
                                 </x-jet-dropdown-link>
                             </div>
-                            <div class="w-44">
-                                <x-jet-dropdown-link href="{{ route('producto.tipo','0' ) }}" class="text-left">
-                                    Todos
-                                </x-jet-dropdown-link>
-                            </div>
                             <div class="border-t border-gray-100"></div>
                             @can('administracion.index')
                             <div class="w-44">

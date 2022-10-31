@@ -14,10 +14,15 @@
             <div class="flex-col space-y-4">
                 <div>
                     <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
-                        <div class="flex w-3/12 font-light lg:w-3/12" >{{ __('ISBN') }}</div>
-                        <div class="flex w-4/12 font-light lg:flex " >{{ __('Referencia') }}</div>
+                        @if($tipo=='1')
+                            <div class="flex w-3/12 font-light lg:w-3/12" >{{ __('ISBN') }}</div>
+                            <div class="flex w-4/12 font-light lg:flex " >{{ __('Título') }}</div>
+                        @else
+                            <div class="flex w-3/12 font-light lg:w-3/12" >{{ __('Código') }}</div>
+                            <div class="flex w-4/12 font-light lg:flex " >{{ __('Referencia') }}</div>
+                        @endif
                         <div class="hidden w-2/12 font-light md:flex" >{{ __('Cliente') }} </div>
-                        <div class="flex w-1/12 font-light lg:w-1/12" >{{ __('Precio') }}</div>
+                        <div class="flex w-1/12 font-light lg:w-1/12" >{{ __('€ Coste') }}</div>
                         <div class="hidden w-5/12 font-light lg:flex" >{{ __('Observaciones') }}</div>
                         <div class="flex w-2/12" ></div>
                     </div>
@@ -34,17 +39,18 @@
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->cliente->entidad }}"  readonly/>
                                 </div>
                                 <div class="flex w-1/12 lg:w-1/12">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->precio }}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->preciocoste }}"  readonly/>
                                 </div>
                                 <div class="hidden w-5/12 lg:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->observaciones }}"  readonly/>
                                 </div>
                                 <div  class="flex w-2/12">
-                                    @if($producto->fichaproducto)
-                                        <x-icon.clip-a class="text-green-500 hover:text-green-700 " wire:click="presentaPDF({{ $producto }})" title="Archivo"/>
+                                    @if($producto->adjunto)
+                                        <x-icon.clip-a class="text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $producto }})" title="Archivo"/>
                                     @else
                                         <x-icon.clip-b class="text-gray-500" title="No hay adjunto"/>
                                     @endif
+                                    <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('producto.ficha', [$producto->id,$tipo]) }}'" title="Ficha Producto"/>
 
                                     @can('producto.edit')
                                         <x-icon.edit-a href="{{ route('producto.edit',$producto) }}"  title="Editar"/>

@@ -2,7 +2,7 @@
     <div class="p-2">
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                @livewire('producto.prod',['producto'=>$producto],key($producto->id))
+                @livewire('producto.prod',['producto'=>$producto,'tipo'=>$producto->tipo],key($producto->id))
             </div>
         </div>
     </div>

@@ -87,20 +87,33 @@ class Prod extends Component
             'producto.precioventa.numeric' => 'El precio de venta debe ser numérico',
         ];
     }
-    public function mount(Producto $producto)
+    public function mount(Producto $producto,$tipo)
     {
         $this->producto=$producto;
+        $this->tipo=$tipo;
+        $this->formatoselected=$producto->formato;
+        $this->gramajeinteriorselected=$producto->gramajeinterior;
+        $this->materialinteriorselected=$producto->materialinterior;
+        $this->tintainteriorselected=$producto->tintainterior;
+        $this->gramajecubiertaselected=$producto->gramajecubierta;
+        $this->materialcubiertaselected=$producto->materialcubierta;
+        $this->tintacubiertaselected=$producto->tintacubierta;
+        $this->encuadernadoselected=$producto->encuadernado;
+        $this->cajaselected=$producto->caja;
+        $this->plastificadoselected=$producto->plastificado;
     }
 
     public function render()
     {
         if($this->tipo==1){
             $this->titulo='Nuevo producto editorial';
-            if($this->producto->id) $this->titulo='Ficha del libro:'. $this->producto->referencia;
+            if($this->producto->id) $this->titulo='Ficha del libro: '. $this->producto->referencia;
         }elseif($this->tipo==2){
             $this->titulo='Nuevo producto';
-            if($this->producto->id) $this->titulo='Ficha del producto:'. $this->producto->referencia;
+            if($this->producto->id) $this->titulo='Ficha del producto: '. $this->producto->referencia;
         }
+        // dd($this->titulo);
+
         $this->formatos=Formato::orderBy('name')->get();
         $gramajes=Gramaje::orderBy('name')->get();
         $this->gramajesinterior=$gramajes->whereIn('familia',['','INT']);
@@ -137,10 +150,10 @@ class Prod extends Component
         $this->validate(['ficheropdf'=>'file|max:5000']);
     }
 
-    public function presentaPDF(Producto $producto){
-        $existe=Storage::disk('fichasproducto')->exists($producto->fichaproducto);
+    public function presentaAdjunto(Producto $producto){
+        $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
         if ($existe)
-            return Storage::disk('fichasproducto')->download($producto->fichaproducto);
+            return Storage::disk('fichasproducto')->download($producto->adjunto);
     }
 
     public function save()
@@ -196,7 +209,7 @@ class Prod extends Component
             'tintacubierta'=>$this->tintacubiertaselected,
             'gramajecubierta'=>$this->gramajecubiertaselected,
             'paginas'=>$this->producto->paginas,
-            'plastificado'=>$this->plastificadoselected,
+            'encuadernado'=>$this->encuadernadoselected,
             'plastificado'=>$this->plastificadoselected,
             'solapa'=>$this->producto->solapa,
             'descripsolapa'=>$this->producto->descripsolapa,
@@ -216,7 +229,7 @@ class Prod extends Component
             ]
         );
         if($this->ficheropdf){
-            $prod->fichaproducto=$filename;
+            $prod->adjunto=$filename;
             $prod->save();
         }
 
