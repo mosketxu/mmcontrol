@@ -180,7 +180,7 @@
 
             <div class="text-sm">
                 {{-- <x-button.button wire:click="create()" color="blue">Nuevo</x-button.button> --}}
-                <x-button.button  onclick="location.href = '{{ route('pedido.create') }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
+                <x-button.button  onclick="location.href = '{{ route('pedido.create',$tipo }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
             </div>
             @if($showNewModal)
                 @include('livewire.pedidocreate')

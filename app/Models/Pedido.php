@@ -13,16 +13,22 @@ class Pedido extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','responsable_id','cliente_id','contacto_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
-                        'tiradaprevista','tiradareal','precio','preciototal','parcial','estado','facturado','distribucion','uds_caja','incidencias','retardos','otros'
+    protected $fillable=['id','tipo','responsable_id','cliente_id','contacto_id','facturadopor_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
+                        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','uds_caja','otros'
                         ];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
     public function responsable(){return $this->belongsTo(User::class,'responsable_id','id')->withDefault(['name'=>'-']);}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
+    public function producto(){return $this->belongsTo(Producto::class,'producto_id','id');}
 
-    public function parciales(){return $this->hasMany(Pedido::class,'parcial_id','id');}
+    public function parciales(){return $this->hasMany(PedidoParcial::class,'pedido_id','id');}
+    public function archivos(){return $this->hasMany(PedidoArchivo::class,'pedido_id','id');}
+    public function incidencias(){return $this->hasMany(PedidoIncidencia::class,'pedido_id','id');}
+    public function presupuestos(){return $this->hasMany(Presupuesto::class,'pedido_id','id');}
+    public function facturaciones(){return $this->hasMany(PedidoFacturacion::class,'pedido_id','id');}
+    public function distribuciones(){return $this->hasMany(PedidoDistribucion::class,'pedido_id','id');}
 
     public function getFechapedAttribute(){return Carbon::parse($this->fechapedido)->format('d-m-Y');}
     public function getFechaarchAttribute(){return Carbon::parse($this->fechaarchivos)->format('d-m-Y');}

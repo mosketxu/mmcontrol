@@ -9,9 +9,13 @@ use Livewire\Component;
 class Pedido extends Component
 {
     public $pedidoid='';
+    public $tipo;
     public $responsable_id;
     public $cliente_id;
     public $proveedor_id;
+    public $facturadopor_id;
+    public $muestra;
+    public $pruebacolor;
     public $contacto_id;
     public $producto_id;
     public $fechapedido;
@@ -21,15 +25,12 @@ class Pedido extends Component
     public $tiradaprevista=0;
     public $tiradareal=0;
     public $preciocoste=0;
-    public $precioventa=0;
+    public $precio=0;
     public $preciototal=0;
     public $parcial=0;
     public $estado=0;
     public $facturado;
-    public $distribucion;
     public $uds_caja;
-    public $incidencias;
-    public $retardos;
     public $otros;
 
     public $mesagge;
@@ -50,6 +51,8 @@ class Pedido extends Component
             'cliente_id'=>'required',
             'contacto_id'=>'nullable',
             'proveedor_id'=>'nullable',
+            'facturadopor_id'=>'nullable',
+            'muestra'=>'nullable',
             'producto_id'=>'required',
             'fechapedido'=>'required|date',
             'fechaarchivos'=>'nullable|date',
@@ -58,14 +61,11 @@ class Pedido extends Component
             'tiradaprevista'=>'required|numeric',
             'tiradareal'=>'nullable|numeric',
             'preciocoste'=>'nullable|numeric',
-            'precioventa'=>'nullable|numeric',
+            'precio'=>'nullable|numeric',
             'preciototal'=>'nullable|numeric',
             'estado'=>'nullable',
             'facturado'=>'nullable',
-            'distribucion'=>'nullable',
             'uds_caja'=>'nullable',
-            'incidencias'=>'nullable',
-            'retardos'=>'nullable',
             'otros'=>'nullable',
         ];
     }
@@ -88,20 +88,25 @@ class Pedido extends Component
             'tiradaprevista.numeric'=>'El valor de la tirada prevista debe ser numérico',
             'tiradareal.numeric'=>'El valor de la tirada real debe ser numérico',
             'preciocoste.numeric'=>'El valor del precio de compra debe ser numérico',
-            'precioventa.numeric'=>'El valor del precio de venta debe ser numérico',
+            'precio.numeric'=>'El valor del precio de venta debe ser numérico',
             'preciototal.numeric'=>'El valor del precio total debe ser numérico',
         ];
     }
 
-    public function mount($pedidoid){
+    public function mount($pedidoid,$tipo){
         $this->titulo='Nuevo Pedido:';
+        $this->tipo=$tipo;
         if ($pedidoid!='') {
             $pedido=ModeloPedido::find($pedidoid);
+            $this->tipo=$pedido->tipo;
             $this->pedidoid=$pedido->id;
             $this->responsable_id=$pedido->responsable_id;
             $this->cliente_id=$pedido->cliente_id;
             $this->contacto_id=$pedido->contacto_id;
             $this->proveedor_id=$pedido->proveedor_id;
+            $this->facturadopor_id=$pedido->facturadopor_id;
+            $this->muestra=$pedido->muestra;
+            $this->pruebacolor=$pedido->pruebacolor;
             $this->producto_id=$pedido->producto_id;
             $this->fechapedido=$pedido->fechapedido;
             $this->fechaarchivos=$pedido->fechaarchivos;
@@ -109,15 +114,12 @@ class Pedido extends Component
             $this->fechaentrega=$pedido->fechaentrega;
             $this->tiradaprevista=$pedido->tiradaprevista;
             $this->tiradareal=$pedido->tiradareal;
-            $this->preciocoste=$pedido->preciocoste;
-            $this->precioventa=$pedido->precioventa;
+            $this->preciocoste=$pedido->producto->preciocoste ?? '-';
+            $this->precio=$pedido->precio;
             $this->preciototal=$pedido->preciototal;
             $this->estado=$pedido->estado;
             $this->facturado=$pedido->facturado;
-            $this->distribucion=$pedido->distribucion;
             $this->uds_caja=$pedido->uds_caja;
-            $this->incidencias=$pedido->incidencias;
-            $this->retardos=$pedido->retardos;
             $this->otros=$pedido->otros;
             $this->titulo='Pedido';
             if($this->contacto_id) $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
@@ -143,7 +145,7 @@ class Pedido extends Component
             ->orderBy('referencia','asc')
             ->get();
 
-            return view('livewire.pedido.pedido',compact(['clientes','proveedores','responsables']));
+            return view('livewire.pedido.pedido',compact(['entidades','clientes','proveedores','responsables']));
 
         }
 
@@ -157,7 +159,7 @@ class Pedido extends Component
             $this->preciocoste=0;
         } else {
             $p=Producto::find($this->producto_id);
-            $this->precioventa=$p->precioventa;
+            $this->precio=$p->precio;
             $this->preciocoste=$p->preciocoste;
         }
     }
@@ -166,9 +168,9 @@ class Pedido extends Component
         $this->preciocoste= $this->preciocoste=='' ? $this->preciocoste=0 : $this->preciocoste;
     }
 
-    public function updatedPrecioventa(){
-        $this->precioventa= $this->precioventa=='' ? $this->precioventa=0 : $this->precioventa;
-        $this->preciototal=$this->precioventa*$this->tiradareal;
+    public function updatedPrecio(){
+        $this->precio= $this->precio=='' ? $this->precio=0 : $this->precio;
+        $this->preciototal=$this->precio*$this->tiradareal;
     }
 
     public function updatedTiradaprevista(){
@@ -177,7 +179,7 @@ class Pedido extends Component
 
     public function updatedTiradareal(){
         $this->tiradareal= $this->tiradareal=='' ? $this->tiradareal=0 : $this->tiradareal;
-        $this->preciototal=$this->precioventa*$this->tiradareal;
+        $this->preciototal=$this->precio*$this->tiradareal;
     }
 
     public function numpedido(){
@@ -202,7 +204,7 @@ class Pedido extends Component
         $mensaje="Pedido creado satisfactoriamente";
         $i="";
         if ($this->pedidoid!='') {
-    $i=$this->pedidoid;
+        $i=$this->pedidoid;
             $mensaje="Pedido actualizado satisfactoriamente";
             $this->validate([
                 'pedidoid'=>[
@@ -220,25 +222,25 @@ class Pedido extends Component
             [
             'id'=>$this->pedidoid,
             'responsable_id'=>$this->responsable_id,
+            'tipo'=>$this->tipo,
             'cliente_id'=>$this->cliente_id,
             'contacto_id'=>$this->contacto_id,
             'proveedor_id'=>$this->proveedor_id == '' ? null : $this->proveedor_id ,
             'producto_id'=>$this->producto_id,
+            'muestra'=>$this->muestra,
+            'pruebacolor'=>$this->pruebacolor,
+            'facturadopor_id'=>$this->facturadopor_id,
             'fechapedido'=>$this->fechapedido,
             'fechaarchivos'=>$this->fechaarchivos,
             'fechaplotter'=>$this->fechaplotter,
             'fechaentrega'=>$this->fechaentrega,
             'tiradaprevista'=>$this->tiradaprevista,
             'tiradareal'=>$this->tiradareal,
-            'preciocoste'=>$this->preciocoste,
-            'precioventa'=>$this->precioventa,
+            'precio'=>$this->precio,
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
             'facturado'=>$this->facturado == '' ? '0' : $this->facturado,
-            'distribucion'=>$this->distribucion,
             'uds_caja'=>$this->uds_caja,
-            'incidencias'=>$this->incidencias,
-            'retardos'=>$this->retardos,
             'otros'=>$this->otros,
         ]);
 

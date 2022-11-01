@@ -15,7 +15,7 @@ class CreatePedidoParcialesTable extends Migration
     {
         Schema::create('pedido_parciales', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pedido_id');
+            $table->foreignId('pedido_id')->constrained('pedidos');
             $table->date('fecha')->nullable();
             $table->bigInteger('cantidad')->nullable()->default(0);
             $table->bigInteger('importe')->nullable()->default(0);

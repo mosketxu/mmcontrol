@@ -3,7 +3,7 @@
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 {{-- @livewire('pedido.pedido') --}}
-                @livewire('pedido.pedido',['pedidoid'=>''])
+                @livewire('pedido.pedido',['pedidoid'=>'','tipo'=>$tipo])
             </div>
         </div>
     </div>

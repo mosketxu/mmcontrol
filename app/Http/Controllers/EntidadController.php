@@ -20,6 +20,7 @@ class EntidadController extends Controller
 
     public function tipo($entidadtipo_id)
     {
+        // dd($entidadtipo_id);
         return view('entidad.index',compact('entidadtipo_id'));
     }
 

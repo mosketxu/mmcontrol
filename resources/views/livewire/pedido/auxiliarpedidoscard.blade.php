@@ -142,6 +142,7 @@
         </div>
     </div>
     <div class="m-2">
+        {{ $tipo }}
         @if($ruta=='i')
             <x-jet-secondary-button  onclick="location.href = '{{route('pedido.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @else

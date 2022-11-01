@@ -7,7 +7,11 @@
                 @include('errores')
             </div>
             <div class="">
-                @include('pedidos.pedidosfilters')
+                @if($tipo=='1')
+                    @include('pedidos.pedidoseditorialfilters')
+                @else
+                    {{-- @include('pedidos.pedidosotrosfilters') --}}
+                @endif
             </div>
             {{-- tabla pedidos --}}
             <div class="flex-col space-y-4">
@@ -16,34 +20,34 @@
                         <div class="flex w-5 h-5 py-2 mr-2 font-medium text-center" >
                             <x-input.checkbox wire:model="selectPage" />
                         </div>
-                        <div class="w-1/12 font-light text-left" >
-                            <div class=""><p> {{ __('Pedido') }}</p><p class="italic text-green-600"> {{ __('Responsable') }}</p></div>
+                        <div class="w-1/12  text-left" >
+                            <div class="font-bold"><p> {{ __('Pedido') }}</p><p class="italic text-green-600"> {{ __('Responsable') }}</p></div>
                         </div>
-                        <div class="w-2/12 font-light text-left" >
-                            <div class=""><p> {{ __('Cliente') }}</p><p class="italic text-green-600"> {{ __('Contacto') }}</p></div>
+                        <div class="w-2/12  text-left" >
+                            <div class="font-bold"><p> {{ __('Cliente') }}</p><p class="italic text-green-600"> {{ __('Contacto') }}</p></div>
                         </div>
-                        <div class="w-2/12 font-light text-left" >
-                            <div class=""><p> {{ __('ISBN') }}</p><p class="italic text-green-600"> {{ __('Referencia') }}</p></div>
+                        <div class="w-2/12  text-left" >
+                            <div class="font-bold"><p> {{ __('ISBN') }}</p><p class="italic text-green-600"> {{ __('Referencia') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-left" >
-                            <div class=""><p> {{ __('F.Pedido') }}</p><p class="italic text-green-600"> {{ __('F.Entrega') }}</p></div>
+                        <div class="w-1/12  text-left" >
+                            <div class="font-bold"><p> {{ __('F.Pedido') }}</p><p class="italic text-green-600"> {{ __('F.Entrega') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-left" >
-                            <div class=""><p> {{ __('F.Archivos') }}</p><p class="italic text-green-600"> {{ __('F.Plotters') }}</p></div>
+                        <div class="w-1/12  text-left" >
+                            <div class="font-bold"><p> {{ __('F.Archivos') }}</p><p class="italic text-green-600"> {{ __('F.Plotters') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-left" >
-                            <div class=""><p> {{ __('Proveedor') }}</p><p class="italic text-green-600"> {{ __('Presupuesto') }}</p></div>
+                        <div class="w-1/12  text-left" >
+                            <div class="font-bold"><p> {{ __('Proveedor') }}</p><p class="italic text-green-600"> {{ __('Presupuesto') }}</p></div>
                         </div>
-                        <div class="w-1/12 pr-3 mr-1 font-light text-right" >
-                            <div class=""><p> {{ __('Q.Prevista') }}</p><p class="italic text-green-600"> {{ __('Q.Total') }}</p></div>
+                        <div class="w-1/12 pr-3 mr-1  text-right" >
+                            <div class="font-bold"><p> {{ __('Q.Prevista') }}</p><p class="italic text-green-600"> {{ __('Q.Total') }}</p></div>
                         </div>
-                        <div class="w-1/12 pr-3 mr-1 font-light text-right" >
-                            <div class=""><p> {{ __('€ Ud.') }}</p><p class="italic text-green-600"> {{ __('€ Total') }}</p></div>
+                        <div class="w-1/12 pr-3 mr-1  text-right" >
+                            <div class="font-bold"><p> {{ __('€ Ud.') }}</p><p class="italic text-green-600"> {{ __('€ Total') }}</p></div>
                         </div>
-                        <div class="w-1/12 font-light text-center" >
-                            <div class=""><p> {{ __('Estado') }}</p><p class="italic text-green-600"> {{ __('Facturado') }}</p></div>
+                        <div class="w-1/12  text-center" >
+                            <div class="font-bold"><p> {{ __('Estado') }}</p><p class="italic text-green-600"> {{ __('Facturado') }}</p></div>
                         </div>
-                        <div class="w-2/12 font-light text-left" ></div>
+                        <div class="w-2/12  text-left" ></div>
                     </div>
                     <div>
                         @if($selectPage)

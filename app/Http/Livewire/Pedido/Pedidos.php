@@ -15,6 +15,7 @@ class Pedidos extends Component
     use WithPagination, WithBulkActions;
 
     public $pedido;
+    public $tipo;
     public $responsable_id;
     public $cliente_id;
     public $proveedor_id;
@@ -102,7 +103,10 @@ class Pedidos extends Component
         ];
     }
 
-
+    public function mount($tipo)
+    {
+        $this->tipo=$tipo;
+    }
     public function render()
     {
         $entidades=Entidad::orderBy('entidad')->get();
@@ -112,7 +116,6 @@ class Pedidos extends Component
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
-
         return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables'));
 }
 

@@ -18,10 +18,12 @@ class CreatePedidosTable extends Migration
             // $table->unsignedBigInteger('id')->primary();
             $table->bigInteger('id')->unsigned(); // to remove primary key
             $table->primary('id'); //to add primary key
+            $table->integer('tipo')->default(1);
             $table->foreignId('responsable_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
             $table->foreignId('cliente_id')->constrained('entidades');
             $table->foreignId('contacto_id')->nullable()->constrained('entidades');
             $table->foreignId('proveedor_id')->nullable()->constrained('entidades');
+            $table->foreignId('facturadopor_id')->nullable()->constrained('entidades');
             $table->foreignId('producto_id')->constrained('productos');
             $table->date('fechapedido');
             $table->date('fechaarchivos')->nullable();
@@ -32,12 +34,11 @@ class CreatePedidosTable extends Migration
             $table->double('precio', 15, 2)->nullable()->default(0.00);
             $table->double('preciototal', 15, 2)->nullable()->default(0.00);
             $table->string('parcial')->nullable();
+            $table->string('muestra')->nullable();
+            $table->string('pruebacolor')->nullable();
             $table->integer('estado')->default('0');
             $table->boolean('facturado')->default(false);
-            $table->string('distribucion')->nullable();
             $table->string('uds_caja')->nullable();
-            $table->string('incidencias')->nullable();
-            $table->string('retardos')->nullable();
             $table->string('otros')->nullable();
             $table->timestamps();
         });

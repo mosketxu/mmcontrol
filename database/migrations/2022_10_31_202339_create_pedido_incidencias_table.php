@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePedidoArchivosTable extends Migration
+class CreatePedidoIncidenciasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreatePedidoArchivosTable extends Migration
      */
     public function up()
     {
-        Schema::create('pedido_archivos', function (Blueprint $table) {
+        Schema::create('pedido_incidencias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pedido_id')->constrained('pedidos');
-            $table->string('nombrearchivooriginal');
-            $table->string('archivo');
+            $table->date('fecha')->nullable();
+            $table->bigInteger('cantidad')->nullable()->default(0);
+            $table->bigInteger('importe')->nullable()->default(0);
             $table->string('comentario')->nullable();
+            $table->string('tipo')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreatePedidoArchivosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedido_archivos');
+        Schema::dropIfExists('pedido_incidencias');
     }
 }
