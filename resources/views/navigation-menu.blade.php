@@ -31,11 +31,24 @@
                         </x-slot>
                         <x-slot name="content">
                             <div class="w-44">
-                                @foreach($tiposentidad as $tipoentidad)
-                                <x-jet-dropdown-link href="{{ route('entidad.tipo',$tipoentidad->id ) }}" class="text-left">
-                                    {{ $tipoentidad->nombreplural }}
+                                <x-jet-dropdown-link href="{{ route('entidad.tipo','1') }}" class="text-left">
+                                    Clientes
                                 </x-jet-dropdown-link>
-                                @endforeach
+                            </div>
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('entidad.tipo','3') }}" class="text-left">
+                                    Proveedores
+                                </x-jet-dropdown-link>
+                            </div>
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('entidad.tipo','4') }}" class="text-left">
+                                    Prospección
+                                </x-jet-dropdown-link>
+                            </div>
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('entidad.tipo','0') }}" class="text-left">
+                                    Contactos
+                                </x-jet-dropdown-link>
                             </div>
                         </x-slot>
                     </x-jet-dropdown>

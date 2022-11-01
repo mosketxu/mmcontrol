@@ -62,5 +62,8 @@ class EntidadSeeder extends Seeder
         Entidad::create(['entidad'=>'Jomagar plano','entidadtipo_id'=>'3']);
         Entidad::create(['entidad'=>'Jomagar rotativa','entidadtipo_id'=>'3']);
 
+        Entidad::create(['entidad'=>'Alexander Arregui','entidadtipo_id'=>'0']);
+        Entidad::create(['entidad'=>'Suma Apoyo Empresarial','entidadtipo_id'=>'4']);
+
     }
 }

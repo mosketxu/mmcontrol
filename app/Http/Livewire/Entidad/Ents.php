@@ -29,6 +29,7 @@ class Ents extends Component
             ->orderBy('entidad','asc')
             ->paginate(10);
 
+
         return view('livewire.entidad.ents',compact('entidades','entidadtipo','responsables'));
     }
 

@@ -20,7 +20,8 @@ class EntidadController extends Controller
 
     public function tipo($entidadtipo_id)
     {
-        // dd($entidadtipo_id);
+        $entidadtipo_id= !in_array($entidadtipo_id, ['0','1','2','3','4']) ? '0' : $entidadtipo_id;
+
         return view('entidad.index',compact('entidadtipo_id'));
     }
 
