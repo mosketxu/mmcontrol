@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
 
         $this->call(CajaSeeder::class);
+        $this->call(FormatoSeeder::class);
         $this->call(EncuadernacionSeeder::class);
         $this->call(GramajeSeeder::class);
         $this->call(MaterialSeeder::class);

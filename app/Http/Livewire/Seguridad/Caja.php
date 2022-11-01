@@ -14,15 +14,14 @@ class Caja extends Component
     public $valorcampo1='';
     public $valorcampo2='';
     public $valorcampo3='';
-    public $titcampo1='';
-    public $titcampo2='Caja';
+    public $titcampo1='Caja';
+    public $titcampo2='Destino';
     public $titcampo3='Descripcion';
-    public $pp='name';
-    public $campo1='';
-    public $campo2='name';
-    public $campo3='familia';
-    public $campo1visible=0;
-    public $campo2visible=1;
+    public $campo1='name';
+    public $campo2='familia';
+    public $campo3='descripcion';
+    public $campo1visible=1;
+    public $campo2visible=0;
     public $campo3visible=1;
     public $editarvisible=0;
     public $search='';
@@ -32,15 +31,16 @@ class Caja extends Component
     protected function rules()
     {
         return [
-            'valorcampo2'=>'required|unique:cajas,name',
+            'valorcampo1'=>'required|unique:cajas,name',
+            'valorcampo2'=>'nullable',
             'valorcampo3'=>'nullable',
         ];
     }
     public function messages()
     {
         return [
-            'valorcampo2.required' => 'El nombre de la caja es necesaria,',
-            'valorcampo2.unique' => 'La caja ya existe. Elige otro nombre,',
+            'valorcampo1.required' => 'El nombre de la caja es necesaria,',
+            'valorcampo1.unique' => 'La caja ya existe. Elige otro nombre,',
         ];
     }
 
@@ -48,7 +48,7 @@ class Caja extends Component
     {
         $valores=ModelsCaja::query()
             ->search('name',$this->search)
-            ->select('id','name as valorcampo2','familia as valorcampo3')
+            ->select('id','name as valorcampo1','familia as valorcampo2','descripcion as valorcampo3')
             ->orderBy('name')
             ->get();
         return view('livewire.auxiliarcard',compact('valores'));
@@ -77,13 +77,15 @@ class Caja extends Component
         $this->validate();
 
         ModelsCaja::create([
-            'name'=>$this->valorcampo2,
-            'familia'=>strtoupper($this->valorcampo3),
+            'name'=>$this->valorcampo1,
+            'familia'=>strtoupper($this->valorcampo2),
+            'descripcion'=>$this->valorcampo3,
         ]);
 
         $this->dispatchBrowserEvent('notify', 'Caja añadida con éxito');
 
         $this->emit('refresh');
+        $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
     }

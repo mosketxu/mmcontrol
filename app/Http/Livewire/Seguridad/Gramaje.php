@@ -14,12 +14,11 @@ class Gramaje extends Component
     public $valorcampo1='';
     public $valorcampo2='';
     public $valorcampo3='';
-    public $titcampo1='Destino';
-    public $titcampo2='Gramaje';
+    public $titcampo1='Gramaje';
+    public $titcampo2='Destino';
     public $titcampo3='Descripción';
-    public $pp='name';
-    public $campo1='familia';
-    public $campo2='name';
+    public $campo1='name';
+    public $campo2='familia';
     public $campo3='descripcion';
     public $campo1visible=1;
     public $campo2visible=1;
@@ -48,7 +47,7 @@ class Gramaje extends Component
     {
         $valores=ModelsGramaje::query()
             ->search('name',$this->search)
-            ->select('id','familia as valorcampo1','name as valorcampo2','descripcion as valorcampo3')
+            ->select('id','name as valorcampo1','familia as valorcampo2','descripcion as valorcampo3')
             ->orderBy('name')
             ->get();
         return view('livewire.auxiliarcard',compact('valores'));
@@ -72,13 +71,15 @@ class Gramaje extends Component
         $this->validate();
 
         ModelsGramaje::create([
-            'name'=>$this->valorcampo2,
-            'familia'=>strtoupper($this->valorcampo3),
+            'name'=>$this->valorcampo1,
+            'familia'=>strtoupper($this->valorcampo2),
+            'descripcion'=>$this->valorcampo3,
         ]);
 
         $this->dispatchBrowserEvent('notify', 'Gramaje añadido con éxito');
 
         $this->emit('refresh');
+        $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
     }

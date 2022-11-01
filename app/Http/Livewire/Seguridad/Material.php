@@ -14,11 +14,11 @@ class Material extends Component
     public $valorcampo1='';
     public $valorcampo2='';
     public $valorcampo3='';
-    public $titcampo1='Destino';
-    public $titcampo2='Material';
+    public $titcampo1='Material';
+    public $titcampo2='Destino';
     public $titcampo3='Descripcion';
-    public $campo1='familia';
-    public $campo2='name';
+    public $campo1='name';
+    public $campo2='familia';
     public $campo3='descripcion';
     public $campo1visible=1;
     public $campo2visible=1;
@@ -31,15 +31,16 @@ class Material extends Component
     protected function rules()
     {
         return [
-            'valorcampo2'=>'required|unique:materiales,name',
+            'valorcampo1'=>'required|unique:materiales,name',
+            'valorcampo2'=>'nullable',
             'valorcampo3'=>'nullable',
         ];
     }
     public function messages()
     {
         return [
-            'valorcampo2.required' => 'El nombre del material es necesario,',
-            'valorcampo2.unique' => 'El material ya existe. Elige otro nombre,',
+            'valorcampo1.required' => 'El nombre del material es necesario,',
+            'valorcampo1.unique' => 'El material ya existe. Elige otro nombre,',
         ];
     }
 
@@ -47,7 +48,7 @@ class Material extends Component
     {
         $valores=ModelsMaterial::query()
             ->search('name',$this->search)
-            ->select('id','familia as valorcampo1','name as valorcampo2','descripcion as valorcampo3')
+            ->select('id','name as valorcampo1','familia as valorcampo2','descripcion as valorcampo3')
             ->orderBy('name')
             ->get();
         return view('livewire.auxiliarcard',compact('valores'));
@@ -71,12 +72,14 @@ class Material extends Component
 
         ModelsMaterial::create([
             'name'=>$this->valorcampo2,
-            'familia'=>strtoupper($this->valorcampo3),
+            'familia'=>strtoupper($this->valorcampo2),
+            'descripcion'=>$this->valorcampo3,
         ]);
 
         $this->dispatchBrowserEvent('notify', 'Material añadido con éxito');
 
         $this->emit('refresh');
+        $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
     }

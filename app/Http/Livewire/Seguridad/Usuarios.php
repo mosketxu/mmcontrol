@@ -15,7 +15,6 @@ class Usuarios extends Component
     public $titcampo1='Usuario';
     public $titcampo2='email';
     public $titcampo3='password';
-    public $pp='nombre';
     public $campo1='name';
     public $campo2='email';
     public $campo3='password';

@@ -1,4 +1,4 @@
-    <div class="relative bg-white border rounded p-2">
+    <div class="relative p-2 bg-white border rounded">
         <div class="">
             <div class="flex justify-between">
                 <div>
@@ -27,21 +27,21 @@
                     <thead>
                         <tr>
                             @if ($campo1visible==1)
-                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 bg-blue-50" >{{ __($titcampo1) }}</th>
+                                <th class="px-1 py-3 pl-3 text-xs font-bold leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo1) }}</th>
                             @endif
                             @if ($campo2visible==1)
-                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 bg-blue-50" >{{ __($titcampo2) }} </th>
+                                <th class="px-1 py-3 pl-3 text-xs font-bold leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo2) }} </th>
                             @endif
                             @if ($campo3visible==1)
-                                <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 bg-blue-50" >{{ __($titcampo3) }} </th>
+                                <th class="px-1 py-3 pl-3 text-xs font-bold leading-4 tracking-wider text-left text-gray-500 bg-blue-50" >{{ __($titcampo3) }} </th>
                             @endif
-                            <th class="px-1 py-3 pl-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 bg-blue-50" ></th>
+                            <th class="px-1 py-3 pl-3 text-xs font-bold leading-4 tracking-wider text-left text-gray-500 bg-blue-50" ></th>
                         </tr>
                     </thead>
-                </table>
+                {{-- </table>
             </div>
-            <div class="h-96 min-w-full overflow-x-auto overflow-y-auto align-middle shadow sm:rounded-b-lg">
-                <table class="min-w-full divide-y divide-gray-200">
+            <div class="min-w-full overflow-x-auto overflow-y-auto align-middle shadow h-96 sm:rounded-b-lg">
+                <table class="min-w-full divide-y divide-gray-200"> --}}
                     <tbody class="bg-white divide-y divide-gray-200 ">
                         @foreach ($valores as $valor)
                             <tr wire:loading.class.delay="opacity-50">
@@ -77,38 +77,38 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
+                {{-- </table>
             </div>
-            <div class="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg">
-                <form wire:submit.prevent="save">
-                    <table min-w-full divide-y divide-gray-200>
-                        <tbody>
-                            <tr>
+            <div class="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg"> --}}
+                {{-- <table min-w-full divide-y divide-gray-200> --}}
+                    <tfoot class="bg-blue-100">
+                        <form wire:submit.prevent="save">
+                            <tr >
                                 @if ($campo1visible==1)
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
                                     <input type="text" wire:model.defer="valorcampo1"
-                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 @endif
                                 @if ($campo2visible==1)
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
                                     <input type="text" wire:model.defer="valorcampo2"
-                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 @endif
                                 @if ($campo3visible==1)
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
                                     <input type="text" wire:model.defer="valorcampo3"
-                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 @endif
                                 <td  class="p-2 ">
                                     <button type="submit" class="items-center pl-1 mx-0 mt-2 text-center w-7 "><x-icon.save-a class="text-blue"></x-icon.save-a></button>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </form>
+                        </tfoot>
+                    </form>
+                </table>
             </div>
         </div>
     </div>

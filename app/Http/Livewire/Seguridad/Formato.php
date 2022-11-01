@@ -14,15 +14,14 @@ class Formato extends Component
     public $valorcampo1='';
     public $valorcampo2='';
     public $valorcampo3='';
-    public $titcampo1='';
-    public $titcampo2='Formato';
-    public $titcampo3='Descripcion';
-    public $pp='name';
-    public $campo1='';
-    public $campo2='name';
-    public $campo3='familia';
-    public $campo1visible=0;
-    public $campo2visible=1;
+    public $titcampo1='Formato';
+    public $titcampo2='Destino';
+    public $titcampo3='Descripción';
+    public $campo1='name';
+    public $campo2='familia';
+    public $campo3='descripcion';
+    public $campo1visible=1;
+    public $campo2visible=0;
     public $campo3visible=1;
     public $editarvisible=0;
     public $search='';
@@ -32,15 +31,16 @@ class Formato extends Component
     protected function rules()
     {
         return [
-            'valorcampo2'=>'required|unique:formatos,name',
+            'valorcampo1'=>'required|unique:formatos,name',
+            'valorcampo2'=>'nullable',
             'valorcampo3'=>'nullable',
         ];
     }
     public function messages()
     {
         return [
-            'valorcampo2.required' => 'El nombre del formato es necesario,',
-            'valorcampo2.unique' => 'El formato ya existe. Elige otro nombre,',
+            'valorcampo1.required' => 'El nombre del formato es necesario,',
+            'valorcampo1.unique' => 'El formato ya existe. Elige otro nombre,',
         ];
     }
 
@@ -48,7 +48,7 @@ class Formato extends Component
     {
         $valores=ModelsFormato::query()
             ->search('name',$this->search)
-            ->select('id','name as valorcampo2','descripcion as valorcampo3')
+            ->select('id','name as valorcampo1','familia as valorcampo2','descripcion as valorcampo3')
             ->orderBy('name')
             ->get();
         return view('livewire.auxiliarcard',compact('valores'));
@@ -77,13 +77,15 @@ class Formato extends Component
         $this->validate();
 
         ModelsFormato::create([
-            'name'=>$this->valorcampo2,
-            'familia'=>strtoupper($this->valorcampo3),
+            'name'=>$this->valorcampo1,
+            'familia'=>strtoupper($this->valorcampo2),
+            'descripcion'=>$this->valorcampo3,
         ]);
 
         $this->dispatchBrowserEvent('notify', 'Formato añadido con éxito');
 
         $this->emit('refresh');
+        $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
     }

@@ -14,12 +14,11 @@ class Tinta extends Component
     public $valorcampo1='';
     public $valorcampo2='';
     public $valorcampo3='';
-    public $titcampo1='Destino';
-    public $titcampo2='Tinta';
+    public $titcampo1='Tinta';
+    public $titcampo2='Destino';
     public $titcampo3='Descripción';
-    public $pp='name';
-    public $campo1='familia';
-    public $campo2='name';
+    public $campo1='name';
+    public $campo2='familia';
     public $campo3='descripcion';
     public $campo1visible=1;
     public $campo2visible=1;
@@ -32,15 +31,16 @@ class Tinta extends Component
     protected function rules()
     {
         return [
-            'valorcampo2'=>'required|unique:tintas,name',
+            'valorcampo1'=>'required|unique:tintas,name',
+            'valorcampo2'=>'nullable',
             'valorcampo3'=>'nullable',
         ];
     }
     public function messages()
     {
         return [
-            'valorcampo2.required' => 'El nombre de la tinta es necesaria,',
-            'valorcampo2.unique' => 'La tinta ya existe. Elige otro nombre,',
+            'valorcampo1.required' => 'El nombre de la tinta es necesaria,',
+            'valorcampo1.unique' => 'La tinta ya existe. Elige otro nombre,',
         ];
     }
 
@@ -48,7 +48,7 @@ class Tinta extends Component
     {
         $valores=ModelsTinta::query()
             ->search('name',$this->search)
-            ->select('id','familia as valorcampo1','name as valorcampo2','descripcion as valorcampo3')
+            ->select('id','name as valorcampo1','familia as valorcampo2','descripcion as valorcampo3')
             ->orderBy('name')
             ->get();
         return view('livewire.auxiliarcard',compact('valores'));
@@ -72,13 +72,15 @@ class Tinta extends Component
         $this->validate();
 
         ModelsTinta::create([
-            'name'=>$this->valorcampo2,
-            'familia'=>strtoupper($this->valorcampo3),
+            'name'=>$this->valorcampo1,
+            'familia'=>strtoupper($this->valorcampo2),
+            'descripcion'=>$this->valorcampo3,
         ]);
 
         $this->dispatchBrowserEvent('notify', 'Tinta añadida con éxito');
 
         $this->emit('refresh');
+        $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
     }
