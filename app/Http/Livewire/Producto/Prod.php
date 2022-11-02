@@ -28,17 +28,6 @@ class Prod extends Component
     public $ficheropdf;
     public $tipo;
     public $titulo;
-    public $formatoselected;
-    public $gramajeinteriorselected;
-    public $materialinteriorselected;
-    public $tintainteriorselected;
-    public $gramajecubiertaselected;
-    public $materialcubiertaselected;
-    public $tintacubiertaselected;
-    public $encuadernadoselected;
-    public $cajaselected;
-    public $plastificadoselected;
-
 
     protected function rules()
     {
@@ -100,16 +89,6 @@ class Prod extends Component
     {
         $this->producto=$producto;
         $this->tipo=$tipo;
-        $this->formatoselected=$producto->formato;
-        $this->gramajeinteriorselected=$producto->gramajeinterior;
-        $this->materialinteriorselected=$producto->materialinterior;
-        $this->tintainteriorselected=$producto->tintainterior;
-        $this->gramajecubiertaselected=$producto->gramajecubierta;
-        $this->materialcubiertaselected=$producto->materialcubierta;
-        $this->tintacubiertaselected=$producto->tintacubierta;
-        $this->encuadernadoselected=$producto->encuadernado;
-        $this->cajaselected=$producto->caja;
-        $this->plastificadoselected=$producto->plastificado;
     }
 
     public function render()
@@ -121,7 +100,6 @@ class Prod extends Component
             $this->titulo='Nuevo producto';
             if($this->producto->id) $this->titulo='Ficha del producto: '. $this->producto->referencia;
         }
-        // dd($this->titulo);
 
         $this->formatos=Formato::orderBy('name')->get();
         $gramajes=Gramaje::orderBy('name')->get();
@@ -192,20 +170,24 @@ class Prod extends Component
             $message=$this->producto->referencia . " creado satisfactoriamente";
         }
 
-        // $a=Validator::make(['descripsolapa'=>$this->producto->descripsolapa],[
-        //     'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
-        //     ])->validate();
+        Validator::make([
+            'descripsolapa'=>$this->producto->descripsolapa,
+            'descripguardas'=>$this->producto->descripguardas,
+            'descripcd'=>$this->producto->descripcd,
+            'descripnovedad'=>$this->producto->descripnovedad,
 
+        ],[
+            'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
+            'descripguardas' => Rule::requiredIf($this->producto->guardas==true),
+            'descripcd' => Rule::requiredIf($this->producto->cd==true),
+            'descripnovedad' => Rule::requiredIf($this->producto->novedad==true),
+        ],[
+            'descripsolapa.required' => 'La descripcion de las solapas es necesaria si se ha seleccionado la opción Solapas. ',
+            'descripguardas.required' => 'La descripcion de las guardas es necesaria si se ha seleccionado la opción Guardas. ',
+            'descripnovedad.required' => 'La descripcion de la novedad es necesaria si se ha seleccionado la opción Novedad. ',
+            'descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
+        ])->validate();
 
-        // $filename=$this->ficheropdf->store('/','fichasproducto');
-        // $filename=$this->ficheropdf->storeAs('/','pp.pdf','fichasproducto');
-        $filename="";
-        if ($this->ficheropdf) {
-            $nombre=$this->producto->id.'.'.$this->ficheropdf->extension();
-            $filename=$this->ficheropdf->storeAs('/', $nombre, 'fichasproducto');
-        }
-
-        // dd($this->producto);
         $prod=Producto::updateOrCreate([
             'id'=>$i
             ],
@@ -215,17 +197,17 @@ class Prod extends Component
             'cliente_id'=>$this->producto->cliente_id,
             'tipo'=>$this->producto->tipo,
             'tirada'=>$this->producto->tirada,
-            'formato'=>$this->formatoselected,
+            'formato'=>$this->producto->formato,
             'FSC'=>$this->producto->FSC,
-            'materialinterior'=>$this->materialinteriorselected,
-            'tintainterior'=>$this->tintainteriorselected,
-            'gramajeinterior'=>$this->gramajeinteriorselected,
-            'materialcubierta'=>$this->materialcubiertaselected,
-            'tintacubierta'=>$this->tintacubiertaselected,
-            'gramajecubierta'=>$this->gramajecubiertaselected,
+            'materialinterior'=>$this->producto->materialinterior,
+            'tintainterior'=>$this->producto->tintainterior,
+            'gramajeinterior'=>$this->producto->gramajeinterior,
+            'materialcubierta'=>$this->producto->materialcubierta,
+            'tintacubierta'=>$this->producto->tintacubierta,
+            'gramajecubierta'=>$this->producto->gramajecubierta,
             'paginas'=>$this->producto->paginas,
-            'encuadernado'=>$this->encuadernadoselected,
-            'plastificado'=>$this->plastificadoselected,
+            'encuadernado'=>$this->producto->encuadernado,
+            'plastificado'=>$this->producto->plastificado,
             'solapa'=>$this->producto->solapa,
             'descripsolapa'=>$this->producto->descripsolapa,
             'guardas'=>$this->producto->guardas,
@@ -234,7 +216,7 @@ class Prod extends Component
             'descripcd'=>$this->producto->descripcd,
             'novedad'=>$this->producto->novedad,
             'descripnovedad'=>$this->producto->descripnovedad,
-            'caja'=>$this->cajaselected,
+            'caja'=>$this->producto->caja,
             'udxcaja'=>$this->producto->udxcaja,
             'especiflogistica'=>$this->producto->especiflogistica,
             'observaciones'=>$this->producto->especiflogistica,
@@ -243,7 +225,13 @@ class Prod extends Component
             'observaciones'=>$this->producto->observaciones,
             ]
         );
-        if($this->ficheropdf){
+
+        // $filename=$this->ficheropdf->store('/','fichasproducto');
+        // $filename=$this->ficheropdf->storeAs('/','pp.pdf','fichasproducto');
+        $filename="";
+        if ($this->ficheropdf) {
+            $nombre=$this->producto->id.'.'.$this->ficheropdf->extension();
+            $filename=$this->ficheropdf->storeAs('/', $nombre, 'fichasproducto');
             $prod->adjunto=$filename;
             $prod->save();
         }

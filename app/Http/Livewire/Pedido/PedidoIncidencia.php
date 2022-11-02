@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\PedidoParcial as ModelsPedidoParcial;
+use App\Models\PedidoIncidencia as ModelsPedidoIncidencia;
+
+
 use Livewire\Component;
 
-class PedidoParcial extends Component
+class PedidoIncidencia extends Component
 {
-    public $titulo='Entregas Parciales del pedido:';
-    public $tipo;
-    public $pedido;
+    public $titulo='Incidencias';
     public $ruta;
     public $pedidoid;
     public $titcampofecha='Fecha';
@@ -21,7 +21,7 @@ class PedidoParcial extends Component
     public $valorcampo2='0';
     public $valorcampo3='0';
     public $valorcampo4='';
-    public $valorcampoimg;
+    public $valorcampoimg='';
     public $campofecha='fecha';
     public $campo2='cantidad';
     public $campo3='importe';
@@ -60,17 +60,14 @@ class PedidoParcial extends Component
         ];
     }
 
-    public function mount($pedidoid,$ruta,$tipo)
+    public function mount()
     {
         $this->valorcampofecha=now()->format('Y-m-d');
-        $this->tipo=$tipo;
-        $this->ruta=$ruta;
-        $this->pedidoid=$pedidoid;
     }
 
     public function render()
     {
-        $valores=ModelsPedidoParcial::query()
+        $valores=ModelsPedidoIncidencia::query()
         ->search('comentario',$this->search)
         ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
         ->orderBy('fecha')
@@ -79,12 +76,12 @@ class PedidoParcial extends Component
         return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));
     }
 
-    public function changeCampo(ModelsPedidoParcial $valor,$campo,$valorcampo)
+    public function changeCampo(ModelsPedidoIncidencia $valor,$campo,$valorcampo)
     {
-        $p=ModelsPedidoParcial::find($valor->id);
+        $p=ModelsPedidoIncidencia::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Parcial Actualizado.');
+        $this->dispatchBrowserEvent('notify', 'Incidencia Actualizada.');
     }
 
     public function save()
@@ -92,7 +89,7 @@ class PedidoParcial extends Component
         $this->valorcampo2=$this->valorcampo2=='' ? '0' : $this->valorcampo2;
         $this->valorcampo3=$this->valorcampo3=='' ? '0' : $this->valorcampo3;
         $this->validate();
-        ModelsPedidoParcial::create([
+        ModelsPedidoIncidencia::create([
             'pedido_id'=>$this->pedidoid,
             'fecha'=>$this->valorcampofecha,
             'cantidad'=>$this->valorcampo2,
@@ -100,7 +97,7 @@ class PedidoParcial extends Component
             'comentario'=>$this->valorcampo4,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Parcial añadido con éxito');
+        $this->dispatchBrowserEvent('notify', 'Incidencia añadida con éxito');
 
         $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
         $this->valorcampo2='0';
@@ -118,11 +115,11 @@ class PedidoParcial extends Component
 
     public function delete($valorId)
     {
-        $borrar = ModelsPedidoParcial::find($valorId);
+        $borrar = ModelsPedidoIncidencia::find($valorId);
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Parcial eliminado!');
+            $this->dispatchBrowserEvent('notify', 'Incidencia eliminada!');
         }
     }
 }

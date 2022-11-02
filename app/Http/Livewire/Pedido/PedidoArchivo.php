@@ -96,7 +96,7 @@ class PedidoArchivo extends Component
         $this->validate(['valorcampoimg'=>'file|max:5000']);
     }
 
-    public function presentaPDF($pedidoarchivoid){
+    public function presentaAdjunto($pedidoarchivoid){
         $parchivo=ModelsPedidoArchivo::find($pedidoarchivoid);
         $existe=Storage::disk('archivospedido')->exists($parchivo->archivo);
         // dd($this->pedidoid.'/'.$pedidoarchivoid->id);
@@ -113,7 +113,7 @@ class PedidoArchivo extends Component
         $filename="";
         $extension="";
 
-$pedidoarchivo=ModelsPedidoArchivo::create([
+        $pedidoarchivo=ModelsPedidoArchivo::create([
             'pedido_id'=>$this->pedidoid,
             'comentario'=>$this->valorcampo4,
             'nombrearchivooriginal'=>$this->valorcampoimg->getClientOriginalName(),
@@ -132,7 +132,7 @@ $pedidoarchivo=ModelsPedidoArchivo::create([
 
         $this->dispatchBrowserEvent('notify', 'Archivo añadido con éxito');
 
-        return redirect()->route('pedido.archivos',$this->pedidoid);
+        return redirect()->route('pedido.archivos',[$this->pedidoid,$this->ruta]);
     }
 
     public function delete($valorId)

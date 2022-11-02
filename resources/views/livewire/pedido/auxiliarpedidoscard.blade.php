@@ -75,12 +75,9 @@
                         </div>
                         @endif
                         @if ($campoimgvisible==1)
-                        <div class="flex-col w-2/12 text-left">
+                        <div class="w-2/12 text-left">
                             @if($valor->valorcampoimg)
-                            <span class="text-green-500 "> {{ $valor->valorcampo3 }}</span>
-                                <x-icon.clip-a class="text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $valor->id }})" title="Archivo"/>
-                            {{-- @else
-                                <x-icon.clip-b class="text-gray-500" title="No hay adjunto"/> --}}
+                                <a href="#" class="flex text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $valor->id }})" title="Archivo">{{ $valor->valorcampo3 }} <x-icon.clip /></a>
                             @endif
                         </div>
                         @endif
@@ -142,7 +139,6 @@
         </div>
     </div>
     <div class="m-2">
-        {{ $tipo }}
         @if($ruta=='i')
             <x-jet-secondary-button  onclick="location.href = '{{route('pedido.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @else

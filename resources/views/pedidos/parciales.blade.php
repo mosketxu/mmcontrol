@@ -9,7 +9,7 @@
         <div class="mx-auto sm:px-6 lg:px-6">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 <div class="grid grid-cols-1 bg-gray-200 bg-opacity-25 md:grid-cols-1">
-                    @livewire('pedido.pedido-parcial',['pedidoid'=>$pedido->id,'ruta'=>$ruta])
+                    @livewire('pedido.pedido-parcial',['pedidoid'=>$pedido->id,'ruta'=>$ruta,'tipo'=>$pedido->tipo])
                 </div>
             </div>
         </div>

@@ -57,12 +57,12 @@ class PedidoController extends Controller
     public function edit(Pedido $pedido)
     {
         $tipo=$pedido->tipo;
-return view('pedidos.edit',compact('pedido','tipo'));
+        return view('pedidos.edit',compact('pedido','tipo'));
     }
 
     public function parciales(Pedido $pedido, $ruta)
     {
-    return view('pedidos.parciales',compact('pedido','ruta'));
+        return view('pedidos.parciales',compact('pedido','ruta'));
     }
 
     public function facturaciones(Pedido $pedido, $ruta)

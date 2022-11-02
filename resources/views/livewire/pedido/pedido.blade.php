@@ -1,24 +1,22 @@
 <div class="">
-    {{-- @livewire('menu',['pedido'=>$pedido],key($pedido->id)) --}}
-
     <div class="h-full p-1 mx-2">
-        <div class="flex space-x-3 ">
+        {{-- <div class="flex space-x-3 ">
             <div class="">
                 <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }} {{ $tipo }}
                     <input  class="text-gray-500 border border-blue-300 rounded shadow-md w-28" wire:model.lazy="pedidoid" type="number" readonly/>
                 </h1>
             </div>
             @if($pedidoid)
-            <x-icon.cubes-a class="text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedidoid,'e'])}}'" title="Parciales"/>Parciales
-            <x-icon.euro-a class="text-orange-500 hover:text-orange-700 " onclick="location.href = '{{route('pedido.facturaciones',[$pedidoid,'e'])}}'" title="facturaciones"/>Facturaciones
-            <x-icon.clip-a class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedidoid,'e'])}}'" title="Archivo"/>Archivos
-            <x-icon.clip-a class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedidoid,'e'])}}'" title="Incidencias"/>Incidencias
-            <x-icon.clip-a class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.retrasos',[$pedidoid,'e'])}}'" title="Retrasos"/>Retrasos
-            <x-icon.clip-a class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.distribuciones',[$pedidoid,'e'])}}'" title="Distribuciones"/>Distribuciones
-            <x-icon.clip-a class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.presupuesto',[$pedidoid,'e'])}}'" title="Presupuesto"/>Presupuesto
+            <a href="#" class="flex text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedidoid,'e'])}}'" title="Parciales"><x-icon.cubes/>Parciales </a>
+            <a href="#" class="flex text-orange-500 hover:text-orange-700 " onclick="location.href = '{{route('pedido.facturaciones',[$pedidoid,'e'])}}'" title="facturaciones"><x-icon.euro class="text-orange-500 hover:text-orange-700 "/>Parciales </a>
+            <a href="#" class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedidoid,'e'])}}'" title="Archivo"><x-icon.clip />Archivos</a>
+            <a href="#" class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedidoid,'e'])}}'" title="Incidencias"><x-icon.clip />Incidencias</a>
+            <a href="#" class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.retrasos',[$pedidoid,'e'])}}'" title="Retrasos"><x-icon.clip />Retrasos</a>
+            <a href="#" class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.distribuciones',[$pedidoid,'e'])}}'" title="Distribuciones"><x-icon.clip />Distribuciones</a>
+            <a href="#" class="text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.presupuesto',[$pedidoid,'e'])}}'" title="Presupuesto"><x-icon.clip />Presupuesto</a>
             @endif
-        </div>
-        <div class="py-1 space-y-4">
+        </div> --}}
+        <div class="py-0 space-y-2">
             <div class="">
                 @include('errores')
             </div>

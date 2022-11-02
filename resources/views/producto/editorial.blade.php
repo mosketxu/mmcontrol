@@ -45,6 +45,7 @@
                     <h3 class="pl-1 font-semibold">Datos generales</h3>
                 </div>
                 {{-- formatos --}}
+                el formato es {{ $producto->formato }}
                 <div class="w-full form-item">
                     <x-jet-label for="formato">{{ __('Formato') }}</x-jet-label>
                         <x-select wire:model.lazy="producto.formato" selectname="formato" class="w-full form-control" id="formato">
