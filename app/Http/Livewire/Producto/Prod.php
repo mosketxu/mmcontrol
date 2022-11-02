@@ -8,6 +8,7 @@ use App\Models\{Caja, Encuadernacion, Entidad, Formato, Gramaje, Material, Plast
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class Prod extends Component
 {
@@ -62,13 +63,13 @@ class Prod extends Component
             'producto.plastificado'=>'nullable',
             'producto.encuadernado'=>'nullable',
             'producto.solapa'=>'nullable',
-            'producto.descripsolapa'=>'nullable',
+            'producto.descripsolapa'=>Rule::requiredIf($this->producto->solapa==true),
             'producto.guardas'=>'nullable',
-            'producto.descripguardas'=>'nullable',
+            'producto.descripguardas'=>Rule::requiredIf($this->producto->guardas==true),
             'producto.cd'=>'nullable',
-            'producto.descripcd'=>'nullable',
+            'producto.descripcd'=>Rule::requiredIf($this->producto->cd==true),
             'producto.novedad'=>'nullable',
-            'producto.descripnovedad'=>'nullable',
+            'producto.descripnovedad'=>Rule::requiredIf($this->producto->novedad==true),
             'producto.caja'=>'nullable',
             'producto.udxcaja'=>'nullable|numeric',
             'producto.especiflogistica'=>'nullable',
@@ -76,6 +77,10 @@ class Prod extends Component
             'producto.observaciones'=>'nullable',
                 ];
     }
+
+    // $a=Validator::make(['descripsolapa'=>$this->producto->descripsolapa],[
+    //     'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
+    //     ])->validate();
 
     public function messages()
     {
@@ -85,6 +90,10 @@ class Prod extends Component
             'producto.isbn.unique' => 'El ISBN ya existe.',
             'producto.preciocoste.numeric' => 'El precio de compra debe ser numérico',
             'producto.precioventa.numeric' => 'El precio de venta debe ser numérico',
+            'producto.descripsolapa.required' => 'La descripcion de las solapas es necesaria si se ha seleccionado la opción Solapas. ',
+            'producto.descripguardas.required' => 'La descripcion de las guardas es necesaria si se ha seleccionado la opción Guardas. ',
+            'producto.descripnovedad.required' => 'La descripcion de la novedad es necesaria si se ha seleccionado la opción Novedad. ',
+            'producto.descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
         ];
     }
     public function mount(Producto $producto,$tipo)
@@ -150,11 +159,11 @@ class Prod extends Component
         $this->validate(['ficheropdf'=>'file|max:5000']);
     }
 
-    public function presentaAdjunto(Producto $producto){
-        $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
-        if ($existe)
-            return Storage::disk('fichasproducto')->download($producto->adjunto);
-    }
+    // public function presentaAdjunto(Producto $producto){
+    //     $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
+    //     if ($existe)
+    //         return Storage::disk('fichasproducto')->download($producto->adjunto);
+    // }
 
     public function save()
     {
@@ -176,11 +185,17 @@ class Prod extends Component
                 ],
             );
             $mensaje=$this->producto->referencia . " actualizado satisfactoriamente";
+
         }else{
             $this->validate();
             $i=$this->producto->id;
             $message=$this->producto->referencia . " creado satisfactoriamente";
         }
+
+        // $a=Validator::make(['descripsolapa'=>$this->producto->descripsolapa],[
+        //     'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
+        //     ])->validate();
+
 
         // $filename=$this->ficheropdf->store('/','fichasproducto');
         // $filename=$this->ficheropdf->storeAs('/','pp.pdf','fichasproducto');

@@ -34,77 +34,77 @@
 @push('scripts')
 
     <script>
-        $(document).ready(function () {
-            $('#formato').val(@json($formatoselected));
-            $('#formato').select2();
-            $('#formato').on('change', function (e) {
-                var data = $('#formato').select2("val");
-                @this.set('formatoselected', data);
-            });
+        // $(document).ready(function () {
+        //     $('#formato').val(@json($formatoselected));
+        //     $('#formato').select2();
+        //     $('#formato').on('change', function (e) {
+        //         var data = $('#formato').select2("val");
+        //         @this.set('formatoselected', data);
+        //     });
 
-            $('#gramajeinterior').val(@json($gramajeinteriorselected));
-            $('#gramajeinterior').select2();
-            $('#gramajeinterior').on('change', function (e) {
-                var data = $('#gramajeinterior').select2("val");
-                @this.set('gramajeinteriorselected', data);
-            });
+        //     $('#gramajeinterior').val(@json($gramajeinteriorselected));
+        //     $('#gramajeinterior').select2();
+        //     $('#gramajeinterior').on('change', function (e) {
+        //         var data = $('#gramajeinterior').select2("val");
+        //         @this.set('gramajeinteriorselected', data);
+        //     });
 
-            $('#tintainterior').val(@json($tintainteriorselected));
-            $('#tintainterior').select2();
-            $('#tintainterior').on('change', function (e) {
-                var data = $('#tintainterior').select2("val");
-                @this.set('tintainteriorselected', data);
-            });
+        //     $('#tintainterior').val(@json($tintainteriorselected));
+        //     $('#tintainterior').select2();
+        //     $('#tintainterior').on('change', function (e) {
+        //         var data = $('#tintainterior').select2("val");
+        //         @this.set('tintainteriorselected', data);
+        //     });
 
-            $('#materialinterior').val(@json($materialinteriorselected));
-            $('#materialinterior').select2();
-            $('#materialinterior').on('change', function (e) {
-                var data = $('#materialinterior').select2("val");
-                @this.set('materialinteriorselected', data);
-            });
+        //     $('#materialinterior').val(@json($materialinteriorselected));
+        //     $('#materialinterior').select2();
+        //     $('#materialinterior').on('change', function (e) {
+        //         var data = $('#materialinterior').select2("val");
+        //         @this.set('materialinteriorselected', data);
+        //     });
 
-            $('#gramajecubierta').val(@json($gramajecubiertaselected));
-            $('#gramajecubierta').select2();
-            $('#gramajecubierta').on('change', function (e) {
-                var data = $('#gramajecubierta').select2("val");
-                @this.set('gramajecubiertaselected', data);
-            });
+        //     $('#gramajecubierta').val(@json($gramajecubiertaselected));
+        //     $('#gramajecubierta').select2();
+        //     $('#gramajecubierta').on('change', function (e) {
+        //         var data = $('#gramajecubierta').select2("val");
+        //         @this.set('gramajecubiertaselected', data);
+        //     });
 
-            $('#tintacubierta').val(@json($tintacubiertaselected));
-            $('#tintacubierta').select2();
-            $('#tintacubierta').on('change', function (e) {
-                var data = $('#tintacubierta').select2("val");
-                @this.set('tintacubiertaselected', data);
-            });
+        //     $('#tintacubierta').val(@json($tintacubiertaselected));
+        //     $('#tintacubierta').select2();
+        //     $('#tintacubierta').on('change', function (e) {
+        //         var data = $('#tintacubierta').select2("val");
+        //         @this.set('tintacubiertaselected', data);
+        //     });
 
-            $('#materialcubierta').val(@json($materialcubiertaselected));
-            $('#materialcubierta').select2();
-            $('#materialcubierta').on('change', function (e) {
-                var data = $('#materialcubierta').select2("val");
-                @this.set('materialcubiertaselected', data);
-            });
+        //     $('#materialcubierta').val(@json($materialcubiertaselected));
+        //     $('#materialcubierta').select2();
+        //     $('#materialcubierta').on('change', function (e) {
+        //         var data = $('#materialcubierta').select2("val");
+        //         @this.set('materialcubiertaselected', data);
+        //     });
 
-            $('#encuadernado').val(@json($encuadernadoselected));
-            $('#encuadernado').select2();
-            $('#encuadernado').on('change', function (e) {
-                var data = $('#encuadernado').select2("val");
-                @this.set('encuadernadoselected', data);
-            });
+        //     $('#encuadernado').val(@json($encuadernadoselected));
+        //     $('#encuadernado').select2();
+        //     $('#encuadernado').on('change', function (e) {
+        //         var data = $('#encuadernado').select2("val");
+        //         @this.set('encuadernadoselected', data);
+        //     });
 
-            $('#plastificado').val(@json($plastificadoselected));
-            $('#plastificado').select2();
-            $('#plastificado').on('change', function (e) {
-                var data = $('#plastificado').select2("val");
-                @this.set('plastificadoselected', data);
-            });
+        //     $('#plastificado').val(@json($plastificadoselected));
+        //     $('#plastificado').select2();
+        //     $('#plastificado').on('change', function (e) {
+        //         var data = $('#plastificado').select2("val");
+        //         @this.set('plastificadoselected', data);
+        //     });
 
-            $('#caja').val(@json($cajaselected));
-            $('#caja').select2();
-            $('#caja').on('change', function (e) {
-                var data = $('#caja').select2("val");
-                @this.set('cajaselected', data);
-            });
-        });
+        //     $('#caja').val(@json($cajaselected));
+        //     $('#caja').select2();
+        //     $('#caja').on('change', function (e) {
+        //         var data = $('#caja').select2("val");
+        //         @this.set('cajaselected', data);
+        //     });
+        // });
     </script>
 
 @endpush

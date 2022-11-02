@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\Storage;
+
 use \PDF;
 // use Barryvdh\DomPDF\Facade as PDF;
 
@@ -35,6 +37,16 @@ class ProductoController extends Controller
     public function nuevo($tipo)
     {
         return view('producto.create',compact('tipo'));
+    }
+
+    public function adjunto(Producto $producto){
+
+        $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
+        if ($existe)
+            // return Storage::disk('fichasproducto')->url($producto->adjunto);
+            return redirect(Storage::disk('fichasproducto')->url($producto->adjunto));
+            // return Storage::disk('fichasproducto')->url($producto->adjunto);
+            // return Storage::disk('fichasproducto')->download($producto->adjunto);
     }
 
     public function ficha($prodId,$tipo)

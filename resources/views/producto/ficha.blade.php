@@ -21,7 +21,9 @@
                 </tr>
                 <tr style="">
                     <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">FSC</td>
-                    <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->FSC =='0' ? 'NO' : 'SÍ' }}</td>
+                    <td style=" padding-left:3px;" class="borde1" colspan="2">
+                        <input type="checkbox" name="FSC" value="{{ $producto->FSC }}" {{ $producto->FSC=='1' ? 'checked' : ''  }} id="FSC">
+                    </td>
                 </tr>
                 <tr style="">
                     <td width=30% style="padding-left:3px; background-color: #CCC0D9;"  class="bordeleft1"></td>
@@ -59,19 +61,31 @@
                 </tr>
                 <tr style="">
                     <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Solapas</td>
-                    <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->descripsolapa }}</td>
+                    <td style="padding-left:3px;" class="borde1" colspan="2">
+                        <input type="checkbox" name="solapa" value="{{ $producto->solapa }}" {{ $producto->solapa=='1' ? 'checked' : ''  }} id="solapa">
+                        {{ $producto->descripsolapa }}
+                    </td>
                 </tr>
                 <tr style="">
                     <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Guardas</td>
-                    <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->descripguardas }}</td>
+                    <td style="padding-left:3px;" class="borde1" colspan="2">
+                        <input type="checkbox" name="guardas" value="{{ $producto->guardas }}" {{ $producto->guardas=='1' ? 'checked' : ''  }} id="guardas">
+                        {{ $producto->descripguardas }}
+                    </td>
                 </tr>
                 <tr style="">
                     <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Novedad</td>
-                    <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->descripnovedad }}</td>
+                    <td style="padding-left:3px;" class="borde1" colspan="2">
+                        <input type="checkbox" name="novedad" value="{{ $producto->novedad }}" {{ $producto->novedad=='1' ? 'checked' : ''  }} id="novedad">
+                        {{ $producto->descripnovedad }}
+                    </td>
                 </tr>
                 <tr style="">
                     <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">CD/DVD</td>
-                    <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->descripcd }}</td>
+                    <td style="padding-left:3px;" class="borde1" colspan="2">
+                        <input type="checkbox" name="cd" value="{{ $producto->cd }}" {{ $producto->cd=='1' ? 'checked' : ''  }} id="cd">
+                        {{ $producto->descripcd }}
+                    </td>
                 </tr>
                 <tr style="">
                     <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Modelo Caja</td>
