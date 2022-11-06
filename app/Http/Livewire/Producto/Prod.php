@@ -67,10 +67,6 @@ class Prod extends Component
                 ];
     }
 
-    // $a=Validator::make(['descripsolapa'=>$this->producto->descripsolapa],[
-    //     'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
-    //     ])->validate();
-
     public function messages()
     {
         return [

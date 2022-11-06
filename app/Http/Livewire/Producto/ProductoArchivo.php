@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Http\Livewire\Pedido;
+namespace App\Http\Livewire\Producto;
 
-use App\Models\PedidoArchivo as ModelsPedidoArchivo;
+use App\Models\Producto;
+use App\Models\ProductoArchivo as ModelsProductoArchivo;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
 use Livewire\Component;
 
-class PedidoArchivo extends Component
+
+class ProductoArchivo extends Component
 {
     use WithFileUploads;
 
-    public $titulo='Archivos del pedido:';
+    public $titulo='Archivos del producto:';
     public $ruta;
-    public $pedidoid;
+    public $productoid;
+    public $prod;
     public $titcampofecha='';
     public $titcampo2='';
     public $titcampo3='';
@@ -63,29 +66,27 @@ class PedidoArchivo extends Component
             'valorcampoimg.required'=>'El fichero es necesario',
         ];
     }
-
-    // public function mount($ruta)
-    // {
-    //     if($ruta='i') $this->ruta='pedidos.index';
-    //     elseif($ruta='e') $this->ruta='pedidos.create';
-    //     elseif($ruta='n') $this->ruta='pedidos.edit';
-    //     else $this->ruta='pedidos.index';
-    // }
-
+    public function mount($productoid,$ruta,$tipo)
+    {
+        $this->prod=Producto::find($productoid);
+        $this->titulo="Archivos del producto: ". $this->prod->referencia;
+        // dd($productoid.'-'.$ruta.'-'.$tipo);
+    }
     public function render()
     {
-        $valores=ModelsPedidoArchivo::query()
+
+        $valores=ModelsProductoArchivo::query()
         ->search('comentario', $this->search)
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
         ->orderBy('comentario')
         ->paginate(10);
 
-        return view('livewire.pedido.auxiliarpedidoscard', compact('valores'));
+        return view('livewire.producto.auxiliarproductoscard', compact('valores'));
     }
 
-    public function changeCampo(ModelsPedidoArchivo $valor, $campo, $valorcampo)
+    public function changeCampo(ModelsProductoArchivo $valor, $campo, $valorcampo)
     {
-        $p=ModelsPedidoArchivo::find($valor->id);
+        $p=ModelsProductoArchivo::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
         $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
@@ -96,12 +97,12 @@ class PedidoArchivo extends Component
         $this->validate(['valorcampoimg'=>'file|max:5000']);
     }
 
-    public function presentaAdjunto($pedidoarchivoid){
-        $parchivo=ModelsPedidoArchivo::find($pedidoarchivoid);
-        $existe=Storage::disk('archivospedido')->exists($parchivo->archivo);
-        // dd($this->pedidoid.'/'.$pedidoarchivoid->id);
+    public function presentaAdjunto($productoarchivoid){
+        $parchivo=ModelsProductoArchivo::find($productoarchivoid);
+        $existe=Storage::disk('fichasproducto')->exists($parchivo->archivo);
+        // dd($this->productoid.'/'.$productoarchivoid->id);
         if ($existe)
-            return Storage::disk('archivospedido')->download($parchivo->archivo);
+            return Storage::disk('fichasproducto')->download($parchivo->archivo);
         else{
             $this->dispatchBrowserEvent('notifyred', 'Ha habido un problema con el fichero');
         }
@@ -113,8 +114,8 @@ class PedidoArchivo extends Component
         $filename="";
         $extension="";
 
-        $pedidoarchivo=ModelsPedidoArchivo::create([
-            'pedido_id'=>$this->pedidoid,
+        $productoarchivo=ModelsProductoArchivo::create([
+            'producto_id'=>$this->productoid,
             'comentario'=>$this->valorcampo4,
             'nombrearchivooriginal'=>$this->valorcampoimg->getClientOriginalName(),
             'archivo'=>'',
@@ -122,22 +123,22 @@ class PedidoArchivo extends Component
 
         if($this->campoimgvisible=='1'){
             if ($this->valorcampoimg) {
-                $nombre=$this->pedidoid.'/'.$pedidoarchivo->id.'.'.$this->valorcampoimg->extension();
-                $filename=$this->valorcampoimg->storeAs('/', $nombre, 'archivospedido');
-                $pedidoarchivo->archivo=$nombre;
-                $pedidoarchivo->save();
+                $nombre=$this->productoid.'/'.$productoarchivo->id.'.'.$this->valorcampoimg->extension();
+                $filename=$this->valorcampoimg->storeAs('/', $nombre, 'fichasproducto');
+                $productoarchivo->archivo=$nombre;
+                $productoarchivo->save();
             }
         }
 
 
         $this->dispatchBrowserEvent('notify', 'Archivo añadido con éxito');
 
-        return redirect()->route('pedido.archivos',[$this->pedidoid,$this->ruta]);
+        return redirect()->route('producto.archivos',[$this->productoid,$this->ruta]);
     }
 
     public function delete($valorId)
     {
-        $borrar = ModelsPedidoArchivo::find($valorId);
+        $borrar = ModelsProductoArchivo::find($valorId);
 
         if ($borrar) {
             $borrar->delete();

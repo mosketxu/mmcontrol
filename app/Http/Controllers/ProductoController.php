@@ -49,6 +49,11 @@ class ProductoController extends Controller
             // return Storage::disk('fichasproducto')->download($producto->adjunto);
     }
 
+    public function archivos(Producto $producto, $ruta)
+    {
+        return view('producto.archivos',compact('producto','ruta'));
+    }
+
     public function ficha($prodId,$tipo)
     {
         $pdf = new Dompdf();
@@ -66,7 +71,8 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        return view('producto.edit',compact('producto'));
+        $tipo=$producto->tipo;
+        return view('producto.edit',compact('producto','tipo'));
     }
 
 }
