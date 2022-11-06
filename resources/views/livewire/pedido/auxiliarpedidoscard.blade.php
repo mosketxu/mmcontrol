@@ -77,7 +77,16 @@
                         @if ($campoimgvisible==1)
                         <div class="w-2/12 text-left">
                             @if($valor->valorcampoimg)
-                                <a href="#" class="flex text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $valor->id }})" title="Archivo">{{ $valor->valorcampo3 }} <x-icon.clip /></a>
+                                {{-- <a href="#" class="flex text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $valor->id }})" title="Archivo">{{ $valor->valorcampo3 }} <x-icon.clip /></a> --}}
+                                <a href="{{asset('archivospedido/'.$valor->valorcampoimg) }}" target="_blank" class="w-5 text-blue-500 hover:text-blue-700" title="Ver producto">
+                                    <div class="flex">
+                                        <x-icon.clip />
+                                        <div class="mt-1">
+                                            {{ $valor->valorcampo3 }}
+                                        </div>
+                                    </div>
+                                </a>
+
                             @endif
                         </div>
                         @endif

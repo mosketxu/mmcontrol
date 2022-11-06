@@ -114,22 +114,19 @@
                             @if ($campo2visible==1)
                                 <div class="flex-col w-2/12 text-left">
                                     <input type="number" step="any" wire:model.defer="valorcampo2"
-                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
-                                    {{ $this->campofechadisabled }} />
+                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo3visible==1)
                                 <div class="flex-col w-2/12 text-left">
                                     <input type="number" step="any" wire:model.defer="valorcampo3"
-                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
-                                    {{ $this->campofechadisabled }} />
+                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"{{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo4visible==1)
                                 <div class="flex-col w-4/12 text-left">
                                     <input type="text" wire:model.defer="valorcampo4"
-                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
-                                    {{ $this->campofechadisabled }} />
+                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campoimgvisible==1)
