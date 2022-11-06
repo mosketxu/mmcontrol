@@ -27,9 +27,6 @@ class Ent extends Component
             'entidad.entidadtipo_id'=>'required',
             'entidad.responsable_id'=>'nullable|numeric',
             'entidad.nif'=>'nullable|max:12',
-            'entidad.presupuesto'=>'nullable',
-            'entidad.cuentactblepro'=>'nullable|numeric',
-            'entidad.cuentactblecli'=>'nullable|numeric',
             'entidad.direccion'=>'nullable',
             'entidad.cp'=>'nullable|max:10',
             'entidad.localidad'=>'nullable',
@@ -40,15 +37,17 @@ class Ent extends Component
             'entidad.emailadm'=>'nullable',
             'entidad.emailaux'=>'nullable',
             'entidad.web'=>'nullable',
-            'entidad.metodopago_id'=>'nullable',
             'entidad.banco1'=>'nullable',
             'entidad.banco2'=>'nullable',
-            'entidad.banco3'=>'nullable',
             'entidad.iban1'=>'nullable',
             'entidad.iban2'=>'nullable',
-            'entidad.iban3'=>'nullable',
-            'entidad.diafactura'=>'numeric|nullable',
+            'entidad.metodopago_id'=>'nullable',
             'entidad.diavencimiento'=>'numeric|nullable',
+            'entidad.vencimientofechafactura'=>'numeric|nullable',
+            'entidad.credito'=>'nullable',
+            'entidad.importecredito'=>'numeric|nullable',
+            'entidad.empresacredito'=>'nullable',
+            'entidad.vigenciacredito'=>'nullable',
             'entidad.observaciones'=>'nullable',
         ];
     }
@@ -62,8 +61,7 @@ class Ent extends Component
             'entidad.cuentactblepro.numeric' => 'La cuenta contable del proveedor debe ser numérica',
             'entidad.cuentactblecli.numeric' => 'La cuenta contable del cliente debe ser numérica',
             'entidad.cp.max' => 'El código postal debe ser inferior a 8 caracteres',
-            'entidad.diafactura.diafactura' => 'El dia factura debe ser numérico',
-            'entidad.diafactura.diavencimienti' => 'El dia de vencimieneto debe ser numérico',
+            'entidad.diafactura.diavencimiento' => 'El dia de vencimiento debe ser numérico',
         ];
     }
 
@@ -108,12 +106,6 @@ class Ent extends Component
                     'nullable',
                     'max:12',
                     Rule::unique('entidades','nif')->ignore($this->entidad->id)],
-                'entidad.cuentactblepro'=>[
-                    'nullable',
-                    Rule::unique('entidades','cuentactblepro')->ignore($this->entidad->id)],
-                'entidad.cuentactblecli'=>[
-                    'nullable',
-                    Rule::unique('entidades','cuentactblecli')->ignore($this->entidad->id)],
                 ]
             );
             $mensaje="Proveedor actualizado satisfactoriamente";
@@ -134,7 +126,6 @@ class Ent extends Component
             ],
             [
             'entidad'=>$this->entidad->entidad,
-            'responsable_id'=>$this->entidad->responsable_id,
             'entidadtipo_id'=>$this->entidad->entidadtipo_id,
             'responsable_id'=>$this->entidad->responsable_id,
             'nif'=>$this->entidad->nif,
@@ -148,19 +139,18 @@ class Ent extends Component
             'emailadm'=>$this->entidad->emailadm,
             'emailaux'=>$this->entidad->emailaux,
             'web'=>$this->entidad->web,
-            'metodopago_id'=>$this->entidad->metodopago_id,
-            'estado'=>$this->entidad->estado,
             'banco1'=>$this->entidad->banco1,
             'banco2'=>$this->entidad->banco2,
-            'banco3'=>$this->entidad->banco3,
             'iban1'=>$this->entidad->iban1,
             'iban2'=>$this->entidad->iban2,
-            'iban3'=>$this->entidad->iban3,
-            'diafactura'=>$this->entidad->diafactura,
+            'metodopago_id'=>$this->entidad->metodopago_id,
             'diavencimiento'=>$this->entidad->diavencimiento,
+            'vencimientofechafactura'=>$this->entidad->vencimientofechafactura,
+            'credito'=>$this->entidad->credito,
+            'empresacredito'=>$this->entidad->empresacredito,
+            'importecredito'=>$this->entidad->importecredito,
+            'vigenciacredito'=>$this->entidad->vigenciacredito,
             'observaciones'=>$this->entidad->observaciones,
-            'cuentactblepro'=>$this->entidad->cuentactblepro,
-            'cuentactblecli'=>$this->entidad->cuentactblecli,
             ]
         );
         if(!$this->entidad->id){

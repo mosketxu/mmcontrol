@@ -13,10 +13,10 @@ class Entidad extends Model
     use HasFactory;
     protected $table = 'entidades';
     protected $fillable=['entidad','entidadtipo_id','responsable_id','direccion','cp','localidad','provincia_id','pais_id',
-                        'nif','tfno','emailgral','emailadm','emailaux','web','idioma',
-                        'banco1','iban1','banco2','iban2','banco3','iban3','factor',
-                        'metodopago_id','diafactura','diavencimiento',
-                        'cuentactblepro','cuentactblecli','observaciones','estado','password'];
+                        'nif','tfno','emailgral','emailadm','emailaux','web','responsable_id',
+                        'banco1','iban1','banco2','iban2',
+                        'vencimientofechafactura','credito','empresacredito','importecredito','vigenciacredito',
+                        'metodopago_id','diavencimiento','observaciones'];
 
     public function pais(){ return $this->belongsTo(Pais::class);}
     public function provincia(){return $this->belongsTo(Provincia::class);}

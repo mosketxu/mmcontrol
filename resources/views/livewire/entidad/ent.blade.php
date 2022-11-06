@@ -1,6 +1,4 @@
 <div class="">
-    {{-- @livewire('menu',['entidad'=>$entidad],key($entidad->id)) --}}
-
     <div class="p-1 mx-2">
         <div class="flex flex-row">
             <div class="w-6/12">
@@ -30,29 +28,10 @@
         </div>
 
     </div>
-    <div class="px-2 py-1 space-y-4" >
-        @if ($errors->any())
-        <div id="alert" class="relative px-6 py-2 mb-2 text-white bg-red-200 border-red-500 rounded border-1">
-            <ul class="mt-3 text-sm text-red-600 list-disc list-inside">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-            <button class="absolute top-0 right-0 mt-2 mr-6 text-2xl font-semibold leading-none bg-transparent outline-none focus:outline-none" onclick="document.getElementById('alert').remove();">
-                <span>×</span>
-            </button>
+    <div class="px-2 py-1 space-y-2" >
+        <div class="">
+            @include('errores')
         </div>
-        @endif
-        @if (session()->has('message'))
-            <div id="alert" class="relative px-6 py-2 mb-2 text-white bg-green-200 border-green-500 rounded border-1" >
-                <span class="inline-block mx-8 align-middle" >
-                    {{ session('message') }}
-                </span>
-                <button class="absolute top-0 right-0 mt-2 mr-6 text-2xl font-semibold leading-none bg-transparent outline-none focus:outline-none" onclick="document.getElementById('alert').remove();">
-                    <span>×</span>
-                </button>
-            </div>
-        @endif
     </div>
     {{-- <x-jet-validation-errors/> --}}
 
@@ -160,16 +139,6 @@
                     <x-jet-input  wire:model.defer="entidad.iban2" type="text" id="iban2" name="iban2" :value="old('iban2')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
-                    <x-jet-label for="banco3" >{{ __('Banco 3') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.banco3" type="text" id="banco3" name="banco3" :value="old('banco3')" class="w-full"/>
-                </div>
-                <div class="w-full form-item">
-                    <x-jet-label for="iban3" >{{ __('Iban 3') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.iban3" type="text" id="iban3" name="iban3" :value="old('iban3')" class="w-full"/>
-                </div>
-            </div>
-            <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                <div class="w-full form-item">
                     <x-jet-label for="metodopago_id">{{ __('Método Pago') }}</x-jet-label>
                     <x-select wire:model.defer="entidad.metodopago_id" class="w-full" selectname="metodopago_id">
                         <option value="">-- choose --</option>
@@ -179,24 +148,38 @@
                     </x-select>
                 </div>
                 <div class="w-full form-item">
-                    <x-jet-label for="cuentactblepro" >{{ __('Cta.Contable Proveedor') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.cuentactblepro" type="number" id="cuentactblepro" name="cuentactblepro" :value="old('cuentactblepro')" class="w-full"/>
-                    <x-jet-input-error for="cuentactblepro" class="mt-2" />
+                    <x-jet-label for="vencimientofechafactura">{{ __('Vto. Factura') }}</x-jet-label>
+                    <x-select wire:model.defer="entidad.vencimientofechafactura" class="w-full" selectname="vencimientofechafactura">
+                        <option value="">-- choose --</option>
+                        <option value="30">30</option>
+                        <option value="60">60</option>
+                        <option value="90">90</option>
+                    </x-select>
+                </div>
+            </div>
+            <div class="px-2 mx-2 my-2 rounded-md bg-blue-50">
+                <h3 class="font-semibold ">Datos Crédito</h3>
+            </div>
+            <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                <div class="w-1/12 form-item">
+                    <x-jet-label for="credito" >{{ __('Crédito') }}</x-jet-label>
+                    <input type="checkbox" wire:model.lazy="entidad.credito"/>
+                    <x-jet-input-error for="credito" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
-                    <x-jet-label for="cuentactblecli" >{{ __('Cta.Contable Cliente') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.cuentactblecli" type="number" id="cuentactblecli" name="cuentactblecli" :value="old('cuentactblecli')" class="w-full"/>
-                    <x-jet-input-error for="cuentactblecli" class="mt-2" />
+                    <x-jet-label for="empresacredito" >{{ __('Empresa Crédito') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.empresacredito" type="text" id="empresacredito" name="empresacredito" :value="old('empresacredito')" class="w-full"/>
+                    <x-jet-input-error for="empresacredito" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
-                    <x-jet-label for="diafactura" >{{ __('Dia Factura') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.diafactura" type="number" id="diafactura" name="diafactura" :value="old('diafactura')" class="w-full"/>
-                    <x-jet-input-error for="diafactura" class="mt-2" />
+                    <x-jet-label for="importecredito" >{{ __('Importe Crédito') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.importecredito" type="number" step="any" id="importecredito" name="importecredito" :value="old('importecredito')" class="w-full"/>
+                    <x-jet-input-error for="importecredito" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
-                    <x-jet-label for="diavencimiento" >{{ __('Dia Vencimiento') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.diavencimiento" type="number" id="diavencimiento" name="diavencimiento" :value="old('diavencimiento')" class="w-full"/>
-                    <x-jet-input-error for="diavencimiento" class="mt-2" />
+                    <x-jet-label for="vigenciacredito" >{{ __('Vigencia Crédito') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.vigenciacredito" type="text" id="vigenciacredito" name="vigenciacredito" :value="old('vigenciacredito')" class="w-full"/>
+                    <x-jet-input-error for="vigenciacredito" class="mt-2" />
                 </div>
             </div>
 
