@@ -21,9 +21,9 @@
             </div>
             <div class="w-6/12 text-right">
                 @if($entidad->id)
-                <x-button.button  onclick="location.href = '{{ route('entidad.contactos',$entidad) }}'" color="green"> {{ __('Contactos') }}</x-button.button>
+                <x-button.buttongreen  onclick="location.href = '{{ route('entidad.contactos',$entidad) }}'" > {{ __('Contactos') }}</x-button.buttongreen>
                 @endif
-                <x-button.button  onclick="location.href = '{{ route('entidad.nueva',$entidadtipo->id) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
+                <x-button.button  onclick="location.href = '{{ route('entidad.nueva',$entidadtipo->id) }}'" color="blue">Nuevo</x-button.button>
             </div>
         </div>
 
