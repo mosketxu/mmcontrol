@@ -19,7 +19,7 @@ class CreatePedidosTable extends Migration
             $table->bigInteger('id')->unsigned(); // to remove primary key
             $table->primary('id'); //to add primary key
             $table->integer('tipo')->default(1);
-            $table->foreignId('responsable_id')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->string('responsable');
             $table->foreignId('cliente_id')->constrained('entidades');
             $table->foreignId('contacto_id')->nullable()->constrained('entidades');
             $table->foreignId('proveedor_id')->nullable()->constrained('entidades');

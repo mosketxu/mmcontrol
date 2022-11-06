@@ -218,26 +218,15 @@
                 <x-jet-label for="udxcaja">{{ __('Uds. x caja') }}</x-jet-label>
                 <input  wire:model.lazy="producto.udxcaja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
             </div>
-            <div class="w-full form-item sm:w-3/12">
+            <div class="w-full form-item sm:w-5/12">
                 <x-jet-label for="especiflogistica">{{ __('Especificaciónes logísticas') }}</x-jet-label>
                 <textarea wire:model.defer="producto.especiflogistica" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('especiflogistica') }} </textarea>
                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
             </div>
-            <div class="w-full form-item sm:w-3/12">
+            <div class="w-full form-item sm:w-4/12">
                 <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>
                 <textarea wire:model.defer="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('observaciones') }} </textarea>
                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-            </div>
-            <div class="w-full form-item sm:w-2/12 ">
-                <x-jet-label for="ficheropdf">{{ __('Ficha producto') }}</x-jet-label>
-                <div class="flex">
-                    <input type="file" wire:model.lazy="ficheropdf">
-                    {{-- @if($producto->adjunto) --}}
-                    {{-- <x-icon.clip-a class="w-10 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('producto.adjunto', [$producto]) }}'" title="Adjunto Producto"/> --}}
-                    {{-- <a href="{{'http://mmcontrol.test/fichasproducto/'.$producto->adjunto }}" target="_blank" title="ver producto"><x-icon.clip class="text-orange-500 w-7 hover:text-orange-700 "/></a> --}}
-                    {{-- @endif --}}
-                    @error('ficheropdf') <p class="text-red-500">{{ $message }}</p> @enderror
-                </div>
             </div>
         </div>
         <div class="py-1 my-0 ">

@@ -24,11 +24,11 @@ class CreateProductosTable extends Migration
             $table->boolean('FSC')->nullable();
             $table->string('materialinterior')->nullable();
             $table->string('tintainterior')->nullable();
-            $table->integer('gramajeinterior')->nullable()->default(0);
+            $table->string('gramajeinterior')->nullable();
             $table->integer('paginas')->nullable()->default(0);
             $table->string('materialcubierta')->nullable();
             $table->string('tintacubierta')->nullable();
-            $table->integer('gramajecubierta')->nullable()->default(0);
+            $table->string('gramajecubierta')->nullable();
             $table->string('plastificado')->nullable();
             $table->string('encuadernado')->nullable();
             $table->boolean('solapa')->nullable();

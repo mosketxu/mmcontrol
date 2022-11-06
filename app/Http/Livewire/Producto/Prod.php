@@ -64,7 +64,7 @@ class Prod extends Component
             'producto.especiflogistica'=>'nullable',
             'producto.precioventa'=>'nullable|numeric',
             'producto.observaciones'=>'nullable',
-                ];
+        ];
     }
 
     public function messages()

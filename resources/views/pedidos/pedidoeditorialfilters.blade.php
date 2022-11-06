@@ -1,4 +1,7 @@
 <div class="flex justify-between space-x-1">
+    <div class="text-gray-300 mt-7 w-10">
+        <x-icon.filter/>
+    </div>
     <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
@@ -12,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="flex w-4/12 ">
+    <div class="flex w-7/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Titulo/Referencia
@@ -25,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="flex w-2/12 ">
+    <div class="flex w-4/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Cliente
@@ -41,11 +44,6 @@
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif
             </div>
-        </div>
-    </div>
-    <div class="flex flex-row-reverse w-2/12 ">
-        <div class="mt-3">
-            <x-button.button  onclick="location.href = '{{ route('pedido.nuevo',$tipo) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
         </div>
     </div>
 </div>

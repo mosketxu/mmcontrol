@@ -1,13 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex">
-            <div class="">
+            <div class="w-full">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    {{ __('Producto:') }} {{ $producto->id }}
+                    @if($producto->tipo=='1')
+                        Título: {{ $producto->referencia }}
+                    @else
+                            Producto: {{ $producto->referencia }}
+                    @endif
                 </h2>
             </div>
-            <div class="ml-5">
+            <div class="w-full">
                 @include('producto.producto-menu' )
+            </div>
+            <div class="flex flex-row-reverse w-full">
+                <x-button.button  onclick="location.href = '{{ route('pedido.nuevo',$tipo) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
             </div>
         </div>
     </x-slot>

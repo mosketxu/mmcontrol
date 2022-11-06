@@ -10,7 +10,7 @@ class Pedido extends Component
 {
     public $pedidoid='';
     public $tipo;
-    public $responsable_id;
+    public $responsable;
     public $cliente_id;
     public $proveedor_id;
     public $facturadopor_id;
@@ -47,7 +47,7 @@ class Pedido extends Component
     protected function rules(){
         return [
             'pedidoid'=>'required',
-            'responsable_id'=>'required',
+            'responsable'=>'required',
             'cliente_id'=>'required',
             'contacto_id'=>'nullable',
             'proveedor_id'=>'nullable',
@@ -75,7 +75,7 @@ class Pedido extends Component
         return [
             'pedidoid.required'=>'El número de pedido es necesario',
             'producto_id.required'=>'Debes elegir un producto',
-            'responsable_id.required'=>'El responsable del pedido es necesario',
+            'responsable.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
             'proveedor_id.nullable'=>'',
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
@@ -96,11 +96,14 @@ class Pedido extends Component
     public function mount($pedidoid,$tipo){
         $this->titulo='Nuevo Pedido:';
         $this->tipo=$tipo;
+        $mm=Entidad::where('nif','B63941835')->first();
+        // dd($mm);
+        $this->facturadopor_id=$mm->id;
         if ($pedidoid!='') {
             $pedido=ModeloPedido::find($pedidoid);
             $this->tipo=$pedido->tipo;
             $this->pedidoid=$pedido->id;
-            $this->responsable_id=$pedido->responsable_id;
+            $this->responsable=$pedido->responsable;
             $this->cliente_id=$pedido->cliente_id;
             $this->contacto_id=$pedido->contacto_id;
             $this->proveedor_id=$pedido->proveedor_id;
@@ -221,7 +224,7 @@ class Pedido extends Component
             ],
             [
             'id'=>$this->pedidoid,
-            'responsable_id'=>$this->responsable_id,
+            'responsable'=>$this->responsable,
             'tipo'=>$this->tipo,
             'cliente_id'=>$this->cliente_id,
             'contacto_id'=>$this->contacto_id,

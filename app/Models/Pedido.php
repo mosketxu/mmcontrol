@@ -13,13 +13,12 @@ class Pedido extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','tipo','responsable_id','cliente_id','contacto_id','facturadopor_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
+    protected $fillable=['id','tipo','responsable','cliente_id','contacto_id','facturadopor_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
                         'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','uds_caja','otros'
                         ];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
-    public function responsable(){return $this->belongsTo(User::class,'responsable_id','id')->withDefault(['name'=>'-']);}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
     public function producto(){return $this->belongsTo(Producto::class,'producto_id','id');}
 

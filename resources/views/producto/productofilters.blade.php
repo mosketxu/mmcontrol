@@ -2,13 +2,6 @@
     <div class="text-gray-300 mt-8 w-0">
         <x-icon.filter/>
     </div>
-    {{-- <div class="flex w-2/12 ">
-        <div class="w-full">
-            <div class="flex">
-                <x-icon.filter class="pb-1"/>
-            </div>
-        </div>
-    </div> --}}
     <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">

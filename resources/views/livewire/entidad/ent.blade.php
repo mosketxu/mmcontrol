@@ -55,13 +55,9 @@
                     <x-jet-input-error for="nif" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
-                    <x-jet-label for="pais">{{ __('Responsable') }}</x-jet-label>
-                    <x-select wire:model.defer="entidad.responsable_id" selectname="responsable_id" class="w-full">
-                        <option value="">-- choose --</option>
-                        @foreach ($responsables as $responsable)
-                            <option value="{{ $responsable->id }}">{{ $responsable->name }}</option>
-                        @endforeach
-                    </x-select>
+                    <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.responsable" type="text" id="responsable" name="responsable" :value="old('responsable')" class="w-full"/>
+                    <x-jet-input-error for="responsable" class="mt-2" />
                 </div>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">

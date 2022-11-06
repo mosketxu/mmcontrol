@@ -81,15 +81,8 @@
                                 </div>
                             </div>
                             <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="responsable_id">{{ __('Responsable') }}</x-jet-label>
-                                    <x-select wire:model.lazy="responsable_id" selectname="responsable_id" class="w-full" >
-                                        <option value="">-- Selecciona el responsable --</option>
-                                        @foreach ($responsables as $responsable)
-                                        <option value="{{ $responsable->id }}">{{ $responsable->name }}</option>
-                                        @endforeach
-                                    </x-select>
-                                </div>
+                                <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
+                                <input  wire:model.lazy="responsable" type="text" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
@@ -144,9 +137,8 @@
                                 <div class="w-full form-item">
                                     <x-jet-label for="facturadopor_id">{{ __('Facturado por') }}</x-jet-label>
                                     <x-select wire:model.lazy="facturadopor_id" selectname="facturadopor_id" class="w-full" >
-                                        <option value="">-- Selecciona  --</option>
-                                        @foreach ($entidades as $entidad)
-                                        <option value="{{ $entidad->id }}">{{ $entidad->entidad }}</option>
+                                        @foreach ($proveedores as $prov)
+                                        <option value="{{ $prov->id }}">{{ $prov->entidad }}</option>
                                         @endforeach
                                     </x-select>
                                 </div>

@@ -25,7 +25,7 @@ class Ent extends Component
             'entidad.id'=>'nullable',
             'entidad.entidad'=>'required',
             'entidad.entidadtipo_id'=>'required',
-            'entidad.responsable_id'=>'nullable|numeric',
+            'entidad.responsable'=>'nullable|numeric',
             'entidad.nif'=>'nullable|max:12',
             'entidad.direccion'=>'nullable',
             'entidad.cp'=>'nullable|max:10',
@@ -73,7 +73,6 @@ class Ent extends Component
         $this->fechacli=$this->entidad->fechacliente;
         $this->entidad->entidadtipo_id=$entidadtipoId;
         $this->entidadtipo=EntidadTipo::find($entidadtipoId);
-        if(Auth::user()->hasRole('Milimetrica')) $this->entidad->responsable_id=Auth::user()->id;
     }
 
 
@@ -127,7 +126,7 @@ class Ent extends Component
             [
             'entidad'=>$this->entidad->entidad,
             'entidadtipo_id'=>$this->entidad->entidadtipo_id,
-            'responsable_id'=>$this->entidad->responsable_id,
+            'responsable'=>$this->entidad->responsable,
             'nif'=>$this->entidad->nif,
             'direccion'=>$this->entidad->direccion,
             'cp'=>$this->entidad->cp,

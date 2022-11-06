@@ -16,7 +16,7 @@ class Pedidos extends Component
 
     public $pedido;
     public $tipo;
-    public $responsable_id;
+    public $responsable;
     public $cliente_id;
     public $proveedor_id;
     public $producto_id;
@@ -59,7 +59,7 @@ class Pedidos extends Component
     protected function rules(){
         return [
             'pedido'=>'required',
-            'responsable_id'=>'required',
+            'responsable'=>'required',
             'cliente_id'=>'required',
             'proveedor_id'=>'nullable',
             'fechapedido'=>'required|date',
@@ -85,7 +85,7 @@ class Pedidos extends Component
     {
         return [
             'pedido.required'=>'El número de pedido es necesario',
-            'responsable_id.required'=>'El responsable del pedido es necesario',
+            'responsable.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
             'proveedor_id.nullable'=>'',
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
@@ -296,7 +296,7 @@ class Pedidos extends Component
                 $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
             })
             ->when($this->filtroresponsable!='', function ($query){
-                $query->where('pedidos.responsable_id',$this->filtroresponsable);
+                $query->where('pedidos.responsable',$this->filtroresponsable);
             })
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('pedidos.cliente_id',$this->filtrocliente);
