@@ -240,8 +240,8 @@
                 </div>
             </div>
         </div>
-        <div class="p-2 m-2 ">
-            <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+        <div class="py-1 my-0 ">
+            <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
                 <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
                 <x-jet-secondary-button  onclick="location.href = '{{route('producto.tipo','1')}}'">{{ __('Volver') }}</x-jet-secondary-button>
             </div>

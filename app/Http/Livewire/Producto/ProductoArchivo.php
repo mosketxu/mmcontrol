@@ -66,18 +66,20 @@ class ProductoArchivo extends Component
             'valorcampoimg.required'=>'El fichero es necesario',
         ];
     }
+
     public function mount($productoid,$ruta,$tipo)
     {
         $this->prod=Producto::find($productoid);
         $this->titulo="Archivos del producto: ". $this->prod->referencia;
-        // dd($productoid.'-'.$ruta.'-'.$tipo);
     }
+
     public function render()
     {
 
         $valores=ModelsProductoArchivo::query()
         ->search('comentario', $this->search)
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
+        ->where('producto_id',$this->prod->id)
         ->orderBy('comentario')
         ->paginate(10);
 

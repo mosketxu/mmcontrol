@@ -64,19 +64,18 @@ class PedidoArchivo extends Component
         ];
     }
 
-    // public function mount($ruta)
-    // {
-    //     if($ruta='i') $this->ruta='pedidos.index';
-    //     elseif($ruta='e') $this->ruta='pedidos.create';
-    //     elseif($ruta='n') $this->ruta='pedidos.edit';
-    //     else $this->ruta='pedidos.index';
-    // }
+    public function mount($pedidoid,$ruta,$tipo)
+    {
+        $this->ped=Pedido::find($pedidoid);
+        $this->titulo="Archivos del pedido: ". $this->ped->referencia;
+    }
 
     public function render()
     {
         $valores=ModelsPedidoArchivo::query()
         ->search('comentario', $this->search)
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
+        ->where('pedido_id',$this->ped->id)
         ->orderBy('comentario')
         ->paginate(10);
 

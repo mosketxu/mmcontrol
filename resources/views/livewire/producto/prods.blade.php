@@ -3,7 +3,7 @@
 
     <div class="h-full p-1 mx-2">
         <h1 class="text-2xl font-semibold text-gray-900">{{ $titulo }}</h1>
-        <div class="py-1 space-y-4">
+        <div class="py-1 space-y-2">
             <div class="">
                 @include('errores')
             </div>
@@ -45,13 +45,8 @@
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->observaciones }}"  readonly/>
                                 </div>
                                 <div  class="flex w-2/12">
-                                    @if($producto->adjunto)
-                                        <x-icon.clip-a class="text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $producto }})" title="Archivo"/>
-                                    @else
-                                        <x-icon.clip-b class="text-gray-500" title="No hay adjunto"/>
-                                    @endif
-                                    <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('producto.ficha', [$producto->id,$tipo]) }}'" title="Ficha Producto"/>
-
+                                    <a href="{{route('producto.archivos',[$producto,'i'])}}"> <x-icon.clip class="text-green-500 hover:text-green-700"/></a>
+                                    <a href="{{route('producto.ficha',[$producto->id,$tipo])}}" target="_blank" rel="noopener noreferrer"><x-icon.clipboard class="text-pink-500 hover:text-pink-700 "/></a>
                                     @can('producto.edit')
                                         <x-icon.edit-a href="{{ route('producto.edit',$producto) }}"  title="Editar"/>
                                     @endcan

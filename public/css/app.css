@@ -1589,6 +1589,9 @@ select {
 .w-4\/6 {
   width: 66.666667%;
 }
+.w-1 {
+  width: 0.25rem;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -2427,6 +2430,10 @@ select {
 .text-blue-400 {
   --tw-text-opacity: 1;
   color: rgb(96 165 250 / var(--tw-text-opacity));
+}
+.text-gray-50 {
+  --tw-text-opacity: 1;
+  color: rgb(249 250 251 / var(--tw-text-opacity));
 }
 .underline {
   text-decoration-line: underline;

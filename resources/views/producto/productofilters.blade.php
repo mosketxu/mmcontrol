@@ -1,4 +1,14 @@
 <div class="flex justify-between space-x-1">
+    <div class="text-gray-300 mt-8 w-0">
+        <x-icon.filter/>
+    </div>
+    {{-- <div class="flex w-2/12 ">
+        <div class="w-full">
+            <div class="flex">
+                <x-icon.filter class="pb-1"/>
+            </div>
+        </div>
+    </div> --}}
     <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
@@ -45,7 +55,7 @@
     </div>
     <div class="flex flex-row-reverse w-2/12 ">
         <div class="mt-3">
-            <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="orange"><x-icon.plus/>Nuevo</x-button.button>
+            <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
         </div>
     </div>
 </div>
