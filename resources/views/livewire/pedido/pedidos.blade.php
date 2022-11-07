@@ -1,8 +1,7 @@
 <div class="">
     {{-- @livewire('menu',['entidad'=>$pedido],key($pedido->id)) --}}
     <div class="h-full p-1 mx-2">
-        <h1 class="text-2xl font-semibold text-gray-900">Pedidos</h1>
-        <div class="py-1 space-y-4">
+        <div class="py-1 space-y-1">
             <div class="">
                 @include('errores')
             </div>
@@ -71,7 +70,7 @@
                                 <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
                                     value="{{ $pedido->id }}"  readonly/>
                                 <input type="text" class="w-full p-1 text-sm italic font-thin text-green-600 border-0 rounded-md"
-                                    value="{{ $pedido->responsable->name }}"  readonly/>
+                                    value="{{ $pedido->responsable }}"  readonly/>
                             </div>
                             <div class="flex-col w-2/12 text-left">
                                 <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md"
@@ -123,7 +122,6 @@
                                 </select>
                                 <select wire:change="changeValor({{ $pedido }},'facturado',$event.target.value)"
                                     class="w-full text-center py-0 mt-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $pedido->facturado_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                                    {{-- class="w-full py-0 mt-1 text-xs text-gray-600 placeholder-gray-300 bg-yellow-100 border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"> --}}
                                     <option value="0" {{ $pedido->facturado== '0'? 'selected' : '' }}>No</option>
                                     <option value="1" {{ $pedido->facturado== '1'? 'selected' : '' }}>Sí</option>
                                     <option value="2" {{ $pedido->facturado== '2'? 'selected' : '' }}>Parcial</option>
@@ -156,20 +154,4 @@
             </div>
         </div>
     </div>
-
-    <!-- PDF Transactions Modal -->
-    <x-modal.confirmationPDF wire:model.defer="showPDFModal">
-        <x-slot name="title">Generar Pedido en PDF</x-slot>
-
-        <x-slot name="content">
-            <div class="py-8 text-gray-700">Selecciona el tipo de Pedido a imprimir</div>
-        </x-slot>
-
-        <x-slot name="footer">
-            {{-- <x-jet-button  onclick="location.href = '{{route('pedido.imprimir', [$presupPDF,'con']) }}'">{{ __('Con totales') }}</x-jet-button> --}}
-            {{-- <x-jet-secondary-button  onclick="location.href = '{{route('pedido.imprimir', [$presupPDF,'sin']) }}'">{{ __('Sin totales') }}</x-jet-secondary-button> --}}
-            <x-jet-button  onclick="location.href = '#'">{{ __('Con totales') }}</x-jet-button>
-            <x-jet-secondary-button  onclick="location.href = '#'">{{ __('Sin totales') }}</x-jet-secondary-button>
-        </x-slot>
-    </x-modal.confirmationPDF>
 </div>

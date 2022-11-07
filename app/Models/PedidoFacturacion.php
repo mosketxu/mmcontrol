@@ -11,10 +11,10 @@ class PedidoFacturacion extends Model
 
     protected $table = 'pedido_facturaciones';
 
-    protected $fillable = ['pedido_id','fecha','cantidad','importe','comentario'];
+    public $incrementing = false;
 
-    public function pedido()
-    {
-        return $this->belongsTo(Pedido::class,'pedido_id');
-    }
+    protected $fillable = ['id','pedido_id','cliente_id','fecha','cantidad','importe','estado','comentario'];
+
+    public function pedido(){return $this->belongsTo(Pedido::class,'pedido_id');}
+    public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id');}
 }

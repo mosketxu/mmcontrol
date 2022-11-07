@@ -106,12 +106,12 @@
                         <x-slot name="content">
                             <div class="w-44">
                                 <x-jet-dropdown-link href="{{ route('pedido.tipo','1' ) }}" class="text-left">
-                                    Pedido Editorial
+                                    Editorial
                                 </x-jet-dropdown-link>
                             </div>
                             <div class="w-44">
                                 <x-jet-dropdown-link href="{{ route('pedido.tipo','2' ) }}" class="text-left">
-                                    Pedido Otros productos
+                                    productos
                                 </x-jet-dropdown-link>
                             </div>
                         </x-slot>

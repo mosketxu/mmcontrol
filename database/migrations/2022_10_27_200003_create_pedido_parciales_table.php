@@ -20,6 +20,14 @@ class CreatePedidoParcialesTable extends Migration
             $table->bigInteger('cantidad')->nullable()->default(0);
             $table->bigInteger('importe')->nullable()->default(0);
             $table->string('comentario')->nullable();
+            $table->string('destino')->nullable();
+            $table->string('atencion')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('localidad')->nullable();
+            $table->string('cp')->nullable();
+            $table->string('horario')->nullable();
+            $table->string('tfno')->nullable();
+            $table->string('observaciones')->nullable();
             $table->timestamps();
         });
     }

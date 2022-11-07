@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\PedidoDistribucion as ModelsPedidoDistribucion;
+use App\Models\{Pedido, PedidoDistribucion as ModelsPedidoDistribucion};
 
 
 
@@ -10,8 +10,9 @@ use Livewire\Component;
 
 class PedidoDistribucion extends Component
 {
-    public $titulo='Distribuciones';
+    public $titulo='Distribuciones del pedido: ';
     public $ruta;
+    public $tipo;
     public $pedidoid;
     public $titcampofecha='Fecha';
     public $titcampo2='Cantidad';
@@ -61,9 +62,12 @@ class PedidoDistribucion extends Component
         ];
     }
 
-    public function mount()
+    public function mount($pedidoid,$ruta,$tipo)
     {
         $this->valorcampofecha=now()->format('Y-m-d');
+        $this->ped=Pedido::find($pedidoid);
+        $this->tipo=$tipo;
+        $this->ruta=$ruta;
     }
 
     public function render()

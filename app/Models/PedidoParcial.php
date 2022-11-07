@@ -11,7 +11,7 @@ class PedidoParcial extends Model
 
     protected $table = 'pedido_parciales';
 
-    protected $fillable = ['pedido_id','fecha','cantidad','importe','comentario'];
+    protected $fillable = ['pedido_id','fecha','cantidad','importe','comentario','destino','atencion','direccion','cp','localidad','horario','telefono','observaciones'];
 
     public function pedido()
     {

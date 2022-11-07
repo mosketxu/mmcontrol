@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Producto,EntidadContacto,Entidad,User,Pedido as ModeloPedido};
+use App\Models\{Producto,EntidadContacto,Entidad,Pedido as ModeloPedido};
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -125,7 +125,8 @@ class Pedido extends Component
             $this->uds_caja=$pedido->uds_caja;
             $this->otros=$pedido->otros;
             $this->titulo='Pedido';
-            if($this->contacto_id) $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
+            if($this->cliente_id)
+                $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         }
     }
 
@@ -133,7 +134,6 @@ class Pedido extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
-        $responsables=User::role('Milimetrica')->orderBy('name')->get();
         $this->productos=Producto::query()
             ->with('cliente')
             ->when($this->filtroisbn!='', function ($query){
@@ -147,8 +147,7 @@ class Pedido extends Component
                 })
             ->orderBy('referencia','asc')
             ->get();
-
-            return view('livewire.pedido.pedido',compact(['entidades','clientes','proveedores','responsables']));
+            return view('livewire.pedido.pedido',compact(['entidades','clientes','proveedores']));
 
         }
 
@@ -207,8 +206,9 @@ class Pedido extends Component
         $mensaje="Pedido creado satisfactoriamente";
         $i="";
         if ($this->pedidoid!='') {
-        $i=$this->pedidoid;
+            $i=$this->pedidoid;
             $mensaje="Pedido actualizado satisfactoriamente";
+            $nuevo=false;
             $this->validate([
                 'pedidoid'=>[
                     'required',
@@ -217,6 +217,7 @@ class Pedido extends Component
         }else{
             $this->pedidoid=$this->numpedido();
             $i=$this->pedidoid;
+            $nuevo=true;
         }
         $this->validate();
         $ped=ModeloPedido::updateOrCreate([
@@ -250,6 +251,6 @@ class Pedido extends Component
         $this->titulo='Pedido:';
         $pedido=ModeloPedido::find($ped->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
-
+        if($nuevo) return redirect()->route('pedido.edit',$pedido);
     }
 }

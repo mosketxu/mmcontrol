@@ -14,11 +14,14 @@ class CreatePedidoFacturacionesTable extends Migration
     public function up()
     {
         Schema::create('pedido_facturaciones', function (Blueprint $table) {
-            $table->id();
+            $table->bigInteger('id')->unsigned(); // to remove primary key
+            $table->primary('id'); //to add primary key
             $table->foreignId('pedido_id')->constrained('pedidos');
+            $table->foreignId('cliente_id')->constrained('entidades');
             $table->date('fecha')->nullable();
             $table->bigInteger('cantidad')->nullable()->default(0);
             $table->bigInteger('importe')->nullable()->default(0);
+            $table->integer('estado')->default(0);
             $table->string('comentario')->nullable();
             $table->timestamps();
         });

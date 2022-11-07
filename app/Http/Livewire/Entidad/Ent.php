@@ -83,13 +83,10 @@ class Ent extends Component
         $contacto=$this->contacto;
         $this->contactoId=$contacto->id;
 
-        $responsables=User::role('Milimetrica')->orderBy('name')->get();
         $metodopagos=MetodoPago::all();
         $provincias=Provincia::all();
         $paises=Pais::all();
-        // $tiposentidad=EntidadTipo::orderBy('id')->get();
-        // return view('livewire.entidad.ent',compact('metodopagos','provincias','paises','tiposentidad','responsables'));
-        return view('livewire.entidad.ent',compact('metodopagos','provincias','paises','responsables'));
+        return view('livewire.entidad.ent',compact('metodopagos','provincias','paises'));
     }
 
     public function save()

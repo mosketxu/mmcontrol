@@ -20,17 +20,15 @@ class Ents extends Component
     public function render()
     {
         $entidadtipo=EntidadTipo::find($this->entidadtipo_id);
-        $responsables=User::role('Milimetrica')->orderBy('name')->get();
 
         $entidades=Entidad::query()
             ->with('entidadtipo')
-            ->with('responsable')
             ->filtrosEntidad($this->search,$this->filtroresponsable,$this->entidadtipo_id,$this->Fini,$this->Ffin)
             ->orderBy('entidad','asc')
             ->paginate(10);
 
 
-        return view('livewire.entidad.ents',compact('entidades','entidadtipo','responsables'));
+        return view('livewire.entidad.ents',compact('entidades','entidadtipo'));
     }
 
     public function updatingSearch(){

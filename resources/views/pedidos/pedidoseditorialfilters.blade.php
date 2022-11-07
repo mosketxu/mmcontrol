@@ -17,7 +17,7 @@
     <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Título/Referencia
+                Título
             </label>
             <div class="flex">
                 <input type="text" wire:model="filtroreferencia" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
@@ -31,7 +31,7 @@
     <div class="flex w-1/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                ISBN/Cód.
+                ISBN
             </label>
             <div class="flex">
                 <input type="text" wire:model="filtroisbn" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
@@ -47,12 +47,7 @@
                 Responsable
             </label>
             <div class="flex">
-                <select wire:model="filtroresponsable" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($responsables as $responsable)
-                    <option value="{{ $responsable->id }}">{{ $responsable->name }}</option>
-                    @endforeach
-                </select>
+                <input type="text" wire:model="filtroresponsable" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
                 @if($filtroresponsable!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroresponsable', '')" class="pb-1" title="reset filter"/>
                 @endif

@@ -2,40 +2,21 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\PedidoFacturacion as ModelsPedidoFacturacion;
+use App\Models\{Entidad,Pedido,PedidoFacturacion as ModelsPedidoFacturacion};
 use Livewire\Component;
 
 class PedidoFacturacion extends Component
 {
-    public $titulo='Facturaciones Parciales';
+    public $titulo='Facturación del pedido: ';
     public $ruta;
-    public $pedidoid;
-    public $titcampofecha='Fecha';
-    public $titcampo2='Cantidad';
-    public $titcampo3='Importe';
-    public $titcampo4='Comentario';
-    public $titcampoimg='';
-    public $valorcampofecha='';
-    public $valorcampo2='0';
-    public $valorcampo3='0';
-    public $valorcampo4='';
-    public $valorcampoimg='';
-    public $campofecha='fecha';
-    public $campo2='cantidad';
-    public $campo3='importe';
-    public $campo4='comentario';
-    public $campoimg='';
-    public $campofechavisible=1;
-    public $campo2visible=1;
-    public $campo3visible=1;
-    public $campo4visible=1;
-    public $campoimgvisible=0;
-    public $campofechadisabled='';
-    public $campo2disabled='';
-    public $campo3disabled='disabled';
-    public $campo4disabled='';
-    public $campoimgdisabled='';
-    public $editarvisible=0;
+    public $tipo;
+    public $pedido_id;
+    public $cliente_id;
+    public $fecha;
+    public $cantidad='0';
+    public $importe='0';
+    public $estado='0';
+    public $comentario='';
     public $search='';
 
     protected $listeners = [ 'refresh' => '$refresh'];
@@ -43,35 +24,47 @@ class PedidoFacturacion extends Component
     protected function rules()
     {
         return [
-            'valorcampofecha'=>'required||date',
-            'valorcampo2'=>'nullable',
-            'valorcampo3'=>'nullable',
-            'valorcampo4'=>'nullable',
-            // 'valorcampoimg'=>'nullable',
+            // 'pedido_id'=>'required',
+            'cliente_id'=>'required',
+            'fecha'=>'date|required',
+            'cantidad'=>'nullable|numeric',
+            'importe'=>'nullable|numeric',
+            'estado'=>'nullable',
         ];
     }
 
     public function messages()
     {
         return [
-            'fecha.required'=>'La fecha es necesaria',
+            'pedido_id.required'=>'El campo Pedido es recesario.',
+            'cliente_id.required'=>'El campo Cliente_id es recesario.',
+            'fecha.required'=>'El campo fecha es recesario.',
+            'fecha.date'=>'El campo fecha debe ser de tipo fecha.',
+            'cantidad.numeric'=>'El campo Cantidad debe ser numérico',
+            'importe.numeric'=>'El campo Importe debe ser numérico',
         ];
     }
 
-    public function mount()
+    public function mount($pedidoid,$ruta,$tipo)
     {
-        $this->valorcampofecha=now()->format('Y-m-d');
+        $ped=Pedido::find($pedidoid);
+        $this->tipo=$tipo;
+        $this->ruta=$ruta;
+        $this->fecha=now()->format('Y-m-d');
+        $this->pedido_id=$pedidoid;
+        $this->cliente_id=$ped->cliente_id;
     }
 
     public function render()
     {
-        $valores=ModelsPedidoFacturacion::query()
+        $facturas=ModelsPedidoFacturacion::query()
         ->search('comentario',$this->search)
-        ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
-        ->orderBy('fecha')
+        ->orderBy('id')
         ->paginate(10);
 
-        return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));
+        $clientes=Entidad::orderBy('entidad')->whereIn('entidadtipo_id',['1','2'])->get();
+
+        return view('livewire.pedido.facturas',compact('facturas','clientes'));
     }
 
     public function changeCampo(ModelsPedidoFacturacion $valor,$campo,$valorcampo)
@@ -84,31 +77,38 @@ class PedidoFacturacion extends Component
 
     public function save()
     {
-        $this->valorcampo2=$this->valorcampo2=='' ? '0' : $this->valorcampo2;
-        $this->valorcampo3=$this->valorcampo3=='' ? '0' : $this->valorcampo3;
         $this->validate();
+        $f=$this->numfactura();
+        // dd($this->pedido_id);
         ModelsPedidoFacturacion::create([
-            'pedido_id'=>$this->pedidoid,
-            'fecha'=>$this->valorcampofecha,
-            'cantidad'=>$this->valorcampo2,
-            'importe'=>$this->valorcampo3,
-            'comentario'=>$this->valorcampo4,
+            'id'=>$f,
+            'pedido_id'=>$this->pedido_id,
+            'cliente_id'=>$this->cliente_id,
+            'fecha'=>$this->fecha,
+            'cantidad'=>$this->cantidad,
+            'importe'=>$this->importe,
+            'estado'=>$this->estado,
+            'comentario'=>$this->comentario,
         ]);
 
         $this->dispatchBrowserEvent('notify', 'Facturación añadida con éxito');
 
-        $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
-        $this->valorcampo2='0';
-        $this->valorcampo3='0';
-        $this->valorcampo4='';
-        $this->valorcampoimg='';
-        $this->campofechavisible=1;
-        $this->campo2visible=1;
-        $this->campo3visible=1;
-        $this->campo4visible=1;
-        $this->campoimgvisible=0;
+            $this->fecha==now()->format('Y-m-d');
+            $this->cantidad='0';
+            $this->importe='0';
+            $this->estado='0';
+
         $this->emit('refresh');
 
+    }
+
+    public function numfactura(){
+        $anyo= substr($this->fecha, 0,4);
+        $anyo2= substr($anyo, -2);
+        // if (!isset($this->pedidoid)){
+            $fac=ModelsPedidoFacturacion::whereYear('fecha', $anyo)->max('id') ;
+            return !isset($fac) ? ($anyo2 * 100000 +1) :$fac + 1 ;
+        // }
     }
 
     public function delete($valorId)

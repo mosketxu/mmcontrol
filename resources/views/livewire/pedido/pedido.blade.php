@@ -39,7 +39,7 @@
                                         @if (isset($contactos))
                                             <option value="">-- Selecciona contacto --</option>
                                             @foreach ($contactos as $contacto)
-                                            <option value="{{ $contacto->id }}">{{ $contacto->entidadcontacto->entidad }}</option>
+                                            <option value="{{ $contacto->contacto_id }}">{{ $contacto->entidadcontacto->entidad }}</option>
                                             @endforeach
                                         @else
                                             <option value="">-- Selecciona primero un cliente --</option>
@@ -199,7 +199,7 @@
                                 class="p-2 m-2 text-gray-500 rounded-lg bg-green-50"
                                 >Saved!
                             </span>
-                            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',$tipo)}}'">{{ __('Volver') }}</x-jet-secondary-button>
                         </div>
                     </div>
                 </form>

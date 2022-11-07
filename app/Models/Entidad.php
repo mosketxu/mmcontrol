@@ -22,6 +22,7 @@ class Entidad extends Model
     public function provincia(){return $this->belongsTo(Provincia::class);}
     public function metodopago(){return $this->belongsTo(MetodoPago::class);}
     public function contactos(){return $this->hasMany(EntidadContacto::class)->withDefault(['contacto'=>'-']);}
+    public function destinos(){return $this->hasMany(EntidadDestino::class);}
     public function entidadtipo(){return $this->belongsTo(EntidadTipo::class);}
     public function productos(){return $this->hasMany(Producto::class);}
     // public function presupuestos(){return $this->hasMany(Presupuesto::class);}
@@ -31,7 +32,7 @@ class Entidad extends Model
     {
         return $query ->search('entidad',$search)
         ->when($filtroresponsable!='', function ($query) use($filtroresponsable){
-            $query->where('responsable',$filtroresponsable);
+            $query->where('responsable','like','%'.$filtroresponsable.'%');
         })
         //  para el valor 0 no pongo condicion, salen todos
         ->when($entidadtipo_id=='1', function ($query){

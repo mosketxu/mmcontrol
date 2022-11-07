@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\PedidoRetraso as ModelsPedidoRetraso;
+use App\Models\{Pedido, PedidoRetraso as ModelsPedidoRetraso};
 
 use Livewire\Component;
 
@@ -10,6 +10,7 @@ class PedidoRetraso extends Component
 {
     public $titulo='Retrasos';
     public $ruta;
+    public $tipo;
     public $pedidoid;
     public $titcampofecha='Fecha';
     public $titcampo2='Cantidad';
@@ -59,9 +60,12 @@ class PedidoRetraso extends Component
         ];
     }
 
-    public function mount()
+    public function mount($pedidoid,$ruta,$tipo)
     {
         $this->valorcampofecha=now()->format('Y-m-d');
+        $this->ped=Pedido::find($pedidoid);
+        $this->tipo=$tipo;
+        $this->ruta=$ruta;
     }
 
     public function render()

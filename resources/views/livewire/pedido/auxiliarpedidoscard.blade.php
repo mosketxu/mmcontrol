@@ -1,7 +1,7 @@
 <div class="">
     <div class="p-1 mx-2 ">
         <div class="flex justify-between space-x-1">
-            <div class="flex w-4/12 py-0 mt-0">
+            <div class="flex w-8/12 py-0 mt-0">
                 <div class="w-full py-0 mt-0">
                     <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }} {{ $pedidoid }}</h1>
                 </div>
@@ -22,7 +22,6 @@
             {{-- cuerpo --}}
             <div class="flex-col ">
                 {{-- titulos --}}
-                <div>
                     <div class="flex pt-2 pb-0 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
                         @if ($campofechavisible==1)
                             <div class="w-2/12 font-light text-left" >{{ __($titcampofecha)}} </div>
@@ -37,7 +36,7 @@
                             <div class="w-4/12 pl-2 ml-2 font-light text-left ">{{ __($titcampo4)}} </div>
                         @endif
                         @if ($campoimgvisible==1)
-                            <div class="w-2/12 font-light text-left">{{ __($titcampoimg)}} </div>
+                            <div class="w-2/12 font-light text-left ml-8">{{ __($titcampoimg)}} </div>
                         @endif
                     </div>
                 </div>
@@ -75,7 +74,7 @@
                         </div>
                         @endif
                         @if ($campoimgvisible==1)
-                        <div class="w-2/12 text-left">
+                        <div class="w-2/12 text-left ml-8">
                             @if($valor->valorcampoimg)
                                 {{-- <a href="#" class="flex text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $valor->id }})" title="Archivo">{{ $valor->valorcampo3 }} <x-icon.clip /></a> --}}
                                 <a href="{{asset('archivospedido/'.$valor->valorcampoimg) }}" target="_blank" class="w-5 text-blue-500 hover:text-blue-700" title="Ver producto">
@@ -91,10 +90,13 @@
                         </div>
                         @endif
                         <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
-                            @if($editarvisible==1)
+                            <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"  title="Eliminar detalle"/>
+                            @if($pdfvisible=='1')
+                                <a href="{{route('pedido.albaran',[$valor->id])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 "/></a>
+                            @endif
+                            @if($editarvisible=='1')
                                 <x-icon.edit-a wire:click="editar({{ $valor->id }})" class="pl-1"  title="Editar {{ $titulo }}"/>
                             @endif
-                                <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"  title="Eliminar detalle"/>
                         </div>
                     </div>
                     @endforeach
@@ -149,7 +151,7 @@
     </div>
     <div class="m-2">
         @if($ruta=='i')
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',$tipo)}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @else
             <x-jet-secondary-button  onclick="location.href = '{{route('pedido.edit',$pedidoid)}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @endif

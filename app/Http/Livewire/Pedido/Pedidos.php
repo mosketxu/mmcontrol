@@ -112,11 +112,10 @@ class Pedidos extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
-        $responsables=User::role('Milimetrica')->orderBy('name')->get();
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
-        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables'));
+        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores'));
 }
 
     public function updatingSearch(){$this->resetPage();}
@@ -288,6 +287,7 @@ class Pedidos extends Component
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->join('productos','pedidos.producto_id','=','productos.id')
             ->select('pedidos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia')
+            ->where('pedidos.tipo',$this->tipo)
             ->search('pedidos.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){
                 $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
@@ -296,7 +296,7 @@ class Pedidos extends Component
                 $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
             })
             ->when($this->filtroresponsable!='', function ($query){
-                $query->where('pedidos.responsable',$this->filtroresponsable);
+                $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
             })
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('pedidos.cliente_id',$this->filtrocliente);
@@ -310,16 +310,6 @@ class Pedidos extends Component
             ->when($this->filtrofacturado!='', function ($query){
                 $query->where('pedidos.facturado',$this->filtrofacturado);
             })
-            // ->when(Auth::user()->hasRole('Comercial'),function ($query){
-            //     $query->when(!Auth::user()->hasRole('Admin'),function ($q){
-            //     // $q->where('solicitante_id',Auth::user()->id);});
-            //     $q->whereRelation('ent','comercial_id',Auth::user()->id)->get();
-            //     ;});
-            // })
-            // ->when($this->search!='', function ($query){
-            //     $query->where('entidades.entidad','like','%'.$this->search.'%')->orWhere('pedidos.pedido','like','%'.$this->search.'%');
-            // })
-
             ->searchYear('fechapedido',$this->filtroanyo)
             ->searchMes('fechapedido',$this->filtromes)
             ->orderBy('pedidos.fechapedido','desc')

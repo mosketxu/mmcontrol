@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entidad;
 use App\Models\Pedido;
+use App\Models\PedidoparcialDetalle;
+use App\Models\PedidoParcial;
 use Dompdf\Dompdf;
 use \PDF;
 
@@ -47,6 +50,20 @@ class PedidoController extends Controller
         return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
     }
 
+    public function albaran($parcialid)
+    {
+        $parcial=PedidoParcial::find($parcialid);
+        $pedido=Pedido::find($parcial->pedido_id);
+        $entidad=Entidad::find($pedido->cliente_id);
+        $detalles=PedidoparcialDetalle::where('parcial_id',$parcialid)->get();
+        $pdf = new Dompdf();
+
+        $pdf = \PDF::loadView('pedidos.albaranpdf', compact('pedido','parcial','entidad','detalles'));
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('albaran.pdf'); //asi lo muestra por pantalla
+    }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -63,6 +80,11 @@ class PedidoController extends Controller
     public function parciales(Pedido $pedido, $ruta)
     {
         return view('pedidos.parciales',compact('pedido','ruta'));
+    }
+
+    public function parcial(Pedido $pedido, $ruta,$parcialid)
+    {
+        return view('pedidos.parcial',compact('pedido','ruta','parcialid'));
     }
 
     public function facturaciones(Pedido $pedido, $ruta)

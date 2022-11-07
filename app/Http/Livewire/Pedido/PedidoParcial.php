@@ -2,127 +2,106 @@
 
 namespace App\Http\Livewire\Pedido;
 
+use App\Models\Entidad;
+use App\Models\EntidadDestino;
+use App\Models\Pedido;
 use App\Models\PedidoParcial as ModelsPedidoParcial;
+
 use Livewire\Component;
 
 class PedidoParcial extends Component
 {
-    public $titulo='Entregas Parciales del pedido:';
-    public $tipo;
     public $pedido;
+    public $destinocalculado;
+    public $parcial;
     public $ruta;
-    public $pedidoid;
-    public $titcampofecha='Fecha';
-    public $titcampo2='Cantidad';
-    public $titcampo3='Importe';
-    public $titcampo4='Comentario';
-    public $titcampoimg='';
-    public $valorcampofecha='';
-    public $valorcampo2='0';
-    public $valorcampo3='0';
-    public $valorcampo4='';
-    public $valorcampoimg;
-    public $campofecha='fecha';
-    public $campo2='cantidad';
-    public $campo3='importe';
-    public $campo4='comentario';
-    public $campoimg='';
-    public $campofechavisible=1;
-    public $campo2visible=1;
-    public $campo3visible=1;
-    public $campo4visible=1;
-    public $campoimgvisible=0;
-    public $campofechadisabled='';
-    public $campo2disabled='';
-    public $campo3disabled='disabled';
-    public $campo4disabled='';
-    public $campoimgdisabled='';
-    public $editarvisible=0;
-    public $search='';
-
-    protected $listeners = [ 'refresh' => '$refresh'];
+    public $tipo;
+    public $pedidoparcial;
 
     protected function rules()
     {
         return [
-            'valorcampofecha'=>'required||date',
-            'valorcampo2'=>'nullable',
-            'valorcampo3'=>'nullable',
-            'valorcampo4'=>'nullable',
-            // 'valorcampoimg'=>'nullable',
+            'parcial.fecha'=>'date|required',
+            'parcial.cantidad'=>'nullable|numeric',
+            'parcial.importe'=>'nullable|numeric',
+            'parcial.comentario'=>'nullable',
+            'parcial.destino'=>'required',
+            'parcial.atencion'=>'nullable',
+            'parcial.direccion'=>'nullable',
+            'parcial.localidad'=>'nullable',
+            'parcial.cp'=>'nullable',
+            'parcial.horario'=>'nullable',
+            'parcial.tfno'=>'nullable',
+            'parcial.observaciones'=>'nullable',
         ];
     }
 
     public function messages()
     {
         return [
-            'fecha.required'=>'La fecha es necesaria',
+            'parcial.fecha.requiered'=>'La Fecha es necesaria',
+            'parcial.fecha.date'=>'La Fechadebe ser válida',
+            'parcial.cantidad.numeric'=>'La Cantidad deber ser numérica',
+            'parcial.importe.numeric'=>'El Importe deber ser numérico',
+            'parcial.destino.required'=>'El destino es necesario',
         ];
     }
-
-    public function mount($pedidoid,$ruta,$tipo)
+    public function mount($pedidoid,$ruta,$tipo,$parcialid)
     {
-        $this->valorcampofecha=now()->format('Y-m-d');
-        $this->tipo=$tipo;
-        $this->ruta=$ruta;
-        $this->pedidoid=$pedidoid;
+
+        $this->pedido=Pedido::find($pedidoid);
+        $this->parcial=ModelsPedidoParcial::find($parcialid);
+        $ruta=$this->ruta;
+        $tipo=$this->tipo;
+        $this->pedidoparcial=ModelsPedidoParcial::find($parcialid);
+
     }
 
     public function render()
     {
-        $valores=ModelsPedidoParcial::query()
-        ->search('comentario',$this->search)
-        ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
-        ->orderBy('fecha')
-        ->paginate(10);
-
-        return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));
+        $entidad=Entidad::find($this->pedido->cliente_id);
+        $destinos=EntidadDestino::where('entidad_id',$this->pedido->cliente_id)->get();
+        return view('livewire.pedido.pedido-parcial',compact('entidad','destinos'));
     }
 
-    public function changeCampo(ModelsPedidoParcial $valor,$campo,$valorcampo)
-    {
-        $p=ModelsPedidoParcial::find($valor->id);
-        $p->$campo=$valorcampo;
-        $p->save();
-        $this->dispatchBrowserEvent('notify', 'Parcial Actualizado.');
-    }
-
-    public function save()
-    {
-        $this->valorcampo2=$this->valorcampo2=='' ? '0' : $this->valorcampo2;
-        $this->valorcampo3=$this->valorcampo3=='' ? '0' : $this->valorcampo3;
-        $this->validate();
-        ModelsPedidoParcial::create([
-            'pedido_id'=>$this->pedidoid,
-            'fecha'=>$this->valorcampofecha,
-            'cantidad'=>$this->valorcampo2,
-            'importe'=>$this->valorcampo3,
-            'comentario'=>$this->valorcampo4,
-        ]);
-
-        $this->dispatchBrowserEvent('notify', 'Parcial añadido con éxito');
-
-        $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
-        $this->valorcampo2='0';
-        $this->valorcampo3='0';
-        $this->valorcampo4='';
-        $this->valorcampoimg='';
-        $this->campofechavisible=1;
-        $this->campo2visible=1;
-        $this->campo3visible=1;
-        $this->campo4visible=1;
-        $this->campoimgvisible=0;
-        $this->emit('refresh');
-
-    }
-
-    public function delete($valorId)
-    {
-        $borrar = ModelsPedidoParcial::find($valorId);
-
-        if ($borrar) {
-            $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Parcial eliminado!');
+    public function updatedDestinocalculado(){
+        $d=EntidadDestino::find($this->destinocalculado);
+        if ($d) {
+            $this->parcial->destino=$d->destino;
+            $this->parcial->atencion=$d->atencion;
+            $this->parcial->direccion=$d->direccion;
+            $this->parcial->localidad=$d->localidad;
+            $this->parcial->cp=$d->cp;
+            $this->parcial->horario=$d->horario;
+            $this->parcial->tfno=$d->tfno;
+            $this->parcial->observaciones=$d->observaciones;
+        } else {
+            $this->parcial->destino='';
+            $this->parcial->atencion='';
+            $this->parcial->direccion='';
+            $this->parcial->localidad='';
+            $this->parcial->cp='';
+            $this->parcial->horario='';
+            $this->parcial->tfno='';
+            $this->parcial->observaciones='';
         }
+    }
+
+    public function save(){
+        $parc = ModelsPedidoParcial::find($this->parcial->id);
+
+        $parc->destino=$this->parcial->destino;
+        $parc->atencion=$this->parcial->atencion;
+        $parc->direccion=$this->parcial->direccion;
+        $parc->localidad=$this->parcial->localidad;
+        $parc->cp=$this->parcial->cp;
+        $parc->horario=$this->parcial->horario;
+        $parc->tfno=$this->parcial->tfno;
+        $parc->observaciones=$this->parcial->observaciones;
+
+
+        $parc->save();
+
+        $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\PedidoIncidencia as ModelsPedidoIncidencia;
+use App\Models\{Pedido,PedidoIncidencia as ModelsPedidoIncidencia};
 
 
 use Livewire\Component;
@@ -11,6 +11,7 @@ class PedidoIncidencia extends Component
 {
     public $titulo='Incidencias';
     public $ruta;
+    public $tipo;
     public $pedidoid;
     public $titcampofecha='Fecha';
     public $titcampo2='Cantidad';
@@ -60,8 +61,11 @@ class PedidoIncidencia extends Component
         ];
     }
 
-    public function mount()
+    public function mount($pedidoid,$ruta,$tipo)
     {
+        $this->ped=Pedido::find($pedidoid);
+        $this->tipo=$tipo;
+        $this->ruta=$ruta;
         $this->valorcampofecha=now()->format('Y-m-d');
     }
 

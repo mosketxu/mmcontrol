@@ -36,9 +36,9 @@ class CreateEntidadesTable extends Migration
             $table->integer('metodopago_id')->nullable()->default(1);
             $table->integer('diavencimiento')->nullable()->default(10);
             $table->integer('vencimientofechafactura')->nullable();
-            $table->boolean('credito')->default(false);
+            $table->boolean('credito')->nullable()->default(false);
             $table->string('empresacredito')->nullable();
-            $table->bigInteger('importecredito')->default(0);
+            $table->bigInteger('importecredito')->nullable()->default(0);
             $table->string('vigenciacredito')->nullable();
             $table->string('observaciones')->nullable();
             $table->timestamps();

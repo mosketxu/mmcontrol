@@ -39,7 +39,7 @@
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->entidadtipo->nombrecorto ?? '-'}}"  readonly/>
                                 </div>
                                 <div class="hidden w-2/12 md:w-2/12">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->responsable->name}}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->responsable}}"  readonly/>
                                 </div>
                                 <div class="hidden w-1/12 md:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->nif }}" readonly/>
@@ -53,6 +53,7 @@
                                 <div class="flex ">
                                     <x-icon.edit-a href="{{ route('entidad.edit',$entidad) }}"  title="Editar"/>
                                     <x-icon.usergroup href="{{ route('entidad.contactos',$entidad) }}"  title="Contactos"/>
+                                    <x-icon.plane-a class="text-gray-900 transform hover:text-black" href="{{ route('entidad.destinos',[$entidad,'i']) }}"  title="Destinos"/>
                                     <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                                 </div>
                             </div>

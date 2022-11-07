@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\PedidoArchivo as ModelsPedidoArchivo;
+use App\Models\{Pedido,PedidoArchivo as ModelsPedidoArchivo};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
@@ -12,8 +12,9 @@ class PedidoArchivo extends Component
 {
     use WithFileUploads;
 
-    public $titulo='Archivos del pedido:';
+    public $titulo='Archivos del pedido: ';
     public $ruta;
+    public $tipo;
     public $pedidoid;
     public $titcampofecha='';
     public $titcampo2='';
@@ -67,7 +68,9 @@ class PedidoArchivo extends Component
     public function mount($pedidoid,$ruta,$tipo)
     {
         $this->ped=Pedido::find($pedidoid);
-        $this->titulo="Archivos del pedido: ". $this->ped->referencia;
+        $this->tipo=$tipo;
+        $this->ruta=$ruta;
+        $this->titulo="Archivos del pedido: ";
     }
 
     public function render()

@@ -46,7 +46,7 @@
                                 </div>
                                 <div  class="flex w-2/12">
                                     <a href="{{route('producto.archivos',[$producto,'i'])}}"> <x-icon.clip class="text-green-500 hover:text-green-700"/></a>
-                                    <a href="{{route('producto.ficha',[$producto->id,$tipo])}}" target="_blank" rel="noopener noreferrer"><x-icon.clipboard class="text-pink-500 hover:text-pink-700 "/></a>
+                                    <a href="{{route('producto.ficha',[$producto->id,$tipo])}}" target="_blank" ><x-icon.clipboard class="text-pink-500 hover:text-pink-700 "/></a>
                                     @can('producto.edit')
                                         <x-icon.edit-a href="{{ route('producto.edit',$producto) }}"  title="Editar"/>
                                     @endcan
