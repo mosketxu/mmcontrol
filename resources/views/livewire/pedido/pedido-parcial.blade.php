@@ -73,7 +73,7 @@
                             </div>
                             <div class="flex">
                                 <div class="mt-2 w-24"><label for="" >Observaciones:</label></div>
-                                <input type="text" wire:model="{{ $parcial->observaciones }}"
+                                <input type="text" wire:model="parcial.observaciones"
                                     class="w-4/12 py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                         </div>
                             </div>
