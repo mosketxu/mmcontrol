@@ -59,25 +59,21 @@
                             <div class="flex">
                                 <div class="mt-2 w-24"><label for="" >CP:</label></div>
                                 <input type="text" wire:model="parcial.cp"
-                                    wire:change="changeCampo({{ $parcial }},'destino',$event.target.wire:model="
                                     class="w-4/12 py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                             <div class="flex">
                                 <div class="mt-2 w-24"><label for="" >Horario:</label></div>
                                 <input type="text" wire:model="parcial.horario"
-                                    wire:change="changeCampo({{ $parcial }},'destino',$event.target.value)"
                                     class="w-4/12 py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                             <div class="flex">
                                 <div class="mt-2 w-24"><label for="" >Tfno.:</label></div>
                                 <input type="text" wire:model="parcial.tfno"
-                                    wire:change="changeCampo({{ $parcial }},'destino',$event.target.value)"
                                     class="w-4/12 py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                             <div class="flex">
                                 <div class="mt-2 w-24"><label for="" >Observaciones:</label></div>
                                 <input type="text" wire:model="{{ $parcial->observaciones }}"
-                                    wire:change="changeCampo({{ $parcial }},'destino',$event.target.value)"
                                     class="w-4/12 py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                         </div>
                             </div>
