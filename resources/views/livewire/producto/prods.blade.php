@@ -13,7 +13,7 @@
             {{-- tabla entidades --}}
             <div class="flex-col space-y-4">
                 <div>
-                    <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-orange-100 rounded-t-md">
+                    <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
                         @if($tipo=='1')
                             <div class="flex w-3/12 font-light lg:w-3/12" >{{ __('ISBN') }}</div>
                             <div class="flex w-4/12 font-light lg:flex " >{{ __('Título') }}</div>

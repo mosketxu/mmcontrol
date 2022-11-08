@@ -15,7 +15,7 @@
 
                         {{-- @if($producto->adjunto) --}}
                         {{-- <x-icon.clip-a class="w-10 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('producto.adjunto', [$producto]) }}'" title="Adjunto Producto"/> --}}
-                        {{-- <a href="{{asset('fichasproducto/'.$producto->adjunto) }}" target="_blank" title="ver producto"><x-icon.clip class="text-orange-500 w-7 hover:text-orange-700 "/></a>
+                        {{-- <a href="{{asset('fichasproducto/'.$producto->adjunto) }}" target="_blank" title="ver producto"><x-icon.clip class="text-blue-500 w-7 hover:text-blue-700 "/></a>
                         @endif --}}
 
                     </x-jet-nav-link>

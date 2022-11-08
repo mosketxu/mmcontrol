@@ -5,7 +5,7 @@
                 @include('errores')
             </div>
     <div class="">
-        <div class="flex-col space-y-2 text-gray-500 border border-orange-300 rounded shadow-md">
+        <div class="flex-col space-y-2 text-gray-500 border border-blue-300 rounded shadow-md">
             @if ($tipo=='1')
                 @include('producto.editorial')
             @else

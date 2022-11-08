@@ -8,7 +8,7 @@
             </div>
             <div class="flex flex-row-reverse w-2/12 ">
                 <div class="flex w-full">
-                    <input type="text" wire:model="search" class="w-full py-1 text-sm border border-orange-100 rounded-lg" placeholder="Búsqueda" autofocus/>
+                    <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
                     @if($search!='')
                             <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                     @endif
@@ -23,7 +23,7 @@
             <div class="flex-col ">
                 {{-- titulos --}}
                 <div>
-                    <div class="flex pt-2 pb-0 pl-2 text-sm text-left text-gray-500 bg-orange-100 rounded-t-md">
+                    <div class="flex pt-2 pb-0 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
                         @if ($campofechavisible==1)
                             <div class="w-2/12 font-light text-left" >{{ __($titcampofecha)}} </div>
                         @endif
@@ -77,7 +77,7 @@
                         @if ($campoimgvisible==1)
                         <div class="w-2/12 text-left">
                             @if($valor->valorcampoimg)
-                                <a href="{{asset('fichasproducto/'.$valor->valorcampoimg) }}" target="_blank" class="w-5 text-orange-500 hover:text-orange-700" title="Ver producto">
+                                <a href="{{asset('fichasproducto/'.$valor->valorcampoimg) }}" target="_blank" class="w-5 text-blue-500 hover:text-blue-700" title="Ver producto">
                                     <div class="flex">
                                         <x-icon.clip />
                                         <div class="mt-1">
@@ -103,30 +103,30 @@
                 </div>
                 <div>
                     <form wire:submit.prevent="save">
-                        <div class="flex w-full p-2 my-0 text-sm text-left bg-orange-200 rounded-b-md" wire:loading.class.delay="opacity-50">
+                        <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                             @if ($campofechavisible==1)
                                 <div class="flex-col w-2/12 text-left">
                                     <input type="date" wire:model.defer="valorcampofecha"
-                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"
+                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo2visible==1)
                                 <div class="flex-col w-2/12 text-left">
                                     <input type="number" step="any" wire:model.defer="valorcampo2"
-                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"/>
+                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo3visible==1)
                                 <div class="flex-col w-2/12 text-left">
                                     <input type="number" step="any" wire:model.defer="valorcampo3"
-                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"{{ $this->campofechadisabled }} />
+                                    class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"{{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo4visible==1)
                                 <div class="flex-col w-4/12 text-left">
                                     <input type="text" wire:model.defer="valorcampo4"
-                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-orange-300 focus:ring focus:ring-orange-200 focus:ring-opacity-50"/>
+                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campoimgvisible==1)
@@ -135,7 +135,7 @@
                                 </div>
                             @endif
                             <div class="flex-col w-1/12 text-right">
-                                <button type="submit" class="items-center pl-1 mx-0 mt-2 text-center w-7 "><x-icon.save-a class="text-orange"></x-icon.save-a></button>
+                                <button type="submit" class="items-center pl-1 mx-0 mt-2 text-center w-7 "><x-icon.save-a class="text-blue"></x-icon.save-a></button>
                             </div>
                         </div>
                     </form>

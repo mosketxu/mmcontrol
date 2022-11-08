@@ -6,7 +6,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{route('pedido.parciales',[$pedido,'e'])}}" :active="request()->routeIs('pedido.parciales')">
-                        <x-icon.cubes/>Parciales
+                        <x-icon.truck /> &nbsp; Parciales
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

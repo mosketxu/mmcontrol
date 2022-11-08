@@ -1,6 +1,6 @@
 <form wire:submit.prevent="save" class="text-sm">
     <div class="p-1 m-2 ">
-        <div class="p-1 rounded-md bg-orange-50">
+        <div class="p-1 rounded-md bg-blue-50">
             <h3 class="pl-1 font-semibold">Datos generales</h3>
             <input  wire:model.defer="producto.id" type="hidden"/>
             <input  wire:model.defer="tipo" type="hidden"/>
@@ -40,8 +40,8 @@
     </div>
     <div class="p-2 m-2 ">
         <div class="grid grid-cols-1 gap-2 md:grid-cols-3">
-            <div class="p-2 border border-orange-300 rounded shadow-md ">
-                <div class="p-1 rounded-md bg-orange-50">
+            <div class="p-2 border border-blue-300 rounded shadow-md ">
+                <div class="p-1 rounded-md bg-blue-50">
                     <h3 class="pl-1 font-semibold">Datos Técnicos</h3>
                 </div>
                 {{-- formatos --}}
