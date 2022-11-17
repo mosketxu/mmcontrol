@@ -7,10 +7,12 @@ use Livewire\Component;
 
 class PedidoFacturacion extends Component
 {
-    public $titulo='Facturación del pedido: ';
+    public $titulo='Facturación: ';
     public $ruta;
     public $tipo;
-    public $pedido_id;
+    public $pedidoid;
+    public $pedido;
+    public $pdfvisible=false;
     public $cliente_id;
     public $fecha;
     public $cantidad='0';
@@ -24,7 +26,7 @@ class PedidoFacturacion extends Component
     protected function rules()
     {
         return [
-            // 'pedido_id'=>'required',
+            'pedido_id'=>'required',
             'cliente_id'=>'required',
             'fecha'=>'date|required',
             'cantidad'=>'nullable|numeric',
@@ -47,12 +49,12 @@ class PedidoFacturacion extends Component
 
     public function mount($pedidoid,$ruta,$tipo)
     {
-        $ped=Pedido::find($pedidoid);
+        $this->pedido=Pedido::find($pedidoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
         $this->fecha=now()->format('Y-m-d');
-        $this->pedido_id=$pedidoid;
-        $this->cliente_id=$ped->cliente_id;
+        $this->pedidoid=$pedidoid;
+        $this->cliente_id=$this->pedido->cliente_id;
     }
 
     public function render()

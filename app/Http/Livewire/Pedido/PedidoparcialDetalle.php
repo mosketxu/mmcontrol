@@ -41,7 +41,7 @@ class PedidoparcialDetalle extends Component
 
     public function changeCampo(PedidoPedidoparcialDetalle $valor, $campo, $valorcampo)
     {
-    $p=PedidoPedidoparcialDetalle::find($valor->id);
+        $p=PedidoPedidoparcialDetalle::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
         $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');

@@ -22,6 +22,7 @@
                 <tr style="">
                     <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">FSC</td>
                     <td style=" padding-left:3px;" class="borde1" colspan="2">
+                        &x#f058;
                         <input type="checkbox" name="FSC" value="{{ $producto->FSC }}" {{ $producto->FSC=='1' ? 'checked' : ''  }} id="FSC">
                     </td>
                 </tr>

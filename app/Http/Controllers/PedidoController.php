@@ -6,6 +6,8 @@ use App\Models\Entidad;
 use App\Models\Pedido;
 use App\Models\PedidoparcialDetalle;
 use App\Models\PedidoParcial;
+use App\Models\PedidoPresupuesto;
+use App\Models\Producto;
 use Dompdf\Dompdf;
 use \PDF;
 
@@ -15,7 +17,7 @@ class PedidoController extends Controller
     public function __construct()
     {
         $this->middleware('can:pedido.index');
-        $this->middleware('can:pedido.edit')->only('nuevo','edit','update','parcial');
+        $this->middleware('can:pedido.edit')->only('nuevo','editar','update','parcial');
     }
 
     /**
@@ -31,9 +33,9 @@ class PedidoController extends Controller
 
     }
 
-    public function tipo($tipo)
+    public function tipo($tipo,$ruta)
     {
-        return view('pedidos.index',compact('tipo'));
+        return view('pedidos.index',compact(['tipo','ruta']));
     }
 
     public function nuevo($tipo)
@@ -63,6 +65,21 @@ class PedidoController extends Controller
         return $pdf->stream('albaran.pdf'); //asi lo muestra por pantalla
     }
 
+    public function presupuesto($pedidopresupuestoid)
+    {
+        $presupuesto=PedidoPresupuesto::find($pedidopresupuestoid);
+        $pedido=Pedido::find($presupuesto->pedido_id);
+        $producto=Producto::find($pedido->producto_id);
+        $proveedor=Entidad::find($presupuesto->proveedor_id);
+        $cliente=Entidad::find($pedido->cliente_id);
+        // $detalles=PedidoparcialDetalle::where('parcial_id',$parcialid)->get();
+        $pdf = new Dompdf();
+
+        $pdf = \PDF::loadView('pedidos.presupuestopdf', compact('pedido','presupuesto','producto','proveedor','cliente'));
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('presupuesto.pdf'); //asi lo muestra por pantalla
+    }
+
 
 
     /**
@@ -71,10 +88,10 @@ class PedidoController extends Controller
      * @param  \App\Models\Pedido  $pedido
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pedido $pedido)
+    public function editar(Pedido $pedido,$ruta)
     {
         $tipo=$pedido->tipo;
-        return view('pedidos.edit',compact('pedido','tipo'));
+        return view('pedidos.edit',compact('pedido','tipo','ruta'));
     }
 
     public function parciales(Pedido $pedido, $ruta)
@@ -112,7 +129,7 @@ class PedidoController extends Controller
         return view('pedidos.distribuciones',compact('pedido','ruta'));
     }
 
-    public function presupuesto(Pedido $pedido, $ruta)
+    public function presupuestos(Pedido $pedido, $ruta)
     {
         return view('pedidos.presupuesto',compact('pedido','ruta'));
     }

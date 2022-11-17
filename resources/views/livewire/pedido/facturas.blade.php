@@ -1,17 +1,20 @@
 <div class="">
     <div class="p-1 mx-2 ">
         <div class="flex justify-between space-x-1">
-            <div class="flex w-4/12 py-0 mt-0">
+            <div class="flex w-3/12 py-0 mt-0">
                 <div class="w-full py-0 mt-0">
-                    <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }} {{ $pedido_id }}</h1>
+                    <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }} {{ $pedidoid }}</h1>
                 </div>
             </div>
-            <div class="flex flex-row-reverse w-2/12 ">
-                <div class="flex w-full">
+            <div class="flex flex-row-reverse w-9/12 ">
+                <div class="flex ">
                     <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
                     @if($search!='')
-                            <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
+                    <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                     @endif
+                </div>
+                <div class="flex mr-10">
+                    @include('pedidos.pedido-menu' )
                 </div>
             </div>
         </div>
@@ -101,7 +104,7 @@
     </div>
     <div class="m-2">
         @if($ruta=='i')
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',$tipo)}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @else
             <x-jet-secondary-button  onclick="location.href = '{{route('pedido.edit',$pedidoid)}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @endif

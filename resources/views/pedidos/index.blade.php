@@ -10,9 +10,9 @@
                     @endif
                 </h2>
             </div>
-            <div class="w-full">
-                {{-- @include('producto.producto-menu' ) --}}
-            </div>
+            {{-- <div class="w-full">
+                @include('producto.producto-menu' )
+            </div> --}}
             <div class="flex flex-row-reverse w-full">
                 <x-button.button  class="py-1" onclick="location.href = '{{ route('pedido.nuevo',$tipo) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
             </div>

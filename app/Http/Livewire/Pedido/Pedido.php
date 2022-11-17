@@ -10,6 +10,7 @@ class Pedido extends Component
 {
     public $pedidoid='';
     public $tipo;
+    public $ruta;
     public $responsable;
     public $cliente_id;
     public $proveedor_id;
@@ -93,9 +94,10 @@ class Pedido extends Component
         ];
     }
 
-    public function mount($pedidoid,$tipo){
+    public function mount($pedidoid,$tipo,$ruta){
         $this->titulo='Nuevo Pedido:';
         $this->tipo=$tipo;
+        $this->ruta=$ruta;
         $mm=Entidad::where('nif','B63941835')->first();
         // dd($mm);
         $this->facturadopor_id=$mm->id;
@@ -251,6 +253,6 @@ class Pedido extends Component
         $this->titulo='Pedido:';
         $pedido=ModeloPedido::find($ped->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
-        if($nuevo) return redirect()->route('pedido.edit',$pedido);
+        if($nuevo) return redirect()->route('pedido.editar',[$pedido,$ruta]);
     }
 }

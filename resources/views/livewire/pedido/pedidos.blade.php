@@ -129,8 +129,8 @@
                             </div>
                             <div class="flex flex-row-reverse w-2/12 pr-2 mt-2">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
-                                <x-icon.edit-a href="{{ route('pedido.edit',$pedido) }}"  title="Editar"/>
-                                <x-icon.truck-a class="w-5 mt-1 text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Parciales"/>
+                                <x-icon.edit-a href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Editar"/>
+                                <x-icon.truck-a class="w-5 mt-1 text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes"/>
                                 <x-icon.euro-a class="w-5 text-orange-500 hover:text-orange-700 " onclick="location.href = '{{route('pedido.facturaciones',[$pedido->id,'i'])}}'" title="Facturaciones"/>
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
                             </div>

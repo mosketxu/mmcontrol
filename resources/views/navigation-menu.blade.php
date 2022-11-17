@@ -105,12 +105,12 @@
                         </x-slot>
                         <x-slot name="content">
                             <div class="w-44">
-                                <x-jet-dropdown-link href="{{ route('pedido.tipo','1' ) }}" class="text-left">
+                                <x-jet-dropdown-link href="{{ route('pedido.tipo',['1','i'] ) }}" class="text-left">
                                     Editorial
                                 </x-jet-dropdown-link>
                             </div>
                             <div class="w-44">
-                                <x-jet-dropdown-link href="{{ route('pedido.tipo','2' ) }}" class="text-left">
+                                <x-jet-dropdown-link href="{{ route('pedido.tipo',['2','i'] ) }}" class="text-left">
                                     productos
                                 </x-jet-dropdown-link>
                             </div>
@@ -204,13 +204,13 @@
                     </x-slot>
                     <x-slot name="content">
                         <div class="w-44">
-                            <x-jet-dropdown-link href="{{ route('pedido.tipo','1') }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('pedido.tipo',['1','i']) }}" class="text-right">
                                 {{ __('Pedido Editorial') }}
                             </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('pedido.tipo','2') }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('pedido.tipo',['2','i']) }}" class="text-right">
                                 {{ __('Pedido Otros productos') }}
                             </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('pedido.tipo','0') }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('pedido.tipo',['0','i']) }}" class="text-right">
                                 {{ __('Todos') }}
                             </x-jet-dropdown-link>
                         </div>

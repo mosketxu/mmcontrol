@@ -7,38 +7,84 @@ use Livewire\Component;
 
 class PedidoParciales extends Component
 {
-    public $titulo='Entregas Parciales del pedido:';
+    public $titulo='Albaranes: ';
     public $tipo;
-    public $pedido;
     public $ruta;
     public $pedidoid;
-    public $titcampofecha='Fecha';
-    public $titcampo2='Cantidad';
-    public $titcampo3='Importe';
-    public $titcampo4='Comentario';
-    public $titcampoimg='';
-    public $valorcampofecha='';
-    public $valorcampo2='0';
-    public $valorcampo3='0';
-    public $valorcampo4='';
-    public $valorcampoimg;
+    public $pedido;
+    public $pdfvisible=true;
+
+    public $routepdf='pedido.parcial';
+    public $routepdfvbles='pedido.parcial';
+
     public $campofecha='fecha';
-    public $campo2='cantidad';
-    public $campo3='importe';
-    public $campo4='comentario';
-    public $campoimg='';
+    public $titcampofecha='Fecha';
+    public $valorcampofecha='';
+    public $longcampofecha='w-1/12';
     public $campofechavisible=1;
-    public $campo2visible=1;
-    public $campo3visible=1;
-    public $campo4visible=1;
-    public $campoimgvisible=0;
     public $campofechadisabled='';
-    public $campo2disabled='';
-    public $campo3disabled='disabled';
+
+    public $campo2='id';
+    public $titcampo2='Nº Albaran';
+    public $valorcampo2='';
+    public $longcampo2='w-1/12';
+    public $textcampo2='text-right';
+    public $desplazcampo2='pr-2';
+    public $tipocampo2='number';
+    public $campo2visible=1;
+    public $campo2disabled='disabled';
+    public $campo2selectname='';
+
+    public $campo3='cantidad';
+    public $titcampo3='Cantidad';
+    public $valorcampo3='0';
+    public $longcampo3='w-1/12';
+    public $textcampo3='text-right';
+    public $desplazcampo3='pr-2';
+    public $tipocampo3='number';
+    public $campo3visible=1;
+    public $campo3disabled='';
+    public $campo3selectname='';
+
+    public $campo4='importe';
+    public $titcampo4='Importe';
+    public $valorcampo4='0';
+    public $longcampo4='w-1/12';
+    public $textcampo4='text-right';
+    public $desplazcampo4='';
+    public $tipocampo4='number';
+    public $campo4visible=1;
     public $campo4disabled='';
+    public $campo4selectname='';
+
+    public $campo5='comentario';
+    public $titcampo5='Comentario';
+    public $valorcampo5='';
+    public $longcampo5='w-7/12';
+    public $textcampo5='text-left';
+    public $desplazcampo5='pl-16';
+    public $tipocampo5='text';
+    public $campo5visible=1;
+    public $campo5disabled='';
+
+    public $campo6='';
+    public $titcampo6='';
+    public $valorcampo6='';
+    public $longcampo6='';
+    public $textcampo6='';
+    public $desplazcampo6='';
+    public $tipocampo6='';
+    public $campo6visible=0;
+    public $campo6disabled='';
+
+    public $campoimg='';
+    public $titcampoimg='';
+    public $valorcampoimg='';
+    public $longcampoimg="";
+    public $campoimgvisible=0;
     public $campoimgdisabled='';
+
     public $editarvisible=1;
-    public $pdfvisible=1;
     public $search='';
 
     protected $listeners = [ 'refresh' => '$refresh'];
@@ -64,19 +110,20 @@ class PedidoParciales extends Component
     public function mount($pedidoid,$ruta,$tipo)
     {
         $this->valorcampofecha=now()->format('Y-m-d');
+        $this->pedido=Pedido::find($pedidoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
         $this->pedidoid=$pedidoid;
-        $this->ped=Pedido::find($pedidoid);
     }
 
     public function render()
     {
         $valores=ModelsPedidoParcial::query()
         ->search('comentario',$this->search)
-        ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
+        ->select('id','id as valorcampo2','fecha as valorcampofecha','cantidad as valorcampo3','importe as valorcampo4','comentario as valorcampo5')
         ->orderBy('fecha')
         ->paginate(10);
+
 
         return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));
     }
@@ -120,6 +167,8 @@ class PedidoParciales extends Component
         $this->campo4visible=1;
         $this->campoimgvisible=0;
         // $this->emit('refresh');
+
+        $this->ruta='e';
 
         return redirect()->route('pedido.parcial',[$this->pedidoid,$this->ruta,$p->id]);
 

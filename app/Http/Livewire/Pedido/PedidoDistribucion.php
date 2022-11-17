@@ -10,35 +10,83 @@ use Livewire\Component;
 
 class PedidoDistribucion extends Component
 {
-    public $titulo='Distribuciones del pedido: ';
+    public $titulo='Distribuciones: ';
     public $ruta;
     public $tipo;
     public $pedidoid;
-    public $titcampofecha='Fecha';
-    public $titcampo2='Cantidad';
-    public $titcampo3='Importe';
-    public $titcampo4='Comentario';
-    public $titcampoimg='';
-    public $valorcampofecha='';
-    public $valorcampo2='0';
-    public $valorcampo3='0';
-    public $valorcampo4='';
-    public $valorcampoimg='';
+    public $pedido;
+    public $pdfvisible=false;
+
+    public $routepdf='';
+
     public $campofecha='fecha';
-    public $campo2='cantidad';
-    public $campo3='importe';
-    public $campo4='comentario';
-    public $campoimg='';
+    public $titcampofecha='Fecha';
+    public $valorcampofecha='';
+    public $longcampofecha='w-1/12';
     public $campofechavisible=1;
-    public $campo2visible=1;
-    public $campo3visible=1;
-    public $campo4visible=1;
-    public $campoimgvisible=0;
     public $campofechadisabled='';
+
+    public $campo2='cantidad';
+    public $titcampo2='Cantidad';
+    public $valorcampo2='0';
+    public $longcampo2='w-1/12';
+    public $textcampo2='text-right';
+    public $desplazcampo2='pr-2';
+    public $tipocampo2='number';
+    public $campo2visible=1;
     public $campo2disabled='';
-    public $campo3disabled='disabled';
+    public $campo2selectname='';
+
+    public $campo3='importe';
+    public $titcampo3='Importe';
+    public $valorcampo3='0';
+    public $longcampo3='w-1/12';
+    public $textcampo3='text-right';
+    public $desplazcampo3='pr-2';
+    public $tipocampo3='number';
+    public $campo3visible=1;
+    public $campo3disabled='';
+    public $campo3selectname='';
+
+    public $campo4='comentario';
+    public $titcampo4='Distribución';
+    public $valorcampo4='';
+    public $longcampo4='w-8/12';
+    public $textcampo4='text-left';
+    public $desplazcampo4='pl-2';
+    public $tipocampo4='textarea';
+    public $colstextarea4="100";
+    public $campo4visible=1;
     public $campo4disabled='';
+
+    public $campo5='';
+    public $titcampo5='';
+    public $valorcampo5='';
+    public $longcampo5='';
+    public $textcampo5='';
+    public $desplazcampo5='';
+    public $tipocampo5='';
+    public $campo5visible=0;
+    public $campo5disabled='';
+
+    public $campo6='';
+    public $titcampo6='';
+    public $valorcampo6='';
+    public $longcampo6='';
+    public $textcampo6='';
+    public $desplazcampo6='';
+    public $tipocampo6='';
+    public $campo6visible=0;
+    public $campo6disabled='';
+
+    public $campoimg='';
+    public $titcampoimg='';
+    public $valorcampoimg='';
+    public $longcampoimg="";
+    public $campoimgvisible=0;
     public $campoimgdisabled='';
+
+
     public $editarvisible=0;
     public $search='';
 
@@ -65,7 +113,7 @@ class PedidoDistribucion extends Component
     public function mount($pedidoid,$ruta,$tipo)
     {
         $this->valorcampofecha=now()->format('Y-m-d');
-        $this->ped=Pedido::find($pedidoid);
+        $this->pedido=Pedido::find($pedidoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
     }

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Presupuesto;
-use App\Http\Requests\StorePresupuestoRequest;
-use App\Http\Requests\UpdatePresupuestoRequest;
+use App\Models\PedidoPresupuesto;
+use App\Http\Requests\StorePedidoPresupuestoRequest;
+use App\Http\Requests\UpdatePedidoPresupuestoRequest;
 
-class PresupuestoController extends Controller
+class PedidoPresupuestoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,10 +31,10 @@ class PresupuestoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePresupuestoRequest  $request
+     * @param  \App\Http\Requests\StorePedidoPresupuestoRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePresupuestoRequest $request)
+    public function store(StorePedidoPresupuestoRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class PresupuestoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Presupuesto  $presupuesto
+     * @param  \App\Models\PedidoPresupuesto  $pedidoPresupuesto
      * @return \Illuminate\Http\Response
      */
-    public function show(Presupuesto $presupuesto)
+    public function show(PedidoPresupuesto $pedidoPresupuesto)
     {
         //
     }
@@ -53,10 +53,10 @@ class PresupuestoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Presupuesto  $presupuesto
+     * @param  \App\Models\PedidoPresupuesto  $pedidoPresupuesto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Presupuesto $presupuesto)
+    public function edit(PedidoPresupuesto $pedidoPresupuesto)
     {
         //
     }
@@ -64,11 +64,11 @@ class PresupuestoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePresupuestoRequest  $request
-     * @param  \App\Models\Presupuesto  $presupuesto
+     * @param  \App\Http\Requests\UpdatePedidoPresupuestoRequest  $request
+     * @param  \App\Models\PedidoPresupuesto  $pedidoPresupuesto
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePresupuestoRequest $request, Presupuesto $presupuesto)
+    public function update(UpdatePedidoPresupuestoRequest $request, PedidoPresupuesto $pedidoPresupuesto)
     {
         //
     }
@@ -76,10 +76,10 @@ class PresupuestoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Presupuesto  $presupuesto
+     * @param  \App\Models\PedidoPresupuesto  $pedidoPresupuesto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Presupuesto $presupuesto)
+    public function destroy(PedidoPresupuesto $pedidoPresupuesto)
     {
         //
     }
