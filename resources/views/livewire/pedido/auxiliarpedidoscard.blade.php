@@ -52,7 +52,7 @@
                 </div>
                 {{-- datos --}}
                 <div>
-                    @foreach ($valores as $valor)
+                    @forelse ($valores as $valor)
                     <div class="flex w-full py-0 my-0 space-x-1 text-sm text-left bg-white border-t-0 border-y" wire:loading.class.delay="opacity-50">
                         @if ($campofechavisible==1)
                         <div class="flex-col {{ $longcampofecha }} text-left">
@@ -156,7 +156,18 @@
                             @endif
                         </div>
                     </div>
-                    @endforeach
+                    @empty
+                            <div>
+                                <div colspan="10">
+                                    <div class="flex items-center justify-center">
+                                        <x-icon.inbox class="w-8 h-8 text-gray-300"/>
+                                        <span class="py-5 text-xl font-medium text-gray-500">
+                                            No se han encontrado datos...
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforelse
                 </div>
                 <div>
                     {{ $valores->links() }}
