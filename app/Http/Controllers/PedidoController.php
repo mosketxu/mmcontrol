@@ -8,6 +8,7 @@ use App\Models\PedidoparcialDetalle;
 use App\Models\PedidoParcial;
 use App\Models\PedidoPresupuesto;
 use App\Models\Producto;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use \PDF;
 
@@ -65,17 +66,17 @@ class PedidoController extends Controller
         return $pdf->stream('albaran.pdf'); //asi lo muestra por pantalla
     }
 
-    public function presupuesto($pedidopresupuestoid)
+    public function presupuesto(Pedido $pedido,$ruta,$pedidopresupuestoid)
     {
         $presupuesto=PedidoPresupuesto::find($pedidopresupuestoid);
-        $pedido=Pedido::find($presupuesto->pedido_id);
         $producto=Producto::find($pedido->producto_id);
         $proveedor=Entidad::find($presupuesto->proveedor_id);
         $cliente=Entidad::find($pedido->cliente_id);
-        // $detalles=PedidoparcialDetalle::where('parcial_id',$parcialid)->get();
         $pdf = new Dompdf();
+        $fecha=Carbon::parse($presupuesto->fecha)->format('d/m/Y');
 
-        $pdf = \PDF::loadView('pedidos.presupuestopdf', compact('pedido','presupuesto','producto','proveedor','cliente'));
+
+        $pdf = \PDF::loadView('pedidos.presupuestopdf', compact('pedido','presupuesto','producto','proveedor','cliente','fecha'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('presupuesto.pdf'); //asi lo muestra por pantalla
     }
