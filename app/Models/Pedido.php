@@ -29,10 +29,6 @@ class Pedido extends Model
     public function facturaciones(){return $this->hasMany(PedidoFacturacion::class,'pedido_id','id');}
     public function distribuciones(){return $this->hasMany(PedidoDistribucion::class,'pedido_id','id');}
 
-    public function getFechapedAttribute(){return Carbon::parse($this->fechapedido)->format('d-m-Y');}
-    public function getFechaarchAttribute(){return Carbon::parse($this->fechaarchivos)->format('d-m-Y');}
-    public function getFechaplotdAttribute(){return Carbon::parse($this->fechaplotter)->format('d-m-Y');}
-    public function getFechaentredAttribute(){return Carbon::parse($this->fechaentrega)->format('d-m-Y');}
 
     public function getStatusColorAttribute(){
         return [
@@ -66,5 +62,38 @@ class Pedido extends Model
         Storage::put('public/'.$pedido->ruta.'/'.$pedido->fichero, $pdf->output());
 
         return $pdf->download($pedido->fichero);
+    }
+
+    public function getFPedidoAttribute()
+    {
+        if ($this->fechapedido) {
+            return Carbon::parse($this->fechapedido)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+    public function getFArchivosAttribute()
+    {
+        if ($this->fechaarchivos) {
+            return Carbon::parse($this->fechaarchivos)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+    public function getFPlotterAttribute()
+    {
+        if ($this->fechaplotter) {
+            return Carbon::parse($this->fechaplotter)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+    public function getFEntregaAttribute()
+    {
+        if ($this->fechaentrega) {
+            return Carbon::parse($this->fechaentrega)->format('d/m/Y');
+        } else {
+            return '';
+        }
     }
 }

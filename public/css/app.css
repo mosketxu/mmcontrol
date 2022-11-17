@@ -1453,6 +1453,18 @@ select {
 .ml-8 {
   margin-left: 2rem;
 }
+.-ml-2 {
+  margin-left: -0.5rem;
+}
+.-ml-6 {
+  margin-left: -1.5rem;
+}
+.-ml-8 {
+  margin-left: -2rem;
+}
+.-ml-10 {
+  margin-left: -2.5rem;
+}
 .block {
   display: block;
 }
@@ -2273,6 +2285,15 @@ select {
 }
 .pl-6 {
   padding-left: 1.5rem;
+}
+.pr-6 {
+  padding-right: 1.5rem;
+}
+.pr-20 {
+  padding-right: 5rem;
+}
+.pl-4 {
+  padding-left: 1rem;
 }
 .text-left {
   text-align: left;
