@@ -67,7 +67,7 @@ class Pedido extends Model
     public function getFPedidoAttribute()
     {
         if ($this->fechapedido) {
-            return Carbon::parse($this->fechapedido)->format('d/m/Y');
+            return Carbon::parse($this->fechapedido)->format('d/m/y');
         } else {
             return '';
         }
@@ -75,7 +75,7 @@ class Pedido extends Model
     public function getFArchivosAttribute()
     {
         if ($this->fechaarchivos) {
-            return Carbon::parse($this->fechaarchivos)->format('d/m/Y');
+            return Carbon::parse($this->fechaarchivos)->format('d/m/y');
         } else {
             return '';
         }
@@ -83,7 +83,7 @@ class Pedido extends Model
     public function getFPlotterAttribute()
     {
         if ($this->fechaplotter) {
-            return Carbon::parse($this->fechaplotter)->format('d/m/Y');
+            return Carbon::parse($this->fechaplotter)->format('d/m/y');
         } else {
             return '';
         }
@@ -91,7 +91,7 @@ class Pedido extends Model
     public function getFEntregaAttribute()
     {
         if ($this->fechaentrega) {
-            return Carbon::parse($this->fechaentrega)->format('d/m/Y');
+            return Carbon::parse($this->fechaentrega)->format('d/m/y');
         } else {
             return '';
         }
