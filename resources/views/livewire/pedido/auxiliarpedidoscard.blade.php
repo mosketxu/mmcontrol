@@ -25,29 +25,45 @@
             {{-- cuerpo --}}
             <div class="flex-col ">
                 {{-- titulos --}}
-                    <div class="flex pt-2 pb-0 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
+                    <div class="flex pt-1 pb-0 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
                         @if ($campofechavisible==1)
-                            <div class="{{ $longcampofecha }} pl-2 font-light text-left" >{{ __($titcampofecha)}} </div>
+                            <div class="flex-col {{ $longcampofecha }} text-left">
+                                <input type="text" value="{{ $titcampofecha }}" class="w-full text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
+                            </div>
                         @endif
                         @if ($campo2visible==1)
-                            <div class="{{ $longcampo2 }} font-light {{ $textcampo2 }} {{$desplazcampo2 }} ">{{ __($titcampo2)}} </div>
+                            <div class="flex-col {{ $longcampo2 }} ">
+                                <input type="text" value="{{ $titcampo2 }}" class="w-full {{ $textcampo2 }} text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
+                            </div>
                         @endif
                         @if ($campo3visible==1)
-                            <div class="{{ $longcampo3 }} font-light {{ $textcampo3 }} {{$desplazcampo3 }}">{{ __($titcampo3)}} </div>
+                            <div class="flex-col {{ $longcampo3 }} text-left">
+                                <input type="text" value="{{ $titcampo3 }}" class="w-full {{ $textcampo3 }} text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
+                            </div>
                         @endif
                         @if ($campo4visible==1)
-                            <div class="{{ $longcampo4 }} font-light {{ $textcampo4 }} {{$desplazcampo4 }}">{{ __($titcampo4)}} </div>
+                            <div class="flex-col {{ $longcampo4 }} text-left">
+                                <input type="text" value="{{ $titcampo4 }}" class="w-full {{ $textcampo4 }} text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
+                            </div>
                         @endif
                         @if ($campo5visible==1)
-                            <div class="{{ $longcampo5 }} font-light {{ $textcampo5 }} {{$desplazcampo5 }}">{{ __($titcampo5)}} </div>
+                            <div class="flex-col {{ $longcampo5 }} text-left">
+                                <input type="text" value="{{ $titcampo5 }}" class="w-full {{ $textcampo5 }} text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
+                            </div>
                         @endif
                         @if ($campo6visible==1)
-                            <div class="{{ $longcampo6 }} font-light {{ $textcampo6 }} {{$desplazcampo6 }}">{{ __($titcampo6)}} </div>
+                            <div class="flex-col {{ $longcampo6 }} text-left">
+                                <input type="text" value="{{ $titcampo6 }}" class="w-full {{ $textcampo6 }} text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
+                            </div>
                         @endif
                         @if ($campoimgvisible==1)
-                            <div class="{{ $longcampoimg }} ml-8 font-light text-left">{{ __($titcampoimg)}} </div>
-                            @endif
-                            <div class="w-2/12 ml-8 font-light text-left"> </div>
+                            <div class="flex-col {{ $longcampoimg }} text-left">
+                                <input type="text" value="{{ $titcampoimg }}" class="w-full text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
+                            </div>
+                        @endif
+                        <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
+                            <p></p>
+                        </div>
                     </div>
                 </div>
                 {{-- datos --}}
