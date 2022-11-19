@@ -9,7 +9,7 @@ use App\Models\Entidad;
 use App\Models\Factura;
 use App\Models\FacturaDetalle as ModelsFacturaDetalle;
 use App\Models\Pedido;
-
+use Illuminate\Support\Facades\DB;
 
 class FacturaDetalle extends Component
 {
@@ -23,6 +23,7 @@ class FacturaDetalle extends Component
     public $orden='0';
     public $visible=true;
     public $observaciones;
+    public $bloqueado=false;
 
     public $fdetalle;
 
@@ -38,6 +39,7 @@ class FacturaDetalle extends Component
             'orden'=>'nullable',
             'visible'=>'nullable',
             'observaciones'=>'nullable',
+            'bloqueado' => 'integer|size:0',
         ];
     }
 
@@ -51,61 +53,55 @@ class FacturaDetalle extends Component
             'iva.numeric'=>'El iva debe ser numérico.',
             'importe.required'=>'El importe es necesario.',
             'importe.numeric'=>'El importe debe ser numérico.',
+            'bloqueado.size'=>'La factura ya se ha enviado. Debe desbloquearla.',
         ];
     }
 
     public function mount($facturaid)
     {
         $this->factura=Factura::find($facturaid);
+        $this->bloqueado= $this->factura->estado =='0' ? '0' : '1';
     }
 
     public function render()
     {
+
         $entidad=Entidad::find($this->factura->cliente_id);
-        $pedidos=Pedido::where('cliente_id', $this->factura->cliente_id)->where('facturado','!=','1')->orderBy('id')->get();
+        $pedidostodos=Pedido::where('cliente_id', $this->factura->cliente_id)->orderBy('id')->get();
+        $pedidos=$pedidostodos->where('facturado','!=','1');
         $fdetalles=ModelsFacturaDetalle::where('factura_id',$this->factura->id)->orderBy('orden')->orderBy('pedido_id')->get();
-        return view('livewire.facturacion.factura-detalle',compact(['fdetalles','entidad','pedidos']));
+        return view('livewire.facturacion.factura-detalle',compact(['fdetalles','entidad','pedidostodos','pedidos']));
     }
 
-    // public function updatedFdetalleCantidad()
-    // {
-    //     $this->calculoImporte($this->fdetalle);
-    // }
-
-    // public function updatedFdetalleImporte()
-    // {
-    //     $this->calculoImporte($this->fdetalle);
-    // }
-
-    // public function updatedFdetalleIva()
-    // {
-    //     $this->calculoImporte($this->fdetalle);
-    // }
-
-    // public function updatedFdetalleUnidad()
-    // {
-    //     $this->calculoImporte($this->fdetalle);
-    // }
-
-
-    public function calculoImporte()
-    {
-
-        $this->importe=$this->cantidad*$this->preciounidad/$this->unidad;
-        $this->subtotaliva=$this->importe*$this->iva;
-        $this->subtota=$this->importe+$this->iva;
-    }
-
-    // public function changeValor(Pedido $pedido,$campo,$valor)
-    // {
-    //     $pedido->update([$campo=>$valor]);
-    //     $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
-    // }
 
     public function changeValor(ModelsFacturaDetalle $facturadetalle,$campo,$valor)
     {
-        // dd($valor);
+        $this->pedido_id=$facturadetalle->pedido_id;
+        $this->validate();
+        $this->pedido_id='';
         $facturadetalle->update([$campo=>$valor]);
+        $facturadetalle->update([
+            'subtotalsiniva'=>round($facturadetalle->cantidad*$facturadetalle->importe/$facturadetalle->unidad,2),
+            'subtotaliva'=>round($facturadetalle->importe*$facturadetalle->iva,2),
+            'subtotal'=>round($facturadetalle->cantidad*$facturadetalle->importe * (1+$facturadetalle->iva)/$facturadetalle->unidad,2),
+            ]);
+
+        $totales = ModelsFacturaDetalle::where('factura_id',$this->factura->id)
+            ->select('factura_id',
+                DB::raw('SUM(subtotalsiniva) as subtotalsiniva'),
+                DB::raw('SUM(subtotaliva) as subtotaliva'),
+                DB::raw('SUM(subtotal) as subtotal'))
+            ->groupBy("factura_id")
+            ->first();
+
+        $this->factura->update([
+                'importe'=>$totales->subtotalsiniva,
+                'iva'=>$totales->subtotaliva,
+                'total'=>$totales->subtotal]
+        );
+
+        $this->emitUp('refreshfactura');
+
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
@@ -113,7 +109,6 @@ class FacturaDetalle extends Component
     {
         $facturadetalle->visible=$facturadetalle->visible=='1'? '0' : '1';
         $facturadetalle->update(['visible'=>$facturadetalle->visible]);
-        // $this->emit('linearefresh');
         $this->dispatchBrowserEvent('notify', 'Visible Actualizado.');
     }
     public function save(){
@@ -123,7 +118,6 @@ class FacturaDetalle extends Component
         if(!$this->unidad) $this->unidad=1;
 
         $this->validate();
-
         $fdetalle=ModelsFacturaDetalle::create([
             'factura_id'=>$this->factura->id,
             'pedido_id'=>$this->pedido_id,
@@ -132,18 +126,28 @@ class FacturaDetalle extends Component
             'unidad'=>$this->unidad,
             'iva'=>$this->iva,
             'importe'=>$this->importe,
-            'subtotalsiniva'=>$this->importe * $this->cantidad / $this->unidad,
-            'subtotaliva'=>$this->importe * $this->cantidad / $this->unidad* $this->iva,
-            'subtotal'=>$this->importe * $this->cantidad / $this->unidad* (1+$this->iva),
+            'subtotalsiniva'=>round($this->importe * $this->cantidad / $this->unidad,2),
+            'subtotaliva'=>round($this->importe * $this->cantidad / $this->unidad* $this->iva,2),
+            'subtotal'=>round($this->importe * $this->cantidad / $this->unidad* (1+$this->iva),2),
             'orden'=>$this->orden,
             'visible'=>$this->visible,
             'observaciones'=>$this->observaciones,
             'cantidad'=>$this->cantidad,
         ]);
 
-        $this->factura->importe = ModelsFacturaDetalle::where('factura_id',$this->factura->id)->sum('importe');
-        $this->factura->iva = ModelsFacturaDetalle::where('factura_id',$this->factura->id)->sum('subtotaliva');
-        $this->factura->total = ModelsFacturaDetalle::where('factura_id',$this->factura->id)->sum('subtotal');
+        $totales = ModelsFacturaDetalle::where('factura_id',$this->factura->id)
+        ->select('factura_id',
+            DB::raw('SUM(subtotalsiniva) as subtotalsiniva'),
+            DB::raw('SUM(subtotaliva) as subtotaliva'),
+            DB::raw('SUM(subtotal) as subtotal'))
+        ->groupBy("factura_id")
+        ->first();
+
+    $this->factura->update([
+            'importe'=>$totales->subtotalsiniva,
+            'iva'=>$totales->subtotaliva,
+            'total'=>$totales->subtotal]
+    );
 
 
 

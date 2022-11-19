@@ -66,6 +66,8 @@
         </div>
         <div class="w-1/12"></div>
     </div>
+
+    @if($bloqueado=='0')
     <form wire:submit.prevent="save">
         <div class="flex w-full py-0 my-0 text-left bg-green-100 border-t-0 border-y space-x-1" wire:loading.class.delay="opacity-50">
             <div class="w-1/12 ">
@@ -79,7 +81,7 @@
             <div class="w-2/12">
                 <x-selectcolor wire:model.lazy="pedido_id" selectname="pedido_id" color="bg-green-100"
                 class="w-full py-1 bg-green-100 text-sm font-thin text-gray-500 border-none shadow-none">
-                    <option value="">-Selecciona-</option>
+                    <option value="" >-Selecciona- </option>
                     @forelse ($pedidos as $pedido)
                     <option value="{{ $pedido->id }}">{{ $pedido->id }}</option>
                     @empty
@@ -88,27 +90,27 @@
                 </x-selectcolor>
             </div>
             <div class="w-4/12">
-                <input type="text" wire:model.defer="concepto" placeholder="Concepto"
-                class="w-full py-1 bg-green-100 text-sm font-thin text-gray-500 border-0 rounded-md"/>
+                <input type="text" wire:model.defer="concepto" placeholder="Introduce el concepto"
+                class="w-full py-1 bg-green-100 text-sm font-thin text-gray-500 border-0 rounded-md placeholder:text-xs  placeholder:text-gray-300  placeholder:italic"/>
             </div>
             <div class="w-2/12">
-                <input type="number" step="any" wire:model.debounce.500ms="cantidad"
+                <input type="number" step="any" wire:model.lazy="cantidad"
                 class="w-full py-1 bg-green-100 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"/>
             </div>
             <div class="w-1/12">
-                <x-selectcolor wire:model.debounce.500ms="unidad" selectname="unidad" color="blue"
+                <x-selectcolor wire:model.debounce.lazy="unidad" selectname="unidad" color="blue"
                 class="w-full py-1 bg-green-100  text-left text-sm font-thin text-gray-500 border-none shadow-none">
-                    <option value="1">x1</option>
-                    <option value="1000">x1000</option>
+                    <option value="1">ud</option>
+                    <option value="1000">M</option>
                 </x-selectcolor>
             </div>
             <div class="w-1/12">
-                <input type="number" step="any" wire:model.debounce.500ms="importe"
+                <input type="number" step="any" wire:model.lazy="importe"
                 class="w-full py-1 bg-green-100 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"/>
             </div>
             <div class="w-1/12">
-                <input type="text"  value="{{ $cantidad * $importe / $unidad}}"
-                class="w-full py-1 bg-green-100 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
+                <input type="text"  value="{{ round($cantidad * $importe / $unidad,2)}}"
+                class="w-full py-1 bg-green-200 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
             <div class="w-1/12">
@@ -121,27 +123,27 @@
                 </x-selectcolor>
             </div>
             <div class="w-1/12">
-                <input type="text"  value="{{ $cantidad * $iva * $importe / $unidad}}"
-                class="w-full py-1 bg-green-100 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
+                <input type="text"  value="{{ round($cantidad * $iva * $importe / $unidad,2)}}"
+                class="w-full py-1 bg-green-200 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
             <div class="w-1/12">
-                <input type="text"  value="{{ $cantidad * (1+$iva) * $importe / $unidad}}"
-                class="w-full py-1 bg-green-100 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
+                <input type="text"  value="{{ round($cantidad * (1+$iva) * $importe / $unidad,2)}}"
+                class="w-full py-1 bg-green-200 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
             <div class="w-3/12 ">
                 <input type="text"  wire:model.defer="observaciones"
-                class="w-full py-1 bg-green-100 pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"/>
+                class="w-full py-1 bg-green-100 pr-2 text-left text-sm font-thin text-gray-500 border-0 rounded-md"/>
             </div>
             <div class="w-1/12 text-center">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
             </div>
         </div>
     </form>
-
+    @endif
     @forelse ($fdetalles as $fdetalle)
-        <div class="flex w-full py-0 my-0 text-left bg-white border-t-0 border-y" wire:loading.class.delay="opacity-50">
+        <div class="flex w-full py-0 my-0 text-left bg-white space-x-1 border-t-0 border-y" wire:loading.class.delay="opacity-50">
             <div class="w-1/12 ">
                 <input type="checkbox" value="{{ $fdetalle->visible }}" {{ $fdetalle->visible==true ? 'checked' : ''  }}
                     wire:change="changeVisible({{ $fdetalle }},$event.target.value)"
@@ -153,11 +155,11 @@
                     class="w-full py-1 text-sm font-thin text-gray-500 border-0 rounded-md"/>
                 </div>
             <div class="w-2/12">
-                <x-selectcolor wire:model.lazy="fdetalle.pedido_id" selectname="pedido_id"
-                wire:change="changeValor({{ $pedido_id }},'pedido_id',$event.target.value)"
+                <x-selectcolor selectname="pedido_id"
+                wire:change="changeValor({{ $fdetalle }},'pedido_id',$event.target.value)"
                 class="w-full py-1 text-sm font-thin text-gray-500 border-none shadow-none">
-                    @forelse ($pedidos as $pedido)
-                        <option value="{{ $pedido->id }}">{{ $pedido->id }}</option>
+                    @forelse ($pedidostodos as $pedido)
+                        <option value="{{ $pedido->id }}" {{ $pedido->id== $fdetalle->pedido_id ? 'selected' : '' }}>{{ $pedido->id }}</option>
                     @empty
                         <option value="">No hay pedidos pendientes</option>
                     @endforelse
@@ -174,11 +176,11 @@
                 class="w-full py-1  pr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"/>
             </div>
             <div class="w-1/12">
-                <x-selectcolor wire:model.lazy="unidades" selectname="unidades" color="blue"
-                wire:change="changeValor({{ $fdetalle->unidades }},'iva',$event.target.value)"
+                <x-selectcolor selectname="unidad" color="blue"
+                wire:change="changeValor({{ $fdetalle }},'unidad',$event.target.value)"
                 class="w-full py-1 text-sm font-thin text-gray-500 border-none shadow-none">
-                <option value="1">x1</option>
-                <option value="1000">x1000</option>
+                <option value="1" {{ $fdetalle->unidad=="1" ? 'selected' : '' }}>ud</option>
+                <option value="1000" {{ $fdetalle->unidad=="1000" ? 'selected' : ''}}>M</option>
                 </x-selectcolor>
             </div>
             <div class="w-1/12">
@@ -188,27 +190,27 @@
             </div>
             <div class="w-1/12">
                 <input type="text" value="{{ $fdetalle->subtotalsiniva }}"
-                class="w-full py-1 mr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
+                class="w-full py-1 mr-2 bg-gray-100 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
             <div class="w-1/12">
-                <x-selectcolor wire:model.lazy="fdetalle.iva" selectname="iva" color="blue"
-                wire:change="changeValor({{ $fdetalle->iva }},'iva',$event.target.value)"
+                <x-selectcolor selectname="iva" color="blue"
+                wire:change="changeValor({{ $fdetalle }},'iva',$event.target.value)"
                 class="w-full py-1 text-center px-0 text-sm font-thin text-gray-500 border-none shadow-none">
-                <option value="0.00"> 0%</option>
-                <option value="0.04"> 4%</option>
-                <option value="0.10">10%</option>
-                <option value="0.21">21%</option>
+                <option value="0.00" {{ $fdetalle->iva=='0.00' ? 'selected' : ''}}> 0%</option>
+                <option value="0.04" {{ $fdetalle->iva=='0.04' ? 'selected' : ''}}> 4%</option>
+                <option value="0.10" {{ $fdetalle->iva=='0.10' ? 'selected' : ''}}>10%</option>
+                <option value="0.21" {{ $fdetalle->iva=='0.21' ? 'selected' : ''}}>21%</option>
                 </x-selectcolor>
             </div>
             <div class="w-1/12">
                 <input type="text" value="{{ $fdetalle->subtotaliva }}"
-                class="w-full py-1 mr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
+                class="w-full py-1 mr-2  bg-gray-100 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
             <div class="w-1/12">
                 <input type="text" value="{{ $fdetalle->subtotal }}"
-                class="w-full py-1 mr-2 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
+                class="w-full py-1 mr-2  bg-gray-100 text-right text-sm font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
             <div class="w-3/12">

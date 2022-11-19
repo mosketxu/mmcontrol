@@ -14,6 +14,8 @@ class Factura extends Component
     public $cliente_id;
     public $fecha;
     public $importe=0;
+    public $iva=0;
+    public $total=0;
     public $estado=0;
     public $observaciones;
 
@@ -22,6 +24,15 @@ class Factura extends Component
 
     public $titulo='';
     // public $pedidos;
+
+    protected $listeners = [ 'refreshfactura'];
+
+    public function refreshfactura()
+    {
+        // dd($this->facturaid);
+        $this->mount($this->facturaid);
+    // $this->render();
+    }
 
     protected function rules(){
         return [
@@ -54,6 +65,8 @@ class Factura extends Component
             $this->cliente_id=$factura->cliente_id;
             $this->fecha=$factura->fecha;
             $this->importe=$factura->importe;
+            $this->iva=$factura->iva;
+            $this->total=$factura->total;
             $this->estado=$factura->estado;
             $this->observaciones=$factura->observaciones;
         }

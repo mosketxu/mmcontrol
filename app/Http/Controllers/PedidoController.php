@@ -39,9 +39,9 @@ class PedidoController extends Controller
         return view('pedidos.index',compact(['tipo','ruta']));
     }
 
-    public function nuevo($tipo)
+    public function nuevo($tipo,$ruta)
     {
-        return view('pedidos.create',compact('tipo'));
+        return view('pedidos.create',compact('tipo','ruta'));
     }
 
     public function ficha($pedId,$tipo)
