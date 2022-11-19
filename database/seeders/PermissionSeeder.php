@@ -84,5 +84,12 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=>'administracion.edit'])->syncRoles($admin, $gestor, $milimetrica);
         Permission::create(['name'=>'administracion.update'])->syncRoles($admin, $gestor, $milimetrica);
         Permission::create(['name'=>'administracion.delete'])->syncRoles($admin, $gestor, $milimetrica);
+
+        // facturacion
+        Permission::create(['name'=>'facturacion.index'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'facturacion.create'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'facturacion.edit'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'facturacion.update'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'facturacion.delete'])->syncRoles($admin, $gestor, $milimetrica);
     }
 }

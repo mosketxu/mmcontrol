@@ -26,8 +26,8 @@ class Pedido extends Model
     public function archivos(){return $this->hasMany(PedidoArchivo::class,'pedido_id','id');}
     public function incidencias(){return $this->hasMany(PedidoIncidencia::class,'pedido_id','id');}
     public function presupuestos(){return $this->hasMany(Presupuesto::class,'pedido_id','id');}
-    public function facturaciones(){return $this->hasMany(PedidoFacturacion::class,'pedido_id','id');}
     public function distribuciones(){return $this->hasMany(PedidoDistribucion::class,'pedido_id','id');}
+    public function facturadetalles(){return $this->hasMany(facturadetalle::class,'pedido_id','id');}
 
 
     public function getStatusColorAttribute(){

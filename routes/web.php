@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,EntidadContactoController};
+use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,6 +76,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/pedido/{tipo}/nuevo', [PedidoController::class, 'nuevo'])->name('pedido.nuevo');
     Route::get('pedido/{tipo}/ruta/{ruta}', [PedidoController::class,'tipo'])->middleware('can:pedido.index')->name('pedido.tipo');;
     Route::resource('pedido', PedidoController::class);
+
+    //Facturacion
+    Route::resource('facturacion', FacturacionController::class);
 
 
 });

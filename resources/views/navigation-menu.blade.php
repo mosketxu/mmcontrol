@@ -118,6 +118,20 @@
                     </x-jet-dropdown>
                 </div>
                 @endcan
+                @can('facturacion.index')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
+                        {{ __('Facturación') }}
+                    </x-jet-nav-link>
+                </div>
+                @endcan
+                @can('seguridad.index')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('seguridad') }}" :active="request()->routeIs('seguridad')">
+                        {{ __('Seguridad') }}
+                    </x-jet-nav-link>
+                </div>
+                @endcan
             </div>
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Settings Dropdown -->
@@ -245,7 +259,7 @@
                             <div class="border-t border-gray-100"></div>
                             @can('administracion.index')
                             <x-jet-dropdown-link href="{{ route('administracion') }}" class="text-right">
-                               {{ __('Administración') }}
+                                {{ __('Administración') }}
                             </x-jet-dropdown-link>
                             @endcan
                         </div>
@@ -253,9 +267,14 @@
                 </x-jet-dropdown>
             </div>
             @endcan
-            @can('administracion.index')
-            <x-jet-responsive-nav-link href="{{ route('administracion') }}" :active="request()->routeIs('administracion')">
-                {{ __('Admnistración') }}
+            @can('facturacion.index')
+            <x-jet-responsive-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
+                {{ __('Facturación') }}
+            </x-jet-responsive-nav-link>
+            @endcan
+            @can('seguridad.index')
+            <x-jet-responsive-nav-link href="{{ route('seguridad') }}" :active="request()->routeIs('seguridad')">
+                {{ __('Seguridad') }}
             </x-jet-responsive-nav-link>
             @endcan
             @can('entidad.index')

@@ -29,7 +29,7 @@ class PedidoParciales extends Component
     public $valorcampo2='';
     public $longcampo2='w-1/12';
     public $textcampo2='text-right';
-    public $desplazcampo2='pr-2';
+    public $desplazcampo2='';
     public $tipocampo2='number';
     public $campo2visible=1;
     public $campo2disabled='disabled';
@@ -40,7 +40,7 @@ class PedidoParciales extends Component
     public $valorcampo3='0';
     public $longcampo3='w-1/12';
     public $textcampo3='text-right';
-    public $desplazcampo3='pr-2';
+    public $desplazcampo3='';
     public $tipocampo3='number';
     public $campo3visible=1;
     public $campo3disabled='';
@@ -62,7 +62,7 @@ class PedidoParciales extends Component
     public $valorcampo5='';
     public $longcampo5='w-7/12';
     public $textcampo5='text-left';
-    public $desplazcampo5='pl-16';
+    public $desplazcampo5='';
     public $tipocampo5='text';
     public $campo5visible=1;
     public $campo5disabled='';

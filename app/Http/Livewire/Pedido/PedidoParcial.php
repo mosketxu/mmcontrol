@@ -39,7 +39,7 @@ class PedidoParcial extends Component
     public function messages()
     {
         return [
-            'parcial.fecha.requiered'=>'La Fecha es necesaria',
+            'parcial.fecha.required'=>'La Fecha es necesaria',
             'parcial.fecha.date'=>'La Fechadebe ser válida',
             'parcial.cantidad.numeric'=>'La Cantidad deber ser numérica',
             'parcial.importe.numeric'=>'El Importe deber ser numérico',

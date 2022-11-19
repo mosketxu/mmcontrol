@@ -42,6 +42,9 @@ class AppServiceProvider extends ServiceProvider
         Builder::macro('searchMes',function($field,$string){
             return $string ? $this->whereMonth($field, 'like', '%'.$string.'%'): $this;
         });
+        Builder::macro('searchMes2',function($field,$string){
+            return $string ? $this->whereMonth($field,$string): $this;
+        });
 
 
         Builder::macro('toCsv', function () {

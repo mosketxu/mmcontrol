@@ -113,9 +113,13 @@
                 Mes Pedido
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtromes"
-                    class="w-full py-1 text-sm text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                    placeholder="Mes (número)" />
+                <select wire:model="filtromes"
+                    class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                    <option value="">-- selecciona --</option>
+                    @foreach ($meses as $mes )
+                    <option value={{ $mes->id}}>{{ $mes->mesmayus }}</option>
+                    @endforeach
+                </select>
                 @if($filtromes!='')
                 <x-icon.filter-slash-a wire:click="$set('filtromes', '')" class="pb-1" title="reset filter" />
                 @endif

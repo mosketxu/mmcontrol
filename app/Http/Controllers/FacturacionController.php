@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FacturaDetale;
-use App\Http\Requests\StoreFacturaDetaleRequest;
-use App\Http\Requests\UpdateFacturaDetaleRequest;
+use App\Models\Factura;
+use Illuminate\Http\Request;
 
-class FacturaDetaleController extends Controller
+class FacturacionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:facturacion.index')->only('index');
+        $this->middleware('can:facturacion.edit')->only('create');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +21,7 @@ class FacturaDetaleController extends Controller
      */
     public function index()
     {
-        //
+        return view('facturacion.index');
     }
 
     /**
@@ -25,16 +31,16 @@ class FacturaDetaleController extends Controller
      */
     public function create()
     {
-        //
+        return view('facturacion.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreFacturaDetaleRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreFacturaDetaleRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -42,10 +48,10 @@ class FacturaDetaleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FacturaDetale  $facturaDetale
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(FacturaDetale $facturaDetale)
+    public function show($id)
     {
         //
     }
@@ -53,22 +59,23 @@ class FacturaDetaleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\FacturaDetale  $facturaDetale
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FacturaDetale $facturaDetale)
+    public function edit($id)
     {
-        //
+        $factura=Factura::find($id);
+        return view('facturacion.edit',compact('factura'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateFacturaDetaleRequest  $request
-     * @param  \App\Models\FacturaDetale  $facturaDetale
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateFacturaDetaleRequest $request, FacturaDetale $facturaDetale)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +83,10 @@ class FacturaDetaleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\FacturaDetale  $facturaDetale
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FacturaDetale $facturaDetale)
+    public function destroy($id)
     {
         //
     }

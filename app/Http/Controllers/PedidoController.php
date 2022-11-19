@@ -17,7 +17,7 @@ class PedidoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:pedido.index');
+        $this->middleware('can:pedido.index')->only('index');;
         $this->middleware('can:pedido.edit')->only('nuevo','editar','update','parcial');
     }
 

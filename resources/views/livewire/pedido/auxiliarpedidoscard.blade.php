@@ -82,7 +82,8 @@
                         @if ($campo2visible==1)
                         <div class="flex-col {{ $longcampo2 }} {{ $textcampo2 }}">
                             @if($tipocampo2=='combo')
-                            <x-selectcolor wire:model.lazy="valor.valorcampo2" selectname="valorcampo2" color="blue" class="w-full" >
+                            <x-selectcolor wire:model.lazy="valor.valorcampo2" selectname="valorcampo2" color="blue" class="w-full"
+                                wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)">
                                 @foreach ($seleccionables2 as $seleccion)
                                 <option value="{{ $seleccion->id }}">{{ $seleccion->referencia }}</option>
                                 @endforeach

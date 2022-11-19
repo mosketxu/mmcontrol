@@ -4,11 +4,9 @@ namespace App\Http\Livewire\Pedido;
 
 use Livewire\Component;
 
-use App\Models\{ Pedido,Entidad, EntidadContacto, User};
+use App\Models\{ Pedido,Entidad, EntidadContacto, Mes};
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class Pedidos extends Component
 {
@@ -89,11 +87,11 @@ class Pedidos extends Component
             'cliente_id.required'=>'El cliente es necesario',
             'proveedor_id.nullable'=>'',
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
-            'fechapedido.requiered'=>'La fecha del pedido es necesaria',
+            'fechapedido.required'=>'La fecha del pedido es necesaria',
             'fechaarchivos.date'=>'La fecha de los archivos debe ser válida',
             'fechaplotter.date'=>'La fecha del plotter debe ser válida',
             'fechaentrega.date'=>'La fecha de entrega debe ser válida',
-            'fechaentrega.requiered'=>'La fecha de entrega es necesaria',
+            'fechaentrega.required'=>'La fecha de entrega es necesaria',
             'tiradaprevista.required'=>'La tirada prevista es necesaria',
             'tiradaprevista.numeric'=>'El valor de la tirada prevista debe ser numérico',
             'tiradareal.numeric'=>'El valor de la tirada real debe ser numérico',
@@ -112,10 +110,12 @@ class Pedidos extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
+        $meses=Mes::orderBy('id')->get();
+
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
-        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores'));
+        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','meses'));
 }
 
     public function updatingSearch(){$this->resetPage();}
