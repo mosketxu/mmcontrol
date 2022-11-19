@@ -63,7 +63,7 @@ class FacturaDetalle extends Component
     {
         $entidad=Entidad::find($this->factura->cliente_id);
         $pedidos=Pedido::where('cliente_id', $this->factura->cliente_id)->where('facturado','!=','1')->orderBy('id')->get();
-        $fdetalles=ModelsFacturaDetalle::where('factura_id',$this->factura->id)->get();
+        $fdetalles=ModelsFacturaDetalle::where('factura_id',$this->factura->id)->orderBy('orden')->orderBy('pedido_id')->get();
         return view('livewire.facturacion.factura-detalle',compact(['fdetalles','entidad','pedidos']));
     }
 
@@ -96,12 +96,26 @@ class FacturaDetalle extends Component
         $this->subtota=$this->importe+$this->iva;
     }
 
+    // public function changeValor(Pedido $pedido,$campo,$valor)
+    // {
+    //     $pedido->update([$campo=>$valor]);
+    //     $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
+    // }
+
     public function changeValor(ModelsFacturaDetalle $facturadetalle,$campo,$valor)
     {
+        // dd($valor);
         $facturadetalle->update([$campo=>$valor]);
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
+    public function changeVisible(ModelsFacturaDetalle $facturadetalle,$visible)
+    {
+        $facturadetalle->visible=$facturadetalle->visible=='1'? '0' : '1';
+        $facturadetalle->update(['visible'=>$facturadetalle->visible]);
+        // $this->emit('linearefresh');
+        $this->dispatchBrowserEvent('notify', 'Visible Actualizado.');
+    }
     public function save(){
 
         if(!$this->cantidad) $this->cantidad=0;
