@@ -91,8 +91,8 @@
             </div>
             <div class="">
                 @if($facturaid)
-                    {{-- @livewire('facturacion.facturadetalle',['facturaid'=>$facturaid],key($facturaid.now())) --}}
-                    @livewire('facturacion.fdetalle',['facturaid'=>$facturaid])
+                    @livewire('facturacion.facturadetalle',['facturaid'=>$facturaid],key($facturaid.now()))
+                    {{-- @livewire('facturacion.fdetalle',['facturaid'=>$facturaid]) --}}
                     {{-- @livewire('facturacion.facturadetalle',['facturaid'=>$facturaid,'bloqueado'=>$bloqueado]) --}}
                 @endif
             </div>
