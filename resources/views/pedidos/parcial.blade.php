@@ -10,9 +10,8 @@
                 {{-- @include('pedido.pedido-menu' ) --}}
             </div>
             <div class="flex flex-row-reverse w-full">
-                <a href="{{route('pedido.albaran',[$parcialid])}}" target="_blank" ><x-icon.pdf class="text-redº-500 hover:text-redº-700 "/></a>
                 <x-button.button  onclick="location.href = ''" color="blue" >{{ __('Nuevo') }}</x-button.button>
-                {{-- <x-button.button  onclick="location.href = '{{ route('pedido.nuevo',$tipo) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button> --}}
+                <a href="{{route('pedido.albaran',[$parcialid])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
             </div>
         </div>
     </x-slot>

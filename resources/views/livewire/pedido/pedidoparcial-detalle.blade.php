@@ -1,4 +1,4 @@
-<div class="py-1 space-y-4">
+<div class="py-1 space-y-1">
     <div class="">
         @include('errores')
     </div>
