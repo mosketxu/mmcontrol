@@ -6,29 +6,29 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:flex">
                     <x-jet-nav-link href="{{route('pedido.editar',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.editar')">
-                        Pedido
+                        <x-icon.edit class="text-gray-500 hover:text-gray-900"/>Pedido
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.parciales',[$pedido,'e'])}}" :active="request()->routeIs('pedido.parciales')">
-                        Albaranes
+                        <x-icon.truck/>Albaranes
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.distribuciones',[$pedido,'e'])}}" :active="request()->routeIs('pedido.distribuciones')">
-                        Distribuciones
+                        <x-icon.building-circle-arrow-right/>Distribuciones
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.archivos',[$pedido,'e'])}}" :active="request()->routeIs('pedido.archivos')">
                         <x-icon.clip/>Archivos
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.presupuestos',[$pedido,'e'])}}" :active="request()->routeIs('pedido.presupuestos')">
-                        Presupuestos
+                        <x-icon.dolarcomment/>Presupuestos
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.incidencias',[$pedido,'e'])}}" :active="request()->routeIs('pedido.incidencias')">
-                        Incidencias
+                        <x-icon.triangleexclamation class="w-4 text-gray-500 hover:text-gray-900"/> Incidencias
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.retrasos',[$pedido,'e'])}}" :active="request()->routeIs('pedido.retrasos')">
-                        Retrasos
+                        <x-icon.sandwatch class="w-3 text-gray-500 hover:text-gray-900"/>Retrasos
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{route('pedido.facturaciones',[$pedido,'e'])}}" :active="request()->routeIs('pedido.facturaciones')">
+                    {{-- <x-jet-nav-link href="{{route('pedido.facturaciones',[$pedido,'e'])}}" :active="request()->routeIs('pedido.facturaciones')">
                         <x-icon.euro/>Facturación
-                    </x-jet-nav-link>
+                    </x-jet-nav-link> --}}
                 </div>
             </div>
         </div>
