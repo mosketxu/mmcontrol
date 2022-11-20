@@ -14,7 +14,7 @@
                 @include('producto.producto-menu' )
             </div>
             <div class="flex flex-row-reverse w-full">
-                <x-button.button  onclick="location.href = '{{ route('pedido.nuevo',$tipo) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
+                <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
             </div>
         </div>
     </x-slot>

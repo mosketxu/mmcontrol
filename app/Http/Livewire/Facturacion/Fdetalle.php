@@ -78,6 +78,7 @@ class Fdetalle extends Component
     {
         $i=Pedido::with('producto')->find($this->pedido_id);
         $this->importe=$i->producto->precioventa;
+        $this->concepto=$i->producto->referencia;
     }
 
 
