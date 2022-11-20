@@ -278,9 +278,9 @@
     </div>
     <div class="m-2">
         @if($ruta=='i')
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
         @else
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
         @endif
     </div>
 </div>
