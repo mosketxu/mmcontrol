@@ -7,6 +7,9 @@
                 </div>
             </div>
             <div class="flex flex-row-reverse w-9/12 ">
+                {{-- <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a> --}}
+                <a href="{{route('facturacion.show',[$factura->id])}}" target="_blank" title="Imprimir factura"><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
+
                 <div class="flex">
                     {{-- @include('pedidos.pedido-menu' ) --}}
                 </div>

@@ -31,4 +31,12 @@ class Factura extends Model
             return '';
         }
     }
+    public function getFfactura4Attribute()
+    {
+        if ($this->fecha) {
+            return Carbon::parse($this->fecha)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
 }
