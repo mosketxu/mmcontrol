@@ -11,7 +11,7 @@
             </div>
             <div class="flex flex-row-reverse w-full">
                 <x-button.button  onclick="location.href = ''" color="blue" >{{ __('Nuevo') }}</x-button.button>
-                <a href="{{route('pedido.albaran',[$parcialid])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
+                <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
             </div>
         </div>
     </x-slot>

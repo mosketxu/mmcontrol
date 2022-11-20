@@ -14,7 +14,9 @@ class PedidoParciales extends Component
     public $pedido;
     public $pdfvisible=true;
 
-    public $routepdf='pedido.parcial';
+    public $routepdf='pedido.albaran';
+    // <a href="{{route('pedido.albaran',[$parcialid])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
+
     public $routepdfvbles='pedido.parcial';
 
     public $campofecha='fecha';

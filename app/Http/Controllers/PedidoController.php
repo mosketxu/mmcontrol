@@ -53,7 +53,7 @@ class PedidoController extends Controller
         return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
     }
 
-    public function albaran($parcialid)
+    public function albaran($pedidoid,$ruta,$parcialid)
     {
         $parcial=PedidoParcial::find($parcialid);
         $pedido=Pedido::find($parcial->pedido_id);
