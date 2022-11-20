@@ -25,6 +25,9 @@ class Fdetalle extends Component
     public $bloqueado=false;
 
     public $fdetalle;
+    public $subtotalsiniva=0;
+    public $subtotaliva=0;
+    public $subtotal=0;
 
     protected function rules()
     {
@@ -64,7 +67,6 @@ class Fdetalle extends Component
 
     public function render()
     {
-
         $entidad=Entidad::find($this->factura->cliente_id);
         $pedidostodos=Pedido::where('cliente_id', $this->factura->cliente_id)->orderBy('id')->get();
         $pedidos=$pedidostodos->where('facturado','!=','1');
@@ -72,6 +74,23 @@ class Fdetalle extends Component
         return view('livewire.facturacion.fdetalle',compact(['fdetalles','entidad','pedidostodos','pedidos']));
     }
 
+    public function UpdatedPedidoId()
+    {
+        $i=Pedido::with('producto')->find($this->pedido_id);
+        $this->importe=$i->producto->precioventa;
+    }
+
+
+    public function calculos()
+    {
+        $this->subtotalsiniva=round($this->importe * $this->cantidad / $this->unidad,2);
+        $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva / $this->unidad,2);
+        $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) / $this->unidad,2);
+    }
+    public function UpdatedCantidad(){ $this->calculos();}
+    public function UpdatedIva(){ $this->calculos();}
+    public function UpdatedImporte(){ $this->calculos();}
+    public function UpdatedUnidad(){ $this->calculos();}
 
     public function changeValor(ModelsFacturaDetalle $facturadetalle,$campo,$valor)
     {
@@ -111,7 +130,6 @@ class Fdetalle extends Component
         $this->dispatchBrowserEvent('notify', 'Visible Actualizado.');
     }
     public function save(){
-
         if(!$this->cantidad) $this->cantidad=0;
         if(!$this->iva) $this->iva=0;
         if(!$this->unidad) $this->unidad=1;
