@@ -81,9 +81,9 @@ class FacturaDetalle extends Component
         $this->pedido_id='';
         $facturadetalle->update([$campo=>$valor]);
         $facturadetalle->update([
-            'subtotalsiniva'=>round($facturadetalle->cantidad*$facturadetalle->importe/$facturadetalle->unidad,2),
-            'subtotaliva'=>round($facturadetalle->importe*$facturadetalle->iva,2),
-            'subtotal'=>round($facturadetalle->cantidad*$facturadetalle->importe * (1+$facturadetalle->iva)/$facturadetalle->unidad,2),
+            'subtotalsiniva'=>round($facturadetalle->importe * $facturadetalle->cantidad / $facturadetalle->unidad,2),
+            'subtotaliva'=>round($facturadetalle->importe * $facturadetalle->cantidad * $facturadetalle->iva / $facturadetalle->unidad,2),
+            'subtotal'=>round($facturadetalle->importe *$facturadetalle->cantidad * (1+$facturadetalle->iva) / $facturadetalle->unidad,2),
             ]);
 
         $totales = ModelsFacturaDetalle::where('factura_id',$this->factura->id)
@@ -148,9 +148,6 @@ class FacturaDetalle extends Component
             'iva'=>$totales->subtotaliva,
             'total'=>$totales->subtotal]
     );
-
-
-
         $this->pedido_id='';
         $this->cantidad='0';
         $this->unidad='1';
@@ -165,6 +162,11 @@ class FacturaDetalle extends Component
 
     public function delete($valorId)
     {
+
+        $this->pedido_id=$valorId;
+        $this->validate();
+        $this->pedido_id='';
+
         $borrar = ModelsFacturaDetalle::find($valorId);
 
         if ($borrar) {

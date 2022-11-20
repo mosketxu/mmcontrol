@@ -20,6 +20,7 @@ class Factura extends Component
     public $observaciones;
 
     public $mesagge;
+    public $bloqueado='0';
     public $filtrocliente;
 
     public $titulo='';
@@ -29,7 +30,6 @@ class Factura extends Component
 
     public function refreshfactura()
     {
-        // dd($this->facturaid);
         $this->mount($this->facturaid);
     // $this->render();
     }
@@ -39,7 +39,6 @@ class Factura extends Component
             'facturaid'=>'required',
             'cliente_id'=>'required',
             'fecha'=>'date|required',
-            'importe'=>'numeric|nullable',
             'estado'=>'nullable',
             'observaciones'=>'nullable',
         ];
@@ -52,23 +51,22 @@ class Factura extends Component
         'cliente_id.required'=>'El cliente es necesario.',
         'fecha.required'=>'la fecha es necesaria.',
         'fecha.date'=>'la fecha debe ser válida.',
-        'importe.numeric'=>'El importe ha de ser numérico',
         ];
     }
 
     public function mount($facturaid){
         $this->titulo='Nueva Factura:';
-
         if ($facturaid!='') {
             $factura=ModelsFactura::find($facturaid);
             $this->facturaid=$factura->id;
             $this->cliente_id=$factura->cliente_id;
             $this->fecha=$factura->fecha;
-            $this->importe=$factura->importe;
-            $this->iva=$factura->iva;
-            $this->total=$factura->total;
+            $this->importe=number_format($factura->importe,2,',','.');
+            $this->iva=number_format($factura->iva,2,',','.');
+            $this->total=number_format($factura->total,2,',','.');
             $this->estado=$factura->estado;
             $this->observaciones=$factura->observaciones;
+            $this->bloqueado=$this->estado!='0' ? '1' : '0';
         }
     }
 
@@ -115,7 +113,6 @@ class Factura extends Component
             'id'=>$this->facturaid,
             'cliente_id'=>$this->cliente_id,
             'fecha'=>$this->fecha,
-            'importe'=>$this->importe,
             'estado'=>$this->estado == '' ? '0' : $this->estado,
             'observaciones'=>$this->observaciones,
         ]);
@@ -124,5 +121,6 @@ class Factura extends Component
         $factura=ModelsFactura::find($i);
         $this->dispatchBrowserEvent('notify', $mensaje);
         if($nuevo) return redirect()->route('facturacion.edit',$factura->id);
+        $this->emit('refreshfactura');
     }
 }

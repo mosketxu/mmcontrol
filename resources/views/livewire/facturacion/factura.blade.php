@@ -39,19 +39,19 @@
                             </div>
                             <div class="w-full form-item">
                                 <x-jet-label for="importe" class="text-right mr-6">{{ __('Subtotal') }}</x-jet-label>
-                                <input  wire:model.lazy="importe" type="number"
+                                <input  wire:model.lazy="importe" type="text"
                                 class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
                             <div class="w-full form-item">
                                 <x-jet-label for="iva" class="text-right mr-6">{{ __('Iva') }}</x-jet-label>
-                                <input  wire:model.lazy="iva" type="number"
+                                <input  wire:model.lazy="iva" type="text"
                                 class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
                             <div class="w-full form-item">
                                 <x-jet-label for="total" class="text-right mr-6">{{ __('Total') }}</x-jet-label>
-                                <input  wire:model.lazy="total" type="number"
+                                <input  wire:model.lazy="total" type="text"
                                 class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
@@ -79,6 +79,12 @@
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
                             <x-jet-secondary-button  onclick="location.href = '{{route('facturacion.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            @if($bloqueado!='0')
+                                <x-icon.lock/>
+                                @else
+                                <x-icon.lock-open/>
+                            @endif
+
                         </div>
                     </div>
                 </form>
