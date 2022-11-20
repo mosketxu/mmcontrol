@@ -189,7 +189,7 @@
                 class="w-full py-1 mr-2 text-right text-xs font-thin text-gray-500 border-0 rounded-md"/>
             </div>
             <div class="w-1/12">
-                <input type="text" value="{{ number_format($fdetalle->subtotalsiniva,2,','.'') }}"
+                <input type="text" value="{{ number_format($fdetalle->subtotalsiniva,2,',','.') }}"
                 class="w-full py-1 mr-2 bg-gray-100 text-right text-xs font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
@@ -204,12 +204,12 @@
                 </x-selectcolor>
             </div>
             <div class="w-1/12">
-                <input type="text" value="{{ number_format($fdetalle->subtotaliva,2,','.'') }}"
+                <input type="text" value="{{ number_format($fdetalle->subtotaliva,2,',','.') }}"
                 class="w-full py-1 mr-2  bg-gray-100 text-right text-xs font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
             <div class="w-1/12">
-                <input type="text" value="{{ number_format($fdetalle->subtotal,2,','.'') }}"
+                <input type="text" value="{{ number_format($fdetalle->subtotal,2,',','.') }}"
                 class="w-full py-1 mr-2  bg-gray-100 text-right text-xs font-thin text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
