@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Facturacion;
 
-use App\Http\Livewire\Facturacion\FacturaDetalle as FacturacionFacturaDetalle;
 use Livewire\Component;
 
 use App\Models\Entidad;
