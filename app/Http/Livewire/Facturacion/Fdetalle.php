@@ -10,7 +10,7 @@ use App\Models\FacturaDetalle as ModelsFacturaDetalle;
 use App\Models\Pedido;
 use Illuminate\Support\Facades\DB;
 
-class FacturaDetalle extends Component
+class Fdetalle extends Component
 {
     public $factura;
     public $pedido_id;
@@ -69,7 +69,7 @@ class FacturaDetalle extends Component
         $pedidostodos=Pedido::where('cliente_id', $this->factura->cliente_id)->orderBy('id')->get();
         $pedidos=$pedidostodos->where('facturado','!=','1');
         $fdetalles=ModelsFacturaDetalle::where('factura_id',$this->factura->id)->orderBy('orden')->orderBy('pedido_id')->get();
-        return view('livewire.facturacion.factura-detalle',compact(['fdetalles','entidad','pedidostodos','pedidos']));
+        return view('livewire.facturacion.fdetalle',compact(['fdetalles','entidad','pedidostodos','pedidos']));
     }
 
 
