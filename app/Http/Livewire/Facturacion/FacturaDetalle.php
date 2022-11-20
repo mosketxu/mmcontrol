@@ -162,7 +162,6 @@ class FacturaDetalle extends Component
 
     public function delete($valorId)
     {
-
         $this->pedido_id=$valorId;
         $this->validate();
         $this->pedido_id='';
