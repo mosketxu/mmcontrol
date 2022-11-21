@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController};
+use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,7 +56,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     // Producto
     Route::get('producto/{producto}/adjunto', [ProductoController::class,'adjunto'])->name('producto.adjunto');
     Route::get('producto/{prodId}/ficha/{tipo}', [ProductoController::class,'ficha'])->name('producto.ficha');
-    Route::get('producto/{tipo}', [ProductoController::class,'tipo'])->middleware('can:producto.index')->name('producto.tipo');;
+    Route::get('producto/{tipo}', [ProductoController::class,'tipo'])->middleware('can:producto.index')->name('producto.tipo');
     Route::get('/producto/{producto}/archivos/{ruta}', [ProductoController::class, 'archivos'])->name('producto.archivos');
     Route::get('/producto/{tipo}/nuevo', [ProductoController::class, 'nuevo'])->name('producto.nuevo');
     Route::resource('producto', ProductoController::class);
@@ -79,6 +79,13 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     //Facturacion
     Route::resource('facturacion', FacturacionController::class);
+
+    //Oferta
+    Route::get('/oferta/{oferta}/editar/{ruta}', [OfertaController::class, 'editar'])->name('oferta.editar');
+    Route::get('oferta/{ofertaId}/ficha/{tipo}', [OfertaController::class,'ficha'])->name('oferta.ficha');
+    Route::get('/oferta/{tipo}/nuevo/{ruta}', [OfertaController::class, 'nuevo'])->name('oferta.nuevo');
+    Route::get('oferta/{tipo}', [OfertaController::class,'tipo'])->middleware('can:oferta.index')->name('oferta.tipo');
+    Route::resource('oferta', OfertaController::class);
 
 
 });

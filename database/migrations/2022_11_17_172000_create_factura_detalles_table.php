@@ -15,7 +15,7 @@ class CreateFacturaDetallesTable extends Migration
     {
         Schema::create('factura_detalles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('factura_id')->constrained('facturas');
+            $table->foreignId('factura_id')->constrained('facturas')->onDelete('cascade');
             $table->foreignId('pedido_id')->constrained('pedidos');
             $table->string('concepto')->nullable();
             $table->bigInteger('cantidad')->default(0.00);

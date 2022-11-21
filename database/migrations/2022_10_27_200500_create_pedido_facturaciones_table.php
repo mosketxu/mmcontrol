@@ -16,7 +16,7 @@ class CreatePedidoFacturacionesTable extends Migration
         Schema::create('pedido_facturaciones', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned(); // to remove primary key
             $table->primary('id'); //to add primary key
-            $table->foreignId('pedido_id')->constrained('pedidos');
+            $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade');
             $table->foreignId('cliente_id')->constrained('entidades');
             $table->date('fecha')->nullable();
             $table->bigInteger('cantidad')->nullable()->default(0);

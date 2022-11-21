@@ -15,7 +15,7 @@ class CreatePedidoparcialDetallesTable extends Migration
     {
         Schema::create('pedidoparcial_detalles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parcial_id')->constrained('pedido_parciales');
+            $table->foreignId('parcial_id')->constrained('pedido_parciales')->onDelete('cascade');
             $table->string('concepto')->nullable();
             $table->bigInteger('cantidad')->nullable();
             $table->timestamps();

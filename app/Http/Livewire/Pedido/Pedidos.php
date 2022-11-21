@@ -347,7 +347,7 @@ class Pedidos extends Component
         $pedido = Pedido::find($pedidoId);
         if ($pedido) {
             $pedido->delete();
-            $this->dispatchBrowserEvent('notify', 'pedido borrado, ');
+            $this->dispatchBrowserEvent('notify', 'pedido borrado. ');
         }
     }
 

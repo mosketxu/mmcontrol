@@ -15,7 +15,7 @@ class CreatePedidoIncidenciasTable extends Migration
     {
         Schema::create('pedido_incidencias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pedido_id')->constrained('pedidos');
+            $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade');
             $table->date('fecha')->nullable();
             $table->bigInteger('cantidad')->nullable()->default(0);
             $table->bigInteger('importe')->nullable()->default(0);

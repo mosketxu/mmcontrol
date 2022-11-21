@@ -156,7 +156,7 @@
                                     <x-select wire:model.lazy="estado" selectname="estado" class="w-full" >
                                         <option value="0">{{ __('En curso') }}</option>
                                         <option value="1">{{ __('Finalizado') }}</option>
-                                        <option value="3">{{ __('Cancelado') }}</option>
+                                        <option value="2">{{ __('Cancelado') }}</option>
                                     </x-select>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@
                                     <x-select wire:model.lazy="facturado" selectname="facturado" class="w-full" >
                                         <option value="0">{{ __('No') }}</option>
                                         <option value="1">{{ __('Sí') }}</option>
-                                        <option value="3">{{ __('Parcial') }}</option>
+                                        <option value="2">{{ __('Parcial') }}</option>
                                     </x-select>
                                 </div>
                             </div>

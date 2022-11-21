@@ -15,7 +15,7 @@ class CreateProductoArchivosTable extends Migration
     {
         Schema::create('producto_archivos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('producto_id')->constrained('productos');
+            $table->foreignId('producto_id')->constrained('productos')->onDelete('cascade');
             $table->string('nombrearchivooriginal');
             $table->string('archivo');
             $table->string('comentario')->nullable();

@@ -15,7 +15,7 @@ class CreatePedidoArchivosTable extends Migration
     {
         Schema::create('pedido_archivos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pedido_id')->constrained('pedidos');
+            $table->foreignId('pedido_id')->constrained('pedidos')->onDelete('cascade');
             $table->string('nombrearchivooriginal');
             $table->string('archivo');
             $table->string('comentario')->nullable();

@@ -125,6 +125,34 @@
                     </x-jet-nav-link>
                 </div>
                 @endcan
+                @can('oferta.index')
+                <div class="hidden pt-2 space-x-8 text-left sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-dropdown  align="left" width="60" >
+                        <x-slot name="trigger">
+                            <span class="inline-flex rounded-md">
+                                <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md bg-blu hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-blue-700">
+                                    Ofertas
+                                    <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </span>
+                        </x-slot>
+                        <x-slot name="content">
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('oferta.tipo','1' ) }}" class="text-left">
+                                    Editorial
+                                </x-jet-dropdown-link>
+                            </div>
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('oferta.tipo','2' ) }}" class="text-left">
+                                    Otros productos
+                                </x-jet-dropdown-link>
+                            </div>
+                        </x-slot>
+                    </x-jet-dropdown>
+                </div>
+                @endcan
                 @can('seguridad.index')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('seguridad') }}" :active="request()->routeIs('seguridad')">
@@ -238,7 +266,7 @@
                     <x-slot name="trigger">
                         <span class="inline-flex rounded-md">
                             <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md bg-blu hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-blue-700">
-                                Catálogoss
+                                Catálogo
                                 <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
@@ -271,6 +299,35 @@
             <x-jet-responsive-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
                 {{ __('Facturación') }}
             </x-jet-responsive-nav-link>
+            @endcan
+            @can('ofefta.index')
+            <div class="relative mt-3 ml-3">
+                <x-jet-dropdown align="right" width="60" >
+                    <x-slot name="trigger">
+                        <span class="inline-flex rounded-md">
+                            <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md bg-blu hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-blue-700">
+                                Ofertas
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </span>
+                    </x-slot>
+                    <x-slot name="content">
+                        <div class="w-44">
+                            <x-jet-dropdown-link href="{{ route('oferta.tipo','1') }}" class="text-right">
+                                {{ __('Editorial') }}
+                            </x-jet-dropdown-link>
+                            <x-jet-dropdown-link href="{{ route('oferta.tipo','2') }}" class="text-right">
+                                {{ __('Otros productos') }}
+                            </x-jet-dropdown-link>
+                            <x-jet-dropdown-link href="{{ route('oferta.tipo','0') }}" class="text-right">
+                                {{ __('Todos') }}
+                            </x-jet-dropdown-link>
+                        </div>
+                    </x-slot>
+                </x-jet-dropdown>
+            </div>
             @endcan
             @can('seguridad.index')
             <x-jet-responsive-nav-link href="{{ route('seguridad') }}" :active="request()->routeIs('seguridad')">

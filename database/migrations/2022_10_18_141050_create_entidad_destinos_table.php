@@ -15,7 +15,7 @@ class CreateEntidadDestinosTable extends Migration
     {
         Schema::create('entidad_destinos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entidad_id')->constrained('entidades');
+            $table->foreignId('entidad_id')->constrained('entidades')->onDelete('cascade');
             $table->string('destino');
             $table->string('atencion')->nullable();
             $table->string('direccion')->nullable();
