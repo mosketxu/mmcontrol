@@ -61,6 +61,7 @@
                             </div>
                             <div class="flex flex-row-reverse w-3/12 pr-2 mt-1 ">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $oferta->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
+                                <a href="{{route('oferta.ficha',[$oferta->id,$oferta->tipo])}}" target="_blank" title="Imprimir Oferta"><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
                                 <x-icon.edit-a class="" href="{{ route('oferta.editar',[$oferta,'i']) }}"  title="Editar"/>
                             </div>
                         </div>

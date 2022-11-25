@@ -15,9 +15,9 @@ class CreateOfertasTable extends Migration
     {
         Schema::create('ofertas', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned(); // to remove primary key
-            $table->primary('id'); //to add primary key
+            $table->primary('id'); //to add primary keys
             $table->foreignId('cliente_id')->constrained('entidades');
-            $table->foreignId('contacto_id')->nullable()->constrained('entidades');
+            $table->foreignId('contacto_id')->nullable()->nullable()->constrained('entidades');
             $table->foreignId('producto_id')->nullable()->constrained('productos');
             $table->integer('tipo');
             $table->date('fecha');

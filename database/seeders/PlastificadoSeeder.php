@@ -14,6 +14,9 @@ class PlastificadoSeeder extends Seeder
      */
     public function run()
     {
+
+        \DB::table('plastificados')->delete();
+
         Plastificado::create(['name'=>'PPB 1C']);
         Plastificado::create(['name'=>'PPM 1C']);
         Plastificado::create(['name'=>'PPM 2C']);

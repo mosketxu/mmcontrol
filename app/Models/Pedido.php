@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Carbon;
 
 class Pedido extends Model
@@ -13,7 +13,7 @@ class Pedido extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','tipo','responsable','cliente_id','contacto_id','facturadopor_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
+    protected $fillable=['id','tipo','responsable','cliente_id','pedidocliente','oferta_id','contacto_id','facturadopor_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
                         'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','uds_caja','otros'
                         ];
 
@@ -25,7 +25,7 @@ class Pedido extends Model
     public function parciales(){return $this->hasMany(PedidoParcial::class,'pedido_id','id');}
     public function archivos(){return $this->hasMany(PedidoArchivo::class,'pedido_id','id');}
     public function incidencias(){return $this->hasMany(PedidoIncidencia::class,'pedido_id','id');}
-    public function presupuestos(){return $this->hasMany(Presupuesto::class,'pedido_id','id');}
+    public function presupuestos(){return $this->hasMany(PedidoPresupuesto::class,'pedido_id','id');}
     public function distribuciones(){return $this->hasMany(PedidoDistribucion::class,'pedido_id','id');}
     public function facturadetalles(){return $this->hasMany(facturadetalle::class,'pedido_id','id');}
 
@@ -72,26 +72,59 @@ class Pedido extends Model
             return '';
         }
     }
-    public function getFArchivosAttribute()
-    {
+
+    public function getFPedido4Attribute(){
+        if ($this->fechapedido) {
+            return Carbon::parse($this->fechapedido)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+
+
+    public function getFArchivosAttribute(){
         if ($this->fechaarchivos) {
             return Carbon::parse($this->fechaarchivos)->format('d/m/y');
         } else {
             return '';
         }
     }
-    public function getFPlotterAttribute()
-    {
+
+    public function getFArchivos4Attribute(){
+        if ($this->fechaarchivos) {
+            return Carbon::parse($this->fechaarchivos)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+
+    public function getFPlotterAttribute(){
         if ($this->fechaplotter) {
             return Carbon::parse($this->fechaplotter)->format('d/m/y');
         } else {
             return '';
         }
     }
-    public function getFEntregaAttribute()
-    {
+
+    public function getFPlotter4Attribute(){
+        if ($this->fechaplotter) {
+            return Carbon::parse($this->fechaplotter)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+
+    public function getFEntregaAttribute(){
         if ($this->fechaentrega) {
             return Carbon::parse($this->fechaentrega)->format('d/m/y');
+        } else {
+            return '';
+        }
+    }
+
+    public function getFEntrega4Attribute(){
+        if ($this->fechaentrega) {
+            return Carbon::parse($this->fechaentrega)->format('d/m/Y');
         } else {
             return '';
         }

@@ -17,7 +17,7 @@
                 <div>
                     <div class="">
                         {{-- titulos --}}
-                        <div class="flex w-full text-sm  pt-2 pb-0 pl-2 font-bold text-gray-500 bg-blue-100 rounded-t-md space-x-2">
+                        <div class="flex w-full pt-2 pb-0 pl-2 space-x-2 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
                             <div class="flex w-5 h-5 mr-2 font-medium text-center" >
                                 <x-input.checkbox wire:model="selectPage" />
                             </div>
@@ -28,16 +28,16 @@
                             <div class="w-1/12 text-right">{{ __('F.Entrega') }}</div>
                             <div class="w-1/12 text-right">{{ __('F. Archivos') }}</div>
                             <div class="w-1/12 text-right">{{ __('F.Plotters') }}</div>
-                            {{-- <div class="w-2/12 text-left pl-2" >{{ __('Proveedor') }}</div> --}}
-                            <div class="w-2/12 text-right pr-6">{{ __('Q.Prev/Q.Real') }}</div>
+                            {{-- <div class="w-2/12 pl-2 text-left" >{{ __('Proveedor') }}</div> --}}
+                            <div class="w-2/12 pr-6 text-right">{{ __('Q.Prev/Q.Real') }}</div>
                             <div class="w-1/12 text-center">{{ __('Estado') }}</div>
                             <div class="w-1/12 text-center">{{ __('Facturado') }}</div>
-                            <div class="w-3/12  text-left" ></div>
+                            <div class="w-3/12 text-left" ></div>
                         </div>
                     </div>
                     <div>
                         @if($selectPage)
-                        <div class="flex w-full bg-gray-200  text-sm text-left border-t-0 border-y" wire:key="row-message">
+                        <div class="flex w-full text-sm text-left bg-gray-200 border-t-0 border-y" wire:key="row-message">
                             <div class="flex-col w-full text-left">
                                 @unless($selectAll)
                                     <span>Has seleccionado <strong>{{ $pedidos->count() }}</strong> pedidos, ¿quieres seleccionar el total: <strong>{{ $pedidos->total() }}</strong> ?</span>
@@ -49,17 +49,17 @@
                         </div>
                         @endif
                         @forelse ($pedidos as $pedido)
-                        <div class="flex w-full text-sm border-t-0 border-y space-x-2 text-gray-500  " wire:loading.class.delay="opacity-50">
+                        <div class="flex w-full space-x-2 text-sm text-gray-500 border-t-0 border-y " wire:loading.class.delay="opacity-50">
                             <div class="flex w-5 h-5 p-2 mr-2 font-medium text-center"><x-input.checkbox wire:model="selected" value="{{ $pedido->id }}" /></div>
-                            <div class="flex-col w-1/12 text-left my-2">{{ $pedido->id }}</div>
-                            <div class="flex-col w-2/12 text-left my-2">{{ $pedido->cliente->entidad }}</div>
-                            <div class="flex-col w-1/12 text-left my-2">{{ $pedido->isbn }}</div>
-                            <div class="flex-col w-2/12 text-left my-2">{{ $pedido->referencia }}</div>
-                            <div class="flex-col w-1/12 text-right my-2">{{ $pedido->fentrega }}</div>
-                            <div class="flex-col w-1/12 text-right my-2">{{ $pedido->farchivos }}</div>
-                            <div class="flex-col w-1/12 text-right my-2">{{ $pedido->fplotter }}</div>
-                            {{-- <div class="flex-col w-2/12 text-left my-2 pl-2">{{ $pedido->proveedor->entidad }}</div> --}}
-                            <div class="flex-col w-2/12 text-right my-2 pr-2">{{ $pedido->tiradaprevista .' / '. $pedido->tiradareal }}</div>
+                            <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->id }}</div>
+                            <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->cliente->entidad }}</div>
+                            <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->isbn }}</div>
+                            <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->referencia }}</div>
+                            <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fentrega }}</div>
+                            <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->farchivos }}</div>
+                            <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fplotter }}</div>
+                            {{-- <div class="flex-col w-2/12 pl-2 my-2 text-left">{{ $pedido->proveedor->entidad }}</div> --}}
+                            <div class="flex-col w-2/12 pr-2 my-2 text-right">{{ $pedido->tiradaprevista .' / '. $pedido->tiradareal }}</div>
                             <div class="flex-col w-1/12 text-right">
                                 <select wire:change="changeValor({{ $pedido }},'estado',$event.target.value)"
                                     class="w-full text-center py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $pedido->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
@@ -79,9 +79,10 @@
                             <div class="flex flex-row-reverse w-3/12 pr-2 mt-1 ">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                                 {{-- <x-icon.euro-a class="w-5 text-orange-500 hover:text-orange-700 " onclick="location.href = '{{route('pedido.facturaciones',[$pedido->id,'i'])}}'" title="Facturaciones"/> --}}
+                                <a href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank" ><x-icon.p class="mx-1 text-red-500 hover:text-red-700 "/></a>
                                 <x-icon.sandwatch-a class="w-4 mt-1 text-brown-500 hover:text-brown-700 " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos"/>
-                                <x-icon.triangleexclamation-a class="w-6 mt-1  text-yellow-500 hover:text-yellow-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias"/>
-                                <x-icon.dolarcomment-a class="w-6 mt-1  text-purple-500 hover:text-purple-700 " onclick="location.href = '{{route('pedido.presupuestos',[$pedido,'i'])}}'" title="Presupuestos"/>
+                                <x-icon.triangleexclamation-a class="w-6 mt-1 text-yellow-500 hover:text-yellow-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias"/>
+                                <x-icon.dolarcomment-a class="w-6 mt-1 text-purple-500 hover:text-purple-700 " onclick="location.href = '{{route('pedido.presupuestos',[$pedido,'i'])}}'" title="Presupuestos"/>
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
                                 <x-icon.building-circle-arrow-right-a class="w-5 my-2 text-gray-500 hover:text-gray-900 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Distirbuciones"/>
                                 <x-icon.truck-a class="w-5 my-2 text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes"/>

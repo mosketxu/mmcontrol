@@ -12,7 +12,6 @@
                 @endif
             </div>
             {{-- datos del pedido --}}
-            {{-- <div class="h-screen"> --}}
             <div class="flex-col space-y-4 text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-2 m-2 space-y-2">
@@ -37,9 +36,9 @@
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
                                     <x-select wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full" >
                                         @if (isset($contactos))
-                                            <option value="">-- Selecciona contacto --</option>
+                                            @if(!$contacto_id) <option value="">-- Selecciona contacto --</option> @endif
                                             @foreach ($contactos as $contacto)
-                                            <option value="{{ $contacto->contacto_id }}">{{ $contacto->entidadcontacto->entidad }}</option>
+                                            <option value="{{ $contacto->contacto_id }}" {{ $contacto->contacto_id == $this->contacto_id ? "selected" : ""}}>{{ $contacto->entidadcontacto->entidad }}</option>
                                             @endforeach
                                         @else
                                             <option value="">-- Selecciona primero un cliente --</option>
@@ -47,6 +46,27 @@
                                     </x-select>
                                 </div>
                             </div>
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="oferta_id">{{ __('Oferta') }}</x-jet-label><span class="text-red-500 text-xs">¿deberia existir siempre?</span>
+                                    <x-select wire:model.lazy="ofertatemp" selectname="ofertatemp" class="w-full" >
+                                        @if (isset($ofertas))
+                                            <option value="">-- Selecciona la oferta aceptada --</option>
+                                            @foreach ($ofertas as $oferta)
+                                            <option value="{{ $oferta->id }}">{{ $oferta->id }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="">-- Selecciona primero un cliente --</option>
+                                        @endif
+                                    </x-select>
+                                    <input  wire:model.lazy="oferta_id" type="text" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="pedidocliente">{{ __('Pedido Cliente') }}</x-jet-label>
+                                <input  wire:model.lazy="pedidocliente" type="text" class="w-full py-2 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                            </div>
+
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="producto_id">{{ __('ISBN/Cód.') }}</x-jet-label>

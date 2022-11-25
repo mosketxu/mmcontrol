@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Facturacion;
 
-use App\Models\{Entidad,Factura as ModelsFactura,Pedido};
+use App\Models\{Entidad, EntidadContacto, Factura as ModelsFactura,Pedido};
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -12,7 +12,9 @@ class Factura extends Component
     public $facturaid='';
     public $ruta;
     public $cliente_id;
+    public $contacto_id;
     public $fecha;
+    public $pedidocliente;
     public $importe=0;
     public $iva=0;
     public $total=0;
@@ -24,7 +26,8 @@ class Factura extends Component
     public $filtrocliente;
 
     public $titulo='';
-    // public $pedidos;
+    public $pedidos;
+    public $contactos;
 
     protected $listeners = [ 'refreshfactura'];
 
@@ -36,8 +39,10 @@ class Factura extends Component
 
     protected function rules(){
         return [
-            'facturaid'=>'required',
+            // 'facturaid'=>'required',
             'cliente_id'=>'required',
+            'contacto_id'=>'required',
+            'pedidocliente'=>'required',
             'fecha'=>'date|required',
             'estado'=>'nullable',
             'observaciones'=>'nullable',
@@ -49,8 +54,10 @@ class Factura extends Component
     return [
         'facturaid.required'=>'El número de factura es necesario.',
         'cliente_id.required'=>'El cliente es necesario.',
-        'fecha.required'=>'la fecha es necesaria.',
-        'fecha.date'=>'la fecha debe ser válida.',
+        'contacto_id.required'=>'El contacto es necesario.',
+        'fecha.required'=>'La fecha es necesaria.',
+        'fecha.date'=>'La fecha debe ser válida.',
+        'pedidocliente.required'=>'El pedido del cliente es necesario.',
         ];
     }
 
@@ -60,24 +67,29 @@ class Factura extends Component
             $factura=ModelsFactura::find($facturaid);
             $this->facturaid=$factura->id;
             $this->cliente_id=$factura->cliente_id;
+            $this->contacto_id=$factura->contacto_id;
             $this->fecha=$factura->fecha;
+            $this->pedidocliente=$factura->pedidocliente;
             $this->importe=number_format($factura->importe,2,',','.');
             $this->iva=number_format($factura->iva,2,',','.');
             $this->total=number_format($factura->total,2,',','.');
             $this->estado=$factura->estado;
             $this->observaciones=$factura->observaciones;
             $this->bloqueado=$this->estado!='0' ? '1' : '0';
+            $this->pedidos=Pedido::where('cliente_id',$factura->cliente_id)->where('estado','<>','1')->get();
+            $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$factura->cliente_id)->get();
         }
     }
 
     public function render(){
         $clientes=Entidad::orderBy('entidad')->whereIn('entidadtipo_id',['1','2'])->get();
-
         return view('livewire.facturacion.factura',compact(['clientes']));
     }
 
     public function updatedClienteId(){
         if(!$this->fecha) $this->fecha=now()->format('Y-m-d');
+        $this->pedidos=Pedido::where('cliente_id',$this->cliente_id)->where('estado','<>','1')->get();
+        $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$this->cliente_id)->get();
     }
 
     public function numfactura(){
@@ -91,6 +103,7 @@ class Factura extends Component
     {
         $mensaje="Factura creada satisfactoriamente";
         $i="";
+        $this->validate();
         if ($this->facturaid!='') {
             $i=$this->facturaid;
             $mensaje="Factura actualizada satisfactoriamente";
@@ -105,13 +118,16 @@ class Factura extends Component
             $i=$this->facturaid;
             $nuevo=true;
         }
-        $this->validate();
+        // $this->validate();
+        // dd('sdc');
         $fac=ModelsFactura::updateOrCreate([
             'id'=>$i
             ],
             [
             'id'=>$this->facturaid,
             'cliente_id'=>$this->cliente_id,
+            'contacto_id'=>$this->contacto_id,
+            'pedidocliente'=>$this->pedidocliente,
             'fecha'=>$this->fecha,
             'estado'=>$this->estado == '' ? '0' : $this->estado,
             'observaciones'=>$this->observaciones,

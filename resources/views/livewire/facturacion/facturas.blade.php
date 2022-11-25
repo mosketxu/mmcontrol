@@ -67,7 +67,9 @@
                             </div>
                             <div class="flex flex-row-reverse w-1/12 pr-2 mt-1 ">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $factura->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
+                                <a href="{{route('facturacion.show',[$factura->id])}}" target="_blank" title="Imprimir factura"><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
                                 <x-icon.edit-a href="{{ route('facturacion.edit',$factura) }}"  title="Editar"/>
+
                             </div>
                         </div>
                         @empty

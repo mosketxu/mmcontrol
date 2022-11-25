@@ -11,6 +11,6 @@ class EntidadContacto extends Model
 
     public function entidadcontacto()
     {
-        return $this->belongsTo(Entidad::class,'contacto_id','id');
+        return $this->belongsTo(Entidad::class,'contacto_id','id')->orderBy('entidad','ASC');
     }
 }

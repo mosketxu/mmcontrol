@@ -14,6 +14,8 @@ class TintaSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('tintas')->delete();
+
         Tinta::create(['name'=>'4+4' ,'familia'=>'']);
         Tinta::create(['name'=>'2+2' ,'familia'=>'']);
         Tinta::create(['name'=>'1+1' ,'familia'=>'']);

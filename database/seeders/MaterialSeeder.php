@@ -14,6 +14,8 @@ class MaterialSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('materiales')->delete();
+
         Material::create(['name'=>'Estucado semimate' ,'familia'=>'']);
         Material::create(['name'=>'Estucado mate' ,'familia'=>'']);
         Material::create(['name'=>'Estucado brillo' ,'familia'=>'']);

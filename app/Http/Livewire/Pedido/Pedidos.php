@@ -48,6 +48,7 @@ class Pedidos extends Component
     public $filtrofacturado='';
 
     public $message;
+    public $destino='0';
 
     public $showDeleteModal=false;
     public $showNewModal = false;

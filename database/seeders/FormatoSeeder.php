@@ -14,6 +14,8 @@ class FormatoSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('formatos')->delete();
+
         Formato::create(['name'=>'210x280']);
         Formato::create(['name'=>'210x297']);
         Formato::create(['name'=>'220x270']);

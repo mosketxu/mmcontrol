@@ -10,7 +10,7 @@ class Factura extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','cliente_id','fecha','importe','iva','total','estado','observaciones'];
+    protected $fillable = ['id','cliente_id','contacto_id','fecha','pedidocliente','importe','iva','total','estado','observaciones'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}
     public function facturadetalles(){return $this->hasMany(FacturaDetalle::class,'factura_id');}

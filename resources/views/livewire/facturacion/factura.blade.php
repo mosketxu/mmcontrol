@@ -4,11 +4,7 @@
             <div class="">
                 @include('errores')
             </div>
-            <div class="">
-                    {{-- @include('pedidos.pedidoeditorialfilters') --}}
-            </div>
             {{-- datos del pedido --}}
-            {{-- <div class="h-screen"> --}}
             <div class="flex-col text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 space-y-1">
@@ -17,12 +13,12 @@
                             <input  wire:model.defer="facturaid" type="hidden"/>
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-4">
-                            <div class="w-full form-item ">
+                            <div class="w-1/12 form-item ">
                                 <x-jet-label for="facturaid">{{ __('Nº Factura') }}</x-jet-label>
                                 <input  wire:model.lazy="facturaid" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm bg-blue-50 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-3/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
                                     <x-selectcolor wire:model.lazy="cliente_id" selectname="cliente_id" class="w-full py-1" >
@@ -33,29 +29,59 @@
                                     </x-selectcolor>
                                 </div>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-3/12 form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
+                                    <x-selectcolor wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full py-1" >
+                                       @if (isset($contactos))
+                                            <option value="">-- Selecciona un contacto --</option>
+                                            @foreach ($contactos as $contacto)
+                                            <option value="{{ $contacto->id }}">{{ $contacto->entidadcontacto->entidad }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="">-- Selecciona primero un contacto --</option>
+                                        @endif
+                                    </x-selectcolor>
+                                </div>
+                            </div>
+                            <div class="w-2/12 form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="pedidocliente">{{ __('Su Pedido') }}</x-jet-label>
+                                    <x-selectcolor wire:model.lazy="pedidocliente" selectname="pedidocliente" class="w-full py-1" >
+                                       @if (isset($pedidos))
+                                            <option value="">-- Selecciona un pedido --</option>
+                                            @foreach ($pedidos as $pedido)
+                                            <option value="{{ $pedido->pedidocliente }}">{{ $pedido->pedidocliente }}</option>
+                                            @endforeach
+                                        @else
+                                                    <option value="">-- Selecciona primero un cliente --</option>
+                                        @endif
+                                    </x-selectcolor>
+                                </div>
+                            </div>
+                            <div class="w-1/12 form-item">
                                 <x-jet-label for="fecha">{{ __('Fecha Factura') }}</x-jet-label>
                                 <input  wire:model.lazy="fecha" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <x-jet-label for="importe" class="text-right mr-6">{{ __('Subtotal') }}</x-jet-label>
                                 <input  wire:model.lazy="importe" type="text"
                                 class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <x-jet-label for="iva" class="text-right mr-6">{{ __('Iva') }}</x-jet-label>
                                 <input  wire:model.lazy="iva" type="text"
                                 class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <x-jet-label for="total" class="text-right mr-6">{{ __('Total') }}</x-jet-label>
                                 <input  wire:model.lazy="total" type="text"
                                 class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
                                     <x-selectcolor wire:model.lazy="estado" selectname="estado" class="w-full" >

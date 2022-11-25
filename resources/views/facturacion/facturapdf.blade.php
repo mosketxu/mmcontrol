@@ -63,15 +63,15 @@
                             <td width=40%>
                                 <p>Fra Num: {{ $factura->id }}</p>
                                 <p>Fecha: {{ $factura->ffactura4 }}</p>
-                                <p>Pedido:  Aclarar donde se dice quién sobre todo si hay muchos pedidos. ¿manual? </p>
-                                <p>Solicitado por: Aclarar donde se dice quién sobre todo si hay muchos pedidos. ¿manual?</p>
+                                <p>Pedido:  {{ $factura->pedidocliente }} </p>
+                                <p>Solicitado por: {{ $factura->contacto_id }}</p>
                             </td>
                         </tr>
                     </table>
 
                      <table width=90% class="mt-20 mx-auto text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
-                            <td class="font-bold " >Pedido</td>
+                            <td class="font-bold " >Nuestro Presup.</td>
                             <td class="font-bold " >Concepto</td>
                             <td class="font-bold " >Cantidad</td>
                             <td class="font-bold " >Importe</td>
@@ -82,7 +82,7 @@
                         </tr>
                         @foreach ($factura->facturadetalles as $detalle)
                         <tr>
-                            <td>{{ $detalle->pedido_id }}-{{ $loop->index }} </td>
+                            <td>{{ $detalle->pedido->oferta_id }} </td>
                             <td>{{ $detalle->concepto }}</td>
                             <td>{{ number_format($detalle->cantidad,0,',','.') }}</td>
                             <td>{{ number_format($detalle->importe,2,',','.') }} {{ $detalle->unidad =='1' ? 'Ud' : 'Millar' }}</td>

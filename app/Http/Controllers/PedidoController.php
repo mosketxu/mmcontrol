@@ -66,6 +66,17 @@ class PedidoController extends Controller
         return $pdf->stream('albaran.pdf'); //asi lo muestra por pantalla
     }
 
+    public function entrada($pedidoid,$tipo,$ruta)
+    {
+
+        $pedido=Pedido::with('cliente','contacto','producto','parciales','archivos','incidencias','presupuestos','distribuciones','facturadetalles')->find($pedidoid);
+        $pdf = new Dompdf();
+
+        $pdf = \PDF::loadView('pedidos.fichaentradapdf', compact('pedido'));
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('pedido.pdf'); //asi lo muestra por pantalla
+    }
+
     public function presupuesto(Pedido $pedido,$ruta,$pedidopresupuestoid)
     {
         $presupuesto=PedidoPresupuesto::find($pedidopresupuestoid);

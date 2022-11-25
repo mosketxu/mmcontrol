@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Producto,EntidadContacto,Entidad,Pedido as ModeloPedido};
+use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido};
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -14,6 +14,8 @@ class Pedido extends Component
     public $responsable;
     public $cliente_id;
     public $proveedor_id;
+    public $pedidocliente;
+    public $oferta_id;
     public $facturadopor_id;
     public $muestra;
     public $pruebacolor;
@@ -35,23 +37,26 @@ class Pedido extends Component
     public $otros;
 
     public $mesagge;
+    public $destino='0';
     public $filtroisbn;
     public $filtroreferencia;
     public $filtrocliente;
+    public $ofertatemp;
 
     public $titulo='';
     public $contactos;
     public $productos;
-
-    public $showPDFModal=false;
+    public $ofertas;
 
     protected function rules(){
         return [
             'pedidoid'=>'required',
             'responsable'=>'required',
             'cliente_id'=>'required',
-            'contacto_id'=>'nullable',
+            'contacto_id'=>'required',
             'proveedor_id'=>'nullable',
+            'pedidocliente'=>'nullable',
+            'oferta_id'=>'nullable',
             'facturadopor_id'=>'nullable',
             'muestra'=>'nullable',
             'producto_id'=>'required',
@@ -76,6 +81,7 @@ class Pedido extends Component
         return [
             'pedidoid.required'=>'El número de pedido es necesario',
             'producto_id.required'=>'Debes elegir un producto',
+            'contacto_id.required'=>'Debes elegir un contacto',
             'responsable.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
             'proveedor_id.nullable'=>'',
@@ -99,7 +105,6 @@ class Pedido extends Component
         $this->tipo=$tipo;
         $this->ruta=$ruta;
         $mm=Entidad::where('nif','B63941835')->first();
-        // dd($mm);
         $this->facturadopor_id=$mm->id;
         if ($pedidoid!='') {
             $pedido=ModeloPedido::find($pedidoid);
@@ -107,6 +112,8 @@ class Pedido extends Component
             $this->pedidoid=$pedido->id;
             $this->responsable=$pedido->responsable;
             $this->cliente_id=$pedido->cliente_id;
+            $this->pedidocliente=$pedido->pedidocliente;
+            $this->oferta_id=$pedido->oferta_id;
             $this->contacto_id=$pedido->contacto_id;
             $this->proveedor_id=$pedido->proveedor_id;
             $this->facturadopor_id=$pedido->facturadopor_id;
@@ -127,8 +134,10 @@ class Pedido extends Component
             $this->uds_caja=$pedido->uds_caja;
             $this->otros=$pedido->otros;
             $this->titulo='Pedido';
-            if($this->cliente_id)
+            if($this->cliente_id){
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
+                $this->ofertas=Oferta::where('cliente_id', '=', $this->cliente_id)->orderBy('id')->get();
+            }
         }
     }
 
@@ -136,6 +145,7 @@ class Pedido extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
+
         $this->productos=Producto::query()
             ->with('cliente')
             ->when($this->filtroisbn!='', function ($query){
@@ -155,6 +165,7 @@ class Pedido extends Component
 
     public function updatedClienteId(){
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
+        $this->ofertas=Oferta::where('cliente_id', $this->cliente_id)->get();
         if(!$this->fechapedido) $this->fechapedido=now()->format('Y-m-d');
     }
 
@@ -166,6 +177,10 @@ class Pedido extends Component
             $this->precio=$p->precio;
             $this->preciocoste=$p->preciocoste;
         }
+    }
+
+    public function updatedOfertatemp(){
+        $this->oferta_id= $this->ofertatemp;
     }
 
     public function updatedPreciocoste(){
@@ -193,14 +208,6 @@ class Pedido extends Component
             $ped=ModeloPedido::whereYear('fechapedido', $anyo)->max('id') ;
             return !isset($ped) ? ($anyo2 * 100000 +1) :$ped + 1 ;
         // }
-    }
-
-    public function openPDFModal(){
-        $this->showPDFModal = true;
-    }
-
-    public function imprimir(){
-        $this->openPDFModal();
     }
 
     public function save()
@@ -231,6 +238,8 @@ class Pedido extends Component
             'tipo'=>$this->tipo,
             'cliente_id'=>$this->cliente_id,
             'contacto_id'=>$this->contacto_id,
+            'pedidocliente'=>$this->pedidocliente,
+            'oferta_id'=>$this->oferta_id,
             'proveedor_id'=>$this->proveedor_id == '' ? null : $this->proveedor_id ,
             'producto_id'=>$this->producto_id,
             'muestra'=>$this->muestra,
@@ -253,6 +262,6 @@ class Pedido extends Component
         $this->titulo='Pedido:';
         $pedido=ModeloPedido::find($ped->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
-        if($nuevo) return redirect()->route('pedido.editar',[$pedido,$ruta]);
+        if($nuevo) return redirect()->route('pedido.editar',[$pedido,$this->ruta]);
     }
 }

@@ -16,6 +16,8 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('permissions')->delete();
+
         $admin=Role::find('1');
         $gestor=Role::find('2');
         $milimetrica=Role::find('3');

@@ -10,7 +10,7 @@ class OfertaController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:oferta.index')->only('tipo','ofertapdf');
+        $this->middleware('can:oferta.index')->only('tipo','ficha');
         $this->middleware('can:producto.edit')->only('nuevo','editar');
     }
 
@@ -37,8 +37,11 @@ class OfertaController extends Controller
     public function ficha($ofertaId,$tipo)
     {
         $pdf = new Dompdf();
-        $oferta=Oferta::with('cliente','ofertadetalles')->find($ofertaId);
-        $pdf = \PDF::loadView('oferta.ofertapdf', compact('oferta'));
+        $oferta=Oferta::with('cliente','contacto','ofertadetalles')->find($ofertaId);
+        if($oferta->tipo=='1')
+            $pdf = \PDF::loadView('oferta.ofertaeditorialpdf', compact('oferta'));
+        else
+            $pdf = \PDF::loadView('oferta.ofertaeotrospdf', compact('oferta'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
     }

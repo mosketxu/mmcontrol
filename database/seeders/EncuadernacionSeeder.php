@@ -14,6 +14,8 @@ class EncuadernacionSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('encuadernaciones')->delete();
+
         Encuadernacion::create(['name'=>'Cosido']);
         Encuadernacion::create(['name'=>'Pur']);
         Encuadernacion::create(['name'=>'Grapado']);

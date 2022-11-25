@@ -14,6 +14,8 @@ class GramajeSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('gramajes')->delete();
+
         Gramaje::create(['name'=>'60' ,'familia'=>'INT']);
         Gramaje::create(['name'=>'70' ,'familia'=>'INT']);
         Gramaje::create(['name'=>'80' ,'familia'=>'INT']);

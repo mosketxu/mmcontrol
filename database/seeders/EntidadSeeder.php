@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Entidad;
+use Illuminate\Support\Facades\Schema;
 
 class EntidadSeeder extends Seeder
 {
@@ -14,6 +15,7 @@ class EntidadSeeder extends Seeder
      */
     public function run()
     {
+
         \DB::table('entidades')->delete();
 
         Entidad::create(['entidad'=>'Milimétrica','entidadtipo_id'=>'3','nif'=>'B63941835']);

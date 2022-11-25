@@ -14,6 +14,8 @@ class CajaSeeder extends Seeder
      */
     public function run()
     {
+        \DB::table('cajas')->delete();
+
         Caja::create(['name'=>'EMDL']);
         Caja::create(['name'=>'TALENLAND']);
         Caja::create(['name'=>'KLETT USA']);
