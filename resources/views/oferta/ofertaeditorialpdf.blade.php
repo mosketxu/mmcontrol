@@ -9,7 +9,7 @@
 
         {{-- sobreescribo margenes de app.css --}}
         <style>
-            @page {margin: 20px 0px 0px 0px;}
+            @page {margin: 0px 0px 0px 0px;}
             .page-break {page-break-after: always;}
         </style>
 
@@ -20,15 +20,16 @@
             <table width="90%" style="margin-top:0px; " class="mx-auto">
                 <tr>
                     <td style="text-align: left"  width=50%>
-                        <img src="{{asset('img/milimetricatexto.png')}}" class="mt-10" width="250px">
+                        <img src="{{asset('img/milimetricatexto.png')}}" class="mt-2" width="250px">
                     </td>
-                    <td style="text-align: right;" width=50%>
+                    <td style="text-align: right; padding-right:40px" width=50%>
+                        <br>
+                        <br>
                         <p>Nº Oferta: {{ $oferta->id }}</p>
-                        <p>Fecha: {{ $oferta->fecha }}</p>
+                        <p>Fecha: {{ $oferta->ffecha }}</p>
                     </td>
                 </tr>
             </table>
-            <br>
             <hr style="border-top: 3px solid rgb(49, 72, 172);">
         </header>
         <footer style="position:fixed;left:0px;bottom:0px;height:270px;width:100%">
@@ -55,67 +56,93 @@
         </footer>
 
     <!-- Wrap the content of your PDF inside a main tag -->
-        <main style=" margin-right: 10px; margin-top:20px">
+        <main style=" margin-right: 10px; margin-top:10px">
             <div class="">
                 <div class="py-0 space-y-2">
-                     <table width=90% class="mt-20 mx-auto text-sm " style="color:rgb(30, 27, 27);">
-                        <tr><td colspan="2">Cliente: {{ $oferta->cliente->entidad }}</td></tr>
-                        <tr><td colspan="2">Att: {{ $oferta->contacto->entidad }}</td></tr>
-                        <tr><td colspan="2">Con la presente y en base a su solicitud, le presento nuestra mejor oferta de:</td></tr>
-                        <tr><td colspan="2">REF: {{ $oferta->referencia }}</td></tr>
+                     <table width=90% class="mt-1 mx-auto text-sm " style="color:rgb(30, 27, 27);">
+                        <tr><td colspan="2" class="font-bold">Cliente: {{ $oferta->cliente->entidad }}</td></tr>
+                        <tr><td colspan="2" class="font-bold"><br>Att: {{ $oferta->contacto->entidad }}</td></tr>
+                        <tr><td colspan="2"><br>Con la presente y en base a su solicitud, le presento nuestra mejor oferta de:</td></tr>
+                        <tr><td colspan="2" class="font-bold"><br> REF: {{ $oferta->referencia }}</td></tr>
+                     </table>
+
+                     <table width=90% class="mt-1 mx-auto text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
-                            <td class="font-bold " >Formato:</td>
-                            <td class="" >{{ $oferta->formato }}:</td>
+                            <td width=20% class="font-bold" style="padding-top:8px"  >Formato:</td>
+                            <td width=80%  class=""  style="padding-top:8px"  style="padding-top:8px">{{ $oferta->formato }}</td>
                         </tr>
                         <tr>
-                            <td class="font-bold " >Extensión:</td>
-                            <td class="" >{{ $oferta->extension }}:</td>
+                            <td width=20% class="font-bold "  style="padding-top:8px">Extensión:</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->extension }}</td>
                         </tr>
                         <tr>
-                            <td class="font-bold " >Interior:</td>
-                            <td class="" >
-                                Composición: {{ $oferta->interiorcomposicion }}:
-                                Impresión: {{ $oferta->interiorimpresion }}:
+                            <td width=20% class="font-bold "  style="padding-top:8px">Interior:</td>
+                            <td width=80% class="" style="" >
+                                <div class="" style="padding-top:8px">
+                                    <div class="">
+                                        <span class="font-bold"> Composición: </span> {{ $oferta->interiorcomposicion }}
+                                    </div>
+                                    <div class="">
+                                        <span class="font-bold">Impresión:</span> {{ $oferta->interiorimpresion }}
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-bold " >Cubierta:</td>
-                            <td class="" >
-                                Composición: {{ $oferta->cubiertacomposicion }}:
-                                Impresión: {{ $oferta->cubiertaimpresion }}:
+                            <td width=20% class="font-bold "  style="padding-top:8px">Cubierta:</td>
+                            <td width=80% class="" style="" >
+                                <div class="" style="padding-top:8px">
+                                    <div class="">
+                                        <span class="font-bold"> Composición: </span> {{ $oferta->cubiertacomposicion }}
+                                    </div>
+                                    <div class="">
+                                        <span class="font-bold">Impresión:</span> {{ $oferta->cubiertaimpresion }}
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-bold " >Guardas:</td>
-                            <td class="" >
-                                Composición: {{ $oferta->guardascomposicion }}:
-                                Impresión: {{ $oferta->guardasimpresion }}:
+                            <td width=20% class="font-bold "  style="padding-top:8px">Guardas:</td>
+                            <td width=80% class="" style="" >
+                                <div class="" style="padding-top:8px">
+                                    <div class="">
+                                        <span class="font-bold"> Composición: </span> {{ $oferta->guardascomposicion }}
+                                    </div>
+                                    <div class="">
+                                        <span class="font-bold">Impresión:</span> {{ $oferta->guardasimpresion }}
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="font-bold " >Acabado:</td>
-                            <td class="" >{{ $oferta->acabado }}:</td>
+                            <td width=20% class="font-bold "  style="padding-top:8px">Acabado:</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->acabado }}</td>
                         </tr>
                         <tr>
-                            <td class="font-bold " >Manipulación:</td>
-                            <td class="" >{{ $oferta->manipulacion }}:</td>
+                            <td width=20% class="font-bold "  style="padding-top:8px">Manipulación:</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->manipulacion }}</td>
                         </tr>
                         <tr>
-                            <td class="font-bold " >Entrega:</td>
-                            <td class="" >{{ $oferta->entrega }}:</td>
+                            <td width=20% class="font-bold "  style="padding-top:8px">Entrega:</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->entrega }}</td>
                         </tr>
                     </table>
 
                     <div class="py-0 space-y-2">
-                        <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                        <table width="90%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
                             @foreach($oferta->ofertadetalles as $odetalle)
                             <tr>
-                                <td class="font-bold">{{ $odetalle->titulo }}: {{ $odetalle->concepto }}</td>
+                                <td class="font-bold">{{ $odetalle->titulo }} {{ $odetalle->concepto }}</td>
                             </tr>
                             <tr>
                                 <td class="font-bold text-left">Cantidad</td>
                                 <td class="font-bold text-center">Precio unitario</td>
                                 <td class="font-bold text-right">Precio total</td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">{{ $odetalle->cantidad }}</td>
+                                <td class="text-center">{{ $odetalle->importe }}</td>
+                                <td class="text-right">{{ $odetalle->total }}</td>
                             </tr>
                             @endforeach
                         </table>
