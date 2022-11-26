@@ -21,18 +21,25 @@
                             <div class="w-3/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
+                                    @if($bloqueado=='0')
                                     <x-selectcolor wire:model.lazy="cliente_id" selectname="cliente_id" class="w-full py-1" >
                                         <option value="">-- Selecciona cliente --</option>
                                         @foreach ($clientes as $cliente)
                                         <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
                                         @endforeach
                                     </x-selectcolor>
+                                    @else
+                                        <input  type="text" value="{{ $fac->cliente->entidad }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        disabled/>
+                                    @endif
                                 </div>
                             </div>
                             <div class="w-3/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
-                                    <x-selectcolor wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full py-1" >
+                                    @if($bloqueado=='0')
+                                    <x-selectcolor wire:model.defer="contacto_id" selectname="contacto_id" class="w-full py-1" >
+                                        dd($contacto_id)
                                        @if (isset($contactos))
                                             <option value="">-- Selecciona un contacto --</option>
                                             @foreach ($contactos as $contacto)
@@ -42,26 +49,37 @@
                                             <option value="">-- Selecciona primero un contacto --</option>
                                         @endif
                                     </x-selectcolor>
+                                    @else
+                                        <input  type="text" value="{{ $fac->contacto->entidad }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        disabled/>
+                                    @endif
                                 </div>
                             </div>
                             <div class="w-2/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="pedidocliente">{{ __('Su Pedido') }}</x-jet-label>
-                                    <x-selectcolor wire:model.lazy="pedidocliente" selectname="pedidocliente" class="w-full py-1" >
+                                    @if($bloqueado=='0')
+                                    <x-selectcolor wire:model.defer="pedidocliente" selectname="pedidocliente" class="w-full py-1" >
                                        @if (isset($pedidos))
                                             <option value="">-- Selecciona un pedido --</option>
                                             @foreach ($pedidos as $pedido)
                                             <option value="{{ $pedido->pedidocliente }}">{{ $pedido->pedidocliente }}</option>
                                             @endforeach
                                         @else
-                                                    <option value="">-- Selecciona primero un cliente --</option>
+                                            <option value="">-- Selecciona primero un cliente --</option>
                                         @endif
                                     </x-selectcolor>
+                                    @else
+                                    <input  type="text" value="{{ $pedidocliente }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
+                                @endif
+
                                 </div>
                             </div>
                             <div class="w-1/12 form-item">
                                 <x-jet-label for="fecha">{{ __('Fecha Factura') }}</x-jet-label>
-                                <input  wire:model.lazy="fecha" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                <input  wire:model.lazy="fecha" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
+                                {{ $bloqueado!='0' ? 'disabled' :'' }}>
                             </div>
                             <div class="w-1/12 form-item">
                                 <x-jet-label for="importe" class="text-right mr-6">{{ __('Subtotal') }}</x-jet-label>
