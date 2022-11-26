@@ -24,10 +24,12 @@ class Factura extends Component
     public $mesagge;
     public $bloqueado='0';
     public $filtrocliente;
+    public $cliente="";
 
     public $titulo='';
     public $pedidos;
     public $contactos;
+    public $fac;
 
     protected $listeners = [ 'refreshfactura'];
 
@@ -49,8 +51,7 @@ class Factura extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
     return [
         'facturaid.required'=>'El número de factura es necesario.',
         'cliente_id.required'=>'El cliente es necesario.',
@@ -65,6 +66,7 @@ class Factura extends Component
         $this->titulo='Nueva Factura:';
         if ($facturaid!='') {
             $factura=ModelsFactura::find($facturaid);
+            $this->fac=ModelsFactura::find($facturaid);
             $this->facturaid=$factura->id;
             $this->cliente_id=$factura->cliente_id;
             $this->contacto_id=$factura->contacto_id;
@@ -76,7 +78,8 @@ class Factura extends Component
             $this->estado=$factura->estado;
             $this->observaciones=$factura->observaciones;
             $this->bloqueado=$this->estado!='0' ? '1' : '0';
-            $this->pedidos=Pedido::where('cliente_id',$factura->cliente_id)->where('estado','<>','1')->get();
+            // $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$factura->cliente_id)->where('pedidocliente',$this->pedidocliente)->groupBy('pedidocliente')->get();
+            $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$factura->cliente_id)->groupBy('pedidocliente')->get();
             $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$factura->cliente_id)->get();
         }
     }
@@ -88,8 +91,8 @@ class Factura extends Component
 
     public function updatedClienteId(){
         if(!$this->fecha) $this->fecha=now()->format('Y-m-d');
-        $this->pedidos=Pedido::where('cliente_id',$this->cliente_id)->where('estado','<>','1')->get();
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$this->cliente_id)->get();
+        $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$this->cliente_id)->where('estado','<>','1')->groupBy('pedidocliente')->get();
     }
 
     public function numfactura(){
@@ -99,8 +102,7 @@ class Factura extends Component
         return !isset($fac) ? ($anyo2 * 100000 +1) :$fac + 1 ;
     }
 
-    public function save()
-    {
+    public function save(){
         $mensaje="Factura creada satisfactoriamente";
         $i="";
         $this->validate();

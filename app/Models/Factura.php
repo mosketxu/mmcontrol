@@ -13,6 +13,7 @@ class Factura extends Model
     protected $fillable = ['id','cliente_id','contacto_id','fecha','pedidocliente','importe','iva','total','estado','observaciones'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}
+    public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id');}
     public function facturadetalles(){return $this->hasMany(FacturaDetalle::class,'factura_id');}
 
     public function getStatusColorAttribute(){

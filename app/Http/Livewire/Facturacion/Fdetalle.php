@@ -23,6 +23,7 @@ class Fdetalle extends Component
     public $visible=true;
     public $observaciones;
     public $bloqueado=false;
+    public $disabled='';
 
     public $fdetalle;
     public $subtotalsiniva=0;
@@ -63,12 +64,13 @@ class Fdetalle extends Component
     {
         $this->factura=Factura::find($facturaid);
         $this->bloqueado= $this->factura->estado =='0' ? '0' : '1';
+        $this->disabled= $this->factura->estado =='0' ? '' : 'disabled';
     }
 
     public function render()
     {
         $entidad=Entidad::find($this->factura->cliente_id);
-        $pedidostodos=Pedido::where('cliente_id', $this->factura->cliente_id)->orderBy('id')->get();
+        $pedidostodos=Pedido::where('cliente_id', $this->factura->cliente_id)->where('pedidocliente',$this->factura->pedidocliente)->orderBy('id')->get();
         $pedidos=$pedidostodos->where('facturado','!=','1');
         $fdetalles=ModelsFacturaDetalle::where('factura_id',$this->factura->id)->orderBy('orden')->orderBy('pedido_id')->get();
         return view('livewire.facturacion.fdetalle',compact(['fdetalles','entidad','pedidostodos','pedidos']));
