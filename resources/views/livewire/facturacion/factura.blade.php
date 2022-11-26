@@ -39,11 +39,10 @@
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
                                     @if($bloqueado=='0')
                                     <x-selectcolor wire:model.defer="contacto_id" selectname="contacto_id" class="w-full py-1" >
-                                        dd($contacto_id)
                                        @if (isset($contactos))
                                             <option value="">-- Selecciona un contacto --</option>
                                             @foreach ($contactos as $contacto)
-                                            <option value="{{ $contacto->id }}">{{ $contacto->entidadcontacto->entidad }}</option>
+                                            <option value="{{ $contacto->contacto_id }}">{{ $contacto->entidadcontacto->entidad }}</option>
                                             @endforeach
                                         @else
                                             <option value="">-- Selecciona primero un contacto --</option>

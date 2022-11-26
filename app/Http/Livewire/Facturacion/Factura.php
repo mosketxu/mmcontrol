@@ -78,7 +78,6 @@ class Factura extends Component
             $this->estado=$factura->estado;
             $this->observaciones=$factura->observaciones;
             $this->bloqueado=$this->estado!='0' ? '1' : '0';
-            // $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$factura->cliente_id)->where('pedidocliente',$this->pedidocliente)->groupBy('pedidocliente')->get();
             $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$factura->cliente_id)->groupBy('pedidocliente')->get();
             $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$factura->cliente_id)->get();
         }
@@ -103,6 +102,7 @@ class Factura extends Component
     }
 
     public function save(){
+
         $mensaje="Factura creada satisfactoriamente";
         $i="";
         $this->validate();
@@ -120,8 +120,6 @@ class Factura extends Component
             $i=$this->facturaid;
             $nuevo=true;
         }
-        // $this->validate();
-        // dd('sdc');
         $fac=ModelsFactura::updateOrCreate([
             'id'=>$i
             ],

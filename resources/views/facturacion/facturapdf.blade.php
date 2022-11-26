@@ -51,57 +51,57 @@
     <!-- Wrap the content of your PDF inside a main tag -->
         <main style=" margin-right: 10px; margin-top:20px">
             <div class="">
-                <div class="py-0 space-y-2">
+                <div class="py-0 space-y-2 text-sm">
                     <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto ">
                         <tr>
-                            <td width=60%>
+                            <td width=50%>
                                 <p>{{ $factura->cliente->entidad }}</p>
                                 <p>{{ $factura->cliente->direccion}}</p>
                                 <p>{{ $factura->cliente->cp}} {{ $factura->cliente->localidad}} </p>
                                 <p>{{ $factura->cliente->nif}} </p>
                             </td>
-                            <td width=40%>
+                            <td width=50%>
                                 <p>Fra Num: {{ $factura->id }}</p>
                                 <p>Fecha: {{ $factura->ffactura4 }}</p>
-                                <p>Pedido:  {{ $factura->pedidocliente }} </p>
-                                <p>Solicitado por: {{ $factura->contacto_id }}</p>
+                                <p>Su pedido:  {{ $factura->pedidocliente }} </p>
+                                <p>Solicitado por: {{ $factura->contacto->entidad }}</p>
                             </td>
                         </tr>
                     </table>
 
                      <table width=90% class="mt-20 mx-auto text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
-                            <td class="font-bold " >Nuestro Presup.</td>
+                            <td class="font-bold " >Oferta</td>
                             <td class="font-bold " >Concepto</td>
-                            <td class="font-bold " >Cantidad</td>
-                            <td class="font-bold " >Importe</td>
-                            <td class="font-bold " >Subtotal</td>
-                            <td class="font-bold " >%Iva</td>
-                            <td class="font-bold " >Iva</td>
-                            <td class="font-bold " >Total</td>
+                            <td class="font-bold text-right" >Cantidad</td>
+                            <td class="font-bold text-right" >Importe</td>
+                            <td class="font-bold text-right" >Subtotal</td>
+                            <td class="font-bold text-right" >%Iva</td>
+                            <td class="font-bold text-right" >Iva</td>
+                            <td class="font-bold text-right" >Total</td>
                         </tr>
                         @foreach ($factura->facturadetalles as $detalle)
                         <tr>
                             <td>{{ $detalle->pedido->oferta_id }} </td>
                             <td>{{ $detalle->concepto }}</td>
-                            <td>{{ number_format($detalle->cantidad,0,',','.') }}</td>
-                            <td>{{ number_format($detalle->importe,2,',','.') }} {{ $detalle->unidad =='1' ? 'Ud' : 'Millar' }}</td>
-                            <td>{{ number_format($detalle->subtotalsiniva,2,',','.') }}</td>
-                            <td>{{ number_format($detalle->iva*100,0) }} %</td>
-                            <td>{{ number_format($detalle->subtotaliva,2,',','.') }}</td>
-                            <td>{{ number_format($detalle->subtotal,2,',','.') }}</td>
+                            <td class="text-right">{{ number_format($detalle->cantidad,0,',','.') }}</td>
+                            <td class="text-right">{{ number_format($detalle->importe,2,',','.') }} {{ $detalle->unidad =='1' ? 'Ud' : 'Millar' }}</td>
+                            <td class="text-right">{{ number_format($detalle->subtotalsiniva,2,',','.') }}</td>
+                            <td class="text-right">{{ number_format($detalle->iva*100,0) }} %</td>
+                            <td class="text-right">{{ number_format($detalle->subtotaliva,2,',','.') }}</td>
+                            <td class="text-right">{{ number_format($detalle->subtotal,2,',','.') }}</td>
                         </tr>
                         @if($loop->index>1 && $loop->index%20==0)
                             <tr class="page-break"></tr>
                             <tr>
-                                <td class="font-bold " >Pedido</td>
+                                <td class="font-bold " >Oferta</td>
                                 <td class="font-bold " >Concepto</td>
-                                <td class="font-bold " >Cantidad</td>
-                                <td class="font-bold " >Importe</td>
-                                <td class="font-bold " >Subtotal</td>
-                                <td class="font-bold " >%Iva</td>
-                                <td class="font-bold " >Iva</td>
-                                <td class="font-bold " >Total</td>
+                                <td class="font-bold text-right " >Cantidad</td>
+                                <td class="font-bold text-right" >Importe</td>
+                                <td class="font-bold text-right" >Subtotal</td>
+                                <td class="font-bold text-right" >%Iva</td>
+                                <td class="font-bold text-right" >Iva</td>
+                                <td class="font-bold text-right" >Total</td>
                             </tr>
                         @endif
                         @endforeach
@@ -139,11 +139,11 @@
                         </table>
                     </div>
 
-                    <table width=90% class="mt-20 mx-auto text-sm " style="color:rgb(30, 27, 27);">
+                    {{-- <table width=90% class="mt-20 mx-auto text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
                             <td class=" " >Nuestro presupuesto: ¿cómo ponemos el dato, sobre todo si hay más de un pedido?</td>
                         </tr>
-                    </table>
+                    </table> --}}
                 </div>
             </div>
         </main>
