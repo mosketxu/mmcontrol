@@ -2,13 +2,12 @@
 
 namespace App\Http\Livewire\Facturacion;
 
-use App\Models\{Factura, Mes};
+use App\Models\{Entidad,Factura, Mes};
 use Livewire\Component;
 
 
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
-use App\Models\Entidad;
 
 class Facturas extends Component
 {

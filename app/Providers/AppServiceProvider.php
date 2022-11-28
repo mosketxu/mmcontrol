@@ -23,9 +23,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-
+    public function boot(){
         // Using view composer to set following variables globally
         view()->composer('*',function($view) {
                 $view->with('tiposentidad', EntidadTipo::orderBy('id')->get());
