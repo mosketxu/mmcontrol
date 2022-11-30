@@ -50,9 +50,6 @@ class Pedidos extends Component
     public $message;
     public $destino='0';
 
-    public $showDeleteModal=false;
-    public $showNewModal = false;
-    public $showPDFModal=false;
     public $presupPDF='';
 
     protected function rules(){
@@ -133,22 +130,18 @@ class Pedidos extends Component
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
-    public function create(){
-        $this->resetInputFields();
-        $this->fechapedido=now()->format('Y-m-d');
-        $this->openNewModal();
-    }
-
-    public function imprimir($pedido){
-        $this->openPDFModal($pedido);
-    }
+    // public function create(){
+    //     $this->resetInputFields();
+    //     $this->fechapedido=now()->format('Y-m-d');
+    //     $this->openNewModal();
+    // }
 
     public function getRowsQueryProperty(){
 
-        dd('llegoaqui');
         return Pedido::query()
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
-            // ->join('productos','pedidos.producto_id','=','productos.id')
+            ->join('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
+            ->join('productos','pedido_productos.producto_id','=','productos.id')
             ->select('pedidos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia')
             ->where('pedidos.tipo',$this->tipo)
             ->search('pedidos.id',$this->search)
