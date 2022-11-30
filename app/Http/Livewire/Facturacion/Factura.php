@@ -43,8 +43,8 @@ class Factura extends Component
         return [
             // 'facturaid'=>'required',
             'cliente_id'=>'required',
-            'contacto_id'=>'required',
-            'pedidocliente'=>'required',
+            'contacto_id'=>'nullable',
+            'pedidocliente'=>'nullable',
             'fecha'=>'date|required',
             'estado'=>'nullable',
             'observaciones'=>'nullable',
@@ -55,10 +55,8 @@ class Factura extends Component
     return [
         'facturaid.required'=>'El número de factura es necesario.',
         'cliente_id.required'=>'El cliente es necesario.',
-        'contacto_id.required'=>'El contacto es necesario.',
         'fecha.required'=>'La fecha es necesaria.',
         'fecha.date'=>'La fecha debe ser válida.',
-        'pedidocliente.required'=>'El pedido del cliente es necesario.',
         ];
     }
 

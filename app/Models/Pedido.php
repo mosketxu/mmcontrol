@@ -13,11 +13,13 @@ class Pedido extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','tipo','responsable','cliente_id','pedidocliente','oferta_id','contacto_id','facturadopor_id','proveedor_id','producto_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
+    protected $fillable=['id','tipo','cliente_id','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
+                    'proveedor_id','facturadopor_id','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
                         'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','uds_caja','otros'
                         ];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
+    public function presupuesto(){return $this->belongsTo(Presupuesto::class,'presupuesto_id','id');}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
     public function producto(){return $this->belongsTo(Producto::class,'producto_id','id');}
@@ -25,7 +27,7 @@ class Pedido extends Model
     public function parciales(){return $this->hasMany(PedidoParcial::class,'pedido_id','id');}
     public function archivos(){return $this->hasMany(PedidoArchivo::class,'pedido_id','id');}
     public function incidencias(){return $this->hasMany(PedidoIncidencia::class,'pedido_id','id');}
-    public function presupuestos(){return $this->hasMany(PedidoPresupuesto::class,'pedido_id','id');}
+    // public function presupuestos(){return $this->hasMany(PedidoPresupuesto::class,'pedido_id','id');}
     public function distribuciones(){return $this->hasMany(PedidoDistribucion::class,'pedido_id','id');}
     public function facturadetalles(){return $this->hasMany(facturadetalle::class,'pedido_id','id');}
 

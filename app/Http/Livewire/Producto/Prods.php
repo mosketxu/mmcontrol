@@ -24,8 +24,8 @@ class Prods extends Component
 
     public function render()
     {
-        if($this->tipo=='1') $titulo="Catálogo Editorial";
-        else $titulo="Catálogo otros productos";
+        if($this->tipo=='1') $titulo="Libros Editorial";
+        else $titulo="Productos Packagind/Propios";
 
         $this->producto= new Producto;
 

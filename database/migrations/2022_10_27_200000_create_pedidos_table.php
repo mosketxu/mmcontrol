@@ -17,16 +17,16 @@ class CreatePedidosTable extends Migration
             // $table->id();
             // $table->unsignedBigInteger('id')->primary();
             $table->bigInteger('id')->unsigned(); // to remove primary key
-            $table->primary('id'); //to add primary key
+            $table->primary('id'); //to add primary key();
             $table->integer('tipo')->default(1);
+            $table->foreignId('cliente_id')->constrained('entidades');
             $table->string('responsable');
+            $table->foreignId('presupuesto_id')->nullable()->constrained('presupuestos');
             $table->string('pedidocliente')->nullable()->index();
             $table->string('oferta_id')->nullable();
-            $table->foreignId('cliente_id')->constrained('entidades');
             $table->foreignId('contacto_id')->nullable()->constrained('entidades');
             $table->foreignId('proveedor_id')->nullable()->constrained('entidades');
             $table->foreignId('facturadopor_id')->nullable()->constrained('entidades');
-            $table->foreignId('producto_id')->constrained('productos');
             $table->date('fechapedido');
             $table->date('fechaarchivos')->nullable();
             $table->date('fechaplotter')->nullable();

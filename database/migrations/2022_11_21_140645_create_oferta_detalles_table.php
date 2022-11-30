@@ -25,6 +25,7 @@ class CreateOfertaDetallesTable extends Migration
             $table->integer('orden')->nullable()->default('0');
             $table->timestamps();
         });
+
     }
 
     /**

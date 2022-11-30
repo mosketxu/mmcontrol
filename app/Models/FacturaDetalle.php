@@ -9,7 +9,7 @@ class FacturaDetalle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','factura_id','pedido_id','cliente_id','fecha','importe','unidad','cantidad','subtotalsiniva','subtotaliva','subtotal','subtotal','concepto','iva','orden','visible','observaciones'];
+    protected $fillable = ['id','factura_id','pedido_id','cliente_id','fecha','importe','cantidad','subtotalsiniva','subtotaliva','subtotal','subtotal','concepto','iva','orden','visible','observaciones'];
 
     public function factura(){return $this->belongsTo(Factura::class,'factura_id','id');}
     public function pedido(){return $this->belongsTo(Pedido::class,'factura_id');}

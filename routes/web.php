@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController};
+use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController, PresupuestoController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,9 +26,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
         if (Auth::user()->hasRole('Admin')) {
             return redirect()->route('seguridad');
         } elseif (Auth::user()->hasRole('Gestor')) {
-            return redirect()->route('pedido.tipo',['1','i']);
+            return redirect()->route('presupuesto.tipo',['1','i']);
         } else {
-            return redirect()->route('pedido.tipo',['1','i']);
+            return redirect()->route('presupuesto.tipo',['1','i']);
         }
     })->name('dashboard');
 
@@ -36,8 +36,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     //Seguridad
     Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:seguridad.index')->name('seguridad');
 
-    //administracion
-    Route::get('/administracion/{tipo?}', function ($tipo = 'gramaje') {return view('seguridad.administracion',compact('tipo'));})->middleware('can:administracion.index')->name('administracion');
+    //caracteristicas
+    Route::get('/caracteristicas/{tipo?}', function ($tipo = 'gramaje') {return view('seguridad.caracteristicas',compact('tipo'));})->middleware('can:caracteristicas.index')->name('caracteristicas');
 
     Route::resource('roles', RoleController::class)->only(['edit','update'])->names('roles');
 
@@ -61,11 +61,18 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/producto/{tipo}/nuevo', [ProductoController::class, 'nuevo'])->name('producto.nuevo');
     Route::resource('producto', ProductoController::class);
 
+    //Presupuestos
+    Route::get('presupuesto/{tipo}/ruta/{ruta}', [PresupuestoController::class,'tipo'])->middleware('can:presupuesto.index')->name('presupuesto.tipo');;
+    Route::get('/presupuesto/{tipo}/nuevo/{ruta}', [PresupuestoController::class, 'nuevo'])->name('presupuesto.nuevo');
+    Route::get('/presupuesto/{presupuesto}/pdf/{presupuestopresupuestoid}/{ruta}', [PresupuestoController::class, 'presupuesto'])->name('presupuesto.presupuestoPDF');
+    Route::get('/presupuesto/{presupuesto}/editar/{ruta}', [PresupuestoController::class, 'editar'])->name('presupuesto.editar');
+    Route::get('/presupuesto/{presupuesto}/archivos/{ruta}', [PresupuestoController::class, 'archivos'])->name('presupuesto.archivos');
+
     //Pedidos
     Route::get('/pedido/{pedido}/entrada/{tipo}/{ruta}', [PedidoController::class, 'entrada'])->name('pedido.entrada');
     Route::get('/pedido/{pedido}/editar/{ruta}', [PedidoController::class, 'editar'])->name('pedido.editar');
-    Route::get('/pedido/{pedido}/{ruta}/presupuesto/{pedidopresupuestoid}', [PedidoController::class, 'presupuesto'])->name('pedido.presupuesto');
-    Route::get('/pedido/{pedido}/presupuestos/{ruta}', [PedidoController::class, 'presupuestos'])->name('pedido.presupuestos');
+    // Route::get('/pedido/{pedido}/{ruta}/presupuesto/{pedidopresupuestoid}', [PedidoController::class, 'presupuesto'])->name('pedido.presupuesto');
+    // Route::get('/pedido/{pedido}/presupuestos/{ruta}', [PedidoController::class, 'presupuestos'])->name('pedido.presupuestos');
     Route::get('/pedido/{pedido}/retrasos/{ruta}', [PedidoController::class, 'retrasos'])->name('pedido.retrasos');
     Route::get('/pedido/{pedido}/incidencias/{ruta}', [PedidoController::class, 'incidencias'])->name('pedido.incidencias');
     Route::get('/pedido/{pedido}/parciales/{ruta}', [PedidoController::class, 'parciales'])->name('pedido.parciales');
@@ -77,6 +84,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/pedido/{tipo}/nuevo/{ruta}', [PedidoController::class, 'nuevo'])->name('pedido.nuevo');
     Route::get('pedido/{tipo}/ruta/{ruta}', [PedidoController::class,'tipo'])->middleware('can:pedido.index')->name('pedido.tipo');;
     Route::resource('pedido', PedidoController::class);
+
+
 
     //Facturacion
     Route::resource('facturacion', FacturacionController::class);

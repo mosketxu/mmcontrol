@@ -126,7 +126,6 @@ class PedidoPresupuesto extends Component
 
         $valores=ModelsPedidoPresupuesto::query()
         ->join('pedidos','pedido_presupuestos.pedido_id','=','pedidos.id')
-        ->join('productos','pedidos.producto_id','=','productos.id')
         ->search('comentario',$this->search)
         ->select('pedido_presupuestos.id','fecha as valorcampofecha','productos.referencia as valorcampo2','pedido_presupuestos.proveedor_id as valorcampo3','cantidad as valorcampo4','importe as valorcampo5','comentario as valorcampo6')
         ->orderBy('fecha')

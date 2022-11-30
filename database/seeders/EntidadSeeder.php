@@ -78,9 +78,6 @@ class EntidadSeeder extends Seeder
         Entidad::create(['entidad'=>'Casabella','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Dicadia','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Difusión SCAMP','entidadtipo_id'=>'1']);
-        Entidad::create(['entidad'=>'DS Smith','entidadtipo_id'=>'1']);
-        Entidad::create(['entidad'=>'EMS','entidadtipo_id'=>'1']);
-        Entidad::create(['entidad'=>'Fira girona (Spora)','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Geresa','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Lacer','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Navna soap','entidadtipo_id'=>'1']);
@@ -89,10 +86,8 @@ class EntidadSeeder extends Seeder
         Entidad::create(['entidad'=>'Regaleco','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Remedios Juanita','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Saül Rossell','entidadtipo_id'=>'1']);
-        Entidad::create(['entidad'=>'SCAMP','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Smilics Thecnologies ','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Specials Flavours S.L.','entidadtipo_id'=>'1']);
-        Entidad::create(['entidad'=>'Tous Watches','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Xavi Rodó','entidadtipo_id'=>'1']);
     }
 }

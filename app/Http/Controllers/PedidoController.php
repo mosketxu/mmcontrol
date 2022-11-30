@@ -39,6 +39,8 @@ class PedidoController extends Controller
         return view('pedidos.index',compact(['tipo','ruta']));
     }
 
+
+
     public function nuevo($tipo,$ruta)
     {
         return view('pedidos.create',compact('tipo','ruta'));
@@ -141,9 +143,9 @@ class PedidoController extends Controller
         return view('pedidos.distribuciones',compact('pedido','ruta'));
     }
 
-    public function presupuestos(Pedido $pedido, $ruta)
-    {
-        return view('pedidos.presupuesto',compact('pedido','ruta'));
-    }
+    // public function presupuestos(Pedido $pedido, $ruta)
+    // {
+    //     return view('pedidos.presupuesto',compact('pedido','ruta'));
+    // }
 
 }

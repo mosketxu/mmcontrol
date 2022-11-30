@@ -15,7 +15,6 @@ class Fdetalle extends Component
     public $factura;
     public $pedido_id;
     public $cantidad='0';
-    public $unidad='1';
     public $iva='0.21';
     public $concepto;
     public $importe='0';
@@ -33,9 +32,8 @@ class Fdetalle extends Component
     protected function rules()
     {
         return [
-            'pedido_id'=>'required',
+            'pedido_id'=>'nullable',
             'cantidad'=>'required|numeric',
-            'unidad'=>'required|numeric',
             'iva'=>'required|numeric',
             'concepto'=>'nullable',
             'importe'=>'required|numeric',
@@ -49,9 +47,7 @@ class Fdetalle extends Component
     public function messages()
     {
         return [
-            'pedido_id.required'=>'El pedido es necesario.',
             'cantidad.required'=>'La cantidad es necesaria.',
-            'unidad.required'=>'Las unidades son necesarias.',
             'iva.required'=>'El iva es necesario.',
             'iva.numeric'=>'El iva debe ser numérico.',
             'importe.required'=>'El importe es necesario.',
@@ -86,25 +82,22 @@ class Fdetalle extends Component
 
     public function calculos()
     {
-        $this->subtotalsiniva=round($this->importe * $this->cantidad / $this->unidad,2);
-        $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva / $this->unidad,2);
-        $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) / $this->unidad,2);
+        $this->subtotalsiniva=round($this->importe * $this->cantidad ,2);
+        $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva ,2);
+        $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) ,2);
     }
     public function UpdatedCantidad(){ $this->calculos();}
     public function UpdatedIva(){ $this->calculos();}
     public function UpdatedImporte(){ $this->calculos();}
-    public function UpdatedUnidad(){ $this->calculos();}
 
     public function changeValor(ModelsFacturaDetalle $facturadetalle,$campo,$valor)
     {
-        $this->pedido_id=$facturadetalle->pedido_id;
         $this->validate();
-        $this->pedido_id='';
         $facturadetalle->update([$campo=>$valor]);
         $facturadetalle->update([
-            'subtotalsiniva'=>round($facturadetalle->importe * $facturadetalle->cantidad / $facturadetalle->unidad,2),
-            'subtotaliva'=>round($facturadetalle->importe * $facturadetalle->cantidad * $facturadetalle->iva / $facturadetalle->unidad,2),
-            'subtotal'=>round($facturadetalle->importe *$facturadetalle->cantidad * (1+$facturadetalle->iva) / $facturadetalle->unidad,2),
+            'subtotalsiniva'=>round($facturadetalle->importe * $facturadetalle->cantidad ,2),
+            'subtotaliva'=>round($facturadetalle->importe * $facturadetalle->cantidad * $facturadetalle->iva ,2),
+            'subtotal'=>round($facturadetalle->importe *$facturadetalle->cantidad * (1+$facturadetalle->iva) ,2),
             ]);
 
         $totales = ModelsFacturaDetalle::where('factura_id',$this->factura->id)
@@ -135,7 +128,6 @@ class Fdetalle extends Component
     public function save(){
         if(!$this->cantidad) $this->cantidad=0;
         if(!$this->iva) $this->iva=0;
-        if(!$this->unidad) $this->unidad=1;
 
         $this->validate();
         $fdetalle=ModelsFacturaDetalle::create([
@@ -143,12 +135,11 @@ class Fdetalle extends Component
             'pedido_id'=>$this->pedido_id,
             'concepto'=>$this->concepto,
             'cantidad'=>$this->cantidad,
-            'unidad'=>$this->unidad,
             'iva'=>$this->iva,
             'importe'=>$this->importe,
-            'subtotalsiniva'=>round($this->importe * $this->cantidad / $this->unidad,2),
-            'subtotaliva'=>round($this->importe * $this->cantidad / $this->unidad* $this->iva,2),
-            'subtotal'=>round($this->importe * $this->cantidad / $this->unidad* (1+$this->iva),2),
+            'subtotalsiniva'=>round($this->importe * $this->cantidad ,2),
+            'subtotaliva'=>round($this->importe * $this->cantidad * $this->iva,2),
+            'subtotal'=>round($this->importe * $this->cantidad * (1+$this->iva),2),
             'orden'=>$this->orden,
             'visible'=>$this->visible,
             'observaciones'=>$this->observaciones,
@@ -170,7 +161,6 @@ class Fdetalle extends Component
     );
         $this->pedido_id='';
         $this->cantidad='0';
-        $this->unidad='1';
         $this->concepto='';
         $this->importe='0';
         $this->orden='0';
@@ -182,9 +172,7 @@ class Fdetalle extends Component
 
     public function delete($valorId)
     {
-        $this->pedido_id=$valorId;
         $this->validate();
-        $this->pedido_id='';
 
         $borrar = ModelsFacturaDetalle::find($valorId);
 

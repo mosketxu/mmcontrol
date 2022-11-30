@@ -14,23 +14,14 @@ class CreateOfertasTable extends Migration
     public function up()
     {
         Schema::create('ofertas', function (Blueprint $table) {
-            $table->bigInteger('id')->unsigned(); // to remove primary key
+             $table->bigInteger('id')->unsigned(); // to remove primary key
             $table->primary('id'); //to add primary keys
             $table->foreignId('cliente_id')->constrained('entidades');
             $table->foreignId('contacto_id')->nullable()->nullable()->constrained('entidades');
             $table->foreignId('producto_id')->nullable()->constrained('productos');
+            $table->string('descripcion');
             $table->integer('tipo');
             $table->date('fecha');
-            $table->string('referencia');
-            $table->string('formato')->nullable();
-            $table->string('extension')->nullable();
-            $table->string('interiorcomposicion')->nullable();
-            $table->string('interiorimpresion')->nullable();
-            $table->string('cubiertacomposicion')->nullable();
-            $table->string('cubiertaimpresion')->nullable();
-            $table->string('guardascomposicion')->nullable();
-            $table->string('guardasimpresion')->nullable();
-            $table->string('acabado')->nullable();
             $table->string('manipulacion')->nullable();
             $table->string('entrega')->nullable();
             $table->string('observaciones')->nullable();

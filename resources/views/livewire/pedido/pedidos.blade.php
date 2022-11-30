@@ -53,8 +53,8 @@
                             <div class="flex w-5 h-5 p-2 mr-2 font-medium text-center"><x-input.checkbox wire:model="selected" value="{{ $pedido->id }}" /></div>
                             <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->id }}</div>
                             <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->cliente->entidad }}</div>
-                            <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->isbn }}</div>
-                            <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->referencia }}</div>
+                            {{-- <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->isbn }}</div>
+                            <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->referencia }}</div> --}}
                             <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fentrega }}</div>
                             <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->farchivos }}</div>
                             <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fplotter }}</div>

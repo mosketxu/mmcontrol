@@ -3,11 +3,11 @@
         <div class="flex">
             <div class="">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    {{ __('Administración') }}
+                    {{ __('Características') }}
                 </h2>
             </div>
             <div class="ml-5">
-                @include('seguridad.admnistracion-menu')
+                @include('seguridad.caracteristicas-menu')
             </div>
         </div>
     </x-slot>

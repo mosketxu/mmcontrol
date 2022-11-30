@@ -3,7 +3,7 @@
         <div class="flex justify-between space-x-1">
             <div class="flex w-3/12 py-0 mt-0">
                 <div class="w-full py-0 mt-0">
-                    <h2 class="text-2xl font-semibold text-gray-900"> {{ $oferta->tipo=='1' ? 'Oferta Editorial' : 'Oferta Otros Productos'  }} {{ $oferta->id }} </h2>
+                    <h2 class="text-2xl font-semibold text-gray-900"> {{ $oferta->tipo=='1' ? 'Oferta Editorial' : 'Presupuesto Packaging/Propios'  }} {{ $oferta->id }} </h2>
                 </div>
             </div>
             <div class="flex flex-row-reverse w-9/12 ">

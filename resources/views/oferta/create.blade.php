@@ -4,9 +4,9 @@
             <div class="w-full">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     @if($tipo=='1')
-                        Nueva Oferta Editorial
+                        Nuevo Presupuesto Editorial
                     @else
-                        Nueva Oferta Otros Productos
+                        Nuevo Presupuesto Packaging/Propios
                     @endif
                 </h2>
             </div>

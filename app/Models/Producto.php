@@ -17,6 +17,7 @@ class Producto extends Model
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
     public function archivos(){return $this->hasMany(ProductoArchivo::class,'producto_id','id');}
+    public function ofertas(){return $this->hasMany(Oferta::class,'producto_id','id');}
 
 }
 

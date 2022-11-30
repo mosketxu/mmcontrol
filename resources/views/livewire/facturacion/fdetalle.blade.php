@@ -85,7 +85,7 @@
             {{-- Pedido_id --}}
             <div class="w-2/12">
                 <x-selectcolor wire:model.lazy="pedido_id" selectname="pedido_id" color="bg-green-100"
-                class="w-full py-1 bg-green-100 text-xs font-thin text-gray-500 border-none shadow-none">
+                    class="w-full py-1 bg-green-100 text-xs font-thin text-gray-500 border-none shadow-none">
                     <option value="" >-Selecciona- </option>
                     @forelse ($pedidos as $pedido)
                     <option value="{{ $pedido->id }}">{{ $pedido->id }}</option>
@@ -103,14 +103,6 @@
             <div class="w-2/12">
                 <input type="number" step="any" wire:model.lazy="cantidad"
                 class="w-full py-1 bg-green-100 pr-2 text-right text-xs font-thin text-gray-500 border-0 rounded-md"/>
-            </div>
-            {{-- unidad --}}
-            <div class="w-1/12">
-                <x-selectcolor wire:model.debounce.lazy="unidad" selectname="unidad" color="blue"
-                class="w-full py-1 bg-green-100  text-left text-xs font-thin text-gray-500 border-none shadow-none">
-                    <option value="1">ud</option>
-                    <option value="1000">M</option>
-                </x-selectcolor>
             </div>
             {{-- importe --}}
             <div class="w-1/12">
@@ -196,15 +188,6 @@
                 wire:change="changeValor('{{ $fdetalle->id }}','cantidad',$event.target.value)"
                 class="w-full py-1  pr-2 text-right text-xs font-thin text-gray-500 border-0 rounded-md"
                 {{ $disabled }}/>
-            </div>
-            <div class="w-1/12">
-                <select
-                wire:change="changeValor({{ $fdetalle }},'unidad',$event.target.value)"
-                class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
-                {{ $disabled }}>
-                <option value="1" {{ $fdetalle->unidad=="1" ? 'selected' : '' }}>ud</option>
-                <option value="1000" {{ $fdetalle->unidad=="1000" ? 'selected' : ''}}>M</option>
-                </select>
             </div>
             <div class="w-1/12">
                 <input type="number" step="any" value="{{ $fdetalle->importe }}"

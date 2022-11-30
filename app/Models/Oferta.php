@@ -12,11 +12,11 @@ class Oferta extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','cliente_id','contacto_id','tipo','fecha','producto_id','referencia','formato','extension','interiorcomposicion','interiorimpresion',
-        'cubiertacomposicion','cubiertaimpresion','guardascomposicion','guardasimpresion','acabado','manipulacion','entrega','observaciones','estado'];
+    protected $fillable=['id','cliente_id','contacto_id','tipo','descripcion','fecha','producto_id','manipulacion','entrega','observaciones','estado'];
 
     public function ofertadetalles(){return $this->hasMany(OfertaDetalle::class,'oferta_id','id');}
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}
+    public function ofertaproducto(){return $this->belongsTo(Producto::class,'producto_id','id');}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
 
 

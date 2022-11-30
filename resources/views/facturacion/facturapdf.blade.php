@@ -85,7 +85,7 @@
                             <td>{{ $detalle->pedido->oferta_id }} </td>
                             <td>{{ $detalle->concepto }}</td>
                             <td class="text-right">{{ number_format($detalle->cantidad,0,',','.') }}</td>
-                            <td class="text-right">{{ number_format($detalle->importe,2,',','.') }} {{ $detalle->unidad =='1' ? 'Ud' : 'Millar' }}</td>
+                            <td class="text-right">{{ number_format($detalle->importe,2,',','.') }}</td>
                             <td class="text-right">{{ number_format($detalle->subtotalsiniva,2,',','.') }}</td>
                             <td class="text-right">{{ number_format($detalle->iva*100,0) }} %</td>
                             <td class="text-right">{{ number_format($detalle->subtotaliva,2,',','.') }}</td>

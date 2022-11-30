@@ -80,8 +80,7 @@ class Pedidos extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'pedido.required'=>'El número de pedido es necesario',
             'responsable.required'=>'El responsable del pedido es necesario',
@@ -102,12 +101,11 @@ class Pedidos extends Component
         ];
     }
 
-    public function mount($tipo)
-    {
+    public function mount($tipo){
         $this->tipo=$tipo;
     }
-    public function render()
-    {
+
+    public function render(){
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
@@ -117,7 +115,7 @@ class Pedidos extends Component
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
         return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','meses'));
-}
+    }
 
     public function updatingSearch(){$this->resetPage();}
     public function updatingFiltroanyo(){$this->resetPage();}
@@ -130,8 +128,7 @@ class Pedidos extends Component
     public function updatingFiltroestado(){$this->resetPage();}
     public function updatingFiltrofacturado(){$this->resetPage();}
 
-    public function changeValor(Pedido $pedido,$campo,$valor)
-    {
+    public function changeValor(Pedido $pedido,$campo,$valor){
         $pedido->update([$campo=>$valor]);
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
@@ -146,156 +143,21 @@ class Pedidos extends Component
         $this->openPDFModal($pedido);
     }
 
-
-    public function replicateRow(Pedido $pedido){
-        dd('en proceso');
-        // inicializo las vbles nuevas
-        $this->fechapedido=now();
-        $this->numpedido();
-        // clono la cabecera del pedido
-        $clone = $pedido->replicate()->fill([
-            'fechapedido'=>$this->fechapedido,
-            'pedido'=>$this->pedido,
-        ]);
-        $clone->save();
-        $this->dispatchBrowserEvent('notify', 'pedidos copiado!');
-    }
-
-
-    public function openNewModal(){
-        $this->showNewModal = true;
-    }
-
-    public function openPDFModal($pedido){
-        dd('en proceso');
-        $this->presupPDF=Pedido::find($pedido['id']);
-        $this->showPDFModal = true;
-    }
-
-    public function closeNewModal(){
-        $this->resetInputFields();
-        $this->showNewModal = false;
-    }
-
-    private function resetInputFields(){
-        dd('en proceso');
-        $this->pedido='';
-        $this->descripcion='';
-        $this->entidad_id='';
-        $this->solicitante_id='';
-        $this->entidadcontacto_id='';
-        $this->fechapedido='';
-        $this->refgrafitex='';
-        $this->refcliente='';
-        $this->preciocoste='0';
-        $this->precioventa='0';
-        $this->preciototal='0';
-        $this->tiradaprevista='0';
-        $this->tiradareal='0';
-        $this->ruta='';
-        $this->fichero='';
-        $this->estado='0';
-        $this->observaciones='';
-    }
-
-    public function store(){
-        dd('en proceso');
-        if($this->representante_id=='') $this->representante_id= Auth()->user()->id;
-        if($this->entidadcontacto_id=='') $this->entidadcontacto_id= null;
-
-        $this->validate([
-            'entidad_id' => 'required',
-            'solicitante_id' => 'required|numeric',
-            'entidadcontacto_id' => 'nullable|numeric',
-            'descripcion' => 'required',
-            'fechapedido' => 'required|date',
-            'refgrafitex' => 'nullable',
-            'refcliente' => 'nullable',
-            'preciocoste' => 'nullable|numeric',
-            'precioventa' => 'nullable|numeric',
-            'incremento' => 'required|numeric',
-            'estado' => 'required',
-            'iva' => 'required',
-        ]);
-
-        $destino="editar";
-        if(!$this->pedido){
-            $this->numpedido();
-            $destino="nuevo";
-        }
-        $pedido = Pedido::updateOrCreate(['id' => $this->pedido_id], [
-            'pedido'=>$this->pedido,
-            'descripcion'=>$this->descripcion,
-            'entidad_id'=>$this->entidad_id,
-            'entidadcontacto_id'=>$this->entidadcontacto_id,
-            'solicitante_id'=>$this->solicitante_id,
-            'fechapedido'=>$this->fechapedido,
-            'refgrafitex'=>$this->refgrafitex,
-            'refcliente'=>$this->refcliente,
-            'precioventa'=>$this->precioventa,
-            'preciocoste'=>$this->preciocoste,
-            'unidades'=>$this->unidades,
-            'incremento'=>$this->incremento,
-            'iva'=>$this->iva,
-            'ruta'=>$this->ruta,
-            'fichero'=>$this->fichero,
-            'estado'=>$this->estado,
-            'observaciones'=>$this->observaciones,
-        ]);
-
-
-        $this->message='';
-        $message="Prespuesto creado satisfactoriamente";
-
-        session()->flash('message',$message);
-
-        if($destino=="editar"){
-            $this->closeNewModal();
-            $this->resetInputFields();
-        }else{
-            return redirect()->route('pedido.edit',$pedido);
-        }
-    }
-
-    public function edit($id) {
-        dd('en proceso');
-        $pedido = Pedido::findOrFail($id);
-        $this->pedido=$pedido->pedido;
-        $this->descripcion=$pedido->descripcion;
-        $this->entidad_id=$pedido->entidad_id;
-        $this->entidadcontacto_id=$pedido->entidadcontacto_id;
-        $this->solicitante_id=$pedido->solicitante_id;
-        $this->fechapedido=$pedido->fechapedido;
-        $this->refgrafitex=$pedido->refgrafitex;
-        $this->refcliente=$pedido->refcliente;
-        $this->preciocoste=$pedido->preciocoste;
-        $this->precioventa=$pedido->precioventa;
-        $this->unidades=$pedido->unidades;
-        $this->incremento=$pedido->incremento;
-        $this->iva=$pedido->iva;
-        $this->ruta=$pedido->ruta;
-        $this->fichero=$pedido->fichero;
-        $this->estado=$pedido->estado;
-        $this->observaciones=$pedido->observaciones;
-        $this->contactos=EntidadContacto::where('entidad_id',$this->entidad_id)->orderBy('contacto')->get();
-        $this->openNewModal();
-    }
-
-
-
     public function getRowsQueryProperty(){
+
+        dd('llegoaqui');
         return Pedido::query()
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
-            ->join('productos','pedidos.producto_id','=','productos.id')
+            // ->join('productos','pedidos.producto_id','=','productos.id')
             ->select('pedidos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia')
             ->where('pedidos.tipo',$this->tipo)
             ->search('pedidos.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){
                 $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
             })
-            ->when($this->filtroisbn!='', function ($query){
-                $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
-            })
+            // ->when($this->filtroisbn!='', function ($query){
+            //     $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
+            // })
             ->when($this->filtroresponsable!='', function ($query){
                 $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
             })
@@ -316,6 +178,7 @@ class Pedidos extends Component
             ->orderBy('pedidos.fechapedido','desc')
             ->orderBy('pedidos.id','desc');
 
+            dd('llego');
             // ->paginate(5); solo contemplo la query, no el resultado. Luego pongo el resultado: get, paginate o lo que quiera
     }
 
@@ -323,33 +186,11 @@ class Pedidos extends Component
         return $this->rowsQuery->paginate(10);
     }
 
-    public function exportSelected(){
-        dd('en proceso');
-    //toCsv es una macro a n AppServiceProvider
-        return response()->streamDownload(function(){
-            echo $this->selectedRowsQuery->toCsv();
-        },'pedidos.csv');
-
-        $this->dispatchBrowserEvent('notify', 'CSV pedidos descargado!');
-    }
-
-    public function deleteSelected(){
-        $deleteCount = $this->selectedRowsQuery->count();
-        $this->selectedRowsQuery->delete();
-        $this->showDeleteModal = false;
-
-        $this->dispatchBrowserEvent('notify', $deleteCount . ' pedidos eliminados!');
-    }
-
-
-
-    public function delete($pedidoId)
-    {
+    public function delete($pedidoId){
         $pedido = Pedido::find($pedidoId);
         if ($pedido) {
             $pedido->delete();
             $this->dispatchBrowserEvent('notify', 'pedido borrado. ');
         }
     }
-
 }

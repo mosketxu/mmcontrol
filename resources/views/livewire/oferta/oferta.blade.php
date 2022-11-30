@@ -23,7 +23,7 @@
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
+                                    <x-jet-label >{{ __('Cliente') }}</x-jet-label>
                                     <x-selectcolor wire:model.lazy="cliente_id" selectname="cliente_id" color="blue" class="w-full py-1" >
                                         <option value="">-- Selecciona cliente --</option>
                                         @foreach ($clientes as $cliente)
@@ -34,7 +34,7 @@
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
+                                    <x-jet-label >{{ __('Contacto') }}</x-jet-label>
                                     <x-selectcolor wire:model.lazy="contacto_id" selectname="contacto_id" color="blue" class="w-full py-1" >
                                         @if (isset($contactos))
                                             <option value="">-- Selecciona contacto --</option>
@@ -48,68 +48,107 @@
                                 </div>
                             </div>
                             <div class="w-full form-item">
-                                <x-jet-label for="referencia">{{ __('Referencia') }}</x-jet-label>
-                                <input  wire:model.lazy="referencia" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                <div class="w-full form-item">
+                                    <x-jet-label >{{ __('Descripción') }}</x-jet-label>
+                                    <input  wire:model.lazy="descripción" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label >{{ __('Producto') }} </x-jet-label>
+                                    <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="blue" class="w-full py-1" >
+                                        @if (isset($productos))
+                                            <option value="">-- Selecciona producto --</option>
+                                            @foreach ($productos as $producto)
+                                            <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="">-- Selecciona primero un producto --</option>
+                                        @endif
+                                    </x-selectcolor>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label >{{ __('Prod.IBAN') }}</x-jet-label>
+                                    <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="blue" class="w-full py-1" >
+                                        @if (isset($productos))
+                                            <option value="">-- Selecciona producto --</option>
+                                            @foreach ($productos as $producto)
+                                            <option value="{{ $producto->id }}">{{ $producto->isbn }}</option>
+                                            @endforeach
+                                        @else
+                                            <option value="">-- Selecciona primero un producto --</option>
+                                        @endif
+                                    </x-selectcolor>
+                                </div>
                             </div>
                         </div>
+
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
                                 <div class="">
-                                    <x-jet-label for="formato">{{ __('Formato') }}</x-jet-label>
-                                    <input  wire:model.lazy="formato" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <x-jet-label >{{ __('Formato') }}</x-jet-label>
+                                    <input  value="{{ $prod->formato ?? '-' }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label for="extension">{{ __('Extension') }}</x-jet-label>
-                                    <input  wire:model.lazy="extension" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                                </div>
-                            </div>
-                            <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="interiorcomposicon">{{ __('Composición Interior') }}</x-jet-label>
-                                    <input  wire:model.lazy="interiorcomposicion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                                </div>
-                                <div class="w-full form-item">
-                                    <x-jet-label for="interiorimpresion">{{ __('Impresión Interior') }}</x-jet-label>
-                                    <input  wire:model.lazy="interiorimpresion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <x-jet-label >{{ __('Extension') }}</x-jet-label>
+                                    <input  value="{{ $prod->paginas ?? '-' }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="cubiertacomposicon">{{ __('Composición Cubierta') }}</x-jet-label>
-                                    <input  wire:model.lazy="cubiertacomposicion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <x-jet-label >{{ __('Material Interior') }}</x-jet-label>
+                                    <input  value="{{ $prod->materialinterior ?? '-' }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label for="cubiertaimpresion">{{ __('Impresión Cubierta') }}</x-jet-label>
-                                    <input  wire:model.lazy="cubiertaimpresion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <x-jet-label >{{ __('Impresión Interior') }}</x-jet-label>
+                                    <input  value="{{ $prod->tintainterior ?? '-' }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="guardascomposicon">{{ __('Composición Guardas') }}</x-jet-label>
+                                    <x-jet-label >{{ __('Material Cubierta') }}</x-jet-label>
+                                    <input  value="{{ $prod->materialcubierta ?? '-' }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
+                                </div>
+                                <div class="w-full form-item">
+                                    <x-jet-label >{{ __('Impresión Cubierta') }}</x-jet-label>
+                                    <input  value="{{ $prod->tintacubierta ?? '-' }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label >{{ __('Composición Guardas') }}</x-jet-label>
                                     <input  wire:model.lazy="guardascomposicion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label for="guardasimpresion">{{ __('Impresión Guardas') }}</x-jet-label>
+                                    <x-jet-label >{{ __('Impresión Guardas') }}</x-jet-label>
                                     <input  wire:model.lazy="guardasimpresion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="acabado">{{ __('Acabado') }}</x-jet-label>
+                                    <x-jet-label >{{ __('Acabado') }}</x-jet-label>
                                     <input  wire:model.lazy="acabado" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label for="manipulacion">{{ __('Manipulación') }}</x-jet-label>
+                                    <x-jet-label >{{ __('Manipulación') }}</x-jet-label>
                                     <input  wire:model.lazy="manipulacion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="entrega">{{ __('Entrega') }}</x-jet-label>
+                                    <x-jet-label >{{ __('Entrega') }}</x-jet-label>
                                     <input  wire:model.lazy="entrega" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
+                                    <x-jet-label >{{ __('Estado') }}</x-jet-label>
                                     <x-selectcolor wire:model.lazy="estado" selectname="estado" color="blue" class="w-full py-1" >
                                         <option value="0">{{ __('En espera') }}</option>
                                         <option value="1">{{ __('Aceptada') }}</option>
@@ -120,9 +159,9 @@
                         </div>
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
-                                <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>
+                                <x-jet-label >{{ __('Observaciones') }}</x-jet-label>
                                 <textarea wire:model.defer="observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('observaciones') }} </textarea>
-                                <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                <input-error  class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                             </div>
                         </div>
                     </div>

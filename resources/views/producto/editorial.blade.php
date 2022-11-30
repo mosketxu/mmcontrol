@@ -101,6 +101,7 @@
                     </div>
                 </div>
             </div>
+            {{-- Interiores --}}
             <div class="p-2 border border-green-300 rounded shadow-md ">
                 <div class="p-1 rounded-md bg-green-50">
                     <h3 class="pl-1 font-semibold">Interiores</h3>
@@ -156,6 +157,7 @@
                     </div>
                 </div>
             </div>
+            {{-- Cubiertas --}}
             <div class="p-2 border border-yellow-300 rounded shadow-md ">
                 <div class="p-1 rounded-md bg-yellow-50">
                     <h3 class="pl-1 font-semibold">Cubiertas</h3>
@@ -205,6 +207,7 @@
         </div>
     </div>
         <div class="flex flex-col mx-2 space-y-2 md:space-y-0 md:flex-row md:space-x-4">
+            {{-- cajas --}}
             <div class="w-full form-item sm:w-2/12">
                 <x-jet-label for="caja">{{ __('Caja') }}</x-jet-label>
                     <x-selectcolor wire:model.lazy="producto.caja"  selectname="caja" color="blue" class="w-full form-control" id="caja">
@@ -214,15 +217,18 @@
                         @endforeach
                     </x-selectcolor>
             </div>
+            {{-- uds cajas --}}
             <div class="w-full form-item sm:w-1/12 ">
                 <x-jet-label for="udxcaja">{{ __('Uds. x caja') }}</x-jet-label>
                 <input  wire:model.lazy="producto.udxcaja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
             </div>
+            {{-- especif logistica --}}
             <div class="w-full form-item sm:w-5/12">
                 <x-jet-label for="especiflogistica">{{ __('Especificaciónes logísticas') }}</x-jet-label>
                 <textarea wire:model.defer="producto.especiflogistica" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('especiflogistica') }} </textarea>
                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
             </div>
+            {{-- observaciones --}}
             <div class="w-full form-item sm:w-4/12">
                 <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>
                 <textarea wire:model.defer="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('observaciones') }} </textarea>

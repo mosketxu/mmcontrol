@@ -29,8 +29,7 @@ class Prod extends Component
     public $tipo;
     public $titulo;
 
-    protected function rules()
-    {
+    protected function rules(){
         return [
             'producto.id'=>'nullable',
             'producto.tipo'=>'required',
@@ -67,8 +66,7 @@ class Prod extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'producto.referencia.required' => 'La referencia es necesaria.',
             'producto.referencia.unique' => 'Esta referencia ya existe.',
@@ -81,14 +79,12 @@ class Prod extends Component
             'producto.descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
         ];
     }
-    public function mount(Producto $producto,$tipo)
-    {
+    public function mount(Producto $producto,$tipo){
         $this->producto=$producto;
         $this->tipo=$tipo;
     }
 
-    public function render()
-    {
+    public function render(){
         if($this->tipo==1){
             $this->titulo='Nuevo producto editorial';
             if($this->producto->id) $this->titulo='Ficha del libro: '. $this->producto->referencia;
@@ -116,32 +112,32 @@ class Prod extends Component
         return view('livewire.producto.prod',compact('clientes'));
     }
 
-    public function updatedProductoPreciocompra()
-    {
+    public function updatedProductoPreciocoste(){
+        if($this->producto->preciocoste=='') $this->producto->preciocoste='0';
         $this->producto->preciocoste=str_replace(',','.',$this->producto->preciocoste);
         $this->validateOnly('producto.preciocoste');
     }
 
-    public function updatedProductoPrecioventa()
-    {
+    public function updatedProductoPrecioventa(){
+        if($this->producto->precioventa=='') $this->producto->precioventa='0';
         $this->producto->precioventa=str_replace(',','.',$this->producto->precioventa);
         $this->validateOnly('producto.precioventa');
     }
 
-    public function updatedficheropdf()
-    {
+    public function updatedProductoNovedad(){if($this->producto->novedad==false) $this->producto->descripnovedad='';}
+    public function updatedProductoGuardas(){if($this->producto->guardas==false) $this->producto->descripguardas='';}
+    public function updatedProductoCd(){if($this->producto->cd==false) $this->producto->descripcd='';}
+    public function updatedProductoSolapa(){if($this->producto->solapa==false) $this->producto->descripsolapa='';}
+    public function updatedProductoDescripnovedad(){if($this->producto->descripnovedad!='') $this->producto->novedad=true;}
+    public function updatedProductoDescripguardas(){if($this->producto->descripguardas!='') $this->producto->guardas=true;}
+    public function updatedProductodescripcd(){if($this->producto->descripcd!='') $this->producto->cd=true;}
+    public function updatedProductoDescripsolapa(){if($this->producto->descripsolapa!='') $this->producto->solapa=true;}
+
+    public function updatedficheropdf(){
         $this->validate(['ficheropdf'=>'file|max:5000']);
     }
 
-    // public function presentaAdjunto(Producto $producto){
-    //     $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
-    //     if ($existe)
-    //         return Storage::disk('fichasproducto')->download($producto->adjunto);
-    // }
-
-    public function save()
-    {
-
+    public function save(){
         if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
         if($this->tipo) $this->producto->tipo=$this->tipo;
         if($this->producto->id){
@@ -222,20 +218,10 @@ class Prod extends Component
             ]
         );
 
-        // $filename=$this->ficheropdf->store('/','fichasproducto');
-        // $filename=$this->ficheropdf->storeAs('/','pp.pdf','fichasproducto');
-        $filename="";
-        if ($this->ficheropdf) {
-            $nombre=$this->producto->id.'.'.$this->ficheropdf->extension();
-            $filename=$this->ficheropdf->storeAs('/', $nombre, 'fichasproducto');
-            $prod->adjunto=$filename;
-            $prod->save();
-        }
-
-        if(!$this->producto->id){
-            $this->producto->id=$prod->id;
-            $mensaje=$this->producto->referencia . " creado satisfactoriamente";
-        }
+        $mensaje=$this->producto->referencia . " creado satisfactoriamente";
         $this->dispatchBrowserEvent('notify', $mensaje);
+
+        return redirect()->route('producto.edit',$prod);
+        // $this->emit('refreshproducto');
     }
 }

@@ -73,6 +73,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=>'producto.update'])->syncRoles($admin, $gestor, $milimetrica);
         Permission::create(['name'=>'producto.delete'])->syncRoles($admin, $gestor, $milimetrica);
 
+        // presupuestos
+        Permission::create(['name'=>'presupuesto.index'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'presupuesto.create'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'presupuesto.edit'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'presupuesto.update'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'presupuesto.delete'])->syncRoles($admin, $gestor, $milimetrica);
+
         // pedidos
         Permission::create(['name'=>'pedido.index'])->syncRoles($admin, $gestor, $milimetrica);
         Permission::create(['name'=>'pedido.create'])->syncRoles($admin, $gestor, $milimetrica);
@@ -80,12 +87,12 @@ class PermissionSeeder extends Seeder
         Permission::create(['name'=>'pedido.update'])->syncRoles($admin, $gestor, $milimetrica);
         Permission::create(['name'=>'pedido.delete'])->syncRoles($admin, $gestor, $milimetrica);
 
-        // administracion
-        Permission::create(['name'=>'administracion.index'])->syncRoles($admin, $gestor, $milimetrica);
-        Permission::create(['name'=>'administracion.create'])->syncRoles($admin, $gestor, $milimetrica);
-        Permission::create(['name'=>'administracion.edit'])->syncRoles($admin, $gestor, $milimetrica);
-        Permission::create(['name'=>'administracion.update'])->syncRoles($admin, $gestor, $milimetrica);
-        Permission::create(['name'=>'administracion.delete'])->syncRoles($admin, $gestor, $milimetrica);
+        // caracteristicas
+        Permission::create(['name'=>'caracteristicas.index'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'caracteristicas.create'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'caracteristicas.edit'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'caracteristicas.update'])->syncRoles($admin, $gestor, $milimetrica);
+        Permission::create(['name'=>'caracteristicas.delete'])->syncRoles($admin, $gestor, $milimetrica);
 
         // facturacion
         Permission::create(['name'=>'facturacion.index'])->syncRoles($admin, $gestor, $milimetrica);

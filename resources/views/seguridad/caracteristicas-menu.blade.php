@@ -5,37 +5,37 @@
             <div class="flex">
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('administracion','encuadernacion') }}" :active="request()->routeIs('encuadernacion')">
+                    <x-jet-nav-link href="{{ route('caracteristicas','encuadernacion') }}" :active="request()->routeIs('encuadernacion')">
                         {{ __('Encuadernación') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('administracion','caja') }}" :active="request()->routeIs('caja')">
+                    <x-jet-nav-link href="{{ route('caracteristicas','caja') }}" :active="request()->routeIs('caja')">
                         {{ __('Cajas') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('administracion','formato') }}" :active="request()->routeIs('formato')">
+                    <x-jet-nav-link href="{{ route('caracteristicas','formato') }}" :active="request()->routeIs('formato')">
                         {{ __('Formatos') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('administracion','gramaje') }}" :active="request()->routeIs('gramaje')">
+                    <x-jet-nav-link href="{{ route('caracteristicas','gramaje') }}" :active="request()->routeIs('gramaje')">
                         {{ __('Gramajes') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('administracion','material') }}" :active="request()->routeIs('material')">
+                    <x-jet-nav-link href="{{ route('caracteristicas','material') }}" :active="request()->routeIs('material')">
                         {{ __('Materiales') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('administracion','plastificado') }}" :active="request()->routeIs('plastificado')">
+                    <x-jet-nav-link href="{{ route('caracteristicas','plastificado') }}" :active="request()->routeIs('plastificado')">
                         {{ __('Plastificados') }}
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('administracion','tinta') }}" :active="request()->routeIs('tinta')">
+                    <x-jet-nav-link href="{{ route('caracteristicas','tinta') }}" :active="request()->routeIs('tinta')">
                         {{ __('Tintas') }}
                     </x-jet-nav-link>
                 </div>
