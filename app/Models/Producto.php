@@ -12,12 +12,13 @@ class Producto extends Model
 
     protected $fillable=['cliente_id','tipo','isbn','referencia','preciocoste','tirada','formato','FSC','materialinterior','tintainterior',
     'gramajeinterior','paginas','materialcubierta','tintacubierta','gramajecubierta','plastificado','encuadernado','solapa','descripsolapa','guardas','descripguardas',
-    'cd','descripcd','novedad','descripnovedad','caja','udxcaja','especiflogistica','precioventa','observaciones'];
+    'cd','descripcd','novedad','descripnovedad','caja_id','udxcaja','especiflogistica','precioventa','observaciones'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
     public function archivos(){return $this->hasMany(ProductoArchivo::class,'producto_id','id');}
     public function ofertas(){return $this->hasMany(Oferta::class,'producto_id','id');}
+    public function caja(){return $this->belongsTo(Caja::class,'caja_id','id');}
 
 }
 

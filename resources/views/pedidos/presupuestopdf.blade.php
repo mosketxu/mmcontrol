@@ -41,8 +41,12 @@
         <main style=" margin-right: 10px; margin-top:220px">
             <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
                 <tr  >
-                    <td style="padding-left:3px;"  class="" >Demanda de presupuesto núm. {{ $presupuesto->id }} / {{ substr($presupuesto->fecha, 0,4) }}</td>
+                    <td style="padding-left:3px;"  class="" >Demanda de presupuesto núm. {{ $presupuesto->id }} / {{ substr($presupuesto->fechapresupuesto, 0,4) }}</td>
                     <td style="text-align: right;"  class="" >FECHA: {{ $fecha}}</td>
+                </tr>
+                <tr>
+                    <td>sdf</td>
+                    <td>{{ $presupuesto->fechapresupuesto }}</td>
                 </tr>
             </table>
             @if($presupuesto->comentario)

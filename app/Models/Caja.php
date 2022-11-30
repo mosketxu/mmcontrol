@@ -11,4 +11,7 @@ class Caja extends Model
 
     protected $fillable = ['name','descripcion','familia'];
 
+    public function caja(){return $this->hasMany(Producto::class);}
+
+
 }

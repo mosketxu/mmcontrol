@@ -39,7 +39,7 @@ class CreateProductosTable extends Migration
             $table->string('descripcd')->nullable();
             $table->boolean('novedad')->nullable();
             $table->string('descripnovedad')->nullable();
-            $table->string('caja')->nullable();
+            $table->foreignId('caja_id')->nullable()->constrained('cajas')->onDelete('cascade');
             $table->integer('udxcaja')->nullable()->default(0);
             $table->string('especiflogistica')->nullable();
             $table->longText('observaciones')->nullable();

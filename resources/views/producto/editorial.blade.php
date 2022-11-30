@@ -210,7 +210,7 @@
             {{-- cajas --}}
             <div class="w-full form-item sm:w-2/12">
                 <x-jet-label for="caja">{{ __('Caja') }}</x-jet-label>
-                    <x-selectcolor wire:model.lazy="producto.caja"  selectname="caja" color="blue" class="w-full form-control" id="caja">
+                    <x-selectcolor wire:model.lazy="producto.caja_id"  selectname="caja:id" color="blue" class="w-full form-control" id="caja">
                         <option value="">--Selecciona--</option>
                         @foreach($cajas as $item)
                             <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>

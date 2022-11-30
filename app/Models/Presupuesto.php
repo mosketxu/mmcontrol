@@ -19,7 +19,7 @@ class Presupuesto extends Model
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
-    public function productos(){return $this->hasMany(PresupuestoProducto::class,'presupuesto_id','id');}
+    public function presupuestoproductos(){return $this->hasMany(PresupuestoProducto::class,'presupuesto_id','id');}
 
     public function getStatusColorAttribute(){
         return [
