@@ -36,8 +36,7 @@ class Pedido extends Component
     public $uds_caja;
     public $otros;
 
-    public $mesagge;
-    public $destino='0';
+    // public $destino='0';
     public $filtroisbn;
     public $filtroreferencia;
     public $filtrocliente;
@@ -76,8 +75,7 @@ class Pedido extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'pedidoid.required'=>'El número de pedido es necesario',
             'producto_id.required'=>'Debes elegir un producto',
@@ -160,7 +158,6 @@ class Pedido extends Component
             ->orderBy('referencia','asc')
             ->get();
             return view('livewire.pedido.pedido',compact(['entidades','clientes','proveedores']));
-
         }
 
     public function updatedClienteId(){
@@ -204,14 +201,11 @@ class Pedido extends Component
     public function numpedido(){
         $anyo= substr($this->fechapedido, 0,4);
         $anyo2= substr($anyo, -2);
-        // if (!isset($this->pedidoid)){
-            $ped=ModeloPedido::whereYear('fechapedido', $anyo)->max('id') ;
-            return !isset($ped) ? ($anyo2 * 100000 +1) :$ped + 1 ;
-        // }
+        $ped=ModeloPedido::whereYear('fechapedido', $anyo)->max('id') ;
+        return !isset($ped) ? ($anyo2 * 100000 +1) :$ped + 1 ;
     }
 
-    public function save()
-    {
+    public function save(){
         $mensaje="Pedido creado satisfactoriamente";
         $i="";
         if ($this->pedidoid!='') {

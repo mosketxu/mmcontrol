@@ -75,13 +75,6 @@ class Presupuestos extends Component
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
-    public function changeVisible(ModelsFacturaDetalle $facturadetalle,$visible)
-    {
-        $facturadetalle->visible=$facturadetalle->visible=='1'? '0' : '1';
-        $this->dispatchBrowserEvent('notify', 'Visible Actualizado.');
-    }
-
-
     public function getRowsQueryProperty(){
 
         if($this->tipo=='1')

@@ -17,7 +17,7 @@ class CreatePresupuestosTable extends Migration
             $table->bigInteger('id')->unsigned(); // to remove primary key
             $table->primary('id'); //to add primary key();
             $table->integer('tipo')->default(1);
-            $table->string('responsable');
+            $table->string('responsable')->nullable();
             $table->foreignId('cliente_id')->constrained('entidades');
             $table->foreignId('contacto_id')->nullable()->constrained('entidades');
             $table->foreignId('proveedor_id')->nullable()->constrained('entidades');

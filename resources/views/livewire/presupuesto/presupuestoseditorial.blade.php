@@ -5,11 +5,7 @@
                 @include('errores')
             </div>
             <div class="">
-                @if($tipo=='1')
                     @include('presupuestos.presupuestoseditorialfilters')
-                @else
-                    {{-- @include('presupuestos.presupuestosotrosfilters') --}}
-                @endif
             </div>
             {{-- tabla presupuesots --}}
             <div class="flex-col space-y-4">
@@ -78,7 +74,7 @@
                                 <x-icon.delete-a wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('presupuesto.archivos',[$presupuesto->id,'i'])}}'" title="Archivo"/>
                                 <a href="{{route('presupuesto.presupuestoPDF',$presupuesto)}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 " title="PDF Presupuesto"/></a>
-                                <x-icon.edit-a class="" href="{{ route('pedido.editar',[$presupuestos,'i']) }}"  title="Editar"/>
+                                <x-icon.edit-a class="" href="{{ route('presupuesto.editar',[$presupuesto,'i']) }}"  title="Editar"/>
                             </div>
                         </div>
                         @empty

@@ -22,17 +22,18 @@ class PresupuestoController extends Controller
     }
 
     public function nuevo($tipo,$ruta){
-        return view('presupuestos.create',compact('tipo','ruta'));
+        $titulo=$tipo=='1' ? 'Nuevo Presupuesto Editorial' : 'Nuevo Presupuesto Packaging/Propios';
+
+        return view('presupuestos.create',compact('tipo','ruta','titulo'));
     }
 
     public function presupuestoPDF(Presupuesto $presupuesto){
         if($presupuesto->tipo=='1'){
             $producto=$presupuesto->presupuestoproductos->first()->producto;
-}
+        }
         else{
             dd('otros');
         }
-
 
         $proveedor=Entidad::find($presupuesto->proveedor_id);
         $cliente=Entidad::find($presupuesto->cliente_id);
@@ -45,7 +46,8 @@ class PresupuestoController extends Controller
 
     public function editar(Presupuesto $presupuesto,$ruta){
         $tipo=$presupuesto->tipo;
-        return view('presupuestos.edit',compact('presupuestos','tipo','ruta'));
+        $titulo=$tipo=='1' ? 'Presupuesto Editorial' : 'Presupuesto Packaging/Propios';
+        return view('presupuestos.edit',compact('presupuesto','tipo','ruta','titulo'));
     }
 
     public function archivos(Presupuesto $presupuesto, $ruta){
