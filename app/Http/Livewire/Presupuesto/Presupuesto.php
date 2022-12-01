@@ -31,6 +31,7 @@ class Presupuesto extends Component
     public $presupuestoproductoid;
     public $titulo;
     public $ruta;
+    public $deshabilitado='';
 
     public $filtroisbn;
     public $filtroreferencia;
@@ -105,6 +106,7 @@ class Presupuesto extends Component
                 $this->productoeditorialid=$presupuesto->presupuestoproductos->first()->producto->id;
                 $this->presupuestoproductoid=$presupuesto->presupuestoproductos->first()->id;
             }
+            $this->deshabilitado=$this->espedido=='1' ? 'disabled' : '';
         }
     }
 
@@ -188,6 +190,10 @@ class Presupuesto extends Component
         return !isset($presup) ? ($anyo2 * 100000 +1) : $presup + 1 ;
     }
 
+    public function desbloquear()
+    {
+        $this->deshabilitado= $this->deshabilitado=='disabled' ? '' : 'disabled';
+    }
     public function save(){
         $this->estado=$this->estado=='' ? '0' : $this->estado;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
