@@ -78,11 +78,9 @@
                             </div>
                             <div class="flex flex-row-reverse w-3/12 pr-2 mt-1 ">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
-                                {{-- <x-icon.euro-a class="w-5 text-orange-500 hover:text-orange-700 " onclick="location.href = '{{route('pedido.facturaciones',[$pedido->id,'i'])}}'" title="Facturaciones"/> --}}
                                 <a href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank" ><x-icon.p class="mx-1 text-red-500 hover:text-red-700 "/></a>
                                 <x-icon.sandwatch-a class="w-4 mt-1 text-brown-500 hover:text-brown-700 " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos"/>
                                 <x-icon.triangleexclamation-a class="w-6 mt-1 text-yellow-500 hover:text-yellow-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias"/>
-                                {{-- <x-icon.dolarcomment-a class="w-6 mt-1 text-purple-500 hover:text-purple-700 " onclick="location.href = '{{route('pedido.presupuestos',[$pedido,'i'])}}'" title="Presupuestos"/> --}}
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
                                 <x-icon.building-circle-arrow-right-a class="w-5 my-2 text-gray-500 hover:text-gray-900 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Distirbuciones"/>
                                 <x-icon.truck-a class="w-5 my-2 text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes"/>

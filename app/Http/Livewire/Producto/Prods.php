@@ -56,11 +56,11 @@ class Prods extends Component
     public function updatingFiltroreferencia(){$this->resetPage();}
     public function updatingFiltrocliente(){$this->resetPage();}
 
-    public function presentaAdjunto(Producto $producto){
-        $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
-        if ($existe)
-            return Storage::disk('fichasproducto')->download($producto->adjunto);
-    }
+    // public function presentaAdjunto(Producto $producto){
+    //     $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
+    //     if ($existe)
+    //         return Storage::disk('fichasproducto')->download($producto->adjunto);
+    // }
 
     public function delete($productoId)
     {

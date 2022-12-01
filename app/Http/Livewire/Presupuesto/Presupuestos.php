@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Presupuesto;
 
-use App\Models\{Entidad,Mes, Presupuesto};
+use App\Models\{Entidad,Mes, Pedido, Presupuesto};
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 
@@ -142,10 +142,15 @@ class Presupuestos extends Component
     }
 
     public function delete($presupuestoId){
-        $presupuesto = Presupuesto::find($presupuestoId);
-        if ($presupuesto) {
-            $presupuesto->delete();
-            $this->dispatchBrowserEvent('notify', 'presupuesto borrado. ');
+        $pedidocount=Pedido::where('presupuesto_id',$presupuestoId)->count();
+        if($pedidocount>0)
+            $this->dispatchBrowserEvent('notifyred', 'Este presupuesto tiene un pedido asociado. No se puede eliminar. ');
+        else{
+            $presupuesto = Presupuesto::find($presupuestoId);
+            if ($presupuesto) {
+                $presupuesto->delete();
+                $this->dispatchBrowserEvent('notify', 'presupuesto borrado. ');
+            }
         }
     }
 

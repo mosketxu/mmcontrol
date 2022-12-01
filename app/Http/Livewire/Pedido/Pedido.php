@@ -258,4 +258,5 @@ class Pedido extends Component
         $this->dispatchBrowserEvent('notify', $mensaje);
         if($nuevo) return redirect()->route('pedido.editar',[$pedido,$this->ruta]);
     }
+
 }

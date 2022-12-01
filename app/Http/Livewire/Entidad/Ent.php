@@ -19,8 +19,7 @@ class Ent extends Component
     public $departamento;
     public $comentario;
 
-    protected function rules()
-    {
+    protected function rules(){
         return [
             'entidad.id'=>'nullable',
             'entidad.entidad'=>'required',
@@ -52,8 +51,7 @@ class Ent extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'entidad.entidad.required' => 'El nombre de la entidad es necesario',
             'entidad.entidadtipo_id.required' => 'El tipo es necesario',
@@ -65,8 +63,7 @@ class Ent extends Component
         ];
     }
 
-    public function mount(Entidad $entidad, Entidad $contacto,$entidadtipoId)
-    {
+    public function mount(Entidad $entidad, Entidad $contacto,$entidadtipoId){
         $this->entidad=$entidad;
         $this->contacto=$contacto;
 
@@ -75,9 +72,7 @@ class Ent extends Component
         $this->entidadtipo=EntidadTipo::find($entidadtipoId);
     }
 
-
-    public function render()
-    {
+    public function render(){
         if (!$this->entidad->estado) $this->entidad->estado=0;
         $entidad=$this->entidad;
         $contacto=$this->contacto;
@@ -89,8 +84,7 @@ class Ent extends Component
         return view('livewire.entidad.ent',compact('metodopagos','provincias','paises'));
     }
 
-    public function save()
-    {
+    public function save(){
         $this->validate();
         if($this->entidad->id){
             $i=$this->entidad->id;

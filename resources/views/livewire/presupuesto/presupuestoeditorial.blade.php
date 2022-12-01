@@ -48,7 +48,7 @@
                                     <x-selectcolor wire:model.lazy="productoeditorialid" selectname="productoeditorialid" class="w-full" >
                                         <option value=''>-- Selecciona ISBN --</option>
                                         @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->isbn .' - '. $producto->referencia}}</option>
+                                            <option value="{{ $producto->id }}" >{{ $producto->isbn .' - '. $producto->referencia}}</option> --}}
                                         @endforeach
                                     </x-selectcolor>
                                 </div>
@@ -84,7 +84,7 @@
                                         <option value="Marta">Marta</option>
                                         <option value="Anna">Anna</option>
                                     </x-selectcolor>
-                               </div>
+                                </div>
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
@@ -104,7 +104,7 @@
                                 <div class="w-full form-item">
                                     <x-jet-label for="precio_ud">{{ __('Precio Ud.') }}</x-jet-label>
                                     <input  wire:model.lazy="precio_ud" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                               </div>
+                                </div>
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
@@ -140,10 +140,14 @@
                                 </div>
                             </div>
                             <div class="w-full text-center form-item">
+                                @if($espedido=='1')
                                 <div class="w-full form-item">
-                                    <x-jet-label for="espedido">{{ __('Es Pedido') }}</x-jet-label>
-                                    <input type="checkbox" wire:model.lazy="espedido"  class="" />
+                                    <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
+                                    <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
                                 </div>
+                                @else
+                                <x-jet-button class="bg-blue-600" wire:click.prevent="pedido( {{ $presupuestoid }} )" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">{{ __('Convertir en Pedido') }}</x-jet-button>
+                                @endif
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
@@ -157,7 +161,7 @@
                     <div class="p-2 m-2 ">
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                            <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
                         </div>
                     </div>
                 </form>

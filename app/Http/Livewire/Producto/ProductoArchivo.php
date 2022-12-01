@@ -99,16 +99,16 @@ class ProductoArchivo extends Component
         $this->validate(['valorcampoimg'=>'file|max:5000']);
     }
 
-    public function presentaAdjunto($productoarchivoid){
-        $parchivo=ModelsProductoArchivo::find($productoarchivoid);
-        $existe=Storage::disk('fichasproducto')->exists($parchivo->archivo);
-        // dd($this->productoid.'/'.$productoarchivoid->id);
-        if ($existe)
-            return Storage::disk('fichasproducto')->download($parchivo->archivo);
-        else{
-            $this->dispatchBrowserEvent('notifyred', 'Ha habido un problema con el fichero');
-        }
-    }
+    // public function presentaAdjunto($productoarchivoid){
+    //     $parchivo=ModelsProductoArchivo::find($productoarchivoid);
+    //     $existe=Storage::disk('fichasproducto')->exists($parchivo->archivo);
+    //     // dd($this->productoid.'/'.$productoarchivoid->id);
+    //     if ($existe)
+    //         return Storage::disk('fichasproducto')->download($parchivo->archivo);
+    //     else{
+    //         $this->dispatchBrowserEvent('notifyred', 'Ha habido un problema con el fichero');
+    //     }
+    // }
 
     public function save()
     {

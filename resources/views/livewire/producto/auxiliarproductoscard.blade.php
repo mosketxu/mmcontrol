@@ -85,7 +85,6 @@
                                         </div>
                                     </div>
                                 </a>
-                                {{-- <a href="#" class="flex text-green-500 hover:text-green-700 " wire:click="presentaAdjunto({{ $valor->id }})" title="Archivo">{{ $valor->valorcampo3 }} <x-icon.clip /></a> --}}
                             @endif
                         </div>
                         @endif

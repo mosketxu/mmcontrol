@@ -27,7 +27,7 @@
                             <div class="w-1/12 text-right">{{ __('Precio Ud.') }}</div>
                             <div class="w-1/12 text-right">{{ __('Precio Total') }}</div>
                             <div class="w-1/12 text-center">{{ __('Estado') }}</div>
-                            <div class="w-1/12 text-center">{{ __('Es Pedido') }}</div>
+                            <div class="w-1/12 text-center">{{ __('Pedido') }}</div>
                             <div class="w-1/12 text-left" ></div>
                         </div>
                     </div>
@@ -65,10 +65,12 @@
                                     <option value="2" {{ $presupuesto->estado== '2'? 'selected' : '' }}>Rechazado</option>
                                 </select>
                             </div>
-                            <div class="flex-col w-1/12 text-center">
-                                <input type="checkbox" wire:change="changeEspedido({{ $presupuesto }},$event.target.value)"
-                                    {{ $presupuesto->espedido == '1' ? 'checked' : '' }}
-                                    class="mt-2 transition duration-150 ease-in-out border-gray-300 form-checkbox sm:text-sm sm:leading-5"/>
+                            <div class="flex-col w-1/12 text-right">
+                                <div class="mt-2 mr-2">
+                                    @if($presupuesto->pedido)
+                                    <a class="text-blue-700 underline " href="{{ route('pedido.editar',[$presupuesto->pedido ,'i']) }}"  title="Pedido">{{ $presupuesto->pedido }}</a>
+                                    @endif
+                                </div>
                             </div>
                             <div class="flex flex-row-reverse w-1/12 pr-2 mt-1 ">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>

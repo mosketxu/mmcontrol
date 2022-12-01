@@ -1,9 +1,9 @@
 <div class="">
     <div class="p-1 mx-2 ">
         <div class="flex justify-between space-x-1">
-            <div class="flex w-3/12 py-0 mt-0">
+            <div class="flex w-4/12 py-0 mt-0">
                 <div class="w-full py-0 mt-0">
-                    <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }} {{ $pedidoid }}</h1>
+                    <h1 class="text-2xl font-semibold text-gray-900"> {{ $titulo }} {{ $presupuestoid }}</h1>
                 </div>
             </div>
             <div class="flex flex-row-reverse w-9/12 ">
@@ -14,7 +14,7 @@
                     @endif
                 </div>
                 <div class="flex mr-10">
-                    @include('pedidos.pedido-menu' )
+                    @include('presupuestos.presupuesto-menu' )
                 </div>
             </div>
         </div>
@@ -101,7 +101,7 @@
                             @if($tipocampo3=='combo')
                                 <x-select selectname="valorcampo3" class="w-full mt-1 border-none"
                                     wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)">
-                                    {{-- {{ $pedido->estado== '0'? 'selected' : '' }} --}}
+                                    {{-- {{ $presupuesto->estado== '0'? 'selected' : '' }} --}}
                                     @foreach ($seleccionables3 as $seleccion)
                                         <option value="{{ $seleccion->id }}" {{ $seleccion->id==$valor->valorcampo3 ? 'selected' :''  }}>{{ $seleccion->$campo3selectname }}</option>
                                     @endforeach
@@ -150,7 +150,7 @@
                         @if ($campoimgvisible==1)
                         <div class="{{ $longcampoimg }} ml-8 text-left">
                             @if($valor->valorcampoimg)
-                                <a href="{{asset('archivospedido/'.$valor->valorcampoimg) }}" target="_blank" class="w-5 text-blue-500 hover:text-blue-700" title="Ver producto">
+                                <a href="{{asset('archivospresupuesto/'.$valor->valorcampoimg) }}" target="_blank" class="w-5 text-blue-500 hover:text-blue-700" title="Ver producto">
                                     <div class="flex">
                                         <x-icon.clip />
                                         <div class="mt-1">
@@ -165,7 +165,7 @@
                         <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
                             <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="mx-1"  title="Eliminar detalle"/>
                             @if($pdfvisible=='1')
-                                <a href="{{route($routepdf,[$pedidoid,$ruta,$valor->id])}}" target="_blank" ><x-icon.pdf class="mx-1 text-red-500 hover:text-red-700 "/></a>
+                                <a href="{{route($routepdf,[$presupuestoid,$ruta,$valor->id])}}" target="_blank" ><x-icon.pdf class="mx-1 text-red-500 hover:text-red-700 "/></a>
                             @endif
                             @if($editarvisible=='1')
                                 <x-icon.edit-a wire:click="editar({{ $valor->id }})" class="mx-1"  title="Editar {{ $titulo }}"/>
@@ -277,9 +277,9 @@
     </div>
     <div class="m-2">
         @if($ruta=='i')
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
         @else
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.editar',[$presupuestoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
         @endif
     </div>
 </div>

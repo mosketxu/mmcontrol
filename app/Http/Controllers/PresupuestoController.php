@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entidad;
+use App\Models\Pedido;
 use App\Models\Presupuesto;
 use App\Models\Producto;
 use Carbon\Carbon;
@@ -23,7 +24,6 @@ class PresupuestoController extends Controller
 
     public function nuevo($tipo,$ruta){
         $titulo=$tipo=='1' ? 'Nuevo Presupuesto Editorial' : 'Nuevo Presupuesto Packaging/Propios';
-
         return view('presupuestos.create',compact('tipo','ruta','titulo'));
     }
 
@@ -53,4 +53,5 @@ class PresupuestoController extends Controller
     public function archivos(Presupuesto $presupuesto, $ruta){
         return view('presupuestos.archivos',compact('presupuesto','ruta'));
     }
+
 }

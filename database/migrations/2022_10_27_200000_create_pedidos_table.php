@@ -26,7 +26,7 @@ class CreatePedidosTable extends Migration
             $table->string('oferta_id')->nullable();
             $table->foreignId('contacto_id')->nullable()->constrained('entidades');
             $table->foreignId('proveedor_id')->nullable()->constrained('entidades');
-            $table->foreignId('facturadopor_id')->nullable()->constrained('entidades');
+            $table->string('facturadopor')->nullable();
             $table->date('fechapedido');
             $table->date('fechaarchivos')->nullable();
             $table->date('fechaplotter')->nullable();

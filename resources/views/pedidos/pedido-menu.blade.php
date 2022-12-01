@@ -17,9 +17,6 @@
                     <x-jet-nav-link href="{{route('pedido.archivos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.archivos')">
                         <x-icon.clip/>Archivos
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{route('pedido.presupuestos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.presupuestos')">
-                        <x-icon.dolarcomment/>Presupuestos
-                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.incidencias',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.incidencias')">
                         <x-icon.triangleexclamation class="w-4 text-gray-500 hover:text-gray-900"/> Incidencias
                     </x-jet-nav-link>

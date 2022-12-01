@@ -248,16 +248,6 @@
                 <textarea wire:model.defer="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('observaciones') }} </textarea>
                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
             </div>
-            <div class="w-full form-item sm:w-2/12 ">
-                <x-jet-label for="ficheropdf">{{ __('Ficha producto') }}</x-jet-label>
-                <div class="flex">
-                    <input type="file" wire:model.lazy="ficheropdf">
-                    @if($producto->adjunto)
-                        <x-icon.clip-a wire:click="presentaAdjunto({{ $producto }})" class="w-8 text-green-500 hover:text-green-700 " title="archivo adjunto"/>
-                    @endif
-                    @error('ficheropdf') <p class="text-red-500">{{ $message }}</p> @enderror
-                </div>
-            </div>
         </div>
         <div class="p-2 m-2 ">
             <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">

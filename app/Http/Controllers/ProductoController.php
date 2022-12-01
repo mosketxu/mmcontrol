@@ -39,16 +39,6 @@ class ProductoController extends Controller
         return view('producto.create',compact('tipo'));
     }
 
-    public function adjunto(Producto $producto){
-
-        $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
-        if ($existe)
-            // return Storage::disk('fichasproducto')->url($producto->adjunto);
-            return redirect(Storage::disk('fichasproducto')->url($producto->adjunto));
-            // return Storage::disk('fichasproducto')->url($producto->adjunto);
-            // return Storage::disk('fichasproducto')->download($producto->adjunto);
-    }
-
     public function archivos(Producto $producto, $ruta)
     {
         return view('producto.archivos',compact('producto','ruta'));

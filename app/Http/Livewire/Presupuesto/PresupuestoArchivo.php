@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Livewire\Pedido;
+namespace App\Http\Livewire\Presupuesto;
 
-use App\Models\{Pedido,PedidoArchivo as ModelsPedidoArchivo};
+use App\Models\{Presupuesto,PresupuestoArchivo as ModelsPresupuestoArchivo};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
 use Livewire\Component;
 
-class PedidoArchivo extends Component
+class PresupuestoArchivo extends Component
 {
     use WithFileUploads;
 
     public $titulo='Archivo: ';
     public $ruta;
     public $tipo;
-    public $pedidoid;
-    public $pedido;
+    public $presupuestoid;
+    public $presupuesto;
     public $pdfvisible ;
 
     public $routepdf='';
@@ -111,29 +111,29 @@ class PedidoArchivo extends Component
         ];
     }
 
-    public function mount($pedidoid,$ruta,$tipo)
+    public function mount($presupuestoid,$ruta,$tipo)
     {
-        $this->pedido=Pedido::find($pedidoid);
+        $this->presupuesto=Presupuesto::find($presupuestoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
-        $this->titulo="Archivos del pedido: ";
+        $this->titulo="Archivos del presupuesto: ";
     }
 
     public function render()
     {
-        $valores=ModelsPedidoArchivo::query()
+        $valores=ModelsPresupuestoArchivo::query()
         ->search('comentario', $this->search)
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
-        ->where('pedido_id',$this->pedido->id)
+        ->where('presupuesto_id',$this->presupuesto->id)
         ->orderBy('comentario')
         ->paginate(10);
 
-        return view('livewire.pedido.auxiliarpedidoscard', compact('valores'));
+        return view('livewire.presupuesto.auxiliarpresupuestoscard', compact('valores'));
     }
 
-    public function changeCampo(ModelsPedidoArchivo $valor, $campo, $valorcampo)
+    public function changeCampo(ModelsPresupuestoArchivo $valor, $campo, $valorcampo)
     {
-        $p=ModelsPedidoArchivo::find($valor->id);
+        $p=ModelsPresupuestoArchivo::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
         $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
@@ -144,11 +144,11 @@ class PedidoArchivo extends Component
         $this->validate(['valorcampoimg'=>'file|max:5000']);
     }
 
-    // public function presentaAdjunto($pedidoarchivoid){
-    //     $parchivo=ModelsPedidoArchivo::find($pedidoarchivoid);
-    //     $existe=Storage::disk('archivospedido')->exists($parchivo->archivo);
+    // public function presentaAdjunto($presupuestoarchivoid){
+    //     $parchivo=ModelsPresupuestoArchivo::find($presupuestoarchivoid);
+    //     $existe=Storage::disk('archivospresupuesto')->exists($parchivo->archivo);
     //     if ($existe)
-    //         return Storage::disk('archivospedido')->download($parchivo->archivo);
+    //         return Storage::disk('archivospresupuesto')->download($parchivo->archivo);
     //     else{
     //         $this->dispatchBrowserEvent('notifyred', 'Ha habido un problema con el fichero');
     //     }
@@ -160,8 +160,8 @@ class PedidoArchivo extends Component
         $filename="";
         $extension="";
 
-        $pedidoarchivo=ModelsPedidoArchivo::create([
-            'pedido_id'=>$this->pedidoid,
+        $presupuestoarchivo=ModelsPresupuestoArchivo::create([
+            'presupuesto_id'=>$this->presupuestoid,
             'comentario'=>$this->valorcampo4,
             'nombrearchivooriginal'=>$this->valorcampoimg->getClientOriginalName(),
             'archivo'=>'',
@@ -169,22 +169,22 @@ class PedidoArchivo extends Component
 
         if($this->campoimgvisible=='1'){
             if ($this->valorcampoimg) {
-                $nombre=$this->pedidoid.'/'.$pedidoarchivo->id.'.'.$this->valorcampoimg->extension();
-                $filename=$this->valorcampoimg->storeAs('/', $nombre, 'archivospedido');
-                $pedidoarchivo->archivo=$nombre;
-                $pedidoarchivo->save();
+                $nombre=$this->presupuestoid.'/'.$presupuestoarchivo->id.'.'.$this->valorcampoimg->extension();
+                $filename=$this->valorcampoimg->storeAs('/', $nombre, 'archivospresupuesto');
+                $presupuestoarchivo->archivo=$nombre;
+                $presupuestoarchivo->save();
             }
         }
 
 
         $this->dispatchBrowserEvent('notify', 'Archivo añadido con éxito');
 
-        return redirect()->route('pedido.archivos',[$this->pedidoid,$this->ruta]);
+        return redirect()->route('presupuesto.archivos',[$this->presupuestoid,$this->ruta]);
     }
 
     public function delete($valorId)
     {
-        $borrar = ModelsPedidoArchivo::find($valorId);
+        $borrar = ModelsPresupuestoArchivo::find($valorId);
 
         if ($borrar) {
             $borrar->delete();

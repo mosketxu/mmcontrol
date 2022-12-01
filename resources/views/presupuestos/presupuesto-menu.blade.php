@@ -11,6 +11,9 @@
                     <x-jet-nav-link href="{{route('presupuesto.archivos',[$presupuesto,$ruta])}}" :active="request()->routeIs('presupuesto.archivos')">
                         <x-icon.clip/>Archivos
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{route('presupuesto.presupuestoPDF',$presupuesto)}}" target="_blank"  :active="request()->routeIs('presupuesto.presupuestoPDF')">
+                        <x-icon.pdf/>PDF
+                    </x-jet-nav-link>
                 </div>
             </div>
         </div>
