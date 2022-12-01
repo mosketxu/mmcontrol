@@ -12,7 +12,7 @@ class Oferta extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','cliente_id','contacto_id','tipo','descripcion','fecha','producto_id','manipulacion','entrega','observaciones','estado'];
+    protected $fillable=['id','cliente_id','contacto_id','tipo','descripcion','fecha','producto_id','manipulacion','acabado','entrega','observaciones','estado'];
 
     public function ofertadetalles(){return $this->hasMany(OfertaDetalle::class,'oferta_id','id');}
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}

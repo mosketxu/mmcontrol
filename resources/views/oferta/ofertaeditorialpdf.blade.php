@@ -46,7 +46,7 @@
                     <p>Milimetrica Producciones tiene la potestad de destruir archivos o troquel sin previo aviso, pasados 2 años desde su última fabricación </p>
                     <p>La cantidad suministrada se ajustará al pedido, admitiéndose las siguientes variaciones en +/-25% (pedidos menores de 500 uds.), 20% (pedidos entre 501 y 1.000 uds.), 10% (pedidos entre 1.001 y 15.000 uds.) y 5% (pedidos mayores de 15.000 uds)</p>
                 </div>
-                <div class="text-center  mt-10 mb-5 " style="font-size: 0.7rem">
+                <div class="mt-10 mb-5 text-center " style="font-size: 0.7rem">
                      C/ Zamora 46-48,  Ático 5ª • 08005 Barcelona • 93 624 38 33
                 </div>
                 <hr style="border-top: 3px solid rgb(49, 72, 172);">
@@ -59,31 +59,31 @@
         <main style=" margin-right: 10px; margin-top:10px">
             <div class="">
                 <div class="py-0 space-y-2">
-                     <table width=90% class="mt-1 mx-auto text-sm " style="color:rgb(30, 27, 27);">
+                     <table width=90% class="mx-auto mt-1 text-sm " style="color:rgb(30, 27, 27);">
                         <tr><td colspan="2" class="font-bold">Cliente: {{ $oferta->cliente->entidad }}</td></tr>
                         <tr><td colspan="2" class="font-bold"><br>Att: {{ $oferta->contacto->entidad }}</td></tr>
                         <tr><td colspan="2"><br>Con la presente y en base a su solicitud, le presento nuestra mejor oferta de:</td></tr>
                         <tr><td colspan="2" class="font-bold"><br> REF: {{ $oferta->referencia }}</td></tr>
                      </table>
 
-                     <table width=90% class="mt-1 mx-auto text-sm " style="color:rgb(30, 27, 27);">
+                     <table width=90% class="mx-auto mt-1 text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
                             <td width=20% class="font-bold" style="padding-top:8px"  >Formato:</td>
-                            <td width=80%  class=""  style="padding-top:8px"  style="padding-top:8px">{{ $oferta->formato }}</td>
+                            <td width=80%  class=""  style="padding-top:8px"  style="padding-top:8px">{{ $oferta->ofertaproducto->formato }}</td>
                         </tr>
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Extensión:</td>
-                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->extension }}</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->ofertaproducto->paginas }}</td>
                         </tr>
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Interior:</td>
                             <td width=80% class="" style="" >
                                 <div class="" style="padding-top:8px">
                                     <div class="">
-                                        <span class="font-bold"> Composición: </span> {{ $oferta->interiorcomposicion }}
+                                        <span class="font-bold"> Composición: </span> {{ $oferta->ofertaproducto->materialinterior }} - {{ $oferta->ofertaproducto->gramajeinterior }} gr
                                     </div>
                                     <div class="">
-                                        <span class="font-bold">Impresión:</span> {{ $oferta->interiorimpresion }}
+                                        <span class="font-bold">Impresión:</span> {{ $oferta->ofertaproducto->tintainterior }}
                                     </div>
                                 </div>
                             </td>
@@ -93,7 +93,7 @@
                             <td width=80% class="" style="" >
                                 <div class="" style="padding-top:8px">
                                     <div class="">
-                                        <span class="font-bold"> Composición: </span> {{ $oferta->cubiertacomposicion }}
+                                        <span class="font-bold"> Composición: </span> {{ $oferta->ofertaproducto->materialcubierta }} - {{ $oferta->ofertaproducto->gramajecubierta }} gr
                                     </div>
                                     <div class="">
                                         <span class="font-bold">Impresión:</span> {{ $oferta->cubiertaimpresion }}
@@ -102,16 +102,16 @@
                             </td>
                         </tr>
                         <tr>
+                            <td width=20% class="font-bold "  style="padding-top:8px">Solapas:</td>
+                            <td width=80% class="" style="padding-top:8px" >
+                                {{ $oferta->ofertaproducto->descripsolapa }}
+                            </td>
+                        </tr>
+                        <tr>
+                        <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Guardas:</td>
-                            <td width=80% class="" style="" >
-                                <div class="" style="padding-top:8px">
-                                    <div class="">
-                                        <span class="font-bold"> Composición: </span> {{ $oferta->guardascomposicion }}
-                                    </div>
-                                    <div class="">
-                                        <span class="font-bold">Impresión:</span> {{ $oferta->guardasimpresion }}
-                                    </div>
-                                </div>
+                            <td width=80% class="" style="padding-top:8px" >
+                                {{ $oferta->ofertaproducto->descripguardas }}
                             </td>
                         </tr>
                         <tr>
@@ -130,19 +130,18 @@
 
                     <div class="py-0 space-y-2">
                         <table width="90%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                            <tr>
+                                <td width=51% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Opciones</td>
+                                <td width=17% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                                <td width=17% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio unitario</td>
+                                <td width=17% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio total</td>
+                            </tr>
                             @foreach($oferta->ofertadetalles as $odetalle)
                             <tr>
-                                <td class="font-bold">{{ $odetalle->titulo }} {{ $odetalle->concepto }}</td>
-                            </tr>
-                            <tr>
-                                <td class="font-bold text-left">Cantidad</td>
-                                <td class="font-bold text-center">Precio unitario</td>
-                                <td class="font-bold text-right">Precio total</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">{{ $odetalle->cantidad }}</td>
-                                <td class="text-center">{{ $odetalle->importe }}</td>
-                                <td class="text-right">{{ $odetalle->total }}</td>
+                                <td width=51% class="pl-2 font-bold" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $odetalle->titulo }} {{ $odetalle->concepto }}</td>
+                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->cantidad }}</td>
+                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->importe }}</td>
+                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->total }}</td>
                             </tr>
                             @endforeach
                         </table>

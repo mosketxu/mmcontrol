@@ -22,6 +22,7 @@ class CreateOfertasTable extends Migration
             $table->string('descripcion');
             $table->integer('tipo');
             $table->date('fecha');
+            $table->string('acabado')->nullable();
             $table->string('manipulacion')->nullable();
             $table->string('entrega')->nullable();
             $table->string('observaciones')->nullable();

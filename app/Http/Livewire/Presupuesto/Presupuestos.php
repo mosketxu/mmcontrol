@@ -39,8 +39,7 @@ class Presupuestos extends Component
             'presupuesto.estado'=>'nullable',
         ];
     }
-    public function render()
-    {
+    public function render(){
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
@@ -76,7 +75,6 @@ class Presupuestos extends Component
     }
 
     public function getRowsQueryProperty(){
-
         if($this->tipo=='1')
         return Presupuesto::query()
             ->join('entidades','presupuestos.cliente_id','=','entidades.id')
@@ -137,7 +135,8 @@ class Presupuestos extends Component
             ->orderBy('presupuestos.id','desc');
         }
 
-    public function getRowsProperty(){
+
+        public function getRowsProperty(){
         return $this->rowsQuery->paginate(15);
     }
 

@@ -13,7 +13,7 @@
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                     @endif
                 </div>
-                <div class="flex mr-10">
+                <div class="flex ">
                     @include('pedidos.pedido-menu' )
                 </div>
             </div>
@@ -210,9 +210,11 @@
                                             @endforelse
                                         </x-selectcolor>
                                     @else
+                                        @if($campo2disabled=='1')
                                         <input type="{{ $tipocampo2 }}" step="any" wire:model.defer="valorcampo2"
                                             class="w-full text-xs {{ $textcampo2 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                             {{ $this->campo2disabled }} />
+                                        @endif
                                     @endif
                                 </div>
                             @endif

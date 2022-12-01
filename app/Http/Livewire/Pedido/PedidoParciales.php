@@ -15,7 +15,7 @@ class PedidoParciales extends Component
     public $pdfvisible=true;
 
     public $routepdf='pedido.albaran';
-    // <a href="{{route('pedido.albaran',[$parcialid])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
+    // <a href="{{route('pedido.albaran',[$parcialid])}}" target="_blank" ><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
 
     public $routepdfvbles='pedido.parcial';
 
@@ -118,8 +118,7 @@ class PedidoParciales extends Component
         $this->pedidoid=$pedidoid;
     }
 
-    public function render()
-    {
+    public function render(){
         $valores=ModelsPedidoParcial::query()
         ->search('comentario',$this->search)
         ->select('id','id as valorcampo2','fecha as valorcampofecha','cantidad as valorcampo3','importe as valorcampo4','comentario as valorcampo5')

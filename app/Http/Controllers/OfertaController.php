@@ -34,37 +34,15 @@ class OfertaController extends Controller
         return view('oferta.create',compact('tipo','ruta'));
     }
 
-    public function ficha($ofertaId,$tipo)
-    {
+    public function ficha($ofertaId,$tipo){
+
         $pdf = new Dompdf();
-        $oferta=Oferta::with('cliente','contacto','ofertadetalles')->find($ofertaId);
-        if($oferta->tipo=='1')
-            $pdf = \PDF::loadView('oferta.ofertaeditorialpdf', compact('oferta'));
-        else
-            $pdf = \PDF::loadView('oferta.ofertaeotrospdf', compact('oferta'));
+        $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
+        $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaeotrospdf';
+
+        $pdf = \PDF::loadView($vista, compact('oferta'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Oferta  $oferta
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Oferta $oferta)
-    {
-        //
     }
 
     /**

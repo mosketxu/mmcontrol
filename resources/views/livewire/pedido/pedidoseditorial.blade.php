@@ -23,12 +23,12 @@
                             </div>
                             <div class="w-1/12 text-left" >{{ __('Pedido') }}</div>
                             <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
+                            <div class="w-1/12 text-left" >{{ __('Presup.') }}</div>
                             <div class="w-1/12 text-left" >{{ __('ISBN') }} </div>
                             <div class="w-2/12 text-left" >{{ __('Referencia') }}</div>
                             <div class="w-1/12 text-right">{{ __('F.Entrega') }}</div>
                             <div class="w-1/12 text-right">{{ __('F. Archivos') }}</div>
                             <div class="w-1/12 text-right">{{ __('F.Plotters') }}</div>
-                            {{-- <div class="w-2/12 pl-2 text-left" >{{ __('Proveedor') }}</div> --}}
                             <div class="w-2/12 pr-6 text-right">{{ __('Q.Prev/Q.Real') }}</div>
                             <div class="w-1/12 text-center">{{ __('Estado') }}</div>
                             <div class="w-1/12 text-center">{{ __('Facturado') }}</div>
@@ -53,12 +53,16 @@
                             <div class="flex w-5 h-5 p-2 mr-2 font-medium text-center"><x-input.checkbox wire:model="selected" value="{{ $pedido->id }}" /></div>
                             <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->id }}</div>
                             <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->cliente->entidad }}</div>
-                            {{-- <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->isbn }}</div>
-                            <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->referencia }}</div> --}}
+                            <div class="flex-col w-1/12 my-2 text-left">
+                                @if($pedido->presupuesto_id)
+                                <a class="text-blue-700 underline" href="{{ route('presupuesto.editar',[$pedido->presupuesto_id,'i']) }}"  title="Pedido">{{ $pedido->presupuesto_id }}</a>
+                                @endif
+                            </div>
+                            <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->isbn }}</div>
+                            <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->referencia }}</div>
                             <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fentrega }}</div>
                             <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->farchivos }}</div>
                             <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fplotter }}</div>
-                            {{-- <div class="flex-col w-2/12 pl-2 my-2 text-left">{{ $pedido->proveedor->entidad }}</div> --}}
                             <div class="flex-col w-2/12 pr-2 my-2 text-right">{{ $pedido->tiradaprevista .' / '. $pedido->tiradareal }}</div>
                             <div class="flex-col w-1/12 text-right">
                                 <select wire:change="changeValor({{ $pedido }},'estado',$event.target.value)"
@@ -78,7 +82,7 @@
                             </div>
                             <div class="flex flex-row-reverse w-3/12 pr-2 mt-1 ">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
-                                <a href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank" ><x-icon.p class="mx-1 text-red-500 hover:text-red-700 "/></a>
+                                <a href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank" ><x-icon.pdf class="mx-1 text-red-500 hover:text-red-700 "/></a>
                                 <x-icon.sandwatch-a class="w-4 mt-1 text-brown-500 hover:text-brown-700 " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos"/>
                                 <x-icon.triangleexclamation-a class="w-6 mt-1 text-yellow-500 hover:text-yellow-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias"/>
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>

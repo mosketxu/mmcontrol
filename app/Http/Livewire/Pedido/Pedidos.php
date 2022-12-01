@@ -111,7 +111,7 @@ class Pedidos extends Component
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
-        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','meses'));
+        return view('livewire.pedido.pedidoseditorial',compact('pedidos','clientes','proveedores','meses'));
     }
 
     public function updatingSearch(){$this->resetPage();}

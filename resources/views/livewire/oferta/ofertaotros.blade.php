@@ -50,7 +50,7 @@
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Descripción') }}</x-jet-label>
-                                    <input  wire:model.lazy="descripción" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <input  wire:model.lazy="descripcion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             </div>
                             <div class="w-full form-item">
@@ -58,12 +58,12 @@
                                     <x-jet-label >{{ __('Producto') }} </x-jet-label>
                                     <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="blue" class="w-full py-1" >
                                         @if (isset($productos))
-                                            <option value="">-- Selecciona producto --</option>
+                                            <option value="">-- Selecciona un producto --</option>
                                             @foreach ($productos as $producto)
-                                            <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
+                                            <option value="{{ $producto->id }}" {{ $producto->id == $producto_id ? 'selected' : '' }}>{{ $producto->referencia }}</option>
                                             @endforeach
                                         @else
-                                            <option value="">-- Selecciona primero un producto --</option>
+                                            <option value="">-- Selecciona primero un cliente --</option>
                                         @endif
                                     </x-selectcolor>
                                 </div>
@@ -84,7 +84,23 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="px-2 m-2 ">
+                            <div class="p-1 rounded-md bg-blue-50">
+                                <h3 class="pl-1 font-semibold">Descripción Producto</h3>
+                                <input  wire:model.defer="pedidoid" type="hidden"/>
+                            </div>
+                            <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
+                                <h1>Descripción Producto</h1><br>
+                                Páginas: {{ $prod->paginas }} Formato: {{ $prod->formato }} FSC: {{ $prod->FSC }}<br>
+                                Interior: {{ $prod->materialinterior }} - {{ $prod->tintainterior }} - {{ $prod->gramajeinterior }} gr<br>
+                                Cubierta: {{ $prod->materialcubierta }} - {{ $prod->tintacubierta }} - {{ $prod->gramajecubierta }} gr<br>
+                                Plastificado: {{ $prod->plastificado }} Encuadernado: {{ $prod->encuadernado }}<br>
+                                @if ($prod->solapa=='1') Solapa: {{ $prod->descripsolapa }} @endif<br>
+                                @if ($prod->guardas=='1') Guardas: {{ $prod->descripguardas }}@endif<br>
+                                @if ($prod->cd=='1') CD: {{ $prod->descripcd }}@endif <br>
+                                @if ($prod->novedad=='1') Novedad: {{ $prod->descripnovedad }} @endif <br>
+                                Caja: {{ $prod->caja->name ?? '' }} udxcaja: {{ $prod->udxcaja }}<br>
+                        </div>
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
                                 <div class="">
@@ -110,6 +126,7 @@
                                     disabled/>
                                 </div>
                             </div>
+
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Material Cubierta') }}</x-jet-label>
@@ -124,28 +141,33 @@
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Composición Guardas') }}</x-jet-label>
-                                    <input  wire:model.lazy="guardascomposicion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <x-jet-label >{{ __('Guardas') }}</x-jet-label>
+                                    <input  value="{{ $prod->descripcionguardas }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Impresión Guardas') }}</x-jet-label>
-                                    <input  wire:model.lazy="guardasimpresion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <input  value="{{ $prod->impresionguardas }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Acabado') }}</x-jet-label>
-                                    <input  wire:model.lazy="acabado" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <input  value="{{ $prod->acabado }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Manipulación') }}</x-jet-label>
-                                    <input  wire:model.lazy="manipulacion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <input  value="{{ $prod->manipulacion }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Entrega') }}</x-jet-label>
-                                    <input  wire:model.lazy="entrega" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <input  value="{{ $prod->entrega }}" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    disabled/>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Estado') }}</x-jet-label>

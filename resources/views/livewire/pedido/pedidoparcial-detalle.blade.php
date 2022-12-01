@@ -29,7 +29,7 @@
         <form wire:submit.prevent="save">
             <div class="flex w-full p-1 text-sm bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                 <div class="w-6/12">
-                    <input type="text" wire:model.defer="concepto"
+                    <input type="text" wire:model.defer="concepto" autofocus
                         class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                 </div>
                 <div class="w-2/12 mr-3">

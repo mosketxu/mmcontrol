@@ -146,13 +146,6 @@
                     </x-jet-dropdown>
                 </div>
                 @endcan
-                @can('facturacion.index')
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
-                        {{ __('Facturación') }}
-                    </x-jet-nav-link>
-                </div>
-                @endcan
                 @can('oferta.index')
                 <div class="hidden pt-2 space-x-8 text-left sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-dropdown  align="left" width="60" >
@@ -179,6 +172,13 @@
                             </div>
                         </x-slot>
                     </x-jet-dropdown>
+                </div>
+                @endcan
+                @can('facturacion.index')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
+                        {{ __('Facturación') }}
+                    </x-jet-nav-link>
                 </div>
                 @endcan
                 @can('seguridad.index')

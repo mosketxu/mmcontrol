@@ -16,7 +16,7 @@ class Pedido extends Component
     public $proveedor_id;
     public $pedidocliente;
     public $oferta_id;
-    public $facturadopor_id;
+    public $facturadopor;
     public $muestra;
     public $pruebacolor;
     public $contacto_id;
@@ -27,7 +27,6 @@ class Pedido extends Component
     public $fechaentrega;
     public $tiradaprevista=0;
     public $tiradareal=0;
-    public $preciocoste=0;
     public $precio=0;
     public $preciototal=0;
     public $parcial=0;
@@ -40,9 +39,10 @@ class Pedido extends Component
     public $filtroisbn;
     public $filtroreferencia;
     public $filtrocliente;
-    public $ofertatemp;
 
     public $titulo='';
+    public $productoeditorialid;
+    public $pedidoproductoid;
     public $contactos;
     public $productos;
     public $ofertas;
@@ -56,22 +56,21 @@ class Pedido extends Component
             'proveedor_id'=>'nullable',
             'pedidocliente'=>'nullable',
             'oferta_id'=>'nullable',
-            'facturadopor_id'=>'nullable',
+            'facturadopor'=>'required',
             'muestra'=>'nullable',
-            'producto_id'=>'required',
             'fechapedido'=>'required|date',
             'fechaarchivos'=>'nullable|date',
             'fechaplotter'=>'nullable|date',
             'fechaentrega'=>'required|date',
             'tiradaprevista'=>'required|numeric',
             'tiradareal'=>'nullable|numeric',
-            'preciocoste'=>'nullable|numeric',
             'precio'=>'nullable|numeric',
             'preciototal'=>'nullable|numeric',
             'estado'=>'nullable',
             'facturado'=>'nullable',
             'uds_caja'=>'nullable',
             'otros'=>'nullable',
+            'productoeditorialid'=>'required_if:tipo,1'
         ];
     }
 
@@ -82,6 +81,7 @@ class Pedido extends Component
             'contacto_id.required'=>'Debes elegir un contacto',
             'responsable.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
+            'facturadopor.required'=>'Debe estar definido quién facturará el pedido',
             'proveedor_id.nullable'=>'',
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
             'fechapedido.required'=>'La fecha del pedido es necesaria',
@@ -92,9 +92,9 @@ class Pedido extends Component
             'tiradaprevista.required'=>'La tirada prevista es necesaria',
             'tiradaprevista.numeric'=>'El valor de la tirada prevista debe ser numérico',
             'tiradareal.numeric'=>'El valor de la tirada real debe ser numérico',
-            'preciocoste.numeric'=>'El valor del precio de compra debe ser numérico',
             'precio.numeric'=>'El valor del precio de venta debe ser numérico',
             'preciototal.numeric'=>'El valor del precio total debe ser numérico',
+            'productoeditorialid.required'=>'El producto editorial es necesario',
         ];
     }
 
@@ -102,8 +102,6 @@ class Pedido extends Component
         $this->titulo='Nuevo Pedido:';
         $this->tipo=$tipo;
         $this->ruta=$ruta;
-        $mm=Entidad::where('nif','B63941835')->first();
-        $this->facturadopor_id=$mm->id;
         if ($pedidoid!='') {
             $pedido=ModeloPedido::find($pedidoid);
             $this->tipo=$pedido->tipo;
@@ -114,17 +112,15 @@ class Pedido extends Component
             $this->oferta_id=$pedido->oferta_id;
             $this->contacto_id=$pedido->contacto_id;
             $this->proveedor_id=$pedido->proveedor_id;
-            $this->facturadopor_id=$pedido->facturadopor_id;
+            $this->facturadopor=$pedido->facturadopor;
             $this->muestra=$pedido->muestra;
             $this->pruebacolor=$pedido->pruebacolor;
-            $this->producto_id=$pedido->producto_id;
             $this->fechapedido=$pedido->fechapedido;
             $this->fechaarchivos=$pedido->fechaarchivos;
             $this->fechaplotter=$pedido->fechaplotter;
             $this->fechaentrega=$pedido->fechaentrega;
             $this->tiradaprevista=$pedido->tiradaprevista;
             $this->tiradareal=$pedido->tiradareal;
-            $this->preciocoste=$pedido->producto->preciocoste ?? '-';
             $this->precio=$pedido->precio;
             $this->preciototal=$pedido->preciototal;
             $this->estado=$pedido->estado;
@@ -135,6 +131,10 @@ class Pedido extends Component
             if($this->cliente_id){
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
                 $this->ofertas=Oferta::where('cliente_id', '=', $this->cliente_id)->orderBy('id')->get();
+            }
+            if ($tipo=='1') {
+                $this->productoeditorialid=$pedido->pedidoproductos->first()->producto->id;
+                $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
             }
         }
     }
@@ -157,8 +157,9 @@ class Pedido extends Component
                 })
             ->orderBy('referencia','asc')
             ->get();
-            return view('livewire.pedido.pedido',compact(['entidades','clientes','proveedores']));
-        }
+        $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoeditorial' : 'livewire.pedido.pedidootros';
+            return view($vista,compact(['entidades','clientes','proveedores']));
+    }
 
     public function updatedClienteId(){
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
@@ -168,20 +169,11 @@ class Pedido extends Component
 
     public function updatedProductoId(){
         if ($this->producto_id=='') {
-            $this->preciocoste=0;
+            $this->precio=0;
         } else {
             $p=Producto::find($this->producto_id);
             $this->precio=$p->precio;
-            $this->preciocoste=$p->preciocoste;
         }
-    }
-
-    public function updatedOfertatemp(){
-        $this->oferta_id= $this->ofertatemp;
-    }
-
-    public function updatedPreciocoste(){
-        $this->preciocoste= $this->preciocoste=='' ? $this->preciocoste=0 : $this->preciocoste;
     }
 
     public function updatedPrecio(){
@@ -206,6 +198,7 @@ class Pedido extends Component
     }
 
     public function save(){
+        if($this->precio=='') $this->precio='0';
         $mensaje="Pedido creado satisfactoriamente";
         $i="";
         if ($this->pedidoid!='') {
@@ -238,7 +231,7 @@ class Pedido extends Component
             'producto_id'=>$this->producto_id,
             'muestra'=>$this->muestra,
             'pruebacolor'=>$this->pruebacolor,
-            'facturadopor_id'=>$this->facturadopor_id,
+            'facturadopor'=>$this->facturadopor,
             'fechapedido'=>$this->fechapedido,
             'fechaarchivos'=>$this->fechaarchivos,
             'fechaplotter'=>$this->fechaplotter,
@@ -253,7 +246,7 @@ class Pedido extends Component
             'otros'=>$this->otros,
         ]);
 
-        $this->titulo='Pedido:';
+        $this->titulo= $this->tipo='1' ? 'Pedido Editorial:': 'Pedido Packaging/Propio:';
         $pedido=ModeloPedido::find($ped->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
         if($nuevo) return redirect()->route('pedido.editar',[$pedido,$this->ruta]);

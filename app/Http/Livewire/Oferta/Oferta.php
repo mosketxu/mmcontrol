@@ -38,6 +38,7 @@ class Oferta extends Component
             'fecha'=>'date|required',
             'producto_id'=>'nullable',
             'manipulacion'=>'nullable',
+            'acabado'=>'nullable',
             'entrega'=>'nullable',
             'observaciones'=>'nullable',
             'estado'=>'nullable',
@@ -70,6 +71,7 @@ class Oferta extends Component
             $this->descripcion=$oferta->descripcion;
             $this->prod=Producto::find($oferta->producto_id);
             $this->manipulacion=$oferta->manipulacion;
+            $this->acabado=$oferta->acabado;
             $this->entrega=$oferta->entrega;
             $this->observaciones=$oferta->observaciones;
             $this->estado=$oferta->estado;
@@ -95,7 +97,8 @@ class Oferta extends Component
             ->orderBy('referencia','asc')
             ->get();
             // dd($this->producto);
-            return view('livewire.oferta.oferta',compact(['entidades','clientes']));
+            $vista=$this->tipo=='1' ? 'livewire.oferta.ofertaeditorial' : 'livewire.oferta.ofertaotros'  ;
+            return view($vista,compact(['entidades','clientes']));
         }
 
     public function updatedClienteId(){
@@ -167,6 +170,8 @@ class Oferta extends Component
             'descripcion'=>$this->descripcion,
             'producto_id'=>$this->producto_id,
             'entrega'=>$this->entrega,
+            'manipulacion'=>$this->manipulacion,
+            'acabado'=>$this->acabado,
             'observaciones'=>$this->observaciones,
             'estado'=>$this->estado,
         ]);

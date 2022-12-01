@@ -40,7 +40,7 @@ class PedidoParcial extends Component
     {
         return [
             'parcial.fecha.required'=>'La Fecha es necesaria',
-            'parcial.fecha.date'=>'La Fechadebe ser válida',
+            'parcial.fecha.date'=>'La Fecha debe ser válida',
             'parcial.cantidad.numeric'=>'La Cantidad deber ser numérica',
             'parcial.importe.numeric'=>'El Importe deber ser numérico',
             'parcial.destino.required'=>'El destino es necesario',
