@@ -138,7 +138,7 @@
                             </tr>
                             @foreach($oferta->ofertadetalles as $odetalle)
                             <tr>
-                                <td width=51% class="pl-2 font-bold" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $odetalle->titulo }} {{ $odetalle->concepto }}</td>
+                                <td width=51% class="pl-2" style="border-style: solid;border-width: .6;border-color: gray" colspan="2"><span class="font-bold">{{ $odetalle->titulo }}</span> {{ $odetalle->concepto }}</td>
                                 <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->cantidad }}</td>
                                 <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->importe }}</td>
                                 <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->total }}</td>
