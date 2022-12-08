@@ -102,7 +102,8 @@ class PedidoController extends Controller
     }
 
     public function parcial(Pedido $pedido, $ruta,$parcialid){
-        return view('pedidos.parcial',compact('pedido','ruta','parcialid'));
+        $tipo=$pedido->tipo;
+        return view('pedidos.parcial',compact('pedido','ruta','parcialid','tipo'));
     }
 
     public function archivos(Pedido $pedido, $ruta){

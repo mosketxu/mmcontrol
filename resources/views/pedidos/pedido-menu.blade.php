@@ -4,7 +4,7 @@
         <div class="flex justify-between ">
             <div class="flex mr-5">
                 <!-- Navigation Links -->
-                <div class="hidden space-x-2 sm:-my-px sm:flex">
+                <div class="hidden space-x-4 sm:-my-px sm:flex">
                     <x-jet-nav-link href="{{route('pedido.editar',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.editar')">
                         <x-icon.edit class="text-gray-500 hover:text-gray-900"/>Pedido
                     </x-jet-nav-link>

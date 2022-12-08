@@ -8,6 +8,7 @@ use App\Models\Entidad;
 use App\Models\Factura;
 use App\Models\FacturaDetalle as ModelsFacturaDetalle;
 use App\Models\Pedido;
+use App\Models\Producto;
 use Illuminate\Support\Facades\DB;
 
 class Fdetalle extends Component
@@ -22,12 +23,13 @@ class Fdetalle extends Component
     public $visible=true;
     public $observaciones;
     public $bloqueado=false;
-    public $disabled='';
+    public $deshabilitado='';
 
     public $fdetalle;
     public $subtotalsiniva=0;
     public $subtotaliva=0;
     public $subtotal=0;
+
 
     protected function rules()
     {
@@ -56,11 +58,11 @@ class Fdetalle extends Component
         ];
     }
 
-    public function mount($facturaid)
+    public function mount($facturaid,$deshabilitado)
     {
         $this->factura=Factura::find($facturaid);
         $this->bloqueado= $this->factura->estado =='0' ? '0' : '1';
-        $this->disabled= $this->factura->estado =='0' ? '' : 'disabled';
+        $this->deshabilitado= $deshabilitado;
     }
 
     public function render()
@@ -76,9 +78,13 @@ class Fdetalle extends Component
         $pedido=Pedido::find($this->pedido_id);
         if($pedido) {
             if($pedido->tipo=='1'){
-                $producto=$pedido->pedidoproductos->first()->producto;
-                $this->importe=$producto->precioventa;
-                $this->concepto=$producto->referencia;
+                $prod=$pedido->pedidoproductos->first();
+                if($prod){
+                    $producto= Producto::find($prod->producto_id);
+                    $this->importe=$producto->precioventa;
+                    $this->concepto=$producto->referencia;
+                    $this->calculos();
+                }
             }
         }
     }
@@ -131,6 +137,8 @@ class Fdetalle extends Component
     public function save(){
         if(!$this->cantidad) $this->cantidad=0;
         if(!$this->iva) $this->iva=0;
+        if($this->pedido_id=='') $this->pedido_id=null;
+        // dd()
 
         $this->validate();
         $fdetalle=ModelsFacturaDetalle::create([

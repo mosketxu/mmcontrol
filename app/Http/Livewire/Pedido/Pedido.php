@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido};
+use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja};
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -32,6 +32,7 @@ class Pedido extends Component
     public $parcial=0;
     public $estado=0;
     public $facturado;
+    public $caja_id;
     public $uds_caja;
     public $otros;
 
@@ -52,7 +53,7 @@ class Pedido extends Component
             'pedidoid'=>'required',
             'responsable'=>'required',
             'cliente_id'=>'required',
-            'contacto_id'=>'required',
+            'contacto_id'=>'nullable',
             'proveedor_id'=>'nullable',
             'pedidocliente'=>'nullable',
             'oferta_id'=>'nullable',
@@ -68,6 +69,7 @@ class Pedido extends Component
             'preciototal'=>'nullable|numeric',
             'estado'=>'nullable',
             'facturado'=>'nullable',
+            'caja_id'=>'nullable',
             'uds_caja'=>'nullable',
             'otros'=>'nullable',
             'productoeditorialid'=>'required_if:tipo,1'
@@ -78,7 +80,6 @@ class Pedido extends Component
         return [
             'pedidoid.required'=>'El número de pedido es necesario',
             'producto_id.required'=>'Debes elegir un producto',
-            'contacto_id.required'=>'Debes elegir un contacto',
             'responsable.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
             'facturadopor.required'=>'Debe estar definido quién facturará el pedido',
@@ -125,6 +126,7 @@ class Pedido extends Component
             $this->preciototal=$pedido->preciototal;
             $this->estado=$pedido->estado;
             $this->facturado=$pedido->facturado;
+            $this->caja_id=$pedido->caja_id;
             $this->uds_caja=$pedido->uds_caja;
             $this->otros=$pedido->otros;
             $this->titulo='Pedido';
@@ -143,6 +145,7 @@ class Pedido extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
+        $cajas=Caja::orderBy('name')->get();
 
         $this->productos=Producto::query()
             ->with('cliente')
@@ -158,21 +161,27 @@ class Pedido extends Component
             ->orderBy('referencia','asc')
             ->get();
         $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoeditorial' : 'livewire.pedido.pedidootros';
-            return view($vista,compact(['entidades','clientes','proveedores']));
+        return view($vista,compact(['entidades','clientes','proveedores','cajas']));
     }
 
     public function updatedClienteId(){
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         $this->ofertas=Oferta::where('cliente_id', $this->cliente_id)->get();
         if(!$this->fechapedido) $this->fechapedido=now()->format('Y-m-d');
+        $resp=Entidad::find($this->cliente_id);
+        if($resp->responsable!='') $this->responsable=$resp->responsable;
     }
 
-    public function updatedProductoId(){
-        if ($this->producto_id=='') {
+    public function updatedProductoeditorialid(){
+        if ($this->productoeditorialid=='') {
+            // dd($this->productoeditorialid);
             $this->precio=0;
         } else {
-            $p=Producto::find($this->producto_id);
-            $this->precio=$p->precio;
+            $p=Producto::find($this->productoeditorialid);
+            $this->precio=$p->precioventa;
+            $this->caja_id=$p->caja_id;
+            $this->uds_caja=$p->udxcaja;
+            $this->preciototal=$this->precio * $this->tiradareal;
         }
     }
 
@@ -188,6 +197,10 @@ class Pedido extends Component
     public function updatedTiradareal(){
         $this->tiradareal= $this->tiradareal=='' ? $this->tiradareal=0 : $this->tiradareal;
         $this->preciototal=$this->precio*$this->tiradareal;
+    }
+
+    public function updatedCajaId(){
+        if($this->caja_id=='') $this->caja_id=null;
     }
 
     public function numpedido(){
@@ -242,6 +255,7 @@ class Pedido extends Component
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
             'facturado'=>$this->facturado == '' ? '0' : $this->facturado,
+            'caja_id'=>$this->caja_id,
             'uds_caja'=>$this->uds_caja,
             'otros'=>$this->otros,
         ]);

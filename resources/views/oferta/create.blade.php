@@ -11,10 +11,10 @@
                 </h2>
             </div>
             <div class="w-full">
-                {{-- @include('producto.producto-menu' ) --}}
+                {{-- @include('oferta.oferta-menu' ) --}}
             </div>
             <div class="flex flex-row-reverse w-full">
-                <x-button.button  class="py-1" onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue" >{{ __('Nueva') }}</x-button.button>
+                <x-button.button  class="py-1" onclick="location.href = '{{ route('oferta.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nueva') }}</x-button.button>
             </div>
         </div>
     </x-slot>

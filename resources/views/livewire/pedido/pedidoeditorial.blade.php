@@ -61,7 +61,6 @@
                                 <x-jet-label for="pedidocliente">{{ __('Pedido Cliente') }}</x-jet-label>
                                 <input  wire:model.lazy="pedidocliente" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
-
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('ISBN/Cód.') }}</x-jet-label>
@@ -146,7 +145,8 @@
                             </div>
                             <div class="w-full form-item">
                                 <x-jet-label for="preciototal">{{ __('€ Precio total') }}</x-jet-label>
-                                <input  wire:model.lazy="preciototal"  type="number" step="any" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                <input  wire:model.lazy="preciototal"  type="number" step="any" class="w-full py-1.5 text-xs bg-blue-50 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                disabled/>
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
@@ -158,13 +158,12 @@
                                     </x-select>
                                 </div>
                             </div>
-
-                        </div>
-                        <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                            <div class="w-full form-item">
+                        {{-- </div>
+                        <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4"> --}}
+                            {{-- <div class="w-full form-item">
                                 <x-jet-label for="parcial">{{ __('Parcial') }}</x-jet-label>
                                 <input  wire:model.lazy="parcial" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                            </div>
+                            </div> --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
@@ -186,6 +185,18 @@
                                 </div>
                             </div>
                             <div class="w-full form-item">
+                                <div class="w-full mx-auto">
+                                    <x-jet-label for="caja_id">{{ __('Caja') }}</x-jet-label>
+                                    <select wire:model.lazy="caja_id"
+                                        class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                            <option value="">--Selecciona Caja--</option>
+                                            @foreach ($cajas as $caja )
+                                                <option value="{{ $caja->id }}">{{ $caja->name }}</option>
+                                            @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
                                 <x-jet-label for="uds_caja">{{ __('Uds x Caja') }}</x-jet-label>
                                 <input  wire:model.lazy="uds_caja" type="number" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
@@ -201,19 +212,6 @@
                     <div class="p-2 m-2 ">
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                            <span
-                                x-data="{ open: false }"
-                                x-init="
-                                    @this.on('notify-saved', () => {
-                                        if (open === false) setTimeout(() => { open = false }, 2500);
-                                        open = true;
-                                    })
-                                "
-                                x-show.transition.out.duration.1000ms="open"
-                                style="display: none;"
-                                class="p-2 m-2 text-gray-500 rounded-lg bg-green-50"
-                                >Saved!
-                            </span>
                             <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
                         </div>
                     </div>

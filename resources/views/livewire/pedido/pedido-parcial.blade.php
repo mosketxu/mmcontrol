@@ -5,20 +5,12 @@
                 @include('errores')
             </div>
             {{-- datos del parcial --}}
-            <div class="grid grid-cols-4 gap-1 border m-2 p-2">
+            <div class="grid grid-cols-3 gap-1 border m-2 p-2">
                 <div class="">
-                    <div class="w-full ">ALBARÁN NÚM.{{ $parcial->id }}</div>
+                    <div class="w-full ">Nº Albarán: {{ $parcial->id }}</div>
                     <div class="w-full ">Fecha: {{ $parcial->fecha }}</div>
-                    <div class="w-full ">Cantidad: {{ $parcial->cantidad }}</div>
-                    <div class="w-full ">Importe: {{ $parcial->importe }}</div>
+                    <div class="w-full ">Cliente: {{ $entidad->entidad }}</div>
                     <div class="w-full ">Comentario: {{ $parcial->comentario }}</div>
-                </div>
-                <div class="">
-                    <p>CLIENTE: {{ $entidad->entidad }}</p>
-                    <p>DOMICILIO: {{ $entidad->direccion }}</p>
-                    <p>POBLACIÓN: {{ $entidad->localidad }} ({{$entidad->cp  }})</p>
-                    <p>TEL./: {{ $entidad->telefono }}</p>
-                    <p>PERSONA DE CONTACTO: {{ $pedido->contacto->entidad }}</p>
                 </div>
                 <div class="col-span-2 text-sm text-gray-600">
                     <form wire:submit.prevent="save" class="">

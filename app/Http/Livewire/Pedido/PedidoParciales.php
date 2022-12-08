@@ -15,7 +15,6 @@ class PedidoParciales extends Component
     public $pdfvisible=true;
 
     public $routepdf='pedido.albaran';
-    // <a href="{{route('pedido.albaran',[$parcialid])}}" target="_blank" ><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
 
     public $routepdfvbles='pedido.parcial';
 
@@ -150,9 +149,9 @@ class PedidoParciales extends Component
         $p=ModelsPedidoParcial::create([
             'pedido_id'=>$this->pedidoid,
             'fecha'=>$this->valorcampofecha,
-            'cantidad'=>$this->valorcampo2,
-            'importe'=>$this->valorcampo3,
-            'comentario'=>$this->valorcampo4,
+            'cantidad'=>$this->valorcampo3,
+            'importe'=>$this->valorcampo4,
+            'comentario'=>$this->valorcampo5,
         ]);
 
         $this->dispatchBrowserEvent('notify', 'Parcial añadido con éxito');

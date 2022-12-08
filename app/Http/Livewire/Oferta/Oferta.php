@@ -19,6 +19,7 @@ class Oferta extends Component
     public $prod;
     public $manipulacion='';
     public $entrega='';
+    public $acabado='';
     public $observaciones='';
     public $estado='0';
 
@@ -157,7 +158,6 @@ class Oferta extends Component
             $nuevo=true;
         }
         $this->validate();
-        // dd($this->contacto_id);
         $ofe=ModelsOferta::updateOrCreate([
             'id'=>$i
             ],
@@ -178,6 +178,7 @@ class Oferta extends Component
 
         $oferta=ModelsOferta::find($ofe->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
+        return redirect()->route('oferta.editar',[$ofe,'i']);
     }
 
 

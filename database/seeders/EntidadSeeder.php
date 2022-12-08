@@ -19,7 +19,7 @@ class EntidadSeeder extends Seeder
         \DB::table('entidades')->delete();
 
         Entidad::create(['entidad'=>'Milimétrica','entidadtipo_id'=>'3','nif'=>'B63941835']);
-        Entidad::create(['entidad'=>'Algamar','entidadtipo_id'=>'1']);
+        Entidad::create(['entidad'=>'Algamar','entidadtipo_id'=>'1','responable'=>'Josep Maria']);
         Entidad::create(['entidad'=>'Alsina','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Arvato','entidadtipo_id'=>'1']);
         Entidad::create(['entidad'=>'Beauty Cluster','entidadtipo_id'=>'1']);

@@ -113,7 +113,7 @@
                             <div class="w-full form-item">
                                 <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>
                                 <textarea wire:model.defer="observaciones"
-                                class="w-full py-1 text-xs border-gray-300 rounded-md" rows="2">{{ old('observaciones') }} </textarea>
+                                class="w-full py-1 text-xs border-gray-300 rounded-md" rows="2" {{ $deshabilitado }}>{{ old('observaciones') }} </textarea>
                                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                             </div>
                         </div>
@@ -134,7 +134,7 @@
             </div>
             <div class="">
                 @if($facturaid)
-                    @livewire('facturacion.fdetalle',['facturaid'=>$facturaid],key($facturaid.now()))
+                    @livewire('facturacion.fdetalle',['facturaid'=>$facturaid,'deshabilitado'=>$deshabilitado],key($facturaid.now()))
                 @endif
             </div>
         </div>

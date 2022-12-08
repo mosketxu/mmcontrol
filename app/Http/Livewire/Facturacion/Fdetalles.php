@@ -24,7 +24,7 @@ class Fdetalles extends Component
     public $observaciones='';
 
     public $factura;
-    public $disabled='';
+    public $deshabilitado='';
 
     protected function rules(){
         return [
@@ -44,7 +44,7 @@ class Fdetalles extends Component
         ];
     }
 
-    public function mount($factura,$fdetalle){
+    public function mount($factura,$fdetalle,$deshabilitado){
         $this->factura=$factura;
         $this->fdetalle_id=$fdetalle->id;
         $this->factura_id=$fdetalle->factura_id;
@@ -59,6 +59,7 @@ class Fdetalles extends Component
         $this->orden=$fdetalle->orden;
         $this->visible=$fdetalle->visible;
         $this->observaciones=$fdetalle->observaciones;
+        $this->deshabilitado=$deshabilitado;
     }
 
     public function render(){
@@ -73,6 +74,8 @@ class Fdetalles extends Component
                 $producto=$pedido->pedidoproductos->first()->producto;
                 $this->importe=$producto->precioventa;
                 $this->concepto=$producto->referencia;
+                $this->calculos();
+                $this->save();
             }
         }
     }
@@ -83,14 +86,19 @@ class Fdetalles extends Component
         $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) ,2);
     }
 
-    public function UpdatedCantidad(){ if($this->cantidad=='') $this->cantidad=='0'; $this->calculos(); }
-    public function UpdatedIva(){  if($this->iva=='') $this->iva=='0'; $this->calculos();}
-    public function UpdatedImporte(){  if($this->importe=='') $this->importe=='0'; $this->calculos(); }
+    public function UpdatedCantidad(){if($this->cantidad=='') $this->cantidad=='0'; $this->calculos(); $this->save();}
+    public function UpdatedIva(){  if($this->iva=='') $this->iva=='0'; $this->calculos(); $this->save();}
+    public function UpdatedImporte(){  if($this->importe=='') $this->importe=='0'; $this->calculos();  $this->save();}
+    public function UpdatedOrden(){  $this->save(); }
+    public function UpdatedConcepto(){  $this->save(); }
+    public function UpdatedObservaciones(){  $this->save(); }
+    public function UpdatedVisible(){  $this->save(); }
 
 
 
     public function save(){
         $this->validate();
+
 
         $fd=FacturaDetalle::find($this->fdetalle_id)->update([
             'factura_id'=>$this->factura_id,

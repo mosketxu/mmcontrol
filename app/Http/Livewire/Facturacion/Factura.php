@@ -23,6 +23,7 @@ class Factura extends Component
 
     public $mesagge;
     public $bloqueado='0';
+    public $deshabilitado='';
     public $filtrocliente;
     public $cliente="";
 
@@ -76,7 +77,8 @@ class Factura extends Component
             $this->estado=$factura->estado;
             $this->observaciones=$factura->observaciones;
             $this->bloqueado=$this->estado!='0' ? '1' : '0';
-            $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$factura->cliente_id)->groupBy('pedidocliente')->get();
+            $this->deshabilitado=$this->bloqueado=='1' ? 'disabled' : '';
+            $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$factura->cliente_id)->where('pedidocliente','<>','')->groupBy('pedidocliente')->get();
             $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$factura->cliente_id)->get();
         }
     }
@@ -89,7 +91,7 @@ class Factura extends Component
     public function updatedClienteId(){
         if(!$this->fecha) $this->fecha=now()->format('Y-m-d');
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$this->cliente_id)->get();
-        $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$this->cliente_id)->where('estado','<>','1')->groupBy('pedidocliente')->get();
+        $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$this->cliente_id)->where('estado','<>','1')->where('pedidocliente','<>','')->groupBy('pedidocliente')->get();
     }
 
     public function numfactura(){
@@ -134,7 +136,8 @@ class Factura extends Component
         $this->titulo='Factura:';
         $factura=ModelsFactura::find($i);
         $this->dispatchBrowserEvent('notify', $mensaje);
-        if($nuevo) return redirect()->route('facturacion.edit',$factura->id);
-        $this->emit('refreshfactura');
+        // if($nuevo) return redirect()->route('facturacion.edit',$factura->id);
+        // $this->emit('refreshfactura');
+        return redirect()->route('facturacion.edit',$factura->id);
     }
 }

@@ -22,7 +22,7 @@ class Presupuesto extends Component
     public $estado=0;
     public $espedido=0;
     public $pedido;
-    public $caja_id=0;
+    public $caja_id;
     public $uds_caja=0;
     public $otros;
 
@@ -54,6 +54,7 @@ class Presupuesto extends Component
             'fechapresupuesto'=>'date|required',
             'estado'=>'required',
             'espedido'=>'required',
+            'caja_id'=>'nullable',
             'uds_caja'=>'nullable',
             'otros'=>'nullable',
             'productoeditorialid'=>'required_if:tipo,1'
@@ -172,6 +173,7 @@ class Presupuesto extends Component
             $this->precio_ud=$p->precio_ud;
             $this->preciototal=$p->precio_ud * $p->tirada;
             $this->caja_id=$p->caja_id;
+            $this->uds_caja=$p->udxcaja;
         }
     }
 
@@ -184,13 +186,13 @@ class Presupuesto extends Component
         $this->preciototal= $this->preciototal=='' ? $this->preciototal=0 : $this->preciototal;
     }
 
-    public function updatedCajaId(){
-        if($this->caja_id=='') $this->caja_id=null;
-    }
-
     public function updatedTirada(){
         $this->tirada= $this->tirada=='' ? $this->tirada=0 : $this->tirada;
         $this->preciototal= $this->preciototal=='' ? $this->preciototal=0 : $this->preciototal;
+    }
+
+    public function updatedCajaId(){
+        if($this->caja_id=='') $this->caja_id=null;
     }
 
     public function numpresupuesto(){
@@ -200,10 +202,10 @@ class Presupuesto extends Component
         return !isset($presup) ? ($anyo2 * 100000 +1) : $presup + 1 ;
     }
 
-    public function desbloquear()
-    {
+    public function desbloquear(){
         $this->deshabilitado= $this->deshabilitado=='disabled' ? '' : 'disabled';
     }
+
     public function save(){
         $this->estado=$this->estado=='' ? '0' : $this->estado;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
@@ -279,7 +281,7 @@ class Presupuesto extends Component
         $pedidoid=Pedido::whereYear('fechapedido', $anyo)->max('id') ;
         $pedidoid= !isset($pedidoid) ? ($anyo2 * 100000 +1) :$pedidoid + 1 ;
 
-        $ped=Pedido::create([
+        $pres=Pedido::create([
             'id'=>$pedidoid,
             'responsable'=>$presupuesto->responsable,
             'tipo'=>$presupuesto->tipo,
@@ -295,6 +297,7 @@ class Presupuesto extends Component
             'preciototal'=>$presupuesto->precio_ud * $presupuesto->tirada,
             'estado'=>'0',
             'facturado'=>'0',
+            'caja_id'=>$this->caja_id,
             'uds_caja'=>$presupuesto->uds_caja,
             'otros'=>$presupuesto->otros,
         ]);
@@ -303,7 +306,7 @@ class Presupuesto extends Component
 
         foreach ($presproductos as $presproducto) {
             $pprod=PedidoProducto::create([
-                'pedido_id'=>$ped->id,
+                'pedido_id'=>$pres->id,
                 'producto_id'=>$presproducto->producto_id,
                 'tiradaprevista'=>$presproducto->tirada,
                 'precio'=>$presproducto->precio_ud,
@@ -312,8 +315,8 @@ class Presupuesto extends Component
         }
 
         $presupuesto->espedido='1';
-        $presupuesto->pedido=$ped->id;
+        $presupuesto->pedido=$pres->id;
         $presupuesto->save();
-        return redirect()->route('pedido.editar',[$ped,'i']);
+        return redirect()->route('pedido.editar',[$pres,'i']);
     }
 }

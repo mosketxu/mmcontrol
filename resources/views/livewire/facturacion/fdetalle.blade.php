@@ -148,7 +148,7 @@
 
     {{-- Lista detalles --}}
     @forelse ($fdetalles as $fdetalle)
-        @livewire('facturacion.fdetalles',['factura'=>$factura,'fdetalle'=>$fdetalle],key($fdetalle->id))
+        @livewire('facturacion.fdetalles',['factura'=>$factura,'fdetalle'=>$fdetalle,'deshabilitado'=>$deshabilitado],key($fdetalle->id))
     @empty
         <div class="flex w-full text-xs text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
             <div colspan="10">

@@ -71,8 +71,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     //Pedidos
     Route::get('/pedido/{pedido}/entrada/{tipo}/{ruta}', [PedidoController::class, 'entrada'])->name('pedido.entrada');
     Route::get('/pedido/{pedido}/editar/{ruta}', [PedidoController::class, 'editar'])->name('pedido.editar');
-    // Route::get('/pedido/{pedido}/{ruta}/presupuesto/{pedidopresupuestoid}', [PedidoController::class, 'presupuesto'])->name('pedido.presupuesto');
-    // Route::get('/pedido/{pedido}/presupuestos/{ruta}', [PedidoController::class, 'presupuestos'])->name('pedido.presupuestos');
     Route::get('/pedido/{pedido}/retrasos/{ruta}', [PedidoController::class, 'retrasos'])->name('pedido.retrasos');
     Route::get('/pedido/{pedido}/incidencias/{ruta}', [PedidoController::class, 'incidencias'])->name('pedido.incidencias');
     Route::get('/pedido/{pedido}/parciales/{ruta}', [PedidoController::class, 'parciales'])->name('pedido.parciales');

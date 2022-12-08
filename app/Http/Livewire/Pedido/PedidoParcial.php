@@ -6,7 +6,7 @@ use App\Models\Entidad;
 use App\Models\EntidadDestino;
 use App\Models\Pedido;
 use App\Models\PedidoParcial as ModelsPedidoParcial;
-
+use App\Models\PedidoparcialDetalle;
 use Livewire\Component;
 
 class PedidoParcial extends Component
@@ -14,9 +14,10 @@ class PedidoParcial extends Component
     public $pedido;
     public $destinocalculado;
     public $parcial;
+    public $parcialdetalles;
     public $ruta;
     public $tipo;
-    public $pedidoparcial;
+    // public $pedidoparcial;
 
     protected function rules()
     {
@@ -51,10 +52,8 @@ class PedidoParcial extends Component
 
         $this->pedido=Pedido::find($pedidoid);
         $this->parcial=ModelsPedidoParcial::find($parcialid);
-        $ruta=$this->ruta;
-        $tipo=$this->tipo;
-        $this->pedidoparcial=ModelsPedidoParcial::find($parcialid);
-
+        $this->ruta=$ruta;
+        $this->tipo=$tipo;
     }
 
     public function render()

@@ -18,7 +18,7 @@ class ProductoSeeder extends Seeder
 
         Producto::create([
             'tipo'=>'1',
-            'cliente_id'=>'1',
+            'cliente_id'=>'2',
             'isbn'=>'123456',
             'referencia'=>'Libro prueba',
             'preciocoste'=>'45',

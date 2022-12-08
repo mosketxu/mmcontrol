@@ -113,59 +113,59 @@
                                 <div class="w-full form-item">
                                     <div class="">
                                         <x-jet-label  class="font-bold">{{ __('Paginas') }}</x-jet-label>
-                                        <p>{{ $prod->paginas  }}</p>
+                                        <p>{{ $prod->paginas ?? '' }}</p>
                                         <x-jet-label  class="font-bold" >{{ __('Plastificado') }}</x-jet-label>
-                                        <p>{{ $prod->plastificado  }}</p>
+                                        <p>{{ $prod->plastificado ?? '' }}</p>
                                         <x-jet-label  class="font-bold">{{ __('Encuadernado') }}</x-jet-label>
-                                        <p>{{ $prod->encuadernado  }}</p>
+                                        <p>{{ $prod->encuadernado ?? ''  }}</p>
                                     </div>
                                 </div>
                                 <div class="w-full form-item">
                                     <div class="">
                                         <x-jet-label  class="font-bold" >{{ __('Interiores') }}</x-jet-label>
-                                        <p>Papel: {{ $prod->materialinterior }} </p>
-                                        <p>Tintas: {{ $prod->tintainterior }} </p>
-                                        <p>Gr {{ $prod->gramajeinterior }} </p>
+                                        <p>Papel: {{ $prod->materialinterior  ?? ''}} </p>
+                                        <p>Tintas: {{ $prod->tintainterior  ?? ''}} </p>
+                                        <p>Gr {{ $prod->gramajeinterior  ?? ''}} </p>
                                     </div>
                                 </div>
                                 <div class="w-full form-item">
                                     <div class="">
                                         <x-jet-label class="font-bold">{{ __('Cubierta') }}</x-jet-label>
-                                        <p>Papel: {{ $prod->materialcubierta }} </p>
-                                        <p>Tintas: {{ $prod->tintacubierta }} </p>
-                                        <p>Gr {{ $prod->gramajecubierta }} </p>
+                                        <p>Papel: {{ $prod->materialcubierta  ?? ''}} </p>
+                                        <p>Tintas: {{ $prod->tintacubierta  ?? ''}} </p>
+                                        <p>Gr {{ $prod->gramajecubierta  ?? ''}} </p>
                                     </div>
                                 </div>
                                 <div class="w-full form-item">
-                                    @if ($prod->solapa=='1')
+                                    @if ($prod && $prod->solapa=='1')
                                     <div class="">
                                         <x-jet-label class="font-bold">{{ __('Solapa') }}</x-jet-label>
-                                        <p>{{ $prod->descripsolapa  }}</p>
+                                        <p>{{ $prod->descripsolapa  ?? '' }}</p>
                                     </div>
                                     @endif
-                                    @if ($prod->guardas=='1')
+                                    @if ($prod && $prod->guardas=='1')
                                     <div class="">
                                         <x-jet-label class="font-bold">{{ __('Guardas') }}</x-jet-label>
-                                        <p>{{ $prod->descripguardas  }}</p>
+                                        <p>{{ $prod->descripguardas  ?? '' }}</p>
                                     </div>
                                     @endif
-                                    @if ($prod->cd=='1')
+                                    @if ($prod && $prod->cd=='1')
                                     <div class="">
                                         <x-jet-label class="font-bold">{{ __('CD') }}</x-jet-label>
-                                        <p>{{ $prod->descripcd  }}</p>
+                                        <p>{{ $prod->descripcd  ?? '' }}</p>
                                     </div>
                                     @endif
                                 </div>
                                 <div class="w-full form-item">
-                                    @if ($prod->novedad=='1')
+                                    @if ($prod && $prod->novedad=='1')
                                     <div class="">
                                         <x-jet-label class="font-bold">{{ __('Novedad') }}</x-jet-label>
-                                        <p>{{ $prod->descripnovedad  }}</p>
+                                        <p>{{ $prod->descripnovedad  ?? '' }}</p>
                                     </div>
                                     @endif
                                     <div class="">
                                         <x-jet-label class="font-bold">{{ __('Caja') }}</x-jet-label>
-                                        <p>{{ $prod->caja->name ?? ''  }} - {{ $prod->udxcaja }} Uds x caja</p>
+                                        <p>{{ $prod->caja->name ?? ''  }} - {{ $prod->udxcaja  ?? ''}} Uds x caja</p>
                                     </div>
                                 </div>
                             </div>
