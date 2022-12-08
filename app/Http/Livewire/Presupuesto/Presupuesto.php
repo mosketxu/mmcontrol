@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire\Presupuesto;
 
-
-use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto, Presupuesto as ModelsPresupuesto, PresupuestoProducto};
+use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto, Presupuesto as ModelsPresupuesto, PresupuestoProducto,Caja};
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -23,6 +22,7 @@ class Presupuesto extends Component
     public $estado=0;
     public $espedido=0;
     public $pedido;
+    public $caja_id=0;
     public $uds_caja=0;
     public $otros;
 
@@ -96,6 +96,7 @@ class Presupuesto extends Component
             $this->estado=$presupuesto->estado;
             $this->espedido=$presupuesto->espedido;
             $this->pedido=$presupuesto->pedido;
+            $this->caja_id=$presupuesto->caja_id;
             $this->uds_caja=$presupuesto->uds_caja;
             $this->otros=$presupuesto->otros;
             if ($this->cliente_id) {
@@ -113,6 +114,7 @@ class Presupuesto extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id', ['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id', ['2','3']);
+        $cajas=Caja::orderBy('name')->get();
 
         $this->productos=Producto::query()
             ->with('cliente')
@@ -133,10 +135,11 @@ class Presupuesto extends Component
 
         $vista=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoeditorial' : 'livewire.presupuesto.presupuestootros' ;
 
-        return view($vista, compact(['entidades','clientes','proveedores']));
+        return view($vista, compact(['entidades','clientes','proveedores','cajas']));
     }
 
     public function updatedClienteId(){
+
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         if (!$this->fechapresupuesto) {
             $this->fechapresupuesto=now()->format('Y-m-d');
@@ -156,6 +159,9 @@ class Presupuesto extends Component
             })
         ->orderBy('referencia', 'asc')
         ->get();
+
+        $resp=Entidad::find($this->cliente_id);
+        if($resp->responsable!='') $this->responsable=$resp->responsable;
     }
 
     public function updatedProductoeditorialid(){
@@ -165,6 +171,7 @@ class Presupuesto extends Component
             $p=Producto::find($this->productoeditorialid);
             $this->precio_ud=$p->precio_ud;
             $this->preciototal=$p->precio_ud * $p->tirada;
+            $this->caja_id=$p->caja_id;
         }
     }
 
@@ -175,6 +182,10 @@ class Presupuesto extends Component
 
     public function updatedPreciototal(){
         $this->preciototal= $this->preciototal=='' ? $this->preciototal=0 : $this->preciototal;
+    }
+
+    public function updatedCajaId(){
+        if($this->caja_id=='') $this->caja_id=null;
     }
 
     public function updatedTirada(){
@@ -233,6 +244,7 @@ class Presupuesto extends Component
             'estado'=>$this->estado,
             'espedido'=>$this->espedido,
             'pedido'=>$this->pedido,
+            'caja_id'=>$this->caja_id,
             'uds_caja'=>$this->uds_caja,
             'otros'=>$this->otros,
         ]

@@ -208,7 +208,7 @@ class Prod extends Component
             'descripcd'=>$this->producto->descripcd,
             'novedad'=>$this->producto->novedad,
             'descripnovedad'=>$this->producto->descripnovedad,
-            'caja'=>$this->producto->caja,
+            'caja_id'=>$this->producto->caja_id,
             'udxcaja'=>$this->producto->udxcaja,
             'especiflogistica'=>$this->producto->especiflogistica,
             'observaciones'=>$this->producto->especiflogistica,

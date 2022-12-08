@@ -56,7 +56,12 @@
                 </div>
                 <div class="w-full form-item">
                     <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
-                    <x-jet-input  wire:model.defer="entidad.responsable" type="text" id="responsable" name="responsable" :value="old('responsable')" class="w-full"/>
+                    <x-select wire:model.defer="entidad.responsable" selectname="responsable" class="w-full">
+                        <option value="">-- Selecciona el responsable --</option>
+                        <option value="Josep Maria">Josep Maria</option>
+                        <option value="Marta">Marta</option>
+                        <option value="Anna">Anna</option>
+                    </x-select>
                     <x-jet-input-error for="responsable" class="mt-2" />
                 </div>
             </div>

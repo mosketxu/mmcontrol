@@ -29,6 +29,7 @@ class CreatePresupuestosTable extends Migration
             $table->integer('estado')->default('0');
             $table->boolean('espedido')->default(false);
             $table->bigInteger('pedido')->nullable();
+            $table->foreignId('caja_id')->nullable()->constrained('cajas')->onDelete('cascade');
             $table->string('uds_caja')->nullable();
             $table->string('otros')->nullable();
             $table->timestamps();

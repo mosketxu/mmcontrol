@@ -24,7 +24,7 @@ class Ent extends Component
             'entidad.id'=>'nullable',
             'entidad.entidad'=>'required',
             'entidad.entidadtipo_id'=>'required',
-            'entidad.responsable'=>'nullable|numeric',
+            'entidad.responsable'=>'nullable',
             'entidad.nif'=>'nullable|max:12',
             'entidad.direccion'=>'nullable',
             'entidad.cp'=>'nullable|max:10',

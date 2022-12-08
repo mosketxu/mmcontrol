@@ -80,10 +80,10 @@
                         <x-jet-label for="paginas">{{ __('Páginas') }}</x-jet-label>
                         <input  wire:model.lazy="producto.paginas" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                     </div>
-                    <div class="w-full form-item">
+                    {{-- <div class="w-full form-item">
                         <x-jet-label for="tirada">{{ __('Tirada') }}</x-jet-label>
                         <input  wire:model.lazy="producto.tirada" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                    </div>
+                    </div> --}}
                     <div class="form-item">
                         <x-jet-label for="FSC">{{ __('FSC') }}</x-jet-label>
                         <input type="checkbox" wire:model.lazy="producto.FSC"/>
@@ -213,7 +213,7 @@
                     <x-selectcolor wire:model.lazy="producto.caja_id"  selectname="caja:id" color="blue" class="w-full form-control" id="caja">
                         <option value="">--Selecciona--</option>
                         @foreach($cajas as $item)
-                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
+                            <option value="{{ $item->id }}">{{ $item->name }}{{ $item->descripcion }}</option>
                         @endforeach
                     </x-selectcolor>
             </div>

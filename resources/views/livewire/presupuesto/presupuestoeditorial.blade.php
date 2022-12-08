@@ -10,7 +10,7 @@
             {{-- datos del presupuesto --}}
             <div class="flex-col space-y-1 text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
-                    <div class="p-2 m-2 space-y-2">
+                    <div class="p-1 m-1 space-y-1">
                         <div class="p-1 rounded-md bg-blue-50">
                             <h3 class="pl-1 font-semibold">Datos generales</h3>
                             <input  wire:model.defer="presupuestoid" type="hidden"/>
@@ -141,6 +141,19 @@
                                 </div>
                             </div>
                             <div class="w-full form-item">
+                                <div class="w-full mx-auto">
+                                    <x-jet-label for="caja_id">{{ __('Caja') }}</x-jet-label>
+                                    <select wire:model.lazy="caja_id"
+                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        {{ $deshabilitado }}>
+                                            <option value="">--Selecciona Caja--</option>
+                                            @foreach ($cajas as $caja )
+                                                <option value="{{ $caja->id }}">{{ $caja->name }}</option>
+                                            @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="uds_caja">{{ __('Uds x Caja') }}</x-jet-label>
                                     <input  wire:model.lazy="uds_caja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -166,7 +179,10 @@
                                     <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
                                 </div>
                                 @else
-                                <x-jet-button class="bg-blue-600" wire:click.prevent="pedido( {{ $presupuestoid }} )" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">{{ __('Convertir en Pedido') }}</x-jet-button>
+                                <button class="mt-2 inline-flex items-center px-2 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white tracking-tigh hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25 transition"
+                                    wire:click.prevent="pedido( {{ $presupuestoid }} )"
+                                    onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">{{ __('Convertir en Pedido') }}
+                                </button>
                                 @endif
                             </div>
                         </div>
@@ -177,7 +193,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-2 m-2 ">
+                    <div class="p-1 m-1 ">
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
                             <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
