@@ -72,23 +72,26 @@ class Fdetalle extends Component
         return view('livewire.facturacion.fdetalle',compact(['fdetalles','entidad','pedidostodos','pedidos']));
     }
 
-    public function UpdatedPedidoId()
-    {
-        $i=Pedido::with('producto')->find($this->pedido_id);
-        $this->importe=$i->producto->precioventa;
-        $this->concepto=$i->producto->referencia;
+    public function UpdatedPedidoId(){
+        $pedido=Pedido::find($this->pedido_id);
+        if($pedido) {
+            if($pedido->tipo=='1'){
+                $producto=$pedido->pedidoproductos->first()->producto;
+                $this->importe=$producto->precioventa;
+                $this->concepto=$producto->referencia;
+            }
+        }
     }
 
-
-    public function calculos()
-    {
+    public function calculos(){
         $this->subtotalsiniva=round($this->importe * $this->cantidad ,2);
         $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva ,2);
         $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) ,2);
     }
-    public function UpdatedCantidad(){ $this->calculos();}
-    public function UpdatedIva(){ $this->calculos();}
-    public function UpdatedImporte(){ $this->calculos();}
+
+    public function UpdatedCantidad(){ if($this->cantidad=='') $this->cantidad=='0'; $this->calculos(); }
+    public function UpdatedIva(){  if($this->iva=='') $this->iva=='0'; $this->calculos();}
+    public function UpdatedImporte(){  if($this->importe=='') $this->importe=='0'; $this->calculos(); }
 
     public function changeValor(ModelsFacturaDetalle $facturadetalle,$campo,$valor)
     {
