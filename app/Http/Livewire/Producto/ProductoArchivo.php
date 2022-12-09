@@ -45,11 +45,12 @@ class ProductoArchivo extends Component
     public $campoimgdisabled='';
     public $editarvisible=0;
     public $search='';
+    public $tipo;
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
-    protected function rules()
-    {
+
+    protected function rules(){
         return [
             // 'valorcampofecha'=>'required||date',
             // 'valorcampo2'=>'nullable',
@@ -59,23 +60,20 @@ class ProductoArchivo extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'valorcampo4.required'=>'El comentario es necesario',
             'valorcampoimg.required'=>'El fichero es necesario',
         ];
     }
 
-    public function mount($productoid,$ruta,$tipo)
-    {
+    public function mount($productoid,$ruta,$tipo){
         $this->prod=Producto::find($productoid);
         $this->titulo="Archivos del producto: ". $this->prod->referencia;
+        $this->tipo=$tipo;
     }
 
-    public function render()
-    {
-
+    public function render(){
         $valores=ModelsProductoArchivo::query()
         ->search('comentario', $this->search)
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
@@ -86,32 +84,18 @@ class ProductoArchivo extends Component
         return view('livewire.producto.auxiliarproductoscard', compact('valores'));
     }
 
-    public function changeCampo(ModelsProductoArchivo $valor, $campo, $valorcampo)
-    {
+    public function changeCampo(ModelsProductoArchivo $valor, $campo, $valorcampo){
         $p=ModelsProductoArchivo::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
         $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
     }
 
-    public function updatedValorcampoimg()
-    {
+    public function updatedValorcampoimg(){
         $this->validate(['valorcampoimg'=>'file|max:5000']);
     }
 
-    // public function presentaAdjunto($productoarchivoid){
-    //     $parchivo=ModelsProductoArchivo::find($productoarchivoid);
-    //     $existe=Storage::disk('fichasproducto')->exists($parchivo->archivo);
-    //     // dd($this->productoid.'/'.$productoarchivoid->id);
-    //     if ($existe)
-    //         return Storage::disk('fichasproducto')->download($parchivo->archivo);
-    //     else{
-    //         $this->dispatchBrowserEvent('notifyred', 'Ha habido un problema con el fichero');
-    //     }
-    // }
-
-    public function save()
-    {
+    public function save(){
         $this->validate();
         $filename="";
         $extension="";

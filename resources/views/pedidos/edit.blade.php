@@ -17,7 +17,7 @@
     <div class="p-2">
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                @livewire('pedido.pedido',['pedidoid'=>$pedido->id,'tipo'=>$tipo,'ruta'=>$ruta])
+                @livewire('pedido.pedido',['pedidoid'=>$pedido->id,'tipo'=>$tipo,'ruta'=>$ruta,'titulo'=>$titulo])
             </div>
         </div>
     </div>

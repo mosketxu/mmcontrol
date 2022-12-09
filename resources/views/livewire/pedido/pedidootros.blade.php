@@ -8,7 +8,7 @@
                 {{-- @include('pedidos.pedidoeditorialfilters') --}}
             </div>
             {{-- datos del pedido --}}
-            <div class="flex-col space-y-4 text-gray-500 border border-blue-300 rounded shadow-md">
+            {{-- <div class="flex-col space-y-4 text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-2 m-2 space-y-2">
                         <div class="p-1 rounded-md bg-blue-50">
@@ -194,6 +194,10 @@
                                 <x-jet-label for="uds_caja">{{ __('Uds x Caja') }}</x-jet-label>
                                 <input  wire:model.lazy="uds_caja" type="number" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="transporte">{{ __('transporte') }}</x-jet-label>
+                                <input  wire:model.lazy="transporte" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                            </div>
                         </div>
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-full form-item">
@@ -223,7 +227,7 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

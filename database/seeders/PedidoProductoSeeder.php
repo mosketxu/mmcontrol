@@ -17,11 +17,26 @@ class PedidoProductoSeeder extends Seeder
         \DB::table('pedido_productos')->delete();
 
         PedidoProducto::create([
-            'pedido_id'=>'220001',
+            'pedido_id'=>'2200001',
             'producto_id'=>'2',
             'tirada'=>'5',
             'precio_ud'=>'10',
             'preciototal'=>'50',
             ]);
+        PedidoProducto::create([
+            'pedido_id'=>'2200002',
+            'producto_id'=>'1',
+            'tirada'=>'5',
+            'precio_ud'=>'10',
+            'preciototal'=>'50',
+            ]);
+        PedidoProducto::create([
+            'pedido_id'=>'2200003',
+            'producto_id'=>'2',
+            'tirada'=>'5',
+            'precio_ud'=>'10',
+            'preciototal'=>'50',
+            ]);
+
     }
 }

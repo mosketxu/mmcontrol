@@ -24,6 +24,7 @@ class Presupuesto extends Component
     public $pedido;
     public $caja_id;
     public $uds_caja=0;
+    public $transporte;
     public $otros;
 
     public $productoeditorialid;
@@ -56,6 +57,7 @@ class Presupuesto extends Component
             'espedido'=>'required',
             'caja_id'=>'nullable',
             'uds_caja'=>'nullable',
+            'transporte'=>'nullable',
             'otros'=>'nullable',
             'productoeditorialid'=>'required_if:tipo,1'
         ];
@@ -99,6 +101,7 @@ class Presupuesto extends Component
             $this->pedido=$presupuesto->pedido;
             $this->caja_id=$presupuesto->caja_id;
             $this->uds_caja=$presupuesto->uds_caja;
+            $this->transporte=$presupuesto->transporte;
             $this->otros=$presupuesto->otros;
             if ($this->cliente_id) {
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
@@ -226,6 +229,7 @@ class Presupuesto extends Component
             $nuevo=true;
         }
         $this->validate();
+
         $presup=ModelsPresupuesto::updateOrCreate(
             [
             'id'=>$i
@@ -248,6 +252,7 @@ class Presupuesto extends Component
             'pedido'=>$this->pedido,
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$this->uds_caja,
+            'transporte'=>$this->transporte,
             'otros'=>$this->otros,
         ]
         );
@@ -299,6 +304,7 @@ class Presupuesto extends Component
             'facturado'=>'0',
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$presupuesto->uds_caja,
+            'transporte'=>$presupuesto->transporte,
             'otros'=>$presupuesto->otros,
         ]);
 

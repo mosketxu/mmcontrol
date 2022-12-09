@@ -63,6 +63,10 @@ class Prod extends Component
             'producto.especiflogistica'=>'nullable',
             'producto.precioventa'=>'nullable|numeric',
             'producto.observaciones'=>'nullable',
+            'producto.material'=>'nullable',
+            'producto.medidas'=>'nullable',
+            'producto.troquel'=>'nullable',
+            'producto.impresion'=>'nullable',
         ];
     }
 
@@ -70,7 +74,7 @@ class Prod extends Component
         return [
             'producto.referencia.required' => 'La referencia es necesaria.',
             'producto.referencia.unique' => 'Esta referencia ya existe.',
-            'producto.isbn.unique' => 'El ISBN ya existe.',
+            'producto.isbn.unique' => 'El ISBN o el Cod./Ref. ya existe.',
             'producto.preciocoste.numeric' => 'El precio de compra debe ser numérico',
             'producto.precioventa.numeric' => 'El precio de venta debe ser numérico',
             'producto.descripsolapa.required' => 'La descripcion de las solapas es necesaria si se ha seleccionado la opción Solapas. ',
@@ -79,19 +83,15 @@ class Prod extends Component
             'producto.descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
         ];
     }
-    public function mount(Producto $producto,$tipo){
+    public function mount(Producto $producto,$tipo,$titulo){
         $this->producto=$producto;
         $this->tipo=$tipo;
+        $this->titulo=$titulo;
     }
 
     public function render(){
-        if($this->tipo==1){
-            $this->titulo='Nuevo producto editorial';
-            if($this->producto->id) $this->titulo='Ficha del libro: '. $this->producto->referencia;
-        }elseif($this->tipo==2){
-            $this->titulo='Nuevo producto';
-            if($this->producto->id) $this->titulo='Ficha del producto: '. $this->producto->referencia;
-        }
+        if($this->tipo=='1' && $this->producto->id) $this->titulo='Ficha del libro: '. $this->producto->referencia;
+        elseif($this->tipo=='2' && $this->producto->id)  $this->titulo='Ficha del producto: '. $this->producto->referencia;
 
         $this->formatos=Formato::orderBy('name')->get();
         $gramajes=Gramaje::orderBy('name')->get();
@@ -109,7 +109,9 @@ class Prod extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
 
-        return view('livewire.producto.prod',compact('clientes'));
+        $vista= $this->tipo=='1' ? 'livewire.producto.prodeditorial' : 'livewire.producto.prodotros';
+
+        return view($vista,compact('clientes'));
     }
 
     public function updatedProductoPreciocoste(){

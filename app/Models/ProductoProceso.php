@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductoArchivo extends Model
+class ProductoProceso extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['producto_id','nombrearchivooriginal','archivo','comentario'];
+    protected $fillable = ['producto_id','proceso','descripcion'];
 
     public function producto()
     {
         return $this->belongsTo(Producto::class,'producto_id');
     }
+
 }
+

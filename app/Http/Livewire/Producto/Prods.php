@@ -18,20 +18,27 @@ class Prods extends Component
     public $filtroisbn='';
     public $filtroreferencia='';
     public $filtrocliente='';
+    public $filtromaterial='';
+    public $filtroimpresion='';
     public $tipo;
+    public $titulo;
 
     public Producto $producto;
 
+    public function mount($titulo)
+    {
+        $this->titulo=$titulo;
+    }
+
     public function render()
     {
-        if($this->tipo=='1') $titulo="Libros Editorial";
-        else $titulo="Productos Packagind/Propios";
+        // if($this->tipo=='1') $titulo="Libros Editorial";
+        // else $titulo="Productos Packagind/Propios";
 
         $this->producto= new Producto;
 
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
-
         $productos=Producto::query()
             ->with('cliente')
             ->when($this->tipo!='', function ($query){
@@ -46,24 +53,29 @@ class Prods extends Component
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('cliente_id',$this->filtrocliente);
                 })
+            ->search('productos.material',$this->filtromaterial)
+            ->search('productos.impresion',$this->filtroimpresion)
             ->orderBy('referencia','asc')
             ->paginate(15);
 
-            return view('livewire.producto.prods',compact('productos','clientes','titulo'));
+
+        $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
+
+        return view($vista,compact('productos','clientes'));
     }
 
     public function updatingFiltroisbn(){$this->resetPage();}
     public function updatingFiltroreferencia(){$this->resetPage();}
     public function updatingFiltrocliente(){$this->resetPage();}
+    public function updatingFiltromaterial(){$this->resetPage();}
+    public function updatingFiltroimpresion(){$this->resetPage();}
 
-    // public function presentaAdjunto(Producto $producto){
-    //     $existe=Storage::disk('fichasproducto')->exists($producto->adjunto);
-    //     if ($existe)
-    //         return Storage::disk('fichasproducto')->download($producto->adjunto);
-    // }
 
     public function delete($productoId)
     {
+        $existe=Storage::disk('fichasproducto')->exists($productoId);
+        if ($existe) Storage::disk('fichasproducto')->deleteDirectory($productoId);
+
         $producto = Producto::find($productoId);
         if ($producto) {
             $producto->delete();

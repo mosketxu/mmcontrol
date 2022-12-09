@@ -8,7 +8,7 @@
                 @include('errores')
             </div>
             <div class="">
-                @include('producto.productofilters')
+                @include('producto.productoeditorialfilters')
             </div>
             {{-- tabla entidades --}}
             <div class="flex-col space-y-4">

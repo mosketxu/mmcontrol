@@ -37,7 +37,8 @@ class PedidoController extends Controller
     }
 
     public function nuevo($tipo,$ruta){
-        return view('pedidos.create',compact('tipo','ruta'));
+        $titulo=$tipo=='1' ? 'Nuevo Pedido Editorial' : 'Nuevo Pedido Packaging/Propios';
+        return view('pedidos.create',compact('tipo','ruta','titulo'));
     }
 
     public function ficha($pedId,$tipo){
@@ -94,7 +95,9 @@ class PedidoController extends Controller
 
     public function editar(Pedido $pedido,$ruta){
         $tipo=$pedido->tipo;
-        return view('pedidos.edit',compact('pedido','tipo','ruta'));
+        $titulo=$tipo=='1' ? 'Pedido Editorial' : 'Pedido Packaging/Propios';
+
+        return view('pedidos.edit',compact('pedido','tipo','ruta','titulo'));
     }
 
     public function parciales(Pedido $pedido, $ruta){

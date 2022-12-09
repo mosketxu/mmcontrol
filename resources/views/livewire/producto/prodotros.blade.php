@@ -6,11 +6,7 @@
             </div>
     <div class="">
         <div class="flex-col space-y-2 text-gray-500 border border-blue-300 rounded shadow-md">
-            @if ($tipo=='1')
-                @include('producto.editorial')
-            @else
-                @include('producto.otrosproductos')
-            @endif
+            @include('producto.otros')
         </div>
     </div>
 </div>

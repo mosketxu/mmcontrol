@@ -14,7 +14,8 @@ class ProductoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:producto.index')->only('index','ficha');
+        $this->middleware('can:producto.index')->only('tipo','ficha');
+        // $this->middleware('can:producto.index')->only('index','ficha');
         $this->middleware('can:producto.edit')->only('nuevo','edit','update');
     }
 
@@ -23,20 +24,24 @@ class ProductoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $tipo='';
-        return view('producto.index',compact('tipo'));
-    }
+    // public function index()
+    // {
+    //     $tipo='';
+    //     return view('producto.index',compact('tipo'));
+    // }
 
     public function tipo($tipo)
     {
-        return view('producto.index',compact('tipo'));
+        $titulo=$tipo=='1'? 'Productos Editoriales' : 'Productos Packaging y Propios';
+        return view('producto.index',compact('tipo','titulo'));
     }
 
     public function nuevo($tipo)
     {
-        return view('producto.create',compact('tipo'));
+        $titulo=$tipo=='1'? 'Nuevo producto Editorial' : 'Nuevo producto de Packaging/Propio';
+
+
+        return view('producto.create',compact('tipo','titulo'));
     }
 
     public function archivos(Producto $producto, $ruta)
@@ -48,7 +53,7 @@ class ProductoController extends Controller
     {
         $pdf = new Dompdf();
         $producto=Producto::with('cliente')->find($prodId);
-        $pdf = \PDF::loadView('producto.fichapdf', compact('producto'));
+        $pdf = \PDF::loadView('producto.fichapdf', compact('producto','tipo'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
     }
@@ -62,7 +67,8 @@ class ProductoController extends Controller
     public function edit(Producto $producto)
     {
         $tipo=$producto->tipo;
-        return view('producto.edit',compact('producto','tipo'));
+        $titulo=$tipo=='1'? 'Producto Editorial:' : 'Producto Packaging/Propio:';
+        return view('producto.edit',compact('producto','tipo','titulo'));
     }
 
 }

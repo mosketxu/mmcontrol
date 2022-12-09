@@ -15,8 +15,8 @@ class Pedido extends Model
 
     protected $fillable=['id','tipo','cliente_id','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
                     'proveedor_id','facturadopor','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
-                        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','caja_id','uds_caja','otros'
-                        ];
+                        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','caja_id','uds_caja'
+                        ,'transporte','otros'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function presupuesto(){return $this->belongsTo(Presupuesto::class,'presupuesto_id','id');}

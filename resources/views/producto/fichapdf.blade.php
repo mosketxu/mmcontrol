@@ -37,7 +37,11 @@
     <!-- Wrap the content of your PDF inside a main tag -->
         <main style="margin-top:200px; margin-right: 10px;">
             {{-- Datos generales  --}}
-            @include('producto.ficha')
+            @if($tipo=='1')
+                @include('producto.fichaeditorial')
+            @else
+                @include('producto.fichaotros')
+            @endif
         </main>
     </body>
 </html>

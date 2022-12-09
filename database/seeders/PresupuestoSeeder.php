@@ -32,6 +32,7 @@ class PresupuestoSeeder extends Seeder
             'espedido'=>'0',
             'estado'=>'0',
             'uds_caja'=>'8',
+            'transporte'=>'Sin transporte',
             'otros'=>'Sin comentarios',
             ]);
             Presupuesto::create([

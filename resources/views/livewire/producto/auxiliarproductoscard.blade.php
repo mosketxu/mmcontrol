@@ -144,7 +144,7 @@
     </div>
     <div class="m-2">
         @if($ruta=='i')
-            <x-jet-secondary-button  onclick="location.href = '{{route('producto.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet-secondary-button  onclick="location.href = '{{route('producto.tipo',$tipo)}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @else
             <x-jet-secondary-button  onclick="location.href = '{{route('producto.edit',$productoid)}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @endif

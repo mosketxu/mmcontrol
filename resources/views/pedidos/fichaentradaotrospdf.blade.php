@@ -106,7 +106,11 @@
                         @endforeach
                         <tr style="">
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Packing list</td>
-                            <td style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">definir</td>
+                            <td style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2"></td>
+                        </tr>
+                        <tr style="">
+                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Transporte</td>
+                            <td style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2"></td>
                         </tr>
                         {{-- @if($pedido->archivos->count()>0)
                         <tr>

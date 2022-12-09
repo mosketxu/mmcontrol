@@ -4,7 +4,8 @@ namespace App\Http\Livewire\Pedido;
 
 use Livewire\Component;
 
-use App\Models\{ Pedido,Entidad, EntidadContacto, Mes};
+use App\Models\{ Pedido,Entidad, Mes};
+use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 
@@ -34,6 +35,7 @@ class Pedidos extends Component
     public $uds_caja;
     public $incidencias;
     public $retardos;
+    public $transporte;
     public $otros;
 
     public $search='';
@@ -73,6 +75,7 @@ class Pedidos extends Component
             'uds_caja'=>'nullable',
             'incidencias'=>'nullable',
             'retardos'=>'nullable',
+            'transporte'=>'nullable',
             'otros'=>'nullable',
         ];
     }
@@ -108,10 +111,10 @@ class Pedidos extends Component
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
 
-
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
-        return view('livewire.pedido.pedidoseditorial',compact('pedidos','clientes','proveedores','meses'));
+        $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoseditorial': 'livewire.pedido.pedidosotros';
+        return view($vista,compact('pedidos','clientes','proveedores','meses'));
     }
 
     public function updatingSearch(){$this->resetPage();}
@@ -130,14 +133,9 @@ class Pedidos extends Component
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
-    // public function create(){
-    //     $this->resetInputFields();
-    //     $this->fechapedido=now()->format('Y-m-d');
-    //     $this->openNewModal();
-    // }
-
     public function getRowsQueryProperty(){
 
+        // return Pedido::query()
         return Pedido::query()
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->join('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
@@ -171,7 +169,7 @@ class Pedidos extends Component
             ->orderBy('pedidos.fechapedido','desc')
             ->orderBy('pedidos.id','desc');
 
-            dd('llego');
+            // dd('llego');
             // ->paginate(5); solo contemplo la query, no el resultado. Luego pongo el resultado: get, paginate o lo que quiera
     }
 
@@ -180,6 +178,10 @@ class Pedidos extends Component
     }
 
     public function delete($pedidoId){
+
+        $existe=Storage::disk('archivospedido')->exists($pedidoId);
+        if ($existe) Storage::disk('archivospedido')->deleteDirectory($pedidoId);
+
         $pedido = Pedido::find($pedidoId);
         if ($pedido) {
             $pedido->delete();

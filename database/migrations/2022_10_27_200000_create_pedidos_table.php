@@ -42,6 +42,7 @@ class CreatePedidosTable extends Migration
             $table->boolean('facturado')->default(false);
             $table->foreignId('caja_id')->nullable()->constrained('cajas')->onDelete('cascade');
             $table->string('uds_caja')->nullable();
+            $table->string('transporte')->nullable();
             $table->string('otros')->nullable();
             $table->timestamps();
         });

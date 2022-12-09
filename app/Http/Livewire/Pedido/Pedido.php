@@ -34,6 +34,7 @@ class Pedido extends Component
     public $facturado;
     public $caja_id;
     public $uds_caja;
+    public $transporte;
     public $otros;
 
     // public $destino='0';
@@ -71,6 +72,7 @@ class Pedido extends Component
             'facturado'=>'nullable',
             'caja_id'=>'nullable',
             'uds_caja'=>'nullable',
+            'transporte'=>'nullable',
             'otros'=>'nullable',
             'productoeditorialid'=>'required_if:tipo,1'
         ];
@@ -99,8 +101,8 @@ class Pedido extends Component
         ];
     }
 
-    public function mount($pedidoid,$tipo,$ruta){
-        $this->titulo='Nuevo Pedido:';
+    public function mount($pedidoid,$tipo,$ruta,$titulo){
+        $this->titulo=$titulo;
         $this->tipo=$tipo;
         $this->ruta=$ruta;
         if ($pedidoid!='') {
@@ -128,15 +130,18 @@ class Pedido extends Component
             $this->facturado=$pedido->facturado;
             $this->caja_id=$pedido->caja_id;
             $this->uds_caja=$pedido->uds_caja;
+            $this->transporte=$pedido->transporte;
             $this->otros=$pedido->otros;
-            $this->titulo='Pedido';
+            $this->titulo=$this->tipo=='1'?'Pedido Editorial':'Pedido Packaging/Propios';
             if($this->cliente_id){
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
                 $this->ofertas=Oferta::where('cliente_id', '=', $this->cliente_id)->orderBy('id')->get();
             }
             if ($tipo=='1') {
-                $this->productoeditorialid=$pedido->pedidoproductos->first()->producto->id;
-                $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
+                if($this->productoeditorialid){
+                    $this->productoeditorialid=$pedido->pedidoproductos->first()->producto->id;
+                    $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
+                }
             }
         }
     }
@@ -257,13 +262,15 @@ class Pedido extends Component
             'facturado'=>$this->facturado == '' ? '0' : $this->facturado,
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$this->uds_caja,
+            'transporte'=>$this->transporte,
             'otros'=>$this->otros,
         ]);
 
-        $this->titulo= $this->tipo='1' ? 'Pedido Editorial:': 'Pedido Packaging/Propio:';
+        // $this->titulo= $this->tipo='1' ? 'Pedido Editorial:': 'Pedido Packaging/Propios:';
         $pedido=ModeloPedido::find($ped->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
-        if($nuevo) return redirect()->route('pedido.editar',[$pedido,$this->ruta]);
+        // if($nuevo) return redirect()->route('pedido.editar',[$pedido,$this->ruta,$this->titulo]);
+        return redirect()->route('pedido.editar',[$pedido,$this->ruta,$this->titulo]);
     }
 
 }
