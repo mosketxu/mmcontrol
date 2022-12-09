@@ -3,6 +3,7 @@
 /public/storage
 /public/fichasproducto
 /public/archivospedido
+/public/archivospresupuesto
 /storage/*.key
 /vendor
 .env

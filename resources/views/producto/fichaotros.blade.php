@@ -20,7 +20,7 @@
                     <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->medidas }}</td>
                 </tr>
                 <tr style="">
-                    <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Imprsión</td>
+                    <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Impresión</td>
                     <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->impresion }}</td>
                 </tr>
                 <tr style="">
