@@ -4,7 +4,7 @@
             <div class="">
                 @include('errores')
             </div>
-            {{-- datos del pedido --}}
+            {{-- datos de la factura --}}
             <div class="flex-col text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 space-y-1">
@@ -81,21 +81,21 @@
                                 {{ $bloqueado!='0' ? 'disabled' :'' }}>
                             </div>
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
-                                <x-jet-label for="importe" class="text-right mr-6">{{ __('Subtotal') }}</x-jet-label>
+                                <x-jet-label for="importe" class="mr-6 text-right">{{ __('Subtotal') }}</x-jet-label>
                                 <input  wire:model.lazy="importe" type="text"
-                                class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                class="w-full py-1 text-xs text-right bg-blue-100 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
-                                <x-jet-label for="iva" class="text-right mr-6">{{ __('Iva') }}</x-jet-label>
+                                <x-jet-label for="iva" class="mr-6 text-right">{{ __('Iva') }}</x-jet-label>
                                 <input  wire:model.lazy="iva" type="text"
-                                class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                class="w-full py-1 text-xs text-right bg-blue-100 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
-                                <x-jet-label for="total" class="text-right mr-6">{{ __('Total') }}</x-jet-label>
+                                <x-jet-label for="total" class="mr-6 text-right">{{ __('Total') }}</x-jet-label>
                                 <input  wire:model.lazy="total" type="text"
-                                class="w-full py-1 text-xs bg-blue-100 text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                class="w-full py-1 text-xs text-right bg-blue-100 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
@@ -127,7 +127,6 @@
                                 @else
                                 <x-icon.lock-open/>
                             @endif
-
                         </div>
                     </div>
                 </form>

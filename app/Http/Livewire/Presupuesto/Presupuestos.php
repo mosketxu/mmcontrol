@@ -29,9 +29,11 @@ class Presupuestos extends Component
 
     public $message;
     public $tipo;
+    public $titulo;
 
-    public function mount($tipo){
+    public function mount($tipo,$titulo){
         $this->tipo=$tipo;
+        $this->titulo=$titulo;
     }
 
     protected function rules(){
@@ -46,7 +48,6 @@ class Presupuestos extends Component
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
 
-        $presupuestos=Presupuesto::get();
         if($this->selectAll) $this->selectPageRows();
         $presupuestos = $this->rows;
         $view=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoseditorial' : 'livewire.presupuesto.presupuestosotros' ;
@@ -108,9 +109,9 @@ class Presupuestos extends Component
         else
         return Presupuesto::query()
             ->join('entidades','presupuestos.cliente_id','=','entidades.id')
-            ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
-            ->join('productos','presupuesto_productos.producto_id','=','productos.id')
-            ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia')
+            // ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
+            // ->join('productos','presupuesto_productos.producto_id','=','productos.id')
+            ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm')
             ->where('presupuestos.tipo',$this->tipo)
             ->search('presupuestos.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){
@@ -124,9 +125,6 @@ class Presupuestos extends Component
             })
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('presupuestos.cliente_id',$this->filtrocliente);
-                })
-            ->when($this->filtroproveedor!='', function ($query){
-                $query->where('presupuestos.proveedor_id',$this->filtroproveedor);
                 })
             ->when($this->filtroestado!='', function ($query){
                 $query->where('presupuestos.estado',$this->filtroestado);

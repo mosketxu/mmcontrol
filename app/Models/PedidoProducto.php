@@ -11,7 +11,7 @@ class PedidoProducto extends Model
 
     use HasFactory;
 
-    protected $fillable=['pedido_id','producto_id','tirada','precio_ud','preciototal'];
+    protected $fillable=['pedido_id','producto_id','tirada','precio_ud','preciototal','observaciones','orden','visible'];
     public function pedido(){return $this->belongsTo(Pedido::class,'pedido_id','id');}
     public function producto(){return $this->belongsTo(Producto::class,'producto_id','id');}
 

@@ -1,4 +1,4 @@
-<div class="py-1 space-y-1">
+<div class="py-1 ">
     <div class="">
         @include('errores')
     </div>
@@ -15,16 +15,11 @@
             disabled/>
         </div>
         <div class="w-2/12 ">
-            <input type="text" value="Pedido"
+            <input type="text" value="Producto"
             class="w-full py-1 text-xs font-thin text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
-        <div class="w-4/12 ">
-            <input type="text" value="Concepto"
-            class="w-full py-1 text-xs font-thin text-gray-500 bg-blue-100 border-0 rounded-md"
-            disabled/>
-        </div>
-        <div class="w-2/12 ">
+        <div class="w-1/12 ">
             <input type="text" value="Cantidad"
             class="w-full py-1 text-xs font-thin text-right text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
@@ -35,27 +30,11 @@
             disabled/>
         </div>
         <div class="w-1/12">
-            <input type="text" value="SubTot."
-            class="w-full py-1 text-xs font-thin text-right text-gray-500 bg-blue-100 border-0 rounded-md"
-            disabled/>
-        </div>
-        <div class="w-1/12">
-            <input type="text" value="%Iva"
-            class="w-full py-1 text-xs font-thin text-left text-gray-500 bg-blue-100 border-0 rounded-md"
-            disabled/>
-        </div>
-        <div class="w-1/12">
-            <input type="text" value="Iva"
-            class="w-full py-1 text-xs font-thin text-right text-gray-500 bg-blue-100 border-0 rounded-md"
-            disabled/>
-        </div>
-        <div class="w-1/12">
             <input type="text" value="Total"
             class="w-full py-1 text-xs font-thin text-right text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
-
-        <div class="w-3/12">
+        <div class="w-4/12">
             <input type="text" value="Observaciones"
             class="w-full py-1 text-xs font-thin text-left text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
@@ -77,64 +56,34 @@
                 <input type="number" wire:model.defer="orden"
                 class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
-            {{-- Pedido_id --}}
+            {{-- producto_id --}}
             <div class="w-2/12">
-                {{-- <x-selectcolor wire:model.lazy="pedido_id" selectname="pedido_id" color="bg-green-100" --}}
-                <x-selectcolor wire:model.lazy="pedido_id" selectname="pedido_id" color="bg-green-100"
+                <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="bg-green-100"
                     class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-none shadow-none">
                     <option value="" >-Selecciona- </option>
-                    @forelse ($pedidos as $pedido)
-                    <option value="{{ $pedido->id }}">{{ $pedido->id }}</option>
-                    @empty
-                    <option value="">No hay pedidos pendientes</option>
-                    @endforelse
+                    @foreach ($productos as $producto)
+                    <option value="{{ $producto->id }}">{{ $producto->id }}</option>
+                    @endforeach
                 </x-selectcolor>
             </div>
-            {{-- concepto --}}
-            <div class="w-4/12">
-                <input type="text" wire:model.defer="concepto" placeholder="Introduce el concepto"
-                class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md placeholder:text-xs placeholder:text-gray-300 placeholder:italic"/>
-            </div>
             {{-- cantidad --}}
-            <div class="w-2/12">
-                <input type="number" step="any" wire:model.lazy="cantidad"
+            <div class="w-1/12">
+                <input type="number" step="any" wire:model.lazy="tirada"
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
             {{-- importe --}}
             <div class="w-1/12">
-                <input type="number" step="any" wire:model.lazy="importe"
+                <input type="number" step="any" wire:model.lazy="precio_ud"
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
             {{-- subtotalsiniva --}}
             <div class="w-1/12">
-                <input type="text"  wire:model="subtotalsiniva"
-                class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
-                disabled/>
-            </div>
-            {{-- iva --}}
-            <div class="w-1/12">
-                <x-selectcolor wire:model.debounce.500ms="iva" selectname="iva" color="bg-green-100"
-                class="w-full px-0 py-1 text-xs font-thin text-center text-gray-500 bg-green-100 border-none shadow-none">
-                    <option value="0.00"> 0%</option>
-                    <option value="0.04"> 4%</option>
-                    <option value="0.10">10%</option>
-                    <option value="0.21">21%</option>
-                </x-selectcolor>
-            </div>
-            {{-- subtotaliva --}}
-            <div class="w-1/12">
-                <input type="text"  wire:model="subtotaliva"
-                class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
-                disabled/>
-            </div>
-            {{-- subtotal --}}
-            <div class="w-1/12">
-                <input type="text"  wire:model="subtotal"
+                <input type="text"  wire:model="preciototal"
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
                 disabled/>
             </div>
             {{-- observaciones --}}
-            <div class="w-3/12 ">
+            <div class="w-4/12 ">
                 <input type="text"  wire:model.defer="observaciones"
                 class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
@@ -147,8 +96,8 @@
     @endif
 
     {{-- Lista detalles --}}
-    @forelse ($fdetalles as $fdetalle)
-        @livewire('facturacion.fdetalles',['factura'=>$factura,'fdetalle'=>$fdetalle,'deshabilitado'=>$deshabilitado],key($fdetalle->id))
+    @forelse ($presupproductos as $pproducto)
+        @livewire('presupuesto.presupuesto-productos',['pproducto'=>$pproducto,'deshabilitado'=>$deshabilitado],key($pproducto->id))
     @empty
         <div class="flex w-full text-xs text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
             <div colspan="10">

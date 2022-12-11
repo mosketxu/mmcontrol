@@ -3,11 +3,7 @@
         <div class="flex">
             <div class="w-full">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    @if($tipo=='1')
-                        Nuevo Presupuesto Editorial
-                    @else
-                        Nuevo Presupuesto Packaging/Propios
-                    @endif
+                    {{ $titulo }}
                 </h2>
             </div>
             <div class="w-full">

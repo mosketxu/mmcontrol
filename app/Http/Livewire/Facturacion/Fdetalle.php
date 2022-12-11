@@ -30,9 +30,7 @@ class Fdetalle extends Component
     public $subtotaliva=0;
     public $subtotal=0;
 
-
-    protected function rules()
-    {
+    protected function rules(){
         return [
             'pedido_id'=>'nullable',
             'cantidad'=>'required|numeric',
@@ -46,8 +44,7 @@ class Fdetalle extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'cantidad.required'=>'La cantidad es necesaria.',
             'iva.required'=>'El iva es necesario.',

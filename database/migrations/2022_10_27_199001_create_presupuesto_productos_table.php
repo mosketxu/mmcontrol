@@ -20,6 +20,9 @@ class CreatePresupuestoProductosTable extends Migration
             $table->bigInteger('tirada')->default(0);
             $table->double('precio_ud', 15, 2)->nullable()->default(0.00);
             $table->double('preciototal', 15, 2)->nullable()->default(0.00);
+            $table->string('observaciones')->nullable();
+            $table->boolean('visible')->nullable()->default('1');
+            $table->integer('orden')->nullable()->default('0');
             $table->timestamps();
         });
     }

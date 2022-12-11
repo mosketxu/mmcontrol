@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Presupuesto;
 
 use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto, Presupuesto as ModelsPresupuesto, PresupuestoProducto,Caja};
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Presupuesto extends Component
@@ -11,6 +12,7 @@ class Presupuesto extends Component
     public $presupuestoid='';
     public $tipo;
     public $cliente_id;
+    public $descripcion;
     public $responsable;
     public $contacto_id;
     public $proveedor_id;
@@ -45,9 +47,10 @@ class Presupuesto extends Component
         return [
             'presupuestoid'=>'required',
             'cliente_id'=>'required',
+            'descripcion'=>'required',
             'responsable'=>'nullable',
             'contacto_id'=>'nullable',
-            'proveedor_id'=>'required',
+            'proveedor_id'=>'nullable',
             'tirada'=>'required',
             'precio_ud'=>'nullable',
             'preciototal'=>'nullable',
@@ -89,6 +92,7 @@ class Presupuesto extends Component
             $this->presupuestoid=$presupuesto->id;
             $this->responsable=$presupuesto->responsable;
             $this->cliente_id=$presupuesto->cliente_id;
+            $this->descripcion=$presupuesto->descripcion;
             $this->contacto_id=$presupuesto->contacto_id;
             $this->proveedor_id=$presupuesto->proveedor_id;
             $this->facturadopor=$presupuesto->facturadopor;
@@ -122,15 +126,6 @@ class Presupuesto extends Component
 
         $this->productos=Producto::query()
             ->with('cliente')
-            // ->when($this->filtroisbn!='', function ($query){
-            //     $query->where('isbn', 'like', '%'.$this->filtroisbn.'%');
-            //     })
-            // ->when($this->filtroreferencia!='', function ($query){
-            //     $query->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
-            //     })
-            // ->when($this->filtrocliente!='', function ($query){
-            //     $query->where('cliente_id',$this->filtrocliente);
-            //     })
             ->when($this->cliente_id!='', function ($query) {
                 $query->where('cliente_id', $this->cliente_id);
             })
@@ -143,21 +138,11 @@ class Presupuesto extends Component
     }
 
     public function updatedClienteId(){
-
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         if (!$this->fechapresupuesto) {
             $this->fechapresupuesto=now()->format('Y-m-d');
         }
         $this->productos=Producto::query()
-               // ->when($this->filtroisbn!='', function ($query){
-            //     $query->where('isbn', 'like', '%'.$this->filtroisbn.'%');
-            //     })
-            // ->when($this->filtroreferencia!='', function ($query){
-            //     $query->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
-            //     })
-            // ->when($this->filtrocliente!='', function ($query){
-            //     $query->where('cliente_id',$this->filtrocliente);
-            //     })
             ->when($this->cliente_id!='', function ($query) {
                 $query->where('cliente_id', $this->cliente_id);
             })
@@ -230,6 +215,8 @@ class Presupuesto extends Component
         }
         $this->validate();
 
+        if($this->tipo=='2') Validator::make(['descripcion'=>$this->descripcion,],['descripcion' => 'required',],['descripcion.required'=>'La descripción es necesaria.'])->validate();
+
         $presup=ModelsPresupuesto::updateOrCreate(
             [
             'id'=>$i
@@ -239,6 +226,7 @@ class Presupuesto extends Component
             'responsable'=>$this->responsable,
             'tipo'=>$this->tipo,
             'cliente_id'=>$this->cliente_id,
+            'descripcion'=>$this->descripcion,
             'contacto_id'=>$this->contacto_id,
             'proveedor_id'=>$this->proveedor_id ,
             'tirada'=>$this->tirada,
@@ -291,6 +279,7 @@ class Presupuesto extends Component
             'responsable'=>$presupuesto->responsable,
             'tipo'=>$presupuesto->tipo,
             'cliente_id'=>$presupuesto->cliente_id,
+            'descripcion'=>$presupuesto->descripcion,
             'contacto_id'=>$presupuesto->contacto_id,
             'presupuesto_id'=>$presupuesto->id,
             'proveedor_id'=>$presupuesto->proveedor_id ,

@@ -19,27 +19,30 @@ class PresupuestoController extends Controller
     }
 
     public function tipo($tipo,$ruta){
-        return view('presupuestos.index',compact(['tipo','ruta']));
+        $titulo=$tipo=='1' ? 'Presupuestos Editoriales' : 'Presupuestos Packaging/Propios';
+        return view('presupuestos.index',compact(['tipo','ruta','titulo']));
     }
 
     public function nuevo($tipo,$ruta){
-        $titulo=$tipo=='1' ? 'Nuevo Presupuesto Editorial' : 'Nuevo Presupuesto Packaging/Propios';
+        $titulo=$tipo=='1' ? 'Nuevo Presupuesto Editorial' : 'Nuevo Presupuesto Packaging/Propio';
         return view('presupuestos.create',compact('tipo','ruta','titulo'));
     }
 
     public function presupuestoPDF(Presupuesto $presupuesto){
-        if($presupuesto->tipo=='1'){
-            $producto=$presupuesto->presupuestoproductos->first()->producto;
-        }
-        else{
-            dd('otros');
-        }
-
         $proveedor=Entidad::find($presupuesto->proveedor_id);
         $cliente=Entidad::find($presupuesto->cliente_id);
         $pdf = new Dompdf();
 
-        $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+        if($presupuesto->tipo=='1'){
+            $producto=$presupuesto->presupuestoproductos->first()->producto;
+            $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+        }
+        else{
+            // $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->where('id',$presupuesto->id)->first();
+            $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->find($presupuesto->id);
+            $pdf = \PDF::loadView('presupuestos.presupuestopdfotros', compact('presupuesto','proveedor','cliente'));
+        }
+
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('presupuesto.pdf'); //asi lo muestra por pantalla
     }

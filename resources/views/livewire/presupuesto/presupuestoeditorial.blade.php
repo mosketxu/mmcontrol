@@ -87,6 +87,18 @@
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
+                                    <x-jet-label for="facturadopor">{{ __('Facturado x') }}</x-jet-label>
+                                    <select wire:model.lazy="facturadopor"
+                                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    {{ $deshabilitado }}>
+                                        <option value="">- ¿Quién factura? -</option>
+                                        <option value="1">Milimetrica</option>
+                                        <option value="0">Proveedor</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
                                     <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
                                     <select wire:model.lazy="responsable"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -129,18 +141,6 @@
                                 </div>
                             </div>
                             <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="facturadopor">{{ __('Factura') }}</x-jet-label>
-                                    <select wire:model.lazy="facturadopor"
-                                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $deshabilitado }}>
-                                        <option value="">- ¿Quién factura? -</option>
-                                        <option value="1">Milimetrica</option>
-                                        <option value="0">Proveedor</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="w-full form-item">
                                 <div class="w-full mx-auto">
                                     <x-jet-label for="caja_id">{{ __('Caja') }}</x-jet-label>
                                     <select wire:model.lazy="caja_id"
@@ -179,7 +179,7 @@
                                     <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
                                 </div>
                                 @else
-                                <button class="mt-2 inline-flex items-center px-2 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-sm text-white tracking-tigh hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25 transition"
+                                <button class="inline-flex items-center px-2 py-2 mt-2 text-sm font-semibold text-white transition bg-blue-600 border border-transparent rounded-md tracking-tigh hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25"
                                     wire:click.prevent="pedido( {{ $presupuestoid }} )"
                                     onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">{{ __('Convertir en Pedido') }}
                                 </button>

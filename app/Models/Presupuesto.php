@@ -12,7 +12,7 @@ class Presupuesto extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','tipo','cliente_id','responsable','contacto_id',
+    protected $fillable=['id','tipo','cliente_id','descripcion','responsable','contacto_id',
                     'proveedor_id','tirada','precio_ud','preciototal','facturadopor','fechapresupuesto',
                     'estado','espedido','pedido','caja_id','uds_caja','transporte','otros'];
 
@@ -21,6 +21,7 @@ class Presupuesto extends Model
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
     public function caja(){return $this->belongsTo(Caja::class,'caja_id','id')->withDefault(['name'=>'']);}
     public function presupuestoproductos(){return $this->hasMany(PresupuestoProducto::class,'presupuesto_id','id');}
+    public function presupuestoprocesos(){return $this->hasMany(PresupuestoProceso::class,'presupuesto_id','id');}
 
     public function getStatusColorAttribute(){
         return [
