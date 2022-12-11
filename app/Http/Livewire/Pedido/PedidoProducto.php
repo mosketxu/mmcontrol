@@ -2,32 +2,32 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Pedido, PedidoProceso as ModelsPedidoProceso};
 use Livewire\Component;
 
+use App\Models\{PedidoProducto as ModelsPedidoProducto, Producto,Pedido};
 
-class PedidoProceso extends Component
+class PedidoProducto extends Component
 {
     public $pedido;
     public $pedido_id;
-    public $proceso;
+    public $producto_id;
     public $orden='0';
     public $visible='1';
     public $tirada='0';
     public $precio_ud='0';
     public $preciototal='0';
-    public $descripcion='';
+    public $observaciones='';
     public $bloqueado=false;
     public $deshabilitado='';
 
     protected function rules(){
         return [
             'pedido_id'=>'required',
-            'proceso'=>'required',
+            'producto_id'=>'required',
             'tirada'=>'required',
             'precio_ud'=>'nullable',
             'preciototal'=>'nullable',
-            'descripcion'=>'nullable',
+            'observaciones'=>'nullable',
             'visible'=>'nullable',
             'orden'=>'nullable',
         ];
@@ -36,7 +36,7 @@ class PedidoProceso extends Component
     public function messages(){
         return [
             'pedido_id'=>'El pedido es necesario.',
-            'proceso'=>'El proceso es necesario.',
+            'producto_id'=>'El producto es necesario.',
             'tirada'=>'La cantidad es necesario.',
         ];
     }
@@ -48,8 +48,22 @@ class PedidoProceso extends Component
     }
 
     public function render(){
-        $pedprocesos=ModelsPedidoProceso::where('pedido_id',$this->pedido_id)->get();
-        return view('livewire.pedido.pedido-procesootros',compact('pedprocesos'));
+        $productos=Producto::where('tipo','2')->orderBy('referencia')->get();
+        $pedproductos=ModelsPedidoProducto::where('pedido_id',$this->pedido_id)->get();
+        return view('livewire.pedido.pedido-productootros',compact('productos','pedproductos'));
+    }
+
+    public function UpdatedProductoId(){
+        if($this->producto_id!='') {
+            $p=Producto::find($this->producto_id);
+            $this->precio_ud=$p->preciocoste;
+            $this->tirada=$p->cantidad;
+            $this->preciototal=$p->precio_ud * $this->tirada;
+        }else{
+            $this->precio_ud='0';
+            $this->tirada='0';
+            $this->preciototal='0';
+        }
     }
 
     public function UpdatedTirada(){ if($this->tirada=='') $this->tirada=='0'; $this->preciototal=$this->precio_ud * $this->tirada; }
@@ -61,22 +75,22 @@ class PedidoProceso extends Component
         if(!$this->preciototal) $this->preciototal=0;
 
         $this->validate();
-        $pproc=ModelsPedidoProceso::create([
+        $pprod=ModelsPedidoProducto::create([
             'pedido_id'=>$this->pedido_id,
-            'proceso'=>$this->proceso,
+            'producto_id'=>$this->producto_id,
             'tirada'=>$this->tirada,
             'precio_ud'=>$this->precio_ud,
             'preciototal'=>$this->preciototal,
-            'descripcion'=>$this->descripcion,
+            'observaciones'=>$this->observaciones,
             'visible'=>$this->visible,
             'orden'=>$this->orden,
         ]);
 
-        $this->proceso='';
+        $this->producto_id='';
         $this->tirada='0';
         $this->precio_ud='0';
         $this->preciototal='0';
-        $this->descripcion='';
+        $this->observaciones='';
         $this->visible='1';
         $this->orden='0';
 
@@ -87,7 +101,7 @@ class PedidoProceso extends Component
     {
         $this->validate();
 
-        $borrar = ModelsPedidoProceso::find($valorId);
+        $borrar = ModelsPedidoProducto::find($valorId);
 
         if ($borrar) {
             $borrar->delete();

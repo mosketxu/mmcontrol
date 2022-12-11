@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Livewire\Presupuesto;
-
-use App\Models\PresupuestoProducto;
-use App\Models\Producto;
+namespace App\Http\Livewire\Pedido;
 
 use Livewire\Component;
+use App\Models\PedidoProducto;
+use App\Models\Producto;
 
-class PresupuestoProductos extends Component
+class PedidoProductos extends Component
 {
 
-    public $presupuesto_id;
+    public $pedido_id;
     public $pproductoid='';
     public $pproducto;
     public $producto_id;
@@ -29,7 +28,7 @@ class PresupuestoProductos extends Component
 
     protected function rules(){
         return [
-            'presupuesto_id'=>'required',
+            'pedido_id'=>'required',
             'producto_id'=>'required',
             'tirada'=>'required',
             'precio_ud'=>'nullable',
@@ -42,7 +41,7 @@ class PresupuestoProductos extends Component
 
     public function messages(){
         return [
-            'presupuesto_id'=>'El presupuesto es necesario.',
+            'pedido_id'=>'El pedido es necesario.',
             'producto_id'=>'El producto es necesario.',
             'tirada'=>'La cantidad es necesario.',
         ];
@@ -51,7 +50,7 @@ class PresupuestoProductos extends Component
     public function mount($pproducto,$deshabilitado){
         $this->pproducto=$pproducto;
         $this->pproductoid=$pproducto->id;
-        $this->presupuesto_id=$pproducto->presupuesto_id;
+        $this->pedido_id=$pproducto->pedido_id;
         $this->producto_id=$pproducto->producto_id;
         $this->orden=$pproducto->orden;
         $this->visible=$pproducto->visible;
@@ -64,7 +63,7 @@ class PresupuestoProductos extends Component
     public function render(){
         $productos=Producto::where('tipo','2')->orderBy('referencia')->get();
 
-        return view('livewire.presupuesto.presupuesto-productosotros',compact('productos'));
+        return view('livewire.pedido.pedido-productosotros',compact('productos'));
     }
 
     public function UpdatedProductoId(){
@@ -90,11 +89,11 @@ class PresupuestoProductos extends Component
         if(!$this->preciototal) $this->preciototal=0;
 
         $this->validate();
-        $pprod=PresupuestoProducto::updateOrCreate([
+        $pprod=PedidoProducto::updateOrCreate([
             'id'=>$this->pproductoid
             ],
             [
-            'presupuesto_id'=>$this->presupuesto_id,
+            'pedido_id'=>$this->pedido_id,
             'producto_id'=>$this->producto_id,
             'tirada'=>$this->tirada,
             'precio_ud'=>$this->precio_ud,
@@ -112,16 +111,14 @@ class PresupuestoProductos extends Component
     {
         $this->validate();
 
-        $borrar = PresupuestoProducto::find($valorId);
+        $borrar = PedidoProducto::find($valorId);
 
         if ($borrar) {
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
         }
 
-        $this->emit('refreshpresupuesto');
-
+        $this->emit('refreshpedido');
     }
 
 }
-

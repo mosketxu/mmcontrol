@@ -15,7 +15,7 @@
                             <h3 class="pl-1 font-semibold">Datos generales</h3>
                             <input  wire:model.defer="pedidoid" type="hidden"/>
                         </div>
-                        <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                        <div class="flex flex-col mx-2 space-y-2 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>

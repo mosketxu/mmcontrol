@@ -4,8 +4,6 @@ namespace App\Http\Livewire\Presupuesto;
 
 use App\Models\PresupuestoProceso;
 
-
-
 use Livewire\Component;
 
 class PresupuestoProcesos extends Component
@@ -77,7 +75,10 @@ class PresupuestoProcesos extends Component
         if(!$this->preciototal) $this->preciototal=0;
 
         $this->validate();
-        $pprod=PresupuestoProceso::create([
+        $pprod=PresupuestoProceso::updateOrCreate([
+            'id'=>$this->pprocesoid
+            ],
+            [
             'presupuesto_id'=>$this->presupuesto_id,
             'proceso'=>$this->proceso,
             'descripcion'=>$this->descripcion,
@@ -102,6 +103,8 @@ class PresupuestoProcesos extends Component
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
         }
+
+        $this->emit('refreshpresupuesto');
     }
 
 }

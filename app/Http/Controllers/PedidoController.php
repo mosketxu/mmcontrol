@@ -95,8 +95,7 @@ class PedidoController extends Controller
 
     public function editar(Pedido $pedido,$ruta){
         $tipo=$pedido->tipo;
-        $titulo=$tipo=='1' ? 'Pedido Editorial' : 'Pedido Packaging/Propios';
-
+        $titulo=$tipo=='1' ? 'Pedido Editorial' : 'Pedido Packaging/Propio';
         return view('pedidos.edit',compact('pedido','tipo','ruta','titulo'));
     }
 

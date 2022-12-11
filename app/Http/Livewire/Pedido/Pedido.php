@@ -48,6 +48,15 @@ class Pedido extends Component
     public $contactos;
     public $productos;
     public $ofertas;
+    public $deshabilitado;
+
+
+    protected $listeners = [ 'refreshpedido'];
+
+    public function refreshpedido(){
+        $this->mount($this->pedidoid,$this->tipo,$this->ruta,$this->titulo);
+    // $this->render();
+    }
 
     protected function rules(){
         return [

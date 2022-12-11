@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Presupuesto;
 
-use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto, Presupuesto as ModelsPresupuesto, PresupuestoProducto,Caja};
+use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto, Presupuesto as ModelsPresupuesto, PresupuestoProducto, PresupuestoProceso,Caja};
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -42,6 +42,15 @@ class Presupuesto extends Component
 
     public $contactos;
     public $productos;
+
+
+    protected $listeners = [ 'refreshpresupuesto'];
+
+    public function refreshpresupuesto(){
+        $this->mount($this->presupuestoid,$this->tipo,$this->ruta,$this->titulo);
+    // $this->render();
+    }
+
 
     protected function rules(){
         return [
@@ -303,9 +312,28 @@ class Presupuesto extends Component
             $pprod=PedidoProducto::create([
                 'pedido_id'=>$pres->id,
                 'producto_id'=>$presproducto->producto_id,
-                'tiradaprevista'=>$presproducto->tirada,
-                'precio'=>$presproducto->precio_ud,
+                'tirada'=>$presproducto->tirada,
+                'precio_ud'=>$presproducto->precio_ud,
                 'preciototal'=>$presproducto->tirada * $this->precio_ud,
+                'observaciones'=>$presproducto->observaciones,
+                'visible'=>$presproducto->visible,
+                'orden'=>$presproducto->orden,
+            ]);
+        }
+
+        $presprocesos=PresupuestoProceso::where('presupuesto_id',$presupuesto->id)->get();
+
+        foreach ($presprocesos as $presproceso) {
+            $pprod=PedidoProducto::create([
+                'pedido_id'=>$pres->id,
+                'proceso'=>$presproceso->proceso,
+                'descripcion'=>$presproceso->descripcion,
+                'tirada'=>$presproceso->tirada,
+                'precio_ud'=>$presproceso->precio_ud,
+                'preciototal'=>$presproceso->tirada * $this->precio_ud,
+                'observaciones'=>$presproceso->observaciones,
+                'visible'=>$presproceso->visible,
+                'orden'=>$presproceso->orden,
             ]);
         }
 
