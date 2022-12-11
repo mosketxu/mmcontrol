@@ -12,7 +12,11 @@
                 <x-button.button  onclick="location.href = ''" color="blue" class="py-1 ">{{ __('Nuevo') }}</x-button.button>
                 <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
                 <div class="mr-5">
-                    @include('pedidos.pedido-menu' )
+                @if($tipo=='1')
+                    @include('pedidos.pedidoeditorial-menu' )
+                @else
+                    @include('pedidos.pedidootros-menu' )
+                @endif
                 </div>
             </div>
         </div>
