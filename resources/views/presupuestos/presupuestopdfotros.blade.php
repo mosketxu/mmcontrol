@@ -48,12 +48,20 @@
                     <td style="padding-left:3px;"  class="" >Cliente: <span class="font-bold"> {{ $presupuesto->facturadopor=='1' ? 'Milimétrica' : $presupuesto->cliente->entidad}} </span></td>
                     <td style="text-align: center;"  class="" ></td>
                 </tr>
+                <tr>
+                    <td>Solicitado a: <span class="font-bold">{{ $presupuesto->proveedor->entidad}} </span></td>
+                </tr>
+                <tr>
+                    <td style="padding-left:3px;"  class="" >Descripción: <span class="font-bold">{{ $presupuesto->descripcion}} </span></td>
+                </tr>
             </table>
+
+
             {{-- Productos --}}
             @if($presupuesto->presupuestoproductos->count()>0)
                 <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto" >
-                    <tr  >
-                        <td style="padding-left:3px; font-weight:bold;" colspan="2"  class="" >Productos:</td>
+                    <tr>
+                        <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="7"  class="" >Productos:</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Cod./Ref.</td>
@@ -82,7 +90,7 @@
             @if($presupuesto->presupuestoprocesos->count()>0)
             <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto">
                 <tr  >
-                    <td style="padding-left:3px; font-weight:bold;" colspan="2"  class="" >Procesos:</td>
+                    <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="3"  class="" >Procesos:</td>
                 </tr>
                 <tr>
                     <td class="font-bold">Proceso</td>
@@ -95,10 +103,23 @@
                     <td>{{ $pproceso->descripcion}}</td>
                     <td style="text-align: right;">{{ $pproceso->tirada}}</td>
                 </tr>
-
                 @endforeach
             </table>
-        @endif
+            @endif
+
+        {{-- resto --}}
+            <table width="90%" style="margin-top:10px; " class="mx-auto" cellspacing="0" cellpadding="2" >
+                <tr>
+                    <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="7"  class="" >Otros:</td>
+                </tr>
+
+                <tr>
+                    <td style="padding-left:3px;"  class="" >Transporte: <span class="font-bold">{{ $presupuesto->transporte}} </span></td>
+                </tr>
+                <tr>
+                    <td>Observaciones: <span class="font-bold">{{ $presupuesto->otros}} </span></td>
+                </tr>
+            </table>
 
         </main>
     </body>

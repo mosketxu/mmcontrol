@@ -24,7 +24,7 @@ class Pedido extends Model
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
     public function caja(){return $this->belongsTo(Caja::class,'caja_id','id')->withDefault(['caja'=>'']);}
     public function pedidoproductos(){return $this->hasMany(PedidoProducto::class,'pedido_id','id');}
-    public function pedidoprocesos(){return $this->hasMany(PresupuestoProceso::class,'pedido_id','id');}
+    public function pedidoprocesos(){return $this->hasMany(PedidoProceso::class,'pedido_id','id');}
 
     public function parciales(){return $this->hasMany(PedidoParcial::class,'pedido_id','id');}
     public function archivos(){return $this->hasMany(PedidoArchivo::class,'pedido_id','id');}

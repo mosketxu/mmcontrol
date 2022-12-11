@@ -40,9 +40,13 @@
     <!-- Wrap the content of your PDF inside a main tag -->
         <main style=" margin-right: 10px; margin-top:220px">
             <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
-                <tr  >
-                    <td style="padding-left:3px;"  class="" >Demanda de presupuesto núm. {{ $presupuesto->id }} </td>
-                    <td style="text-align: right;"  class="" >Fecha: {{ $presupuesto->fpresupuesto4}}</td>
+                <tr>
+                    <td style="padding-left:3px;"  class="" >Demanda de presupuesto núm. <span style="font-weight:bold;">{{ $presupuesto->id }} </span></td>
+                    <td style="text-align: right;"  class="" >Fecha: <span style="font-weight:bold;">{{ $presupuesto->fpresupuesto4}}</span></td>
+                </tr>
+                <tr>
+                    <td>Solicitado a: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
+                    <td></td>
                 </tr>
             </table>
             @if($presupuesto->comentario)

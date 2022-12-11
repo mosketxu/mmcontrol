@@ -14,6 +14,7 @@ use Dompdf\Dompdf;
 use \PDF;
 
 
+
 class PedidoController extends Controller
 {
     public function __construct()
@@ -62,36 +63,34 @@ class PedidoController extends Controller
     }
 
     public function entrada($pedidoid,$tipo,$ruta){
+        $pdf = new Dompdf();
         if($tipo=='1'){
             $vista='pedidos.fichaentradaeditorialpdf';
             $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;
             $pedido=Pedido::with('cliente','contacto','distribuciones')->find($pedidoid);
+            $pdf = \PDF::loadView($vista, compact('pedido','productos'));
         }else{
             $vista='pedidos.fichaentradaotrospdf';
-            // $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;//sacarlo bien
-            // $pedido=Pedido::with('cliente','contacto','productos','distribuciones')->find($pedidoid);
+            $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos')->find($pedidoid);
+            $pdf = \PDF::loadView($vista, compact('pedido'));
         }
-        $pdf = new Dompdf();
-
-
-        $pdf = \PDF::loadView($vista, compact('pedido','productos'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('pedido.pdf'); //asi lo muestra por pantalla
     }
 
-    public function presupuesto(Pedido $pedido,$ruta,$pedidopresupuestoid){
-        $presupuesto=PedidoPresupuesto::find($pedidopresupuestoid);
-        $producto=Producto::find($pedido->producto_id);
-        $proveedor=Entidad::find($presupuesto->proveedor_id);
-        $cliente=Entidad::find($pedido->cliente_id);
-        $pdf = new Dompdf();
-        $fecha=Carbon::parse($presupuesto->fecha)->format('d/m/Y');
+    // public function presupuesto(Pedido $pedido,$ruta,$pedidopresupuestoid){
+    //     $presupuesto=PedidoPresupuesto::find($pedidopresupuestoid);
+    //     $producto=Producto::find($pedido->producto_id);
+    //     $proveedor=Entidad::find($presupuesto->proveedor_id);
+    //     $cliente=Entidad::find($pedido->cliente_id);
+    //     $pdf = new Dompdf();
+    //     $fecha=Carbon::parse($presupuesto->fecha)->format('d/m/Y');
 
 
-        $pdf = \PDF::loadView('pedidos.presupuestopdf', compact('pedido','presupuesto','producto','proveedor','cliente','fecha'));
-        $pdf->setPaper('a4','portrait');
-        return $pdf->stream('presupuesto.pdf'); //asi lo muestra por pantalla
-    }
+    //     $pdf = \PDF::loadView('pedidos.presupuestopdf', compact('pedido','presupuesto','producto','proveedor','cliente','fecha'));
+    //     $pdf->setPaper('a4','portrait');
+    //     return $pdf->stream('presupuesto.pdf'); //asi lo muestra por pantalla
+    // }
 
     public function editar(Pedido $pedido,$ruta){
         $tipo=$pedido->tipo;
