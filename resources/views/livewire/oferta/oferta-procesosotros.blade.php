@@ -2,7 +2,6 @@
     <div class="">
         @include('errores')
     </div>
-
     @if($bloqueado=='0')
     {{-- Nuevo detalle --}}
     <form wire:submit.prevent="save">
@@ -17,15 +16,15 @@
                 <input type="number" wire:model.defer="orden"
                 class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
             </div>
-            {{-- producto_id --}}
-            <div class="w-2/12">
-                <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="bg-blue-100"
-                    class="w-full text-xs font-thin text-gray-500 border-none shadow-none">
-                    <option value="" >-Selecciona- </option>
-                    @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
-                    @endforeach
-                </x-selectcolor>
+            {{-- proceso --}}
+            <div class="w-3/12">
+                <input type="text" wire:model.defer="proceso"
+                class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
+            </div>
+            {{-- descripcion --}}
+            <div class="w-3/12">
+                <input type="text" wire:model.defer="descripcion"
+                class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
             </div>
             {{-- cantidad --}}
             <div class="w-1/12">
@@ -43,15 +42,10 @@
                 class="w-full pr-2 text-xs font-thin text-right text-gray-500 border-0 rounded-md"
                 disabled/>
             </div>
-            {{-- observaciones --}}
-            <div class="w-4/12 ">
-                <input type="text"  wire:model.defer="observaciones"
-                class="w-full pr-2 text-xs font-thin text-left text-gray-500 border-0 rounded-md"/>
-            </div>
             {{-- botones --}}
-            <div class="flex w-1/12 text-center">
+            <div class="flex w-1/12 space-x-1 pl-2">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
-                <x-icon.delete-a wire:click.prevent="delete({{ $pproductoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+                <x-icon.delete-a wire:click.prevent="delete({{ $pprocesoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
             </div>
         </div>
     </form>

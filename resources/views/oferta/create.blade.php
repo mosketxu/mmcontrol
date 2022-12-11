@@ -10,7 +10,7 @@
                 {{-- @include('oferta.oferta-menu' ) --}}
             </div>
             <div class="flex flex-row-reverse w-full">
-                <x-button.button  class="py-1" onclick="location.href = '{{ route('oferta.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nueva') }}</x-button.button>
+                <x-button.button  class="py-1" onclick="location.href = '{{ route('oferta.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
             </div>
         </div>
     </x-slot>

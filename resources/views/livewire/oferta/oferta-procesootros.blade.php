@@ -1,5 +1,5 @@
 <div class="py-1 ">
-    {{-- <div class="">
+    <div class="">
         @include('errores')
     </div>
     {{-- Titulos --}}
@@ -14,8 +14,13 @@
             class="w-full py-1 text-xs font-thin text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
-        <div class="w-2/12 ">
-            <input type="text" value="Producto"
+        <div class="w-3/12 ">
+            <input type="text" value="Proceso"
+            class="w-full py-1 text-xs font-thin text-gray-500 bg-blue-100 border-0 rounded-md"
+            disabled/>
+        </div>
+        <div class="w-3/12 ">
+            <input type="text" value="Descripción"
             class="w-full py-1 text-xs font-thin text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
@@ -32,11 +37,6 @@
         <div class="w-1/12">
             <input type="text" value="Total"
             class="w-full py-1 text-xs font-thin text-right text-gray-500 bg-blue-100 border-0 rounded-md"
-            disabled/>
-        </div>
-        <div class="w-4/12">
-            <input type="text" value="Observaciones"
-            class="w-full py-1 text-xs font-thin text-left text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
         <div class="w-1/12"></div>
@@ -56,15 +56,15 @@
                 <input type="number" wire:model.defer="orden"
                 class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
-            {{-- producto_id --}}
-            <div class="w-2/12">
-                <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="bg-green-100"
-                    class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-none shadow-none">
-                    <option value="" >-Selecciona- </option>
-                    @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->referencia}}</option>
-                    @endforeach
-                </x-selectcolor>
+            {{-- proceso_id --}}
+            <div class="w-3/12">
+                <input type="text" step="any" wire:model.lazy="proceso"
+                class="w-full py-1 pr-2 text-xs font-thin  text-gray-500 bg-green-100 border-0 rounded-md"/>
+            </div>
+            {{-- descripcion --}}
+            <div class="w-3/12">
+                <input type="text" step="any" wire:model.lazy="descripcion"
+                class="w-full py-1 pr-2 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
             {{-- cantidad --}}
             <div class="w-1/12">
@@ -82,11 +82,6 @@
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
                 disabled/>
             </div>
-            {{-- observaciones --}}
-            <div class="w-4/12 ">
-                <input type="text"  wire:model.defer="observaciones"
-                class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"/>
-            </div>
             {{-- botones --}}
             <div class="w-1/12 text-center">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
@@ -96,8 +91,8 @@
     @endif
 
     {{-- Lista detalles --}}
-    @forelse ($pedproductos as $pproducto)
-        @livewire('pedido.pedido-productos',['pproducto'=>$pproducto,'deshabilitado'=>$deshabilitado],key($pproducto->id))
+    @forelse ($pedprocesos as $pproceso)
+        @livewire('oferta.oferta-procesos',['pproceso'=>$pproceso,'deshabilitado'=>$deshabilitado],key($pproceso->id))
     @empty
         <div class="flex w-full text-xs text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
             <div colspan="10">

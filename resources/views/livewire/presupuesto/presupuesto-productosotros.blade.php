@@ -23,7 +23,7 @@
                     class="w-full text-xs font-thin text-gray-500 border-none shadow-none">
                     <option value="" >-Selecciona- </option>
                     @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->id }}</option>
+                    <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
                     @endforeach
                 </x-selectcolor>
             </div>

@@ -9,7 +9,6 @@ use Livewire\Component;
 class Oferta extends Component
 {
     public $ofertaid='';
-    public $tipo='';
     public $ruta='';
     public $cliente_id='';
     public $contacto_id='';
@@ -17,20 +16,34 @@ class Oferta extends Component
     public $fecha='';
     public $producto_id='';
     public $prod;
-    public $manipulacion='';
-    public $entrega='';
+    public $tipo='';
     public $acabado='';
+    public $manipulacion='';
+    public $material='';
+    public $medidas='';
+    public $impresion='';
+    public $embalaje='';
+    public $entrega='';
+    public $transporte='';
     public $observaciones='';
     public $estado='0';
 
     public $filtroisbn='';
     public $filtroreferencia='';
     public $filtrocliente='';
+    public $deshabilitado='';
 
     public $contactos;
     // public $productos;
     public $titulo='';
 
+
+    protected $listeners = [ 'refreshoferta'];
+
+    public function refreshoferta(){
+        $this->mount($this->ofertaid,$this->tipo,$this->ruta,$this->titulo);
+    // $this->render();
+    }
     protected function rules(){
         return [
             'cliente_id'=>'required',
@@ -38,9 +51,14 @@ class Oferta extends Component
             'descripcion'=>'required',
             'fecha'=>'date|required',
             'producto_id'=>'nullable',
-            'manipulacion'=>'nullable',
             'acabado'=>'nullable',
+            'manipulacion'=>'nullable',
+            'material'=>'nullable',
+            'medidas'=>'nullable',
+            'impresion'=>'nullable',
+            'embalaje'=>'nullable',
             'entrega'=>'nullable',
+            'transporte'=>'nullable',
             'observaciones'=>'nullable',
             'estado'=>'nullable',
         ];
@@ -67,18 +85,25 @@ class Oferta extends Component
 
             $this->cliente_id=$oferta->cliente_id;
             $this->contacto_id=$oferta->contacto_id;
+            $this->descripcion=$oferta->descripcion;
             $this->fecha=$oferta->fecha;
             $this->producto_id=$oferta->producto_id;
-            $this->descripcion=$oferta->descripcion;
-            $this->prod=Producto::find($oferta->producto_id);
-            $this->manipulacion=$oferta->manipulacion;
+            if($oferta->producto_id) $this->prod=Producto::find($oferta->producto_id);
+            $this->tipo=$oferta->tipo;
             $this->acabado=$oferta->acabado;
+            $this->manipulacion=$oferta->manipulacion;
+            $this->material=$oferta->material;
+            $this->medidas=$oferta->medidas;
+            $this->impresion=$oferta->impresion;
+            $this->embalaje=$oferta->embalaje;
             $this->entrega=$oferta->entrega;
+            $this->transporte=$oferta->transporte;
             $this->observaciones=$oferta->observaciones;
             $this->estado=$oferta->estado;
             if($this->cliente_id)
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         }
+
     }
 
     public function render(){
@@ -97,9 +122,9 @@ class Oferta extends Component
                 })
             ->orderBy('referencia','asc')
             ->get();
-            // dd($this->producto);
-            $vista=$this->tipo=='1' ? 'livewire.oferta.ofertaeditorial' : 'livewire.oferta.ofertaotros'  ;
-            return view($vista,compact(['entidades','clientes']));
+
+        $vista=$this->tipo=='1' ? 'livewire.oferta.ofertaeditorial' : 'livewire.oferta.ofertaotros'  ;
+        return view($vista,compact(['entidades','clientes']));
         }
 
     public function updatedClienteId(){
@@ -141,6 +166,8 @@ class Oferta extends Component
 
     public function save()
     {
+        if($this->producto_id=='') $this->producto_id=null;
+        if($this->contacto_id=='') $this->contacto_id=null;
         $mensaje="Oferta creada satisfactoriamente";
         $i="";
         if ($this->ofertaid!='') {
@@ -152,12 +179,14 @@ class Oferta extends Component
                     'required',
                     Rule::unique('ofertas', 'id')->ignore($this->ofertaid)
                 ],],);
-        }else{
-            $this->ofertaid=$this->numoferta();
-            $i=$this->ofertaid;
-            $nuevo=true;
-        }
+            }else{
+
+                $this->ofertaid=$this->numoferta();
+                $i=$this->ofertaid;
+                $nuevo=true;
+            }
         $this->validate();
+
         $ofe=ModelsOferta::updateOrCreate([
             'id'=>$i
             ],
@@ -165,21 +194,26 @@ class Oferta extends Component
             'id'=>$this->ofertaid,
             'cliente_id'=>$this->cliente_id,
             'contacto_id'=>$this->contacto_id,
-            'tipo'=>$this->tipo,
-            'fecha'=>$this->fecha,
             'descripcion'=>$this->descripcion,
+            'fecha'=>$this->fecha,
             'producto_id'=>$this->producto_id,
+            'tipo'=>$this->tipo,
+            'acabado'=>$this->acabado,
             'entrega'=>$this->entrega,
             'manipulacion'=>$this->manipulacion,
-            'acabado'=>$this->acabado,
+            'material'=>$this->material,
+            'medidas'=>$this->medidas,
+            'impresion'=>$this->impresion,
+            'embalaje'=>$this->embalaje,
+            'entrega'=>$this->entrega,
+            'transporte'=>$this->transporte,
             'observaciones'=>$this->observaciones,
             'estado'=>$this->estado,
         ]);
 
-        $oferta=ModelsOferta::find($ofe->id);
+        // dd('dfs');
+        // $oferta=ModelsOferta::find($ofe->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
         return redirect()->route('oferta.editar',[$ofe,'i']);
     }
-
-
-    }
+}

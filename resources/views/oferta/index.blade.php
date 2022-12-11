@@ -3,19 +3,11 @@
         <div class="flex">
             <div class="w-full">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    @if($tipo=='1')
-                        Presupuestos Editoriales
-                    @else
-
-                        Presupuestos Packagind/Propios
-                    @endif
+                    {{ $titulo }}
                 </h2>
             </div>
-            {{-- <div class="w-full">
-                @include('producto.producto-menu' )
-            </div> --}}
             <div class="flex flex-row-reverse w-full">
-                <x-button.button  class="py-1" onclick="location.href = '{{ route('oferta.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nueva') }}</x-button.button>
+                <x-button.button  class="py-1" onclick="location.href = '{{ route('oferta.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
             </div>
         </div>
     </x-slot>

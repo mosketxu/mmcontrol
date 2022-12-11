@@ -62,7 +62,7 @@
                     class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-none shadow-none">
                     <option value="" >-Selecciona- </option>
                     @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->referencia}}</option>
+                    <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
                     @endforeach
                 </x-selectcolor>
             </div>
@@ -97,7 +97,7 @@
 
     {{-- Lista detalles --}}
     @forelse ($pedproductos as $pproducto)
-        @livewire('pedido.pedido-productos',['pproducto'=>$pproducto,'deshabilitado'=>$deshabilitado],key($pproducto->id))
+        @livewire('oferta.oferta-productos',['pproducto'=>$pproducto,'deshabilitado'=>$deshabilitado],key($pproducto->id))
     @empty
         <div class="flex w-full text-xs text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
             <div colspan="10">

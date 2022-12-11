@@ -23,6 +23,12 @@
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
+                                    <x-jet-label >{{ __('Fecha') }}</x-jet-label>
+                                    <input  wire:model.lazy="fecha" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
                                     <x-jet-label >{{ __('Cliente') }}</x-jet-label>
                                     <x-selectcolor wire:model.lazy="cliente_id" selectname="cliente_id" color="blue" class="w-full py-1" >
                                         <option value="">-- Selecciona cliente --</option>
@@ -82,6 +88,14 @@
                                         @endif
                                     </x-selectcolor>
                                 </div>
+                            </div>
+                            <div class="w-full">
+                                <x-jet-label >{{ __('Estado') }}</x-jet-label>
+                                <x-selectcolor wire:model.lazy="estado" selectname="estado" color="blue" class="w-full py-1" >
+                                    <option value="0">En Espera</option>
+                                    <option value="1">Aceptada</option>
+                                    <option value="2">Rechazada</option>
+                                </x-selectcolor>
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">

@@ -14,32 +14,23 @@ class OfertaController extends Controller
         $this->middleware('can:producto.edit')->only('nuevo','editar');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     public function tipo($tipo)
     {
-        return view('oferta.index',compact('tipo'));
+        $titulo=$tipo=='1' ? 'Presupuesto Editorial':  'Presupuesto Packaging/Propios';
+        return view('oferta.index',compact('tipo','titulo'));
     }
 
     public function nuevo($tipo,$ruta)
     {
-        return view('oferta.create',compact('tipo','ruta'));
+        $titulo=$tipo=='1' ? 'Nuevo Presupuesto Editorial' : 'Nuevo Presupuesto Packaging/Propios';
+        return view('oferta.create',compact('tipo','ruta','titulo'));
     }
 
     public function ficha($ofertaId,$tipo){
 
         $pdf = new Dompdf();
         $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
-        $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaeotrospdf';
-
+        $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaotrospdf';
         $pdf = \PDF::loadView($vista, compact('oferta'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
@@ -61,6 +52,7 @@ class OfertaController extends Controller
     public function editar(Oferta $oferta,$ruta)
     {
         $tipo=$oferta->tipo;
-        return view('oferta.edit',compact('oferta','tipo','ruta'));
+        $titulo=$tipo=='1' ? 'Presupuesto Editorial' : 'Presupuesto Packaging/Propios';
+        return view('oferta.edit',compact('oferta','tipo','ruta','titulo'));
     }
 }
