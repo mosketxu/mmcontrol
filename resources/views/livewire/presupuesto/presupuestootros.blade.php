@@ -18,6 +18,13 @@
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
+                                    <x-jet-label for="fechapresupuesto">{{ __('Fecha presupuesto') }}</x-jet-label>
+                                    <input  wire:model.lazy="fechapresupuesto" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    {{ $deshabilitado }}/>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
                                     <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
                                     <select wire:model.lazy="cliente_id"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -92,13 +99,6 @@
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
-                            <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="fechapresupuesto">{{ __('Fecha presupuesto') }}</x-jet-label>
-                                    <input  wire:model.lazy="fechapresupuesto" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $deshabilitado }}/>
-                                </div>
-                            </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="tirada">{{ __('Cantidad') }}</x-jet-label>

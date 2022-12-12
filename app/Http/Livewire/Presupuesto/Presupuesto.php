@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Presupuesto;
 
-use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto, Presupuesto as ModelsPresupuesto, PresupuestoProducto, PresupuestoProceso,Caja};
+use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto,PedidoProceso, Presupuesto as ModelsPresupuesto, PresupuestoProducto, PresupuestoProceso,Caja};
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -324,7 +324,7 @@ class Presupuesto extends Component
         $presprocesos=PresupuestoProceso::where('presupuesto_id',$presupuesto->id)->get();
 
         foreach ($presprocesos as $presproceso) {
-            $pprod=PedidoProducto::create([
+            $pprod=PedidoProceso::create([
                 'pedido_id'=>$pres->id,
                 'proceso'=>$presproceso->proceso,
                 'descripcion'=>$presproceso->descripcion,
