@@ -61,7 +61,7 @@
                                         {{ $deshabilitado }}>
                                         <option value=''>-- Selecciona ISBN --</option>
                                         @foreach ($productos as $producto)
-                                            <option value="{{ $producto->id }}" >{{ $producto->isbn .' - '. $producto->referencia}}</option>
+                                            <option value="{{ $producto->id }}" >{{ $producto->isbn }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -74,7 +74,7 @@
                                         {{ $deshabilitado }}>
                                         <option value="">-- Selecciona Referencia --</option>
                                         @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->referencia .' - '. $producto->isbn}}</option>
+                                        <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -160,7 +160,7 @@
                                     {{ $deshabilitado }}/>
                                 </div>
                             </div>
-                            <div class="w-full form-item">
+                            {{-- <div class="w-full form-item">
                                 <div class="w-full mx-auto">
                                     <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
                                     <select wire:model.lazy="estado"
@@ -171,7 +171,7 @@
                                         <option value="2">{{ __('Cancelado') }}</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="w-full text-center form-item">
                                 @if($espedido=='1')
                                 <div class="w-full form-item">

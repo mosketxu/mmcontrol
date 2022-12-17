@@ -18,7 +18,7 @@ class Pedidos extends Component
     public $responsable;
     public $cliente_id;
     public $proveedor_id;
-    public $producto_id;
+    // public $producto_id;
     public $fechapedido;
     public $fechaarchivos;
     public $fechaplotter;
@@ -85,7 +85,6 @@ class Pedidos extends Component
             'pedido.required'=>'El número de pedido es necesario',
             'responsable.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
-            'proveedor_id.nullable'=>'',
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
             'fechapedido.required'=>'La fecha del pedido es necesaria',
             'fechaarchivos.date'=>'La fecha de los archivos debe ser válida',
@@ -113,6 +112,7 @@ class Pedidos extends Component
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
+        // dd($pedidos);
         $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoseditorial': 'livewire.pedido.pedidosotros';
         return view($vista,compact('pedidos','clientes','proveedores','meses'));
     }

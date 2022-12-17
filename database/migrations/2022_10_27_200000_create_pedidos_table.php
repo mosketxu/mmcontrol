@@ -20,7 +20,7 @@ class CreatePedidosTable extends Migration
             $table->primary('id'); //to add primary key();
             $table->integer('tipo')->default(1);
             $table->foreignId('cliente_id')->constrained('entidades');
-            $table->string('responsable');
+            $table->string('responsable')->nullable();
             $table->foreignId('presupuesto_id')->nullable()->constrained('presupuestos');
             $table->string('pedidocliente')->nullable()->index();
             $table->string('oferta_id')->nullable();

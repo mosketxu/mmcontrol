@@ -56,7 +56,7 @@ class Presupuesto extends Component
         return [
             'presupuestoid'=>'required',
             'cliente_id'=>'required',
-            'descripcion'=>'required',
+            'descripcion'=>Rule::requiredIf($this->tipo!='1'),
             'responsable'=>'nullable',
             'contacto_id'=>'nullable',
             'proveedor_id'=>'nullable',
@@ -65,7 +65,7 @@ class Presupuesto extends Component
             'preciototal'=>'nullable',
             'facturadopor'=>'required',
             'fechapresupuesto'=>'date|required',
-            'estado'=>'required',
+            'estado'=>'nullable',
             'espedido'=>'required',
             'caja_id'=>'nullable',
             'uds_caja'=>'nullable',

@@ -5,9 +5,13 @@ namespace App\Http\Livewire\Seguridad;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
+use Livewire\WithPagination;
+
 
 class Usuarios extends Component
 {
+    use WithPagination;
+
     public $titulo='Usuarios';
     public $valorcampo1='';
     public $valorcampo2='';
@@ -47,12 +51,13 @@ class Usuarios extends Component
     }
     public function render()
     {
-$valores=User::query()
+        $valores=User::query()
             ->search('name',$this->search)
             ->orSearch('email',$this->search)
             ->select('id','name as valorcampo1','email as valorcampo2','password as valorcampo3')
             ->orderBy('name')
-            ->get();
+            ->paginate(15);
+
         return view('livewire.auxiliarcard',compact('valores'));
     }
 

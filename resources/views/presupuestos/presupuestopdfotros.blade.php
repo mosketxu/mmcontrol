@@ -49,7 +49,10 @@
                     <td style="text-align: center;"  class="" ></td>
                 </tr>
                 <tr>
-                    <td>Solicitado a: <span class="font-bold">{{ $presupuesto->proveedor->entidad}} </span></td>
+                    <td>Solicitado por: <span style="font-weight:bold;">{{ $presupuesto->contacto->entidad}} </span></td>
+                </tr>
+                <tr>
+                    <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
                 </tr>
                 <tr>
                     <td style="padding-left:3px;"  class="" >Descripción: <span class="font-bold">{{ $presupuesto->descripcion}} </span></td>

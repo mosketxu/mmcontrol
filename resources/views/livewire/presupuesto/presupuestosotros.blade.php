@@ -24,7 +24,7 @@
                             <div class="w-1/12 text-right">{{ __('Cantidad') }}</div>
                             <div class="w-1/12 text-right">{{ __('Precio Ud.') }}</div>
                             <div class="w-1/12 text-right">{{ __('Precio Total') }}</div>
-                            <div class="w-1/12 text-center">{{ __('Estado') }}</div>
+                            {{-- <div class="w-1/12 text-center">{{ __('Estado') }}</div> --}}
                             <div class="w-1/12 text-center">{{ __('Pedido') }}</div>
                             <div class="w-1/12 text-left" ></div>
                         </div>
@@ -53,14 +53,14 @@
                             <div class="flex-col w-1/12 my-2 text-right">{{ $presupuesto->tirada }}</div>
                             <div class="flex-col w-1/12 my-2 text-right">{{ $presupuesto->precio_ud }}</div>
                             <div class="flex-col w-1/12 my-2 text-right">{{ $presupuesto->preciototal }}</div>
-                            <div class="flex-col w-1/12 text-right">
+                            {{-- <div class="flex-col w-1/12 text-right">
                                 <select wire:change="changeValor({{ $presupuesto }},'estado',$event.target.value)"
                                 class="w-full mx-2 text-center py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $presupuesto->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                                 <option value="0" {{ $presupuesto->estado== '0'? 'selected' : '' }}>Enviado</option>
                                 <option value="1" {{ $presupuesto->estado== '1'? 'selected' : '' }}>Aceptado</option>
                                 <option value="2" {{ $presupuesto->estado== '2'? 'selected' : '' }}>Rechazado</option>
-                            </select>
-                            </div>
+                                </select>
+                            </div> --}}
                             <div class="flex-col w-1/12 text-right">
                                 <div class="mt-2 mr-2">
                                     @if($presupuesto->pedido)

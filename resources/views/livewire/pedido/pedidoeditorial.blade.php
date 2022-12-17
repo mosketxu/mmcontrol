@@ -16,6 +16,7 @@
                             <input  wire:model.defer="pedidoid" type="hidden"/>
                         </div>
                         <div class="flex flex-col mx-2 space-y-2 md:space-y-0 md:flex-row md:space-x-4">
+                            {{-- cliente --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
@@ -27,6 +28,7 @@
                                     </x-select>
                                 </div>
                             </div>
+                            {{-- contacto --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
@@ -42,6 +44,7 @@
                                     </x-select>
                                 </div>
                             </div>
+                            {{-- oferta --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="oferta_id">{{ __('Oferta') }}</x-jet-label>
@@ -57,32 +60,36 @@
                                     </x-select>
                                 </div>
                             </div>
+                            {{-- pedido cliente --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="pedidocliente">{{ __('Pedido Cliente') }}</x-jet-label>
                                 <input  wire:model.lazy="pedidocliente" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
+                            {{-- isbn --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('ISBN/Cód.') }}</x-jet-label>
+                                    <x-jet-label >{{ __('ISBN/Cód.') }} {{ $productoeditorialid }}</x-jet-label>
                                     <x-select wire:model.lazy="productoeditorialid" selectname="productoeditorialid" class="w-full" >
                                         <option value=''>-- Selecciona ISBN --</option>
                                         @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->isbn .' - '. $producto->referencia}}</option>
+                                        <option value="{{ $producto->id }}">{{ $producto->isbn }}</option>
                                         @endforeach
                                     </x-select>
                                 </div>
                             </div>
+                            {{-- titulo --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Título/Ref.') }}</x-jet-label>
                                     <x-select wire:model.lazy="productoeditorialid" selectname="productoeditorialid" class="w-full" >
                                         <option value="">-- Selecciona Referencia --</option>
                                         @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->referencia .' - '. $producto->isbn}}</option>
+                                        <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
                                         @endforeach
                                     </x-select>
                                 </div>
                             </div>
+                            {{-- proveedor --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Proveedor') }}</x-jet-label>
@@ -94,37 +101,35 @@
                                     </x-select>
                                 </div>
                             </div>
-                            <div class="w-full form-item">
-                                <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
-                                <x-select wire:model.lazy="responsable" selectname="responsable" class="w-full" >
-                                    <option value="">-- Selecciona el responsable --</option>
-                                    <option value="Josep Maria">Josep Maria</option>
-                                    <option value="Marta">Marta</option>
-                                    <option value="Anna">Anna</option>
-                                </x-select>
-                            </div>
                         </div>
+
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                            {{-- fecha pedido --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="fechapedido">{{ __('Fecha pedido') }}</x-jet-label>
                                 <input  wire:model.lazy="fechapedido" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
+                            {{-- Fecha archivos --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="fechaarchivos">{{ __('Fecha archivos') }}</x-jet-label>
                                 <input  wire:model.lazy="fechaarchivos" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
+                            {{-- Fecha plotter --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="fechaplotter">{{ __('Fecha plotter') }}</x-jet-label>
                                 <input  wire:model.lazy="fechaplotter" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
+                            {{-- fecha entrega --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="fechaentrega">{{ __('Fecha entrega') }}</x-jet-label>
                                 <input  wire:model.lazy="fechaentrega" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
+                            {{-- muestra --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="muestra">{{ __('Muestra') }}</x-jet-label>
                                 <input  wire:model.lazy="muestra" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
+                            {{-- prueba color --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="pruebacolor">{{ __('Prueba Color') }}</x-jet-label>
                                 <input  wire:model.lazy="pruebacolor" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
@@ -148,42 +153,13 @@
                                 <input  wire:model.lazy="preciototal"  type="number" step="any" class="w-full py-1.5 text-xs bg-blue-50 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
-                            <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="facturadopor">{{ __('Factura') }}</x-jet-label>
-                                    <x-select wire:model.lazy="facturadopor" selectname="facturadopor" class="w-full" >
-                                        <option value="">- ¿Quién factura? -</option>
-                                        <option value="1">Milimetrica</option>
-                                        <option value="0">Proveedor</option>
-                                    </x-select>
-                                </div>
-                            </div>
                         {{-- </div>
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4"> --}}
                             {{-- <div class="w-full form-item">
                                 <x-jet-label for="parcial">{{ __('Parcial') }}</x-jet-label>
                                 <input  wire:model.lazy="parcial" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div> --}}
-                            <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
-                                    <x-select wire:model.lazy="estado" selectname="estado" class="w-full" >
-                                        <option value="0">{{ __('En curso') }}</option>
-                                        <option value="1">{{ __('Finalizado') }}</option>
-                                        <option value="2">{{ __('Cancelado') }}</option>
-                                    </x-select>
-                                </div>
-                            </div>
-                            <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="facturado">{{ __('Facturado') }}</x-jet-label>
-                                    <x-select wire:model.lazy="facturado" selectname="facturado" class="w-full" >
-                                        <option value="0">{{ __('No') }}</option>
-                                        <option value="1">{{ __('Sí') }}</option>
-                                        <option value="2">{{ __('Parcial') }}</option>
-                                    </x-select>
-                                </div>
-                            </div>
+                            {{-- Cajas --}}
                             <div class="w-full form-item">
                                 <div class="w-full mx-auto">
                                     <x-jet-label for="caja_id">{{ __('Caja') }}</x-jet-label>
@@ -196,18 +172,70 @@
                                     </select>
                                 </div>
                             </div>
+                            {{-- Uds x caja --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="uds_caja">{{ __('Uds x Caja') }}</x-jet-label>
                                 <input  wire:model.lazy="uds_caja" type="number" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                         </div>
+                        {{-- otros --}}
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-full form-item">
                                 <x-jet-label for="otros">{{ __('Otros') }}</x-jet-label>
-                                <textarea wire:model.defer="otros" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('observaciones') }} </textarea>
+                                <textarea wire:model.defer="otros" class="w-full text-xs border-gray-300 rounded-md" rows="1">{{ old('observaciones') }} </textarea>
                                 <input-error for="otros" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                             </div>
                         </div>
+                        <div class="p-1 rounded-md bg-blue-50">
+                            <h3 class="pl-1 font-semibold">Estado del pedido</h3>
+                            <input  wire:model.defer="pedidoid" type="hidden"/>
+                        </div>
+                        <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                            {{-- facturado por --}}
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="facturadopor">{{ __('Factura') }}</x-jet-label>
+                                    <x-select wire:model.lazy="facturadopor" selectname="facturadopor" class="w-full" >
+                                        <option value="">- ¿Quién factura? -</option>
+                                        <option value="1">Milimetrica</option>
+                                        <option value="0">Proveedor</option>
+                                    </x-select>
+                                </div>
+                            </div>
+                            {{-- responsable --}}
+                            <div class="w-full form-item">
+                                <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
+                                <x-select wire:model.lazy="responsable" selectname="responsable" class="w-full" >
+                                    <option value="">-- Selecciona el responsable --</option>
+                                    <option value="Josep Maria">Josep Maria</option>
+                                    <option value="Marta">Marta</option>
+                                    <option value="Anna">Anna</option>
+                                </x-select>
+                            </div>
+                            {{-- estado --}}
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
+                                    <x-select wire:model.lazy="estado" selectname="estado" class="w-full" >
+                                        <option value="0">{{ __('En curso') }}</option>
+                                        <option value="1">{{ __('Finalizado') }}</option>
+                                        <option value="2">{{ __('Cancelado') }}</option>
+                                    </x-select>
+                                </div>
+                            </div>
+                            {{-- facturado --}}
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="facturado">{{ __('Facturado') }}</x-jet-label>
+                                    <x-select wire:model.lazy="facturado" selectname="facturado" class="w-full" >
+                                        <option value="0">{{ __('No') }}</option>
+                                        <option value="1">{{ __('Sí') }}</option>
+                                        <option value="2">{{ __('Parcial') }}</option>
+                                    </x-select>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="p-2 m-2 ">
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">

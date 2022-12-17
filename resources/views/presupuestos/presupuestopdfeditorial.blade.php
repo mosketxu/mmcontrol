@@ -45,8 +45,10 @@
                     <td style="text-align: right;"  class="" >Fecha: <span style="font-weight:bold;">{{ $presupuesto->fpresupuesto4}}</span></td>
                 </tr>
                 <tr>
-                    <td>Solicitado a: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
-                    <td></td>
+                    <td>Solicitado por: <span style="font-weight:bold;">{{ $presupuesto->contacto->entidad}} </span></td>
+                </tr>
+                <tr>
+                    <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
                 </tr>
             </table>
             @if($presupuesto->comentario)

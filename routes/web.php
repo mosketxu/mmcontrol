@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     //caracteristicas
     Route::get('/caracteristicas/{tipo?}', function ($tipo = 'gramaje') {return view('seguridad.caracteristicas',compact('tipo'));})->middleware('can:caracteristicas.index')->name('caracteristicas');
 
+    //Roles
     Route::resource('roles', RoleController::class)->only(['edit','update'])->names('roles');
 
     //Users

@@ -57,7 +57,7 @@ class Prod extends Component
             'producto.cd'=>'nullable',
             'producto.descripcd'=>Rule::requiredIf($this->producto->cd==true),
             'producto.novedad'=>'nullable',
-            'producto.descripnovedad'=>Rule::requiredIf($this->producto->novedad==true),
+            'producto.descripnovedad'=>'nullable',
             'producto.caja_id'=>'nullable',
             'producto.udxcaja'=>'nullable|numeric',
             'producto.especiflogistica'=>'nullable',
