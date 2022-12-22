@@ -45,7 +45,6 @@ class ProductoSeeder extends Seeder
             'descripnovedad'=>'Novedad prueba',
             'caja_id'=>'1',
             'udxcaja'=>'8',
-            'especiflogistica'=>'Especificacion prueba',
             'observaciones'=>'Observaciones prueba',
         ]);
         Producto::create([
@@ -77,7 +76,6 @@ class ProductoSeeder extends Seeder
             'descripnovedad'=>'Novedad prueba 2',
             'caja_id'=>'2',
             'udxcaja'=>'3',
-            'especiflogistica'=>'Especificacion prueba 2',
             'observaciones'=>'Observaciones prueba 2',
         ]);
         Producto::create([
