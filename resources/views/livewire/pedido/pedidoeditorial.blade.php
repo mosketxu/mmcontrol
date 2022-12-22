@@ -207,9 +207,9 @@
                                 <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
                                 <x-select wire:model.lazy="responsable" selectname="responsable" class="w-full" >
                                     <option value="">-- Selecciona el responsable --</option>
-                                    <option value="Josep Maria">Josep Maria</option>
-                                    <option value="Marta">Marta</option>
-                                    <option value="Anna">Anna</option>
+                                    @foreach ($responsables as $responsable )
+                                    <option value="{{ $responsable->responsable}}">{{ $responsable->responsable}}</option>
+                                @endforeach
                                 </x-select>
                             </div>
                             {{-- estado --}}

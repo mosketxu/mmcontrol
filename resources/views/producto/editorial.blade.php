@@ -222,12 +222,6 @@
                 <x-jet-label for="udxcaja">{{ __('Uds. x caja') }}</x-jet-label>
                 <input  wire:model.lazy="producto.udxcaja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
             </div>
-            {{-- especif logistica --}}
-            <div class="w-full form-item sm:w-5/12">
-                <x-jet-label for="especiflogistica">{{ __('Especificaciónes logísticas') }}</x-jet-label>
-                <textarea wire:model.defer="producto.especiflogistica" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('especiflogistica') }} </textarea>
-                <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-            </div>
             {{-- observaciones --}}
             <div class="w-full form-item sm:w-4/12">
                 <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>

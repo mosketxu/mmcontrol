@@ -60,7 +60,6 @@ class Prod extends Component
             'producto.descripnovedad'=>'nullable',
             'producto.caja_id'=>'nullable',
             'producto.udxcaja'=>'nullable|numeric',
-            'producto.especiflogistica'=>'nullable',
             'producto.precioventa'=>'nullable|numeric',
             'producto.observaciones'=>'nullable',
             'producto.material'=>'nullable',
@@ -134,6 +133,7 @@ class Prod extends Component
     public function updatedProductoDescripguardas(){if($this->producto->descripguardas!='') $this->producto->guardas=true;}
     public function updatedProductodescripcd(){if($this->producto->descripcd!='') $this->producto->cd=true;}
     public function updatedProductoDescripsolapa(){if($this->producto->descripsolapa!='') $this->producto->solapa=true;}
+    public function updatedProductoUdxcaja(){if($this->producto->udxcaja=='') $this->producto->udxcaja='0';}
 
     public function updatedficheropdf(){
         $this->validate(['ficheropdf'=>'file|max:5000']);
@@ -168,17 +168,14 @@ class Prod extends Component
             'descripsolapa'=>$this->producto->descripsolapa,
             'descripguardas'=>$this->producto->descripguardas,
             'descripcd'=>$this->producto->descripcd,
-            'descripnovedad'=>$this->producto->descripnovedad,
 
         ],[
             'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
             'descripguardas' => Rule::requiredIf($this->producto->guardas==true),
             'descripcd' => Rule::requiredIf($this->producto->cd==true),
-            'descripnovedad' => Rule::requiredIf($this->producto->novedad==true),
         ],[
             'descripsolapa.required' => 'La descripcion de las solapas es necesaria si se ha seleccionado la opción Solapas. ',
             'descripguardas.required' => 'La descripcion de las guardas es necesaria si se ha seleccionado la opción Guardas. ',
-            'descripnovedad.required' => 'La descripcion de la novedad es necesaria si se ha seleccionado la opción Novedad. ',
             'descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
         ])->validate();
 
@@ -212,8 +209,6 @@ class Prod extends Component
             'descripnovedad'=>$this->producto->descripnovedad,
             'caja_id'=>$this->producto->caja_id,
             'udxcaja'=>$this->producto->udxcaja,
-            'especiflogistica'=>$this->producto->especiflogistica,
-            'observaciones'=>$this->producto->especiflogistica,
             'preciocoste'=>$this->producto->preciocoste,
             'precioventa'=>$this->producto->precioventa,
             'observaciones'=>$this->producto->observaciones,

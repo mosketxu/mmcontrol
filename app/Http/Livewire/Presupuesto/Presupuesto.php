@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Presupuesto;
 
-use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto,PedidoProceso, Presupuesto as ModelsPresupuesto, PresupuestoProducto, PresupuestoProceso,Caja};
+use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto,PedidoProceso, Presupuesto as ModelsPresupuesto, PresupuestoProducto, PresupuestoProceso,Caja, Responsable};
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -16,17 +16,19 @@ class Presupuesto extends Component
     public $responsable;
     public $contacto_id;
     public $proveedor_id;
-    public $tirada=0;
+    public $tirada='0';
     public $precio_ud=0;
     public $preciototal=0;
     public $facturadopor;
     public $fechapresupuesto;
     public $estado=0;
     public $espedido=0;
+    public $manipulacion='';
     public $pedido;
     public $caja_id;
     public $uds_caja=0;
     public $transporte;
+    public $especificacioneslogisticas;
     public $otros;
 
     public $productoeditorialid;
@@ -67,9 +69,11 @@ class Presupuesto extends Component
             'fechapresupuesto'=>'date|required',
             'estado'=>'nullable',
             'espedido'=>'required',
+            'manipulacion'=>'nullable',
             'caja_id'=>'nullable',
             'uds_caja'=>'nullable',
             'transporte'=>'nullable',
+            'especificacioneslogisticas'=>'nullable',
             'otros'=>'nullable',
             'productoeditorialid'=>'required_if:tipo,1'
         ];
@@ -111,10 +115,12 @@ class Presupuesto extends Component
             $this->preciototal=$presupuesto->preciototal;
             $this->estado=$presupuesto->estado;
             $this->espedido=$presupuesto->espedido;
+            $this->manipulacion=$presupuesto->manipulacion;
             $this->pedido=$presupuesto->pedido;
             $this->caja_id=$presupuesto->caja_id;
             $this->uds_caja=$presupuesto->uds_caja;
             $this->transporte=$presupuesto->transporte;
+            $this->especificacioneslogisticas=$presupuesto->especificacioneslogisticas;
             $this->otros=$presupuesto->otros;
             if ($this->cliente_id) {
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
@@ -141,9 +147,11 @@ class Presupuesto extends Component
             ->orderBy('referencia', 'asc')
             ->get();
 
+        $responsables=Responsable::all();
+
         $vista=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoeditorial' : 'livewire.presupuesto.presupuestootros' ;
 
-        return view($vista, compact(['entidades','clientes','proveedores','cajas']));
+        return view($vista, compact(['entidades','clientes','proveedores','responsables','cajas']));
     }
 
     public function updatedClienteId(){
@@ -162,13 +170,17 @@ class Presupuesto extends Component
         if($resp->responsable!='') $this->responsable=$resp->responsable;
     }
 
+    public function tiradanum($tirada){
+        return is_numeric($tirada) ? $tirada : 0;
+    }
+
     public function updatedProductoeditorialid(){
         if ($this->productoeditorialid=='') {
             $this->precio_ud=0;
         } else {
             $p=Producto::find($this->productoeditorialid);
             $this->precio_ud=$p->precio_ud;
-            $this->preciototal=$p->precio_ud * $p->tirada;
+            $this->preciototal=$p->precio_ud * $this->tiradanum($p->tirada);
             $this->caja_id=$p->caja_id;
             $this->uds_caja=$p->udxcaja;
         }
@@ -176,7 +188,7 @@ class Presupuesto extends Component
 
     public function updatedPrecioUd(){
         $this->precio_ud= $this->precio_ud=='' ? $this->precio_ud=0 : $this->precio_ud;
-        $this->preciototal= $this->precio_ud * $this->tirada;
+        $this->preciototal= $this->precio_ud * $this->tiradanum($this->tirada);
     }
 
     public function updatedPreciototal(){
@@ -184,8 +196,7 @@ class Presupuesto extends Component
     }
 
     public function updatedTirada(){
-        $this->tirada= $this->tirada=='' ? $this->tirada=0 : $this->tirada;
-        $this->preciototal= $this->preciototal=='' ? $this->preciototal=0 : $this->preciototal;
+        $this->preciototal= $this->precio_ud * $this->tiradanum($this->tirada);
     }
 
     public function updatedCajaId(){
@@ -226,6 +237,7 @@ class Presupuesto extends Component
 
         if($this->tipo=='2') Validator::make(['descripcion'=>$this->descripcion,],['descripcion' => 'required',],['descripcion.required'=>'La descripción es necesaria.'])->validate();
 
+        // Esto lo hago tanto para Editorial como para Packaging
         $presup=ModelsPresupuesto::updateOrCreate(
             [
             'id'=>$i
@@ -241,19 +253,21 @@ class Presupuesto extends Component
             'tirada'=>$this->tirada,
             'facturadopor'=>$this->facturadopor,
             'fechapresupuesto'=>$this->fechapresupuesto,
-            'tirada'=>$this->tirada,
             'precio_ud'=>$this->precio_ud,
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
             'espedido'=>$this->espedido,
+            'manipulacion'=>$this->manipulacion,
             'pedido'=>$this->pedido,
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$this->uds_caja,
             'transporte'=>$this->transporte,
+            'especificacioneslogisticas'=>$this->especificacioneslogisticas,
             'otros'=>$this->otros,
         ]
         );
 
+        // Esto solo para editorial ya que debo crear el producto en la lista de los productos del presupuesto
         if ($this->tipo=='1') {
             $presupprod=PresupuestoProducto::updateOrCreate(
                 [
@@ -264,7 +278,7 @@ class Presupuesto extends Component
                 'producto_id'=>$this->productoeditorialid,
                 'tirada'=>$this->tirada,
                 'precio_ud'=>$this->precio_ud,
-                'preciototal'=>$this->tirada * $this->precio_ud,
+                'preciototal'=>$this->tiradanum($this->tirada) * $this->precio_ud,
 
             ]
             );
@@ -294,15 +308,16 @@ class Presupuesto extends Component
             'proveedor_id'=>$presupuesto->proveedor_id ,
             'facturadopor'=>$presupuesto->facturadopor,
             'fechapedido'=>$fechapedido,
-            'tiradaprevista'=>$presupuesto->tirada,
+            'tiradaprevista'=>$this->tiradanum($presupuesto->tirada) ,
             'tiradareal'=>'0',
             'precio'=>$presupuesto->precio_ud ? $presupuesto->precio_ud : '0' ,
-            'preciototal'=>$presupuesto->precio_ud * $presupuesto->tirada,
+            'preciototal'=>$presupuesto->precio_ud * $this->tiradanum($presupuesto->tirada),
             'estado'=>'0',
             'facturado'=>'0',
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$presupuesto->uds_caja,
             'transporte'=>$presupuesto->transporte,
+            'especificacioneslogisticas'=>$presupuesto->especificacioneslogisticas,
             'otros'=>$presupuesto->otros,
         ]);
 
@@ -314,7 +329,7 @@ class Presupuesto extends Component
                 'producto_id'=>$presproducto->producto_id,
                 'tirada'=>$presproducto->tirada,
                 'precio_ud'=>$presproducto->precio_ud,
-                'preciototal'=>$presproducto->tirada * $this->precio_ud,
+                'preciototal'=> $this->tiradanum($presproducto->tirada) * $this->precio_ud,
                 'observaciones'=>$presproducto->observaciones,
                 'visible'=>$presproducto->visible,
                 'orden'=>$presproducto->orden,
@@ -330,7 +345,7 @@ class Presupuesto extends Component
                 'descripcion'=>$presproceso->descripcion,
                 'tirada'=>$presproceso->tirada,
                 'precio_ud'=>$presproceso->precio_ud,
-                'preciototal'=>$presproceso->tirada * $this->precio_ud,
+                'preciototal'=>$this->tiradanum($presproceso->tirada) * $this->precio_ud,
                 'observaciones'=>$presproceso->observaciones,
                 'visible'=>$presproceso->visible,
                 'orden'=>$presproceso->orden,

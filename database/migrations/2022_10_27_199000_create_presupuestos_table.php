@@ -23,7 +23,7 @@ class CreatePresupuestosTable extends Migration
             $table->foreignId('contacto_id')->nullable()->constrained('entidades');
             $table->foreignId('proveedor_id')->nullable()->constrained('entidades');
             $table->integer('facturadopor')->default('1');
-            $table->bigInteger('tirada')->default(0);
+            $table->string('tirada')->default('0');
             $table->double('precio_ud', 15, 2)->nullable()->default(0.00);
             $table->double('preciototal', 15, 2)->nullable()->default(0.00);
             $table->date('fechapresupuesto');
@@ -32,7 +32,9 @@ class CreatePresupuestosTable extends Migration
             $table->bigInteger('pedido')->nullable();
             $table->foreignId('caja_id')->nullable()->constrained('cajas')->onDelete('cascade');
             $table->string('uds_caja')->nullable();
+            $table->string('manipulacion')->nullable();
             $table->string('transporte')->nullable();
+            $table->string('especificacioneslogisticas')->nullable();
             $table->string('otros')->nullable();
             $table->timestamps();
         });

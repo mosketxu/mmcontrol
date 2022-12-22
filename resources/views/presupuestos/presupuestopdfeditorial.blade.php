@@ -65,9 +65,9 @@
             <div class="" style="margin-top:40px; ">
                 <table width="80%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
                     <tr  >
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1" >Cliente</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1" >Cliente </td>
                         <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">
-                            {{ $producto->facturadopor!='1' ? 'Milimetrica' : $producto->cliente->entidad }}
+                            {{ $presupuesto->facturadopor=='1' ? 'Milimetrica' : $presupuesto->cliente->entidad }}
                         </td>
                     </tr>
                     <tr style="">
@@ -162,13 +162,27 @@
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Modelo Caja</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->caja->name ?? ''}}</td>
                     </tr>
+                    @if($presupuesto->uds_caja>0)
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Uds x Caja</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->uds_caja }}</td>
+                    </tr>
+                    @endif
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Manipulación</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->manipulacion }}</td>
+                    </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Distribución</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->transporte }}</td>
+                    </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Especificaciones logísticas</td>
-                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->especiflogistica }}</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->especificacioneslogisticas }}</td>
                     </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Otros</td>
-                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->observaciones }}</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->otros }}</td>
                     </tr>
                 </table>
                 {{-- @include('producto.ficha') --}}

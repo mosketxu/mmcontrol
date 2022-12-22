@@ -73,9 +73,9 @@
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{ $deshabilitado }}>
                                         <option value="">-- Selecciona el responsable --</option>
-                                        <option value="Josep Maria">Josep Maria</option>
-                                        <option value="Marta">Marta</option>
-                                        <option value="Anna">Anna</option>
+                                        @foreach ($responsables as $responsable )
+                                            <option value="{{ $responsable->responsable}}">{{ $responsable->responsable}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                                     {{ $deshabilitado }}/>
                                 </div>
                             </div>
-                            {{-- <div class="w-full form-item">
+                            <div class="w-full form-item">
                                 <div class="w-full mx-auto">
                                     <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
                                     <select wire:model.lazy="estado"
@@ -138,7 +138,7 @@
                                         <option value="2">{{ __('Cancelado') }}</option>
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
                             <div class="w-full text-center form-item">
                                 @if($espedido=='1')
                                 <div class="w-full form-item">

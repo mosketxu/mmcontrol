@@ -14,7 +14,7 @@
                             <h3 class="pl-1 font-semibold">Datos generales</h3>
                             <input  wire:model.defer="pedidoid" type="hidden"/>
                         </div>
-                        <div class="flex flex-col mx-2   md:flex-row md:space-x-4">
+                        <div class="flex flex-col mx-2 md:flex-row md:space-x-4">
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
@@ -75,9 +75,9 @@
                                 <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
                                 <x-select wire:model.lazy="responsable" selectname="responsable" class="w-full" >
                                     <option value="">-- Selecciona el responsable --</option>
-                                    <option value="Josep Maria">Josep Maria</option>
-                                    <option value="Marta">Marta</option>
-                                    <option value="Anna">Anna</option>
+                                    @foreach ($responsables as $responsable )
+                                      <option value="{{ $responsable->responsable}}">{{ $responsable->responsable}}</option>
+                                    @endforeach
                                 </x-select>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pb-1 px-1 mx-1 ">
+                    <div class="px-1 pb-1 mx-1 ">
                         <div class="flex flex-col mx-2 md:flex-row md:space-x-4">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
                             <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>

@@ -17,7 +17,7 @@ class CreatePresupuestoProductosTable extends Migration
             $table->id();
             $table->foreignId('presupuesto_id')->constrained('presupuestos')->onDelete('cascade');
             $table->foreignId('producto_id')->constrained('productos');
-            $table->bigInteger('tirada')->default(0);
+            $table->string('tirada')->default('0');
             $table->double('precio_ud', 15, 2)->nullable()->default(0.00);
             $table->double('preciototal', 15, 2)->nullable()->default(0.00);
             $table->string('observaciones')->nullable();

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Entidad;
 
-use App\Models\{Entidad, EntidadContacto, EntidadTipo,  MetodoPago,Pais,Provincia, User};
+use App\Models\{Entidad, EntidadContacto, EntidadTipo,  MetodoPago,Pais,Provincia, Responsable};
 // use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
@@ -78,10 +78,11 @@ class Ent extends Component
         $contacto=$this->contacto;
         $this->contactoId=$contacto->id;
 
+        $responsables=Responsable::all();
         $metodopagos=MetodoPago::all();
         $provincias=Provincia::all();
         $paises=Pais::all();
-        return view('livewire.entidad.ent',compact('metodopagos','provincias','paises'));
+        return view('livewire.entidad.ent',compact('responsables','metodopagos','provincias','paises'));
     }
 
     public function save(){

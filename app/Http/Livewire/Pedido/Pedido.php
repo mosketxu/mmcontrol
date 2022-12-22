@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, PedidoProducto};
+use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, PedidoProducto, Responsable};
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -175,8 +175,11 @@ class Pedido extends Component
                 })
             ->orderBy('referencia','asc')
             ->get();
+
+            $responsables=Responsable::all();
+
         $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoeditorial' : 'livewire.pedido.pedidootros';
-        return view($vista,compact(['entidades','clientes','proveedores','cajas']));
+        return view($vista,compact(['entidades','clientes','proveedores','responsables','cajas']));
     }
 
     public function updatedClienteId(){

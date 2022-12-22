@@ -41,7 +41,6 @@ class CreateProductosTable extends Migration
             $table->string('descripnovedad')->nullable();
             $table->foreignId('caja_id')->nullable()->constrained('cajas')->onDelete('cascade');
             $table->integer('udxcaja')->nullable()->default(0);
-            $table->string('especiflogistica')->nullable();
             $table->double('preciocoste', 15, 2)->nullable()->default(0.00);
             $table->double('precioventa', 15, 2)->nullable()->default(0.00);
             $table->string('material')->nullable();
