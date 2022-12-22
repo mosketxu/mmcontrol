@@ -79,7 +79,6 @@
             </div>
             {{-- Pedido_id --}}
             <div class="w-2/12">
-                {{-- <x-selectcolor wire:model.lazy="pedido_id" selectname="pedido_id" color="bg-green-100" --}}
                 <x-selectcolor wire:model.lazy="pedido_id" selectname="pedido_id" color="bg-green-100"
                     class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-none shadow-none">
                     <option value="" >-Selecciona- </option>
