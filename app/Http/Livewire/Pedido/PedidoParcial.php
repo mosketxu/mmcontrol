@@ -19,8 +19,7 @@ class PedidoParcial extends Component
     public $tipo;
     // public $pedidoparcial;
 
-    protected function rules()
-    {
+    protected function rules(){
         return [
             'parcial.fecha'=>'date|required',
             'parcial.cantidad'=>'nullable|numeric',
@@ -37,8 +36,7 @@ class PedidoParcial extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'parcial.fecha.required'=>'La Fecha es necesaria',
             'parcial.fecha.date'=>'La Fecha debe ser válida',
@@ -47,8 +45,7 @@ class PedidoParcial extends Component
             'parcial.destino.required'=>'El destino es necesario',
         ];
     }
-    public function mount($pedidoid,$ruta,$tipo,$parcialid)
-    {
+    public function mount($pedidoid,$ruta,$tipo,$parcialid){
 
         $this->pedido=Pedido::find($pedidoid);
         $this->parcial=ModelsPedidoParcial::find($parcialid);
@@ -56,8 +53,7 @@ class PedidoParcial extends Component
         $this->tipo=$tipo;
     }
 
-    public function render()
-    {
+    public function render(){
         $entidad=Entidad::find($this->pedido->cliente_id);
         $destinos=EntidadDestino::where('entidad_id',$this->pedido->cliente_id)->get();
         return view('livewire.pedido.pedido-parcial',compact('entidad','destinos'));

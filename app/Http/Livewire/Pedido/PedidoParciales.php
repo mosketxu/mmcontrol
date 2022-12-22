@@ -90,8 +90,7 @@ class PedidoParciales extends Component
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
-    protected function rules()
-    {
+    protected function rules(){
         return [
             'valorcampofecha'=>'required||date',
             'valorcampo2'=>'nullable',
@@ -101,15 +100,13 @@ class PedidoParciales extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'fecha.required'=>'La fecha es necesaria',
         ];
     }
 
-    public function mount($pedidoid,$ruta,$tipo)
-    {
+    public function mount($pedidoid,$ruta,$tipo){
         $this->valorcampofecha=now()->format('Y-m-d');
         $this->pedido=Pedido::find($pedidoid);
         $this->tipo=$tipo;
@@ -119,6 +116,7 @@ class PedidoParciales extends Component
 
     public function render(){
         $valores=ModelsPedidoParcial::query()
+        ->where('pedido_id',$this->pedido->id)
         ->search('comentario',$this->search)
         ->select('id','id as valorcampo2','fecha as valorcampofecha','cantidad as valorcampo3','importe as valorcampo4','comentario as valorcampo5')
         ->orderBy('fecha')

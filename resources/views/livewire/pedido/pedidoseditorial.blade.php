@@ -86,7 +86,7 @@
                                 <x-icon.sandwatch-a class="w-4 mt-1 text-brown-500 hover:text-brown-700 " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos"/>
                                 <x-icon.triangleexclamation-a class="w-6 mt-1 text-yellow-500 hover:text-yellow-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias"/>
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
-                                <x-icon.building-circle-arrow-right-a class="w-5 my-2 text-gray-500 hover:text-gray-900 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Distribuciones"/>
+                                <x-icon.building-circle-arrow-right-a class="w-5 my-2 text-gray-500 hover:text-gray-900 " onclick="location.href = '{{route('pedido.distribuciones',[$pedido->id,'i'])}}'" title="Distribuciones"/>
                                 <x-icon.truck-a class="w-5 my-2 text-pink-500 hover:text-pink-700 " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes"/>
                                 <x-icon.edit-a class="" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Editar"/>
                             </div>

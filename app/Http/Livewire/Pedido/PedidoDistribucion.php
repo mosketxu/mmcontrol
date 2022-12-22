@@ -121,6 +121,7 @@ class PedidoDistribucion extends Component
     public function render()
     {
         $valores=ModelsPedidoDistribucion::query()
+        ->where('pedido_id',$this->pedido->id)
         ->search('comentario',$this->search)
         ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
         ->orderBy('fecha')

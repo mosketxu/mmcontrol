@@ -119,9 +119,7 @@
                             @if($tipocampo4 =="textarea")
                                 <textarea  rows="4" cols="{{ $colstextarea4 }}"
                                     wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"
-                                    class="block text-xs font-thin text-left text-gray-500 border-0 rounded-md">
-                                    {{ $valor->valorcampo4 }}
-                                </textarea>
+                                    class="block text-xs font-thin text-left text-gray-500 border-0 rounded-md">{{ $valor->valorcampo4 }}</textarea>
                             @else
                             <input type="{{ $tipocampo4 }}" value="{{ $valor->valorcampo4 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"
@@ -239,8 +237,7 @@
                                     @if($tipocampo4 =="textarea")
                                         <textarea  rows="4" cols="{{ $colstextarea4 }}"
                                             wire:model.defer="valorcampo4"
-                                            class="block text-xs font-thin text-gray-500 border-0 rounded-md">
-                                    </textarea>
+                                            class="block text-xs font-thin text-gray-500 border-0 rounded-md"></textarea>
                                 @else
                                     <input type="{{ $tipocampo4 }}" wire:model.defer="valorcampo4"
                                     class="w-full text-xs {{ $textcampo4 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
