@@ -327,7 +327,7 @@ class Presupuesto extends Component
             $pprod=PedidoProducto::create([
                 'pedido_id'=>$pres->id,
                 'producto_id'=>$presproducto->producto_id,
-                'tirada'=>$presproducto->tirada,
+                'tirada'=>$this->tiradanum($presproducto->tirada),
                 'precio_ud'=>$presproducto->precio_ud,
                 'preciototal'=> $this->tiradanum($presproducto->tirada) * $this->precio_ud,
                 'observaciones'=>$presproducto->observaciones,
