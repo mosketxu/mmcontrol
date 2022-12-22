@@ -63,10 +63,14 @@
                         <tr><td colspan="2" class="font-bold">Cliente: {{ $oferta->cliente->entidad }}</td></tr>
                         <tr><td colspan="2" class="font-bold"><br>Att: {{ $oferta->contacto->entidad }}</td></tr>
                         <tr><td colspan="2"><br>Con la presente y en base a su solicitud, le presento nuestra mejor oferta de:</td></tr>
-                        <tr><td colspan="2" class="font-bold"><br> REF: {{ $oferta->referencia }}</td></tr>
+                        <tr><td colspan="2">{{ $oferta->descripcion }}</td></tr>
                      </table>
 
                      <table width=90% class="mx-auto mt-1 text-sm " style="color:rgb(30, 27, 27);">
+                        <tr>
+                            <td width=20% class="font-bold" style="padding-top:8px"  >Ref:</td>
+                            <td width=80%  class="font-bold"  style="padding-top:8px"  style="padding-top:8px">{{ $oferta->ofertaproducto->referencia }}</td>
+                        </tr>
                         <tr>
                             <td width=20% class="font-bold" style="padding-top:8px"  >Formato:</td>
                             <td width=80%  class=""  style="padding-top:8px"  style="padding-top:8px">{{ $oferta->ofertaproducto->formato }}</td>

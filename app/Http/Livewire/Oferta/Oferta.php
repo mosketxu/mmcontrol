@@ -42,15 +42,16 @@ class Oferta extends Component
 
     public function refreshoferta(){
         $this->mount($this->ofertaid,$this->tipo,$this->ruta,$this->titulo);
-    // $this->render();
     }
+
     protected function rules(){
         return [
+            'ofertaid'=>'nullable',
             'cliente_id'=>'required',
             'contacto_id'=>'nullable',
-            'descripcion'=>'required',
+            'descripcion'=>'required_if:tipo,2',
             'fecha'=>'date|required',
-            'producto_id'=>'nullable',
+            'producto_id'=>'required_if:tipo,1',
             'acabado'=>'nullable',
             'manipulacion'=>'nullable',
             'material'=>'nullable',
@@ -64,14 +65,13 @@ class Oferta extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
-            'cliente_id'=>'El cliente es necesario',
-            'producto_id'=>'El producto es necesario',
-            'descripcion'=>'La descripción es necesaria',
-            'fecha'=>'La fecha es necesaria',
-            'fecha'=>'La fecha debe ser válida',
+            'cliente_id.required'=>'El cliente es necesario',
+            'producto_id.required_if'=>'El producto es necesario',
+            'descripcion.required_if'=>'La descripción es necesaria',
+            'fecha.required'=>'La fecha es necesaria',
+            'fecha.required'=>'La fecha debe ser válida',
         ];
     }
 
@@ -127,7 +127,8 @@ class Oferta extends Component
         return view($vista,compact(['entidades','clientes']));
         }
 
-    public function updatedClienteId(){
+
+        public function updatedClienteId(){
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         if(!$this->fecha) $this->fecha=now()->format('Y-m-d');
         $this->productos=Producto::query()
@@ -159,33 +160,24 @@ class Oferta extends Component
     public function numoferta(){
         $anyo= substr($this->fecha, 0,4);
         $anyo2= substr($anyo, -2);
-        $ped=ModelsOferta::whereYear('fecha', $anyo)->max('id') ;
-            return !isset($ped) ? ($anyo2 * 100000 +1) :$ped + 1 ;
-        // }
+        $ofe=ModelsOferta::whereYear('fecha', $anyo)->max('id') ;
+        return !isset($ofe) ? ($anyo2 * 100000 +1) :$ofe + 1 ;
     }
 
     public function save()
     {
         if($this->producto_id=='') $this->producto_id=null;
         if($this->contacto_id=='') $this->contacto_id=null;
+        $this->validate();
         $mensaje="Oferta creada satisfactoriamente";
         $i="";
         if ($this->ofertaid!='') {
             $i=$this->ofertaid;
             $mensaje="Oferta actualizada satisfactoriamente";
-            $nuevo=false;
-            $this->validate([
-                'ofertaid'=>[
-                    'required',
-                    Rule::unique('ofertas', 'id')->ignore($this->ofertaid)
-                ],],);
-            }else{
-
-                $this->ofertaid=$this->numoferta();
-                $i=$this->ofertaid;
-                $nuevo=true;
-            }
-        $this->validate();
+        }else{
+            $this->ofertaid=$this->numoferta();
+            $i=$this->ofertaid;
+        }
 
         $ofe=ModelsOferta::updateOrCreate([
             'id'=>$i
@@ -211,8 +203,7 @@ class Oferta extends Component
             'estado'=>$this->estado,
         ]);
 
-        // dd('dfs');
-        // $oferta=ModelsOferta::find($ofe->id);
+
         $this->dispatchBrowserEvent('notify', $mensaje);
         return redirect()->route('oferta.editar',[$ofe,'i']);
     }

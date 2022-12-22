@@ -24,7 +24,7 @@ class OfertaDetalles extends Component
         return [
             'oferta_id'=>'required',
             'titulo'=>'nullable',
-            'concepto'=>'required',
+            'concepto'=>'nullable',
             'cantidad'=>'required|numeric',
             'importe'=>'required|numeric',
             'total'=>'required|numeric',
