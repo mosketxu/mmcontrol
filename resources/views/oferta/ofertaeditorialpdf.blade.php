@@ -100,7 +100,10 @@
                                         <span class="font-bold"> Composición: </span> {{ $oferta->ofertaproducto->materialcubierta }} - {{ $oferta->ofertaproducto->gramajecubierta }} gr
                                     </div>
                                     <div class="">
-                                        <span class="font-bold">Impresión:</span> {{ $oferta->cubiertaimpresion }}
+                                        <span class="font-bold">Impresión:</span> {{ $oferta->ofertaproducto->tintacubierta }}
+                                    </div>
+                                    <div class="">
+                                        <span class="font-bold">Plastificado:</span> {{ $oferta->ofertaproducto->plastificado }}
                                     </div>
                                 </div>
                             </td>
@@ -117,10 +120,6 @@
                             <td width=80% class="" style="padding-top:8px" >
                                 {{ $oferta->ofertaproducto->descripguardas }}
                             </td>
-                        </tr>
-                        <tr>
-                            <td width=20% class="font-bold "  style="padding-top:8px">Acabado:</td>
-                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->acabado }}</td>
                         </tr>
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Manipulación:</td>

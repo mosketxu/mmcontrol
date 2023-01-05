@@ -150,7 +150,7 @@ class Prod extends Component
                     Rule::unique('productos','referencia')->ignore($this->producto->id)
                     ],
                 'producto.isbn'=>[
-                    'required',
+                    'nullable',
                     Rule::unique('productos','isbn')->ignore($this->producto->id)
                     ],
 

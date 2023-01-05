@@ -38,7 +38,7 @@
                                 <div class="w-full form-item">
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
                                     @if($bloqueado=='0')
-                                    <x-selectcolor wire:model.defer="contacto_id" selectname="contacto_id" class="w-full py-1" >
+                                    <x-selectcolor wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full py-1" >
                                        @if (isset($contactos))
                                             <option value="">-- Selecciona un contacto --</option>
                                             @foreach ($contactos as $contacto)

@@ -78,39 +78,13 @@
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Fecha de entrega</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->fentrega4 }}</td>
                         </tr>
-                        <tr style="">
+                        {{-- <tr style="">
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Muestra</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->muestra }}</td>
-                        </tr>
+                        </tr> --}}
                         <tr style="">
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Prueba color</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->pruebacolor }}</td>
-                        </tr>
-                        <tr style="">
-                            {{-- <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Parciales</td>
-                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2"> --}}
-                                @if($pedido->parciales->count()>0)
-                                    @foreach ($pedido->parciales as $parcial )
-                                        @if($loop->index>0)
-                                        <div style=" border-top:solid ;  border-top-width: .6; border-color: gray">
-                                        @else
-                                        <div style=" ">
-                                        @endif
-                                            <div style="display: flex; ">
-                                                <div style="display: flex">
-                                                    {{ $parcial->ffecha }} - {{ $parcial->cantidad }} uds
-                                                </div>
-                                            </div>
-                                            @if($parcial->comentario!='')
-                                            <div class="">
-                                                {{ $parcial->comentario }}
-
-                                            </div>
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                @endif
-                            </td>
                         </tr>
                         @foreach ($pedido->distribuciones as $distribucion )
                         <tr>
@@ -121,20 +95,6 @@
                             </td>
                         </tr>
                         @endforeach
-                        {{-- <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Packing list</td>
-                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">definir</td>
-                        </tr> --}}
-                        {{-- @if($pedido->archivos->count()>0)
-                        <tr>
-                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Archivos</td>
-                            <td style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
-                                @foreach ($pedido->archivos as $archivo )
-                                    <p>Fecha: {{ $archivo->nombrearchivooriginal }} / &nbsp; {{ $archivo->comentario }} </p>
-                                @endforeachif
-                            </td>
-                        </tr>
-                        @endforeach --}}
                         <tr style="">
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Otros</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->otros }}</td>

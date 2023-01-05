@@ -64,7 +64,7 @@
                                 <p>Fra Num: {{ $factura->id }}</p>
                                 <p>Fecha: {{ $factura->ffactura4 }}</p>
                                 <p>Su pedido:  {{ $factura->pedidocliente }} </p>
-                                <p>Solicitado por: {{ $factura->contacto->entidad }}</p>
+                                <p>Solicitado por: {{ $factura->contacto->entidad ?? ''}}</p>
                             </td>
                         </tr>
                     </table>

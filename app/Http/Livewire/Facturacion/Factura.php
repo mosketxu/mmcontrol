@@ -94,6 +94,8 @@ class Factura extends Component
         $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$this->cliente_id)->where('estado','<>','1')->where('pedidocliente','<>','')->groupBy('pedidocliente')->get();
     }
 
+    public function updatedContactoId(){if($this->contacto_id=='') $this->contacto_id=null;}
+
     public function numfactura(){
         $anyo= substr($this->fecha, 0,4);
         $anyo2= substr($anyo, -2);
@@ -104,7 +106,7 @@ class Factura extends Component
     public function save(){
 
         $mensaje="Factura creada satisfactoriamente";
-        $i="";
+$i="";
         $this->validate();
         if ($this->facturaid!='') {
             $i=$this->facturaid;

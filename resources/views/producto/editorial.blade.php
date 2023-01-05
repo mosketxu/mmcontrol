@@ -9,7 +9,7 @@
             {{-- isbn --}}
             <div class="w-full form-item sm:w-2/12">
                 <x-jet-label for="isbn">{{ __('ISBN') }}</x-jet-label>
-                <input wire:model.lazy="producto.isbn" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
+                <input wire:model.lazy="producto.isbn" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
             </div>
             {{-- titulo --}}
             <div class="w-full form-item sm:w-4/12">
