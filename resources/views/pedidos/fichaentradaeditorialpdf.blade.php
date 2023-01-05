@@ -7,13 +7,6 @@
         <link rel="stylesheet" href="{{ asset('css/app.css')}}">
 
 
-{{--
-
-    falta poner manual:
-        solicitado por
-        nuestro presuesto
-    --}}
-
         {{-- sobreescribo margenes de app.css --}}
         <style>
             @page {margin: 20px 0px 0px 0px;}

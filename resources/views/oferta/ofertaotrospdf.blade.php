@@ -74,9 +74,9 @@
                         </tr>
                     </table>
 
-                    <table width=80% class="mx-auto mt-1 text-sm " style="color:rgb(30, 27, 27);">
+                    <table width=80% class="mx-auto mt-4 text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
-                            <td width=20% class="font-bold" style="padding-top:8px"  >Material:</td>
+                            <td width=20% class="font-bold" style=""  >Material:</td>
                             <td width=80% >{{ $oferta->material}}</td>
                         </tr>
                         <tr>
@@ -85,11 +85,11 @@
                         </tr>
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Impresión:</td>
-                            <td width=80% >{{ $oferta->impresión}}</td>
+                            <td width=80% >{{ $oferta->impresion}}</td>
                         </tr>
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Acabados:</td>
-                            <td width=80% >{{ $oferta->acabados}}</td>
+                            <td width=80% >{{ $oferta->acabado}}</td>
                         </tr>
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Embalaje:</td>
@@ -105,17 +105,19 @@
                     <div class="py-0 space-y-2">
                         <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
                             <tr>
-                                <td width=51% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Producto</td>
-                                <td width=17% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Material</td>
-                                <td width=17% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
-                                <td width=17% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
+                                <td width=40% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Producto</td>
+                                <td width=30% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Material</td>
+                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
+                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
                             </tr>
                             @foreach($oferta->ofertaproductos as $oproducto)
                             <tr>
-                                <td width=51% class="pl-2" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproducto->producto->referencia}}</td>
-                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->producto->material }}</td>
-                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
-                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
+                                <td width=30% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproducto->producto->referencia}}</td>
+                                <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->producto->material }}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->precio_ud ,2)}}</td>
                             </tr>
                             @endforeach
                         </table>
@@ -123,25 +125,36 @@
                     @endif
 
                     @if($oferta->ofertaprocesos->count()>0)
-                    <div class="py-0 space-y-2">
+                    <div class="py-0 space-y-2 text-xs">
                         <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
                             <tr>
-                                <td width=51% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Proceso</td>
-                                <td width=17% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Descripcion</td>
-                                <td width=17% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
-                                <td width=17% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
+                                <td width=20% class="pl-2 font-bold text-xs " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Proceso</td>
+                                <td width=30% class="pl-2 font-bold text-xs text-left " style="border-style: solid;border-width: .6;border-color: gray">Descripcion</td>
+                                <td width=10% class="pr-2 font-bold text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                                <td width=10% class="pr-2 font-bold text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
+                                <td width=10% class="pr-2 font-bold text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
                             </tr>
                             @foreach($oferta->ofertaprocesos as $oproceso)
                             <tr>
-                                <td width=51% class="pl-2" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproceso->proceso}}</td>
-                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->descripcion }}</td>
-                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->tirada}}</td>
-                                <td width=17% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->precio_ud}}</td>
+                                <td width=20% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproceso->proceso}}</td>
+                                <td width=30% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->descripcion }}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->tirada}}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->precio_ud}}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproceso->precio_ud * $oproceso->tirada,2) }}</td>
                             </tr>
                             @endforeach
                         </table>
                     </div>
                     @endif
+
+                    <table width=80% class="mx-auto mt-4 text-sm " style="color:rgb(30, 27, 27);">
+                        <tr>
+                            <td  class="font-bold" style=""  >Observaciones:</td>
+                        </tr>
+                        <tr>
+                            <td width=80% >{{ $oferta->observaciones}}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </main>

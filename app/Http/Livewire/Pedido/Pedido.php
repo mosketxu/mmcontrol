@@ -13,6 +13,7 @@ class Pedido extends Component
     public $ruta;
     public $responsable;
     public $cliente_id;
+    public $descripcion;
     public $proveedor_id;
     public $pedidocliente;
     public $oferta_id;
@@ -63,6 +64,7 @@ class Pedido extends Component
             'pedidoid'=>'required',
             'responsable'=>'nullable',
             'cliente_id'=>'required',
+            'descripcion'=>'nullable',
             'contacto_id'=>'nullable',
             'proveedor_id'=>'nullable',
             'pedidocliente'=>'nullable',
@@ -120,6 +122,7 @@ class Pedido extends Component
             $this->pedidoid=$pedido->id;
             $this->responsable=$pedido->responsable;
             $this->cliente_id=$pedido->cliente_id;
+            $this->descripcion=$pedido->descripcion;
             $this->pedidocliente=$pedido->pedidocliente;
             $this->oferta_id=$pedido->oferta_id;
             $this->contacto_id=$pedido->contacto_id;
@@ -256,6 +259,7 @@ class Pedido extends Component
             'responsable'=>$this->responsable,
             'tipo'=>$this->tipo,
             'cliente_id'=>$this->cliente_id,
+            'descripcion'=>$this->descripcion,
             'contacto_id'=>$this->contacto_id,
             'pedidocliente'=>$this->pedidocliente,
             'oferta_id'=>$this->oferta_id,

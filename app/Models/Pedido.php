@@ -13,7 +13,7 @@ class Pedido extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','tipo','cliente_id','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
+    protected $fillable=['id','tipo','cliente_id','descripcion','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
                     'proveedor_id','facturadopor','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
                         'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','caja_id','uds_caja'
                         ,'transporte','otros'];

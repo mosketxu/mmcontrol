@@ -65,7 +65,13 @@ class Fdetalle extends Component
     public function render()
     {
         $entidad=Entidad::find($this->factura->cliente_id);
-        $pedidostodos=Pedido::where('cliente_id', $this->factura->cliente_id)->where('pedidocliente',$this->factura->pedidocliente)->orderBy('id')->get();
+        $pedidostodos=Pedido::query()
+        ->where('cliente_id', $this->factura->cliente_id)
+        ->when($this->factura->pedidocliente!='', function ($query){
+            $query->where('pedidocliente',$this->factura->pedidocliente);
+        })
+        ->orderBy('id')
+        ->get();
         $pedidos=$pedidostodos->where('facturado','!=','1');
         $fdetalles=ModelsFacturaDetalle::where('factura_id',$this->factura->id)->orderBy('orden')->orderBy('pedido_id')->get();
         return view('livewire.facturacion.fdetalle',compact(['fdetalles','entidad','pedidostodos','pedidos']));

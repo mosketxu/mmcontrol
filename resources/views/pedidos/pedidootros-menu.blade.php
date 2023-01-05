@@ -11,6 +11,9 @@
                     <x-jet-nav-link href="{{route('pedido.parciales',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.parciales')">
                         <x-icon.truck/>Albaranes
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{route('pedido.distribuciones',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.distribuciones')">
+                        <x-icon.building-circle-arrow-right/>Distribuciones
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.archivos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.archivos')">
                         <x-icon.clip/>Archivos
                     </x-jet-nav-link>

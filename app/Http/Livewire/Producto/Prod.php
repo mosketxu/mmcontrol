@@ -212,6 +212,11 @@ class Prod extends Component
             'preciocoste'=>$this->producto->preciocoste,
             'precioventa'=>$this->producto->precioventa,
             'observaciones'=>$this->producto->observaciones,
+            'material'=>$this->producto->material,
+            'medidas'=>$this->producto->medidas,
+            'troquel'=>$this->producto->troquel,
+            'impresion'=>$this->producto->impresion,
+
             ]
         );
 
