@@ -88,7 +88,7 @@
                 class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
             {{-- botones --}}
-            <div class="w-1/12 text-center">
+            <div class="w-1/12 text-right pr-2">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
             </div>
         </div>

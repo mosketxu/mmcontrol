@@ -49,9 +49,9 @@
                 class="w-full pr-2 text-xs font-thin text-left text-gray-500 border-0 rounded-md"/>
             </div>
             {{-- botones --}}
-            <div class="flex w-1/12 text-center">
+            <div class="w-1/12 text-right pr-2">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
-                <x-icon.delete-a wire:click.prevent="delete({{ $pproductoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+                <x-icon.delete-a wire:click.prevent="delete({{ $pproducto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
             </div>
         </div>
     </form>

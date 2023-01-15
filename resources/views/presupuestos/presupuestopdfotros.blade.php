@@ -57,6 +57,9 @@
                 <tr>
                     <td style="padding-left:3px;"  class="" >Descripción: <span class="font-bold">{{ $presupuesto->descripcion}} </span></td>
                 </tr>
+                <tr>
+                    <td style="padding-left:3px;"  class="" >Cantidad Total: <span class="font-bold">{{ $presupuesto->tirada}} </span></td>
+                </tr>
             </table>
 
 
@@ -69,7 +72,7 @@
                     <tr>
                         <td class="font-bold">Cod./Ref.</td>
                         <td class="font-bold">Descripción</td>
-                        <td class="font-bold text-right pr-2">Cantidad</td>
+                        <td class="pr-2 font-bold text-right">Cantidad</td>
                         <td class="font-bold">Material</td>
                         <td class="font-bold">Medidas</td>
                         <td class="font-bold">Troquel</td>

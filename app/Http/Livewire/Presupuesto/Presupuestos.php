@@ -79,6 +79,7 @@ class Presupuestos extends Component
     public function getRowsQueryProperty(){
         if($this->tipo=='1')
         return Presupuesto::query()
+            ->with('cliente','proveedor')
             ->join('entidades','presupuestos.cliente_id','=','entidades.id')
             ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
             ->join('productos','presupuesto_productos.producto_id','=','productos.id')

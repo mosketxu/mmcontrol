@@ -56,7 +56,7 @@ class Presupuesto extends Component
 
     protected function rules(){
         return [
-            'presupuestoid'=>'required',
+            // 'presupuestoid'=>'required',
             'cliente_id'=>'required',
             'descripcion'=>Rule::requiredIf($this->tipo!='1'),
             'responsable'=>'nullable',
@@ -81,7 +81,7 @@ class Presupuesto extends Component
 
     public function messages(){
         return [
-            'presupuestoid.required'=>'El número de presupuesto es necesario',
+            // 'presupuestoid.required'=>'El número de presupuesto es necesario',
             'cliente_id.required'=>'El cliente es necesario',
             'proveedor_id.required'=>'El proveedor es necesario',
             'tirada.required'=>'La tirada es necesaria',
@@ -196,6 +196,7 @@ class Presupuesto extends Component
     }
 
     public function updatedTirada(){
+        if($this->tirada=='') $this->tirada='0';
         $this->preciototal= $this->precio_ud * $this->tiradanum($this->tirada);
     }
 
@@ -215,6 +216,7 @@ class Presupuesto extends Component
     }
 
     public function save(){
+        $this->validate();
         $this->estado=$this->estado=='' ? '0' : $this->estado;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
         $mensaje="Presupuesto creado satisfactoriamente";
@@ -233,7 +235,6 @@ class Presupuesto extends Component
             $i=$this->presupuestoid;
             $nuevo=true;
         }
-        $this->validate();
 
         if($this->tipo=='2') Validator::make(['descripcion'=>$this->descripcion,],['descripcion' => 'required',],['descripcion.required'=>'La descripción es necesaria.'])->validate();
 

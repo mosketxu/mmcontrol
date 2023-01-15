@@ -21,7 +21,7 @@ class ResponsablesTableSeeder extends Seeder
 
         Responsable::create(['responsable' => 'Josep Maria']);
         Responsable::create(['responsable' => 'Marta']);
-        Responsable::create(['responsable' => 'Ana']);
+        Responsable::create(['responsable' => 'Anna']);
         Responsable::create(['responsable' => 'Elisabet']);
     }
 }

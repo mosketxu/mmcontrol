@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between space-x-1">
-            <div class="flex w-4/12 py-0 mt-0">
+            <div class="flex w-6/12 py-0 mt-0">
                 <div class="w-full py-0 mt-0">
                     <h2 class="text-2xl font-semibold text-gray-900">{{ $titulo }} {{ $presupuesto->id }} </h2>
                 </div>

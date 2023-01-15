@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class Ent extends Component
 {
     public $entidad;
+    public $contacto;
     public $entidadtipo;
     public $fechacli;
     public $contactoId;
@@ -77,12 +78,13 @@ class Ent extends Component
         $entidad=$this->entidad;
         $contacto=$this->contacto;
         $this->contactoId=$contacto->id;
+        $tiposentidad=EntidadTipo::orderby('id')->get();
 
         $responsables=Responsable::all();
         $metodopagos=MetodoPago::all();
         $provincias=Provincia::all();
         $paises=Pais::all();
-        return view('livewire.entidad.ent',compact('responsables','metodopagos','provincias','paises'));
+        return view('livewire.entidad.ent',compact('responsables','metodopagos','provincias','paises','tiposentidad'));
     }
 
     public function save(){

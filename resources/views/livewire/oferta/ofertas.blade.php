@@ -31,9 +31,8 @@
                     </div>
                     <div>
                         @if($selectPage)
-                        {{-- <div class="flex w-full pt-2 space-x-2 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md"> --}}
-                        <div class="flex w-full text-sm  bg-gray-200 border-t-0 border-y" wire:key="row-message">
-                            <div class="flex  w-full text-left">
+                        <div class="flex w-full text-sm bg-gray-200 border-t-0 border-y" wire:key="row-message">
+                            <div class="flex w-full text-left">
                                 @unless($selectAll)
                                     <span>Has seleccionado <strong>{{ $ofertas->count() }}</strong> ofertas, ¿quieres seleccionar el total: <strong>{{ $ofertas->total() }}</strong> ?</span>
                                     <x-button.link wire:click="selectAll" class="ml-1 text-blue-600">Select all</x-button.link>
@@ -44,7 +43,7 @@
                         </div>
                         @endif
                         @forelse ($ofertas as $oferta)
-                        <div class="flex w-full pl-2 py-1 font-medium text-sm text-gray-500 border-t-0 border-y " wire:loading.class.delay="opacity-50">
+                        <div class="flex w-full py-1 pl-2 text-sm font-medium text-gray-500 border-t-0 border-y " wire:loading.class.delay="opacity-50">
                             <div class="flex w-5 h-5 text-center"><x-input.checkbox wire:model="selected" value="{{ $oferta->id }}" /></div>
                             <div class="flex w-1/12 text-left">{{ $oferta->id }}</div>
                             <div class="flex w-2/12 text-left">{{ $oferta->cliente->entidad }}</div>
@@ -61,7 +60,7 @@
                             </div>
                             <div class="flex flex-row-reverse w-1/12 pr-2 mt-1 ">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $oferta->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
-                                <a href="{{route('oferta.ficha',[$oferta->id,$oferta->tipo])}}" target="_blank" title="Imprimir Oferta"><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
+                                <a href="{{route('oferta.ficha',[$oferta->id,$oferta->tipo])}}" target="_blank" title="Imprimir Oferta"><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
                                 <x-icon.edit-a class="" href="{{ route('oferta.editar',[$oferta,'i']) }}"  title="Editar"/>
                             </div>
                         </div>

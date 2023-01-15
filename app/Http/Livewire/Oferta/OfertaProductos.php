@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Oferta;
 
-use App\Models\Producto;
+use App\Models\{Producto,OfertaProducto};
 use Livewire\Component;
 
 
@@ -106,12 +106,9 @@ class OfertaProductos extends Component
         $this->emit('refresh');
     }
 
-    public function delete($valorId)
-    {
+    public function delete($valorId){
         $this->validate();
-
         $borrar = OfertaProducto::find($valorId);
-
         if ($borrar) {
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');

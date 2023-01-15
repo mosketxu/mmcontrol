@@ -28,9 +28,8 @@ class Ofertas extends Component
         $this->tipo=$tipo;
     }
 
-    public function render()
-    {
-        $ofertas=Oferta::with('cliente','contacto')->orderBy('id')->get();
+    public function render(){
+        // $ofertas=Oferta::with('contacto','cliente')->orderBy('id')->get();
         $clientes=Entidad::whereIn('entidadtipo_id',['1','2'])->orderBy('entidad')->get();
         $meses=Mes::orderBy('id')->get();
 
@@ -54,6 +53,7 @@ class Ofertas extends Component
 
     public function getRowsQueryProperty(){
         return Oferta::query()
+            ->with('cliente','contacto')
             ->join('entidades','ofertas.cliente_id','=','entidades.id')
             ->select('ofertas.*', 'entidades.entidad', 'entidades.emailadm')
             ->where('ofertas.tipo',$this->tipo)

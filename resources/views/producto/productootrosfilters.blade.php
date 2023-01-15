@@ -18,7 +18,7 @@
     <div class="flex w-3/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Descripción
+                Referencia
             </label>
             <div class="flex">
                 <input type="text" wire:model.lazy="filtroreferencia" class="w-full py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" placeholder="Búsqueda Entidad/Factura" autofocus/>

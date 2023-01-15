@@ -11,7 +11,6 @@
             <div class="flex-col space-y-4">
                 <div>
                     <div class="">
-                        {{-- titulos --}}
                         <div class="flex w-full pt-2 pb-0 space-x-1 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
                             <div class="flex w-5 h-5 px-2 mr-2 font-medium text-center" >
                                 <x-input.checkbox wire:model="selectPage" />
@@ -91,6 +90,7 @@
                         @endforelse
                     </div>
                 </div>
+            </div>
             <div>
                 {{ $presupuestos->links() }}
             </div>

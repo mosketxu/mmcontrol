@@ -16,13 +16,13 @@ class OfertaController extends Controller
 
     public function tipo($tipo)
     {
-        $titulo=$tipo=='1' ? 'Presupuesto Editorial':  'Presupuesto Packaging/Propios';
+        $titulo=$tipo=='1' ? 'Presupuesto MM Editorial':  'Presupuesto MM Packaging/Propios';
         return view('oferta.index',compact('tipo','titulo'));
     }
 
     public function nuevo($tipo,$ruta)
     {
-        $titulo=$tipo=='1' ? 'Nuevo Presupuesto Editorial' : 'Nuevo Presupuesto Packaging/Propios';
+        $titulo=$tipo=='1' ? 'Nuevo Presupuesto MM Editorial' : 'Nuevo Presupuesto MM Packaging/Propios';
         return view('oferta.create',compact('tipo','ruta','titulo'));
     }
 
@@ -52,7 +52,7 @@ class OfertaController extends Controller
     public function editar(Oferta $oferta,$ruta)
     {
         $tipo=$oferta->tipo;
-        $titulo=$tipo=='1' ? 'Presupuesto Editorial' : 'Presupuesto Packaging/Propios';
+        $titulo=$tipo=='1' ? 'Presupuesto MM Editorial' : 'Presupuesto MM Packaging/Propios';
         return view('oferta.edit',compact('oferta','tipo','ruta','titulo'));
     }
 }

@@ -97,8 +97,7 @@ class OfertaProducto extends Component
         $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
     }
 
-    public function delete($valorId)
-    {
+    public function delete($valorId){
         $this->validate();
 
         $borrar = ModelsOfertaProducto::find($valorId);

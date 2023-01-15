@@ -83,7 +83,7 @@
                 disabled/>
             </div>
             {{-- botones --}}
-            <div class="w-1/12 text-center">
+            <div class="w-1/12 text-right pr-2">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
             </div>
         </div>

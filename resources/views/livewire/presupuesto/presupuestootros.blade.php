@@ -28,7 +28,7 @@
                                     <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
                                     <select wire:model.lazy="cliente_id"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $deshabilitado }}>
+                                        requiered {{ $deshabilitado }}>
                                         <option value="">-- Selecciona cliente --</option>
                                         @foreach ($clientes as $cliente)
                                         <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>

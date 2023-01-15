@@ -43,7 +43,7 @@
                 disabled/>
             </div>
             {{-- botones --}}
-            <div class="flex w-1/12 space-x-1 pl-2">
+            <div class="w-1/12 text-right pr-2">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
                 <x-icon.delete-a wire:click.prevent="delete({{ $pprocesoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
             </div>
