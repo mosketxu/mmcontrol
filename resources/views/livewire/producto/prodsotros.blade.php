@@ -14,8 +14,8 @@
             <div class="flex-col space-y-4">
                 <div>
                     <div class="flex py-2 pl-2 space-x-1 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
-                        <div class="w-full font-light" >{{ __('COD./Ref.') }}</div>
-                        <div class="w-full font-light" >{{ __('Descripción') }}</div>
+                        <div class="w-full font-light" >{{ __('Cod.') }}</div>
+                        <div class="w-full font-light" >{{ __('Referencia') }}</div>
                         <div class="w-full font-light" >{{ __('Cliente') }}</div>
                         <div class="w-full font-light" >{{ __('Material') }} </div>
                         <div class="w-full font-light" >{{ __('Medidas') }}</div>
@@ -56,11 +56,11 @@
                         </div>
 
                         <div class="flex w-full text-right">
+                            @can('producto.edit')
+                            <a href="{{route('producto.edit',$producto)}}"> <x-icon.edit class="mt-1 text-blue-500 hover:text-blue-700" title="Editar"/></a>
+                            @endcan
                             <a href="{{route('producto.archivos',[$producto,'i'])}}"> <x-icon.clip class="text-green-500 hover:text-green-700" title="Archivos Producto"/></a>
                             <a href="{{route('producto.ficha',[$producto->id,$tipo])}}" target="_blank" ><x-icon.clipboard class="text-pink-500 hover:text-pink-700 " title="Ficha Producto"/></a>
-                            @can('producto.edit')
-                                <x-icon.edit-a href="{{ route('producto.edit',$producto) }}"  title="Editar"/>
-                            @endcan
                             @can('producto.delete')
                                 <x-icon.delete-a wire:click.prevent="delete({{ $producto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                             @endcan

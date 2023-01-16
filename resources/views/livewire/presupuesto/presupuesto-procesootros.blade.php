@@ -59,7 +59,7 @@
             {{-- proceso_id --}}
             <div class="w-3/12">
                 <input type="text" step="any" wire:model.lazy="proceso"
-                class="w-full py-1 pr-2 text-xs font-thin  text-gray-500 bg-green-100 border-0 rounded-md"/>
+                class="w-full py-1 pr-2 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
             {{-- descripcion --}}
             <div class="w-3/12">
@@ -83,7 +83,7 @@
                 disabled/>
             </div>
             {{-- botones --}}
-            <div class="w-1/12 text-center">
+            <div class="w-1/12 text-right">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
             </div>
         </div>

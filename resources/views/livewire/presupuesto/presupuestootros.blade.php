@@ -122,8 +122,15 @@
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="tirada">{{ __('Transporte') }}</x-jet-label>
+                                    <x-jet-label for="transporte">{{ __('Transporte') }}</x-jet-label>
                                     <input  wire:model.lazy="transporte" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    {{ $deshabilitado }}/>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="troquel">{{ __('Troquel') }}</x-jet-label>
+                                    <input  wire:model.lazy="troquel" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $deshabilitado }}/>
                                 </div>
                             </div>

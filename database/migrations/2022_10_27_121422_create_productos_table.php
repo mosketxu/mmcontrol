@@ -17,8 +17,8 @@ class CreateProductosTable extends Migration
             $table->id();
             $table->foreignId('cliente_id')->nullable()->constrained('entidades');
             $table->integer('tipo')->nullable();
-            $table->string('isbn')->nullable()->unique()->index();
-            $table->string('referencia',150)->unique()->index();
+            $table->string('isbn')->nullable()->index();
+            $table->string('referencia',150)->index();
             $table->integer('tirada')->nullable()->default(0);
             $table->string('formato')->nullable();
             $table->boolean('FSC')->nullable();

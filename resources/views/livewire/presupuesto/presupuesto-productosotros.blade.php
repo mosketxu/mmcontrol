@@ -23,7 +23,7 @@
                     class="w-full text-xs font-thin text-gray-500 border-none shadow-none">
                     <option value="" >-Selecciona- </option>
                     @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
+                    <option value="{{ $producto->id }}">{{ $producto->isbn .'-'. $producto->referencia }}</option>
                     @endforeach
                 </x-selectcolor>
             </div>
@@ -49,9 +49,10 @@
                 class="w-full pr-2 text-xs font-thin text-left text-gray-500 border-0 rounded-md"/>
             </div>
             {{-- botones --}}
-            <div class="flex w-1/12 text-center">
-                <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
+            {{-- <div class="flex w-1/12 text-right"> --}}
+            <div class="flex flex-row-reverse w-1/12">
                 <x-icon.delete-a wire:click.prevent="delete({{ $pproductoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+                <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
             </div>
         </div>
     </form>

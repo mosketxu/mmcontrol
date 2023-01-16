@@ -28,6 +28,7 @@ class Presupuesto extends Component
     public $caja_id;
     public $uds_caja=0;
     public $transporte;
+    public $troquel;
     public $especificacioneslogisticas;
     public $otros;
 
@@ -73,6 +74,7 @@ class Presupuesto extends Component
             'caja_id'=>'nullable',
             'uds_caja'=>'nullable',
             'transporte'=>'nullable',
+            'troquel'=>'nullable',
             'especificacioneslogisticas'=>'nullable',
             'otros'=>'nullable',
             'productoeditorialid'=>'required_if:tipo,1'
@@ -120,6 +122,7 @@ class Presupuesto extends Component
             $this->caja_id=$presupuesto->caja_id;
             $this->uds_caja=$presupuesto->uds_caja;
             $this->transporte=$presupuesto->transporte;
+            $this->troquel=$presupuesto->troquel;
             $this->especificacioneslogisticas=$presupuesto->especificacioneslogisticas;
             $this->otros=$presupuesto->otros;
             if ($this->cliente_id) {
@@ -263,6 +266,7 @@ class Presupuesto extends Component
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$this->uds_caja,
             'transporte'=>$this->transporte,
+            'troquel'=>$this->troquel,
             'especificacioneslogisticas'=>$this->especificacioneslogisticas,
             'otros'=>$this->otros,
         ]
@@ -318,6 +322,7 @@ class Presupuesto extends Component
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$presupuesto->uds_caja,
             'transporte'=>$presupuesto->transporte,
+            'troquel'=>$presupuesto->troquel,
             'especificacioneslogisticas'=>$presupuesto->especificacioneslogisticas,
             'otros'=>$presupuesto->otros,
         ]);

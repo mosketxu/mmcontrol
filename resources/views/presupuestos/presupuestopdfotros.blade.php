@@ -65,7 +65,7 @@
 
             {{-- Productos --}}
             @if($presupuesto->presupuestoproductos->count()>0)
-                <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto" >
+                <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto text-xs" >
                     <tr>
                         <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="7"  class="" >Productos:</td>
                     </tr>
@@ -94,7 +94,7 @@
             @endif
             {{-- Procesos --}}
             @if($presupuesto->presupuestoprocesos->count()>0)
-            <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto">
+            <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto text-xs">
                 <tr  >
                     <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="3"  class="" >Procesos:</td>
                 </tr>
@@ -120,10 +120,13 @@
                 </tr>
 
                 <tr>
-                    <td style="padding-left:3px;"  class="" >Transporte: <span class="font-bold">{{ $presupuesto->transporte}} </span></td>
+                    <td style="padding-left:3px;"  class="" ><span class="font-bold">Transporte: </span>{{ $presupuesto->transporte}} </td>
                 </tr>
                 <tr>
-                    <td>Observaciones: <span class="font-bold">{{ $presupuesto->otros}} </span></td>
+                    <td style="padding-left:3px;"  class="" > <span class="font-bold">Troquel: </span>{{ $presupuesto->troquel}}</td>
+                </tr>
+                <tr>
+                    <td> <span class="font-bold">Observaciones: </span>{{ $presupuesto->otros}}</td>
                 </tr>
             </table>
 

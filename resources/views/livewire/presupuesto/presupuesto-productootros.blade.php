@@ -62,7 +62,7 @@
                     class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-none shadow-none">
                     <option value="" >-Selecciona- </option>
                     @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
+                    <option value="{{ $producto->id }}">{{ $producto->isbn .'-'. $producto->referencia }}</option>
                     @endforeach
                 </x-selectcolor>
             </div>
@@ -88,7 +88,7 @@
                 class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
             {{-- botones --}}
-            <div class="w-1/12 text-center">
+            <div class="w-1/12 text-right">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
             </div>
         </div>

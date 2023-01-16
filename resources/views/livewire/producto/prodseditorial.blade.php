@@ -14,25 +14,20 @@
             <div class="flex-col space-y-4">
                 <div>
                     <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
-                        @if($tipo=='1')
-                            <div class="flex w-3/12 font-light lg:w-3/12" >{{ __('ISBN') }}</div>
-                            <div class="flex w-4/12 font-light lg:flex " >{{ __('Título') }}</div>
-                        @else
-                            <div class="flex w-3/12 font-light lg:w-3/12" >{{ __('Código') }}</div>
-                            <div class="flex w-4/12 font-light lg:flex " >{{ __('Referencia') }}</div>
-                        @endif
+                        <div class="flex w-2/12 font-light lg:w-3/12" >{{ __('ISBN') }}</div>
+                        <div class="flex w-3/12 font-light lg:flex " >{{ __('Título') }}</div>
                         <div class="hidden w-2/12 font-light md:flex" >{{ __('Cliente') }} </div>
                         <div class="flex w-1/12 font-light lg:w-1/12" >{{ __('€ Coste') }}</div>
-                        <div class="hidden w-5/12 font-light lg:flex" >{{ __('Observaciones') }}</div>
-                        <div class="flex w-2/12" ></div>
+                        <div class="hidden w-3/12 font-light lg:flex" >{{ __('Observaciones') }}</div>
+                        <div class="flex w-1/12" ></div>
                     </div>
                     <div>
                         @forelse ($productos as $producto)
                             <div class="flex w-full text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
-                                <div class="flex w-3/12 lg:w-3/12">
+                                <div class="flex w-2/12 lg:w-3/12">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->isbn }}"  readonly/>
                                 </div>
-                                <div class="flex w-4/12 lg:flex">
+                                <div class="flex w-3/12 lg:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->referencia }}"  readonly/>
                                 </div>
                                 <div class="hidden w-2/12 lg:flex">
@@ -41,15 +36,15 @@
                                 <div class="flex w-1/12 lg:w-1/12">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->preciocoste }}"  readonly/>
                                 </div>
-                                <div class="hidden w-5/12 lg:flex">
+                                <div class="hidden w-3/12 lg:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->observaciones }}"  readonly/>
                                 </div>
-                                <div  class="flex w-2/12">
+                                <div class="flex w-1/12 text-right">
+                                    @can('producto.edit')
+                                        <a href="{{route('producto.edit',$producto)}}"> <x-icon.edit class="mt-1 text-blue-500 hover:text-blue-700" title="Editar"/></a>
+                                    @endcan
                                     <a href="{{route('producto.archivos',[$producto,'i'])}}"> <x-icon.clip class="text-green-500 hover:text-green-700" title="Archivos Producto"/></a>
                                     <a href="{{route('producto.ficha',[$producto->id,$tipo])}}" target="_blank" ><x-icon.clipboard class="text-pink-500 hover:text-pink-700 " title="Ficha Producto"/></a>
-                                    @can('producto.edit')
-                                        <x-icon.edit-a href="{{ route('producto.edit',$producto) }}"  title="Editar"/>
-                                    @endcan
                                     @can('producto.delete')
                                         <x-icon.delete-a wire:click.prevent="delete({{ $producto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                                     @endcan

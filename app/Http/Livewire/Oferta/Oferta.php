@@ -25,6 +25,7 @@ class Oferta extends Component
     public $embalaje='';
     public $entrega='';
     public $transporte='';
+    public $troquel='';
     public $observaciones='';
     public $estado='0';
 
@@ -60,6 +61,7 @@ class Oferta extends Component
             'embalaje'=>'nullable',
             'entrega'=>'nullable',
             'transporte'=>'nullable',
+            'troquel'=>'nullable',
             'observaciones'=>'nullable',
             'estado'=>'nullable',
         ];
@@ -98,6 +100,7 @@ class Oferta extends Component
             $this->embalaje=$oferta->embalaje;
             $this->entrega=$oferta->entrega;
             $this->transporte=$oferta->transporte;
+            $this->troquel=$oferta->troquel;
             $this->observaciones=$oferta->observaciones;
             $this->estado=$oferta->estado;
             if($this->cliente_id)
@@ -199,6 +202,7 @@ class Oferta extends Component
             'embalaje'=>$this->embalaje,
             'entrega'=>$this->entrega,
             'transporte'=>$this->transporte,
+            'troquel'=>$this->troquel,
             'observaciones'=>$this->observaciones,
             'estado'=>$this->estado,
         ]);
