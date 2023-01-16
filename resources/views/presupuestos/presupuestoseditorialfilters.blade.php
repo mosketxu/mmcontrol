@@ -138,7 +138,7 @@
     </div>
 
     <div class="flex flex-row-reverse w-2/12">
-        <div class="inline-flex mt-3 space-x-2">
+        {{-- <div class="inline-flex mt-3 space-x-2">
             <x-dropdown label="Actions">
                 <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
                     <x-icon.csv class="text-green-400"></x-icon.csv><span>Export </span>
@@ -148,6 +148,6 @@
                     <x-icon.trash class="text-red-400"></x-icon.trash> <span>Delete </span>
                 </x-dropdown.item>
             </x-dropdown>
-        </div>
+        </div> --}}
     </div>
 </div>

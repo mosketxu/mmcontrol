@@ -165,7 +165,7 @@
         </div>
     </div>
 
-    <div class="flex flex-row-reverse w-2/12">
+    {{-- <div class="flex flex-row-reverse w-2/12">
         <div class="inline-flex mt-3 space-x-2">
             <x-dropdown label="Actions">
                 <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
@@ -177,5 +177,5 @@
                 </x-dropdown.item>
             </x-dropdown>
         </div>
-    </div>
+    </div> --}}
 </div>
