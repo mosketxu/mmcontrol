@@ -54,6 +54,10 @@
                             <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->descripcion }}</td>
                         </tr>
                         <tr style="">
+                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Tirada</td>
+                            <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->tiradaprevista }}</td>
+                        </tr>
+                        <tr style="">
                         </tr>
                         <tr style="">
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Fecha archivos</td>
@@ -79,19 +83,19 @@
                     </table>
                     {{-- Productos --}}
                     {{-- @if($pedido->pedidoproductos->count()>0)
-                    <div class="border mx-20 mt-8 ">
+                    <div class="mx-20 mt-8 border ">
                         <table  width="100%" style="" cellspacing="0" cellpadding="2" class="mx-auto text-xs" >
                             <tr >
-                                <td class="bg-blue-300 pl-2" style="background-color: #e0f3bc; font-weight:bold;" colspan="7"  >Productos:</td>
+                                <td class="pl-2 bg-blue-300" style="background-color: #e0f3bc; font-weight:bold;" colspan="7"  >Productos:</td>
                             </tr>
                             <tr>
-                                <td class="font-bold pl-1">Cod./Ref.</td>
+                                <td class="pl-1 font-bold">Cod./Ref.</td>
                                 <td class="font-bold">Descripción</td>
                                 <td class="font-bold">Material</td>
                                 <td class="font-bold">Medidas</td>
                                 <td class="font-bold">Troquel</td>
                                 <td class="font-bold">Impresión</td>
-                                <td class="font-bold text-right pr-2">Cantidad</td>
+                                <td class="pr-2 font-bold text-right">Cantidad</td>
                             </tr>
                             @foreach ($pedido->pedidoproductos as $pproducto)
                             <tr>
@@ -110,15 +114,15 @@
                     @endif --}}
                     {{-- Procesos --}}
                     {{-- @if($pedido->pedidoprocesos->count()>0)
-                    <div class="border mx-20 mt-8">
+                    <div class="mx-20 mt-8 border">
                         <table width="100%" style="" cellspacing="0" cellpadding="2" class="mx-auto text-xs">
                             <tr >
-                                <td class="bg-blue-300 pl-2" style="background-color: #bcd0f3; font-weight:bold;" colspan="3"  >Procesos:</td>
+                                <td class="pl-2 bg-blue-300" style="background-color: #bcd0f3; font-weight:bold;" colspan="3"  >Procesos:</td>
                             </tr>
                             <tr>
                                 <td class="pl-2 font-bold">Proceso</td>
                                 <td class="font-bold">Descripción</td>
-                                <td class="font-bold text-right pr-2" >Cantidad</td>
+                                <td class="pr-2 font-bold text-right" >Cantidad</td>
                             </tr>
                             @foreach ($pedido->pedidoprocesos as $pproceso)
                             <tr>
