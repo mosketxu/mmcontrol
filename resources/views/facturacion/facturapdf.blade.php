@@ -39,7 +39,7 @@
         </header>
         <footer style="position:fixed;left:0px;bottom:0px;height:130px;width:100%">
             <div>
-                <div class="text-center  mt-10 mb-5 " style="font-size: 0.7rem">
+                <div class="mt-10 mb-5 text-center " style="font-size: 0.7rem">
                     Milimétrica Producciones, S.L. • NIF: B-63941835 • C/ Zamora 46-48,  Ático 5ª • 08005 Barcelona • 93 624 38 33
                 </div>
                 <hr style="border-top: 3px solid rgb(49, 72, 172);">
@@ -69,7 +69,7 @@
                         </tr>
                     </table>
 
-                     <table width=90% class="mt-20 mx-auto text-sm " style="color:rgb(30, 27, 27);">
+                    <table width=90% class="mx-auto mt-20 text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
                             <td class="font-bold " >Oferta</td>
                             <td class="font-bold " >Concepto</td>
@@ -82,7 +82,7 @@
                         </tr>
                         @foreach ($factura->facturadetalles as $detalle)
                         <tr>
-                            <td>{{ $detalle->pedido->oferta_id }} </td>
+                            <td>{{ $detalle->pedido->oferta_id ?? '' }} </td>
                             <td>{{ $detalle->concepto }}</td>
                             <td class="text-right">{{ number_format($detalle->cantidad,0,',','.') }}</td>
                             <td class="text-right">{{ number_format($detalle->importe,2,',','.') }}</td>
@@ -124,24 +124,24 @@
                             @endforeach
                             @if($totales->count()>1)
                             <tr>
-                                <td class="text-right font-bold">{{ number_format($factura->importe,2,',','.') }}</td>
+                                <td class="font-bold text-right">{{ number_format($factura->importe,2,',','.') }}</td>
                                 <td></td >
-                                <td class="text-right font-bold">{{ number_format($factura->iva,2,',','.') }}</td>
-                                <td class="text-right font-bold">{{ number_format($factura->total,2,',','.') }}</td>
+                                <td class="font-bold text-right">{{ number_format($factura->iva,2,',','.') }}</td>
+                                <td class="font-bold text-right">{{ number_format($factura->total,2,',','.') }}</td>
                             </tr>
                             @endif
                         </table>
 
                         <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
                             <tr>
-                                <td colspan="4" class="italic text-xs text-center"  >TRANSFERENCIA A: IBAN ES11 2013 3221  3102 1024 3770</td>
+                                <td colspan="4" class="text-xs italic text-center"  >TRANSFERENCIA A: IBAN ES11 2013 3221  3102 1024 3770</td>
                             </tr>
                         </table>
                     </div>
 
-                    {{-- <table width=90% class="mt-20 mx-auto text-sm " style="color:rgb(30, 27, 27);">
+                    {{-- <table width=90% class="mx-auto mt-20 text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
-                            <td class=" " >Nuestro presupuesto: ¿cómo ponemos el dato, sobre todo si hay más de un pedido?</td>
+                            <td class="" >Nuestro presupuesto: ¿cómo ponemos el dato, sobre todo si hay más de un pedido?</td>
                         </tr>
                     </table> --}}
                 </div>
