@@ -78,7 +78,7 @@
                 <div class="flex flex-row space-x-4">
                     <div class="w-full form-item">
                         <x-jet-label for="paginas">{{ __('Páginas') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.paginas" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                        <input  wire:model.lazy="producto.paginas" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                     </div>
                     {{-- <div class="w-full form-item">
                         <x-jet-label for="tirada">{{ __('Tirada') }}</x-jet-label>

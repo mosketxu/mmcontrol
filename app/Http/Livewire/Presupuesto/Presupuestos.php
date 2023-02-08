@@ -133,10 +133,9 @@ class Presupuestos extends Component
             ->searchYear('fechapresupuesto',$this->filtroanyo)
             ->searchMes('fechapresupuesto',$this->filtromes)
             ->orderBy('presupuestos.id','desc');
-        }
+    }
 
-
-        public function getRowsProperty(){
+    public function getRowsProperty(){
         return $this->rowsQuery->paginate(15);
     }
 

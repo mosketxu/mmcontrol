@@ -17,13 +17,17 @@ class EncuadernacionSeeder extends Seeder
         \DB::table('encuadernaciones')->delete();
 
         Encuadernacion::create(['name'=>'Cosido']);
-        Encuadernacion::create(['name'=>'Pur']);
+        Encuadernacion::create(['name'=>'PUR']);
         Encuadernacion::create(['name'=>'Grapado']);
         Encuadernacion::create(['name'=>'Flexibook']);
         Encuadernacion::create(['name'=>'Cartoné']);
+        Encuadernacion::create(['name'=>'Cartoné cosido']);
         Encuadernacion::create(['name'=>'Espiral']);
         Encuadernacion::create(['name'=>'Wire-o']);
         Encuadernacion::create(['name'=>'Rustica PUR']);
         Encuadernacion::create(['name'=>'Rustica cosida']);
+        Encuadernacion::create(['name'=>'Hendido y grapa']);
+        Encuadernacion::create(['name'=>'Plegado']);
+        Encuadernacion::create(['name'=>'Wiro']);
     }
 }

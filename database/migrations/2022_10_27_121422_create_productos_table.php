@@ -19,13 +19,13 @@ class CreateProductosTable extends Migration
             $table->integer('tipo')->nullable();
             $table->string('isbn')->nullable()->index();
             $table->string('referencia',150)->index();
-            $table->integer('tirada')->nullable()->default(0);
+            $table->string('tirada')->nullable()->default('0');
             $table->string('formato')->nullable();
             $table->boolean('FSC')->nullable();
             $table->string('materialinterior')->nullable();
             $table->string('tintainterior')->nullable();
             $table->string('gramajeinterior')->nullable();
-            $table->integer('paginas')->nullable()->default(0);
+            $table->string('paginas')->nullable()->default('0');
             $table->string('materialcubierta')->nullable();
             $table->string('tintacubierta')->nullable();
             $table->string('gramajecubierta')->nullable();

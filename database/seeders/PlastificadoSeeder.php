@@ -23,5 +23,6 @@ class PlastificadoSeeder extends Seeder
         Plastificado::create(['name'=>'PPB 2C']);
         Plastificado::create(['name'=>'PPM Antirayas 1C']);
         Plastificado::create(['name'=>'PPM Soft touch 1C']);
+        Plastificado::create(['name'=>'lacado acrílico']);
     }
 }

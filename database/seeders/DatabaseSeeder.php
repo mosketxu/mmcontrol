@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MetodoPagoSeeder::class);
         $this->call(EntidadSeeder::class);
         $this->call(EntidadTipoSeeder::class);
-        $this->call(EntidadContactoSeeder::class);
 
 
         $this->call(CajaSeeder::class);
@@ -34,11 +33,14 @@ class DatabaseSeeder extends Seeder
         $this->call(PlastificadoSeeder::class);
         $this->call(TintaSeeder::class);
         $this->call(ProductoSeeder::class);
-        $this->call(PresupuestoSeeder::class);
-        $this->call(PresupuestoProductoSeeder::class);
-        $this->call(PedidoSeeder::class);
-        $this->call(PedidoProductoSeeder::class);
-        $this->call(OfertaSeeder::class);
+
+
+        // $this->call(EntidadContactoSeeder::class);
+        // $this->call(PresupuestoSeeder::class);
+        // $this->call(PresupuestoProductoSeeder::class);
+        // $this->call(PedidoSeeder::class);
+        // $this->call(PedidoProductoSeeder::class);
+        // $this->call(OfertaSeeder::class);
 
     }
 }

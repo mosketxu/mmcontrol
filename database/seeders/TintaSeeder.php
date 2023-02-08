@@ -19,7 +19,7 @@ class TintaSeeder extends Seeder
         Tinta::create(['name'=>'4+4' ,'familia'=>'']);
         Tinta::create(['name'=>'2+2' ,'familia'=>'']);
         Tinta::create(['name'=>'1+1' ,'familia'=>'']);
-        Tinta::create(['name'=>'4+4/2+2' ,'familia'=>'INT']);
+        Tinta::create(['name'=>'4+4 - 2+2' ,'familia'=>'']);
         Tinta::create(['name'=>'4+0' ,'familia'=>'CUB']);
         Tinta::create(['name'=>'2+0' ,'familia'=>'CUB']);
         Tinta::create(['name'=>'1+0' ,'familia'=>'CUB']);
