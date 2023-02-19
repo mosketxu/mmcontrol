@@ -17,15 +17,15 @@
                 <div>
                     <div class="">
                         {{-- titulos --}}
-                        <div class="flex w-full pt-2 pb-0 pl-2 space-x-2 font-bold text-gray-500 bg-blue-100 rounded-t-md">
+                        <div class="flex w-full pt-2 text-xs pb-0 pl-2 space-x-2 font-bold text-gray-500 bg-blue-100 rounded-t-md">
                             <div class="flex w-5 h-5 mr-2 font-medium text-center" >
                                 <x-input.checkbox wire:model="selectPage" />
                             </div>
                             <div class="w-1/12 text-left" >{{ __('Pedido') }}</div>
                             <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
-                            <div class="w-1/12 text-left" >{{ __('Presup.') }}</div>
-                            <div class="w-2/12 text-left" >{{ __('ISBN') }} </div>
-                            <div class="w-2/12 text-left" >{{ __('Referencia') }}</div>
+                            {{-- <div class="w-1/12 text-left" >{{ __('Presup.') }}</div> --}}
+                            <div class="w-3/12 text-left" >{{ __('ISBN/Ref') }} </div>
+                            {{-- <div class="w-2/12 text-left" >{{ __('Referencia') }}</div> --}}
                             <div class="w-1/12 text-right">{{ __('F.Entrega') }}</div>
                             {{-- <div class="w-1/12 text-right">{{ __('F. Archivos') }}</div> --}}
                             {{-- <div class="w-1/12 text-right">{{ __('F.Plotters') }}</div> --}}
@@ -51,15 +51,15 @@
                         @forelse ($pedidos as $pedido)
                         <div class="flex w-full space-x-2 text-xs text-gray-500 border-t-0 border-y hover:bg-gray-100 " wire:loading.class.delay="opacity-50">
                             <div class="flex w-5 h-5 p-2 mr-2 font-medium text-center"><x-input.checkbox wire:model="selected" value="{{ $pedido->id }}" /></div>
-                            <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->id }}</div>
-                            <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->cliente->entidad }}</div>
-                            <div class="flex-col w-1/12 my-2 text-left">
+                            <div class="flex-col w-1/12 text-left">{{ $pedido->id }}</div>
+                            <div class="flex-col w-2/12 text-left">{{ $pedido->cliente->entidad }}</div>
+                            {{-- <div class="flex-col w-1/12 text-left">
                                 @if($pedido->presupuesto_id)
                                 <a class="text-blue-700 underline" href="{{ route('presupuesto.editar',[$pedido->presupuesto_id,'i']) }}"  title="Pedido">{{ $pedido->presupuesto_id }}</a>
                                 @endif
-                            </div>
-                            <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->isbn }}</div>
-                            <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->referencia }}</div>
+                            </div> --}}
+                            <div class="flex-col w-3/12 my-2 text-left">{{ $pedido->isbn }} {{ $pedido->referencia }}</div>
+                            {{-- <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->referencia }}</div> --}}
                             <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fentrega }}</div>
                             {{-- <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->farchivos }}</div> --}}
                             {{-- <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fplotter }}</div> --}}
