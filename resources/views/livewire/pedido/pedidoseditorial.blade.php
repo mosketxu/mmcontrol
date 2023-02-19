@@ -17,7 +17,7 @@
                 <div>
                     <div class="">
                         {{-- titulos --}}
-                        <div class="flex w-full pt-2 pb-0 pl-2 space-x-2 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
+                        <div class="flex w-full pt-2 pb-0 pl-2 space-x-2 font-bold text-gray-500 bg-blue-100 rounded-t-md">
                             <div class="flex w-5 h-5 mr-2 font-medium text-center" >
                                 <x-input.checkbox wire:model="selectPage" />
                             </div>
@@ -29,7 +29,7 @@
                             <div class="w-1/12 text-right">{{ __('F.Entrega') }}</div>
                             {{-- <div class="w-1/12 text-right">{{ __('F. Archivos') }}</div> --}}
                             {{-- <div class="w-1/12 text-right">{{ __('F.Plotters') }}</div> --}}
-                            <div class="w-2/12 pr-6 text-right">{{ __('Q.Prev/Q.Real') }}</div>
+                            {{-- <div class="w-2/12 pr-6 text-right">{{ __('Q.Prev/Q.Real') }}</div> --}}
                             <div class="w-1/12 text-center">{{ __('Estado') }}</div>
                             <div class="w-1/12 text-center">{{ __('Facturado') }}</div>
                             <div class="w-4/12 text-left" ></div>
@@ -49,7 +49,7 @@
                         </div>
                         @endif
                         @forelse ($pedidos as $pedido)
-                        <div class="flex w-full space-x-2 text-sm text-gray-500 border-t-0 border-y hover:bg-gray-100 " wire:loading.class.delay="opacity-50">
+                        <div class="flex w-full space-x-2 text-xs text-gray-500 border-t-0 border-y hover:bg-gray-100 " wire:loading.class.delay="opacity-50">
                             <div class="flex w-5 h-5 p-2 mr-2 font-medium text-center"><x-input.checkbox wire:model="selected" value="{{ $pedido->id }}" /></div>
                             <div class="flex-col w-1/12 my-2 text-left">{{ $pedido->id }}</div>
                             <div class="flex-col w-2/12 my-2 text-left">{{ $pedido->cliente->entidad }}</div>
@@ -63,7 +63,7 @@
                             <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fentrega }}</div>
                             {{-- <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->farchivos }}</div> --}}
                             {{-- <div class="flex-col w-1/12 my-2 text-right">{{ $pedido->fplotter }}</div> --}}
-                            <div class="flex-col w-2/12 pr-2 my-2 text-right">{{ $pedido->tiradaprevista .' / '. $pedido->tiradareal }}</div>
+                            {{-- <div class="flex-col w-2/12 pr-2 my-2 text-right">{{ $pedido->tiradaprevista .' / '. $pedido->tiradareal }}</div> --}}
                             <div class="flex-col w-1/12 text-right">
                                 <select wire:change="changeValor({{ $pedido }},'estado',$event.target.value)"
                                     class="w-full text-center py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $pedido->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
