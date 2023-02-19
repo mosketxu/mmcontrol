@@ -140,7 +140,7 @@ class Presupuesto extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id', ['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id', ['2','3']);
-        $cajas=Caja::orderBy('name')->get();
+        $cajas=Caja::orderBy('name')->get();p
 
         $this->productos=Producto::query()
             ->with('cliente')
