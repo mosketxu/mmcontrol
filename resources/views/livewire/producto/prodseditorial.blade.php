@@ -23,21 +23,21 @@
                     </div>
                     <div>
                         @forelse ($productos as $producto)
-                            <div class="flex w-full text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
+                            <div class="flex w-full py-1 text-sm text-left border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                                 <div class="flex w-2/12 lg:w-3/12">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->isbn }}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->isbn }}"  readonly/>
                                 </div>
                                 <div class="flex w-3/12 lg:flex">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->referencia }}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->referencia }}"  readonly/>
                                 </div>
                                 <div class="hidden w-2/12 lg:flex">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->cliente->entidad }}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->cliente->entidad }}"  readonly/>
                                 </div>
                                 <div class="flex w-1/12 lg:w-1/12">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->preciocoste }}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->preciocoste }}"  readonly/>
                                 </div>
                                 <div class="hidden w-3/12 lg:flex">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->observaciones }}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->observaciones }}"  readonly/>
                                 </div>
                                 <div class="flex w-1/12 text-right">
                                     @can('producto.edit')

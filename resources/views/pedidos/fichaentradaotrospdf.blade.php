@@ -72,7 +72,7 @@
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Distribucion {{ $loop->index +1 }}</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 Cantidad: {{ $distribucion->cantidad }}
-                                <textarea name="" id="" cols="30" rows="8" class="p-0 m-0 border-none" style="text-align: left;">{{ $distribucion->comentario }}</textarea>
+                                <p>{!! nl2br(e($distribucion->comentario)) !!}</p>
                             </td>
                         </tr>
                         @endforeach

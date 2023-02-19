@@ -26,33 +26,33 @@
                         <div class="w-full font-light" ></div>
                     </div>
                     @forelse ($productos as $producto)
-                    <div class="flex py-1 pl-2 space-x-1 text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
+                    <div class="flex py-1 pl-2 space-x-1 text-sm text-left border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->isbn }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->isbn }}"  readonly/>
                         </div>
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->referencia }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->referencia }}"  readonly/>
                         </div>
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->cliente->entidad }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->cliente->entidad }}"  readonly/>
                         </div>
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->material }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->material }}"  readonly/>
                         </div>
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->medidas }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->medidas }}"  readonly/>
                         </div>
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->impresion }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->impresion }}"  readonly/>
                         </div>
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->preciocoste }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->preciocoste }}"  readonly/>
                         </div>
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->precioventa }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->precioventa }}"  readonly/>
                         </div>
                         <div class="w-full">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $producto->troquel }}"  readonly/>
+                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->troquel }}"  readonly/>
                         </div>
 
                         <div class="flex w-full text-right">

@@ -68,17 +68,23 @@
 
                      <table width=90% class="mx-auto mt-1 text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
+                            {{ $oferta->ofertaproducto }}
                             <td width=20% class="font-bold" style="padding-top:8px"  >Ref:</td>
                             <td width=80%  class="font-bold"  style="padding-top:8px"  style="padding-top:8px">{{ $oferta->ofertaproducto->referencia }}</td>
                         </tr>
+                        @if($oferta->ofertaproducto->formato!='')
                         <tr>
                             <td width=20% class="font-bold" style="padding-top:8px"  >Formato:</td>
                             <td width=80%  class=""  style="padding-top:8px"  style="padding-top:8px">{{ $oferta->ofertaproducto->formato }}</td>
                         </tr>
+                        @endif
+                        @if($oferta->ofertaproducto->paginas!='0')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Extensión:</td>
                             <td width=80% class=""  style="padding-top:8px" >{{ $oferta->ofertaproducto->paginas }}</td>
                         </tr>
+                        @endif
+                        @if($oferta->ofertaproducto->materialinterior!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Interior:</td>
                             <td width=80% class="" style="" >
@@ -92,6 +98,8 @@
                                 </div>
                             </td>
                         </tr>
+                        @endif
+                        @if($oferta->ofertaproducto->materialcubierta!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Cubierta:</td>
                             <td width=80% class="" style="" >
@@ -108,23 +116,36 @@
                                 </div>
                             </td>
                         </tr>
+                        @endif
+                        @if($oferta->ofertaproducto->descripsolapa!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Solapas:</td>
                             <td width=80% class="" style="padding-top:8px" >
                                 {{ $oferta->ofertaproducto->descripsolapa }}
                             </td>
                         </tr>
+                        @endif
                         <tr>
+                        @if($oferta->ofertaproducto->descripguardas!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Guardas:</td>
                             <td width=80% class="" style="padding-top:8px" >
                                 {{ $oferta->ofertaproducto->descripguardas }}
                             </td>
                         </tr>
+                        @endif
+                        @if($oferta->ofertaproducto->manipulacion!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Manipulación:</td>
                             <td width=80% class=""  style="padding-top:8px" >{{ $oferta->manipulacion }}</td>
                         </tr>
+                        @endif
+                        @if($oferta->ofertaproducto->observaciones!='')
+                        <tr style="">
+                            <td width=20% class="font-bold "  style="padding-top:8px">Observaciones:</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->ofertaproducto->observaciones }}</td>
+                        </tr>
+                        @endif
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Entrega:</td>
                             <td width=80% class=""  style="padding-top:8px" >{{ $oferta->entrega }}</td>

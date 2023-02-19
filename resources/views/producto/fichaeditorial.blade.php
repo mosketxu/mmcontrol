@@ -60,6 +60,10 @@
             <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->encuadernado }}</td>
         </tr>
         <tr style="">
+            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Plastificado</td>
+            <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->plastificado }}</td>
+        </tr>
+        <tr style="">
             <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Solapas</td>
             <td style="padding-left:3px;" class="borde1" colspan="2">
                 <input type="checkbox" name="solapa" value="{{ $producto->solapa }}" {{ $producto->solapa=='1' ? 'checked' : ''  }} id="solapa">

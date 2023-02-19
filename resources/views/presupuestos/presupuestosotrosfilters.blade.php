@@ -3,7 +3,7 @@
     <div class="flex w-1/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Presupuesto
+                Nº.Presup
             </label>
             <div class="flex">
                 <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
@@ -14,7 +14,7 @@
         </div>
     </div>
     {{-- Cliente --}}
-    <div class="flex w-1/12 ">
+    <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Cliente
@@ -28,21 +28,6 @@
                 </select>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
-                @endif
-            </div>
-        </div>
-    </div>
-
-    {{-- ISBN --}}
-    <div class="flex w-1/12 ">
-        <div class="w-full">
-            <label class="px-1 text-sm text-gray-600">
-                Cod./Ref.
-            </label>
-            <div class="flex">
-                <input type="text" wire:model="filtroisbn" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
-                @if($filtroisbn!='')
-                    <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                 @endif
             </div>
         </div>
@@ -62,8 +47,23 @@
             </div>
         </div>
     </div>
+
+        {{-- ISBN --}}
+        <div class="flex w-2/12 ">
+            <div class="w-full">
+                <label class="px-1 text-sm text-gray-600">
+                    Cod./Ref.
+                </label>
+                <div class="flex">
+                    <input type="text" wire:model="filtroisbn" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                    @if($filtroisbn!='')
+                        <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
+                    @endif
+                </div>
+            </div>
+        </div>
     {{-- Proveedor  --}}
-    <div class="flex w-1/12 ">
+    <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Proveedor
@@ -85,7 +85,7 @@
     <div class="flex w-1/12">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Año Presupuesto
+                Año
             </label>
             <div class="flex">
                 <input type="text" wire:model="filtroanyo"
@@ -101,7 +101,7 @@
     <div class="flex w-1/12">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Mes Presupuesto
+                Mes
             </label>
             <div class="flex">
                 <select wire:model="filtromes"
@@ -138,7 +138,7 @@
         </div>
     </div>
 
-    <div class="flex flex-row-reverse w-2/12">
+    {{-- <div class="flex flex-row-reverse w-2/12"> --}}
         {{-- <div class="inline-flex mt-3 space-x-2">
             <x-dropdown label="Actions">
                 <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
@@ -150,5 +150,5 @@
                 </x-dropdown.item>
             </x-dropdown>
         </div> --}}
-    </div>
+    {{-- </div> --}}
 </div>

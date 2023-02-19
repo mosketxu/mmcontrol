@@ -60,7 +60,7 @@
                                     <textarea wire:model.defer="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1">{{ old('descripcion') }} </textarea>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('IBAN') }}</x-jet-label>
+                                    <x-jet-label >{{ __('ISBN') }}</x-jet-label>
                                     <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="blue" class="w-full py-1" >
                                         @if (isset($productos))
                                             <option value="">-- Selecciona producto --</option>

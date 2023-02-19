@@ -75,30 +75,40 @@
                     </table>
 
                     <table width=80% class="mx-auto mt-4 text-sm " style="color:rgb(30, 27, 27);">
+                        @if($oferta->material!='')
                         <tr>
                             <td width=20% class="font-bold" style=""  >Material:</td>
                             <td width=80% >{{ $oferta->material}}</td>
                         </tr>
+                        @endif
+                        @if($oferta->medidas!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Medidas:</td>
                             <td width=80% >{{ $oferta->medidas}}</td>
                         </tr>
+                        @endif
+                        @if($oferta->impresion!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Impresión:</td>
                             <td width=80% >{{ $oferta->impresion}}</td>
                         </tr>
+                        @endif
                         {{-- <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Acabados:</td>
                             <td width=80% >{{ $oferta->acabado}}</td>
                         </tr> --}}
+                        @if($oferta->embalaje!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Embalaje:</td>
                             <td width=80% >{{ $oferta->embalaje }}</td>
                         </tr>
+                        @endif
+                        @if($oferta->transporte!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Transporte:</td>
                             <td width=80% >{{ $oferta->transporte }}</td>
                         </tr>
+                        @endif
                     </table>
 
                     @if($oferta->ofertaproductos->count()>0)
@@ -118,6 +128,10 @@
                                 <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
                                 <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
                                 <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->precio_ud ,2)}}</td>
+                            </tr>
+                            <tr>
+                                <td width=20% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray">Observaciones:</td>
+                                <td width=80%  colspan="5" class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->producto->observaciones }}</td>
                             </tr>
                             @endforeach
                         </table>
@@ -150,15 +164,21 @@
                     {{-- resto --}}
                     <div class="py-0 space-y-2 text-xs">
                         <table width="80%" style="margin-top:10px; " class="mx-auto" cellspacing="0" cellpadding="2" >
+                            @if($oferta->transporte!='')
                             <tr>
                                 <td style="padding-left:3px;"  class="" ><span class="font-bold">Transporte: </span>{{ $oferta->transporte}} </td>
                             </tr>
+                            @endif
+                            @if($oferta->troquel!='')
                             <tr>
                                 <td style="padding-left:3px;"  class="" > <span class="font-bold">Troquel: </span>{{ $oferta->troquel}}</td>
                             </tr>
+                            @endif
+                            @if($oferta->observaciones!='')
                             <tr>
                                 <td> <span class="font-bold">Observaciones: </span>{{ $oferta->observaciones}}</td>
                             </tr>
+                            @endif
                         </table>
                     </div>
 

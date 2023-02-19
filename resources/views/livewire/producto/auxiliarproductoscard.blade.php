@@ -102,7 +102,7 @@
                 </div>
                 <div>
                     <form wire:submit.prevent="save">
-                        <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
+                        <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                             @if ($campofechavisible==1)
                                 <div class="flex-col w-2/12 text-left">
                                     <input type="date" wire:model.defer="valorcampofecha"

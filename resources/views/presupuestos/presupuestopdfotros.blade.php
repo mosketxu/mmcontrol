@@ -49,7 +49,9 @@
                     <td style="text-align: center;"  class="" ></td>
                 </tr>
                 <tr>
-                    <td>Solicitado por: <span style="font-weight:bold;">{{ $presupuesto->contacto->entidad}} </span></td>
+                    <td>Solicitado por: <span style="font-weight:bold;">
+                        {{ $presupuesto->facturadopor=='1' ? $presupuesto->responsable : $presupuesto->cliente->entidad }}
+                    </span></td>
                 </tr>
                 <tr>
                     <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
@@ -88,6 +90,12 @@
                         <td>{{ $pproducto->producto->troquel }}</td>
                         <td>{{ $pproducto->producto->impresion }}</td>
                     </tr>
+                    @if($pproducto->producto->observaciones!='')
+                    <tr>
+                        <td>Observaciones:</td>
+                        <td colspan="6">{{ $pproducto->producto->observaciones }}</td>
+                    </tr>
+                    @endif
 
                     @endforeach
                 </table>
@@ -109,6 +117,12 @@
                     <td>{{ $pproceso->descripcion}}</td>
                     <td style="text-align: right;">{{ $pproceso->tirada}}</td>
                 </tr>
+                @if($pproceso->observaciones!='')
+                <tr>
+                    <td>Observaciones:</td>
+                    <td colspan="2">{{ $pproceso->observaciones }}</td>
+                </tr>
+                @endif
                 @endforeach
             </table>
             @endif

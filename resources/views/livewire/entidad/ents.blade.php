@@ -31,24 +31,24 @@
                     </div>
                     <div>
                         @forelse ($entidades as $entidad)
-                            <div class="flex w-full text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
+                            <div class="flex w-full text-sm text-left border-t-0 border-y py-1 hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                                 <div class="flex w-5/12 lg:w-3/12">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->entidad }}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->entidad }}"  readonly/>
                                 </div>
                                 <div class="hidden w-1/12 lg:flex">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->entidadtipo->nombrecorto ?? '-'}}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->entidadtipo->nombrecorto ?? '-'}}"  readonly/>
                                 </div>
                                 <div class="hidden w-2/12 md:w-2/12">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->responsable}}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->responsable}}"  readonly/>
                                 </div>
                                 <div class="hidden w-1/12 md:flex">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->nif }}" readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->nif }}" readonly/>
                                 </div>
                                 <div class="hidden w-2/12 lg:flex">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->tfno }}" readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->tfno }}" readonly/>
                                 </div>
                                 <div class="flex w-5/12 lg:w-3/12">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md" value="{{ $entidad->emailgral }}"  readonly/>
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->emailgral }}"  readonly/>
                                 </div>
                                 <div class="flex ">
                                     <x-icon.edit-a href="{{ route('entidad.edit',$entidad) }}"  title="Editar"/>

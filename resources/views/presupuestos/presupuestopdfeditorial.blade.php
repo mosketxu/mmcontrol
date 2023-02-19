@@ -45,7 +45,9 @@
                     <td style="text-align: right;"  class="" >Fecha: <span style="font-weight:bold;">{{ $presupuesto->fpresupuesto4}}</span></td>
                 </tr>
                 <tr>
-                    <td>Solicitado por: <span style="font-weight:bold;">{{ $presupuesto->contacto->entidad}} </span></td>
+                    <td>Solicitado por: <span style="font-weight:bold;">
+                        {{ $presupuesto->facturadopor=='1' ? $presupuesto->responsable : $presupuesto->cliente->entidad }}
+                    </span></td>
                 </tr>
                 <tr>
                     <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
@@ -131,6 +133,10 @@
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->encuadernado }}</td>
                     </tr>
                     <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Plastificado</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->plastificado }}</td>
+                    </tr>
+                    <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Solapas</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
                             <input type="checkbox" name="solapa" value="{{ $producto->solapa }}" {{ $producto->solapa=='1' ? 'checked' : ''  }} id="solapa">
@@ -156,6 +162,12 @@
                         <td style="padding-left:3px;" class="borde1" colspan="2">
                             <input type="checkbox" name="cd" value="{{ $producto->cd }}" {{ $producto->cd=='1' ? 'checked' : ''  }} id="cd">
                             {{ $producto->descripcd }}
+                        </td>
+                    </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Observaciones:</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            {{ $producto->observaciones }}
                         </td>
                     </tr>
                     <tr style="">

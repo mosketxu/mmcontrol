@@ -24,30 +24,30 @@
                     </div>
                     <div>
                         @forelse ($contactos as $contacto)
-                        <div class="flex w-full text-sm text-left border-t-0 border-y space-x-1" wire:loading.class.delay="opacity-50">
+                        <div class="flex w-full py-1 text-sm text-left border-t-0 border-y space-x-1 hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                             <div class="flex w-3/12 lg:w-3/12">
-                                <input type="text" value="{{ $contacto->entidad }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md" readonly/>
+                                <input type="text" value="{{ $contacto->entidad }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" readonly/>
                             </div>
                             <div class="w-1/12 lg:flex w-1/12">
-                                <input type="text" value="{{ $contacto->nif  }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md" readonly/>
+                                <input type="text" value="{{ $contacto->nif  }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" readonly/>
                             </div>
                             <div class="hidden w-1/12 lg:flex w-1/12">
-                                    <input type="text" value="{{ $contacto->tfno }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
+                                    <input type="text" value="{{ $contacto->tfno }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                     wire:change="changeValor('{{ $contacto->id }}','tfno',$event.target.value)"
                                     />
                                 </div>
                                 <div class="flex w-3/12 lg:w-3/12">
-                                    <input type="email" value="{{ $contacto->emailgral}}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
+                                    <input type="email" value="{{ $contacto->emailgral}}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                     wire:change="changeValor('{{ $contacto->id }}','emailgral',$event.target.value)"
                                     />
                                 </div>
                                 <div class="flex w-3/12 lg:w-4/12">
-                                    <input type="text" value="{{ $contacto->departamento }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
+                                    <input type="text" value="{{ $contacto->departamento }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                     wire:change="changeValor('{{ $contacto->id }}','departamento',$event.target.value)"
                                     />
                                 </div>
                                 <div class="flex w-4/12 lg:w-4/12">
-                                    <input type="text" value="{{ $contacto->comentarios }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
+                                    <input type="text" value="{{ $contacto->comentarios }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                     wire:change="changeValor('{{ $contacto->id }}','comentarios',$event.target.value)"
                                     />
                                 </div>

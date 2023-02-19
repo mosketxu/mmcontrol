@@ -44,7 +44,7 @@
     <div class="flex w-1/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Responsable
+                Respble.
             </label>
             <div class="flex">
                 <input type="text" wire:model="filtroresponsable" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
@@ -95,7 +95,7 @@
     <div class="flex w-1/12">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Año Pedido
+                Año
             </label>
             <div class="flex">
                 <input type="text" wire:model="filtroanyo"
@@ -110,7 +110,7 @@
     <div class="flex w-1/12">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Mes Pedido
+                Mes
             </label>
             <div class="flex">
                 <select wire:model="filtromes"
@@ -165,17 +165,4 @@
         </div>
     </div>
 
-    {{-- <div class="flex flex-row-reverse w-2/12">
-        <div class="inline-flex mt-3 space-x-2">
-            <x-dropdown label="Actions">
-                <x-dropdown.item type="button" wire:click="exportSelected" class="flex items-center space-x-2">
-                    <x-icon.csv class="text-green-400"></x-icon.csv><span>Export </span>
-                </x-dropdown.item>
-                <x-dropdown.item type="button" wire:click="$toggle('showDeleteModal')"
-                    class="flex items-center space-x-2">
-                    <x-icon.trash class="text-red-400"></x-icon.trash> <span>Delete </span>
-                </x-dropdown.item>
-            </x-dropdown>
-        </div>
-    </div> --}}
 </div>

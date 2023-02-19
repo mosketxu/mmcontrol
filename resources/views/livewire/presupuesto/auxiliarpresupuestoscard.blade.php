@@ -69,20 +69,20 @@
                 {{-- datos --}}
                 <div>
                     @forelse ($valores as $valor)
-                    <div class="flex w-full py-0 my-0 space-x-1 text-sm text-left bg-white border-t-0 border-y" wire:loading.class.delay="opacity-50">
+                    <div class="flex w-full py-1 my-0 space-x-1 text-sm text-left bg-white border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                         @if ($campofechavisible==1)
                         <div class="flex-col {{ $longcampofecha }} text-left">
                             <input type="date"
                                 value="{{ $valor->valorcampofecha }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campofecha }}',$event.target.value)"
-                                class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
+                                class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                 $campofechadisabled />
                         </div>
                         @endif
                         @if ($campo2visible==1)
                         <div class="flex-col {{ $longcampo2 }} {{ $textcampo2 }}">
                             @if($tipocampo2=='combo')
-                            <x-selectcolor wire:model.lazy="valor.valorcampo2" selectname="valorcampo2" color="blue" class="w-full"
+                            <x-selectcolor wire:model.lazy="valor.valorcampo2" selectname="valorcampo2" color="blue" class="w-full hover:bg-gray-100"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)">
                                 @foreach ($seleccionables2 as $seleccion)
                                 <option value="{{ $seleccion->id }}">{{ $seleccion->referencia }}</option>
@@ -91,7 +91,7 @@
                             @else
                             <input type="{{ $tipocampo2 }}" value="{{ $valor->valorcampo2 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)"
-                                class="w-full text-sm font-thin {{ $textcampo2 }} text-gray-500 border-0 rounded-md"
+                                class="w-full text-sm font-thin {{ $textcampo2 }} text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                 {{ $campo2disabled }}/>
                             @endif
                         </div>
@@ -99,7 +99,7 @@
                         @if ($campo3visible==1)
                         <div class="flex-col {{ $longcampo3 }} {{ $textcampo3 }}">
                             @if($tipocampo3=='combo')
-                                <x-select selectname="valorcampo3" class="w-full mt-1 border-none"
+                                <x-select selectname="valorcampo3" class="w-full mt-1 border-none hover:bg-gray-100"
                                     wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)">
                                     {{-- {{ $presupuesto->estado== '0'? 'selected' : '' }} --}}
                                     @foreach ($seleccionables3 as $seleccion)
@@ -109,7 +109,7 @@
                             @else
                             <input type="{{ $tipocampo3 }}" value="{{ $valor->valorcampo3 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
-                                class="w-full text-sm font-thin {{ $textcampo3 }} text-gray-500 border-0 rounded-md"
+                                class="w-full text-sm font-thin {{ $textcampo3 }} text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                 {{ $campo3disabled }}/>
                             @endif
                         </div>
@@ -119,11 +119,11 @@
                             @if($tipocampo4 =="textarea")
                                 <textarea  rows="4" cols="{{ $colstextarea4 }}"
                                     wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"
-                                    class="block text-xs font-thin text-left text-gray-500 border-0 rounded-md">{{ $valor->valorcampo4 }}</textarea>
+                                    class="block text-xs font-thin text-left text-gray-500 border-0 rounded-md hover:bg-gray-100">{{ $valor->valorcampo4 }}</textarea>
                             @else
                             <input type="{{ $tipocampo4 }}" value="{{ $valor->valorcampo4 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"
-                                class="w-full {{ $textcampo4 }} text-sm font-thin text-gray-500 border-0 rounded-md"
+                                class="w-full {{ $textcampo4 }} text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                 {{ $campo4disabled }}/>
                             @endif
                         </div>
@@ -132,7 +132,7 @@
                         <div class="flex-col {{ $longcampo5 }} {{ $textcampo5 }}">
                             <input type="{{ $tipocampo5 }}" value="{{ $valor->valorcampo5 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo5 }}',$event.target.value)"
-                                class="w-full text-sm font-thin {{ $textcampo5 }} text-gray-500 border-0 rounded-md"
+                                class="w-full text-sm font-thin {{ $textcampo5 }} text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                 {{ $campo5disabled }}/>
                         </div>
                         @endif
@@ -140,7 +140,7 @@
                         <div class="flex-col {{ $longcampo6 }} {{ $textcampo6 }}">
                             <input type="{{ $tipocampo6 }}" value="{{ $valor->valorcampo6 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo6 }}',$event.target.value)"
-                                class="w-full text-sm font-thin {{ $textcampo6 }} text-gray-500 border-0 rounded-md"
+                                class="w-full text-sm font-thin {{ $textcampo6 }} text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                 {{ $campo6disabled }}/>
                         </div>
                         @endif
@@ -148,7 +148,8 @@
                         @if ($campoimgvisible==1)
                         <div class="{{ $longcampoimg }} ml-8 text-left">
                             @if($valor->valorcampoimg)
-                                <a href="{{asset('archivospresupuesto/'.$valor->valorcampoimg) }}" target="_blank" class="w-5 text-blue-500 hover:text-blue-700" title="Ver producto">
+                                <a href="{{asset('archivospresupuesto/'.$valor->valorcampoimg) }}" target="_blank"
+                                    class="w-5 text-blue-500 hover:text-blue-700 hover:bg-gray-100" title="Ver producto">
                                     <div class="flex">
                                         <x-icon.clip />
                                         <div class="mt-1">

@@ -23,10 +23,10 @@
                             <div class="w-1/12 text-left" >{{ __('Oferta') }}</div>
                             <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
                             <div class="w-2/12 text-left" >{{ __('Fecha') }}</div>
-                            <div class="w-2/12 text-left" >{{ __('Contacto') }} </div>
+                            {{-- <div class="w-2/12 text-left" >{{ __('Contacto') }} </div> --}}
                             <div class="w-3/12 text-left" >{{ __('Referencia') }} </div>
-                            <div class="w-1/12 text-cent">{{ __('Estado') }}</div>
-                            <div class="w-1/12 text-left" ></div>
+                            <div class="w-2/12 text-cent">{{ __('Estado') }}</div>
+                            <div class="w-2/12 text-left" ></div>
                         </div>
                     </div>
                     <div>
@@ -43,14 +43,14 @@
                         </div>
                         @endif
                         @forelse ($ofertas as $oferta)
-                        <div class="flex w-full py-1 pl-2 text-sm font-medium text-gray-500 border-t-0 border-y " wire:loading.class.delay="opacity-50">
+                        <div class="flex w-full py-1 pl-2 text-sm font-medium text-gray-500 border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                             <div class="flex w-5 h-5 text-center"><x-input.checkbox wire:model="selected" value="{{ $oferta->id }}" /></div>
                             <div class="flex w-1/12 text-left">{{ $oferta->id }}</div>
                             <div class="flex w-2/12 text-left">{{ $oferta->cliente->entidad }}</div>
                             <div class="flex w-2/12 text-left">{{ $oferta->ffecha }}</div>
-                            <div class="flex w-2/12 text-left">{{ $oferta->contacto->entidad }}</div>
+                            {{-- <div class="flex w-2/12 text-left">{{ $oferta->contacto->entidad }}</div> --}}
                             <div class="flex w-3/12 text-left">{{ $oferta->referencia }}</div>
-                            <div class="flex w-1/12 text-left">
+                            <div class="flex w-2/12 text-left">
                                 <select wire:change="changeValor({{ $oferta }},'estado',$event.target.value)"
                                     class="w-full text-center py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $oferta->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                                     <option value="0" {{ $oferta->estado== '0'? 'selected' : '' }}>En Espera</option>
@@ -58,7 +58,7 @@
                                     <option value="2" {{ $oferta->estado== '2'? 'selected' : '' }}>Rechazada</option>
                                 </select>
                             </div>
-                            <div class="flex flex-row-reverse w-1/12 pr-2 mt-1 ">
+                            <div class="flex flex-row-reverse w-2/12 pr-2 mt-1 ">
                                 <x-icon.delete-a wire:click.prevent="delete({{ $oferta->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
                                 <a href="{{route('oferta.ficha',[$oferta->id,$oferta->tipo])}}" target="_blank" title="Imprimir Oferta"><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
                                 <x-icon.edit-a class="" href="{{ route('oferta.editar',[$oferta,'i']) }}"  title="Editar"/>
