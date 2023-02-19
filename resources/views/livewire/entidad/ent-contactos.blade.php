@@ -14,38 +14,42 @@
             <div class="flex-col space-y-4">
                 <div>
                     <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
-                        <div class="flex w-4/12 lg:w-4/12" >{{ __('Contacto') }}</div>
-                        <div class="hidden w-2/12 lg:flex" >{{ __('Nif') }}</div>
-                        <div class="hidden w-1/12 lg:flex" >{{ __('Tfno.') }}</div>
-                        <div class="flex w-3/12 lg:w-1/12" >{{ __('Email Gral.') }}</div>
-                        <div class="flex w-3/12 lg:w-4/12" >{{ __('Departamento') }}</div>
-                        <div class="flex w-3/12 lg:w-4/12" >{{ __('Obs.Contacto') }}</div>
+                        <div class="flex w-3/12 lg:w-3/12" >{{ __('Contacto') }}</div>
+                        <div class="hidden w-1/12 lg:flex w-1/12" >{{ __('Nif') }}</div>
+                        <div class="hidden w-1/12 lg:flex w-1/12" >{{ __('Tfno.') }}</div>
+                        <div class="flex w-3/12 lg:w-3/12" >{{ __('Email Gral.') }}</div>
+                        <div class="flex w-3/12 lg:w-3/12" >{{ __('Departamento') }}</div>
+                        <div class="flex w-4/12 lg:w-4/12" >{{ __('Obs.Contacto') }}</div>
                         <div class="flex w-1/12 " ></div>
                     </div>
                     <div>
                         @forelse ($contactos as $contacto)
-                        <div class="flex w-full text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
-                            <div class="flex w-4/12 lg:w-4/12">
+                        <div class="flex w-full text-sm text-left border-t-0 border-y space-x-1" wire:loading.class.delay="opacity-50">
+                            <div class="flex w-3/12 lg:w-3/12">
                                 <input type="text" value="{{ $contacto->entidad }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md" readonly/>
                             </div>
-                            <div class="w-2/12 lg:flex">
+                            <div class="w-1/12 lg:flex w-1/12">
                                 <input type="text" value="{{ $contacto->nif  }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md" readonly/>
                             </div>
-                            <div class="hidden w-1/12 lg:flex">
+                            <div class="hidden w-1/12 lg:flex w-1/12">
                                     <input type="text" value="{{ $contacto->tfno }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
-                                        readonly/>
+                                    wire:change="changeValor('{{ $contacto->id }}','tfno',$event.target.value)"
+                                    />
                                 </div>
-                                <div class="flex w-3/12 lg:w-1/12">
-                                    <input type="text" value="{{ $contacto->emailgral}}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
-                                        readonly/>
-                                </div>
-                                <div class="flex w-3/12 lg:w-4/12">
-                                    <input type="email" value="{{ $contacto->departamento }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
-                                        readonly/>
+                                <div class="flex w-3/12 lg:w-3/12">
+                                    <input type="email" value="{{ $contacto->emailgral}}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
+                                    wire:change="changeValor('{{ $contacto->id }}','emailgral',$event.target.value)"
+                                    />
                                 </div>
                                 <div class="flex w-3/12 lg:w-4/12">
-                                    <input type="email" value="{{ $contacto->comentarios }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
-                                        readonly/>
+                                    <input type="text" value="{{ $contacto->departamento }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
+                                    wire:change="changeValor('{{ $contacto->id }}','departamento',$event.target.value)"
+                                    />
+                                </div>
+                                <div class="flex w-4/12 lg:w-4/12">
+                                    <input type="text" value="{{ $contacto->comentarios }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
+                                    wire:change="changeValor('{{ $contacto->id }}','comentarios',$event.target.value)"
+                                    />
                                 </div>
                                 <div class="flex w-1/12 ">
                                     <x-icon.edit-a href="{{ route('entidad.edit',$contacto->contacto_id) }}"  title="Editar"/>

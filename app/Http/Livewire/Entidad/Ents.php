@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Entidad;
 
-use App\Models\{Entidad,EntidadTipo,User};
+use App\Models\{Entidad,EntidadTipo, Producto, User};
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,28 +23,49 @@ class Ents extends Component
 
         $entidades=Entidad::query()
             ->with('entidadtipo')
-            ->filtrosEntidad($this->search,$this->filtroresponsable,$this->entidadtipo_id,$this->Fini,$this->Ffin)
-            ->orderBy('entidad','asc')
+            ->filtrosEntidad($this->search, $this->filtroresponsable, $this->entidadtipo_id, $this->Fini, $this->Ffin)
+            ->orderBy('entidad', 'asc')
             ->paginate(10);
 
 
-        return view('livewire.entidad.ents',compact('entidades','entidadtipo'));
+        return view('livewire.entidad.ents', compact('entidades', 'entidadtipo'));
     }
 
-    public function updatingSearch(){
+    public function updatingSearch()
+    {
         $this->resetPage();
     }
 
-    public function changeValor(Entidad $entidad,$campo,$valor)
+    public function changeValor(Entidad $entidad, $campo, $valor)
     {
         $entidad->update([$campo=>$valor]);
-        $this->dispatchBrowserEvent('notify', 'Actulizada con éxito.');
+        $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
     }
 
     public function delete($entidadId)
     {
         $entidad = Entidad::find($entidadId);
-        if ($entidad) {
+        $mensaje='';
+        $mensaje1='';
+        $mensaje2='';
+        $mensaje3='';
+
+        $productos=$entidad->productos->count();
+        $presupuestos=$entidad->presupuestos->count();
+        $ofertas=$entidad->ofertas->count();
+
+        if ($productos>0) $mensaje1="Productos";
+        if ($presupuestos>0) $mensaje2=', Presupuestos' ;
+        if ($ofertas>0) $mensaje3=', Presupuestos MM';
+
+        $mensaje='No se puede eliminar porque tiene asociados: '. $mensaje1 . ' ' . $mensaje2 . ' ' . $mensaje3;
+        if ($mensaje!='') {
+            $this->dispatchBrowserEvent('notifyred', $mensaje);
+        }
+
+        if ($entidad && $mensaje=='') {
+            $entidad->contactos->delete();
+            $entidad->destinos->delete();
             $entidad->delete();
             $this->dispatchBrowserEvent('notify', 'La entidad: '.$entidad->entidad.' ha sido eliminada!');
         }

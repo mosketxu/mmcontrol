@@ -21,11 +21,12 @@ class Entidad extends Model
     public function pais(){ return $this->belongsTo(Pais::class);}
     public function provincia(){return $this->belongsTo(Provincia::class);}
     public function metodopago(){return $this->belongsTo(MetodoPago::class);}
-    public function contactos(){return $this->hasMany(EntidadContacto::class)->withDefault(['contacto'=>'-']);}
+    public function contactos(){return $this->hasMany(EntidadContacto::class)->withDefault('-');}
     public function destinos(){return $this->hasMany(EntidadDestino::class);}
     public function entidadtipo(){return $this->belongsTo(EntidadTipo::class);}
-    public function productos(){return $this->hasMany(Producto::class);}
-    // public function presupuestos(){return $this->hasMany(Presupuesto::class);}
+    public function productos(){return $this->hasMany(Producto::class,'cliente_id');}
+    public function presupuestos(){return $this->hasMany(Presupuesto::class,'cliente_id');}
+    public function ofertas(){return $this->hasMany(Oferta::class,'cliente_id');}
 
 
     public function scopeFiltrosEntidad(Builder $query, $search, $filtroresponsable, $entidadtipo_id,$fini,$ffin) : Builder

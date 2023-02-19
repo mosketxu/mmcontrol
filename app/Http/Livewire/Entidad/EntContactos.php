@@ -18,9 +18,7 @@ class EntContactos extends Component
     public $conts;
     public $ruta='entidad.contacto';
 
-    public function render()
-    {
-
+    public function render(){
         $ent=$this->entidad;
         $contactos = EntidadContacto::where('entidad_id',$this->entidad->id)
         ->join('entidades','entidad_contactos.contacto_id','=','entidades.id')
@@ -35,8 +33,13 @@ class EntContactos extends Component
         $entidades=Entidad::whereNotIn('id',$excludedContactos)->orderBy('entidad')->get();
 
         return view('livewire.entidad.ent-contactos',compact(['ent','contactos','entidades','excludedContactos']));
-
     }
+
+    public function changeValor(EntidadContacto $contacto,$campo,$valor){
+        $contacto->update([$campo=>$valor]);
+        $this->dispatchBrowserEvent('notify', 'Contacto actulizado.');
+    }
+
 
     public function savecontacto()
     {

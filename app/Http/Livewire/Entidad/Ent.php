@@ -82,7 +82,7 @@ class Ent extends Component
 
         $responsables=Responsable::all();
         $metodopagos=MetodoPago::all();
-        $provincias=Provincia::all();
+        $provincias=Provincia::orderBy('provincia')->get();
         $paises=Pais::all();
         return view('livewire.entidad.ent',compact('responsables','metodopagos','provincias','paises','tiposentidad'));
     }
