@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Pedido;
 
+use App\Exports\PedidosExport;
 use Livewire\Component;
 
 use App\Models\{ Pedido,Entidad, Mes};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Pedidos extends Component
 {
@@ -139,7 +141,7 @@ class Pedidos extends Component
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
-            ->select('pedidos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia')
+            ->select('entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia','pedidos.*',)
             ->where('pedidos.tipo',$this->tipo)
             ->search('pedidos.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){
@@ -174,6 +176,48 @@ class Pedidos extends Component
 
     public function getRowsProperty(){
         return $this->rowsQuery->paginate(10);
+    }
+
+    public function exportSelected(){
+        $pedidos= Pedido::query()
+            ->join('entidades','pedidos.cliente_id','=','entidades.id')
+            ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
+            ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+            ->select('entidades.entidad',
+            'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
+            'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechaplotter','pedidos.fechaentrega',
+            'productos.isbn','productos.referencia',
+            'pedidos.estado','pedidos.facturado','otros',
+            )
+            ->where('pedidos.tipo',$this->tipo)
+            ->search('pedidos.id',$this->search)
+            ->when($this->filtroreferencia!='', function ($query){
+                $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
+            })
+            ->when($this->filtroresponsable!='', function ($query){
+                $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
+            })
+            ->when($this->filtrocliente!='', function ($query){
+                $query->where('pedidos.cliente_id',$this->filtrocliente);
+                })
+            ->when($this->filtroproveedor!='', function ($query){
+                $query->where('pedidos.proveedor_id',$this->filtroproveedor);
+                })
+            ->when($this->filtroestado!='', function ($query){
+                $query->where('pedidos.estado',$this->filtroestado);
+            })
+            ->when($this->filtrofacturado!='', function ($query){
+                $query->where('pedidos.facturado',$this->filtrofacturado);
+            })
+            ->searchYear('fechapedido',$this->filtroanyo)
+            ->searchMes('fechapedido',$this->filtromes)
+            ->orderBy('pedidos.fechapedido','desc')
+            ->orderBy('pedidos.id','desc')
+            ->get();
+
+            // dd($pedidos);
+
+        return Excel::download(new PedidosExport($pedidos), 'pedidos.xlsx');
     }
 
     public function delete($pedidoId){
