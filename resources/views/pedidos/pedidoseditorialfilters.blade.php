@@ -165,6 +165,7 @@
         </div>
     </div>
     <div class="w-5">
+        Excel
         <x-icon.xls-a wire:click="exportSelected" class="w-7 text-green-400 mt-3 mr-1" title="Exportar pedidos"/>
     </div>
 
