@@ -131,4 +131,20 @@ class Pedido extends Model
             return '';
         }
     }
+
+    public function getStatusAttribute(){
+        return [
+            '0'=>['text-blue-500','Curso'],
+            '1'=>['text-green-500','Fin.'],
+            '2'=>['text-red-500','Canc.']
+        ][$this->estado] ?? ['text-gray-100','-'];
+    }
+
+    public function getFactuAttribute(){
+        return [
+            '0'=>['text-red-500','No'],
+            '1'=>['text-green-500','Sí.'],
+            '2'=>['text-blue-500','Parcial'],
+        ][$this->estado] ?? ['text-gray-100','-'];
+    }
 }
