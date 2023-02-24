@@ -44,12 +44,12 @@
                             </div>
                             <div class="flex-col w-2/12 text-left">{{ $pedido->cliente->entidad }}</div>
                             <div class="flex-col w-3/12 text-left">{{ $pedido->isbn }} {{ $pedido->referencia }}</div>
-                            <div class="flex-col w-2/12 text-center">
+                            <div class="flex-col w-2/12 text-center bg-green-50">
                                 <div class="flex"><div class="w-6/12 text-left">Archivos:</div><div class="w-6/12 text-right">{{ $pedido->farchivos }}</div></div>
                                 <div class="flex"><div class="w-6/12  text-left">Plotter:</div><div class="w-6/12 text-right">{{ $pedido->fplotter }}</div></div>
                                 <div class="flex"><div class="w-6/12  text-left">Entrega:</div><div class="w-6/12 text-right">{{ $pedido->fentrega }}</div></div>
                             </div>
-                            <div class="flex-col w-1/12 ">
+                            <div class="flex-col w-1/12 bg-gray-50">
                                 <div class="flex">
                                     <div class="w-6/12 text-left">Pre:</div>
                                     <div class="w-6/12 text-right">{{ $pedido->tiradaprevista }}</div>
@@ -58,7 +58,7 @@
                                     <div class="w-6/12  text-left">Re:</div>
                                     <div class="w-6/12 text-right">{{ $pedido->tiradareal }}</div></div>
                             </div>
-                            <div class="flex-col w-1/12 text-center">
+                            <div class="flex-col w-1/12 text-center bg-blue-50">
                                 <div class="{{ $pedido->status[0] }}">
                                     {{ $pedido->status[1] }}
                                 </div>
@@ -72,7 +72,7 @@
                                 <x-icon.building-circle-arrow-right-a class="w-5 text-gray-500 hover:text-gray-900 " onclick="location.href = '{{route('pedido.distribuciones',[$pedido->id,'i'])}}'" title="Distribuciones"/>
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
                                 <x-icon.triangleexclamation-a class="w-6 mb-1 text-yellow-500 hover:text-yellow-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias"/>
-                                <x-icon.sandwatch-a class="w-4  text-orange-700 hover:text-brown-700 " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos"/>
+                                <x-icon.sandwatch-a class="w-4  text-orange-700 hover:text-orange-900 " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos"/>
                                 <x-icon.pdf-a class=" text-red-500 hover:text-red-700" href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank"/>
                                 <x-icon.delete-a class="" wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" />
                             </div>
