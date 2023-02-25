@@ -11,7 +11,6 @@
             <div class="">
                 @include('errores')
             </div>
-
             <div class="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-t-lg">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead>
@@ -28,10 +27,6 @@
                             <th class="px-1 py-3 pl-3 text-xs font-bold leading-4 tracking-wider text-left text-gray-500 bg-blue-50" ></th>
                         </tr>
                     </thead>
-                {{-- </table>
-            </div>
-            <div class="min-w-full overflow-x-auto overflow-y-auto align-middle shadow h-96 sm:rounded-b-lg">
-                <table class="min-w-full divide-y divide-gray-200"> --}}
                     <tbody class="bg-white divide-y divide-gray-200 ">
                         @foreach ($valores as $valor)
                             <tr wire:loading.class.delay="opacity-50">
@@ -67,10 +62,6 @@
                             </tr>
                         @endforeach
                     </tbody>
-                {{-- </table>
-            </div>
-            <div class="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg"> --}}
-                {{-- <table min-w-full divide-y divide-gray-200> --}}
                     <tfoot class="bg-blue-100">
                         <form wire:submit.prevent="save">
                             <tr >
@@ -99,6 +90,9 @@
                         </tfoot>
                     </form>
                 </table>
+            </div>
+            <div class="">
+                @include('errores')
             </div>
         </div>
     </div>
