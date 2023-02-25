@@ -169,7 +169,7 @@ class Pedidos extends Component
             ->searchMes('fechapedido',$this->filtromes)
             ->orderBy('pedidos.estado','asc')
             ->orderBy('entidades.entidad','asc')
-            ->orderBy('pedidos.fechapedido','desc')
+            ->orderBy('pedidos.fechaentrega','desc')
             ->orderBy('pedidos.id','desc');
 
             // dd('llego');
