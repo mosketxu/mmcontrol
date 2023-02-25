@@ -66,12 +66,11 @@ class Material extends Component
         $this->dispatchBrowserEvent('notify', 'Material Actualizado.');
     }
 
-    public function save()
-    {
+    public function save(){
         $this->validate();
 
         ModelsMaterial::create([
-            'name'=>$this->valorcampo2,
+            'name'=>$this->valorcampo1,
             'familia'=>strtoupper($this->valorcampo2),
             'descripcion'=>$this->valorcampo3,
         ]);
