@@ -120,6 +120,7 @@ class PedidoIncidencia extends Component
         $valores=ModelsPedidoIncidencia::query()
         ->search('comentario',$this->search)
         ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
+        ->where('pedido_id',$this->pedido->id)
         ->orderBy('fecha')
         ->paginate(10);
 
