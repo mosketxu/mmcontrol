@@ -223,7 +223,9 @@ class Presupuesto extends Component
         $this->estado=$this->estado=='' ? '0' : $this->estado;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
         $mensaje="Presupuesto creado satisfactoriamente";
-        $i="";
+        $i=null;
+        $nuevo=null;
+
         if ($this->presupuestoid!='') {
             $i=$this->presupuestoid;
             $mensaje="Presupuesto actualizado satisfactoriamente";
@@ -239,7 +241,12 @@ class Presupuesto extends Component
             $nuevo=true;
         }
 
-        if($this->tipo=='2') Validator::make(['descripcion'=>$this->descripcion,],['descripcion' => 'required',],['descripcion.required'=>'La descripción es necesaria.'])->validate();
+        if($this->tipo=='2')
+            Validator::make(
+                ['descripcion'=>$this->descripcion,],
+                ['descripcion' => 'required',],
+                ['descripcion.required'=>'La descripción es necesaria.'])
+                ->validate();
 
         // Esto lo hago tanto para Editorial como para Packaging
         $presup=ModelsPresupuesto::updateOrCreate(
@@ -289,13 +296,15 @@ class Presupuesto extends Component
             );
         }
 
-        $this->dispatchBrowserEvent('notify', $mensaje);
+        $i=null;
         if ($nuevo) {
             return redirect()->route('presupuesto.editar', [$presup,'e']);
         }
+        $this->dispatchBrowserEvent('notify', $mensaje);
     }
 
     public function pedido(ModelsPresupuesto $presupuesto){
+        $pedidoid=null;
         $fechapedido=now()->format('Y-m-d');
         $anyo= substr($fechapedido, 0,4);
         $anyo2= substr($anyo, -2);
