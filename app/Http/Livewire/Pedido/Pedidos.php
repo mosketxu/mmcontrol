@@ -167,7 +167,7 @@ class Pedidos extends Component
             })
             ->searchYear('fechapedido',$this->filtroanyo)
             ->searchMes('fechapedido',$this->filtromes)
-            ->orderBy('pedidos.estado','desc')
+            ->orderBy('pedidos.estado','asc')
             ->orderBy('entidades.entidad','asc')
             ->orderBy('pedidos.fechapedido','desc')
             ->orderBy('pedidos.id','desc');
