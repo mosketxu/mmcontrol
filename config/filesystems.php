@@ -46,12 +46,6 @@ return [
             'url' => env('APP_URL').'/archivospedido',
             'visibility' => 'public',
         ],
-        'archivospedidos' => [
-            'driver' => 'local',
-            'root' => storage_path('app/archivospedido'),
-            'url' => env('APP_URL').'/archivospedido',
-            'visibility' => 'public',
-        ],
         'archivospresupuesto' => [
             'driver' => 'local',
             'root' => storage_path('app/archivospresupuesto'),
@@ -92,7 +86,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('fichasproducto') => storage_path('app/fichasproducto'),
-        public_path('archivospedido') => storage_path('app/fichasproducto'),
+        public_path('archivospedido') => storage_path('app/archivospedido'),
         public_path('archivospresupuesto') => storage_path('app/archivospresupuesto'),
     ],
 
