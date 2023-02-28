@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, PedidoProducto, Responsable};
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -233,6 +234,10 @@ class Pedido extends Component
     }
 
     public function save(){
+        if($this->fechaarchivos=='')$this->fechaarchivos=null;
+        if($this->fechaentrega =='') $this->fechaentrega=null;
+        if($this->fechaplotter =='') $this->fechaplotter=null;
+
         if($this->precio=='') $this->precio='0';
         $mensaje="Pedido creado satisfactoriamente";
         $i="";

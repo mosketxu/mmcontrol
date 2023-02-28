@@ -17,19 +17,21 @@
                 <div>
                     <div class="">
                         {{-- titulos --}}
-                        <div class="flex w-full pt-2 text-xs pb-0 pl-2 space-x-2 font-bold text-gray-500 bg-blue-100 rounded-t-md">
+                        <div class="flex w-full pt-2 pb-0 pl-2 space-x-2 text-xs font-bold text-gray-500 bg-blue-100 rounded-t-md">
                             <div class="w-1/12 text-left" >{{ __('Pedido') }} <br>{{ __('Presup.')  }}</div>
                             <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
                             <div class="w-3/12 text-left" >{{ __('ISBN/Ref') }} </div>
                             <div class="w-2/12 text-center">{{ __('Fechas') }}</div>
-                            <div class="w-1/12 text-center">{{ __('Tirada') }}</div>
-                            <div class="w-1/12 text-center">{{ __('Estado') }} <br> {{ __('Facturado') }}</div>
+                            <div class="w-1/12 text-center">{{ __('Q.Pre/Q.Real') }}</div>
+                            <div class="w-10 text-center">{{ __('Est/Fac') }} </div>
                             <div class="w-2/12" ></div>
                         </div>
                     </div>
                     <div>
                         @forelse ($pedidos as $pedido)
-                        <div class="flex w-full items-center space-x-2 text-xs text-gray-500 border-t-0 border-y hover:bg-gray-100 " wire:loading.class.delay="opacity-50">
+                        @livewire('pedido.pedidos-pedido',['pedidoId'=>$pedido->id,'tipo'=>'1'],key($pedido->id))
+                        {{-- <div class="flex items-center w-full space-x-2 text-xs text-gray-500 border-t-0 border-y hover:bg-gray-100 " wire:loading.class.delay="opacity-50">
+
                             <div class="flex-col w-1/12 text-left">
                                 <div class="pl-2">
                                     <div class="">
@@ -45,25 +47,31 @@
                             <div class="flex-col w-2/12 text-left">{{ $pedido->cliente->entidad }}</div>
                             <div class="flex-col w-3/12 text-left">{{ $pedido->isbn }} {{ $pedido->referencia }}</div>
                             <div class="flex-col w-2/12 text-center bg-green-50">
-                                <div class="flex"><div class="w-6/12 text-left">Archivos:</div><div class="w-6/12 text-right">{{ $pedido->farchivos }}</div></div>
-                                <div class="flex"><div class="w-6/12  text-left">Plotter:</div><div class="w-6/12 text-right">{{ $pedido->fplotter }}</div></div>
-                                <div class="flex"><div class="w-6/12  text-left">Entrega:</div><div class="w-6/12 text-right">{{ $pedido->fentrega }}</div></div>
+                                <span class="font-bold"> Arc:</span>&nbsp;{{ $pedido->farchivos }} <span class="font-bold"> Plo:</span>&nbsp;{{ $pedido->fplotter }} <span class="font-bold"> Ent:</span>&nbsp;{{ $pedido->fentrega }}
                             </div>
-                            <div class="flex-col w-1/12 bg-gray-50">
-                                <div class="flex">
-                                    <div class="w-6/12 text-left">Pre:</div>
-                                    <div class="w-6/12 text-right">{{ $pedido->tiradaprevista }}</div>
-                                </div>
-                                <div class="flex">
-                                    <div class="w-6/12  text-left">Re:</div>
-                                    <div class="w-6/12 text-right">{{ $pedido->tiradareal }}</div></div>
+                            <div class="flex-col w-1/12 mx-auto text-center bg-gray-50">
+                                {{ $pedido->tiradaprevista }}/{{ $pedido->tiradareal }}
                             </div>
-                            <div class="flex-col w-1/12 text-center bg-blue-50">
-                                <div class="{{ $pedido->status[0] }}">
-                                    {{ $pedido->status[1] }}
+                            <div class="flex w-10 mx-auto text-center ">
+                                <div class="" >
+                                    @if($pedido->estado=='0')
+                                        <x-icon.thumbs-up-a class="" title="En curso" wire:click="cambiaEstado({{ $pedido->id}})"/>
+                                    @elseif($pedido->estado=='2')
+                                        <x-icon.thumbs-down-a class="w-5 " title="Cancelado" wire:click="cambiaEstado({{ $pedido->id}})"/>
+                                    @elseif($pedido->estado=='1')
+                                        <x-icon.flag-checkered-a class="w-5 text-black hover:text-gray-700 " title="Finalizado" wire:click="cambiaEstado({{ $pedido->id}})"/>
+                                    @endif
                                 </div>
-                                <div class="{{ $pedido->factu[0] }}">
-                                    {{ $pedido->factu[1] }}
+                            </div>
+                            <div class="flex w-10 mx-auto text-center ">
+                                <div class="">
+                                    @if($pedido->facturado=='1')
+                                        <x-icon.thumbs-up-a class="w-5 text-green-500 hover:text-green-700 "  title="Sí" wire:click="cambiaFac({{ $pedido->id}})"/>
+                                    @elseif($pedido->facturado=='0')
+                                        <x-icon.thumbs-down-a class="w-5 text-red-500 hover:text-red-700 " title="No" wire:click="cambiaFac({{ $pedido->id}})"/>
+                                    @elseif($pedido->facturado=='2')
+                                        <x-icon.p-a class="w-4 text-black hover:text-gray-700 " title="Parcial" wire:click="cambiaFac({{ $pedido->id}})"/>
+                                    @endif
                                 </div>
                             </div>
                             <div class="w-2/12 space-x-1 text-center lg:space-x-2">
@@ -72,11 +80,11 @@
                                 <x-icon.building-circle-arrow-right-a class="w-5 text-gray-500 hover:text-gray-900 " onclick="location.href = '{{route('pedido.distribuciones',[$pedido->id,'i'])}}'" title="Distribuciones"/>
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
                                 <x-icon.triangleexclamation-a class="w-6 mb-1 text-yellow-500 hover:text-yellow-700 " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias"/>
-                                <x-icon.sandwatch-a class="w-4  text-orange-700 hover:text-orange-900 " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos"/>
-                                <x-icon.pdf-a class=" text-red-500 hover:text-red-700" href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank"/>
+                                <x-icon.sandwatch-a class="w-4 text-orange-700 hover:text-orange-900 " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos"/>
+                                <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank"/>
                                 <x-icon.delete-a class="" wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" />
                             </div>
-                        </div>
+                        </div> --}}
                         @empty
                         <div class="flex w-full text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
                             <div colspan="10">

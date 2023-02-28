@@ -6,7 +6,7 @@
                 Pedido
             </label>
             <div class="flex">
-                <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <input type="search" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
                 @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -20,7 +20,7 @@
                 Título
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroreferencia" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <input type="search" wire:model="filtroreferencia" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
                 @if($filtroreferencia!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -34,7 +34,7 @@
                 ISBN
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroisbn" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <input type="search" wire:model="filtroisbn" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
                 @if($filtroisbn!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -44,10 +44,15 @@
     <div class="flex w-1/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Respble.
+                Rpble.
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroresponsable" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <select wire:model="filtroresponsable" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                    <option value="">Todos</option>
+                    @foreach ($responsables as $responsable)
+                    <option value="{{ $responsable->responsable }}">{{ $responsable->responsable }}</option>
+                    @endforeach
+                </select>
                 @if($filtroresponsable!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroresponsable', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -98,7 +103,7 @@
                 Año
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroanyo"
+                <input type="search" wire:model="filtroanyo"
                     class="w-full py-1 text-sm text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
                     placeholder="Año" />
                 @if($filtroanyo!='')
@@ -166,7 +171,7 @@
     </div>
     <div class="w-5">
 
-        <x-icon.xls-a wire:click="exportSelected" class="w-7 text-green-400 mt-3 mr-1" title="Exportar pedidos"/>
+        <x-icon.xls-a wire:click="exportSelected" class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/>
     </div>
 
 </div>

@@ -5,11 +5,12 @@ namespace App\Http\Livewire\Pedido;
 use App\Exports\PedidosExport;
 use Livewire\Component;
 
-use App\Models\{ Pedido,Entidad, Mes};
+use App\Models\{ Pedido,Entidad, Mes, Responsable};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use Maatwebsite\Excel\Facades\Excel;
+
 
 class Pedidos extends Component
 {
@@ -111,11 +112,12 @@ class Pedidos extends Component
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
+        $responsables=Responsable::all();
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
         $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoseditorial': 'livewire.pedido.pedidosotros';
-        return view($vista,compact('pedidos','clientes','proveedores','meses'));
+        return view($vista,compact('pedidos','clientes','proveedores','responsables','meses'));
     }
 
     public function updatingSearch(){$this->resetPage();}
@@ -128,6 +130,8 @@ class Pedidos extends Component
     public function updatingFiltroisbn(){$this->resetPage();}
     public function updatingFiltroestado(){$this->resetPage();}
     public function updatingFiltrofacturado(){$this->resetPage();}
+
+
 
     public function changeValor(Pedido $pedido,$campo,$valor){
         $pedido->update([$campo=>$valor]);
@@ -147,9 +151,9 @@ class Pedidos extends Component
             ->when($this->filtroreferencia!='', function ($query){
                 $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
             })
-            // ->when($this->filtroisbn!='', function ($query){
-            //     $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
-            // })
+            ->when($this->filtroisbn!='', function ($query){
+                $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
+            })
             ->when($this->filtroresponsable!='', function ($query){
                 $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
             })
@@ -195,6 +199,9 @@ class Pedidos extends Component
             ->search('pedidos.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){
                 $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
+            })
+            ->when($this->filtroisbn!='', function ($query){
+                $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
             })
             ->when($this->filtroresponsable!='', function ($query){
                 $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
