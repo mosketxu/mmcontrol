@@ -17,13 +17,13 @@
                             <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
                             <div class="w-2/12 text-left" >{{ __('ISBN / Referencia') }} </div>
                             <div class="w-2/12 text-left">{{ __('F.Presup') }}</div>
-                            {{-- <div class="w-1/12 text-left md:" >{{ __('Proveedor') }}</div> --}}
+                            <div class="w-1/12 text-left md:" >{{ __('Proveedor') }}</div>
                             {{-- <div class="w-1/12 text-right">{{ __('Tirada') }}</div> --}}
                             {{-- <div class="w-1/12 text-right">{{ __('Precio Ud.') }}</div> --}}
                             {{-- <div class="w-1/12 text-right">{{ __('Precio Total') }}</div> --}}
                             <div class="w-1/12 text-center">{{ __('Estado') }}</div>
                             <div class="w-1/12 text-center">{{ __('Pedido') }}</div>
-                            <div class="w-2/12 text-left" ></div>
+                            <div class="w-1/12 text-left" ></div>
                         </div>
                     </div>
                     <div>
@@ -34,26 +34,26 @@
                             <div class="flex-col w-2/12 my-2 text-left">{{ $presupuesto->cliente->entidad }}</div>
                             <div class="flex-col w-2/12 my-2 text-left">{{ $presupuesto->isbn }} {{ $presupuesto->referencia }}</div>
                             <div class="flex-col w-2/12 my-2 text-left">{{ $presupuesto->fpresupuesto4 }}</div>
-                            {{-- <div class="flex-col w-1/12 my-2 text-left">{{ $presupuesto->proveedor->entidad }}</div> --}}
+                            <div class="flex-col w-1/12 my-2 text-left">{{ $presupuesto->proveedor->entidad }}</div>
                             {{-- <div class="flex-col w-1/12 my-2 text-right">{{ $presupuesto->tirada }}</div> --}}
                             {{-- <div class="flex-col w-1/12 my-2 text-right">{{ $presupuesto->precio_ud }}</div> --}}
                             {{-- <div class="flex-col w-1/12 my-2 text-right">{{ $presupuesto->preciototal }}</div> --}}
-                            <div class="flex-col w-1/12 text-right">
+                            <div class="flex-col w-1/12 pl-0 ml-0 text-left">
                                 <select wire:change="changeValor({{ $presupuesto }},'estado',$event.target.value)"
-                                    class="w-full text-center py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $presupuesto->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                                    class="w-full text-left py-1 my-1 ml-0 pl-0 text-xs text-gray-600 placeholder-gray-300 bg-{{ $presupuesto->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                                     <option value="0" {{ $presupuesto->estado== '0'? 'selected' : '' }}>Enviado</option>
                                     <option value="1" {{ $presupuesto->estado== '1'? 'selected' : '' }}>Aceptado</option>
                                     <option value="2" {{ $presupuesto->estado== '2'? 'selected' : '' }}>Rechazado</option>
                                 </select>
                             </div>
-                            <div class="flex-col w-1/12 text-center">
+                            <div class="flex-col text-center w-15">
                                 @if($presupuesto->pedido)
                                     <a class="text-blue-700 underline " href="{{ route('pedido.editar',[$presupuesto->pedido ,'i']) }}"  title="Pedido">{{ $presupuesto->pedido }}</a>
                                 @endif
                             </div>
-                            <div class="w-2/12 space-x-1 text-center lg:space-x-1">
+                            <div class="w-1/12 space-x-1 text-center lg:space-x-1">
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('presupuesto.archivos',[$presupuesto->id,'i'])}}'" title="Archivo"/>
-                                <x-icon.pdf-a class=" text-red-500 hover:text-red-700" href="{{route('presupuesto.presupuestoPDF',$presupuesto)}}" target="_blank" title="PDF Presupuesto"/>
+                                <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{route('presupuesto.presupuestoPDF',$presupuesto)}}" target="_blank" title="PDF Presupuesto"/>
                                 <x-icon.edit-a class="" href="{{ route('presupuesto.editar',[$presupuesto,'i']) }}"  title="Editar"/>
                                 <x-icon.delete-a class="" wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
                             </div>

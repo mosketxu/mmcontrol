@@ -1486,6 +1486,9 @@ select {
 .mr-10 {
   margin-right: 2.5rem;
 }
+.ml-0 {
+  margin-left: 0px;
+}
 .block {
   display: block;
 }
@@ -1659,6 +1662,12 @@ select {
 }
 .w-4\/6 {
   width: 66.666667%;
+}
+.w-11 {
+  width: 2.75rem;
+}
+.w-9 {
+  width: 2.25rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -2310,6 +2319,9 @@ select {
 }
 .pl-16 {
   padding-left: 4rem;
+}
+.pl-0 {
+  padding-left: 0px;
 }
 .text-left {
   text-align: left;

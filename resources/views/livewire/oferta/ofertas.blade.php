@@ -20,18 +20,27 @@
                             <div class="w-1/12 text-left" >{{ __('Oferta') }}</div>
                             <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
                             <div class="w-2/12 text-left" >{{ __('Fecha') }}</div>
-                            <div class="w-3/12 text-left" >{{ __('Referencia') }} </div>
+                            @if($tipo=='1')
+                                <div class="w-3/12 text-left" >{{ __('Isbn/Título') }} </div>
+                            @else
+                                <div class="w-3/12 text-left" >{{ __('Referencia') }} </div>
+                            @endif
                             <div class="w-2/12 text-center">{{ __('Estado') }}</div>
                             <div class="w-2/12 text-left" ></div>
                         </div>
                     </div>
                     <div>
                         @forelse ($ofertas as $oferta)
-                        <div class="flex w-full items-center py-1 pl-2 text-xs font-medium text-gray-500 border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
+                        <div class="flex items-center w-full py-1 pl-2 text-xs font-medium text-gray-500 border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                             <div class="flex w-1/12 text-left">{{ $oferta->id }}</div>
                             <div class="flex w-2/12 text-left">{{ $oferta->cliente->entidad }}</div>
                             <div class="flex w-2/12 text-left">{{ $oferta->ffecha }}</div>
-                            <div class="flex w-3/12 text-left">{{ $oferta->descripcion }}</div>
+                            {{ $tipo }}
+                            @if($tipo=='1')
+                                <div class="flex w-3/12 text-left">{{ $oferta->ofertaproducto->isbn }} {{ $oferta->ofertaproducto->referencia }}</div>
+                            @else
+                                <div class="flex w-3/12 text-left">{{ $oferta->descripcion }}</div>
+                            @endif
                             <div class="flex w-2/12 text-center">
                                 <select wire:change="changeValor({{ $oferta }},'estado',$event.target.value)"
                                     class="w-full text-left py-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $oferta->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
