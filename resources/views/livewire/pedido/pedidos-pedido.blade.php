@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="flex-col w-2/12 text-left">{{ $pedido->cliente->entidad }}</div>
-    <div class="flex-col w-3/12 text-left">{{ $pedido->isbn }} {{ $pedido->referencia }}</div>
+    <div class="flex-col w-3/12 text-left">{{ $pedido->pedidoproductos->first()->producto->isbn }} - {{ $pedido->pedidoproductos->first()->producto->referencia }}</div>
     <div class="flex-col w-2/12 text-center bg-green-50">
         <span class="font-bold"> Arc:</span>&nbsp;{{ $pedido->farchivos }} <span class="font-bold"> Plo:</span>&nbsp;{{ $pedido->fplotter }} <span class="font-bold"> Ent:</span>&nbsp;{{ $pedido->fentrega }}
     </div>

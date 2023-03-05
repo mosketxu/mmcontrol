@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\Pedido;
+use App\Models\{Pedido,Producto,PedidoProducto};
 use Livewire\Component;
 
 
@@ -14,6 +14,7 @@ class PedidosPedido extends Component
     public $tipo;
     public $estado;
     public $facturado;
+    public $producto='';
 
     public function mount($pedidoId,$tipo){
         $this->tipo=$tipo;
@@ -22,8 +23,8 @@ class PedidosPedido extends Component
         $this->facturado=$this->pedido->facturado;
     }
 
-    public function render()
-    {
+    public function render(){
+
         return view('livewire.pedido.pedidos-pedido');
     }
 

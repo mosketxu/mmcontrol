@@ -100,13 +100,13 @@ class Factura extends Component
         $anyo= substr($this->fecha, 0,4);
         $anyo2= substr($anyo, -2);
         $fac=ModelsFactura::whereYear('fecha', $anyo)->max('id') ;
-        return !isset($fac) ? ($anyo2 * 100000 +1) :$fac + 1 ;
+        return !isset($fac) ? ($anyo2 * 100000 +1961) :$fac + 1 ;
     }
 
     public function save(){
 
         $mensaje="Factura creada satisfactoriamente";
-$i="";
+        $i="";
         $this->validate();
         if ($this->facturaid!='') {
             $i=$this->facturaid;

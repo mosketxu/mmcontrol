@@ -68,7 +68,7 @@
                             {{-- isbn --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('ISBN/Cód.') }} {{ $productoeditorialid }}</x-jet-label>
+                                    <x-jet-label >{{ __('ISBN/Cód.') }} </x-jet-label>
                                     <x-select wire:model.lazy="productoeditorialid" selectname="productoeditorialid" class="w-full" >
                                         <option value=''>-- Selecciona ISBN --</option>
                                         @foreach ($productos as $producto)
