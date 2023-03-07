@@ -139,7 +139,6 @@ class Pedidos extends Component
     }
 
     public function getRowsQueryProperty(){
-
         // return Pedido::query()
         return Pedido::query()
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
