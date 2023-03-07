@@ -31,7 +31,7 @@
                     </div>
                     <div>
                         @forelse ($entidades as $entidad)
-                            <div class="flex w-full text-sm text-left border-t-0 border-y py-1 hover:bg-gray-100" wire:loading.class.delay="opacity-50">
+                            <div class="flex w-full py-1 text-sm text-left border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                                 <div class="flex w-5/12 lg:w-3/12">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->entidad }}"  readonly/>
                                 </div>
@@ -54,7 +54,7 @@
                                     <x-icon.edit-a href="{{ route('entidad.edit',$entidad) }}"  title="Editar"/>
                                     <x-icon.usergroup href="{{ route('entidad.contactos',$entidad) }}"  title="Contactos"/>
                                     <x-icon.plane-a class="text-gray-900 transform hover:text-black" href="{{ route('entidad.destinos',[$entidad,'i']) }}"  title="Destinos"/>
-                                    <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
+                                    <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"/>
                                 </div>
                             </div>
                         @empty

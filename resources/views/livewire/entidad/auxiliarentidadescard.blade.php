@@ -23,33 +23,33 @@
             <div class="flex-col ">
                 {{-- titulos --}}
                 <div>
-                    <div class="flex pt-2 pl-2 pb-0 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md ">
+                    <div class="flex pt-2 pb-0 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md ">
                         @if ($campofechavisible==1)
-                            <div class="pl-1 w-2/12 font-light text-left" >{{ __($titcampofecha)}} </div>
+                            <div class="w-2/12 pl-1 font-light text-left" >{{ __($titcampofecha)}} </div>
                         @endif
                         @if ($campo1visible==1)
-                            <div class="pl-1 w-2/12 font-light text-left    ">{{ __($titcampo1)}} </div>
+                            <div class="w-2/12 pl-1 font-light text-left ">{{ __($titcampo1)}} </div>
                         @endif
                         @if ($campo2visible==1)
-                            <div class="pl-5 w-2/12 font-light text-left ">{{ __($titcampo2)}} </div>
+                            <div class="w-2/12 pl-5 font-light text-left ">{{ __($titcampo2)}} </div>
                         @endif
                         @if ($campo3visible==1)
-                            <div class="pl-10 w-2/12 font-light text-left ">{{ __($titcampo3)}} </div>
+                            <div class="w-2/12 pl-10 font-light text-left ">{{ __($titcampo3)}} </div>
                         @endif
                         @if ($campo4visible==1)
-                            <div class="pl-12 w-1/12 font-light text-left ">{{ __($titcampo4)}} </div>
+                            <div class="w-1/12 pl-12 font-light text-left ">{{ __($titcampo4)}} </div>
                         @endif
                         @if ($campo5visible==1)
-                            <div class="pl-16 w-1/12 font-light text-left ">{{ __($titcampo5)}} </div>
+                            <div class="w-1/12 pl-16 font-light text-left ">{{ __($titcampo5)}} </div>
                         @endif
                         @if ($campo6visible==1)
-                            <div class=" pl-16 w-2/12 font-light text-left ">{{ __($titcampo6)}} </div>
+                            <div class="w-2/12 pl-16 font-light text-left ">{{ __($titcampo6)}} </div>
                         @endif
                         @if ($campo7visible==1)
-                            <div class=" pl-16 w-1/12 font-light text-left ">{{ __($titcampo7)}} </div>
+                            <div class="w-1/12 pl-16 font-light text-left ">{{ __($titcampo7)}} </div>
                         @endif
                         @if ($campo8visible==1)
-                            <div class="pl-16 w-2/12  font-light text-left ">{{ __($titcampo8)}} </div>
+                            <div class="w-2/12 pl-16 font-light text-left ">{{ __($titcampo8)}} </div>
                         @endif
                         @if ($campoimgvisible==1)
                             <div class="w-2/12 font-light text-left">{{ __($titcampoimg)}} </div>
@@ -68,7 +68,7 @@
                             <input type="date"
                                 value="{{ $valor->valorcampofecha }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campofecha }}',$event.target.value)"
-                                class="mx-0 px-0 w-full text-sm font-thin text-gray-500 border-0 rounded-md"/>
+                                class="w-full px-0 mx-0 text-sm font-thin text-gray-500 border-0 rounded-md"/>
                         </div>
                         @endif
                         @if ($campo1visible==1)
@@ -146,7 +146,7 @@
                             @if($editarvisible==1)
                                 <x-icon.edit-a wire:click="editar({{ $valor->id }})" class="pl-1"  title="Editar {{ $titulo }}"/>
                             @endif
-                                <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"  title="Eliminar detalle"/>
+                                <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"  title="Eliminar detalle"/>
                         </div>
                     </div>
                     @endforeach

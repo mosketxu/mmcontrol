@@ -165,7 +165,7 @@
                         </div>
                         @endif
                         <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
-                            <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="mx-1"  title="Eliminar detalle"/>
+                            <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 mx-1"  title="Eliminar detalle"/>
                             @if($pdfvisible=='1')
                                 <a href="{{route($routepdf,[$pedidoid,$ruta,$valor->id])}}" target="_blank" ><x-icon.pdf class="mx-1 text-red-500 hover:text-red-700 "/></a>
                             @endif

@@ -62,9 +62,9 @@
                             <td class="w-2/6 px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
                                 <div class="flex items-center justify-center space-x-3">
                                     {{-- <x-icon.edit-a href="{{ route('users.edit',$user) }}"  title="Editar"/>
-                                    <x-icon.delete-a wire:click.prevent="delete({{ $user->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/> --}}
+                                    <x-icon.delete-a wire:click.prevent="delete({{ $user->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"/> --}}
                                     <x-icon.edit-a href="#"  title="Editar"/>
-                                    <x-icon.delete-a wire:click.prevent="#" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
+                                    <x-icon.delete-a wire:click.prevent="#" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"/>
                                 </div>
                             </td>
                         </tr>

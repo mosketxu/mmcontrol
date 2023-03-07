@@ -62,7 +62,7 @@
                             <a href="{{route('producto.archivos',[$producto,'i'])}}"> <x-icon.clip class="text-green-500 hover:text-green-700" title="Archivos Producto"/></a>
                             <a href="{{route('producto.ficha',[$producto->id,$tipo])}}" target="_blank" ><x-icon.clipboard class="text-pink-500 hover:text-pink-700 " title="Ficha Producto"/></a>
                             @can('producto.delete')
-                                <x-icon.delete-a wire:click.prevent="delete({{ $producto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"/>
+                                <x-icon.delete-a wire:click.prevent="delete({{ $producto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"/>
                             @endcan
                         </div>
                     </div>

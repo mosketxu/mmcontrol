@@ -20,7 +20,7 @@
                     class="w-full pr-2 mr-2 text-sm font-thin text-right text-gray-500 border-0 rounded-md"/>
             </div>
             <div class="w-1/12 pr-2">
-                <x-icon.delete-a wire:click.prevent="delete({{ $detalle->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"  title="Eliminar detalle"/>
+                <x-icon.delete-a wire:click.prevent="delete({{ $detalle->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"  title="Eliminar detalle"/>
             </div>
         </div>
         @endforeach

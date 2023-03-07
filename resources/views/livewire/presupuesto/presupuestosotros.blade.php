@@ -54,9 +54,9 @@
                             </div>
                             <div class="w-2/12 space-x-1 text-center lg:space-x-1">
                                 <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('presupuesto.archivos',[$presupuesto->id,'i'])}}'" title="Archivo"/>
-                                <x-icon.pdf-a class=" text-red-500 hover:text-red-700" href="{{route('presupuesto.presupuestoPDF',$presupuesto)}}" target="_blank" title="PDF Presupuesto"/>
+                                <x-icon.pdf-a class="text-red-500  hover:text-red-700" href="{{route('presupuesto.presupuestoPDF',$presupuesto)}}" target="_blank" title="PDF Presupuesto"/>
                                 <x-icon.edit-a class="" href="{{ route('presupuesto.editar',[$presupuesto,'i']) }}"  title="Editar"/>
-                                <x-icon.delete-a class="" wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
+                                <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
                             </div>
                         </div>
                         @empty

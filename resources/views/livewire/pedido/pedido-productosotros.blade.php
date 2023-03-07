@@ -51,7 +51,7 @@
             {{-- botones --}}
             <div class="flex w-1/12 text-center">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
-                <x-icon.delete-a wire:click.prevent="delete({{ $pproductoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+                <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $pproductoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
             </div>
         </div>
     </form>

@@ -77,7 +77,7 @@
         <div class="w-1/12 text-center">
             @if ($deshabilitado=='')
             <x-icon.save-a wire:click.prevent="save()"  title="Guardar detalle"/>
-            <x-icon.delete-a wire:click.prevent="delete({{ $fdetalle_id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+            <x-icon.delete-a class="w-6 " wire:click.prevent="delete({{ $fdetalle_id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
             @endif
         </div>
     </div>

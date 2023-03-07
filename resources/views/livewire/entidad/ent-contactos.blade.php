@@ -15,8 +15,8 @@
                 <div>
                     <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
                         <div class="flex w-3/12 lg:w-3/12" >{{ __('Contacto') }}</div>
-                        <div class="hidden w-1/12 lg:flex w-1/12" >{{ __('Nif') }}</div>
-                        <div class="hidden w-1/12 lg:flex w-1/12" >{{ __('Tfno.') }}</div>
+                        <div class="hidden w-1/12 lg:flex" >{{ __('Nif') }}</div>
+                        <div class="hidden w-1/12 lg:flex" >{{ __('Tfno.') }}</div>
                         <div class="flex w-3/12 lg:w-3/12" >{{ __('Email Gral.') }}</div>
                         <div class="flex w-3/12 lg:w-3/12" >{{ __('Departamento') }}</div>
                         <div class="flex w-4/12 lg:w-4/12" >{{ __('Obs.Contacto') }}</div>
@@ -24,14 +24,14 @@
                     </div>
                     <div>
                         @forelse ($contactos as $contacto)
-                        <div class="flex w-full py-1 text-sm text-left border-t-0 border-y space-x-1 hover:bg-gray-100" wire:loading.class.delay="opacity-50">
+                        <div class="flex w-full py-1 space-x-1 text-sm text-left border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                             <div class="flex w-3/12 lg:w-3/12">
                                 <input type="text" value="{{ $contacto->entidad }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" readonly/>
                             </div>
-                            <div class="w-1/12 lg:flex w-1/12">
+                            <div class="w-1/12 lg:flex">
                                 <input type="text" value="{{ $contacto->nif  }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" readonly/>
                             </div>
-                            <div class="hidden w-1/12 lg:flex w-1/12">
+                            <div class="hidden w-1/12 lg:flex">
                                     <input type="text" value="{{ $contacto->tfno }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                     wire:change="changeValor('{{ $contacto->id }}','tfno',$event.target.value)"
                                     />
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="flex w-1/12 ">
                                     <x-icon.edit-a href="{{ route('entidad.edit',$contacto->contacto_id) }}"  title="Editar"/>
-                                    <x-icon.delete-a wire:click.prevent="delete({{ $contacto['id'] }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="pl-1"  title="Eliminar contacto"/>
+                                    <x-icon.delete-a wire:click.prevent="delete({{ $contacto['id'] }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"  title="Eliminar contacto"/>
                                 </div>
                             </div>
                         @empty
