@@ -24,6 +24,8 @@ class PedidosPedido extends Component
         $this->facturado=$this->pedido->facturado;
     }
 
+    protected $listeners = [ 'refreshpedidospedido' => '$refresh'];
+
     public function render(){
 
         return view('livewire.pedido.pedidos-pedido');
@@ -57,8 +59,11 @@ class PedidosPedido extends Component
         $pedido = Pedido::find($pedidoId);
         if ($pedido) {
             $pedido->delete();
+            $this->emit('refreshpedidospedido');
             $this->dispatchBrowserEvent('notify', 'pedido borrado. ');
+
         }
+
     }
 
 }
