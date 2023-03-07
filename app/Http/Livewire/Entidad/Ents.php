@@ -58,8 +58,8 @@ class Ents extends Component
         if ($presupuestos>0) $mensaje2=', Presupuestos' ;
         if ($ofertas>0) $mensaje3=', Presupuestos MM';
 
-        $mensaje='No se puede eliminar porque tiene asociados: '. $mensaje1 . ' ' . $mensaje2 . ' ' . $mensaje3;
-        if ($mensaje!='') {
+        if ($mensaje1!='' || $mensaje2!='' || $mensaje3!=''  ) {
+            $mensaje='No se puede eliminar porque tiene asociados: '. $mensaje1 . ' ' . $mensaje2 . ' ' . $mensaje3;
             $this->dispatchBrowserEvent('notifyred', $mensaje);
         }
 
