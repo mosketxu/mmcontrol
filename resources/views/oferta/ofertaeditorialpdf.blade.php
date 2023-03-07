@@ -117,6 +117,12 @@
                             </td>
                         </tr>
                         @endif
+                        @if($oferta->ofertaproducto->encuadernado!='')
+                        <tr>
+                            <td width=20% class="font-bold "  style="padding-top:8px">Encuadernado:</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->ofertaproducto->encuadernado }}</td>
+                        </tr>
+                        @endif
                         @if($oferta->ofertaproducto->descripsolapa!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Solapas:</td>

@@ -24,7 +24,8 @@ class Prod extends Component
     public $tintascubierta;
     public $materialescubierta;
     public $plastificados;
-    public $encuadernados;
+    public $encuadernaciones;
+    public $cajas;
     public $ficheropdf;
     public $tipo;
     public $titulo;
@@ -168,20 +169,20 @@ class Prod extends Component
             $message=$this->producto->referencia . " creado satisfactoriamente";
         }
 
-        Validator::make([
-            'descripsolapa'=>$this->producto->descripsolapa,
-            'descripguardas'=>$this->producto->descripguardas,
-            'descripcd'=>$this->producto->descripcd,
+        // Validator::make([
+        //     'descripsolapa'=>$this->producto->descripsolapa,
+        //     'descripguardas'=>$this->producto->descripguardas,
+        //     'descripcd'=>$this->producto->descripcd,
 
-        ],[
-            'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
-            'descripguardas' => Rule::requiredIf($this->producto->guardas==true),
-            'descripcd' => Rule::requiredIf($this->producto->cd==true),
-        ],[
-            'descripsolapa.required' => 'La descripcion de las solapas es necesaria si se ha seleccionado la opción Solapas. ',
-            'descripguardas.required' => 'La descripcion de las guardas es necesaria si se ha seleccionado la opción Guardas. ',
-            'descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
-        ])->validate();
+        // ],[
+        //     'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
+        //     'descripguardas' => Rule::requiredIf($this->producto->guardas==true),
+        //     'descripcd' => Rule::requiredIf($this->producto->cd==true),
+        // ],[
+        //     'descripsolapa.required' => 'La descripcion de las solapas es necesaria si se ha seleccionado la opción Solapas. ',
+        //     'descripguardas.required' => 'La descripcion de las guardas es necesaria si se ha seleccionado la opción Guardas. ',
+        //     'descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
+        // ])->validate();
 
         $prod=Producto::updateOrCreate([
             'id'=>$i

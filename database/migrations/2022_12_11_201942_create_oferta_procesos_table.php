@@ -19,7 +19,7 @@ class CreateOfertaProcesosTable extends Migration
             $table->string('proceso');
             $table->string('descripcion')->nullable();
             $table->bigInteger('tirada')->default(0);
-            $table->double('precio_ud', 15, 2)->nullable()->default(0.00);
+            $table->double('precio_ud', 15, 6)->nullable()->default(0.00);
             $table->double('preciototal', 15, 2)->nullable()->default(0.00);
             $table->boolean('visible')->nullable()->default('1');
             $table->integer('orden')->nullable()->default('0');
