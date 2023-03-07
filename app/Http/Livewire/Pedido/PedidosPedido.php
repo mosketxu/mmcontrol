@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Pedido,Producto,PedidoProducto};
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 
@@ -46,6 +47,18 @@ class PedidosPedido extends Component
 
         $this->pedido->facturado=$this->facturado;
         $this->pedido->save();
+    }
+
+    public function delete($pedidoId){
+
+        $existe=Storage::disk('archivospedido')->exists($pedidoId);
+        if ($existe) Storage::disk('archivospedido')->deleteDirectory($pedidoId);
+
+        $pedido = Pedido::find($pedidoId);
+        if ($pedido) {
+            $pedido->delete();
+            $this->dispatchBrowserEvent('notify', 'pedido borrado. ');
+        }
     }
 
 }
