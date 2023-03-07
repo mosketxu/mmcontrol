@@ -127,7 +127,7 @@
                                 <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->producto->material }}</td>
                                 <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
                                 <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->precio_ud ,2)}}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->tirada ,2)}}</td>
                             </tr>
                             <tr>
                                 <td width=20% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray">Observaciones:</td>
