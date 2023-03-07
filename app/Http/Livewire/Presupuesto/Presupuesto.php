@@ -210,7 +210,7 @@ class Presupuesto extends Component
     public function numpresupuesto(){
         $anyo= substr($this->fechapresupuesto, 0, 4);
         $anyo2= substr($anyo, -2);
-        $presup=ModelsPresupuesto::whereYear('fechapresupuesto', $anyo)->max('id') ;
+        $presup=ModelsPresupuesto::inYear($anyo)->max('id') ;
         return !isset($presup) ? ($anyo2 * 100000 +1) : $presup + 1 ;
     }
 
@@ -308,7 +308,7 @@ class Presupuesto extends Component
         $fechapedido=now()->format('Y-m-d');
         $anyo= substr($fechapedido, 0,4);
         $anyo2= substr($anyo, -2);
-        $pedidoid=Pedido::whereYear('fechapedido', $anyo)->max('id') ;
+        $pedidoid=Pedido::inYear($anyo)->max('id') ;
         $pedidoid= !isset($pedidoid) ? ($anyo2 * 100000 +1) :$pedidoid + 1 ;
 
         $pres=Pedido::create([

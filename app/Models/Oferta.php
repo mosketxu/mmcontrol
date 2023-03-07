@@ -31,12 +31,18 @@ class Oferta extends Model
         ][$this->estado] ?? ['gray-100',''];
     }
 
-    public function getFfechaAttribute()
-    {
+    public function getFfechaAttribute(){
         if ($this->fecha) {
             return Carbon::parse($this->fecha)->format('d/m/Y');
         } else {
             return '';
         }
+    }
+
+    public function scopeInYear($query, $year){
+        return $query->whereBetween('fecha', [
+            Carbon::create($year)->startOfYear(),
+            Carbon::create($year)->endOfYear(),
+        ]);
     }
 }

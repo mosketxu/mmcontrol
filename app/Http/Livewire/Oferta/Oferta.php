@@ -163,7 +163,7 @@ class Oferta extends Component
     public function numoferta(){
         $anyo= substr($this->fecha, 0,4);
         $anyo2= substr($anyo, -2);
-        $ofe=ModelsOferta::whereYear('fecha', $anyo)->max('id') ;
+        $ofe=ModelsOferta::inYear($anyo)->max('id') ;
         return !isset($ofe) ? ($anyo2 * 100000 +1) :$ofe + 1 ;
     }
 

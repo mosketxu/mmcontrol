@@ -49,21 +49,14 @@ class Pedido extends Model
         ][$this->facturado] ?? ['gray-100',''];
     }
 
-
-
-    public function getRutaficheroAttribute()
-    {
+    public function getRutaficheroAttribute(){
         return $this->ruta.'/'.$this->fichero;
     }
 
-    public function scopeImprimirpedido()
-    {
+    public function scopeImprimirpedido(){
         $pedido=Pedido::with('entidad')->find($this->id);
-
         $pdf = \PDF::loadView('pedido.pedidopdf', compact(['pedido']));
-
         Storage::put('public/'.$pedido->ruta.'/'.$pedido->fichero, $pdf->output());
-
         return $pdf->download($pedido->fichero);
     }
 
@@ -82,7 +75,6 @@ class Pedido extends Model
             return '';
         }
     }
-
 
     public function getFArchivosAttribute(){
         if ($this->fechaarchivos) {
@@ -146,5 +138,12 @@ class Pedido extends Model
             '1'=>['text-green-500','Sí.'],
             '2'=>['text-blue-500','Parcial'],
         ][$this->estado] ?? ['text-gray-100','-'];
+    }
+
+    public function scopeInYear($query, $year){
+        return $query->whereBetween('fechapedido', [
+            Carbon::create($year)->startOfYear(),
+            Carbon::create($year)->endOfYear(),
+        ]);
     }
 }

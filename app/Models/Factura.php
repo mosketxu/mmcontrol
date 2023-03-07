@@ -24,20 +24,26 @@ class Factura extends Model
         ][$this->estado] ?? ['gray-100',''];
     }
 
-    public function getFfacturaAttribute()
-    {
+    public function getFfacturaAttribute(){
         if ($this->fecha) {
             return Carbon::parse($this->fecha)->format('d/m/y');
         } else {
             return '';
         }
     }
-    public function getFfactura4Attribute()
-    {
+
+    public function getFfactura4Attribute(){
         if ($this->fecha) {
             return Carbon::parse($this->fecha)->format('d/m/Y');
         } else {
             return '';
         }
+    }
+
+    public function scopeInYear($query, $year){
+        return $query->whereBetween('fecha', [
+            Carbon::create($year)->startOfYear(),
+            Carbon::create($year)->endOfYear(),
+        ]);
     }
 }

@@ -31,13 +31,19 @@ class Presupuesto extends Model
         ][$this->estado] ?? ['gray-100',''];
     }
 
-    public function getFPresupuesto4Attribute()
-    {
+    public function getFPresupuesto4Attribute(){
         if ($this->fechapresupuesto) {
             return Carbon::parse($this->fechapresupuesto)->format('d/m/Y');
         } else {
             return '';
         }
+    }
+
+    public function scopeInYear($query, $year){
+        return $query->whereBetween('fechapresupuesto', [
+            Carbon::create($year)->startOfYear(),
+            Carbon::create($year)->endOfYear(),
+        ]);
     }
 
 }

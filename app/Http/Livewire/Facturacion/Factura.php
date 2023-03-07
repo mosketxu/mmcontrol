@@ -99,7 +99,7 @@ class Factura extends Component
     public function numfactura(){
         $anyo= substr($this->fecha, 0,4);
         $anyo2= substr($anyo, -2);
-        $fac=ModelsFactura::whereYear('fecha', $anyo)->max('id') ;
+        $fac=ModelsFactura::inYear($anyo)->max('id') ;
         return !isset($fac) ? ($anyo2 * 100000 +1961) :$fac + 1 ;
     }
 

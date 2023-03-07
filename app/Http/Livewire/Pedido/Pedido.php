@@ -229,7 +229,7 @@ class Pedido extends Component
     public function numpedido(){
         $anyo= substr($this->fechapedido, 0,4);
         $anyo2= substr($anyo, -2);
-        $ped=ModeloPedido::whereYear('fechapedido', $anyo)->max('id') ;
+        $ped=ModeloPedido::inYear($anyo)->max('id') ;
         return !isset($ped) ? ($anyo2 * 100000 +1) :$ped + 1 ;
     }
 
