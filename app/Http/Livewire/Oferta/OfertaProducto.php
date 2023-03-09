@@ -23,7 +23,7 @@ class OfertaProducto extends Component
     protected function rules(){
         return [
             'oferta_id'=>'required',
-            'producto_id'=>'required',
+            'producto_id'=>'nullable',
             'tirada'=>'required',
             'precio_ud'=>'nullable',
             'preciototal'=>'nullable',
@@ -35,9 +35,9 @@ class OfertaProducto extends Component
 
     public function messages(){
         return [
-            'oferta_id'=>'El oferta es necesario.',
-            'producto_id'=>'El producto es necesario.',
-            'tirada'=>'La cantidad es necesario.',
+            'oferta_id'=>'La oferta es necesaria.',
+            // 'producto_id'=>'El producto es necesario.',
+            'tirada'=>'La cantidad es necesaria.',
         ];
     }
 
@@ -73,6 +73,7 @@ class OfertaProducto extends Component
         if(!$this->tirada) $this->tirada=0;
         if(!$this->precio_ud) $this->precio_ud=0;
         if(!$this->preciototal) $this->preciototal=0;
+        if(!$this->producto_id='') $this->producto_id=NULL;
 
         $this->validate();
         $pprod=ModelsOfertaProducto::create([
