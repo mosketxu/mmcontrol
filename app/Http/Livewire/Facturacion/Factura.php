@@ -111,6 +111,7 @@ class Factura extends Component
 
         $mensaje="Factura creada satisfactoriamente";
         $i="";
+        if($this->fechavencimiento=='') $this->fechavencimiento=null;
         $this->validate();
         if ($this->facturaid!='') {
             $i=$this->facturaid;
