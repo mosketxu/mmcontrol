@@ -82,6 +82,11 @@
                                 {{ $bloqueado!='0' ? 'disabled' :'' }}>
                             </div>
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
+                                <x-jet-label for="fechavencimiento">{{ __('Fecha Vto') }}</x-jet-label>
+                                <input  wire:model.lazy="fechavencimiento" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
+                                {{ $bloqueado!='0' ? 'disabled' :'' }}>
+                            </div>
+                            <div class="w-full form-item md:w-1/12 lg:w-1/12">
                                 <x-jet-label for="importe" class="mr-6 text-right">{{ __('Subtotal') }}</x-jet-label>
                                 <input  wire:model.lazy="importe" type="text"
                                 class="w-full py-1 text-xs text-right bg-blue-100 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"

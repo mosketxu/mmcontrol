@@ -132,9 +132,11 @@
                             @endif
                         </table>
 
-                        <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                        <table width="100%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
                             <tr>
-                                <td colspan="4" class="text-xs italic text-center"  >TRANSFERENCIA A: IBAN ES11 2013 3221  3102 1024 3770</td>
+                                <td width="30%" class="text-xs italic text-right"  >Vto: {{ $factura->ffacturavto }}</td>
+                                <td width="10%" class="text-xs italic text-right"  ></td>
+                                <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN ES11 2013 3221  3102 1024 3770</td>
                             </tr>
                         </table>
                     </div>

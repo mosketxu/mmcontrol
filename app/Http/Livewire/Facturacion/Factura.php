@@ -14,6 +14,7 @@ class Factura extends Component
     public $cliente_id;
     public $contacto_id;
     public $fecha;
+    public $fechavencimiento;
     public $pedidocliente;
     public $importe=0;
     public $iva=0;
@@ -47,6 +48,7 @@ class Factura extends Component
             'contacto_id'=>'nullable',
             'pedidocliente'=>'nullable',
             'fecha'=>'date|required',
+            'fechavencimiento'=>'nullable|date',
             'estado'=>'nullable',
             'observaciones'=>'nullable',
         ];
@@ -58,6 +60,7 @@ class Factura extends Component
         'cliente_id.required'=>'El cliente es necesario.',
         'fecha.required'=>'La fecha es necesaria.',
         'fecha.date'=>'La fecha debe ser válida.',
+        'fechavencimiento.date'=>'La fecha de vencimiento debe ser válida.',
         ];
     }
 
@@ -70,6 +73,7 @@ class Factura extends Component
             $this->cliente_id=$factura->cliente_id;
             $this->contacto_id=$factura->contacto_id;
             $this->fecha=$factura->fecha;
+            $this->fechavencimiento=$factura->fechavencimiento;
             $this->pedidocliente=$factura->pedidocliente;
             $this->importe=number_format($factura->importe,2,',','.');
             $this->iva=number_format($factura->iva,2,',','.');
@@ -131,6 +135,7 @@ class Factura extends Component
             'contacto_id'=>$this->contacto_id,
             'pedidocliente'=>$this->pedidocliente,
             'fecha'=>$this->fecha,
+            'fechavencimiento'=>$this->fechavencimiento,
             'estado'=>$this->estado == '' ? '0' : $this->estado,
             'observaciones'=>$this->observaciones,
         ]);

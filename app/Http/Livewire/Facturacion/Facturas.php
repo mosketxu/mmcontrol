@@ -16,6 +16,7 @@ class Facturas extends Component
     public $facturaid;
     public $cliente_id;
     public $fecha ;
+    public $fechavencimiento ;
     public $importe='0';
     public $estado='0';
     public $observaciones;

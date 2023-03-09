@@ -12,20 +12,21 @@
                 <div>
                     <div class="">
                         <div class="flex w-full pt-2 pb-0 pl-2 space-x-2 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
-                            <div class="flex w-5 h-5 mr-2 font-medium text-center" >
+                            {{-- <div class="flex w-5 h-5 mr-2 font-medium text-center" >
                                 <x-input.checkbox wire:model="selectPage" />
-                            </div>
+                            </div> --}}
                             <div class="w-1/12 text-left" >{{ __('Nº.Factura') }}</div>
                             <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
                             <div class="w-1/12 text-right" >{{ __('Fecha') }}</div>
+                            <div class="w-1/12 text-right" >{{ __('F.Vto') }}</div>
                             <div class="w-1/12 text-right" >{{ __('Importe') }} </div>
-                            <div class="w-4/12 text-left">{{ __('Observaciones') }}</div>
+                            <div class="w-3/12 text-left">{{ __('Observaciones') }}</div>
                             <div class="w-1/12 text-center" >{{ __('Estado') }}</div>
-                            <div class="w-1/12 text-left" ></div>
+                            <div class="w-2/12 text-left" ></div>
                         </div>
                     </div>
                     <div>
-                        @if($selectPage)
+                        {{-- @if($selectPage)
                         <div class="flex w-full text-sm text-left bg-gray-200 border-t-0 border-y" wire:key="row-message">
                             <div class="flex-col w-full text-left">
                                 @unless($selectAll)
@@ -36,12 +37,12 @@
                                 @endif
                             </div>
                         </div>
-                        @endif
+                        @endif --}}
                         @forelse ($facturas as $factura)
-                        <div class="flex w-full space-x-2 text-sm text-gray-500 border-t-0 border-y " wire:loading.class.delay="opacity-50">
-                            <div class="flex w-5 h-5 p-2 mr-2 font-medium text-center">
+                        <div class="flex items-center w-full space-x-2 text-sm text-gray-500 border-t-0 border-y " wire:loading.class.delay="opacity-50">
+                            {{-- <div class="flex w-5 h-5 p-2 mr-2 font-medium text-center">
                                 <x-input.checkbox wire:model="selected" value="{{ $factura->id }}" />
-                            </div>
+                            </div> --}}
                             <div class="flex-col w-1/12 my-2 text-left">
                                 {{ $factura->id }}
                             </div>
@@ -52,9 +53,12 @@
                                 {{ $factura->ffactura }}
                             </div>
                             <div class="flex-col w-1/12 my-2 text-right">
+                                {{ $factura->ffacturavto }}
+                            </div>
+                            <div class="flex-col w-1/12 my-2 text-right">
                                 {{ $factura->importe }}
                             </div>
-                            <div class="flex-col w-4/12 pl-2 my-2 ml-2 text-left">
+                            <div class="flex-col w-3/12 pl-2 my-2 ml-2 text-left">
                                 {{ $factura->observaciones }}
                             </div>
                             <div class="flex-col w-1/12 text-right">
@@ -65,10 +69,11 @@
                                     <option value="2" {{ $factura->estado== '2'? 'selected' : '' }}>Cobrada</option>
                                 </select>
                             </div>
-                            <div class="flex flex-row-reverse w-1/12 pr-2 mt-1 ">
-                                <x-icon.delete-a wire:click.prevent="delete({{ $factura->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"/>
-                                <a href="{{route('facturacion.show',[$factura->id])}}" target="_blank" title="Imprimir factura"><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
+                            <div class="w-2/12 space-x-2 text-center ">
                                 <x-icon.edit-a href="{{ route('facturacion.edit',$factura) }}"  title="Editar"/>
+                                <x-icon.pdf-a href="{{ route('facturacion.show',[$factura->id]) }}" target="_blank" title="Imprimir factura"  title="PDF Factura"/>
+                                {{-- <a href="{{route('facturacion.show',[$factura->id])}}" ><x-icon.pdf class="text-red-500 hover:text-red-700 "/></a> --}}
+                                <x-icon.delete-a wire:click.prevent="delete({{ $factura->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6"/>
 
                             </div>
                         </div>
