@@ -21,19 +21,19 @@
             <div class="flex-col space-y-4">
                 <div>
                     <div class="flex py-2 pl-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
-                        <div class="flex w-5/12 font-light lg:w-3/12" >{{ $entidadtipo->nombre }}</div>
+                        <div class="flex w-3/12 font-light " >{{ $entidadtipo->nombre }}</div>
                         <div class="hidden w-1/12 font-light lg:flex " >{{ __('Tipo') }}</div>
                         <div class="hidden w-2/12 font-light md:w-2/12" >{{ __('Responsable') }}</div>
                         <div class="hidden w-1/12 font-light md:flex" >{{ __('Nif') }} </div>
                         <div class="hidden w-2/12 font-light lg:flex" >{{ __('Tfno.') }}</div>
-                        <div class="flex w-5/12 font-light lg:w-3/12" >{{ __('Email') }}</div>
-                        <div class="flex " ></div>
+                        <div class="flex w-2/12 font-light lg:w-3/12" >{{ __('Email') }}</div>
+                        <div class="flex w-1/12" ></div>
                     </div>
                     <div>
                         @forelse ($entidades as $entidad)
-                            <div class="flex w-full py-1 text-sm text-left border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
-                                <div class="flex w-5/12 lg:w-3/12">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->entidad }}"  readonly/>
+                            <div class="flex w-full py-1 text-sm text-left border-t-0 space-c-1 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
+                                <div class="flex w-3/12 ">
+                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:border-blue-500 focus:border-blue-500 " value="{{ $entidad->entidad }}"  readonly/>
                                 </div>
                                 <div class="hidden w-1/12 lg:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->entidadtipo->nombrecorto ?? '-'}}"  readonly/>
@@ -47,14 +47,14 @@
                                 <div class="hidden w-2/12 lg:flex">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->tfno }}" readonly/>
                                 </div>
-                                <div class="flex w-5/12 lg:w-3/12">
+                                <div class="flex w-2/12 lg:w-3/12">
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->emailgral }}"  readonly/>
                                 </div>
-                                <div class="flex ">
+                                <div class="w-1/12 mx-auto space-x-2">
                                     <x-icon.edit-a href="{{ route('entidad.edit',$entidad) }}"  title="Editar"/>
                                     <x-icon.usergroup href="{{ route('entidad.contactos',$entidad) }}"  title="Contactos"/>
                                     <x-icon.plane-a class="text-gray-900 transform hover:text-black" href="{{ route('entidad.destinos',[$entidad,'i']) }}"  title="Destinos"/>
-                                    <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 pl-1"/>
+                                    <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6"/>
                                 </div>
                             </div>
                         @empty
