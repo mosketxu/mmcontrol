@@ -20,6 +20,7 @@ class CreateFacturasTable extends Migration
             $table->foreignId('contacto_id')->nullable()->constrained('entidades');
             $table->string('pedidocliente')->nullable()->index();
             $table->date('fecha');
+            $table->date('fechavencimiento')->nullable();
             $table->double('importe', 15, 2)->nullable()->default(0.00);
             $table->double('iva', 15, 2)->nullable()->default(0.00);
             $table->double('total', 15, 2)->nullable()->default(0.00);

@@ -35,7 +35,7 @@
                         </div>
                     <td width=55% class="test-right">
                         <div class="text-right">
-                            <img src="{{asset('img/SelloSostenibilidad.png')}}" class="text-right" width="260px">
+                            {{-- <img src="{{asset('img/SelloSostenibilidad.png')}}" class="text-right" width="260px"> --}}
                         </div>
                     </td>
                 </tr>
