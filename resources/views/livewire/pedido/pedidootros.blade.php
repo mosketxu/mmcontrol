@@ -86,6 +86,10 @@
                                 <input  wire:model.lazy="fechaarchivos" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="w-full form-item">
+                                <x-jet-label for="fechaplotter">{{ __('Fecha plotterr') }}</x-jet-label>
+                                <input  wire:model.lazy="fechaplotter" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                            </div>
+                            <div class="w-full form-item">
                                 <x-jet-label for="fechaentrega">{{ __('Fecha entrega') }}</x-jet-label>
                                 <input  wire:model.lazy="fechaentrega" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
