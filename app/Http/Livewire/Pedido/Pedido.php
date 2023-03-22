@@ -230,7 +230,10 @@ class Pedido extends Component
         $anyo= substr($this->fechapedido, 0,4);
         $anyo2= substr($anyo, -2);
         $ped=ModeloPedido::inYear($anyo)->max('id') ;
-        return !isset($ped) ? ($anyo2 * 100000 +1) :$ped + 1 ;
+        $ped=!isset($ped) ? ($anyo2 * 100000 +1) :$ped + 1 ;
+        $pedMax=ModeloPedido::max('id');
+        $ped=$pedMax>$ped ? $pedMax+1 : $ped;
+        return $ped;
     }
 
     public function save(){
@@ -255,6 +258,7 @@ class Pedido extends Component
             $i=$this->pedidoid;
             $nuevo=true;
         }
+
         $this->validate();
         $ped=ModeloPedido::updateOrCreate([
             'id'=>$i

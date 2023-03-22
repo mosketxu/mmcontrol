@@ -48,7 +48,7 @@ class PresupuestoController extends Controller
     }
 
     public function editar(Presupuesto $presupuesto,$ruta){
-        $tipo=$presupuesto->tipo;
+$tipo=$presupuesto->tipo;
         $titulo=$tipo=='1' ? 'Presupuesto Editorial' : 'Presupuesto Packaging/Propios';
         return view('presupuestos.edit',compact('presupuesto','tipo','ruta','titulo'));
     }

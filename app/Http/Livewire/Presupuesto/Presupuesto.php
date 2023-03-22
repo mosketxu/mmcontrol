@@ -308,10 +308,13 @@ class Presupuesto extends Component
         $fechapedido=now()->format('Y-m-d');
         $anyo= substr($fechapedido, 0,4);
         $anyo2= substr($anyo, -2);
+
         $pedidoid=Pedido::inYear($anyo)->max('id') ;
         $pedidoid= !isset($pedidoid) ? ($anyo2 * 100000 +1) :$pedidoid + 1 ;
+        $pedMax=Pedido::max('id');
+        $pedidoid=$pedMax>$pedidoid ? $pedMax+1 : $pedidoid;
 
-        $pres=Pedido::create([
+        $ped=Pedido::create([
             'id'=>$pedidoid,
             'responsable'=>$presupuesto->responsable,
             'tipo'=>$presupuesto->tipo,
@@ -340,7 +343,7 @@ class Presupuesto extends Component
 
         foreach ($presproductos as $presproducto) {
             $pprod=PedidoProducto::create([
-                'pedido_id'=>$pres->id,
+                'pedido_id'=>$ped->id,
                 'producto_id'=>$presproducto->producto_id,
                 'tirada'=>$this->tiradanum($presproducto->tirada),
                 'precio_ud'=>$presproducto->precio_ud,
@@ -355,7 +358,7 @@ class Presupuesto extends Component
 
         foreach ($presprocesos as $presproceso) {
             $pprod=PedidoProceso::create([
-                'pedido_id'=>$pres->id,
+                'pedido_id'=>$ped->id,
                 'proceso'=>$presproceso->proceso,
                 'descripcion'=>$presproceso->descripcion,
                 'tirada'=>$presproceso->tirada,
@@ -368,8 +371,8 @@ class Presupuesto extends Component
         }
 
         $presupuesto->espedido='1';
-        $presupuesto->pedido=$pres->id;
+        $presupuesto->pedido=$ped->id;
         $presupuesto->save();
-        return redirect()->route('pedido.editar',[$pres,'i']);
+        return redirect()->route('pedido.editar',[$ped,'i']);
     }
 }
