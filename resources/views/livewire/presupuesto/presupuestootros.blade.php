@@ -43,7 +43,7 @@
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{ $deshabilitado }}>
                                         @if (isset($contactos))
-                                            @if(!$contacto_id) <option value="">-- Selecciona contacto --</option> @endif
+                                            <option value="">-- Selecciona contacto --</option>
                                             @foreach ($contactos as $contacto)
                                             <option value="{{ $contacto->contacto_id }}" {{ $contacto->contacto_id == $this->contacto_id ? "selected" : ""}}>{{ $contacto->entidadcontacto->entidad ?? ''}}</option>
                                             @endforeach

@@ -240,6 +240,7 @@ class Pedido extends Component
         if($this->fechaarchivos=='')$this->fechaarchivos=null;
         if($this->fechaentrega =='') $this->fechaentrega=null;
         if($this->fechaplotter =='') $this->fechaplotter=null;
+        if($this->contacto_id =='') $this->contacto_id=null;
 
         if($this->precio=='') $this->precio='0';
         $mensaje="Pedido creado satisfactoriamente";

@@ -222,6 +222,7 @@ class Presupuesto extends Component
         $this->validate();
         $this->estado=$this->estado=='' ? '0' : $this->estado;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
+        if($this->contacto_id =='') $this->contacto_id=null;
         $mensaje="Presupuesto creado satisfactoriamente";
         $i=null;
         $nuevo=null;

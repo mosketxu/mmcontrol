@@ -31,7 +31,7 @@
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
                                     <x-select wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full" >
                                         @if (isset($contactos))
-                                            @if(!$contacto_id) <option value="">-- Selecciona contacto --</option> @endif
+                                            <option value=''>-- Selecciona contacto --</option>
                                             @foreach ($contactos as $contacto)
                                                 <option value="{{ $contacto->contacto_id }}" {{ $contacto->contacto_id == $this->contacto_id ? "selected" : ""}}>{{ $contacto->entidadcontacto->entidad }}</option>
                                             @endforeach
