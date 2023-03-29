@@ -11,7 +11,7 @@
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 ">
                         <div class="p-1 rounded-md bg-blue-50">
-                            <h3 class="pl-1 font-semibold">Datos generaless</h3>
+                            <h3 class="pl-1 font-semibold">Datos generales</h3>
                             <input  wire:model.defer="pedidoid" type="hidden"/>
                         </div>
                         <div class="flex flex-col mx-2 md:flex-row md:space-x-4">
@@ -29,7 +29,7 @@
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
-                                    <x-select wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full" >
+                                    {{-- <x-select wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full" >
                                         @if (isset($contactos))
                                             @if(!$contacto_id) <option value="">-- Selecciona contacto --</option> @endif
                                             @foreach ($contactos as $contacto)
@@ -38,7 +38,7 @@
                                         @else
                                             <option value="">-- Selecciona primero un cliente --</option>
                                         @endif
-                                    </x-select>
+                                    </x-select> --}}
                                 </div>
                             </div>
                             <div class="w-full form-item">
