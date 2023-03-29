@@ -15,6 +15,30 @@
     <body>
         <!-- Define header and footer blocks before your content -->
         <header>
+            {{-- <table width="100%" style="margin-top:0px; " class="tablacentrada">
+                <tr>
+                    <td style="text-align: left;" width="250px">
+                        <img src="{{asset('img/milimetrica.png')}}" width="250px">
+                    </td>
+                </tr>
+                <tr style="">
+                    <td class="text-xs " style="text-align:right;color: #6b7280">
+                        C/ ZAMORA 46-48 ÁTICO 5ª - 08005 Barcelona (España) <br>
+                        <a href="http://www.milimetrica.es" class="colorazul">www.milimetrica.es</a> <br>
+                        milimétrica producciones, s.l. – N.I.F. B-63.941.835
+                    </td>
+                </tr>
+            </table> --}}
+        </header>
+        <footer>
+            <div>
+                <div>
+                </div>
+            </div>
+        </footer>
+
+    <!-- Wrap the content of your PDF inside a main tag -->
+        <main style=" margin-right: 10px; margin-top:0px">
             <table width="100%" style="margin-top:0px; " class="tablacentrada">
                 <tr>
                     <td style="text-align: left;" width="250px">
@@ -29,16 +53,6 @@
                     </td>
                 </tr>
             </table>
-        </header>
-        <footer>
-            <div>
-                <div>
-                </div>
-            </div>
-        </footer>
-
-    <!-- Wrap the content of your PDF inside a main tag -->
-        <main style=" margin-right: 10px; margin-top:220px">
             <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
                 <tr>
                     <td style="padding-left:3px;"  class="" >Demanda de presupuesto núm. <span style="font-weight:bold;">{{ $presupuesto->id }} </span></td>
@@ -53,16 +67,16 @@
                     <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
                 </tr>
             </table>
-            @if($presupuesto->comentario)
+            {{-- @if($presupuesto->comentario)
             <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
                 <tr  >
                     <td style="padding-left:3px; font-weight:bold;" colspan="2"  class="" >Observaciones:</td>
                 </tr>
                 <tr>
-                    <td style="padding-left:3px;"  class="" >{{ $presupuesto->comentario}}</td>
+                    <td style="padding-left:3px;"  class="" ><p>{!! nl2br(e($presupuesto->comentario)) !!}</p></td>
                 </tr>
             </table>
-            @endif
+            @endif --}}
             {{-- Datos producto  --}}
             <div class="" style="margin-top:40px; ">
                 <table width="80%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
@@ -164,12 +178,12 @@
                             {{ $producto->descripcd }}
                         </td>
                     </tr>
-                    <tr style="">
+                    {{-- <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Observaciones:</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
-                            {{ $producto->observaciones }}
+                            <p>{!! nl2br(e($producto->observaciones)) !!}</p>
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Modelo Caja</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->caja->name ?? ''}}</td>
@@ -182,19 +196,27 @@
                     @endif
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Manipulación</td>
-                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->manipulacion }}</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            <p>{!! nl2br(e($presupuesto->manipulacion)) !!}</p>
+                        </td>
                     </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Distribución</td>
-                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->transporte }}</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            <p>{!! nl2br(e($presupuesto->transporte)) !!}</p>
+                        </td>
                     </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Especificaciones logísticas</td>
-                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->especificacioneslogisticas }}</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            <p>{!! nl2br(e($presupuesto->especificacioneslogisticas)) !!}</p>
+                        </td>
                     </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Otros</td>
-                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->otros }}</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            <p>{!! nl2br(e($presupuesto->otros)) !!}</p>
+                        </td>
                     </tr>
                 </table>
                 {{-- @include('producto.ficha') --}}

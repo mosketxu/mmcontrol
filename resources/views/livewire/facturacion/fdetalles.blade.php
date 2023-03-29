@@ -70,9 +70,9 @@
             disabled/>
         </div>
         <div class="w-3/12">
-            <input type="text" wire:model.lazy='observaciones'
-            class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"
-            {{ $deshabilitado }}/>
+            <textarea wire:model.lazy='observaciones' rows="1"
+                class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"
+                {{ $deshabilitado }}></textarea>
         </div>
         <div class="w-1/12 text-center">
             @if ($deshabilitado=='')

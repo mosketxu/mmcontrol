@@ -93,7 +93,7 @@
                     @if($pproducto->producto->observaciones!='')
                     <tr>
                         <td>Observaciones:</td>
-                        <td colspan="6">{{ $pproducto->producto->observaciones }}</td>
+                        <td colspan="6"><textarea class="border-0 text-sm">{{ $pproducto->producto->observaciones }}</textarea></td>
                     </tr>
                     @endif
 
@@ -120,7 +120,7 @@
                 @if($pproceso->observaciones!='')
                 <tr>
                     <td>Observaciones:</td>
-                    <td colspan="2">{{ $pproceso->observaciones }}</td>
+                    <td colspan="2"><textarea class="border-0 text-sm">{{ $pproceso->observaciones }}</textarea></td>
                 </tr>
                 @endif
                 @endforeach

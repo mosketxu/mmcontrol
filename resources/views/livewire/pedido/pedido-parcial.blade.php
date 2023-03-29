@@ -71,8 +71,8 @@
                         <div class="flex">
                             <div class="flex w-full space-x-2">
                                 <label for="" >Observaciones:</label>
-                                <input type="text" wire:model="parcial.observaciones"
-                                    class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
+                                <textarea wire:model="parcial.observaciones" rows="1"
+                                class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"></textarea>
                             </div>
                         </div>
                         <div class="flex">

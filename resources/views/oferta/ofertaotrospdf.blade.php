@@ -124,15 +124,13 @@
                             @foreach($oferta->ofertaproductos as $oproducto)
                             <tr>
                                 <td width=30% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproducto->producto->referencia?? ''}}</td>
-                                <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->observaciones }}</td>
+                                <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">
+                                    <p>{!! nl2br(e($oproducto->observaciones)) !!}</p>
+                                </td>
                                 <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
                                 <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
                                 <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->tirada ,2)}}</td>
                             </tr>
-                            {{-- <tr>
-                                <td width=20% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray">Observaciones:</td>
-                                <td width=80%  colspan="5" class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->producto->observaciones }}</td>
-                            </tr> --}}
                             @endforeach
                         </table>
                     </div>
@@ -164,11 +162,6 @@
                     {{-- resto --}}
                     <div class="py-0 space-y-2 text-xs">
                         <table width="80%" style="margin-top:10px; " class="mx-auto" cellspacing="0" cellpadding="2" >
-                            {{-- @if($oferta->transporte!='')
-                            <tr>
-                                <td style="padding-left:3px;"  class="" ><span class="font-bold">Transporte: </span>{{ $oferta->transporte}} </td>
-                            </tr>
-                            @endif --}}
                             @if($oferta->troquel!='')
                             <tr>
                                 <td style="padding-left:3px;"  class="" > <span class="font-bold">Troquel: </span>{{ $oferta->troquel}}</td>
@@ -176,7 +169,9 @@
                             @endif
                             @if($oferta->observaciones!='')
                             <tr>
-                                <td> <span class="font-bold">Observaciones: </span>{{ $oferta->observaciones}}</td>
+                                <td> <span class="font-bold">Observaciones: </span>
+                                    <p>{!! nl2br(e($oferta->observaciones)) !!}</p>
+                                </td>
                             </tr>
                             @endif
                         </table>

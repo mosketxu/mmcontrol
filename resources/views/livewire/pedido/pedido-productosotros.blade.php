@@ -45,11 +45,11 @@
             </div>
             {{-- observaciones --}}
             <div class="w-4/12 ">
-                <input type="text"  wire:model.defer="observaciones"
-                class="w-full pr-2 text-xs font-thin text-left text-gray-500 border-0 rounded-md"/>
+                <textarea wire:model.defer="observaciones" rows="1"
+                class="w-full pr-2 text-xs font-thin text-left text-gray-500 border-0 rounded-md"></textarea>
             </div>
             {{-- botones --}}
-            <div class="flex w-1/12 text-center">
+            <div class="w-1/12 text-center">
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
                 <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $pproductoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
             </div>

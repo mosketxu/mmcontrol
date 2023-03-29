@@ -84,8 +84,8 @@
             </div>
             {{-- observaciones --}}
             <div class="w-4/12 ">
-                <input type="text"  wire:model.defer="observaciones"
-                class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"/>
+                <textarea wire:model.defer="observaciones" rows="1"
+                class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"></textarea>
             </div>
             {{-- botones --}}
             <div class="w-1/12 text-center">

@@ -59,7 +59,7 @@
                                 {{ $factura->importe }}
                             </div>
                             <div class="flex-col w-3/12 pl-2 my-2 ml-2 text-left">
-                                {{ $factura->observaciones }}
+                                <textarea class="w-full text-sm border-0 rounded-md" rows="1">{{ $factura->observaciones }}</textarea>
                             </div>
                             <div class="flex-col w-1/12 text-right">
                                 <select wire:change="changeValor({{ $factura }},'estado',$event.target.value)"

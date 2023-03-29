@@ -37,7 +37,7 @@
                 <div class="ml-2">Localidad: {{ $parcial->localidad }} ({{ $parcial->cp }}) </div>
                 <div class="ml-2">Horario: {{ $parcial->horario }}</div>
                 <div class="ml-2">Tfno.: {{ $parcial->tfno }}</div>
-                <div class="ml-2">Observaciones: {{ $parcial->observaciones }}</div>
+                <div class="ml-2">Observaciones:<textarea rows="1" class="border-0 text-sm mt-0">{{ $parcial->observaciones }}</textarea></div>
             </div>
         </div>
         </div>

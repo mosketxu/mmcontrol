@@ -23,7 +23,7 @@ class PedidoProducto extends Component
     protected function rules(){
         return [
             'pedido_id'=>'required',
-            'producto_id'=>'required',
+            'producto_id'=>'nullable',
             'tirada'=>'required',
             'precio_ud'=>'nullable',
             'preciototal'=>'nullable',
@@ -73,8 +73,8 @@ class PedidoProducto extends Component
         if(!$this->tirada) $this->tirada=0;
         if(!$this->precio_ud) $this->precio_ud=0;
         if(!$this->preciototal) $this->preciototal=0;
-
         $this->validate();
+
         $pprod=ModelsPedidoProducto::create([
             'pedido_id'=>$this->pedido_id,
             'producto_id'=>$this->producto_id,
@@ -85,6 +85,8 @@ class PedidoProducto extends Component
             'visible'=>$this->visible,
             'orden'=>$this->orden,
         ]);
+
+
 
         $this->producto_id='';
         $this->tirada='0';

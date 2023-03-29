@@ -29,7 +29,7 @@
     </tr>
     <tr style="">
         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Otro</td>
-        <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->observaciones }}</td>
+        <td style=" padding-left:3px;" class="borde1" colspan="2"><textarea class="border-0 text-sm">{{ $producto->observaciones }}</textarea></td>
     </tr>
 </table>
 

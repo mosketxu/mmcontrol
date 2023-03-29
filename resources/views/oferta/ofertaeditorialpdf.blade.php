@@ -148,8 +148,10 @@
                         @endif
                         @if($oferta->ofertaproducto->observaciones!='')
                         <tr style="">
-                            <td width=20% class="font-bold "  style="padding-top:8px">Observaciones:</td>
-                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->ofertaproducto->observaciones }}</td>
+                            <td width=20% class="font-bold "  style="margin-top: 0px">Observaciones:</td>
+                            <td width=80% class=""  style="padding-top:8px" >
+                                <p>{!! nl2br(e($oferta->ofertaproducto->observaciones)) !!}</p>
+                            </td>
                         </tr>
                         @endif
                         <tr>

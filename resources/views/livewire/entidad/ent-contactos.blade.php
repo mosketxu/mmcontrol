@@ -47,9 +47,9 @@
                                     />
                                 </div>
                                 <div class="flex w-4/12 lg:w-4/12">
-                                    <input type="text" value="{{ $contacto->comentarios }}" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
+                                    <textarea type="text" rows="1" class="w-full text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100"
                                     wire:change="changeValor('{{ $contacto->id }}','comentarios',$event.target.value)"
-                                    />
+                                    >{{ $contacto->comentarios }}</textarea>
                                 </div>
                                 <div class="flex w-1/12 ">
                                     <x-icon.edit-a href="{{ route('entidad.edit',$contacto->contacto_id) }}"  title="Editar"/>
@@ -95,7 +95,9 @@
                         </div>
                         <div class="w-full form-item">
                             <x-jet-label for="comentarios">{{ __('Comentario') }}</x-jet-label>
-                            <x-jet-input  wire:model.defer="comentario" type="text" id="comentarios"  class="w-full" :value="old('comentarios')" />
+                            <textarea type="text" rows="1" class="w-full text-sm font-thin text-gray-500 border-gray-300 rounded-md"
+                                wire:model.defer="comentario"
+                            >{{ $contacto->comentarios }}</textarea>
                             <x-jet-input-error for="comentarios" class="mt-2" />
                         </div>
                         <div class="w-full form-item">

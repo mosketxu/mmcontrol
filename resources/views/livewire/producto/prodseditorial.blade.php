@@ -37,7 +37,8 @@
                                     <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->preciocoste }}"  readonly/>
                                 </div>
                                 <div class="hidden w-3/12 lg:flex">
-                                    <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->observaciones }}"  readonly/>
+                                    <textarea rows="1"
+                                    class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" readonly>{{ $producto->observaciones }}</textarea>
                                 </div>
                                 <div class="flex w-1/12 text-right">
                                     @can('producto.edit')

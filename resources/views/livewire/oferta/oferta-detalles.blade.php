@@ -79,8 +79,8 @@
             </div>
             {{-- observaciones --}}
             <div class="w-3/12 ">
-                <input type="text"  wire:model.defer="observaciones"
-                class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"/>
+                <textarea wire:model.lazy='observaciones' rows="1"
+                class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"></textarea>
             </div>
             {{-- botones --}}
             <div class="w-1/12 text-center">
@@ -123,9 +123,12 @@
                 disabled/>
             </div>
             <div class="w-3/12">
-                <input type="text" value="{{ $odetalle->observaciones }}"
+                <textarea rows="1"
+                class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"
+                wire:change="changeValor('{{ $odetalle->id }}','observaciones',$event.target.value)">{{ $odetalle->observaciones }}</textarea>
+                {{-- <input type="text" value="{{ $odetalle->observaciones }}"
                 wire:change="changeValor('{{ $odetalle->id }}','observaciones',$event.target.value)"
-                class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"/>
+                class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"/> --}}
             </div>
             <div class="w-1/12 text-center">
                 <x-icon.delete-a class="w-6 " wire:click.prevent="delete({{ $odetalle->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
