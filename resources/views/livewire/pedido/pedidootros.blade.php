@@ -11,7 +11,7 @@
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 ">
                         <div class="p-1 rounded-md bg-blue-50">
-                            <h3 class="pl-1 font-semibold">Datos generales</h3>
+                            <h3 class="pl-1 font-semibold">Datos generaless</h3>
                             <input  wire:model.defer="pedidoid" type="hidden"/>
                         </div>
                         <div class="flex flex-col mx-2 md:flex-row md:space-x-4">
