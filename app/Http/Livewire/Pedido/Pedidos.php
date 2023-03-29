@@ -180,7 +180,7 @@ class Pedidos extends Component
     }
 
     public function getRowsProperty(){
-        return $this->rowsQuery->paginate(10);
+        return $this->rowsQuery->get();
     }
 
     public function exportSelected(){

@@ -46,7 +46,7 @@ class Permisos extends Component
         ->search('name',$this->search)
         ->select('id','name as valorcampo2','guard_name as valorcampo1')
         ->orderBy('name')
-        ->paginate(15);
+        ->get();
 
         return view('livewire.auxiliarcard',compact('valores'));
     }

@@ -91,9 +91,9 @@
                         @endforelse
                     </div>
                 </div>
-            <div>
+            {{-- <div>
                 {{ $facturas->links() }}
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

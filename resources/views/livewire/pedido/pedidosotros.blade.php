@@ -87,9 +87,9 @@
                         @endforelse
                     </div>
                 </div>
-            <div>
+            {{-- <div>
                 {{ $pedidos->links() }}
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

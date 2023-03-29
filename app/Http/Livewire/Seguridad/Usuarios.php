@@ -56,7 +56,7 @@ class Usuarios extends Component
             ->orSearch('email',$this->search)
             ->select('id','name as valorcampo1','email as valorcampo2','password as valorcampo3')
             ->orderBy('name')
-            ->paginate(15);
+            ->get();
 
         return view('livewire.auxiliarcard',compact('valores'));
     }

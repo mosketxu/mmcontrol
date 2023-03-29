@@ -120,7 +120,7 @@ class PedidoParciales extends Component
         ->search('comentario',$this->search)
         ->select('id','id as valorcampo2','fecha as valorcampofecha','cantidad as valorcampo3','importe as valorcampo4','comentario as valorcampo5')
         ->orderBy('fecha')
-        ->paginate(10);
+        ->get();
 
 
         return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));

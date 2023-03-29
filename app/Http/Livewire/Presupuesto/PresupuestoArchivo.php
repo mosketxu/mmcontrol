@@ -126,7 +126,7 @@ class PresupuestoArchivo extends Component
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
         ->where('presupuesto_id',$this->presupuesto->id)
         ->orderBy('comentario')
-        ->paginate(10);
+        ->get();
 
         return view('livewire.presupuesto.auxiliarpresupuestoscard', compact('valores'));
     }

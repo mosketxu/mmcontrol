@@ -126,7 +126,7 @@ class PedidoArchivo extends Component
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
         ->where('pedido_id',$this->pedido->id)
         ->orderBy('comentario')
-        ->paginate(10);
+        ->get();
 
         return view('livewire.pedido.auxiliarpedidoscard', compact('valores'));
     }

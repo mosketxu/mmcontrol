@@ -106,7 +106,7 @@ class EntDestino extends Component
         ->select('id', 'destino as valorcampo1','atencion as valorcampo2','direccion as valorcampo3','localidad as valorcampo4','cp as valorcampo5','horario as valorcampo6','tfno as valorcampo7','observaciones as valorcampo8')
         ->where('entidad_id',$this->ent->id)
         ->orderBy('destino')
-        ->paginate(10);
+        ->get();
 
         return view('livewire.entidad.auxiliarentidadescard', compact('valores'));
     }

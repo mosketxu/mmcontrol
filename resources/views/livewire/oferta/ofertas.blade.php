@@ -70,9 +70,9 @@
                         @endforelse
                     </div>
                 </div>
-            <div>
+            {{-- <div>
                 {{ $ofertas->links() }}
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

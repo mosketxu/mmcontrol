@@ -79,7 +79,7 @@ class ProductoArchivo extends Component
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
         ->where('producto_id',$this->prod->id)
         ->orderBy('comentario')
-        ->paginate(10);
+        ->get();
 
         return view('livewire.producto.auxiliarproductoscard', compact('valores'));
     }

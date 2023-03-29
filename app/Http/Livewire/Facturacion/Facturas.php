@@ -44,7 +44,7 @@ class Facturas extends Component
 
     public function render()
     {
-        // $facturas=Factura::orderBy('id')->paginate(15);
+        // $facturas=Factura::orderBy('id')->get();
         $clientes=Entidad::orderBy('entidad')->whereIn('entidadtipo_id',['1','2'])->get();
         $meses=Mes::orderBy('id')->get();
 
@@ -97,7 +97,7 @@ class Facturas extends Component
         }
 
             public function getRowsProperty(){
-                return $this->rowsQuery->paginate(10);
+                return $this->rowsQuery->get();
             }
 
             public function exportSelected(){

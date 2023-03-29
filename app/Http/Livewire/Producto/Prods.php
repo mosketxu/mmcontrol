@@ -56,7 +56,7 @@ class Prods extends Component
             ->search('productos.material',$this->filtromaterial)
             ->search('productos.impresion',$this->filtroimpresion)
             ->orderBy('referencia','asc')
-            ->paginate(15);
+            ->get();
 
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';

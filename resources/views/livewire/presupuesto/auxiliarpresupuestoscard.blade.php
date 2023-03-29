@@ -184,9 +184,9 @@
                             </div>
                         @endforelse
                 </div>
-                <div>
+                {{-- <div>
                     {{ $valores->links() }}
-                </div>
+                </div> --}}
                 <div>
                     <form wire:submit.prevent="save">
                         <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">

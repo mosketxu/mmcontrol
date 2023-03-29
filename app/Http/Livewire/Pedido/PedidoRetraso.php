@@ -121,7 +121,7 @@ class PedidoRetraso extends Component
         ->search('comentario',$this->search)
         ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
         ->orderBy('fecha')
-        ->paginate(10);
+        ->get();
 
         return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));
     }

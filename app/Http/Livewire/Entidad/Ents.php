@@ -25,7 +25,7 @@ class Ents extends Component
             ->with('entidadtipo')
             ->filtrosEntidad($this->search, $this->filtroresponsable, $this->entidadtipo_id, $this->Fini, $this->Ffin)
             ->orderBy('entidad', 'asc')
-            ->paginate(10);
+            ->get();
 
 
         return view('livewire.entidad.ents', compact('entidades', 'entidadtipo'));

@@ -71,9 +71,9 @@
                         @endforelse
                     </div>
                 </div>
-                <div>
+                {{-- <div>
                     {{ $entidades->links() }}
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
