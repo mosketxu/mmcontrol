@@ -29,16 +29,16 @@
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
-                                    {{-- <x-select wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full" >
+                                    <x-select wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full" >
                                         @if (isset($contactos))
-                                            @if(!$contacto_id) <option value="">-- Selecciona contacto --</option> @endif
+                                            {{-- @if(!$contacto_id) <option value="">-- Selecciona contacto --</option> @endif
                                             @foreach ($contactos as $contacto)
                                             <option value="{{ $contacto->contacto_id }}" {{ $contacto->contacto_id == $this->contacto_id ? "selected" : ""}}>{{ $contacto->entidadcontacto->entidad }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         @else
                                             <option value="">-- Selecciona primero un cliente --</option>
                                         @endif
-                                    </x-select> --}}
+                                    </x-select>
                                 </div>
                             </div>
                             <div class="w-full form-item">
