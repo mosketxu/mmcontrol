@@ -28,7 +28,6 @@
                             </div>
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    {{ $contactos }}
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
                                     <x-select wire:model.lazy="contacto_id" selectname="contacto_id" class="w-full" >
                                         @if (isset($contactos))
