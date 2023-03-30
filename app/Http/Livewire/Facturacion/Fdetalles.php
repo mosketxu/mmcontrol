@@ -98,8 +98,6 @@ class Fdetalles extends Component
 
     public function save(){
         $this->validate();
-
-
         $fd=FacturaDetalle::find($this->fdetalle_id)->update([
             'factura_id'=>$this->factura_id,
             'pedido_id'=>$this->pedido_id,
@@ -133,5 +131,15 @@ class Fdetalles extends Component
         $mensaje="Actualizado con éxito";
         $this->emit('refreshfactura');
         $this->dispatchBrowserEvent('notify', $mensaje);
+    }
+
+    public function delete($valorId){
+        $borrar = FacturaDetalle::find($valorId);
+        if ($borrar) {
+            $borrar->delete();
+            $this->emit('refreshfactura');
+            $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+        }
+
     }
 }

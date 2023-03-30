@@ -31,19 +31,16 @@ class Facturas extends Component
 
     public $message;
 
+
+
     protected function rules(){
         return [
             'estado'=>'nullable',
         ];
     }
 
-    public function mount()
-    {
-        # code...
-    }
 
-    public function render()
-    {
+    public function render(){
         // $facturas=Factura::orderBy('id')->get();
         $clientes=Entidad::orderBy('entidad')->whereIn('entidadtipo_id',['1','2'])->get();
         $meses=Mes::orderBy('id')->get();
@@ -62,8 +59,7 @@ class Facturas extends Component
     public function updatingFiltroFi(){$this->resetPage();}
     public function updatingFiltroFf(){$this->resetPage();}
 
-    public function changeValor(Factura $factura,$campo,$valor)
-    {
+    public function changeValor(Factura $factura,$campo,$valor){
         $factura->update([$campo=>$valor]);
         $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
     }

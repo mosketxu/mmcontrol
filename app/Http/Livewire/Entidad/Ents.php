@@ -17,8 +17,7 @@ class Ents extends Component
     public $entidadtipo_id='';
     public Entidad $entidad;
 
-    public function render()
-    {
+    public function render(){
         $entidadtipo=EntidadTipo::find($this->entidadtipo_id);
 
         $entidades=Entidad::query()
@@ -31,19 +30,16 @@ class Ents extends Component
         return view('livewire.entidad.ents', compact('entidades', 'entidadtipo'));
     }
 
-    public function updatingSearch()
-    {
+    public function updatingSearch(){
         $this->resetPage();
     }
 
-    public function changeValor(Entidad $entidad, $campo, $valor)
-    {
+    public function changeValor(Entidad $entidad, $campo, $valor){
         $entidad->update([$campo=>$valor]);
         $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
     }
 
     public function delete($entidadId){
-
         $entidad = Entidad::find($entidadId);
         $mensaje='';
         $mensaje1='';
