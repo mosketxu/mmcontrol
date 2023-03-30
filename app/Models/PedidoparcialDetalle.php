@@ -9,7 +9,7 @@ class PedidoparcialDetalle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['parcial_id','concepto','cantidad'];
+    protected $fillable = ['parcial_id','concepto','cantidad','precio_ud','total'];
 
     public function parcial()
     {

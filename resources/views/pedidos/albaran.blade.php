@@ -19,16 +19,27 @@
                 </tr>
             </table>
             <table width=100% class="mt-20">
-                <tr>
-                    <td width=70% class="font-bold " >Concepto</td>
-                    <td  width=30% class="font-bold text-right" >Cantidad</td>
+                <tr class="border-b-2">
+                    <td width=52% class="font-bold " >Concepto</td>
+                    <td  width=16% class="font-bold text-right" >Cantidad</td>
+                    <td  width=16% class="font-bold text-right" >€/Ud</td>
+                    <td  width=16% class="font-bold text-right" >Total</td>
                 </tr>
                 @foreach ($detalles as $detalle)
                 <tr>
                     <td>{{ $detalle->concepto }}</td>
                     <td class="text-right">{{ $detalle->cantidad }}</td>
+                    <td class="text-right"> {{ number_format(round($detalle->precio_ud,2),2) }}</td>
+                    <td class="text-right">{{ number_format(round($detalle->total,2),2) }}</td>
                 </tr>
                 @endforeach
+                <tr class="border-t-2">
+                    <td> </td>
+                    <td class="text-right"></td>
+                    <td class="text-right font-bold italic"> Total</td>
+                    <td class="text-right font-bold italic">{{ number_format(round($detalle->sum('total'),2),2) }}</td>
+
+                </tr>
             </table>
             <div class="mt-24">
                 <div class="ml-2 w-24 font-bold">Enviar a: {{ $parcial->destino }} </div>
