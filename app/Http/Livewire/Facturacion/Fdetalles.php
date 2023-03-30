@@ -72,8 +72,16 @@ class Fdetalles extends Component
         if($pedido) {
             if($pedido->tipo=='1'){
                 $producto=$pedido->pedidoproductos->first()->producto;
-                $this->importe=$producto->precioventa;
-                $this->concepto=$producto->referencia;
+                $this->importe=$pedido->precio;
+                $this->cantidad=$pedido->tiradareal;
+                if($producto)
+                    $this->concepto=$producto->referencia?? '' ;
+                $this->calculos();
+                $this->save();
+            }else{
+                $this->importe=$pedido->precio;
+                $this->cantidad=$pedido->tiradareal;
+                $this->concepto=$pedido->descripcion;
                 $this->calculos();
                 $this->save();
             }

@@ -60,7 +60,7 @@
                                     @if($bloqueado=='0')
                                     {{-- {{ $pedidos }} --}}
                                     <x-selectcolor wire:model.defer="pedidocliente" selectname="pedidocliente" class="w-full py-1" >
-                                       @if (isset($pedidos))
+                                        @if (isset($pedidos))
                                             <option value="">-- Selecciona un pedido --</option>
                                             @foreach ($pedidos as $pedido)
                                             <option value="{{ $pedido['pedidocliente'] }}">{{ $pedido['pedidocliente'] }}</option>

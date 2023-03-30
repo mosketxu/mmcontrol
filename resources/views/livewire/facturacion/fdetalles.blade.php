@@ -4,7 +4,6 @@
             @include('errores')
         </div>
     </div>
-
     <div class="flex w-full py-0 my-0 space-x-1 text-left bg-white border-t-0 border-y" wire:loading.class.delay="opacity-50">
         <div class="w-1/12 ">
             <input type="hidden" wire:model.lazy='fdetalle_id'>
@@ -18,7 +17,7 @@
                 {{ $deshabilitado }}/>
             </div>
         <div class="w-2/12">
-            <select wire:model.lazy='pedido_id'
+            <select wire:model='pedido_id'
             class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
             {{ $deshabilitado }}>
                 <option value="" >-</option>

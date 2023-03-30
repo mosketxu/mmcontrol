@@ -55,15 +55,13 @@ class Fdetalle extends Component
         ];
     }
 
-    public function mount($facturaid,$deshabilitado)
-    {
+    public function mount($facturaid,$deshabilitado){
         $this->factura=Factura::find($facturaid);
         $this->bloqueado= $this->factura->estado =='0' ? '0' : '1';
         $this->deshabilitado= $deshabilitado;
     }
 
-    public function render()
-    {
+    public function render(){
         $entidad=Entidad::find($this->factura->cliente_id);
         $pedidostodos=Pedido::query()
         ->where('cliente_id', $this->factura->cliente_id)
@@ -79,15 +77,22 @@ class Fdetalle extends Component
 
     public function UpdatedPedidoId(){
         $pedido=Pedido::find($this->pedido_id);
-        if($pedido) {
-            if($pedido->tipo=='1'){
-                $prod=$pedido->pedidoproductos->first();
-                if($prod){
-                    $producto= Producto::find($prod->producto_id);
-                    $this->importe=$producto->precioventa;
-                    $this->concepto=$producto->referencia;
+        if ($pedido) {
+            if ($pedido->tipo=='1') {
+                $producto=$pedido->pedidoproductos->first()->producto;
+                if ($pedido) {
+                    $this->importe=$pedido->precio;
+                    $this->cantidad=$pedido->tiradareal;
+                    if ($producto) {
+                        $this->concepto=$producto->referencia?? '' ;
+                    }
                     $this->calculos();
                 }
+            } else {
+                $this->importe=$pedido->precio;
+                $this->cantidad=$pedido->tiradareal;
+                $this->concepto=$pedido->descripcion;
+                $this->calculos();
             }
         }
     }
