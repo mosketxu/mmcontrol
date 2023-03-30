@@ -211,9 +211,20 @@
                                 {{-- es pedido o convertir a pedido --}}
                                 <div class="w-full text-center form-item">
                                     @if($espedido=='1')
-                                    <div class="w-full form-item">
-                                        <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
-                                        <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
+                                    <div class="flex-none w-full md:flex">
+                                        <div class="w-full form-item">
+                                            <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
+                                            <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
+                                        </div>
+                                        <div class=" form-item">
+                                            <x-jet-label for="asignarpedido">{{ __('Asignar otro pedido') }}</x-jet-label>
+                                            <x-select class="w-/12" selectname="pedido" wire:model.lazy="pedido">
+                                                <option value="">-- Selecciona un pedido --</option>
+                                                @foreach ($pedidos as $ped )
+                                                <option value="{{ $ped->id }}">{{ $ped->id }}</option>
+                                                @endforeach
+                                            </x-select>
+                                        </div>
                                     </div>
                                     @else
                                     <button class="inline-flex items-center px-2 py-2 mt-2 text-sm font-semibold text-white transition bg-blue-600 border border-transparent rounded-md tracking-tigh hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25"

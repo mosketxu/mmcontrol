@@ -136,7 +136,7 @@
                     class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value="">-- selecciona --</option>
                     <option value="0">En curso</option>
-                    <option value="1">Aceptado</option>
+                    <option value="1">Acabado</option>
                     <option value="2">Cancelado</option>
                 </select>
                 @if($filtroestado!='')

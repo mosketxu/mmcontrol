@@ -18,7 +18,7 @@ class CreateEntidadesTable extends Migration
             $table->string('entidad')->unique();
             $table->integer('entidadtipo_id')->default(0);
             $table->string('responsable')->nullable();
-            $table->string('nif', 12)->nullable()->unique();
+            $table->string('nif', 100)->nullable()->unique();
             $table->string('direccion', 100)->nullable();
             $table->string('cp', 10)->nullable();
             $table->string('localidad', 100)->nullable();

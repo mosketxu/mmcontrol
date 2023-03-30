@@ -26,7 +26,7 @@ class Ent extends Component
             'entidad.entidad'=>'required',
             'entidad.entidadtipo_id'=>'required',
             'entidad.responsable'=>'nullable',
-            'entidad.nif'=>'nullable|max:12',
+            'entidad.nif'=>'nullable',
             'entidad.direccion'=>'nullable',
             'entidad.cp'=>'nullable|max:10',
             'entidad.localidad'=>'nullable',
@@ -56,7 +56,6 @@ class Ent extends Component
         return [
             'entidad.entidad.required' => 'El nombre de la entidad es necesario',
             'entidad.entidadtipo_id.required' => 'El tipo es necesario',
-            'entidad.nif.max' => 'El Nif debe ser inferior a 12 caracteres',
             'entidad.cuentactblepro.numeric' => 'La cuenta contable del proveedor debe ser numérica',
             'entidad.cuentactblecli.numeric' => 'La cuenta contable del cliente debe ser numérica',
             'entidad.cp.max' => 'El código postal debe ser inferior a 8 caracteres',
@@ -97,7 +96,6 @@ class Ent extends Component
                     Rule::unique('entidades','entidad')->ignore($this->entidad->id)],
                 'entidad.nif'=>[
                     'nullable',
-                    'max:12',
                     Rule::unique('entidades','nif')->ignore($this->entidad->id)],
                 ]
             );
@@ -105,7 +103,7 @@ class Ent extends Component
         }else{
             $this->validate([
                 'entidad.entidad'=>'required|unique:entidades,entidad',
-                'entidad.nif'=>'nullable|max:12|unique:entidades,nif',
+                'entidad.nif'=>'nullable|unique:entidades,nif',
                 'entidad.cuentactblepro'=>'nullable|numeric|unique:entidades,cuentactblepro',
                 'entidad.cuentactblecli'=>'nullable|numeric|unique:entidades,cuentactblecli',
                 ]

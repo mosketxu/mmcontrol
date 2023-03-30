@@ -14,14 +14,30 @@
     </div>
     <div class="flex-col w-2/12 text-left">{{ $pedido->cliente->entidad }}</div>
     <div class="flex-col w-3/12 text-left">{{ $pedido->pedidoproductos->first()->producto->isbn }} - {{ $pedido->pedidoproductos->first()->producto->referencia }}</div>
-    <div class="flex-col w-2/12 text-center bg-green-50">
+    {{-- <div class="flex-col w-2/12 text-center bg-green-50">
         <span class="font-bold"> Arc:</span>&nbsp;{{ $pedido->farchivos }} <span class="font-bold"> Plo:</span>&nbsp;{{ $pedido->fplotter }} <span class="font-bold"> Ent:</span>&nbsp;{{ $pedido->fentrega }}
+    </div> --}}
+    <div class="flex-none w-2/12 bg-green-50 md:flex">
+        <div class="w-4/12">
+            <div class="font-bold"> Arch:</div>
+            <div class="">{{ $pedido->farchivos }}</div>
+        </div>
+        <div class="w-4/12">
+            <div class="font-bold"> Plot:</div>
+            <div>{{ $pedido->fplotter }} </div>
+        </div>
+        <div class="w-4/12">
+            <div class="font-bold"> Entr:</div>
+            <div>{{ $pedido->fentrega }}</div>
+        </div>
     </div>
-    <div class="flex-col w-1/12 mx-auto text-center bg-gray-50">
-        {{ $pedido->tiradaprevista }}/{{ $pedido->tiradareal }}
+    <div class="flex w-1/12 mx-auto text-center bg-gray-50">
+        <div class="w-6/12">{{ $pedido->tiradaprevista }}</div>
+        <div class="w-1/12">/</div>
+        <div class="w-5/12">{{ $pedido->tiradareal }}</div>
     </div>
-    <div class="flex w-10 mx-auto text-center ">
-        <div class="" >
+    <div class="flex w-1/12">
+        <div class="w-6/12" >
             @if($estado=='0')
                 <x-icon.thumbs-up-a class="" title="En curso" wire:click="cambiaEstado()"/>
             @elseif($estado=='2')
@@ -30,9 +46,7 @@
                 <x-icon.flag-checkered-a class="w-5 text-black hover:text-gray-700 " title="Finalizado" wire:click="cambiaEstado()"/>
             @endif
         </div>
-    </div>
-    <div class="flex w-10 mx-auto text-center ">
-        <div class="">
+        <div class="w-6/12">
             @if($pedido->facturado=='1')
                 <x-icon.thumbs-up-a class="w-5 text-green-500 hover:text-green-700 "  title="Sí" wire:click="cambiaFac({{ $pedido->id}})"/>
             @elseif($pedido->facturado=='0')

@@ -138,9 +138,19 @@ class Presupuesto extends Component
 
     public function render(){
         $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id', ['1','2']);
+        $clientes=$entidades->whereIn('entidadtipo_id', ['1','2','4']);
         $proveedores=$entidades->whereIn('entidadtipo_id', ['2','3']);
         $cajas=Caja::orderBy('name')->get();
+        $cliente=$this->cliente_id;
+        $tipo=$this->tipo;
+
+        $pedidos=Pedido::query()
+            ->when($cliente!='', function ($query) use($cliente) {
+                $query->where('cliente_id', $cliente);})
+            ->when($tipo!='', function ($query) use($tipo) {
+                $query->where('tipo', $tipo);})
+            ->orderBy('id')
+            ->get();
 
         $this->productos=Producto::query()
             ->with('cliente')
@@ -154,7 +164,7 @@ class Presupuesto extends Component
 
         $vista=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoeditorial' : 'livewire.presupuesto.presupuestootros' ;
 
-        return view($vista, compact(['entidades','clientes','proveedores','responsables','cajas']));
+        return view($vista, compact(['entidades','clientes','proveedores','responsables','cajas','pedidos']));
     }
 
     public function updatedClienteId(){
@@ -171,6 +181,22 @@ class Presupuesto extends Component
 
         $resp=Entidad::find($this->cliente_id);
         if($resp->responsable!='') $this->responsable=$resp->responsable;
+    }
+
+    public function updatedPedido(){
+
+        $presup=ModelsPresupuesto::find($this->presupuestoid);
+        $pold=Pedido::where('presupuesto_id',$presup->id)->first();
+        if($pold){
+            $pold->presupuesto_id=null;
+            $pold->save();
+        }
+
+        $pnew=Pedido::find($this->pedido);
+        $pnew->presupuesto_id=$this->presupuestoid;
+        $pnew->save();
+        $presup->pedido=$this->pedido;
+        $presup->save();
     }
 
     public function tiradanum($tirada){
