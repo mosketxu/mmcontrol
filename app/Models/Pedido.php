@@ -29,6 +29,7 @@ class Pedido extends Model
     public function parciales(){return $this->hasMany(PedidoParcial::class,'pedido_id','id');}
     public function archivos(){return $this->hasMany(PedidoArchivo::class,'pedido_id','id');}
     public function incidencias(){return $this->hasMany(PedidoIncidencia::class,'pedido_id','id');}
+    public function retrasos(){return $this->hasMany(PedidoRetraso::class,'pedido_id','id');}
     public function distribuciones(){return $this->hasMany(PedidoDistribucion::class,'pedido_id','id');}
     public function facturadetalles(){return $this->hasMany(facturadetalle::class,'pedido_id','id');}
 
@@ -43,10 +44,50 @@ class Pedido extends Model
 
     public function getFacturadoColorAttribute(){
         return [
-            '0'=>['red-500','No'],
-            '1'=>['green-500','Sí'],
-            '2'=>['yellow-400','Parcial']
-        ][$this->facturado] ?? ['gray-100',''];
+            '0'=>['text-gray-300','text-gray-500'],
+            '1'=>['text-green-500','text-green-800'],
+            '2'=>['text-blue-500','text-blue-800']
+        ][$this->facturado] ?? ['text-gray-300',''];
+    }
+
+    public function getIncidenciasColorAttribute(){
+        $hay=$this->incidencias->count()> '0' ? '1' : '0';
+        return [
+            '0'=>['text-gray-300','text-gray-500'],
+            '1'=>['text-red-500','text-red-800'],
+        ][$hay] ?? ['gray-500',''];
+    }
+
+    public function getRetrasosColorAttribute(){
+        $hay=$this->retrasos->count()> '0' ? '1' : '0';
+        return [
+            '0'=>['text-gray-300','text-gray-500'],
+            '1'=>['text-red-500','text-red-800'],
+        ][$hay] ?? ['gray-500',''];
+    }
+
+    public function getParcialesColorAttribute(){
+        $hay=$this->parciales->count()> '0' ? '1' : '0';
+        return [
+            '0'=>['text-gray-300','text-gray-500'],
+            '1'=>['text-pink-500','text-pink-800'],
+        ][$hay] ?? ['gray-500',''];
+    }
+
+    public function getDistribucionesColorAttribute(){
+        $hay=$this->distribuciones->count()> '0' ? '1' : '0';
+        return [
+            '0'=>['text-gray-300','text-gray-500'],
+            '1'=>['text-orange-500','text-orange-800'],
+        ][$hay] ?? ['gray-500',''];
+    }
+
+    public function getArchivosColorAttribute(){
+        $hay=$this->archivos->count()> '0' ? '1' : '0';
+        return [
+            '0'=>['text-gray-300','text-gray-500'],
+            '1'=>['text-green-500','text-green-800'],
+        ][$hay] ?? ['gray-500',''];
     }
 
     public function getRutaficheroAttribute(){

@@ -20,6 +20,7 @@ class Factura extends Component
     public $iva=0;
     public $total=0;
     public $estado=0;
+    public $tipo='1';
     public $observaciones;
 
     public $mesagge;
@@ -35,8 +36,7 @@ class Factura extends Component
 
     protected $listeners = [ 'refreshfactura'];
 
-    public function refreshfactura()
-    {
+    public function refreshfactura(){
         $this->mount($this->facturaid);
     // $this->render();
     }
@@ -50,17 +50,18 @@ class Factura extends Component
             'fecha'=>'date|required',
             'fechavencimiento'=>'nullable|date',
             'estado'=>'nullable',
+            'tipo'=>'nullable',
             'observaciones'=>'nullable',
         ];
     }
 
     public function messages(){
-    return [
-        'facturaid.required'=>'El número de factura es necesario.',
-        'cliente_id.required'=>'El cliente es necesario.',
-        'fecha.required'=>'La fecha es necesaria.',
-        'fecha.date'=>'La fecha debe ser válida.',
-        'fechavencimiento.date'=>'La fecha de vencimiento debe ser válida.',
+        return [
+            'facturaid.required'=>'El número de factura es necesario.',
+            'cliente_id.required'=>'El cliente es necesario.',
+            'fecha.required'=>'La fecha es necesaria.',
+            'fecha.date'=>'La fecha debe ser válida.',
+            'fechavencimiento.date'=>'La fecha de vencimiento debe ser válida.',
         ];
     }
 
@@ -68,7 +69,7 @@ class Factura extends Component
         $this->titulo='Nueva Factura:';
         if ($facturaid!='') {
             $factura=ModelsFactura::find($facturaid);
-            $this->fac=ModelsFactura::find($facturaid);
+            $this->fac=$factura;
             $this->facturaid=$factura->id;
             $this->cliente_id=$factura->cliente_id;
             $this->contacto_id=$factura->contacto_id;
@@ -108,7 +109,6 @@ class Factura extends Component
     }
 
     public function save(){
-
         $mensaje="Factura creada satisfactoriamente";
         $i="";
         if($this->fechavencimiento=='') $this->fechavencimiento=null;
@@ -138,14 +138,13 @@ class Factura extends Component
             'fecha'=>$this->fecha,
             'fechavencimiento'=>$this->fechavencimiento,
             'estado'=>$this->estado == '' ? '0' : $this->estado,
+            'tipo'=>$this->estado == '' ? '1' : $this->estado,
             'observaciones'=>$this->observaciones,
         ]);
 
         $this->titulo='Factura:';
         $factura=ModelsFactura::find($i);
         $this->dispatchBrowserEvent('notify', $mensaje);
-        // if($nuevo) return redirect()->route('facturacion.edit',$factura->id);
-        // $this->emit('refreshfactura');
         return redirect()->route('facturacion.edit',$factura->id);
     }
 }

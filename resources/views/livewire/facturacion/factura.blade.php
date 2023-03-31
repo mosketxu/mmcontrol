@@ -39,7 +39,7 @@
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
                                     @if($bloqueado=='0')
                                     <x-selectcolor wire:model.defer="contacto_id" selectname="contacto_id" class="w-full py-1" >
-                                       @if (isset($contactos))
+                                        @if (isset($contactos))
                                             <option value="">-- Selecciona un contacto --</option>
                                             @foreach ($contactos as $contacto)
                                             <option value="{{ $contacto->contacto_id }}">{{ $contacto->entidadcontacto->entidad }}</option>
@@ -58,7 +58,6 @@
                                 <div class="w-full form-item">
                                     <x-jet-label for="pedidocliente">{{ __('Su Pedido') }}</x-jet-label>
                                     @if($bloqueado=='0')
-                                    {{-- {{ $pedidos }} --}}
                                     <x-selectcolor wire:model.defer="pedidocliente" selectname="pedidocliente" class="w-full py-1" >
                                         @if (isset($pedidos))
                                             <option value="">-- Selecciona un pedido --</option>
@@ -73,7 +72,6 @@
                                     <input  type="text" value="{{ $pedidocliente }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     disabled/>
                                 @endif
-
                                 </div>
                             </div>
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">

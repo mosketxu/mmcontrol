@@ -63,7 +63,7 @@ class Fdetalles extends Component
     }
 
     public function render(){
-        $pedidos=Pedido::where('cliente_id',$this->factura->cliente_id)->where('facturado','<>','1')->select('id')->get();
+        $pedidos=Pedido::where('cliente_id',$this->factura->cliente_id)->select('id')->get();
         return view('livewire.facturacion.fdetalles',compact('pedidos'));
     }
 
@@ -141,9 +141,15 @@ class Fdetalles extends Component
         $this->dispatchBrowserEvent('notify', $mensaje);
     }
 
-    public function delete($valorId){
+    public function delete($valorId, $numpedido){
+
         $borrar = FacturaDetalle::find($valorId);
+        $numfrasconestepedido=FacturaDetalle::where('pedido_id',$numpedido)->count();
         if ($borrar) {
+            if($numfrasconestepedido>1)
+                Pedido::where('id', $numpedido)->update(['facturado' => '2']);
+            else
+                Pedido::where('id', $numpedido)->update(['facturado' => '0']);
             $borrar->delete();
             $this->emit('refreshfactura');
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');

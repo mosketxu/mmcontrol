@@ -28,6 +28,7 @@ class Facturas extends Component
     public $filtroestado='';
     public $filtroFi='';
     public $filtroFf='';
+    public $filtrotipo='';
 
     public $message;
 
@@ -51,13 +52,14 @@ class Facturas extends Component
         return view('livewire.facturacion.facturas',compact('facturas','clientes','meses'));
     }
 
-    public function updatingSearch(){$this->resetPage();}
-    public function updatingFiltroanyo(){$this->resetPage();}
-    public function updatingFiltromes(){$this->resetPage();}
-    public function updatingFiltrocliente(){$this->resetPage();}
-    public function updatingFiltroestado(){$this->resetPage();}
-    public function updatingFiltroFi(){$this->resetPage();}
-    public function updatingFiltroFf(){$this->resetPage();}
+    // public function updatingSearch(){$this->resetPage();}
+    // public function updatingFiltroanyo(){$this->resetPage();}
+    // public function updatingFiltromes(){$this->resetPage();}
+    // public function updatingFiltrocliente(){$this->resetPage();}
+    // public function updatingFiltroestado(){$this->resetPage();}
+    // public function updatingFiltroFi(){$this->resetPage();}
+    // public function updatingFiltroFf(){$this->resetPage();}
+    // public function updatingFiltrotipo(){$this->resetPage();}
 
     public function changeValor(Factura $factura,$campo,$valor){
         $factura->update([$campo=>$valor]);
@@ -74,6 +76,9 @@ class Facturas extends Component
                 })
             ->when($this->filtroestado!='', function ($query){
                 $query->where('facturas.estado',$this->filtroestado);
+            })
+            ->when($this->filtrotipo!='', function ($query){
+                $query->where('facturas.tipo',$this->filtrotipo);
             })
             ->when($this->filtroFi && !$this->filtroFf, function ($query) {
                 $query->where('fecha','>=', $this->filtroFi);
@@ -92,36 +97,34 @@ class Facturas extends Component
             // ->paginate(5); solo contemplo la query, no el resultado. Luego pongo el resultado: get, paginate o lo que quiera
         }
 
-            public function getRowsProperty(){
-                return $this->rowsQuery->get();
-            }
+    public function getRowsProperty(){
+            return $this->rowsQuery->get();
+    }
 
-            public function exportSelected(){
-                dd('en proceso');
-            //toCsv es una macro a n AppServiceProvider
-                return response()->streamDownload(function(){
-                    echo $this->selectedRowsQuery->toCsv();
-                },'facturas.csv');
+    public function exportSelected(){
+        dd('en proceso');
+        //toCsv es una macro a n AppServiceProvider
+        return response()->streamDownload(function(){
+            echo $this->selectedRowsQuery->toCsv();
+        },'facturas.csv');
 
-                $this->dispatchBrowserEvent('notify', 'CSV facturas descargado!');
-            }
+        $this->dispatchBrowserEvent('notify', 'CSV facturas descargado!');
+    }
 
-            public function deleteSelected(){
-                $deleteCount = $this->selectedRowsQuery->count();
-                $this->selectedRowsQuery->delete();
-                $this->showDeleteModal = false;
+    public function deleteSelected(){
+        $deleteCount = $this->selectedRowsQuery->count();
+        $this->selectedRowsQuery->delete();
+        $this->showDeleteModal = false;
 
-                $this->dispatchBrowserEvent('notify', $deleteCount . ' facturas eliminados!');
-            }
+        $this->dispatchBrowserEvent('notify', $deleteCount . ' facturas eliminados!');
+    }
 
-
-
-            public function delete($facturaId)
-            {
-                $factura = Factura::find($facturaId);
-                if ($factura) {
-                    $factura->delete();
-                    $this->dispatchBrowserEvent('notify', 'factura borrado, ');
-                }
-            }
+    public function delete($facturaId)
+    {
+        $factura = Factura::find($facturaId);
+        if ($factura) {
+            $factura->delete();
+            $this->dispatchBrowserEvent('notify', 'factura borrado, ');
+        }
+    }
 }

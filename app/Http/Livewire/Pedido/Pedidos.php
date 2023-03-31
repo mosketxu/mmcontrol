@@ -108,6 +108,7 @@ class Pedidos extends Component
     }
 
     public function render(){
+
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
@@ -144,7 +145,7 @@ class Pedidos extends Component
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
-            ->select('entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia','pedidos.*',)
+            ->select('entidades.entidad as cli', 'entidades.nif','entidades.emailadm','productos.isbn as isbn','productos.referencia as ref','pedidos.*',)
             ->where('pedidos.tipo',$this->tipo)
             ->search('pedidos.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){

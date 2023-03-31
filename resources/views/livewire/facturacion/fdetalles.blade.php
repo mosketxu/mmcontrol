@@ -18,11 +18,13 @@
             </div>
         <div class="w-2/12">
             <select wire:model='pedido_id'
-            class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
-            {{ $deshabilitado }}>
-                <option value="" >-</option>
-                @forelse ($pedidos as $pedido)
-                    <option value="{{ $pedido->id }}" >{{ $pedido->id }}</option>
+                class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+                {{ $deshabilitado }}>
+                @if(!$pedido_id)
+                    <option value="" >-</option>
+                @endif
+                @forelse ($pedidos as $ped)
+                    <option value="{{ $ped->id }}" >{{  $ped->id }}</option>
                 @empty
                     <option value="">No hay pedidos pendientes</option>
                 @endforelse
@@ -76,7 +78,7 @@
         <div class="w-1/12 text-center">
             @if ($deshabilitado=='')
             <x-icon.save-a wire:click.prevent="save()"  title="Guardar detalle"/>
-            <x-icon.delete-a class="w-6 " wire:click.prevent="delete({{ $fdetalle_id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+            <x-icon.delete-a class="w-6 " wire:click.prevent="delete({{ $fdetalle_id }},{{ $pedido_id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
             @endif
         </div>
     </div>

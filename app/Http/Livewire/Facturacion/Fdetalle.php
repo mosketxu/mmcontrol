@@ -107,8 +107,7 @@ class Fdetalle extends Component
     public function UpdatedIva(){  if($this->iva=='') $this->iva=='0'; $this->calculos();}
     public function UpdatedImporte(){  if($this->importe=='') $this->importe=='0'; $this->calculos(); }
 
-    public function changeValor(ModelsFacturaDetalle $facturadetalle,$campo,$valor)
-    {
+    public function changeValor(ModelsFacturaDetalle $facturadetalle,$campo,$valor){
         $this->validate();
         $facturadetalle->update([$campo=>$valor]);
         $facturadetalle->update([
@@ -136,19 +135,18 @@ class Fdetalle extends Component
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
-    public function changeVisible(ModelsFacturaDetalle $facturadetalle,$visible)
-    {
+    public function changeVisible(ModelsFacturaDetalle $facturadetalle,$visible){
         $facturadetalle->visible=$facturadetalle->visible=='1'? '0' : '1';
         $facturadetalle->update(['visible'=>$facturadetalle->visible]);
         $this->dispatchBrowserEvent('notify', 'Visible Actualizado.');
-    }
+        }
+
     public function save(){
         if(!$this->cantidad) $this->cantidad=0;
         if(!$this->iva) $this->iva=0;
         if($this->pedido_id=='') $this->pedido_id=null;
-        // dd()
-
         $this->validate();
+
         $fdetalle=ModelsFacturaDetalle::create([
             'factura_id'=>$this->factura->id,
             'pedido_id'=>$this->pedido_id,
@@ -163,21 +161,22 @@ class Fdetalle extends Component
             'visible'=>$this->visible,
             'observaciones'=>$this->observaciones,
             'cantidad'=>$this->cantidad,
-        ]);
+            ]);
 
         $totales = ModelsFacturaDetalle::where('factura_id',$this->factura->id)
-        ->select('factura_id',
-            DB::raw('SUM(subtotalsiniva) as subtotalsiniva'),
-            DB::raw('SUM(subtotaliva) as subtotaliva'),
-            DB::raw('SUM(subtotal) as subtotal'))
-        ->groupBy("factura_id")
-        ->first();
+            ->select('factura_id',
+                DB::raw('SUM(subtotalsiniva) as subtotalsiniva'),
+                DB::raw('SUM(subtotaliva) as subtotaliva'),
+                DB::raw('SUM(subtotal) as subtotal'))
+            ->groupBy("factura_id")
+            ->first();
 
-    $this->factura->update([
+        $this->factura->update([
             'importe'=>$totales->subtotalsiniva,
             'iva'=>$totales->subtotaliva,
             'total'=>$totales->subtotal]
-    );
+        );
+
         $this->pedido_id='';
         $this->cantidad='0';
         $this->concepto='';
@@ -185,16 +184,18 @@ class Fdetalle extends Component
         $this->orden='0';
         $this->visible=true;
         $this->observaciones='';
-
         $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
     }
 
-    public function delete($valorId)
-    {
-        $this->validate();
+    public function delete($valorId){
+        //vemos si este pedido está en alguna otra factura
+        // $numfrasconestepedido=ModelsFacturaDetalle::where('pedido_id',$valorId)->count();
+        // $facturado= $numfrasconestepedido > 1 ? '2' : '0';
+        // $p=Pedido::find($valorId);
+        // $p->facturado=$facturado;
+        // $p->save();
 
         $borrar = ModelsFacturaDetalle::find($valorId);
-
         if ($borrar) {
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
