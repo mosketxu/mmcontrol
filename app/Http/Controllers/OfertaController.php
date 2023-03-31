@@ -8,26 +8,22 @@ use Dompdf\Dompdf;
 class OfertaController extends Controller
 {
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('can:oferta.index')->only('tipo','ficha');
         $this->middleware('can:producto.edit')->only('nuevo','editar');
     }
 
-    public function tipo($tipo)
-    {
+    public function tipo($tipo){
         $titulo=$tipo=='1' ? 'Presupuesto MM Editorial':  'Presupuesto MM Packaging/Propios';
         return view('oferta.index',compact('tipo','titulo'));
     }
 
-    public function nuevo($tipo,$ruta)
-    {
+    public function nuevo($tipo,$ruta){
         $titulo=$tipo=='1' ? 'Nuevo Presupuesto MM Editorial' : 'Nuevo Presupuesto MM Packaging/Propios';
         return view('oferta.create',compact('tipo','ruta','titulo'));
     }
 
     public function ficha($ofertaId,$tipo){
-
         $pdf = new Dompdf();
         $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
         $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaotrospdf';

@@ -12,8 +12,8 @@ use \PDF;
 
 class PresupuestoController extends Controller
 {
-    public function __construct()
-    {
+
+    public function __construct(){
         $this->middleware('can:presupuesto.index')->only('tipo','presupuestoPDF');;
         $this->middleware('can:presupuesto.edit')->only('nuevo','editar','archivos');
     }
@@ -48,7 +48,7 @@ class PresupuestoController extends Controller
     }
 
     public function editar(Presupuesto $presupuesto,$ruta){
-$tipo=$presupuesto->tipo;
+        $tipo=$presupuesto->tipo;
         $titulo=$tipo=='1' ? 'Presupuesto Editorial' : 'Presupuesto Packaging/Propios';
         return view('presupuestos.edit',compact('presupuesto','tipo','ruta','titulo'));
     }

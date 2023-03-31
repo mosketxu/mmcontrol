@@ -64,6 +64,32 @@
                 </tr>
             </table>
 
+            {{-- Procesos --}}
+            @if($presupuesto->presupuestoprocesos->count()>0)
+            <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto text-xs">
+                <tr  >
+                    <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="3"  class="" >Procesos:</td>
+                </tr>
+                <tr>
+                    <td class="font-bold">Proceso</td>
+                    <td class="font-bold">Descripción</td>
+                    <td class="font-bold text-right" >Cantidad</td>
+                </tr>
+                @foreach ($presupuesto->presupuestoprocesos as $pproceso)
+                <tr>
+                    <td>{{ $pproceso->proceso}}</td>
+                    <td>{{ $pproceso->descripcion}}</td>
+                    <td style="text-align: right;">{{ $pproceso->tirada}}</td>
+                </tr>
+                @if($pproceso->observaciones!='')
+                <tr>
+                    <td>Observaciones:</td>
+                    <td colspan="2"><p>{!! nl2br(e($pproceso->observaciones)) !!}</p></td>
+                </tr>
+                @endif
+                @endforeach
+            </table>
+            @endif
 
             {{-- Productos --}}
             @if($presupuesto->presupuestoproductos->count()>0)
@@ -91,41 +117,15 @@
                         <td>{{ $pproducto->producto->impresion }}</td>
                     </tr>
                     @if($pproducto->producto->observaciones!='')
-                    <tr>
+                    <tr class="border-b-2 border-gray-400 ">
                         <td>Observaciones:</td>
-                        <td colspan="6"><textarea class="border-0 text-sm">{{ $pproducto->producto->observaciones }}</textarea></td>
+                        <td colspan="6"><p>{!! nl2br(e($pproducto->producto->observaciones)) !!}</p></td>
                     </tr>
                     @endif
-
                     @endforeach
                 </table>
             @endif
-            {{-- Procesos --}}
-            @if($presupuesto->presupuestoprocesos->count()>0)
-            <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto text-xs">
-                <tr  >
-                    <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="3"  class="" >Procesos:</td>
-                </tr>
-                <tr>
-                    <td class="font-bold">Proceso</td>
-                    <td class="font-bold">Descripción</td>
-                    <td class="font-bold text-right" >Cantidad</td>
-                </tr>
-                @foreach ($presupuesto->presupuestoprocesos as $pproceso)
-                <tr>
-                    <td>{{ $pproceso->proceso}}</td>
-                    <td>{{ $pproceso->descripcion}}</td>
-                    <td style="text-align: right;">{{ $pproceso->tirada}}</td>
-                </tr>
-                @if($pproceso->observaciones!='')
-                <tr>
-                    <td>Observaciones:</td>
-                    <td colspan="2"><textarea class="border-0 text-sm">{{ $pproceso->observaciones }}</textarea></td>
-                </tr>
-                @endif
-                @endforeach
-            </table>
-            @endif
+
 
         {{-- resto --}}
             <table width="90%" style="margin-top:10px; " class="mx-auto" cellspacing="0" cellpadding="2" >
@@ -140,7 +140,9 @@
                     <td style="padding-left:3px;"  class="" > <span class="font-bold">Troquel: </span>{{ $presupuesto->troquel}}</td>
                 </tr>
                 <tr>
-                    <td> <span class="font-bold">Observaciones: </span>{{ $presupuesto->otros}}</td>
+                    <td> <span class="font-bold">Observaciones: </span>
+                        <p>{!! nl2br(e($presupuesto->otros)) !!}</p>
+                    </td>
                 </tr>
             </table>
 

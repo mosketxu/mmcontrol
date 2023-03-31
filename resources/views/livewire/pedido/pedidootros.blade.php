@@ -183,12 +183,12 @@
                 @if($pedidoid)
                 {{-- <div class="grid grid-cols-2 gap-1 "> --}}
                     <div class="p-1 border rounded-md">
-                        Productos
-                        @livewire('pedido.pedido-producto',['pedidoid'=>$pedidoid,'deshabilitado'=>$deshabilitado],key($pedidoid.now()))
-                    </div>
-                    <div class="p-1 border rounded-md">
                         Procesos
                         @livewire('pedido.pedido-proceso',['pedidoid'=>$pedidoid,'deshabilitado'=>$deshabilitado],key($pedidoid.now()))
+                    </div>
+                    <div class="p-1 border rounded-md">
+                        Productos
+                        @livewire('pedido.pedido-producto',['pedidoid'=>$pedidoid,'deshabilitado'=>$deshabilitado],key($pedidoid.now()))
                     </div>
                 {{-- </div> --}}
                 @endif

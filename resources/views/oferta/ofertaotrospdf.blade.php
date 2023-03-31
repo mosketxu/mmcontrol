@@ -57,7 +57,7 @@
         <main style=" margin-right: 10px; margin-top:10px">
             <div class="">
                 <div class="py-0 space-y-2">
-                     <table width=80% class="mx-auto mt-1 text-sm " style="color:rgb(30, 27, 27);">
+                    <table width=80% class="mx-auto mt-1 text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
                             <td width=70% class="font-bold">Cliente: {{ $oferta->cliente->entidad }}</td>
                             <td width=30% class="font-bold text-right">Presupuesto nº: {{ $oferta->id}}</td>
@@ -111,31 +111,6 @@
                         @endif
                     </table>
 
-                    @if($oferta->ofertaproductos->count()>0)
-                    <div class="py-0 space-y-2">
-                        <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
-                            <tr>
-                                <td width=40% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Producto</td>
-                                <td width=30% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Observaciones</td>
-                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
-                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
-                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
-                            </tr>
-                            @foreach($oferta->ofertaproductos as $oproducto)
-                            <tr>
-                                <td width=30% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproducto->producto->referencia?? ''}}</td>
-                                <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">
-                                    <p>{!! nl2br(e($oproducto->observaciones)) !!}</p>
-                                </td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->tirada ,2)}}</td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                    @endif
-
                     @if($oferta->ofertaprocesos->count()>0)
                     <div class="py-0 space-y-2 text-xs">
                         <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
@@ -159,6 +134,32 @@
                     </div>
                     @endif
 
+                    @if($oferta->ofertaproductos->count()>0)
+                    <div class="py-0 space-y-2">
+                        <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                            <tr>
+                                {{-- <td width=40% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Producto</td> --}}
+                                <td width=55% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Observaciones</td>
+                                <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                                <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
+                                <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
+                            </tr>
+                            @foreach($oferta->ofertaproductos as $oproducto)
+                            <tr>
+                                {{-- <td width=30% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproducto->producto->referencia?? ''}}</td> --}}
+                                <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">
+                                    <p>{!! nl2br(e($oproducto->observaciones)) !!}</p>
+                                </td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
+                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->tirada ,2)}}</td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                    @endif
+
+
                     {{-- resto --}}
                     <div class="py-0 space-y-2 text-xs">
                         <table width="80%" style="margin-top:10px; " class="mx-auto" cellspacing="0" cellpadding="2" >
@@ -170,7 +171,7 @@
                             @if($oferta->observaciones!='')
                             <tr>
                                 <td> <span class="font-bold">Observaciones: </span>
-                                    <p>{!! nl2br(e($oferta->observaciones)) !!}</p>
+                                    <p>{!! nl2br(e($presupuesto->otros)) !!}</p>
                                 </td>
                             </tr>
                             @endif

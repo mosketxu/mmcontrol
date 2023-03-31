@@ -13,7 +13,11 @@
             </div>
         </div>
         <div class="flex-col w-2/12 text-left">{{ $pedido->cliente->entidad }}</div>
-        <div class="flex-col w-3/12 text-left">{{ $pedido->isbn }} - {{ $pedido->ref }}</div>
+        @if($pedido->tipo=='1')
+            <div class="flex-col w-3/12 text-left">{{ $pedido->isbn }} - {{ $pedido->ref }}</div>
+        @else
+            <div class="flex-col w-3/12 text-left">{{ $pedido->descripcion }}</div>
+        @endif
         <div class="flex-none w-4/12 bg-green-50 md:flex">
             <div class="w-4/12">
                 <div class="font-bold"> Arch:</div>

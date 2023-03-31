@@ -132,12 +132,12 @@
             <div class="">
                 @if($ofertaid)
                     <div class="p-1 border rounded-md">
-                        Productos
-                        @livewire('oferta.oferta-producto',['ofertaid'=>$ofertaid,'deshabilitado'=>$deshabilitado],key($ofertaid.now()))
-                    </div>
-                    <div class="p-1 border rounded-md">
                         Otros
                         @livewire('oferta.oferta-proceso',['ofertaid'=>$ofertaid,'deshabilitado'=>$deshabilitado],key($ofertaid.now()))
+                    </div>
+                    <div class="p-1 border rounded-md">
+                        Productos
+                        @livewire('oferta.oferta-producto',['ofertaid'=>$ofertaid,'deshabilitado'=>$deshabilitado],key($ofertaid.now()))
                     </div>
                     @if($tipo=='1')
                     <div class="p-1 border rounded-md">

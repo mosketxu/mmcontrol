@@ -35,7 +35,7 @@ class Oferta extends Component
     public $deshabilitado='';
 
     public $contactos;
-    // public $productos;
+    public $productos;
     public $titulo='';
 
 

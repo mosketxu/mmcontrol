@@ -197,12 +197,12 @@
                 @if($presupuestoid)
                 {{-- <div class="grid grid-cols-2 gap-1 "> --}}
                     <div class="p-1 border rounded-md">
-                        Productos
-                        @livewire('presupuesto.presupuesto-producto',['presupuestoid'=>$presupuestoid,'deshabilitado'=>$deshabilitado],key($presupuestoid.now()))
-                    </div>
-                    <div class="p-1 border rounded-md">
                         Procesos
                         @livewire('presupuesto.presupuesto-proceso',['presupuestoid'=>$presupuestoid,'deshabilitado'=>$deshabilitado],key($presupuestoid.now()))
+                    </div>
+                    <div class="p-1 border rounded-md">
+                        Productos
+                        @livewire('presupuesto.presupuesto-producto',['presupuestoid'=>$presupuestoid,'deshabilitado'=>$deshabilitado],key($presupuestoid.now()))
                     </div>
                 {{-- </div> --}}
                 @endif
