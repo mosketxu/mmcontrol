@@ -268,6 +268,14 @@
                                     <input type="file" wire:model.lazy="valorcampoimg" />
                                 </div>
                             @endif
+                            @if(isset($distribuciones))
+                                <x-select selectname="distribucion" wire:model.lazy="distribucion">
+                                    <option value="">--Elige distribución--</option>
+                                    @foreach ($distribuciones as $distribucion )
+                                        <option value="{{ $distribucion->id }}">{{ $distribucion->destino }}</option>
+                                    @endforeach
+                                </x-select>
+                            @endif
                             <div class="flex-col w-1/12 text-right">
                                 <button type="submit" class="items-center pl-1 mx-0 mt-2 text-center w-7 "><x-icon.save-a class="text-blue"></x-icon.save-a></button>
                             </div>

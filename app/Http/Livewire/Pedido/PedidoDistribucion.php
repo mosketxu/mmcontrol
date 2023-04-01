@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Pedido, PedidoDistribucion as ModelsPedidoDistribucion};
+use App\Models\{EntidadDestino, Pedido, PedidoDistribucion as ModelsPedidoDistribucion};
 
 
 
@@ -86,6 +86,7 @@ class PedidoDistribucion extends Component
     public $campoimgvisible=0;
     public $campoimgdisabled='';
 
+    public $distribucion;
 
     public $editarvisible=0;
     public $search='';
@@ -103,23 +104,20 @@ class PedidoDistribucion extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'fecha.required'=>'La fecha es necesaria',
         ];
     }
 
-    public function mount($pedidoid,$ruta,$tipo)
-    {
+    public function mount($pedidoid,$ruta,$tipo){
         $this->valorcampofecha=now()->format('Y-m-d');
         $this->pedido=Pedido::find($pedidoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
     }
 
-    public function render()
-    {
+    public function render(){
         $valores=ModelsPedidoDistribucion::query()
         ->where('pedido_id',$this->pedido->id)
         ->search('comentario',$this->search)
@@ -127,19 +125,26 @@ class PedidoDistribucion extends Component
         ->orderBy('fecha')
         ->get();
 
-        return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));
+        $distribuciones=EntidadDestino::where('entidad_id',$this->pedido->cliente_id)->get();
+
+        return view('livewire.pedido.auxiliarpedidoscard',compact('valores','distribuciones'));
     }
 
-    public function changeCampo(ModelsPedidoDistribucion $valor,$campo,$valorcampo)
-    {
+    public function changeCampo(ModelsPedidoDistribucion $valor,$campo,$valorcampo){
         $p=ModelsPedidoDistribucion::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
         $this->dispatchBrowserEvent('notify', 'Distribución Actualizada.');
     }
 
-    public function save()
-    {
+    public function updatedDistribucion(){
+        if($this->distribucion!=''){
+            $dis=EntidadDestino::find($this->distribucion);
+            $this->valorcampo4=$dis->destino ."\n". 'A la atención de:'. $dis->atencion ."\n".$dis->direccion ." ". $dis->localidad . " " . $dis->cp . "\n" . 'Horario:'. $dis->horario ."\n". 'Tfno.:' .$dis->tfno . "\n" .'Obs: '. $dis->observaciones  ;
+        }
+    }
+
+    public function save(){
         $this->valorcampo2=$this->valorcampo2=='' ? '0' : $this->valorcampo2;
         $this->valorcampo3=$this->valorcampo3=='' ? '0' : $this->valorcampo3;
         $this->validate();
@@ -167,10 +172,8 @@ class PedidoDistribucion extends Component
 
     }
 
-    public function delete($valorId)
-    {
+    public function delete($valorId){
         $borrar = ModelsPedidoDistribucion::find($valorId);
-
         if ($borrar) {
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Distribución eliminada!');
