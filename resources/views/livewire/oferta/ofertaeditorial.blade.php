@@ -12,9 +12,15 @@
                     <div class="p-1 ">
                         {{-- datos oferta --}}
                         <div class="">
-                            <div class="p-1 rounded-md bg-blue-50">
-                                <h3 class="pl-1 font-semibold">Datos Oferta</h3>
-                                <input  wire:model.defer="pedidoid" type="hidden"/>
+                            <div class="flex p-1 rounded-md bg-blue-50">
+                                <h3 class="pl-1 font-semibold">Datos generales</h3>
+                                <input  wire:model.defer="presupuestoid" type="hidden"/>
+                                @if($tipo!='1')
+                                <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
+                                    <option value="2">Packaging</option>
+                                    <option value="3">Propios</option>
+                                </x-select>
+                                @endif
                             </div>
                             {{-- fecha-cliente-contacto-estado- --}}
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">

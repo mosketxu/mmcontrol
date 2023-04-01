@@ -6,25 +6,32 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-4 sm:-my-px sm:flex">
                     <x-jet-nav-link href="{{route('pedido.editar',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.editar')">
-                        <x-icon.edit class="text-gray-500 hover:text-gray-900"/>Pedido
+                        <x-icon.edit class="text-gray-500 hover:text-gray-900"/>
+                        <div class="hidden md:flex">Pedido</div>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.parciales',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.parciales')">
-                        <x-icon.truck/>Albaranes
+                        <x-icon.truck/>
+                        <div class="hidden md:flex">Albaranes</div>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.distribuciones',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.distribuciones')">
-                        <x-icon.building-circle-arrow-right/>Distribuciones
+                        <x-icon.building-circle-arrow-right/>
+                        <div class="hidden md:flex">Distribuciones</div>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.archivos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.archivos')">
-                        <x-icon.clip/>Archivos
+                        <x-icon.clip/>
+                        <div class="hidden md:flex">Archivos</div>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.incidencias',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.incidencias')">
-                        <x-icon.triangleexclamation class="w-4 text-gray-500 hover:text-gray-900"/> Incidencias
+                        <x-icon.triangleexclamation class="w-4 text-gray-500 hover:text-gray-900"/>
+                        <div class="hidden md:flex">Incidencias</div>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.retrasos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.retrasos')">
-                        <x-icon.sandwatch class="w-3 text-gray-500 hover:text-gray-900"/>Retrasos
+                        <x-icon.sandwatch class="w-3 text-gray-500 hover:text-gray-900"/>
+                        <div class="hidden md:flex">Retrasos</div>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank">
-                        <x-icon.pdf class="w-3 text-gray-500 hover:text-gray-900"/>Entrada Pedido
+                        <x-icon.pdf class="w-3 text-gray-500 hover:text-gray-900"/>
+                        <div class="hidden md:flex">Entrada Pedido</div>
                     </x-jet-nav-link>
                 </div>
             </div>

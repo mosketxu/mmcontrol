@@ -1,6 +1,6 @@
-<div class="flex justify-between space-x-2 ">
+<div class="flex space-x-2 ">
     {{-- Cliente --}}
-    <div class="flex w-3/12 ">
+    <div class="flex ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Cliente
@@ -48,7 +48,7 @@
         </div>
     </div> --}}
     {{-- Proveedor  --}}
-    <div class="flex w-3/12 ">
+    <div class="flex ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Proveedor

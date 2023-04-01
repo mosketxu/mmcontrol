@@ -10,7 +10,6 @@ use Livewire\Component;
 class Pedido extends Component
 {
     public $pedidoid='';
-    public $tipo;
     public $ruta;
     public $responsable;
     public $cliente_id;
@@ -33,6 +32,7 @@ class Pedido extends Component
     public $preciototal=0;
     public $parcial=0;
     public $estado=0;
+    public $tipo;
     public $facturado;
     public $caja_id;
     public $uds_caja;
@@ -81,6 +81,7 @@ class Pedido extends Component
             'precio'=>'nullable|numeric',
             'preciototal'=>'nullable|numeric',
             'estado'=>'nullable',
+            'tipo'=>'nullable',
             'facturado'=>'nullable',
             'caja_id'=>'nullable',
             'uds_caja'=>'nullable',
@@ -287,6 +288,7 @@ class Pedido extends Component
             'precio'=>$this->precio,
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
+            'tipo'=>$this->tipo,
             'facturado'=>$this->facturado == '' ? '0' : $this->facturado,
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$this->uds_caja,

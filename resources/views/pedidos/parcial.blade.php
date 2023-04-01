@@ -10,13 +10,14 @@
             </div> --}}
             <div class="flex flex-row-reverse w-9/12">
                 <x-button.button  onclick="location.href = ''" color="blue" class="py-1 ">{{ __('Nuevo') }}</x-button.button>
-                <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid])}}" target="_blank" ><x-icon.pdf class="text-red-500 hover:text-red-700 mr-5 "/></a>
+                <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid])}}" target="_blank" ><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
                 <div class="mr-5">
-                @if($tipo=='1')
+                {{-- @if($tipo=='1') --}}
                     @include('pedidos.pedidoeditorial-menu' )
-                @else
+                    adas
+                {{-- @else
                     @include('pedidos.pedidootros-menu' )
-                @endif
+                @endif --}}
                 </div>
             </div>
         </div>

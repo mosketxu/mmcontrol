@@ -108,7 +108,6 @@ class Pedidos extends Component
     }
 
     public function render(){
-
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
@@ -131,8 +130,6 @@ class Pedidos extends Component
     public function updatingFiltroisbn(){$this->resetPage();}
     public function updatingFiltroestado(){$this->resetPage();}
     public function updatingFiltrofacturado(){$this->resetPage();}
-
-
 
     public function changeValor(Pedido $pedido,$campo,$valor){
         $pedido->update([$campo=>$valor]);

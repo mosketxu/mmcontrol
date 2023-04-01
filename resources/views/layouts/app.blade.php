@@ -43,6 +43,9 @@
 
             <!-- Page Content -->
             <main>
+                {{-- por npm run watch --}}
+                <span class="text-pink-500"></span>
+                <span class="text-pink-800"></span>
                 {{ $slot }}
             </main>
 

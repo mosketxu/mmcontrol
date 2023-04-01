@@ -11,9 +11,15 @@
             <div class="flex-col space-y-1 text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 space-y-1">
-                        <div class="p-1 rounded-md bg-blue-50">
+                        <div class="flex p-1 rounded-md bg-blue-50">
                             <h3 class="pl-1 font-semibold">Datos generales</h3>
                             <input  wire:model.defer="presupuestoid" type="hidden"/>
+                            @if($tipo!='1')
+                            <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
+                                <option value="2">Packaging</option>
+                                <option value="3">Propios</option>
+                            </x-select>
+                            @endif
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">

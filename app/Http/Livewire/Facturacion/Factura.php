@@ -80,6 +80,7 @@ class Factura extends Component
             $this->iva=number_format($factura->iva,2,',','.');
             $this->total=number_format($factura->total,2,',','.');
             $this->estado=$factura->estado;
+            $this->tipo=$factura->tipo;
             $this->observaciones=$factura->observaciones;
             $this->bloqueado=$this->estado!='0' ? '1' : '0';
             $this->deshabilitado=$this->bloqueado=='1' ? 'disabled' : '';
@@ -138,7 +139,7 @@ class Factura extends Component
             'fecha'=>$this->fecha,
             'fechavencimiento'=>$this->fechavencimiento,
             'estado'=>$this->estado == '' ? '0' : $this->estado,
-            'tipo'=>$this->estado == '' ? '1' : $this->estado,
+            'tipo'=>$this->tipo == '' ? '1' : $this->tipo,
             'observaciones'=>$this->observaciones,
         ]);
 

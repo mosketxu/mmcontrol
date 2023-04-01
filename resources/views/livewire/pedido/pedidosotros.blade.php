@@ -19,11 +19,11 @@
                             <div class="flex w-2/12"><div class="w-6/12 text-center">Q.Prev.</div><div class="w-6/12 text-center">Q.Real</div></div>
                         </div>
                         <div class="w-3/12 pt-2 pb-0 space-x-2 text-xs font-bold text-gray-500 bg-blue-100 rounded-tr-md">
-                            <div class="flex w-4/12">
+                            <div class="flex w-3/12">
                                 <div class="w-6/12">Estado</div>
                                 <div class="w-6/12">Facturado</div>
                             </div>
-                            <div class="w-8/12" ></div>
+                            <div class="w-9/12" ></div>
                             </div>
                         </div>
                     <div>

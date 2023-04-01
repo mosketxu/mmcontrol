@@ -17,6 +17,8 @@ class PedidosPedido extends Component
     public $facturado;
     public $producto='';
 
+    protected $listeners = [ 'refreshpedidospedido' => '$refresh'];
+
     public function mount($pedidoId,$tipo){$this->tipo=$tipo;
         $this->pedido=Pedido::query()
         ->join('entidades','pedidos.cliente_id','=','entidades.id')
@@ -27,8 +29,6 @@ class PedidosPedido extends Component
         $this->estado=$this->pedido->estado;
         $this->facturado=$this->pedido->facturado;
     }
-
-    protected $listeners = [ 'refreshpedidospedido' => '$refresh'];
 
     public function render(){
         return view('livewire.pedido.pedidos-pedido');

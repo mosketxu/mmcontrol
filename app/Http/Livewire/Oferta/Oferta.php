@@ -149,16 +149,15 @@ class Oferta extends Component
             ->get();
     }
 
-    public function updatedProductoId(){
-        if ($this->producto_id=='') {
-            $this->preciocoste=0;
-        } else {
-            $this->prod=Producto::find($this->producto_id);
-            $this->precio=$this->prod->precio;
-            $this->preciocoste=$this->prod->preciocoste;
-        }
-        // dd($this->prod);
-    }
+    // public function updatedProductoId(){
+    //     if ($this->producto_id=='') {
+    //         $this->preciocoste=0;
+    //     } else {
+    //         $this->prod=Producto::find($this->producto_id);
+    //         $this->precio=$this->prod->precio;
+    //         $this->preciocoste=$this->prod->preciocoste;
+    //     }
+    // }
 
     public function numoferta(){
         $anyo= substr($this->fecha, 0,4);
@@ -167,8 +166,7 @@ class Oferta extends Component
         return !isset($ofe) ? ($anyo2 * 100000 +1) :$ofe + 1 ;
     }
 
-    public function save()
-    {
+    public function save(){
         if($this->producto_id=='') $this->producto_id=null;
         if($this->contacto_id=='') $this->contacto_id=null;
         $this->validate();

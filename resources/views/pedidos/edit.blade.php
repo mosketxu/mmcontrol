@@ -8,11 +8,11 @@
             </div>
             <div class="flex flex-row-reverse w-8/12">
                 <x-button.button  class="py-1 ml-4" onclick="location.href = '{{ route('pedido.nuevo',[$tipo,$ruta]) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
-                @if($tipo=='1')
+                {{-- @if($tipo=='1') --}}
                     @include('pedidos.pedidoeditorial-menu' )
-                @else
+                {{-- @else
                     @include('pedidos.pedidootros-menu' )
-                @endif
+                @endif --}}
             </div>
         </div>
     </x-slot>

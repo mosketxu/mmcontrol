@@ -14,11 +14,11 @@
                     @endif
                 </div>
                 <div class="flex ">
-                    @if($tipo=='1')
+                    {{-- @if($tipo=='1') --}}
                         @include('pedidos.pedidoeditorial-menu' )
-                    @else
+                    {{-- @else
                         @include('pedidos.pedidootros-menu' )
-                    @endif
+                    @endif --}}
                 </div>
             </div>
         </div>

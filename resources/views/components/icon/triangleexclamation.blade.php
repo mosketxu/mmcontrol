@@ -1,4 +1,4 @@
-<div {{ $attributes->merge(['type' => 'button', 'class' => 'w-4 mr-2 pt-1 transform hover:scale-125']) }} >
+<div {{ $attributes->merge(['type' => 'button', 'class' => 'transform hover:scale-125']) }} >
     <svg svg aria-hidden="true" focusable="false" class="" role="img" xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512">
         <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->

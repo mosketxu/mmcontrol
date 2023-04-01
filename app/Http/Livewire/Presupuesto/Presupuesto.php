@@ -10,7 +10,6 @@ use Livewire\Component;
 class Presupuesto extends Component
 {
     public $presupuestoid='';
-    public $tipo;
     public $cliente_id;
     public $descripcion;
     public $responsable;
@@ -21,6 +20,7 @@ class Presupuesto extends Component
     public $preciototal=0;
     public $facturadopor;
     public $fechapresupuesto;
+    public $tipo;
     public $estado=0;
     public $espedido=0;
     public $manipulacion='';
@@ -69,6 +69,7 @@ class Presupuesto extends Component
             'facturadopor'=>'required',
             'fechapresupuesto'=>'date|required',
             'estado'=>'nullable',
+            'tipo'=>'required',
             'espedido'=>'required',
             'manipulacion'=>'nullable',
             'caja_id'=>'nullable',
@@ -116,6 +117,7 @@ class Presupuesto extends Component
             $this->precio_ud=$presupuesto->precio_ud;
             $this->preciototal=$presupuesto->preciototal;
             $this->estado=$presupuesto->estado;
+            $this->tipo=$presupuesto->tipo;
             $this->espedido=$presupuesto->espedido;
             $this->manipulacion=$presupuesto->manipulacion;
             $this->pedido=$presupuesto->pedido;
@@ -184,7 +186,6 @@ class Presupuesto extends Component
     }
 
     public function updatedPedido(){
-
         $presup=ModelsPresupuesto::find($this->presupuestoid);
         $pold=Pedido::where('presupuesto_id',$presup->id)->first();
         if($pold){
@@ -268,7 +269,7 @@ class Presupuesto extends Component
             $nuevo=true;
         }
 
-        if($this->tipo=='2')
+        if($this->tipo!='1')
             Validator::make(
                 ['descripcion'=>$this->descripcion,],
                 ['descripcion' => 'required',],
@@ -294,6 +295,7 @@ class Presupuesto extends Component
             'precio_ud'=>$this->precio_ud,
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
+            'tipo'=>$this->tipo,
             'espedido'=>$this->espedido,
             'manipulacion'=>$this->manipulacion,
             'pedido'=>$this->pedido,
@@ -357,6 +359,7 @@ class Presupuesto extends Component
             'precio'=>$presupuesto->precio_ud ? $presupuesto->precio_ud : '0' ,
             'preciototal'=>$presupuesto->precio_ud * $this->tiradanum($presupuesto->tirada),
             'estado'=>'0',
+            'tipo'=>$presupuesto->tipo,
             'facturado'=>'0',
             'caja_id'=>$this->caja_id,
             'uds_caja'=>$presupuesto->uds_caja,

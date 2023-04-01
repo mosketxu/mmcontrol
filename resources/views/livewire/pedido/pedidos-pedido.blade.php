@@ -1,4 +1,4 @@
-<div class="flex space-x-2 hover:bg-gray-200 hover:cursor-pointer">
+<div class="flex hover:bg-gray-200 hover:cursor-pointer">
     <div class="flex items-center w-9/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" onclick="location.href = '{{ route('pedido.editar',[$pedido,'i']) }}'">
         <div class="flex-col w-1/12 text-left">
             <div class="pl-2">
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="flex items-center w-3/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" ">
-        <div class="flex w-4/12">
+        <div class="flex w-3/12">
             <div class="w-6/12" >
                 @if($estado=='0')
                     <x-icon.thumbs-up-a class="" title="En curso" wire:click="cambiaEstado()"/>
@@ -59,7 +59,7 @@
                 @endif
             </div>
         </div>
-        <div class="w-8/12 space-x-1 text-center lg:space-x-2">
+        <div class="w-9/12 space-x-1 text-center lg:space-x-2">
             <x-icon.truck-a class="w-5 {{ $pedido->parcialescolor[0] }} hover:{{ $pedido->parcialescolor[1] }} " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes"/>
             <x-icon.building-circle-arrow-right-a class="w-5 {{ $pedido->distribucionescolor[0] }} hover:{{ $pedido->distribucionescolor[1] }} " onclick="location.href = '{{route('pedido.distribuciones',[$pedido->id,'i'])}}'" title="Distribuciones"/>
             <x-icon.clip-a class="w-5 {{ $pedido->archivoscolor[0] }} hover:{{ $pedido->archivoscolor[1] }} " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
