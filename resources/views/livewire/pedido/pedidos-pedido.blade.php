@@ -1,5 +1,5 @@
-<div class="flex space-x-2">
-    <div class="flex items-center w-9/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y hover:bg-gray-200" wire:loading.class.delay="opacity-50" onclick="location.href = '{{ route('pedido.editar',[$pedido,'i']) }}'">
+<div class="flex space-x-2 hover:bg-gray-200 hover:cursor-pointer">
+    <div class="flex items-center w-9/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" onclick="location.href = '{{ route('pedido.editar',[$pedido,'i']) }}'">
         <div class="flex-col w-1/12 text-left">
             <div class="pl-2">
                 <div class="">
@@ -38,7 +38,7 @@
             <div class="w-5/12">{{ $pedido->tiradareal }}</div>
         </div>
     </div>
-    <div class="flex items-center w-3/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y hover:bg-gray-200" wire:loading.class.delay="opacity-50" ">
+    <div class="flex items-center w-3/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" ">
         <div class="flex w-4/12">
             <div class="w-6/12" >
                 @if($estado=='0')
