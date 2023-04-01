@@ -38,7 +38,11 @@
         <main style="margin-top:200px; margin-right: 10px;">
             {{-- Datos generales  --}}
             @if($tipo=='1')
-                @include('producto.fichaeditorial')
+                @if($tipopdf=='n')
+                    @include('producto.fichaeditorial')
+                @else
+                    @include('producto.fichaeditorialreducida')
+                @endif
             @else
                 @include('producto.fichaotros')
             @endif

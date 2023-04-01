@@ -7,17 +7,17 @@
         </div>
         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-4">
             {{-- isbn --}}
-            <div class="w-full form-item sm:w-2/12">
+            <div class="w-full form-item md:w-2/12">
                 <x-jet-label for="isbn">{{ __('ISBN') }}</x-jet-label>
                 <input wire:model.lazy="producto.isbn" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
             </div>
             {{-- titulo --}}
-            <div class="w-full form-item sm:w-4/12">
+            <div class="w-full form-item md:w-4/12">
                 <x-jet-label for="referencia">{{ __('Título') }}</x-jet-label>
                 <input wire:model.lazy="producto.referencia" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" autofocus/>
             </div>
             {{-- cliente --}}
-            <div class="w-full form-item sm:w-4/12">
+            <div class="w-full form-item md:w-4/12">
                 <x-jet-label for="entidad_id">{{ __('Cliente') }}</x-jet-label>
                 <x-selectcolor wire:model.lazy="producto.cliente_id" selectname="cliente_id" color="blue" class="w-full" >
                     <option value=''>-- Selecciona cliente --</option>
@@ -27,12 +27,12 @@
                 </x-selectcolor>
             </div>
             {{-- precio coste --}}
-            <div class="w-full form-item sm:w-1/12">
+            <div class="w-full form-item md:w-1/12">
                 <x-jet-label for="preciocoste">{{ __('€ Compra') }}</x-jet-label>
                 <input  wire:model.lazy="producto.preciocoste" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
             </div>
             {{-- precio venta --}}
-            <div class="w-full form-item sm:w-1/12">
+            <div class="w-full form-item md:w-1/12">
                 <x-jet-label for="precioventa">{{ __('€ Venta') }}</x-jet-label>
                 <input  wire:model.lazy="producto.precioventa" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
             </div>
@@ -208,7 +208,7 @@
     </div>
         <div class="flex flex-col mx-2 space-y-2 md:space-y-0 md:flex-row md:space-x-4">
             {{-- cajas --}}
-            <div class="w-full form-item sm:w-2/12">
+            <div class="w-full form-item md:w-3/12">
                 <x-jet-label for="caja">{{ __('Caja') }}</x-jet-label>
                     <x-selectcolor wire:model.lazy="producto.caja_id"  selectname="caja:id" color="blue" class="w-full form-control" id="caja">
                         <option value="">--Selecciona--</option>
@@ -218,12 +218,12 @@
                     </x-selectcolor>
             </div>
             {{-- uds cajas --}}
-            <div class="w-full form-item sm:w-1/12 ">
+            <div class="w-full form-item md:w-1/12 ">
                 <x-jet-label for="udxcaja">{{ __('Uds. x caja') }}</x-jet-label>
                 <input  wire:model.lazy="producto.udxcaja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
             </div>
             {{-- observaciones --}}
-            <div class="w-full form-item sm:w-4/12">
+            <div class="w-full form-item md:w-8/12">
                 <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>
                 <textarea wire:model.defer="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('observaciones') }} </textarea>
                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />

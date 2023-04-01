@@ -30,30 +30,24 @@ class ProductoController extends Controller
     //     return view('producto.index',compact('tipo'));
     // }
 
-    public function tipo($tipo)
-    {
+    public function tipo($tipo){
         $titulo=$tipo=='1'? 'Productos Editoriales' : 'Productos Packaging y Propios';
         return view('producto.index',compact('tipo','titulo'));
     }
 
-    public function nuevo($tipo)
-    {
+    public function nuevo($tipo){
         $titulo=$tipo=='1'? 'Nuevo producto Editorial' : 'Nuevo producto de Packaging/Propio';
-
-
         return view('producto.create',compact('tipo','titulo'));
     }
 
-    public function archivos(Producto $producto, $ruta)
-    {
+    public function archivos(Producto $producto, $ruta){
         return view('producto.archivos',compact('producto','ruta'));
     }
 
-    public function ficha($prodId,$tipo)
-    {
+    public function ficha($prodId,$tipo,$tipopdf){
         $pdf = new Dompdf();
         $producto=Producto::with('cliente')->find($prodId);
-        $pdf = \PDF::loadView('producto.fichapdf', compact('producto','tipo'));
+        $pdf = \PDF::loadView('producto.fichapdf', compact('producto','tipo','tipopdf'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
     }

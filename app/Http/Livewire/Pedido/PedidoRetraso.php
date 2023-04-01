@@ -89,8 +89,7 @@ class PedidoRetraso extends Component
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
-    protected function rules()
-    {
+    protected function rules(){
         return [
             'valorcampofecha'=>'required||date',
             'valorcampo2'=>'nullable',
@@ -100,24 +99,22 @@ class PedidoRetraso extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'fecha.required'=>'La fecha es necesaria',
         ];
     }
 
-    public function mount($pedidoid,$ruta,$tipo)
-    {
+    public function mount($pedidoid,$ruta,$tipo){
         $this->valorcampofecha=now()->format('Y-m-d');
         $this->pedido=Pedido::find($pedidoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
     }
 
-    public function render()
-    {
+    public function render(){
         $valores=ModelsPedidoRetraso::query()
+        ->where('pedido_id',$this->pedido->id)
         ->search('comentario',$this->search)
         ->select('id','fecha as valorcampofecha','cantidad as valorcampo2','importe as valorcampo3','comentario as valorcampo4')
         ->orderBy('fecha')

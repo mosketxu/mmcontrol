@@ -35,6 +35,9 @@ class PresupuestoController extends Controller
 
         if($presupuesto->tipo=='1'){
             $producto=$presupuesto->presupuestoproductos->first()->producto;
+            if($tipopdf='n')
+            $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+            else
             $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
         }
         else{

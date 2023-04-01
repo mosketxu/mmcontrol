@@ -87,6 +87,7 @@ class Prod extends Component
             'producto.descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
         ];
     }
+
     public function mount(Producto $producto,$tipo,$titulo){
         $this->producto=$producto;
         $this->tipo=$tipo;
@@ -146,7 +147,9 @@ class Prod extends Component
 
     public function save(){
         if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
+        if($this->producto->caja_id=='') $this->producto->caja_id=null;
         if($this->tipo) $this->producto->tipo=$this->tipo;
+
         if($this->producto->id){
             $i=$this->producto->id;
             $this->validate([

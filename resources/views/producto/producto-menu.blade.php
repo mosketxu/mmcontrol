@@ -10,8 +10,13 @@
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:m-2 sm:flex">
-                    <x-jet-nav-link href="{{route('producto.ficha', [$producto->id,$tipo]) }}" target="_blank" :active="request()->routeIs('producto.archivos')">
+                    <x-jet-nav-link href="{{route('producto.ficha', [$producto->id,$tipo,'n']) }}" target="_blank" :active="request()->routeIs('producto.ficha')">
                         <x-icon.pdf class="text-gray-500 hover:text-gray-700"/>Ficha
+                    </x-jet-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:m-2 sm:flex">
+                    <x-jet-nav-link href="{{route('producto.ficha', [$producto->id,$tipo,'r']) }}" target="_blank" :active="request()->routeIs('producto.ficha')">
+                        <x-icon.pdf class="text-gray-500 hover:text-gray-700"/>Ficha reducida
                     </x-jet-nav-link>
                 </div>
             </div>
