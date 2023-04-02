@@ -136,6 +136,16 @@ class Fdetalles extends Component
                 'total'=>$totales->subtotal]
         );
 
+        //actualizo el estado del pedido
+        if($this->pedido_id){
+            $numfrasconestepedido=FacturaDetalle::where('pedido_id',$this->pedido_id)->count();
+            // dd($numfrasconestepedido);
+            if($numfrasconestepedido>1)
+                Pedido::where('id', $this->pedido_id)->update(['facturado' => '2']);
+            else
+                Pedido::where('id', $this->pedido_id)->update(['facturado' => '1']);
+        }
+
         $mensaje="Actualizado con éxito";
         $this->emit('refreshfactura');
         $this->dispatchBrowserEvent('notify', $mensaje);

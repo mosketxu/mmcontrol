@@ -24,6 +24,13 @@ class Factura extends Model
         ][$this->estado] ?? ['gray-100',''];
     }
 
+    public function getFacturaTipoAttribute(){
+        return [
+            '1'=>['gray-200','Editorial'],
+            '2'=>['red-500','Packaging'],
+            '3'=>['green-500','Propios']
+        ][$this->tipo] ?? ['gray-100',''];
+    }
     public function getFfacturaAttribute(){
         if ($this->fecha) {
             return Carbon::parse($this->fecha)->format('d/m/y');

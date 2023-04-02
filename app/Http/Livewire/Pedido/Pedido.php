@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, PedidoProducto, Responsable};
+use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, Factura, FacturaDetalle, PedidoProducto, Responsable};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -49,6 +49,7 @@ class Pedido extends Component
     public $pedidoproductoid;
     public $contactos;
     public $productos;
+    public $facturas;
     public $ofertas;
     public $deshabilitado;
 
@@ -147,6 +148,9 @@ class Pedido extends Component
             $this->transporte=$pedido->transporte;
             $this->otros=$pedido->otros;
             $this->titulo=$this->tipo=='1'?'Pedido Editorial':'Pedido Packaging/Propios';
+            $this->facturas=FacturaDetalle::where('pedido_id',$pedido->id)->get();
+            // dd($pedido->id);
+            // dd($this->facturas);
             if($this->cliente_id){
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
                 $this->ofertas=Oferta::where('cliente_id', '=', $this->cliente_id)->orderBy('id')->get();
@@ -163,6 +167,7 @@ class Pedido extends Component
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $cajas=Caja::orderBy('name')->get();
+
 
         $this->productos=Producto::query()
             ->with('cliente')

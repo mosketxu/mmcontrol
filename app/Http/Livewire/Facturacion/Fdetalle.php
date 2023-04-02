@@ -8,7 +8,6 @@ use App\Models\Entidad;
 use App\Models\Factura;
 use App\Models\FacturaDetalle as ModelsFacturaDetalle;
 use App\Models\Pedido;
-use App\Models\Producto;
 use Illuminate\Support\Facades\DB;
 
 class Fdetalle extends Component
@@ -139,7 +138,7 @@ class Fdetalle extends Component
         $facturadetalle->visible=$facturadetalle->visible=='1'? '0' : '1';
         $facturadetalle->update(['visible'=>$facturadetalle->visible]);
         $this->dispatchBrowserEvent('notify', 'Visible Actualizado.');
-        }
+    }
 
     public function save(){
         if(!$this->cantidad) $this->cantidad=0;
@@ -176,6 +175,15 @@ class Fdetalle extends Component
             'iva'=>$totales->subtotaliva,
             'total'=>$totales->subtotal]
         );
+
+        //actualizo el estado del pedido
+        if($this->pedido_id){
+            $numfrasconestepedido=ModelsFacturaDetalle::where('pedido_id',$this->pedido_id)->count();
+            if($numfrasconestepedido>1)
+                Pedido::where('id', $this->pedido_id)->update(['facturado' => '2']);
+            else
+                Pedido::where('id', $this->pedido_id)->update(['facturado' => '1']);
+        }
 
         $this->pedido_id='';
         $this->cantidad='0';
