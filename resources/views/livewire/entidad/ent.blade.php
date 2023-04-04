@@ -132,7 +132,7 @@
                     <x-jet-input  wire:model.defer="entidad.iban1" type="text" id="iban1" name="iban1" :value="old('iban1')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
-                    <x-jet-label for="banco2"  title="Banco a la que el cliente hará la transferencia">{{ __('Trasnferencia a:') }}</x-jet-label>
+                    <x-jet-label for="banco2"  title="Banco a la que el cliente hará la transferencia">{{ __('Transferencia a:') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.banco2" type="text" id="banco2" name="banco2" :value="old('banco2')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
