@@ -136,7 +136,11 @@
                             <tr>
                                 <td width="30%" class="text-xs italic text-right"  >Vto: {{ $factura->ffacturavto }}</td>
                                 <td width="10%" class="text-xs italic text-right"  ></td>
+                                @if($factura->cliente->iban2!='')
+                                <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN {{ $factura->cliente->iban2 }}</td>
+                                @else
                                 <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN ES11 2013 3221  3102 1024 3770</td>
+                                @endif
                             </tr>
                         </table>
                     </div>
