@@ -341,9 +341,10 @@ class Presupuesto extends Component
         $pedidoid=Pedido::inYear($anyo)->max('id') ;
         $pedidoid= !isset($pedidoid) ? ($anyo2 * 100000 +1) :$pedidoid + 1 ;
         $pedMax=Pedido::max('id');
-        dd('calculado'.$pedidoid .' max:'.$pedMax);
 
-        $pedidoid=$pedMax>$pedidoid ? $pedMax+1 : $pedidoid;
+        $pedidoid=$pedMax>=$pedidoid ? $pedMax+1 : $pedidoid;
+
+        dd('calculado'.$pedidoid .' max:'.$pedMax);
 
         $ped=Pedido::create([
             'id'=>$pedidoid,
