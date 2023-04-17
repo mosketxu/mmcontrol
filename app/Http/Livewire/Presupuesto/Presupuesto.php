@@ -344,9 +344,7 @@ class Presupuesto extends Component
 
         $pedidoid=$pedMax>=$pedidoid ? $pedMax+1 : $pedidoid;
 
-        dd('calculado'.$pedidoid .' max:'.$pedMax);
-
-        $ped=Pedido::create([
+$ped=Pedido::create([
             'id'=>$pedidoid,
             'responsable'=>$presupuesto->responsable,
             'tipo'=>$presupuesto->tipo,
