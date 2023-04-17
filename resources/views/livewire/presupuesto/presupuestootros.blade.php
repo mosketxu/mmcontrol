@@ -146,9 +146,9 @@
                                     <select wire:model.lazy="estado"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{ $deshabilitado }}>
-                                    <option value="0">{{ __('En curso') }}</option>
-                                        <option value="1">{{ __('Finalizado') }}</option>
-                                        <option value="2">{{ __('Cancelado') }}</option>
+                                        <option value="0">{{ __('Enviado') }}</option>
+                                        <option value="1">{{ __('Aceptado') }}</option>
+                                        <option value="2">{{ __('Rechazado') }}</option>
                                     </select>
                                 </div>
                             </div>
