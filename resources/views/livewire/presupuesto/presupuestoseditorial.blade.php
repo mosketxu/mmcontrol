@@ -30,8 +30,8 @@
                     <div>
                         @forelse ($presupuestos as $presupuesto)
                         <div class="hover:bg-gray-100 hover:cursor-pointer">
-                            <div class="flex items-center w-full text-sm text-gray-500 border-t-0 border-y" wire:loading.class.delay="opacity-50" onclick="location.href = '{{ route('presupuesto.editar',[$presupuesto,'i']) }}'">
-                                <div class="flex w-9/12">
+                            <div class="flex items-center w-full text-sm text-gray-500 border-t-0 border-y" wire:loading.class.delay="opacity-50" >
+                                <div class="flex w-9/12" onclick="location.href = '{{ route('presupuesto.editar',[$presupuesto,'i']) }}'">
                                     <div class="w-2/12 pl-2">{{ $presupuesto->id }}</div>
                                     <div class="w-1/12 ">{{ $presupuesto->facturadopor=='1' ? 'MM' : 'Proveedor' }}</div>
                                     <div class="w-2/12 ">{{ $presupuesto->cliente->entidad }}</div>
