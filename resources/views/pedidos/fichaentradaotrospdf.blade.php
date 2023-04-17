@@ -78,7 +78,9 @@
                         @endforeach
                         <tr style="">
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Otros</td>
-                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->otros }}</td>
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
+                                <p>{!! nl2br(e($pedido->otros)) !!}</p>
+                            </td>
                         </tr>
                     </table>
                     {{-- Productos --}}
