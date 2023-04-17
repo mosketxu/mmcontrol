@@ -97,7 +97,7 @@
                             <x-jet-label for="comentarios">{{ __('Comentario') }}</x-jet-label>
                             <textarea type="text" rows="1" class="w-full text-sm font-thin text-gray-500 border-gray-300 rounded-md"
                                 wire:model.defer="comentario"
-                            >{{ $contacto->comentarios }}</textarea>
+                            >{{ $comentario }}</textarea>
                             <x-jet-input-error for="comentarios" class="mt-2" />
                         </div>
                         <div class="w-full form-item">

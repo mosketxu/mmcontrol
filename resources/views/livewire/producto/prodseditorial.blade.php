@@ -13,9 +13,9 @@
                     <div class="flex w-full py-1 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
                         <div class="flex w-11/12">
                             <div class="w-2/12 ml-2" >{{ __('ISBN') }}</div>
-                            <div class="w-3/12 " >{{ __('Título') }}</div>
+                            <div class="w-4/12 " >{{ __('Título') }}</div>
                             <div class="w-2/12 " >{{ __('Cliente') }} </div>
-                            <div class="w-1/12 " >{{ __('€ Coste') }}</div>
+                            {{-- <div class="w-1/12 " >{{ __('€ Coste') }}</div> --}}
                             <div class="w-4/12 " >{{ __('Observaciones') }}</div>
                         </div>
                         <div class="flex w-1/12 ">
@@ -24,20 +24,20 @@
                     </div>
                     <div>
                         @forelse ($productos as $producto)
-                            <div class="flex w-full py-1 text-sm text-left border-t-0 border-y cursor-pointer hover:bg-gray-100" wire:loading.class.delay="opacity-50">
+                            <div class="flex w-full py-1 text-sm text-left border-t-0 cursor-pointer border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                                 <div class="flex items-center w-11/12"  onclick="location.href = '{{ route('producto.edit',$producto) }}'">
                                     <div class="w-2/12 ml-2">
                                         <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->isbn }}"  disabled/>
                                     </div>
-                                    <div class="w-3/12">
+                                    <div class="w-4/12">
                                         <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->referencia }}"  disabled/>
                                     </div>
                                     <div class="w-2/12">
                                         <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->cliente->entidad }}"  disabled/>
                                     </div>
-                                    <div class="w-1/12">
+                                    {{-- <div class="w-1/12">
                                         <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->preciocoste }}"  disabled/>
-                                    </div>
+                                    </div> --}}
                                     <div class="w-4/12">
                                         <textarea rows="1" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" disabled>{{ $producto->observaciones }}</textarea>
                                     </div>

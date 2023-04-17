@@ -17,7 +17,7 @@
                     </x-jet-nav-link>
                 </div> --}}
                 @can('entidad.index')
-                <div class="hidden pt-2  text-left  sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
+                <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left"  >
                         <x-slot name="trigger">
                             <span class="inline-flex rounded-md">
@@ -42,7 +42,7 @@
                             </div>
                             <div class="w-44">
                                 <x-jet-dropdown-link href="{{ route('entidad.tipo','4') }}" class="text-left">
-                                    Prospección
+                                    Prospección/Colaboradores
                                 </x-jet-dropdown-link>
                             </div>
                             <div class="w-44">
@@ -55,7 +55,7 @@
                 </div>
                 @endcan
                 @can('producto.index')
-                <div class="hidden pt-2  text-left  sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
+                <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left" width="60" >
                         <x-slot name="trigger">
                             <span class="inline-flex rounded-md">
@@ -91,7 +91,7 @@
                 </div>
                 @endcan
                 @can('presupuesto.index')
-                <div class="hidden pt-2  text-left  sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
+                <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left" width="60" >
                         <x-slot name="trigger">
                             <span class="inline-flex rounded-md">
@@ -119,7 +119,7 @@
                 </div>
                 @endcan
                 @can('oferta.index')
-                <div class="hidden pt-2  text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
+                <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left" width="60" >
                         <x-slot name="trigger">
                             <span class="inline-flex rounded-md">
@@ -147,7 +147,7 @@
                 </div>
                 @endcan
                 @can('pedido.index')
-                <div class="hidden pt-2  text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
+                <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left" width="60" >
                         <x-slot name="trigger">
                             <span class="inline-flex rounded-md">

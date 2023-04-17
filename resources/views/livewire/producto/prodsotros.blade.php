@@ -11,49 +11,49 @@
             <div class="flex-col space-y-1">
                 <div class="flex w-full py-1 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
                     <div class="flex w-11/12 ">
-                        <div class="flex w-1/12 ml-2" >{{ __('Cod.') }}</div>
-                        <div class="flex w-2/12" >{{ __('Referencia') }}</div>
-                        <div class="flex w-1/12" >{{ __('Cliente') }}</div>
-                        <div class="flex w-2/12" >{{ __('Material') }} </div>
-                        <div class="flex w-2/12" >{{ __('Medidas') }}</div>
-                        <div class="flex w-1/12" >{{ __('Impresion') }}</div>
-                        <div class="flex w-1/12" >{{ __('€. Coste') }}</div>
-                        <div class="flex w-1/12" >{{ __('€. Venta') }}</div>
-                        <div class="flex w-1/12" >{{ __('Troquel') }}</div>
+                        <div class="flex w-1/12 pl-2 " >{{ __('Cod.') }}</div>
+                        <div class="flex w-3/12 pl-2 " >{{ __('Referencia') }}</div>
+                        <div class="flex w-1/12 pl-2 " >{{ __('Cliente') }}</div>
+                        <div class="flex w-3/12 pl-2 " >{{ __('Material') }} </div>
+                        <div class="flex w-2/12 pl-2 " >{{ __('Medidas') }}</div>
+                        <div class="flex w-1/12 pl-2 " >{{ __('Impresion') }}</div>
+                        {{-- <div class="flex w-1/12" >{{ __('€. Coste') }}</div>
+                        <div class="flex w-1/12" >{{ __('€. Venta') }}</div> --}}
+                        <div class="flex w-1/12 pl-2 " >{{ __('Troquel') }}</div>
                     </div>
-                    <div class="flex w-1/12">
+                    <div class="flex w-1/12 ">
                         <div class="w-full" ></div>
                     </div>
                 </div>
                 @forelse ($productos as $producto)
-                <div class="flex items-center w-full text-sm text-left cursor-pointer border-t-0 border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
+                <div class="flex items-center w-full text-sm text-left border-t-0 cursor-pointer border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                     <div class="flex items-center w-11/12 "  onclick="location.href = '{{ route('producto.edit',$producto) }}'">
-                        <div class="w-1/12 ml-2">
-                            <input type="text" class="w-full p-1 bg-transparent text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->isbn }}"  disabled/>
+                        <div class="w-1/12 ">
+                            <input type="text" class="w-full pl-2 text-sm font-thin text-gray-500 bg-transparent border-none rounded-md hover:bg-gray-100" value="{{ $producto->isbn }}"  disabled/>
                         </div>
-                        <div class="w-2/12">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->referencia }}"  disabled/>
-                        </div>
-                        <div class="w-1/12">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->cliente->entidad }}"  disabled/>
-                        </div>
-                        <div class="w-2/12">
-                            <input type="text" class="w-fullp-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->material }}"  disabled/>
+                        <div class="w-3/12 ">
+                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->referencia }}"  disabled/>
                         </div>
                         <div class="w-1/12">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->medidas }}"  disabled/>
+                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->cliente->entidad }}"  disabled/>
+                        </div>
+                        <div class="w-3/12 ">
+                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->material }}"  disabled/>
+                        </div>
+                        <div class="w-2/12 ">
+                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->medidas }}"  disabled/>
+                        </div>
+                        <div class="w-1/12 ">
+                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->impresion }}"  disabled/>
+                        </div>
+                        {{-- <div class="w-1/12">
+                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->preciocoste }}"  disabled/>
                         </div>
                         <div class="w-1/12">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->impresion }}"  disabled/>
-                        </div>
-                        <div class="w-1/12">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->preciocoste }}"  disabled/>
-                        </div>
-                        <div class="w-1/12">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->precioventa }}"  disabled/>
-                        </div>
-                        <div class="w-1/12">
-                            <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $producto->troquel }}"  disabled/>
+                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->precioventa }}"  disabled/>
+                        </div> --}}
+                        <div class="w-1/12 ">
+                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->troquel }}"  disabled/>
                         </div>
                     </div>
                     <div class="items-center w-1/12 text-center" >
