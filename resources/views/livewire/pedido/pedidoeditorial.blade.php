@@ -187,13 +187,15 @@
                             <div class="w-4/12">
                                 <x-jet-label>Facturas del pedido</x-jet-label>
                                 <div class="flex">
-                                    @forelse ($facturas as $factura )
-                                    <div class="text-xs border-gray-300 rounded-md text-blue-700 underline mr-2 hover:text-xl hover:text-white hover:bg-blue-900 hover:p-2 hover:m-2 ">
-                                        <a class="" href="{{ route('facturacion.edit',$factura->factura) }}"  title="Ir a {{ $factura->factura->id }}">{{ $factura->factura->id }}</a>
-                                    </div>
-                                    @empty
-                                    No hay facturas con este pedido
-                                    @endforelse
+                                    @if($facturas)
+                                        @foreach ($facturas as $factura )
+                                            <div class="mr-2 text-xs text-blue-700 underline border-gray-300 rounded-md hover:text-xl hover:text-white hover:bg-blue-900 hover:p-2 hover:m-2 ">
+                                                <a class="" href="{{ route('facturacion.edit',$factura->factura) }}"  title="Ir a {{ $factura->factura->id }}">{{ $factura->factura->id }}</a>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        No hay facturas asociadas a este pedido
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -219,8 +221,8 @@
                                 <x-select wire:model.lazy="responsable" selectname="responsable" class="w-full" >
                                     <option value="">-- Selecciona el responsable --</option>
                                     @foreach ($responsables as $responsable )
-                                    <option value="{{ $responsable->responsable}}">{{ $responsable->responsable}}</option>
-                                @endforeach
+                                        <option value="{{ $responsable->responsable}}">{{ $responsable->responsable}}</option>
+                                    @endforeach
                                 </x-select>
                             </div>
                             {{-- estado --}}

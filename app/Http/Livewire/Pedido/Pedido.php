@@ -163,6 +163,7 @@ class Pedido extends Component
     }
 
     public function render(){
+
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
