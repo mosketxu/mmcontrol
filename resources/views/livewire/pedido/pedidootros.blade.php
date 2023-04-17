@@ -120,11 +120,26 @@
                                 disabled/>
                             </div>
                         </div>
-                        <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
-                            <div class="w-full form-item">
+                        {{-- otros --}}
+                        <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                            <div class="w-8/12 form-item">
                                 <x-jet-label for="otros">{{ __('Otros') }}</x-jet-label>
                                 <textarea wire:model.defer="otros" class="w-full text-xs border-gray-300 rounded-md" rows="1">{{ old('observaciones') }} </textarea>
                                 <input-error for="otros" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                            </div>
+                            <div class="w-4/12">
+                                <x-jet-label>Facturas del pedido</x-jet-label>
+                                <div class="flex">
+                                    @if($facturas)
+                                        @foreach ($facturas as $factura )
+                                            <div class="mr-2 text-xs text-blue-700 underline border-gray-300 rounded-md hover:text-xl hover:text-white hover:bg-blue-900 hover:p-2 hover:m-2 ">
+                                                <a class="" href="{{ route('facturacion.edit',$factura->factura) }}"  title="Ir a {{ $factura->factura->id }}">{{ $factura->factura->id }}</a>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        No hay facturas asociadas a este pedido
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="p-1 rounded-md bg-blue-50">
