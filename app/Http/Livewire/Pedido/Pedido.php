@@ -26,6 +26,9 @@ class Pedido extends Component
     public $fechaarchivos;
     public $fechaplotter;
     public $fechaentrega;
+    public $ctrarchivos;
+    public $ctrplotter;
+    public $ctrentrega;
     public $tiradaprevista=0;
     public $tiradareal=0;
     public $precio=0;
@@ -77,6 +80,9 @@ class Pedido extends Component
             'fechaarchivos'=>'nullable|date',
             'fechaplotter'=>'nullable|date',
             'fechaentrega'=>'nullable|date',
+            'ctrarchivos'=>'nullable',
+            'ctrplotter'=>'nullable',
+            'ctrentrega'=>'nullable',
             'tiradaprevista'=>'required|numeric',
             'tiradareal'=>'nullable|numeric',
             'precio'=>'nullable|numeric',
@@ -137,6 +143,9 @@ class Pedido extends Component
             $this->fechaarchivos=$pedido->fechaarchivos;
             $this->fechaplotter=$pedido->fechaplotter;
             $this->fechaentrega=$pedido->fechaentrega;
+            $this->ctrarchivos=$pedido->ctrarchivos;
+            $this->ctrplotter=$pedido->ctrplotter;
+            $this->ctrentrega=$pedido->ctrentrega;
             $this->tiradaprevista=$pedido->tiradaprevista;
             $this->tiradareal=$pedido->tiradareal;
             $this->precio=$pedido->precio;
@@ -247,6 +256,9 @@ class Pedido extends Component
         if($this->fechaarchivos=='')$this->fechaarchivos=null;
         if($this->fechaentrega =='') $this->fechaentrega=null;
         if($this->fechaplotter =='') $this->fechaplotter=null;
+        if($this->ctrarchivos=='')$this->ctrarchivos='0';
+        if($this->ctrentrega =='') $this->ctrentrega='0';
+        if($this->ctrplotter =='') $this->ctrplotter='0';
         if($this->contacto_id =='') $this->contacto_id=null;
 
         if($this->precio=='') $this->precio='0';
@@ -289,6 +301,9 @@ class Pedido extends Component
             'fechaarchivos'=>$this->fechaarchivos,
             'fechaplotter'=>$this->fechaplotter,
             'fechaentrega'=>$this->fechaentrega,
+            'ctrarchivos'=>$this->ctrarchivos,
+            'ctrplotter'=>$this->ctrplotter,
+            'ctrentrega'=>$this->ctrentrega,
             'tiradaprevista'=>$this->tiradaprevista,
             'tiradareal'=>$this->tiradareal,
             'precio'=>$this->precio,

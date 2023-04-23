@@ -1,8 +1,8 @@
 <div class="flex hover:bg-gray-200 hover:cursor-pointer">
-    <div class="flex items-center w-9/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" onclick="location.href = '{{ route('pedido.editar',[$pedido,'i']) }}'">
-        <div class="flex-col w-1/12 text-left">
-            <div class="pl-2">
-                <div class="">
+    <div class="flex items-center w-6/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" onclick="location.href = '{{ route('pedido.editar',[$pedido,'i']) }}'">
+        <div class="flex-col w-2/12 text-left md:w-1/12">
+            <div class="pl-1">
+                <div class="text-base font-bold">
                     {{ $pedido->id }}
                 </div>
                 @if($pedido->presupuesto_id)
@@ -12,35 +12,52 @@
                 @endif
             </div>
         </div>
-        <div class="flex-col w-2/12 text-left">{{ $pedido->cliente->entidad }}</div>
+        <div class="flex-col w-3/12 pl-2 text-left md:w-2/12">{{ $pedido->cliente->entidad }}</div>
         @if($pedido->tipo=='1')
-            <div class="flex-col w-3/12 text-left">{{ $pedido->isbn }} - {{ $pedido->ref }}</div>
+            <div class="flex-col w-6/12 text-left">{{ $pedido->isbn }} - {{ $pedido->ref }}</div>
         @else
-            <div class="flex-col w-3/12 text-left">{{ $pedido->descripcion }}</div>
+            <div class="flex-col w-4/12 text-left md:w-6/12">{{ $pedido->descripcion }}</div>
         @endif
-        <div class="flex-none w-4/12 bg-green-50 md:flex">
-            <div class="w-4/12">
-                <div class="font-bold"> Arch:</div>
-                <div class="">{{ $pedido->farchivos }}</div>
-            </div>
-            <div class="w-4/12">
-                <div class="font-bold"> Plot:</div>
-                <div>{{ $pedido->fplotter }} </div>
-            </div>
-            <div class="w-4/12">
-                <div class="font-bold"> Entr:</div>
-                <div>{{ $pedido->fentrega }}</div>
-            </div>
-        </div>
         <div class="flex w-2/12 mx-auto text-center bg-gray-50">
             <div class="w-6/12">{{ $pedido->tiradaprevista }}</div>
             <div class="w-1/12">/</div>
             <div class="w-5/12">{{ $pedido->tiradareal }}</div>
         </div>
     </div>
+    <div class="flex items-center w-3/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" >
+        <div class="flex-none w-4/12 md:flex md:w-full">
+            <div class="w-4/12">
+                <div class="flex font-bold">
+                    Arch:
+                    @if($pedido->ctrarchivos=='1')<x-icon.validate class="w-4"/>@endif
+                </div>
+                <div class=" {{ $pedido->ctrlarchivoscolor[0] }}" wire:click="cambiaEstadocontrolfecha('ctrarchivos')">
+                    {{ $pedido->farchivos }}
+                </div>
+            </div>
+            <div class="w-4/12">
+                <div class="flex font-bold">
+                    Plot:
+                    @if($pedido->ctrplotter=='1')<x-icon.validate class="w-4"/>@endif
+                </div>
+                <div class="{{ $pedido->ctrlplottercolor[0] }}"  wire:click="cambiaEstadocontrolfecha('ctrplotter')">
+                    {{ $pedido->fplotter }}
+                </div>
+            </div>
+            <div class="w-4/12">
+                <div class="flex font-bold">
+                    Entr:
+                    @if($pedido->ctrentrega=='1')<x-icon.validate class="w-4"/>@endif
+                </div>
+                <div class="{{ $pedido->ctrlentregacolor[0] }}"  wire:click="cambiaEstadocontrolfecha('ctrentrega')">
+                    {{ $pedido->fentrega }}
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="flex items-center w-3/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" ">
-        <div class="flex w-3/12">
-            <div class="w-6/12" >
+        <div class="flex-none w-3/12 md:flex ">
+            <div class="w-6/12 pl-2" >
                 @if($estado=='0')
                     <x-icon.thumbs-up-a class="" title="En curso" wire:click="cambiaEstado()"/>
                 @elseif($estado=='2')
@@ -49,7 +66,7 @@
                     <x-icon.flag-checkered-a class="w-5 text-black hover:text-gray-700 " title="Finalizado" wire:click="cambiaEstado()"/>
                 @endif
             </div>
-            <div class="w-6/12">
+            <div class="w-6/12 pl-2">
                 @if($pedido->facturado=='1')
                     <x-icon.thumbs-up-a class="w-5 text-green-500 hover:text-green-700 "  title="Sí" wire:click="cambiaFac({{ $pedido->id}})"/>
                 @elseif($pedido->facturado=='0')

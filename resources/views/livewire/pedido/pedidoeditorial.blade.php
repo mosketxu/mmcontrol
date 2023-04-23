@@ -102,7 +102,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                        <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-2">
                             {{-- fecha pedido --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="fechapedido">{{ __('Fecha pedido') }}</x-jet-label>
@@ -113,25 +113,39 @@
                                 <x-jet-label for="fechaarchivos">{{ __('Fecha archivos') }}</x-jet-label>
                                 <input  wire:model.lazy="fechaarchivos" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="ctrarchivos">{{ __('Ctrl F.Archivos') }}</x-jet-label>
+                                <select wire:model.lazy="ctrarchivos"
+                                    class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    <option value="0">KO</option>
+                                    <option value="1">OK</option>
+                                </select>
+                            </div>
                             {{-- Fecha plotter --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="fechaplotter">{{ __('Fecha plotter') }}</x-jet-label>
                                 <input  wire:model.lazy="fechaplotter" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                            </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="ctrplotter">{{ __('Ctrl F.plotter') }}</x-jet-label>
+                                <select wire:model.lazy="ctrplotter"
+                                    class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    <option value="0">KO</option>
+                                    <option value="1">OK</option>
+                                </select>
                             </div>
                             {{-- fecha entrega --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="fechaentrega">{{ __('Fecha entrega') }}</x-jet-label>
                                 <input  wire:model.lazy="fechaentrega" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
-                            {{-- muestra --}}
                             <div class="w-full form-item">
-                                <x-jet-label for="muestra">{{ __('Muestra') }}</x-jet-label>
-                                <input  wire:model.lazy="muestra" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                            </div>
-                            {{-- prueba color --}}
-                            <div class="w-full form-item">
-                                <x-jet-label for="pruebacolor">{{ __('Prueba Color') }}</x-jet-label>
-                                <input  wire:model.lazy="pruebacolor" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                <x-jet-label for="ctrentrega">{{ __('Ctrl F.entrega') }}</x-jet-label>
+                                <select wire:model.lazy="ctrentrega"
+                                    class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    <option value="0">KO</option>
+                                    <option value="1">OK</option>
+                                </select>
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
@@ -152,12 +166,16 @@
                                 <input  wire:model.lazy="preciototal"  type="number" step="any" class="w-full py-1.5 text-xs bg-blue-50 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
-                        {{-- </div>
-                        <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4"> --}}
-                            {{-- <div class="w-full form-item">
-                                <x-jet-label for="parcial">{{ __('Parcial') }}</x-jet-label>
-                                <input  wire:model.lazy="parcial" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                            </div> --}}
+                            {{-- muestra --}}
+                            <div class="w-full form-item">
+                                <x-jet-label for="muestra">{{ __('Muestra') }}</x-jet-label>
+                                <input  wire:model.lazy="muestra" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                            </div>
+                            {{-- prueba color --}}
+                            <div class="w-full form-item">
+                                <x-jet-label for="pruebacolor">{{ __('Prueba Color') }}</x-jet-label>
+                                <input  wire:model.lazy="pruebacolor" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                            </div>
                             {{-- Cajas --}}
                             <div class="w-full form-item">
                                 <div class="w-full mx-auto">

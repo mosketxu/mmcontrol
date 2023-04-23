@@ -14,9 +14,9 @@ class Pedido extends Model
     public $incrementing = false;
 
     protected $fillable=['id','tipo','cliente_id','descripcion','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
-                    'proveedor_id','facturadopor','fechapedido','fechaarchivos','fechaplotter','fechaentrega',
-                        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','caja_id','uds_caja'
-                        ,'transporte','otros'];
+                    'proveedor_id','facturadopor','fechapedido','fechaarchivos','ctrarchivos','fechaplotter','ctrplotter','fechaentrega','ctrentrega',
+                        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','estado','facturado','caja_id','uds_caja',
+                        'transporte','otros'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function presupuesto(){return $this->belongsTo(Presupuesto::class,'presupuesto_id','id');}
@@ -88,6 +88,27 @@ class Pedido extends Model
             '0'=>['text-gray-300','text-gray-500'],
             '1'=>['text-green-500','text-green-800'],
         ][$hay] ?? ['gray-500',''];
+    }
+
+    public function getCtrlArchivosColorAttribute(){
+        return [
+            '0'=>['text-red-500','text-red-500'],
+            '1'=>['text-green-500','text-green-800'],
+        ][$this->ctrarchivos] ?? ['text-red-500','text-red-500'];
+    }
+
+    public function getCtrlPlotterColorAttribute(){
+        return [
+            '0'=>['text-red-500','text-red-500'],
+            '1'=>['text-green-500','text-green-800'],
+        ][$this->ctrplotter] ?? ['text-red-500',''];
+    }
+
+    public function getCtrlEntregaColorAttribute(){
+        return [
+            '0'=>['text-red-500','text-red-500'],
+            '1'=>['text-green-500','text-green-800'],
+        ][$this->ctrentrega] ?? ['text-red-500',''];
     }
 
     public function getRutaficheroAttribute(){

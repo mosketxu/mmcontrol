@@ -14,12 +14,16 @@ class PedidosPedido extends Component
     public $pedido;
     public $tipo;
     public $estado;
+    public $ctrarchivos;
+    public $ctrplotter;
+    public $ctrentrega;
     public $facturado;
     public $producto='';
 
     protected $listeners = [ 'refreshpedidospedido' => '$refresh'];
 
-    public function mount($pedidoId,$tipo){$this->tipo=$tipo;
+    public function mount($pedidoId,$tipo){
+        $this->tipo=$tipo;
         $this->pedido=Pedido::query()
         ->join('entidades','pedidos.cliente_id','=','entidades.id')
         ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
@@ -28,6 +32,9 @@ class PedidosPedido extends Component
         ->find($pedidoId);
         $this->estado=$this->pedido->estado;
         $this->facturado=$this->pedido->facturado;
+        $this->ctrarchivos=$this->pedido->ctrarchivos;
+        $this->ctrplotter=$this->pedido->ctrplotter;
+        $this->ctrentrega=$this->pedido->ctrentrega;
     }
 
     public function render(){
@@ -41,6 +48,12 @@ class PedidosPedido extends Component
             $this->estado='0';
 
         $this->pedido->estado=$this->estado;
+        $this->pedido->save();
+    }
+
+    public function cambiaEstadocontrolfecha($ctrl){
+        $this->$ctrl=$this->$ctrl =='1' ? '0' : '1';
+        $this->pedido->$ctrl=$this->$ctrl;
         $this->pedido->save();
     }
 

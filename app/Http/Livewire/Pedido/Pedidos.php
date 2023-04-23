@@ -26,6 +26,9 @@ class Pedidos extends Component
     public $fechaarchivos;
     public $fechaplotter;
     public $fechaentrega;
+    public $ctrarchivos;
+    public $ctrplotter;
+    public $ctrentrega;
     public $tiradaprevista;
     public $tiradareal;
     public $preciocoste;
@@ -51,6 +54,9 @@ class Pedidos extends Component
     public $filtroisbn='';
     public $filtroestado='';
     public $filtrofacturado='';
+    public $filtroarchivos='';
+    public $filtroplotter='';
+    public $filtroentrega='';
 
     public $message;
     public $destino='0';
@@ -67,6 +73,9 @@ class Pedidos extends Component
             'fechaarchivos'=>'nullable|date',
             'fechaplotter'=>'nullable|date',
             'fechaentrega'=>'required|date',
+            'ctrarchivos'=>'nullable',
+            'ctrplotter'=>'nullable',
+            'ctrentrega'=>'required',
             'tiradaprevista'=>'required|numeric',
             'tiradareal'=>'nullable|numeric',
             'preciocoste'=>'nullable|numeric',
@@ -116,28 +125,27 @@ class Pedidos extends Component
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
-        $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoseditorial': 'livewire.pedido.pedidosotros';
-        return view($vista,compact('pedidos','clientes','proveedores','responsables','meses'));
+        // $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoseditorial': 'livewire.pedido.pedidosotros';
+        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables','meses'));
     }
 
-    public function updatingSearch(){$this->resetPage();}
-    public function updatingFiltroanyo(){$this->resetPage();}
-    public function updatingFiltromes(){$this->resetPage();}
-    public function updatingFiltrocliente(){$this->resetPage();}
-    public function updatingFiltroproveedor(){$this->resetPage();}
-    public function updatingFiltroresponsable(){$this->resetPage();}
-    public function updatingFiltroreferencia(){$this->resetPage();}
-    public function updatingFiltroisbn(){$this->resetPage();}
-    public function updatingFiltroestado(){$this->resetPage();}
-    public function updatingFiltrofacturado(){$this->resetPage();}
+    // public function updatingSearch(){$this->resetPage();}
+    // public function updatingFiltroanyo(){$this->resetPage();}
+    // public function updatingFiltromes(){$this->resetPage();}
+    // public function updatingFiltrocliente(){$this->resetPage();}
+    // public function updatingFiltroproveedor(){$this->resetPage();}
+    // public function updatingFiltroresponsable(){$this->resetPage();}
+    // public function updatingFiltroreferencia(){$this->resetPage();}
+    // public function updatingFiltroisbn(){$this->resetPage();}
+    // public function updatingFiltroestado(){$this->resetPage();}
+    // public function updatingFiltrofacturado(){$this->resetPage();}
 
     public function changeValor(Pedido $pedido,$campo,$valor){
         $pedido->update([$campo=>$valor]);
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
-    public function getRowsQueryProperty(){
-        // return Pedido::query()
+    public function getRowsQuery1Property(){
         return Pedido::query()
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
@@ -166,6 +174,15 @@ class Pedidos extends Component
             ->when($this->filtrofacturado!='', function ($query){
                 $query->where('pedidos.facturado',$this->filtrofacturado);
             })
+            ->when($this->filtroarchivos!='', function ($query){
+                $query->where('pedidos.ctrarchivos',$this->filtroarchivos);
+            })
+            ->when($this->filtroplotter!='', function ($query){
+                $query->where('pedidos.ctrplotter',$this->filtroplotter);
+            })
+            ->when($this->filtroentrega!='', function ($query){
+                $query->where('pedidos.ctrentrega',$this->filtroentrega);
+            })
             ->searchYear('fechapedido',$this->filtroanyo)
             ->searchMes('fechapedido',$this->filtromes)
             ->orderBy('pedidos.estado','asc')
@@ -177,8 +194,62 @@ class Pedidos extends Component
             // ->paginate(5); solo contemplo la query, no el resultado. Luego pongo el resultado: get, paginate o lo que quiera
     }
 
+    public function getRowsQuery2Property(){
+        return Pedido::query()
+            ->join('entidades','pedidos.cliente_id','=','entidades.id')
+            ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
+            ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+            ->select('entidades.entidad as cli', 'entidades.nif','entidades.emailadm','pedidos.*',)
+            ->where('pedidos.tipo',$this->tipo)
+            ->search('pedidos.id',$this->search)
+            ->when($this->filtroreferencia!='', function ($query){
+                $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
+            })
+            ->when($this->filtroisbn!='', function ($query){
+                $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
+            })
+            ->when($this->filtroresponsable!='', function ($query){
+                $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
+            })
+            ->when($this->filtrocliente!='', function ($query){
+                $query->where('pedidos.cliente_id',$this->filtrocliente);
+                })
+            ->when($this->filtroproveedor!='', function ($query){
+                $query->where('pedidos.proveedor_id',$this->filtroproveedor);
+                })
+            ->when($this->filtroestado!='', function ($query){
+                $query->where('pedidos.estado',$this->filtroestado);
+            })
+            ->when($this->filtrofacturado!='', function ($query){
+                $query->where('pedidos.facturado',$this->filtrofacturado);
+            })
+            ->when($this->filtroarchivos!='', function ($query){
+                $query->where('pedidos.ctrarchivos',$this->filtroarchivos);
+            })
+            ->when($this->filtroplotter!='', function ($query){
+                $query->where('pedidos.ctrplotter',$this->filtroplotter);
+            })
+            ->when($this->filtroentrega!='', function ($query){
+                $query->where('pedidos.ctrentrega',$this->filtroentrega);
+            })
+            ->searchYear('fechapedido',$this->filtroanyo)
+            ->searchMes('fechapedido',$this->filtromes)
+            ->orderBy('pedidos.estado','asc')
+            ->orderBy('entidades.entidad','asc')
+            ->orderBy('pedidos.fechaentrega','asc')
+            ->orderBy('pedidos.id','desc')
+            ->groupBy('pedidos.id');
+
+            // dd('llego');
+            // ->paginate(5); solo contemplo la query, no el resultado. Luego pongo el resultado: get, paginate o lo que quiera
+    }
+
     public function getRowsProperty(){
-        return $this->rowsQuery->get();
+        if($this->tipo=='1')
+            return $this->rowsQuery1->get();
+        else
+            return $this->rowsQuery2->get();
+
     }
 
     public function exportSelected(){
@@ -188,7 +259,7 @@ class Pedidos extends Component
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
             ->select('entidades.entidad',
             'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
-            'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechaplotter','pedidos.fechaentrega',
+            'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
             'productos.isbn','productos.referencia',
             'pedidos.estado','pedidos.facturado','otros',
             )

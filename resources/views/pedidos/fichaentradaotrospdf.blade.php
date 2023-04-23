@@ -51,7 +51,9 @@
                         </tr>
                         <tr style="">
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Descripción</td>
-                            <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->descripcion }}</td>
+                            <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">
+                                <p>{!! nl2br(e($pedido->descripcion)) !!}</p>
+                            </td>
                         </tr>
                         <tr style="">
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Tirada</td>
