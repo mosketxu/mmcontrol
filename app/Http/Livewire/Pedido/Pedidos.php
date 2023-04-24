@@ -239,7 +239,7 @@ class Pedidos extends Component
             ->orderBy('pedidos.estado','asc')
             ->orderBy('entidades.entidad','asc')
             ->orderBy('pedidos.fechaentrega','asc')
-            ->orderBy('pedidos.id','desc');
+            ->orderBy('pedidos.id','desc')
             ->groupBy('pedidos.id');
 
             // dd('llego');
