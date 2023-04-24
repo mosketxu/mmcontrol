@@ -28,15 +28,15 @@
                             <div class="w-full text-center">{{ __('Fechas') }}</div>
                             <div class="flex-none w-4/12 md:flex md:w-full">
                                 <div class="flex flex-row w-full pb-1 md:w-4/12">
-                                    <label for="filtroarchivos">Ctr.Archivos </label> &nbsp;
+                                    <label for="filtroarchivos">Ctr.Arch </label> &nbsp;
                                     <input id="filtroarchivos" type="checkbox" wire:model="filtroarchivos" class=""/>
                                 </div>
                                 <div class="flex flex-row w-full pb-1 md:w-4/12">
-                                    <label for="filtroplotter">Ctr.Plotter</label> &nbsp;
+                                    <label for="filtroplotter">Ctr.Plot</label> &nbsp;
                                     <input id="filtroplotter" type="checkbox" wire:model="filtroplotter" class=""/>
                                 </div>
                                 <div class="flex flex-row w-full pb-1 md:w-4/12">
-                                    <label for="filtroentrega">Ctr.Entrega</label> &nbsp;
+                                    <label for="filtroentrega">Ctr.Ent</label> &nbsp;
                                     <input id="filtroentrega" type="checkbox" wire:model="filtroentrega" class=""/>
                                 </div>
                             </div>
