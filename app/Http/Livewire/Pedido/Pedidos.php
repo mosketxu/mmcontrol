@@ -239,8 +239,8 @@ class Pedidos extends Component
             ->orderBy('pedidos.estado','asc')
             ->orderBy('entidades.entidad','asc')
             ->orderBy('pedidos.fechaentrega','asc')
-            ->orderBy('pedidos.id','desc')
-            ->groupBy('pedidos.id','pedidos.tipo');
+            ->orderBy('pedidos.id','desc');
+            // ->groupBy('pedidos.id','pedidos.tipo');
 
             // dd('llego');
             // ->paginate(5); solo contemplo la query, no el resultado. Luego pongo el resultado: get, paginate o lo que quiera
