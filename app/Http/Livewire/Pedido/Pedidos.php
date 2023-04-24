@@ -147,6 +147,7 @@ class Pedidos extends Component
 
     public function getRowsQuery1Property(){
         return Pedido::query()
+            ->with('cliente')
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
@@ -196,6 +197,7 @@ class Pedidos extends Component
 
     public function getRowsQuery2Property(){
         return Pedido::query()
+            ->with('cliente')
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')

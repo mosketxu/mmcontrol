@@ -51,7 +51,8 @@
                     </div>
                 <div>
                 @forelse ($pedidos as $pedido)
-                @livewire('pedido.pedidos-pedido',['pedidoId'=>$pedido->id,'tipo'=>'1'],key($pedido->id))
+                {{-- @livewire('pedido.pedidos-pedido',['pedidoId'=>$pedido->id,'tipo'=>'1'],key($pedido->id)) --}}
+                @livewire('pedido.pedidos-pedido',['pedido'=>$pedido,'tipo'=>$tipo],key($pedido->id))
                 @empty
                 <div class="flex w-full text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
                     <div colspan="10">

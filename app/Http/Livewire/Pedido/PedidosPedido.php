@@ -22,14 +22,16 @@ class PedidosPedido extends Component
 
     protected $listeners = [ 'refreshpedidospedido' => '$refresh'];
 
-    public function mount($pedidoId,$tipo){
+    public function mount($pedido,$tipo){
         $this->tipo=$tipo;
-        $this->pedido=Pedido::query()
-        ->join('entidades','pedidos.cliente_id','=','entidades.id')
-        ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
-        ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
-        ->select('pedidos.*','entidades.entidad as cli', 'productos.isbn as isbn','productos.referencia as ref')
-        ->find($pedidoId);
+        // $this->pedido=Pedido::query()
+        // ->join('entidades','pedidos.cliente_id','=','entidades.id')
+        // ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
+        // ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+        // ->select('pedidos.*','entidades.entidad as cli', 'productos.isbn as isbn','productos.referencia as ref')
+        // ->find($pedidoId);
+        $this->pedido=$pedido;
+        // dd($this->pedido);
         $this->estado=$this->pedido->estado;
         $this->facturado=$this->pedido->facturado;
         $this->ctrarchivos=$this->pedido->ctrarchivos;
