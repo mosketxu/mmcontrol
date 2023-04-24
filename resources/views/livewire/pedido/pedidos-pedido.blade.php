@@ -77,7 +77,7 @@
             </div>
         </div>
         <div class="w-9/12 space-x-1 text-center lg:space-x-2">
-            {{-- <x-icon.truck-a class="w-5 {{ $pedido->parcialescolor[0] }} hover:{{ $pedido->parcialescolor[1] }} " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes"/>
+            <x-icon.truck-a class="w-5 {{ $pedido->parcialescolor[0] }} hover:{{ $pedido->parcialescolor[1] }} " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes"/>
             <x-icon.building-circle-arrow-right-a class="w-5 {{ $pedido->distribucionescolor[0] }} hover:{{ $pedido->distribucionescolor[1] }} " onclick="location.href = '{{route('pedido.distribuciones',[$pedido->id,'i'])}}'" title="Distribuciones"/>
             <x-icon.clip-a class="w-5 {{ $pedido->archivoscolor[0] }} hover:{{ $pedido->archivoscolor[1] }} " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivo"/>
             <x-icon.triangleexclamation-a class="w-6 mb-1 {{ $pedido->incidenciascolor[0] }} hover:{{ $pedido->incidenciascolor[1] }} " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias"/>
@@ -89,7 +89,7 @@
                     wire:click.prevent="generarfactura" onclick="confirm('¿Quieres generar un factura con este pedido?') || event.stopImmediatePropagation()"/>
             @endif
             <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank"/>
-            <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" /> --}}
+            <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" />
         </div>
     </div>
 </div>
