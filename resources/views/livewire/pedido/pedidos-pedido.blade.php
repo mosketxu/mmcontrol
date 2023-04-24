@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="flex items-center w-3/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" ">
-        <div class="flex-none w-3/12 md:flex ">
+        <div class="flex-none w-3/12 lg:flex ">
             <div class="w-6/12 pl-2" >
                 @if($estado=='0')
                     <x-icon.thumbs-up-a class="" title="En curso" wire:click="cambiaEstado()"/>

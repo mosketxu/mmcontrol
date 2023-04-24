@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <div class="w-3/12 pt-2 pb-0 space-x-2 text-xs font-bold text-gray-500 bg-blue-100 rounded-tr-md">
-                            <div class="flex-none w-full md:flex md:w-3/12">
+                            <div class="flex-none w-full lg:flex lg:w-3/12">
                                 <div class="w-full md:w-6/12">Estado</div>
                                 <div class="w-full md:w-6/12">Facturado</div>
                             </div>
