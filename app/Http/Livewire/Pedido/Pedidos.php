@@ -255,48 +255,88 @@ class Pedidos extends Component
     }
 
     public function exportSelected(){
-        $pedidos= Pedido::query()
-            ->join('entidades','pedidos.cliente_id','=','entidades.id')
-            ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
-            ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
-            ->select('entidades.entidad',
-            'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
-            'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
-            'productos.isbn','productos.referencia',
-            'pedidos.estado','pedidos.facturado','otros',
-            )
-            ->where('pedidos.tipo',$this->tipo)
-            ->search('pedidos.id',$this->search)
-            ->when($this->filtroreferencia!='', function ($query){
-                $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
-            })
-            ->when($this->filtroisbn!='', function ($query){
-                $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
-            })
-            ->when($this->filtroresponsable!='', function ($query){
-                $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
-            })
-            ->when($this->filtrocliente!='', function ($query){
-                $query->where('pedidos.cliente_id',$this->filtrocliente);
+        if($this->tipo=='1')
+            $pedidos= Pedido::query()
+                ->join('entidades as clientes','pedidos.cliente_id','=','clientes.id')
+                ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
+                ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+                ->leftjoin('entidades as imprenta','pedidos.proveedor_id','=','imprenta.id')
+                ->select('clientes.entidad as cliente',
+                'pedidos.id','pedidos.descripcion','pedidos.responsable','imprenta.entidad as imprenta',
+                'pedidos.facturadopor',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
+                'productos.isbn','productos.referencia',
+                'pedidos.estado','pedidos.facturado','otros',
+                )
+                ->where('pedidos.tipo',$this->tipo)
+                ->search('pedidos.id',$this->search)
+                ->when($this->filtroreferencia!='', function ($query){
+                    $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
                 })
-            ->when($this->filtroproveedor!='', function ($query){
-                $query->where('pedidos.proveedor_id',$this->filtroproveedor);
+                ->when($this->filtroisbn!='', function ($query){
+                    $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
                 })
-            ->when($this->filtroestado!='', function ($query){
-                $query->where('pedidos.estado',$this->filtroestado);
-            })
-            ->when($this->filtrofacturado!='', function ($query){
-                $query->where('pedidos.facturado',$this->filtrofacturado);
-            })
-            ->searchYear('fechapedido',$this->filtroanyo)
-            ->searchMes('fechapedido',$this->filtromes)
-            ->orderBy('pedidos.fechapedido','desc')
-            ->orderBy('pedidos.id','desc')
-            ->get();
+                ->when($this->filtroresponsable!='', function ($query){
+                    $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
+                })
+                ->when($this->filtrocliente!='', function ($query){
+                    $query->where('pedidos.cliente_id',$this->filtrocliente);
+                    })
+                ->when($this->filtroproveedor!='', function ($query){
+                    $query->where('pedidos.proveedor_id',$this->filtroproveedor);
+                    })
+                ->when($this->filtroestado!='', function ($query){
+                    $query->where('pedidos.estado',$this->filtroestado);
+                })
+                ->when($this->filtrofacturado!='', function ($query){
+                    $query->where('pedidos.facturado',$this->filtrofacturado);
+                })
+                ->searchYear('fechapedido',$this->filtroanyo)
+                ->searchMes('fechapedido',$this->filtromes)
+                ->orderBy('pedidos.fechapedido','desc')
+                ->orderBy('pedidos.id','desc')
+                ->get();
+        else
+            $pedidos= Pedido::query()
+                ->join('entidades','pedidos.cliente_id','=','entidades.id')
+                ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
+                ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+                ->select('entidades.entidad',
+                'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
+                'productos.isbn','productos.referencia',
+                'pedidos.estado','pedidos.facturado','otros',
+                )
+                ->where('pedidos.tipo',$this->tipo)
+                ->search('pedidos.id',$this->search)
+                ->when($this->filtroreferencia!='', function ($query){
+                    $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
+                })
+                ->when($this->filtroisbn!='', function ($query){
+                    $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
+                })
+                ->when($this->filtroresponsable!='', function ($query){
+                    $query->where('pedidos.responsable','like','%'.$this->filtroresponsable.'%');
+                })
+                ->when($this->filtrocliente!='', function ($query){
+                    $query->where('pedidos.cliente_id',$this->filtrocliente);
+                    })
+                ->when($this->filtroproveedor!='', function ($query){
+                    $query->where('pedidos.proveedor_id',$this->filtroproveedor);
+                    })
+                ->when($this->filtroestado!='', function ($query){
+                    $query->where('pedidos.estado',$this->filtroestado);
+                })
+                ->when($this->filtrofacturado!='', function ($query){
+                    $query->where('pedidos.facturado',$this->filtrofacturado);
+                })
+                ->searchYear('fechapedido',$this->filtroanyo)
+                ->searchMes('fechapedido',$this->filtromes)
+                ->orderBy('pedidos.fechapedido','desc')
+                ->orderBy('pedidos.id','desc')
+                ->get();
 
-            // dd($pedidos);
-
-        return Excel::download(new PedidosExport($pedidos), 'pedidos.xlsx');
+        return Excel::download(new PedidosExport($pedidos,$this->tipo), 'pedidos.xlsx');
     }
 
     public function delete($pedidoId){

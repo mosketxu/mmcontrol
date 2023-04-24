@@ -10,13 +10,37 @@ class PedidosExport implements FromCollection,WithHeadings
 {
 
     protected $pedidos;
+    protected $tipo;
 
-    function __construct($pedidos) {
+    function __construct($pedidos,$tipo) {
             $this->pedidos = $pedidos;
+            $this->tipo = $tipo;
     }
 
     public function headings(): array
     {
+        if($this->tipo=='1')
+        return [
+            'Cliente',
+            'Pedido',
+            'Descripcion',
+            'Responsable',
+            'Imprenta',
+            'Facturado Por',
+            'fechapedido',
+            'fechaarchivos',
+            'ctrarchivos',
+            'fechaplotter',
+            'ctrplotter',
+            'fechaentrega',
+            'ctrentrega',
+            'ISBN',
+            'Referencia',
+            'estado',
+            'facturado',
+            'otros',
+        ];
+        else
         return [
             'Cliente',
             'Pedido',
@@ -36,6 +60,7 @@ class PedidosExport implements FromCollection,WithHeadings
             'facturado',
             'otros',
         ];
+
     }
 
     /**
