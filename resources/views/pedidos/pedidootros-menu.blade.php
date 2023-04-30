@@ -18,7 +18,7 @@
                         <div class="hidden md:flex">Distribuciones</div>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.archivos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.archivos')">
-                        <x-icon.clip/>
+                        <div class="w-5"><x-icon.clip/></div>
                         <div class="hidden md:flex">Archivos</div>
                     </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.incidencias',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.incidencias')">
