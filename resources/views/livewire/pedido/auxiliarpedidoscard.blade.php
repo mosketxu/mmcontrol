@@ -265,7 +265,8 @@
                             @endif
                             @if ($campoimgvisible==1)
                                 <div class="flex-col {{ $longcampoimg }} ml-2 text-right">
-                                    <input type="file" wire:model.lazy="valorcampoimg" />
+                                    {{-- <input type="file" wire:model.lazy="valorcampoimg" /> --}}
+                                    <x-input.filepond wire:model="valorcampoimg" />
                                 </div>
                             @endif
                             @if(isset($distribuciones))

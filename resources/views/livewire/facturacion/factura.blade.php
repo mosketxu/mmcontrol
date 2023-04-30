@@ -35,7 +35,7 @@
                                         @endforeach
                                     </x-selectcolor>
                                     @else
-                                        <input  type="text" value="{{ $fac->cliente->entidad }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        <input  type="text" value="{{ $fac->cliente->entidad ?? '' }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         disabled/>
                                     @endif
                                 </div>
@@ -55,7 +55,7 @@
                                         @endif
                                     </x-selectcolor>
                                     @else
-                                        <input  type="text" value="{{ $fac->contacto->entidad }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        <input  type="text" value="{{ $fac->contacto->entidad ?? '' }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         disabled/>
                                     @endif
                                 </div>
