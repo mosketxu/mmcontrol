@@ -151,7 +151,7 @@
                                 <a href="{{asset('archivospresupuesto/'.$valor->valorcampoimg) }}" target="_blank"
                                     class="w-5 text-blue-500 hover:text-blue-700 hover:bg-gray-100" title="Ver producto">
                                     <div class="flex">
-                                        <x-icon.clip class="w-4"/>
+                                        <x-icon.clip class="w-8"/>
                                         <div class="mt-1">
                                             {{ $valor->valorcampo3 }}
                                         </div>
