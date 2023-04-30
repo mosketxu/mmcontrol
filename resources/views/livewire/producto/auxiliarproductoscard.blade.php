@@ -130,8 +130,8 @@
                             @endif
                             @if ($campoimgvisible==1)
                                 <div class="flex-col w-2/12 ml-2 text-right">
-                                    {{-- <input type="file" wire:model.lazy="valorcampoimg" /> --}}
-                                    <x-input.filepond wire:model="valorcampoimg" />
+                                    <input type="file" wire:model.lazy="valorcampoimg" />
+                                    {{-- <x-input.filepond wire:model="valorcampoimg" /> --}}
                                 </div>
                             @endif
                             <div class="flex-col w-1/12 text-right">
