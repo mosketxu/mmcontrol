@@ -303,7 +303,7 @@ class Pedidos extends Component
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
                 ->select('entidades.entidad',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
-                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
                 'productos.isbn','productos.referencia',
                 'pedidos.estado','pedidos.facturado','otros',
                 )

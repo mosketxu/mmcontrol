@@ -51,12 +51,23 @@ class PedidosPedido extends Component
 
         $this->pedido->estado=$this->estado;
         $this->pedido->save();
+
     }
 
     public function cambiaEstadocontrolfecha($ctrl){
         $this->$ctrl=$this->$ctrl =='1' ? '0' : '1';
+        // dd($this->pedido);
         $this->pedido->$ctrl=$this->$ctrl;
+
         $this->pedido->save();
+        $this->pedido=Pedido::query()
+        ->join('entidades','pedidos.cliente_id','=','entidades.id')
+        ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
+        ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+        ->select('pedidos.*','entidades.entidad as cli', 'productos.isbn as isbn','productos.referencia as ref')
+        ->find($this->pedido->id);
+
+        // $this->emit('refreshpedidospedido');
     }
 
     public function generarfactura(){

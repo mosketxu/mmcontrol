@@ -16,8 +16,8 @@ class Presupuesto extends Model
                     'proveedor_id','tirada','precio_ud','preciototal','facturadopor','fechapresupuesto',
                     'estado','espedido','pedido','caja_id','uds_caja','manipulacion','transporte','troquel','especificacioneslogisticas','otros'];
 
-    public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
-    public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
+    public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'']);}
+    public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'']);}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
     public function caja(){return $this->belongsTo(Caja::class,'caja_id','id')->withDefault(['name'=>'']);}
     public function presupuestoproductos(){return $this->hasMany(PresupuestoProducto::class,'presupuesto_id','id');}

@@ -36,6 +36,8 @@ class PedidosExport implements FromCollection,WithHeadings
             'ctrentrega',
             'ISBN',
             'Referencia',
+            'Tirada Prevista',
+            'Tirada Real',
             'estado',
             'facturado',
             'otros',

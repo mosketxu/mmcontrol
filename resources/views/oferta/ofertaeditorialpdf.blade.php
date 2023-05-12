@@ -147,10 +147,26 @@
                         </tr>
                         @endif
                         @if($oferta->ofertaproducto->observaciones!='')
-                        <tr style="">
-                            <td width=20% class="font-bold "  style="margin-top: 0px">Observaciones:</td>
+                        <tr style="padding-top:8px">
+                            <td width=20% class="font-bold "  style="margin-top: 0px;padding-top:8px;">Observaciones:</td>
                             <td width=80% class=""  style="padding-top:8px" >
                                 <p>{!! nl2br(e($oferta->ofertaproducto->observaciones)) !!}</p>
+                            </td>
+                        </tr>
+                        @endif
+                        @if($oferta->manipulacion!='')
+                        <tr style="">
+                            <td width=20% class="font-bold "  style="margin-top: 0px;padding-top:8px">Manipulación:</td>
+                            <td width=80% class=""  style="padding-top:8px" >
+                                <p>{!! nl2br(e($oferta->manipulacion)) !!}</p>
+                            </td>
+                        </tr>
+                        @endif
+                        @if($oferta->observaciones!='')
+                        <tr style="">
+                            <td width=20% class="font-bold "  style="margin-top: 0px;;padding-top:8px">Otros:</td>
+                            <td width=80% class=""  style="padding-top:8px" >
+                                <p>{!! nl2br(e($oferta->observaciones)) !!}</p>
                             </td>
                         </tr>
                         @endif

@@ -178,12 +178,12 @@
                             {{ $producto->descripcd }}
                         </td>
                     </tr>
-                    {{-- <tr style="">
+                    <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Observaciones:</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
                             <p>{!! nl2br(e($producto->observaciones)) !!}</p>
                         </td>
-                    </tr> --}}
+                    </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Modelo Caja</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->caja->name ?? ''}}</td>
