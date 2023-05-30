@@ -93,8 +93,6 @@ class PedidoParcial extends Component
         $parc->horario=$this->parcial->horario;
         $parc->tfno=$this->parcial->tfno;
         $parc->observaciones=$this->parcial->observaciones;
-
-
         $parc->save();
 
         $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');

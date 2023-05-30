@@ -148,6 +148,11 @@ class PedidoIncidencia extends Component
             'comentario'=>$this->valorcampo4,
         ]);
 
+        $pedido=Pedido::find($this->pedidoid);
+        $pedido->hayIncidencias=$pedido->hayIncidencias+1;
+        $pedido->save();
+
+
         $this->dispatchBrowserEvent('notify', 'Incidencia añadida con éxito');
 
         $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
@@ -170,6 +175,10 @@ class PedidoIncidencia extends Component
 
         if ($borrar) {
             $borrar->delete();
+            $pedido=Pedido::find($borrar->pedido_id);
+            $pedido->hayIncidencias=$pedido->hayIncidencias-1;
+            $pedido->save();
+
             $this->dispatchBrowserEvent('notify', 'Incidencia eliminada!');
         }
     }

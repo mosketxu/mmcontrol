@@ -144,6 +144,11 @@ class PedidoRetraso extends Component
             'comentario'=>$this->valorcampo4,
         ]);
 
+        $pedido=Pedido::find($this->pedidoid);
+        $pedido->hayRetrasos=$pedido->hayRetrasos+1;
+        $pedido->save();
+
+
         $this->dispatchBrowserEvent('notify', 'Retraso añadido con éxito');
 
         $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
@@ -166,6 +171,10 @@ class PedidoRetraso extends Component
 
         if ($borrar) {
             $borrar->delete();
+            $pedido=Pedido::find($this->pedidoid);
+            $pedido->hayRetrasos=$pedido->hayRetrasos-1;
+            $pedido->save();
+
             $this->dispatchBrowserEvent('notify', 'Retraso eliminado!');
         }
     }

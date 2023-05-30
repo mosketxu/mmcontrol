@@ -156,6 +156,10 @@ class PedidoDistribucion extends Component
             'comentario'=>$this->valorcampo4,
         ]);
 
+        $pedido=Pedido::find($this->pedidoid);
+        $pedido->hayDistribuciones=$pedido->hayDistribuciones+1;
+        $pedido->save();
+
         $this->dispatchBrowserEvent('notify', 'Distribución añadida con éxito');
 
         $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
@@ -176,6 +180,9 @@ class PedidoDistribucion extends Component
         $borrar = ModelsPedidoDistribucion::find($valorId);
         if ($borrar) {
             $borrar->delete();
+            $pedido=Pedido::find($borrar->pedido_id);
+            $pedido->hayDistribuciones=$pedido->hayDistribuciones-1;
+            $pedido->save();
             $this->dispatchBrowserEvent('notify', 'Distribución eliminada!');
         }
     }

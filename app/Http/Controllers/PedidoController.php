@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Entidad;
 use App\Models\Pedido;
+use App\Models\PedidoArchivo;
+use App\Models\PedidoDistribucion;
+use App\Models\PedidoIncidencia;
 use App\Models\PedidoparcialDetalle;
 use App\Models\PedidoParcial;
 use App\Models\PedidoPresupuesto;
 use App\Models\PedidoProducto;
+use App\Models\PedidoRetraso;
 use App\Models\Producto;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -21,6 +25,29 @@ class PedidoController extends Controller
     {
         $this->middleware('can:pedido.index')->only('index');;
         $this->middleware('can:pedido.edit')->only('nuevo','editar','update','parcial');
+    }
+
+    public function contadores()
+    {
+        $pedidos=Pedido::get();
+        foreach ($pedidos as $pedido) {
+            //archivos
+            $archivos=PedidoArchivo::where('pedido_id',$pedido->id)->count();
+            if($archivos>0) $pedido->update(['hayArchivos'=>$archivos]);
+            //incidencias
+            $Incidencias=PedidoIncidencia::where('pedido_id',$pedido->id)->count();
+            if($Incidencias>0) $pedido->update(['hayIncidencias'=>$Incidencias]);
+            //retrasos
+            $Retrasos=PedidoRetraso::where('pedido_id',$pedido->id)->count();
+            if($Retrasos>0) $pedido->update(['hayRetrasos'=>$Retrasos]);
+            //distribuciones
+            $Distribuciones=PedidoDistribucion::where('pedido_id',$pedido->id)->count();
+            if($Distribuciones>0) $pedido->update(['hayDistribuciones'=>$Distribuciones]);
+            //parciales
+            $Parciales=PedidoParcial::where('pedido_id',$pedido->id)->count();
+            if($Parciales>0) $pedido->update(['hayParciales'=>$Parciales]);
+        }
+        dd('fin');
     }
 
     /**

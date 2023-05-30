@@ -167,6 +167,11 @@ class PedidoArchivo extends Component
             'archivo'=>'',
         ]);
 
+        $pedido=Pedido::find($this->pedidoid);
+        $pedido->hayArchivos=$pedido->hayArchivos+1;
+        $pedido->save();
+
+
         if($this->campoimgvisible=='1'){
             if ($this->valorcampoimg) {
                 $nombre=$this->pedidoid.'/'.$pedidoarchivo->id.'.'.$this->valorcampoimg->extension();
@@ -188,6 +193,9 @@ class PedidoArchivo extends Component
 
         if ($borrar) {
             $borrar->delete();
+            $pedido=Pedido::find($borrar->pedido_id);
+            $pedido->hayArchivos=$pedido->hayArchivos-1;
+            $pedido->save();
             $this->dispatchBrowserEvent('notify', 'Archivo eliminado!');
         }
     }

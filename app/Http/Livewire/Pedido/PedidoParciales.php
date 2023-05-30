@@ -151,6 +151,9 @@ class PedidoParciales extends Component
             'importe'=>$this->valorcampo4,
             'comentario'=>$this->valorcampo5,
         ]);
+        $pedido=Pedido::find($this->pedidoid);
+        $pedido->hayParciales=$pedido->hayParciales+1;
+        $pedido->save();
 
         $this->dispatchBrowserEvent('notify', 'Parcial añadido con éxito');
 
@@ -172,12 +175,14 @@ class PedidoParciales extends Component
 
     }
 
-    public function delete($valorId)
-    {
+    public function delete($valorId){
         $borrar = ModelsPedidoParcial::find($valorId);
 
         if ($borrar) {
             $borrar->delete();
+            $pedido=Pedido::find($borrar->pedido_id);
+            $pedido->hayParciales=$pedido->hayParciales-1;
+            $pedido->save();
             $this->dispatchBrowserEvent('notify', 'Parcial eliminado!');
         }
     }
