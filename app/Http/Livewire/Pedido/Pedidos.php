@@ -125,7 +125,6 @@ class Pedidos extends Component
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
-        // $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoseditorial': 'livewire.pedido.pedidosotros';
 
         return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables','meses'));
     }
@@ -148,7 +147,7 @@ class Pedidos extends Component
 
     public function getRowsQuery1Property(){
         return Pedido::query()
-            ->with('cliente')
+            ->with('cliente','proveedor')
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
@@ -198,7 +197,7 @@ class Pedidos extends Component
 
     public function getRowsQuery2Property(){
         return Pedido::query()
-            ->with('cliente')
+            ->with('cliente','proveedor')
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')

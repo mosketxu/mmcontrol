@@ -27,28 +27,28 @@ class PedidoController extends Controller
         $this->middleware('can:pedido.edit')->only('nuevo','editar','update','parcial');
     }
 
-    public function contadores()
-    {
-        $pedidos=Pedido::get();
-        foreach ($pedidos as $pedido) {
-            //archivos
-            $archivos=PedidoArchivo::where('pedido_id',$pedido->id)->count();
-            if($archivos>0) $pedido->update(['hayArchivos'=>$archivos]);
-            //incidencias
-            $Incidencias=PedidoIncidencia::where('pedido_id',$pedido->id)->count();
-            if($Incidencias>0) $pedido->update(['hayIncidencias'=>$Incidencias]);
-            //retrasos
-            $Retrasos=PedidoRetraso::where('pedido_id',$pedido->id)->count();
-            if($Retrasos>0) $pedido->update(['hayRetrasos'=>$Retrasos]);
-            //distribuciones
-            $Distribuciones=PedidoDistribucion::where('pedido_id',$pedido->id)->count();
-            if($Distribuciones>0) $pedido->update(['hayDistribuciones'=>$Distribuciones]);
-            //parciales
-            $Parciales=PedidoParcial::where('pedido_id',$pedido->id)->count();
-            if($Parciales>0) $pedido->update(['hayParciales'=>$Parciales]);
-        }
-        dd('fin');
-    }
+    // public function contadores()
+    // {
+    //     $pedidos=Pedido::get();
+    //     foreach ($pedidos as $pedido) {
+    //         //archivos
+    //         $archivos=PedidoArchivo::where('pedido_id',$pedido->id)->count();
+    //         if($archivos>0) $pedido->update(['hayArchivos'=>$archivos]);
+    //         //incidencias
+    //         $Incidencias=PedidoIncidencia::where('pedido_id',$pedido->id)->count();
+    //         if($Incidencias>0) $pedido->update(['hayIncidencias'=>$Incidencias]);
+    //         //retrasos
+    //         $Retrasos=PedidoRetraso::where('pedido_id',$pedido->id)->count();
+    //         if($Retrasos>0) $pedido->update(['hayRetrasos'=>$Retrasos]);
+    //         //distribuciones
+    //         $Distribuciones=PedidoDistribucion::where('pedido_id',$pedido->id)->count();
+    //         if($Distribuciones>0) $pedido->update(['hayDistribuciones'=>$Distribuciones]);
+    //         //parciales
+    //         $Parciales=PedidoParcial::where('pedido_id',$pedido->id)->count();
+    //         if($Parciales>0) $pedido->update(['hayParciales'=>$Parciales]);
+    //     }
+    //     dd('fin');
+    // }
 
     /**
      * Display a listing of the resource.

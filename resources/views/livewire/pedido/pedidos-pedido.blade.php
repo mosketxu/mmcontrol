@@ -17,7 +17,6 @@
             @if($tipo=='1')<div class="text-xs text-blue-700">{{ $pedido->proveedor->entidad ?? '' }}</div>@endif
         </div>
         @if($pedido->tipo=='1')
-        {{-- <div class="">{{ $pedido }}</div> --}}
             <div class="flex-col w-6/12 text-left">{{ $pedido->isbn }} - {{ $pedido->ref }}</div>
         @else
             <div class="flex-col w-4/12 text-left md:w-6/12">{{ $pedido->descripcion }}</div>

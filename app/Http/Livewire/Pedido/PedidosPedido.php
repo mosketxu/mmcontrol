@@ -23,6 +23,7 @@ class PedidosPedido extends Component
     protected $listeners = [ 'refreshpedidospedido' => '$refresh'];
 
     public function mount($pedido,$tipo){
+        // dd($pedido);
         $this->tipo=$tipo;
         // $this->pedido=Pedido::query()
         // ->join('entidades','pedidos.cliente_id','=','entidades.id')
