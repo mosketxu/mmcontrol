@@ -129,16 +129,16 @@ class Pedidos extends Component
         return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables','meses'));
     }
 
-    // public function updatingSearch(){$this->resetPage();}
-    // public function updatingFiltroanyo(){$this->resetPage();}
-    // public function updatingFiltromes(){$this->resetPage();}
-    // public function updatingFiltrocliente(){$this->resetPage();}
-    // public function updatingFiltroproveedor(){$this->resetPage();}
-    // public function updatingFiltroresponsable(){$this->resetPage();}
-    // public function updatingFiltroreferencia(){$this->resetPage();}
-    // public function updatingFiltroisbn(){$this->resetPage();}
-    // public function updatingFiltroestado(){$this->resetPage();}
-    // public function updatingFiltrofacturado(){$this->resetPage();}
+    public function updatingSearch(){$this->resetPage();}
+    public function updatingFiltroanyo(){$this->resetPage();}
+    public function updatingFiltromes(){$this->resetPage();}
+    public function updatingFiltrocliente(){$this->resetPage();}
+    public function updatingFiltroproveedor(){$this->resetPage();}
+    public function updatingFiltroresponsable(){$this->resetPage();}
+    public function updatingFiltroreferencia(){$this->resetPage();}
+    public function updatingFiltroisbn(){$this->resetPage();}
+    public function updatingFiltroestado(){$this->resetPage();}
+    public function updatingFiltrofacturado(){$this->resetPage();}
 
     public function changeValor(Pedido $pedido,$campo,$valor){
         $pedido->update([$campo=>$valor]);
