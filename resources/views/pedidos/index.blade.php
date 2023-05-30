@@ -12,7 +12,7 @@
             </div>
             <div class="flex flex-row-reverse w-full">
                 <x-button.button  class="py-1" onclick="location.href = '{{ route('pedido.nuevo',[$tipo,$ruta]) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
-                <x-button.button  class="py-1" onclick="location.href = '{{ route('pedido.contadores') }}'" color="red" >{{ __('contadores') }}</x-button.button>
+                {{-- <x-button.button  class="py-1" onclick="location.href = '{{ route('pedido.contadores') }}'" color="red" >{{ __('contadores') }}</x-button.button> --}}
             </div>
         </div>
     </x-slot>
