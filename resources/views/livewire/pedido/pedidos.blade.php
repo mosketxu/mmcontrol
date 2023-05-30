@@ -5,11 +5,11 @@
                 @include('errores')
             </div>
             <div class="">
-                @if($tipo='1')
+                {{-- @if($tipo=='1') --}}
                     @include('pedidos.pedidoseditorialfilters')
-                @else
+                {{-- @else
                     @include('pedidos.pedidosotrosfilters')
-                @endif
+                @endif --}}
             </div>
             {{-- tabla pedidos --}}
             <div class="flex-col space-y-4">
@@ -17,7 +17,10 @@
                     <div class="flex">
                         <div class="flex w-6/12 pt-2 pb-0 pl-2 space-x-2 text-xs font-bold text-gray-500 bg-blue-100 rounded-tl-md">
                             <div class="w-2/12 text-left md:w-1/12" >{{ __('Pedido') }} <br>{{ __('Presup.')  }}</div>
-                            <div class="w-3/12 text-left md:w-2/12" >{{ __('Cliente') }}</div>
+                            <div class="w-3/12 text-left md:w-2/12" >
+                                <div class="">{{ __('Cliente') }} </div>
+                                @if($tipo=='1')<div class="text-xs text-blue-700">{{ __('Prov.') }}</div>@endif
+                            </div>
                             <div class="w-4/12 text-left md:w-6/12" >{{ $tipo=='1' ? 'ISBN/Ref' : 'Descripción'  }}</div>
                             <div class="flex-none w-2/12 md:flex">
                                 <div class="w-full text-center md:w-6/12">Q.Prev.</div>
@@ -51,7 +54,9 @@
                     </div>
                 <div>
                 @forelse ($pedidos as $pedido)
-                @livewire('pedido.pedidos-pedido',['pedido'=>$pedido,'tipo'=>$tipo],key($pedido->id))
+                <div class="" wire:loading.class.delay="opacity-50">
+                    @livewire('pedido.pedidos-pedido',['pedido'=>$pedido,'tipo'=>$tipo],key($pedido->id))
+                </div>
                 @empty
                 <div class="flex w-full text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
                     <div colspan="10">

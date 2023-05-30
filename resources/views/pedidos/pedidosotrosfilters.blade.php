@@ -44,10 +44,15 @@
     <div class="flex w-1/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Responsable
+                Rpble.
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroresponsable" class="w-full py-1 border border-blue-100 rounded-lg" placeholder="Búsqueda responsable"/>
+                <select wire:model="filtroresponsable" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                    <option value="">Todos</option>
+                    @foreach ($responsables as $responsable)
+                    <option value="{{ $responsable->responsable }}">{{ $responsable->responsable }}</option>
+                    @endforeach
+                </select>
                 @if($filtroresponsable!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroresponsable', '')" class="pb-1" title="reset filter"/>
                 @endif

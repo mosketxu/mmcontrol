@@ -126,6 +126,7 @@ class Pedidos extends Component
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
         // $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoseditorial': 'livewire.pedido.pedidosotros';
+
         return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables','meses'));
     }
 
