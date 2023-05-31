@@ -49,21 +49,21 @@ class Entidad extends Model
             $query->where('entidadtipo_id','4');
         })
         ->when($fini && !$ffin, function ($query) use($fini){
-            $query->where('fechacliente','>=', $fini);
+            $query->where('created_at','>=', $fini);
         })
         ->when(!$fini && $ffin, function ($query) use($ffin){
-            $query->where('fechacliente','<=', $ffin);
+            $query->where('created_at','<=', $ffin);
         })
         ->when($fini && $ffin, function ($query) use($fini,$ffin){
-            $query->whereBetween('fechacliente', [$fini, $ffin]);
+            $query->whereBetween('created_at', [$fini, $ffin]);
         })
         ->orSearch('nif',$search);
     }
 
     public function getFechacliAttribute()
     {
-        if ($this->fechacliente) {
-            return Carbon::parse($this->fechacliente)->format('d-m-Y');
+        if ($this->created_at) {
+            return Carbon::parse($this->created_at)->format('d-m-Y');
         } else {
             return '';
         }

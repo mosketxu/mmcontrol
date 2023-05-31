@@ -12,40 +12,61 @@
                 <div>
                     <div class="flex w-full py-2 text-sm text-left text-gray-500 bg-blue-100 rounded-t-md">
                         <div class="flex w-11/12 ">
-                            <div class="w-3/12 pl-2 " >{{ $entidadtipo->nombre }}</div>
+                            <div class="w-3/12 pl-2 " >{{ $entidadtipo->nombre }}
+                                @if($orden=='asc' && $ordenarpor=='entidad')
+                                    <x-icon.sort-down-a wire:click="ordenar('entidad')" class="pl-1"  title="Orden"/>
+                                @elseif (($orden=='desc' && $ordenarpor=='entidad'))
+                                    <x-icon.sort-up-a wire:click="ordenar('entidad')" class="pl-1"  title="Orden"/>
+                                @else
+                                    <x-icon.sort-a wire:click="ordenar('entidad')" class="pl-1"  title="Orden"/>
+                                @endif
+                            </div>
                             <div class="w-1/12 ">{{ __('Tipo') }}</div>
                             <div class="w-2/12 " >{{ __('Respble.') }}</div>
                             <div class="w-1/12 " >{{ __('Nif') }} </div>
-                            <div class="w-2/12 " >{{ __('Tfno.') }}</div>
+                            <div class="w-1/12 " >{{ __('Tfno.') }}</div>
                             <div class="w-3/12 " >{{ __('Email') }}</div>
+                            <div class="w-1/12 " >{{ __('F.Creación') }}
+                                @if($orden=='asc' && $ordenarpor=='created_at')
+                                    <x-icon.sort-down-a wire:click="ordenar('created_at')" class="pl-1"  title="Orden"/>
+                                @elseif (($orden=='desc' && $ordenarpor=='created_at'))
+                                    <x-icon.sort-up-a wire:click="ordenar('created_at')" class="pl-1"  title="Orden"/>
+                                @else
+                                    <x-icon.sort-a wire:click="ordenar('created_at')" class="pl-1"  title="Orden"/>
+                                @endif
+                            </div>
+
                         </div>
                         <div class="flex w-1/12 ">
                         </div>
                     </div>
                     <div>
                         @forelse ($entidades as $entidad)
-                            <div class="flex items-center w-full text-sm cursor-pointer  text-gray-500 border-t-0 border-y hover:bg-gray-100 hover:cursor-pointer" wire:loading.class.delay="opacity-50" >
+                            <div class="flex items-center w-full text-sm text-gray-500 border-t-0 cursor-pointer border-y hover:bg-gray-100 hover:cursor-pointer" wire:loading.class.delay="opacity-50" >
                                 <div class="flex items-center w-11/12 my-1 cursor-pointer"  onclick="location.href = '{{ route('entidad.edit',$entidad) }}'">
-                                    <div class="w-3/12 pl-2  ">
-                                        <input type="text" class="w-full p-1 cursor-pointer text-sm font-thin text-gray-500 border-0 rounded-md hover:border-blue-500 focus:border-blue-500 " value="{{ $entidad->entidad }}"  disabled/>
+                                    <div class="w-3/12 pl-2 ">
+                                        <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md cursor-pointer hover:border-blue-500 focus:border-blue-500 " value="{{ $entidad->entidad }}"  disabled/>
                                     </div>
                                     <div class="w-1/12 ">
-                                        <input type="text" class="w-full p-1 cursor-pointer text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->entidadtipo->nombrecorto ?? '-'}}"  disabled/>
+                                        <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md cursor-pointer hover:bg-gray-100" value="{{ $entidad->entidadtipo->nombrecorto ?? '-'}}"  disabled/>
                                     </div>
                                     <div class="w-2/12 ">
-                                        <input type="text" class="w-full p-1 cursor-pointer text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->responsable}}"  disabled/>
+                                        <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md cursor-pointer hover:bg-gray-100" value="{{ $entidad->responsable}}"  disabled/>
                                     </div>
                                     <div class="w-1/12 ">
-                                        <input type="text" class="w-full p-1 cursor-pointer text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->nif }}" disabled/>
+                                        <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md cursor-pointer hover:bg-gray-100" value="{{ $entidad->nif }}" disabled/>
                                     </div>
-                                    <div class="w-2/12 ">
-                                        <input type="text" class="w-full p-1 cursor-pointer text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->tfno }}" disabled/>
+                                    <div class="w-1/12 ">
+                                        <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md cursor-pointer hover:bg-gray-100" value="{{ $entidad->tfno }}" disabled/>
                                     </div>
                                     <div class="w-3/12 ">
-                                        <input type="text" class="w-full p-1 cursor-pointer text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" value="{{ $entidad->emailgral }}"  disabled/>
+                                        <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md cursor-pointer hover:bg-gray-100" value="{{ $entidad->emailgral }}"  disabled/>
+                                    </div>
+                                    <div class="w-1/12 ">
+                                        <input type="text" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md cursor-pointer hover:bg-gray-100" value="{{ $entidad->fechacli }}"  disabled/>
                                     </div>
                                 </div>
-                                <div class="items-center text-center w-1/12 " >
+                                <div class="items-center w-1/12 text-center " >
                                     <x-icon.usergroup-a href="{{ route('entidad.contactos',$entidad) }}"  title="Contactos"/>
                                     <x-icon.plane-a class="text-gray-900 transform hover:text-black" href="{{ route('entidad.destinos',[$entidad,'i']) }}"  title="Destinos"/>
                                     <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6"/>

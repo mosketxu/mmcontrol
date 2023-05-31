@@ -12,9 +12,12 @@ class Ents extends Component
 
     public $search='';
     public $filtroresponsable='';
-    public $Fini='';
-    public $Ffin='';
+    public $filtrofini='';
+    public $filtroffin='';
+    public $ordenarpor='entidad';
+    public $orden='asc';
     public $entidadtipo_id='';
+
     public Entidad $entidad;
 
     public function render(){
@@ -22,8 +25,9 @@ class Ents extends Component
 
         $entidades=Entidad::query()
             ->with('entidadtipo')
-            ->filtrosEntidad($this->search, $this->filtroresponsable, $this->entidadtipo_id, $this->Fini, $this->Ffin)
-            ->orderBy('entidad', 'asc')
+            ->filtrosEntidad($this->search, $this->filtroresponsable, $this->entidadtipo_id, $this->filtrofini, $this->filtroffin)
+            ->orderBy($this->ordenarpor,$this->orden)
+            ->orderBy('created_at', 'asc')
             ->get();
 
 
@@ -37,6 +41,11 @@ class Ents extends Component
     public function changeValor(Entidad $entidad, $campo, $valor){
         $entidad->update([$campo=>$valor]);
         $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
+    }
+
+    public function ordenar($campo){
+        $this->ordenarpor=$campo;
+        $this->orden= $this->orden=='asc' ? 'desc' : 'asc';
     }
 
     public function delete($entidadId){

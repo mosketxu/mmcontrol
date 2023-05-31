@@ -67,7 +67,7 @@ class Ent extends Component
         $this->entidad=$entidad;
         $this->contacto=$contacto;
 
-        $this->fechacli=$this->entidad->fechacliente;
+        $this->fechacli=$this->entidad->created_at;
         $this->entidad->entidadtipo_id=$entidadtipoId;
         $this->entidadtipo=EntidadTipo::find($entidadtipoId);
     }
