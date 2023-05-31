@@ -93,10 +93,10 @@
                             <td width=80% >{{ $oferta->impresion}}</td>
                         </tr>
                         @endif
-                        {{-- <tr>
-                            <td width=20% class="font-bold "  style="padding-top:1px">Acabados:</td>
-                            <td width=80% >{{ $oferta->acabado}}</td>
-                        </tr> --}}
+                        <tr>
+                            <td width=20% class="font-bold "  style="padding-top:1px">Manipulación:</td>
+                            <td width=80% >{{ $oferta->manipulacion}}</td>
+                        </tr>
                         @if($oferta->embalaje!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Embalaje:</td>
@@ -171,7 +171,7 @@
                             @if($oferta->observaciones!='')
                             <tr>
                                 <td> <span class="font-bold">Observaciones: </span>
-                                    <p>{!! nl2br(e($presupuesto->otros)) !!}</p>
+                                    <p>{!! nl2br(e($oferta->observaciones)) !!}</p>
                                 </td>
                             </tr>
                             @endif
