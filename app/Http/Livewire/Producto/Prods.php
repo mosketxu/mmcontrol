@@ -22,12 +22,32 @@ class Prods extends Component
     public $filtroimpresion='';
     public $tipo;
     public $titulo;
+    public $ordenarpor1='';
+    public $orden1='';
+    public $ordenarpor2='';
+    public $orden2='';
+
 
     public Producto $producto;
 
-    public function mount($titulo)
+    public function mount($tipo,$titulo,)
     {
         $this->titulo=$titulo;
+        $this->tipo=$tipo;
+        if($tipo=='1'){
+            $this->ordenarpor1='referencia';
+            $this->orden1='asc';
+            $this->ordenarpor2='';
+            $this->orden2='';
+
+        }else{
+            $this->ordenarpor1='isbn';
+            $this->orden1='asc';
+            $this->ordenarpor2='referencia';
+            $this->orden2='asc';
+        }
+
+
     }
 
     public function render()
@@ -55,7 +75,10 @@ class Prods extends Component
                 })
             ->search('productos.material',$this->filtromaterial)
             ->search('productos.impresion',$this->filtroimpresion)
-            ->orderBy('referencia','asc')
+            ->orderBy($this->ordenarpor1,$this->orden1)
+            ->when($this->ordenarpor2!='', function ($query){
+                $query->orderBy($this->ordenarpor2,$this->orden2);
+                })
             ->get();
 
 
