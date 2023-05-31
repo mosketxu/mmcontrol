@@ -86,7 +86,21 @@
                         </tr>
                     </table>
                     {{-- Productos --}}
-                    {{-- @if($pedido->pedidoproductos->count()>0)
+                    {{-- @if($productos->count()>0)
+                    @foreach ($productos->producto as $producto)
+                        {{ $producto }} --}}
+
+                    {{-- <tr>
+                        <td class="text-center">{{ $pproducto->producto->isbn ?? ''}}</td>
+                        <td>{{ $pproducto->producto->referencia }}</td>
+                        <td>{{ $pproducto->producto->material}}</td>
+                        <td>{{ $pproducto->producto->medidas }}</td>
+                        <td>{{ $pproducto->producto->troquel }}</td>
+                        <td>{{ $pproducto->producto->impresion }}</td>
+                        <td style="text-align: right;" class="pr-2">{{ $pproducto->tirada}} </td>
+                    </tr> --}}
+
+                    {{-- @endforeach
                     <div class="mx-20 mt-8 border ">
                         <table  width="100%" style="" cellspacing="0" cellpadding="2" class="mx-auto text-xs" >
                             <tr >
@@ -101,18 +115,20 @@
                                 <td class="font-bold">Impresión</td>
                                 <td class="pr-2 font-bold text-right">Cantidad</td>
                             </tr>
-                            @foreach ($pedido->pedidoproductos as $pproducto)
-                            <tr>
-                                <td class="text-center">{{ $pproducto->producto->isbn }}</td>
+
+                            @foreach ($pedido->pedidoproductos as $pproducto) --}}
+
+                            {{-- <tr>
+                                <td class="text-center">{{ $pproducto->producto->isbn ?? ''}}</td>
                                 <td>{{ $pproducto->producto->referencia }}</td>
                                 <td>{{ $pproducto->producto->material}}</td>
                                 <td>{{ $pproducto->producto->medidas }}</td>
                                 <td>{{ $pproducto->producto->troquel }}</td>
                                 <td>{{ $pproducto->producto->impresion }}</td>
                                 <td style="text-align: right;" class="pr-2">{{ $pproducto->tirada}} </td>
-                            </tr>
+                            </tr> --}}
 
-                            @endforeach
+                            {{-- @endforeach
                         </table>
                     </div>
                     @endif --}}
