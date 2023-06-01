@@ -86,21 +86,20 @@
                         </tr>
                     </table>
                     {{-- Productos --}}
-                    {{-- @if($productos->count()>0)
-                    @foreach ($productos->producto as $producto)
-                        {{ $producto }} --}}
+                    @if($productos->count()>0)
+                    {{-- @foreach ($productos as $producto)
+                    <tr>
+                        <td class="text-center">{{ $producto->isbn}}</td>
+                        <td>{{ $producto->referencia }}</td>
+                        <td>{{ $producto->material}}</td>
+                        <td>{{ $producto->medidas }}</td>
+                        <td>{{ $producto->troquel }}</td>
+                        <td>{{ $producto->impresion }}</td>
+                        <td style="text-align: right;" class="pr-2">{{ $producto->tirada}} </td>
+                    </tr>
 
-                    {{-- <tr>
-                        <td class="text-center">{{ $pproducto->producto->isbn ?? ''}}</td>
-                        <td>{{ $pproducto->producto->referencia }}</td>
-                        <td>{{ $pproducto->producto->material}}</td>
-                        <td>{{ $pproducto->producto->medidas }}</td>
-                        <td>{{ $pproducto->producto->troquel }}</td>
-                        <td>{{ $pproducto->producto->impresion }}</td>
-                        <td style="text-align: right;" class="pr-2">{{ $pproducto->tirada}} </td>
-                    </tr> --}}
+                    @endforeach --}}
 
-                    {{-- @endforeach
                     <div class="mx-20 mt-8 border ">
                         <table  width="100%" style="" cellspacing="0" cellpadding="2" class="mx-auto text-xs" >
                             <tr >
@@ -111,27 +110,26 @@
                                 <td class="font-bold">Descripción</td>
                                 <td class="font-bold">Material</td>
                                 <td class="font-bold">Medidas</td>
-                                <td class="font-bold">Troquel</td>
-                                <td class="font-bold">Impresión</td>
+                                {{-- <td class="font-bold">Troquel</td>
+                                <td class="font-bold">Impresión</td> --}}
                                 <td class="pr-2 font-bold text-right">Cantidad</td>
                             </tr>
 
-                            @foreach ($pedido->pedidoproductos as $pproducto) --}}
+                            @foreach ($productos as $producto)
 
-                            {{-- <tr>
-                                <td class="text-center">{{ $pproducto->producto->isbn ?? ''}}</td>
-                                <td>{{ $pproducto->producto->referencia }}</td>
-                                <td>{{ $pproducto->producto->material}}</td>
-                                <td>{{ $pproducto->producto->medidas }}</td>
-                                <td>{{ $pproducto->producto->troquel }}</td>
-                                <td>{{ $pproducto->producto->impresion }}</td>
-                                <td style="text-align: right;" class="pr-2">{{ $pproducto->tirada}} </td>
-                            </tr> --}}
-
-                            {{-- @endforeach
+                            <tr>
+                                <td class="text-center">{{ $producto->isbn}}</td>
+                                <td>{{ $producto->referencia }}</td>
+                                <td>{{ $producto->material}}</td>
+                                <td>{{ $producto->medidas }}</td>
+                                {{-- <td>{{ $producto->troquel }}</td>
+                                <td>{{ $producto->impresion }}</td> --}}
+                                <td style="text-align: right;" class="pr-2">{{ $producto->tirada}} </td>
+                            </tr>
+                            @endforeach
                         </table>
                     </div>
-                    @endif --}}
+                    @endif
                     {{-- Procesos --}}
                     {{-- @if($pedido->pedidoprocesos->count()>0)
                     <div class="mx-20 mt-8 border">

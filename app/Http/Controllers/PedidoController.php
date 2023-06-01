@@ -100,8 +100,8 @@ class PedidoController extends Controller
             $vista='pedidos.fichaentradaotrospdf';
             $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos')->find($pedidoid);
             // dd($pedido->pedidoproductos);
-            $productos=PedidoProducto::where('pedido_id',$pedidoid)->pluck('producto_id');
-            // dd($productos);
+            $pedidoproductos=PedidoProducto::where('pedido_id',$pedidoid)->pluck('producto_id');
+            $productos=Producto::whereIn('id',$pedidoproductos)->get();
             $pdf = \PDF::loadView($vista, compact('pedido','productos'));
         }
         $pdf->setPaper('a4','portrait');
