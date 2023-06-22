@@ -143,6 +143,7 @@
                     <option value="0">En curso</option>
                     <option value="1">Acabado</option>
                     <option value="2">Cancelado</option>
+                    <option value="3">Todos</option>
                 </select>
                 @if($filtroestado!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroestado', '')" class="pb-1" title="reset filter" />
