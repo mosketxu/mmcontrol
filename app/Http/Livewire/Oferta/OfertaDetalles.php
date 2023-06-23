@@ -61,15 +61,23 @@ class OfertaDetalles extends Component
     public function UpdatedCantidad(){ $this->total=round($this->cantidad * $this->importe,2);}
     public function UpdatedImporte(){ $this->total=round($this->cantidad * $this->importe,2);}
 
-    public function changeValor(OfertaDetalle $odetalle,$campo,$valor)
-    {
+    public function changeValor(OfertaDetalle $odetalle,$campo,$valor){
+        // dd($odetalle,$campo,$valor);
+        if($campo=='cantidad')
+            $this->total=round($valor * $odetalle->importe,2);
+        elseif($campo=='importe')
+            $this->total=round($valor * $odetalle->cantidad,2);
         $this->oferta_id=$odetalle->oferta_id;
         $this->validate();
-        $this->oferta_id='';
-        $odetalle->update([$campo=>$valor]);
+        // $this->oferta_id='';
+        // $this->total=round($this->cantidad * $this->importe,2);
         $odetalle->update([
-            'total'=>round($this->cantidad * $this->importe,2)
-            ]);
+            $campo=>$valor,
+            'total'=>$this->total]);
+        // $odetalle->update([
+        //     'total'=>round($this->cantidad * $this->importe,2)
+        //     ]);
+
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 

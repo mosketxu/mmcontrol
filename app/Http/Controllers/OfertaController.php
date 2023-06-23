@@ -38,15 +38,13 @@ class OfertaController extends Controller
      * @param  \App\Models\Oferta  $oferta
      * @return \Illuminate\Http\Response
      */
-    public function edit(Oferta $oferta)
-    {
+    public function edit(Oferta $oferta){
         $tipo=$oferta->tipo;
         return view('oferta.edit',compact('oferta','tipo'));
 
     }
 
-    public function editar(Oferta $oferta,$ruta)
-    {
+    public function editar(Oferta $oferta,$ruta){
         $tipo=$oferta->tipo;
         $titulo=$tipo=='1' ? 'Presupuesto MM Editorial' : 'Presupuesto MM Packaging/Propios';
         return view('oferta.edit',compact('oferta','tipo','ruta','titulo'));

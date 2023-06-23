@@ -50,6 +50,7 @@ class Presupuestos extends Component
 
         if($this->selectAll) $this->selectPageRows();
         $presupuestos = $this->rows;
+        // dd($presupuestos->where('id','2300659'));
         $view=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoseditorial' : 'livewire.presupuesto.presupuestosotros' ;
         return view($view,compact('presupuestos','clientes','proveedores','meses'));
     }
@@ -106,7 +107,8 @@ class Presupuestos extends Component
             })
             ->searchYear('fechapresupuesto',$this->filtroanyo)
             ->searchMes('fechapresupuesto',$this->filtromes)
-            ->orderBy('presupuestos.id','desc');
+            ->orderBy('presupuestos.id','desc')
+            ->groupBy('presupuestos.id');
         else
         return Presupuesto::query()
             ->join('entidades','presupuestos.cliente_id','=','entidades.id')
