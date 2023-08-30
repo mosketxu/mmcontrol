@@ -26,40 +26,24 @@
                     </div>
                 </div>
                 @forelse ($productos as $producto)
-                <div class="flex items-center w-full text-sm text-left border-t-0 cursor-pointer border-y hover:bg-gray-100" wire:loading.class.delay="opacity-50">
-                    <div class="flex items-center w-11/12 "  onclick="location.href = '{{ route('producto.edit',$producto) }}'">
-                        <div class="w-1/12 ">
-                            <input type="text" class="w-full pl-2 text-sm font-thin text-gray-500 bg-transparent border-none rounded-md hover:bg-gray-100" value="{{ $producto->isbn }}"  disabled/>
+                <div class="hover:bg-gray-100 hover:cursor-pointer">
+                    <div class="flex items-center w-full text-sm text-gray-500 border-t-0 border-y" wire:loading.class.delay="opacity-50" >
+                        <div class="flex items-center w-11/12 "  onclick="location.href = '{{ route('producto.edit',$producto) }}'">
+                            <div class="w-1/12 ">{{ $producto->isbn }}</div>
+                            <div class="w-3/12 ">{{ $producto->referencia }}</div>
+                            <div class="w-1/12">{{ $producto->cliente->entidad }}</div>
+                            <div class="w-3/12 ">{{ $producto->material }}</div>
+                            <div class="w-2/12 ">{{ $producto->medidas }}</div>
+                            <div class="w-1/12 ">{{ $producto->impresion }}</div>
+                            <div class="w-1/12 ">{{ $producto->troquel }}</div>
                         </div>
-                        <div class="w-3/12 ">
-                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->referencia }}"  disabled/>
+                        <div class="items-center flex-none w-1/12 md:flex">
+                            <div class="w-full text-center">
+                                <x-icon.clip-a  class="text-green-500 hover:text-green-700"  href="{{route('producto.archivos',[$producto,'i'])}}"title="Archivos Producto"/>
+                                <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " href="{{route('producto.ficha',[$producto->id,$tipo,'n'])}}" target="_blank"   title="Ficha Producto"/>
+                                <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $producto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" />
+                            </div>
                         </div>
-                        <div class="w-1/12">
-                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->cliente->entidad }}"  disabled/>
-                        </div>
-                        <div class="w-3/12 ">
-                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->material }}"  disabled/>
-                        </div>
-                        <div class="w-2/12 ">
-                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->medidas }}"  disabled/>
-                        </div>
-                        <div class="w-1/12 ">
-                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->impresion }}"  disabled/>
-                        </div>
-                        {{-- <div class="w-1/12">
-                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->preciocoste }}"  disabled/>
-                        </div>
-                        <div class="w-1/12">
-                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->precioventa }}"  disabled/>
-                        </div> --}}
-                        <div class="w-1/12 ">
-                            <input type="text" class="w-full text-sm font-thin text-gray-500 border-none rounded-md hover:bg-gray-100" value="{{ $producto->troquel }}"  disabled/>
-                        </div>
-                    </div>
-                    <div class="items-center w-1/12 text-center" >
-                        <x-icon.clip-a  class="text-green-500 hover:text-green-700"  href="{{route('producto.archivos',[$producto,'i'])}}"title="Archivos Producto"/>
-                        <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " href="{{route('producto.ficha',[$producto->id,$tipo,'n'])}}" target="_blank"   title="Ficha Producto"/>
-                        <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $producto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" />
                     </div>
                 </div>
                 @empty
