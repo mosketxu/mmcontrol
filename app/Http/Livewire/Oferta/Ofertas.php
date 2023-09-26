@@ -29,12 +29,15 @@ class Ofertas extends Component
     }
 
     public function render(){
+
         // $ofertas=Oferta::with('contacto','cliente')->orderBy('id')->get();
         $clientes=Entidad::whereIn('entidadtipo_id',['1','2'])->orderBy('entidad')->get();
         $meses=Mes::orderBy('id')->get();
 
         if($this->selectAll) $this->selectPageRows();
         $ofertas = $this->rows;
+        // dd($ofertas);
+        // dd($this->rows);
         return view('livewire.oferta.ofertas',compact('ofertas','clientes','meses'));
     }
 
@@ -52,14 +55,39 @@ class Ofertas extends Component
     }
 
     public function getRowsQueryProperty(){
-        return Oferta::query()
+        if($this->tipo=='1')
+            return Oferta::query()
+                ->with('cliente','contacto')
+                ->join('entidades','ofertas.cliente_id','=','entidades.id')
+                ->join('productos','ofertas.producto_id','=','productos.id')
+                ->select('ofertas.*', 'entidades.entidad', 'entidades.emailadm','productos.isbn','productos.referencia')
+                ->where('ofertas.tipo',$this->tipo)
+                ->search('ofertas.id',$this->search)
+                ->when($this->filtroreferencia!='', function ($query){
+                    $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
+                })
+                ->when($this->filtroisbn!='', function ($query){
+                    $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
+                })
+                ->when($this->filtrocliente!='', function ($query){
+                    $query->where('ofertas.cliente_id',$this->filtrocliente);
+                    })
+                ->when($this->filtroestado!='', function ($query){
+                    $query->where('ofertas.estado',$this->filtroestado);
+                })
+                ->searchYear('fecha',$this->filtroanyo)
+                ->searchMes('fecha',$this->filtromes)
+                ->orderBy('ofertas.id','desc')
+                ->orderBy('ofertas.fecha','desc');
+        else
+            return Oferta::query()
             ->with('cliente','contacto')
             ->join('entidades','ofertas.cliente_id','=','entidades.id')
             ->select('ofertas.*', 'entidades.entidad', 'entidades.emailadm')
             ->where('ofertas.tipo',$this->tipo)
             ->search('ofertas.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){
-                $query->where('ofertas.referencia','like','%'.$this->filtroreferencia.'%');
+                $query->where('ofertas.descripcion','like','%'.$this->filtroreferencia.'%');
             })
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('ofertas.cliente_id',$this->filtrocliente);

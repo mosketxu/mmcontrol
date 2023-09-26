@@ -1,21 +1,34 @@
 <div class="flex justify-between space-x-1">
-    <div class="text-gray-300 mt-7 w-10">
+    <div class="w-10 text-gray-300 mt-7">
         <x-icon.filter/>
     </div>
     <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                ISBN/Código
+                Cód.Oferta
             </label>
             <div class="flex">
-                <input type="text" wire:model.lazy="filtroisbn" class="w-full py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" autofocus/>
+                <input type="text" wire:model.lazy="search" class="w-full py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" autofocus/>
+                @if($search!='')
+                    <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="flex w-2/12 ">
+        <div class="w-full">
+            <label class="px-1 text-sm text-gray-600">
+                ISBN
+            </label>
+            <div class="flex">
+                <input type="text" wire:model.lazy="filtroisbn" class="w-full py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" placeholder="Búsqueda por ISBN" autofocus/>
                 @if($filtroisbn!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                 @endif
             </div>
         </div>
     </div>
-    <div class="flex w-7/12 ">
+    <div class="flex w-5/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Titulo/Referencia
