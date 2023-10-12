@@ -146,6 +146,14 @@
                             <td width=80% class=""  style="padding-top:8px" >{{ $oferta->manipulacion }}</td>
                         </tr>
                         @endif
+                        @if($oferta->ofertaproducto->FSC!='')
+                        <tr style="padding-top:8px">
+                            <td width=20% class="font-bold "  style="margin-top: 0px;padding-top:8px;">FSC:</td>
+                            <td width=80% class=""  style="padding-top:8px" >
+                                <p>Sí</p>
+                            </td>
+                        </tr>
+                        @endif
                         @if($oferta->ofertaproducto->observaciones!='')
                         <tr style="padding-top:8px">
                             <td width=20% class="font-bold "  style="margin-top: 0px;padding-top:8px;">Observaciones:</td>
