@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController, PresupuestoController};
+use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController, PresupuestoController,ClienteController};
+use App\Models\UserEmpresa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
             return redirect()->route('seguridad');
         } elseif (Auth::user()->hasRole('Gestor')) {
             return redirect()->route('presupuesto.tipo',['1','i']);
+        } elseif (Auth::user()->hasRole('Cliente')) {
+            return redirect()->route('cliente.index');
         } else {
             return redirect()->route('presupuesto.tipo',['1','i']);
         }
@@ -86,8 +89,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('pedido/{tipo}/ruta/{ruta}', [PedidoController::class,'tipo'])->middleware('can:pedido.index')->name('pedido.tipo');;
     Route::resource('pedido', PedidoController::class);
 
-
-
     //Facturacion
     Route::resource('facturacion', FacturacionController::class);
 
@@ -97,6 +98,15 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/oferta/{tipo}/nuevo/{ruta}', [OfertaController::class, 'nuevo'])->name('oferta.nuevo');
     Route::get('oferta/{tipo}', [OfertaController::class,'tipo'])->middleware('can:oferta.index')->name('oferta.tipo');
     Route::resource('oferta', OfertaController::class);
+
+    //Cliente
+    Route::get('cliente/{tipo}/ruta/{ruta}', [ClienteController::class,'tipo'])->middleware('can:cliente.index')->name('cliente.tipo');;
+    // Route::get('/presupuesto/{tipo}/nuevo/{ruta}', [PresupuestoController::class, 'nuevo'])->name('presupuesto.nuevo');
+    // Route::get('/presupuesto/{presupuesto}/pdf', [PresupuestoController::class, 'presupuestoPDF'])->name('presupuesto.presupuestoPDF');
+    // Route::get('/presupuesto/{presupuesto}/editar/{ruta}', [PresupuestoController::class, 'editar'])->name('presupuesto.editar');
+    // Route::get('/presupuesto/{presupuesto}/archivos/{ruta}', [PresupuestoController::class, 'archivos'])->name('presupuesto.archivos');
+
+    Route::resource('cliente', ClienteController::class);
 
 
 });

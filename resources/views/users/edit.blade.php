@@ -3,8 +3,6 @@
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
                 <div class="">
-                    {{-- @livewire('menu') --}}
-
                     <div class="p-1 mx-2 ">
                         <div class="flex flex-row">
                             <h1 class="mx-2 text-2xl font-semibold text-gray-900">Usuario: {{ $user->name  }} </h1>
@@ -48,45 +46,49 @@
                         <form action="{{ route('users.update',$user) }}" method="post">
                             @csrf
                             @method('PUT')
-                            <div class="flex-col text-gray-500 rounded-lg">
-                                <div class="flex">
-                                    <div class="flex-initial w-full py-2 mr-1 bg-white rounded-lg shadow-md">
-                                        <div class="px-2 mx-2 my-1 bg-blue-100 rounded-md">
-                                            <h3 class="font-semibold ">Datos Usuario</h3>
+                            <div class="flex my-2 text-gray-500 rounded-lg">
+                                {{-- Datos usuario --}}
+                                <div class="w-4/12 py-2 mr-1 bg-white rounded-lg shadow-md">
+                                    <div class="px-2 mx-2 my-1 bg-blue-100 rounded-md">
+                                        <h3 class="font-semibold ">Datos Usuario</h3>
+                                    </div>
+                                    <div class="flex flex-col ml-3 space-x-3 md:flex-row">
+                                        <div class="w-full form-item lg:w-3/12">
+                                            <label class="block text-sm font-medium text-gray-700">{{ __('Nombre') }}</label>
+                                            <input  type="text" name="name" value="{{old('name',$user->name)}}" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
                                         </div>
-                                        <div class="flex flex-col ml-3 space-x-3 md:flex-row">
-                                            <div class="w-full form-item lg:w-3/12">
-                                                <label class="block text-sm font-medium text-gray-700">{{ __('Nombre') }}</label>
-                                                <input  type="text" name="name" value="{{old('name',$user->name)}}" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
-                                            </div>
-                                            <div class="w-full form-item lg:w-3/12">
-                                                <label class="block text-sm font-medium text-gray-700">{{ __('eMail') }}</label>
-                                                <input  type="email" name="email" value="{{old('email',$user->email)}}" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
-                                            </div>
-                                            <div class="w-full form-item lg:w-3/12">
-                                                <label class="block text-sm font-medium text-gray-700">{{ __('password') }}</label>
-                                                <input  type="password" name="password" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                                            </div>
+                                        <div class="w-full form-item lg:w-3/12">
+                                            <label class="block text-sm font-medium text-gray-700">{{ __('eMail') }}</label>
+                                            <input  type="email" name="email" value="{{old('email',$user->email)}}" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" required/>
+                                        </div>
+                                        <div class="w-full form-item lg:w-3/12">
+                                            <label class="block text-sm font-medium text-gray-700">{{ __('password') }}</label>
+                                            <input  type="password" name="password" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <hr class="my-2">
-
-                            <h2 class="mx-2 text-xl font-semibold text-gray-500">Listado de roles</h2>
-                            @foreach ($roles as $role)
-                                <div class="ml-4">
-                                    {{-- @can('user.edit') --}}
-                                    {{ $role->id }}
-                                    <input type="checkbox" name="roles[]" value="{{$role->id}}"
-                                        {{ (in_array($role->id, old('roles', [])) || isset($user) && $user->roles()->pluck('name', 'roles.id')->contains($role->name)) ? 'checked' : '' }}>&nbsp {{$role->name}}
-                                    {{-- @elsecan('user.show')
-                                        <input type="checkbox" name="roles[]" value="{{$rol->id}}" class="d-none"
-                                            {{ (in_array($rol->id, old('roles', [])) || isset($user) && $user->roles()->pluck('name', 'roles.id')->contains($rol->name)) ? 'checked' : '' }}> &nbsp {{$rol->name}}  --}}
+                                {{-- Roles Usuario --}}
+                                <div class="w-4/12 py-2 mr-1 bg-white rounded-lg shadow-md">
+                                    <div class="px-2 mx-2 my-1 bg-blue-100 rounded-md">
+                                        <h3 class="font-semibold ">Roles del Usuario</h3>
+                                    </div>
+                                    @foreach ($roles as $role)
+                                    <div class="ml-4">
+                                        {{ $role->id }}
+                                        <input type="checkbox" name="roles[]" value="{{$role->id}}"
+                                            {{ (in_array($role->id, old('roles', [])) || isset($user) && $user->roles()->pluck('name', 'roles.id')->contains($role->name)) ? 'checked' : '' }}>&nbsp {{$role->name}}
+                                    </div>
+                                    @endforeach
                                 </div>
-                            @endforeach
-
+                                {{-- Empresas usurario --}}
+                                <div class="w-4/12 py-2 mr-1 bg-white rounded-lg shadow-md">
+                                    <div class="px-2 mx-2 my-1 bg-blue-100 rounded-md">
+                                        <h3 class="font-semibold ">Empresas del Usuario</h3>
+                                    </div>
+                                    @livewire('seguridad.empresas-cliente',['cliente'=>$user])
+                                </div>
+                            </div>
+                            <hr class="my-2">
 
                             <div class="flex mt-2 ml-2 space-x-4">
                                 <div class="space-x-3">

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Seguridad;
 
 use App\Models\User;
+use App\Models\UserEmpresa;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -39,8 +40,7 @@ class Usuarios extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'valorcampo1.required' => 'El nombre del usuario es necesario',
             'valorcampo1.unique' => 'El nombre del usuario ya existe',
@@ -49,8 +49,8 @@ class Usuarios extends Component
             'valorcampo2.email' => 'El mail debe ser válido.',
         ];
     }
-    public function render()
-    {
+
+    public function render(){
         $valores=User::query()
             ->search('name',$this->search)
             ->orSearch('email',$this->search)
@@ -61,8 +61,7 @@ class Usuarios extends Component
         return view('livewire.auxiliarcard',compact('valores'));
     }
 
-    public function changeCampo(User $valor,$campo,$valorcampo)
-    {
+    public function changeCampo(User $valor,$campo,$valorcampo){
         Validator::make(['valorcampo'=>$valorcampo],[
             'valorcampo'=>'required',
         ])->validate();
@@ -73,15 +72,12 @@ class Usuarios extends Component
         $this->dispatchBrowserEvent('notify', 'Usuario Actualizado.');
     }
 
-
-    public function editar($valorId)
-    {
+    public function editar($valorId){
         $user= User::find($valorId);
         return redirect()->route('users.edit',$user);
     }
 
-    public function save()
-    {
+    public function save(){
         $this->validate();
 
         User::create([
@@ -98,11 +94,12 @@ class Usuarios extends Component
         $this->valorcampo3='';
     }
 
-    public function delete($valorId)
-    {
+    public function delete($valorId){
         $borrar = User::find($valorId);
 
         if ($borrar) {
+            $empresasclienteborrar=UserEmpresa::where('user_id',$borrar->id)->get();
+            $empresasclienteborrar->delete();
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Usuario eliminado!');
         }

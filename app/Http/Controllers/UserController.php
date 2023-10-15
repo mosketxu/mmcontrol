@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserEmpresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -35,8 +36,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $request->validate([
             'name'=>'required',
             'email' => 'required|email:rfc|unique:users,email',
@@ -65,12 +65,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
-    {
+    public function show(User $user){
         $roles = auth()->user()->roles;
-
         return view('users.edit', compact('user','roles'));
-
     }
 
     /**
@@ -79,10 +76,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {
+    public function edit(User $user){
         $roles= Role::get();
-        return view('users.edit',compact('user','roles'));
+        $empresascliente=UserEmpresa::where('user_id',$user->id)->get();
+        return view('users.edit',compact('user','roles','empresascliente'));
     }
 
     /**
@@ -92,8 +89,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
-    {
+    public function update(Request $request, User $user){
         $data = request()->validate([
             'name' => 'required',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
@@ -119,8 +115,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         try{
             User::destroy($id);;
         }catch(\ErrorException $ex){
