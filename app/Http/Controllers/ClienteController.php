@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entidad;
+use App\Models\UserEmpresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +22,28 @@ class ClienteController extends Controller
         $cliente=Auth::user();
         return view('clientes.index',compact(['cliente']));
     }
+
+    public function entidadIndex(){
+        $cliente=Auth::user();
+        $empresascliente=UserEmpresa::where('user_id',$cliente->id)->pluck('entidad_id');
+        $entidades=Entidad::query()
+            ->with('entidadtipo')
+            // ->filtrosEntidad($this->search, $this->filtroresponsable, $this->entidadtipo_id, $this->filtrofini, $this->filtroffin)
+            ->whereIn('id',$empresascliente)
+            ->orderBy('entidad')
+            ->get();
+
+        return view('clientes.entidad.index',compact('cliente','entidades'));
+    }
+
+    public function productotipo($tipo){
+        $cliente=Auth::user();
+        $titulo=$tipo=='1'? 'Productos Editoriales' : 'Productos Packaging y Propios';
+        $titulo= $titulo . ' del cliente ' . $cliente->name ;
+
+        return view('clientes.producto.index',compact('tipo','cliente','titulo'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

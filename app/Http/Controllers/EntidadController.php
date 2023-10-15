@@ -30,11 +30,11 @@ class EntidadController extends Controller
         return view('entidad.create',compact('entidadtipo_id'));
     }
 
-    public function edit(Entidad $entidad)
-    {
+    public function edit(Entidad $entidad){
         $entidadtipoId = $entidad->entidadtipo_id;
         return view('entidad.edit',compact('entidad','entidadtipoId'));
     }
+
 
     public function contactos(Entidad $entidad)
     {

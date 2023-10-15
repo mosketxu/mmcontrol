@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Livewire\Producto;
+namespace App\Http\Livewire\Clientes;
 
-use App\Models\{Entidad,Producto};
+use App\Models\{Entidad,Producto, UserEmpresa};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 
 
 use Livewire\Component;
 
-class Prods extends Component
+class ClienteProds extends Component
 {
 
     use WithPagination;
@@ -22,16 +22,17 @@ class Prods extends Component
     public $filtroimpresion='';
     public $tipo;
     public $titulo;
+    public $cliente;
     public $ordenarpor1='';
     public $orden1='';
     public $ordenarpor2='';
     public $orden2='';
 
-
     public Producto $producto;
 
-    public function mount($tipo,$titulo,)
+    public function mount($tipo,$cliente,$titulo)
     {
+        $this->cliente=$cliente;
         $this->titulo=$titulo;
         $this->tipo=$tipo;
         if($tipo=='1'){
@@ -46,16 +47,19 @@ class Prods extends Component
             $this->ordenarpor2='referencia';
             $this->orden2='asc';
         }
-
-
     }
 
     public function render(){
         $this->producto= new Producto;
-        $entidades=Entidad::orderBy('entidad')->get();
+        $entidadescliente=UserEmpresa::where('user_id',$this->cliente->id)->get();
+        // dd($entidadescliente);
+        $entidades=Entidad::orderBy('entidad')
+        ->whereIn('id',$entidadescliente->pluck('entidad_id'))
+        ->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $productos=Producto::query()
             ->with('cliente')
+            ->whereIn('cliente_id',$entidadescliente->pluck('entidad_id'))
             ->when($this->tipo!='', function ($query){
                 $query->where('tipo',$this->tipo);
                 })
@@ -76,7 +80,7 @@ class Prods extends Component
                 })
             ->get();
 
-        $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
+        $vista= $this->tipo=='1' ? 'livewire.clientes.producto.prodseditorial' : 'livewire.clientes.producto.prodsotros';
 
         return view($vista,compact('productos','clientes'));
     }
@@ -86,17 +90,4 @@ class Prods extends Component
     public function updatingFiltrocliente(){$this->resetPage();}
     public function updatingFiltromaterial(){$this->resetPage();}
     public function updatingFiltroimpresion(){$this->resetPage();}
-
-
-    public function delete($productoId)
-    {
-        $existe=Storage::disk('fichasproducto')->exists($productoId);
-        if ($existe) Storage::disk('fichasproducto')->deleteDirectory($productoId);
-
-        $producto = Producto::find($productoId);
-        if ($producto) {
-            $producto->delete();
-            $this->dispatchBrowserEvent('notify', 'El producto: '.$producto->referencia.' ha sido eliminado!');
-        }
-    }
 }
