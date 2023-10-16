@@ -17,8 +17,6 @@
                         <div class="flex w-3/12 pl-2 " >{{ __('Material') }} </div>
                         <div class="flex w-2/12 pl-2 " >{{ __('Medidas') }}</div>
                         <div class="flex w-1/12 pl-2 " >{{ __('Impresion') }}</div>
-                        {{-- <div class="flex w-1/12" >{{ __('€. Coste') }}</div>
-                        <div class="flex w-1/12" >{{ __('€. Venta') }}</div> --}}
                         <div class="flex w-1/12 pl-2 " >{{ __('Troquel') }}</div>
                     </div>
                     <div class="flex w-1/12 ">
@@ -28,7 +26,7 @@
                 @forelse ($productos as $producto)
                 <div class="hover:bg-gray-100 hover:cursor-pointer">
                     <div class="flex items-center w-full text-sm text-gray-500 border-t-0 border-y" wire:loading.class.delay="opacity-50" >
-                        <div class="flex items-center w-11/12 "  onclick="location.href = '{{ route('producto.edit',$producto) }}'">
+                        <div class="flex items-center w-11/12 "  onclick="location.href = '{{ route('cliente.producto.edit',$producto) }}'">
                             <div class="w-1/12 ">{{ $producto->isbn }}</div>
                             <div class="w-3/12 ">{{ $producto->referencia }}</div>
                             <div class="w-1/12">{{ $producto->cliente->entidad }}</div>
@@ -39,9 +37,8 @@
                         </div>
                         <div class="items-center flex-none w-1/12 md:flex">
                             <div class="w-full text-center">
-                                <x-icon.clip-a  class="text-green-500 hover:text-green-700"  href="{{route('producto.archivos',[$producto,'i'])}}"title="Archivos Producto"/>
-                                <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " href="{{route('producto.ficha',[$producto->id,$tipo,'n'])}}" target="_blank"   title="Ficha Producto"/>
-                                {{-- <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $producto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" /> --}}
+                                <x-icon.clip-a  class="text-green-500 hover:text-green-700"  href="{{route('cliente.producto.archivos',[$producto,'i'])}}"title="Archivos Producto"/>
+                                <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " href="{{route('cliente.producto.ficha',[$producto->id,$tipo,'n'])}}" target="_blank"   title="Ficha Producto"/>
                             </div>
                         </div>
                     </div>

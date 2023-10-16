@@ -9,33 +9,27 @@
             {{-- isbn --}}
             <div class="w-full form-item md:w-3/12">
                 <x-jet-label for="isbn">{{ __('ISBN') }}</x-jet-label>
-                <input wire:model.lazy="producto.isbn" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                <input wire:model.lazy="producto.isbn" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                {{$deshabilitado}}/>
             </div>
             {{-- titulo --}}
             <div class="w-full form-item md:w-5/12">
                 <x-jet-label for="referencia">{{ __('Título') }}</x-jet-label>
-                <input wire:model.lazy="producto.referencia" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" autofocus/>
+                <input wire:model.lazy="producto.referencia" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" autofocus
+                {{$deshabilitado}}/>
             </div>
             {{-- cliente --}}
             <div class="w-full form-item md:w-4/12">
                 <x-jet-label for="entidad_id">{{ __('Cliente') }}</x-jet-label>
-                <x-selectcolor wire:model.lazy="producto.cliente_id" selectname="cliente_id" color="blue" class="w-full" >
+                <select wire:model.lazy="producto.cliente_id"
+                    class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                    {{$deshabilitado}} >
                     <option value=''>-- Selecciona cliente --</option>
                     @foreach ($clientes as $cliente)
                     <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
                     @endforeach
-                </x-selectcolor>
+                </select>
             </div>
-            {{-- precio coste --}}
-            {{-- <div class="w-full form-item md:w-1/12">
-                <x-jet-label for="preciocoste">{{ __('€ Compra') }}</x-jet-label>
-                <input  wire:model.lazy="producto.preciocoste" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-            </div> --}}
-            {{-- precio venta --}}
-            {{-- <div class="w-full form-item md:w-1/12">
-                <x-jet-label for="precioventa">{{ __('€ Venta') }}</x-jet-label>
-                <input  wire:model.lazy="producto.precioventa" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-            </div> --}}
         </div>
     </div>
     <div class="p-2 m-2 ">
@@ -47,38 +41,45 @@
                 {{-- formatos --}}
                 <div class="w-full form-item">
                     <x-jet-label for="formato">{{ __('Formato') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.formato" selectname="formato" color="blue" class="w-full form-control" id="formato">
+                        <select wire:model.lazy="producto.formato"
+                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                            {{$deshabilitado}} >
                             <option value="">--Selecciona--</option>
                             @foreach($formatos as $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
                             @endforeach
-                        </x-selectcolor>
+                        <select>
                 </div>
                 {{-- Encuadernación --}}
                 <div class="w-full form-item">
                     <x-jet-label for="encuadernado">{{ __('Encuadernación') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.encuadernado" selectname="encuadernado" color="blue" class="w-full form-control" id="encuadernado">
+                        <select wire:model.lazy="producto.encuadernado"
+                            class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                            {{$deshabilitado}} >
                             <option value="">--Selecciona--</option>
                             @foreach($encuadernaciones as $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
                             @endforeach
-                        </x-selectcolor>
+                        </select>
                 </div>
                 {{-- plastificado --}}
                 <div class="w-full form-item">
                     <x-jet-label for="plastificado">{{ __('Plastificado') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.plastificado" selectname="plastificado" color="blue" class="w-full form-control" id="plastificado">
+                        <select wire:model.lazy="producto.plastificado"
+                            class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                            {{$deshabilitado}} >
                             <option value="">--Selecciona--</option>
                             @foreach($plastificados as $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
                             @endforeach
-                        </x-selectcolor>
+                        <select>
                 </div>
                 {{-- varios --}}
                 <div class="flex flex-row space-x-4">
                     <div class="w-full form-item">
                         <x-jet-label for="paginas">{{ __('Páginas') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.paginas" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                        <input  wire:model.lazy="producto.paginas" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        {{$deshabilitado}}/>
                     </div>
                     {{-- <div class="w-full form-item">
                         <x-jet-label for="tirada">{{ __('Tirada') }}</x-jet-label>
@@ -86,18 +87,21 @@
                     </div> --}}
                     <div class="form-item">
                         <x-jet-label for="FSC">{{ __('FSC') }}</x-jet-label>
-                        <input type="checkbox" wire:model.lazy="producto.FSC"/>
+                        <input type="checkbox" wire:model.lazy="producto.FSC"
+                        {{$deshabilitado}}/>
                     </div>
                 </div>
                 {{-- Novedad --}}
                 <div class="flex flex-row">
                     <div class="form-item">
                         <x-jet-label for="novedad">{{ __('Novedad') }}</x-jet-label>
-                        <input type="checkbox" wire:model.lazy="producto.novedad"/>
+                        <input type="checkbox" wire:model.lazy="producto.novedad"
+                        {{$deshabilitado}}/>
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="descripnovedad">{{ __('Descripción novedad') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.descripnovedad" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                        <input  wire:model.lazy="producto.descripnovedad" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        {{$deshabilitado}}/>
                     </div>
                 </div>
             </div>
@@ -109,51 +113,55 @@
                 {{-- gramaje interior --}}
                 <div class="w-full form-item">
                     <x-jet-label for="gramajeinterior">{{ __('Gramaje Interior') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.gramajeinterior" selectname="gramajeinterior" color="blue" class="w-full form-control" id="gramajeinterior">
-                            <option value="">--Selecciona--</option>
-                            @foreach($gramajesinterior as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        </x-selectcolor>
+                    <select wire:model.lazy="producto.gramajeinterior"
+                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                        {{$deshabilitado}} >
+                        <option value="">--Selecciona--</option>
+                        @foreach($gramajesinterior as $item)
+                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 {{-- tinta interior --}}
                 <div class="w-full form-item">
                     <x-jet-label for="tintainterior">{{ __('Tinta Interior') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.tintainterior" selectname="tintainterior" color="blue" class="w-full form-control" id="tintainterior">
-                            <option value="">--Selecciona--</option>
-                            @foreach($tintasinterior as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        </x-selectcolor>
+                    <select wire:model.lazy="producto.tintainterior"
+                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                        {{$deshabilitado}} >
+                        <option value="">--Selecciona--</option>
+                        @foreach($tintasinterior as $item)
+                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 {{-- Material interior --}}
                 <div class="w-full form-item">
                     <x-jet-label for="materialinterior">{{ __('Material Interior') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.materialinterior" selectname="materialinterior" color="blue" class="w-full form-control" id="materialinterior">
+                        {{-- <select wire:model.lazy="producto.materialinterior" selectname="materialinterior" color="blue" class="w-full form-control" id="materialinterior" {{$deshabilitado}}/>>
                             <option value="">--Selecciona--</option>
                             @foreach($materialesinterior as $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
                             @endforeach
-                        </x-selectcolor>
+                        </select> --}}
                 </div>
                 <div class="flex flex-row space-x-4">
                     <div class="form-item">
                         <x-jet-label for="guardas">{{ __('Guardas') }}</x-jet-label>
-                        <input type="checkbox" wire:model.lazy="producto.guardas"/>
+                        <input type="checkbox" wire:model.lazy="producto.guardas" {{$deshabilitado}}/>
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="descripguardas">{{ __('Descripción guardas') }}</x-jet-label>
-                        <input wire:model.lazy="producto.descripguardas" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                        <input wire:model.lazy="producto.descripguardas" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" {{$deshabilitado}}/>
                     </div>
                 </div>
                 <div class="flex flex-row space-x-4">
                     <div class="form-item">
                         <x-jet-label for="cd">{{ __('CD') }}</x-jet-label>
-                        <input type="checkbox" wire:model.lazy="producto.cd"/>
+                        <input type="checkbox" wire:model.lazy="producto.cd" {{$deshabilitado}}/>
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="descripcd">{{ __('Descripción cd') }}</x-jet-label>
-                        <input wire:model.lazy="producto.descripcd" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                        <input wire:model.lazy="producto.descripcd" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" {{$deshabilitado}}/>
                     </div>
                 </div>
             </div>
@@ -165,42 +173,46 @@
                 {{-- Gramaje Cubierta --}}
                 <div class="w-full form-item">
                     <x-jet-label for="gramajecubierta">{{ __('Gramaje Cubierta') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.gramajecubierta" selectname="gramajecubierta" color="blue" class="w-full form-control" id="gramajecubierta">
+                        {{-- <select wire:model.lazy="producto.gramajecubierta" selectname="gramajecubierta" color="blue" class="w-full form-control" id="gramajecubierta" {{$deshabilitado}}/>>
                             <option value="">--Selecciona--</option>
                             @foreach($gramajescubierta as $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
                             @endforeach
-                        </x-selectcolor>
+                        </select> --}}
                 </div>
                 {{-- Tinta Cubierta --}}
                 <div class="w-full form-item">
                     <x-jet-label for="tintacubierta">{{ __('Tinta Cubierta') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.tintacubierta"  selectname="tintacubierta" color="blue" class="w-full form-control" id="tintacubierta">
-                            <option value="">--Selecciona--</option>
-                            @foreach($tintascubierta as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        </x-selectcolor>
+                    <select wire:model.lazy="producto.tintacubierta"
+                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                        {{$deshabilitado}} >
+                        <option value="">--Selecciona--</option>
+                        @foreach($tintascubierta as $item)
+                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 {{-- Material Cubierta --}}
                 <div class="w-full form-item">
                     <x-jet-label for="materialcubierta">{{ __('Material Cubierta') }}</x-jet-label>
-                        <x-selectcolor wire:model.lazy="producto.materialcubierta"  selectname="materialcubierta" color="blue" class="w-full form-control" id="materialcubierta">
-                            <option value="">--Selecciona--</option>
-                            @foreach($materialescubierta as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        </x-selectcolor>
+                    <select wire:model.lazy="producto.materialcubierta"
+                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                        {{$deshabilitado}} >
+                        <option value="">--Selecciona--</option>
+                        @foreach($materialescubierta as $item)
+                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 {{-- Solapas --}}
                 <div class="flex flex-row space-x-4">
                     <div class="form-item">
                         <x-jet-label for="solapa">{{ __('Solapas') }}</x-jet-label>
-                        <input type="checkbox" wire:model.lazy="producto.solapa"/>
+                        <input type="checkbox" wire:model.lazy="producto.solapa" {{$deshabilitado}}/>
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="descripsolapa">{{ __('Descripción Solapa') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.descripsolapa" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                        <input  wire:model.lazy="producto.descripsolapa" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" {{$deshabilitado}}/>
                     </div>
                 </div>
             </div>
@@ -210,29 +222,35 @@
             {{-- cajas --}}
             <div class="w-full form-item md:w-3/12">
                 <x-jet-label for="caja">{{ __('Caja') }}</x-jet-label>
-                    <x-selectcolor wire:model.lazy="producto.caja_id"  selectname="caja:id" color="blue" class="w-full form-control" id="caja">
+                    <select wire:model.lazy="producto.caja_id"
+                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
+                        {{$deshabilitado}} >
                         <option value="">--Selecciona--</option>
                         @foreach($cajas as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}{{ $item->descripcion }}</option>
                         @endforeach
-                    </x-selectcolor>
+                    </select>
             </div>
             {{-- uds cajas --}}
             <div class="w-full form-item md:w-1/12 ">
                 <x-jet-label for="udxcaja">{{ __('Uds. x caja') }}</x-jet-label>
-                <input  wire:model.lazy="producto.udxcaja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                <input  wire:model.lazy="producto.udxcaja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" {{$deshabilitado}}/>
             </div>
             {{-- observaciones --}}
             <div class="w-full form-item md:w-8/12">
                 <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>
-                <textarea wire:model.defer="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2">{{ old('observaciones') }} </textarea>
+                <textarea wire:model.defer="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{$deshabilitado}}>>{{ old('observaciones') }} </textarea>
                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
             </div>
         </div>
         <div class="py-1 my-0 ">
             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
-                <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                <x-jet-secondary-button  onclick="location.href = '{{route('producto.tipo','1')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                @if(Auth::user()->hasRole('Cliente'))
+                    <x-jet-secondary-button  onclick="location.href = '{{route('cliente.producto.tipo','1')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                @else
+                    <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
+                    <x-jet-secondary-button  onclick="location.href = '{{route('producto.tipo','1')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                @endif
             </div>
         </div>
     </div>

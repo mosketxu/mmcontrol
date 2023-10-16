@@ -80,7 +80,7 @@ class ClienteProds extends Component
                 })
             ->get();
 
-        $vista= $this->tipo=='1' ? 'livewire.clientes.producto.prodseditorial' : 'livewire.clientes.producto.prodsotros';
+        $vista= $this->tipo=='1' ? 'livewire.clientes.producto.prodseditorial-cliente' : 'livewire.clientes.producto.prodsotros-cliente';
 
         return view($vista,compact('productos','clientes'));
     }

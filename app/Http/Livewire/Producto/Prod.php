@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Producto;
 use Livewire\Component;
 
 use App\Models\{Caja, Encuadernacion, Entidad, Formato, Gramaje, Material, Plastificado, Producto, Tinta};
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
@@ -29,6 +30,8 @@ class Prod extends Component
     public $ficheropdf;
     public $tipo;
     public $titulo;
+    public $deshabilitado;
+
 
     protected function rules(){
         return [
@@ -92,6 +95,7 @@ class Prod extends Component
         $this->producto=$producto;
         $this->tipo=$tipo;
         $this->titulo=$titulo;
+        $this->deshabilitado= Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

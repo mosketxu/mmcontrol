@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <x-slot name="header">
         <div class="flex">
             <div class="w-full">
@@ -7,14 +7,10 @@
                 </h2>
             </div>
             <div class="w-full">
-                @if(Auth::user()->hasRole('Cliente'))
-                    @include('producto.producto-menu' )
-                @else
-                    @include('clientes.producto.producto-cliente-menu' )
-                @endif
+                @include('clientes.producto.producto-cliente-menu' )
             </div>
             <div class="flex flex-row-reverse w-full">
-                <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>
+                {{-- <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button> --}}
             </div>
         </div>
     </x-slot>
@@ -25,4 +21,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-guest-layout>

@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entidad;
+use App\Models\Producto;
 use App\Models\UserEmpresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Dompdf\Dompdf;
 
 class ClienteController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('can:cliente.index');
+        $this->middleware('can:cliente.producto.index');
     }
     /**
      * Display a listing of the resource.
@@ -40,9 +42,27 @@ class ClienteController extends Controller
         $cliente=Auth::user();
         $titulo=$tipo=='1'? 'Productos Editoriales' : 'Productos Packaging y Propios';
         $titulo= $titulo . ' del cliente ' . $cliente->name ;
-
         return view('clientes.producto.index',compact('tipo','cliente','titulo'));
     }
+
+    public function productoedit(Producto $producto){
+        $tipo=$producto->tipo;
+        $titulo=$tipo=='1'? 'Producto Editorial:' : 'Producto Packaging/Propio:';
+        return view('clientes.producto.edit',compact('producto','tipo','titulo'));
+    }
+
+    public function productoarchivos(Producto $producto, $ruta){
+        return view('clientes.producto.archivos',compact('producto','ruta'));
+    }
+
+    public function productoficha($prodId,$tipo,$tipopdf){
+        $pdf = new Dompdf();
+        $producto=Producto::with('cliente')->find($prodId);
+        $pdf = \PDF::loadView('clientes.producto.fichapdf', compact('producto','tipo','tipopdf'));
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
+    }
+
 
 
     /**

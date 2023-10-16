@@ -107,8 +107,12 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     // Route::get('/presupuesto/{presupuesto}/editar/{ruta}', [PresupuestoController::class, 'editar'])->name('presupuesto.editar');
     // Route::get('/presupuesto/{presupuesto}/archivos/{ruta}', [PresupuestoController::class, 'archivos'])->name('presupuesto.archivos');
 
-    Route::get('cliente.entidad.index', [ClienteController::class,'entidadIndex'])->middleware('can:cliente.entidad.index')->name('cliente.entidad.index');
-    Route::get('cliente.producto/{tipo}', [ClienteController::class,'productotipo'])->middleware('can:cliente.producto.index')->name('cliente.producto.tipo');
+    Route::get('cliente/entidad/index', [ClienteController::class,'entidadIndex'])->middleware('can:cliente.entidad.index')->name('cliente.entidad.index');
+    Route::get('cliente/producto/{tipo}', [ClienteController::class,'productotipo'])->middleware('can:cliente.producto.index')->name('cliente.producto.tipo');
+    Route::get('cliente/producto/{producto}/edit', [ClienteController::class,'productoedit'])->middleware('can:cliente.producto.index')->name('cliente.producto.edit');
+    Route::get('cliente/producto/{prodId}/ficha/{tipo}/{tipopdf}', [ClienteController::class,'productoficha'])->middleware('can:cliente.producto.index')->name('cliente.producto.ficha');
+    Route::get('cliente/producto/{producto}/archivos/{ruta}', [ClienteController::class, 'productoarchivos'])->middleware('can:cliente.producto.index')->name('cliente.producto.archivos');
+
 
 
     Route::get('cliente.presupuesto.index', [ClienteController::class,'presupuestoIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
