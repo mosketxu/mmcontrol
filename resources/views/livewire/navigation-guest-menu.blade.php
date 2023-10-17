@@ -53,7 +53,7 @@
                     </x-jet-dropdown>
                 </div>
                 @endcan
-                @can('cliente.presupuesto.index')
+                {{-- @can('cliente.presupuesto.index')
                 <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left" width="60" >
                         <x-slot name="trigger">
@@ -80,7 +80,7 @@
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
-                @endcan
+                @endcan --}}
                 @can('cliente.oferta.index')
                 <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left" width="60" >
@@ -96,12 +96,12 @@
                         </x-slot>
                         <x-slot name="content">
                             <div class="w-44">
-                                <x-jet-dropdown-link href="{{ route('oferta.tipo','1' ) }}" class="text-left">
+                                <x-jet-dropdown-link href="{{ route('cliente.oferta.tipo','1' ) }}" class="text-left">
                                     Editorial
                                 </x-jet-dropdown-link>
                             </div>
                             <div class="w-44">
-                                <x-jet-dropdown-link href="{{ route('oferta.tipo','2' ) }}" class="text-left">
+                                <x-jet-dropdown-link href="{{ route('cliente.oferta.tipo','2' ) }}" class="text-left">
                                     Packaging y propios
                                 </x-jet-dropdown-link>
                             </div>

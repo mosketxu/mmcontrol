@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Oferta;
 use App\Models\OfertaProceso;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class OfertaProcesos extends Component
 {
@@ -56,6 +57,8 @@ class OfertaProcesos extends Component
         $this->preciototal=$pproceso->preciototal;
         $this->orden=$pproceso->orden;
         $this->visible=$pproceso->visible;
+        $this->deshabilitado=$deshabilitado;
+        if(Auth::user()->hasRole('Cliente')) $this->deshabilitado='disabled';
     }
 
     public function render(){
@@ -94,10 +97,7 @@ class OfertaProcesos extends Component
         $this->emit('refresh');
     }
 
-    public function delete($valorId)
-    {
-        $this->validate();
-
+    public function delete($valorId){
         $borrar = OfertaProceso::find($valorId);
 
         if ($borrar) {

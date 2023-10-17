@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entidad;
+use App\Models\Oferta;
 use App\Models\Producto;
 use App\Models\UserEmpresa;
 use Illuminate\Http\Request;
@@ -63,7 +64,25 @@ class ClienteController extends Controller
         return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
     }
 
+    public function ofertatipo($tipo){
+        $titulo=$tipo=='1' ? 'Presupuesto MM Editorial':  'Presupuesto MM Packaging/Propios';
+        return view('clientes.oferta.index',compact('tipo','titulo'));
+    }
 
+    public function ofertaeditar(Oferta $oferta,$ruta){
+        $tipo=$oferta->tipo;
+        $titulo=$tipo=='1' ? 'Presupuesto MM Editorial' : 'Presupuesto MM Packaging/Propios';
+        return view('clientes.oferta.edit',compact('oferta','tipo','ruta','titulo'));
+    }
+
+    public function ofertaficha($ofertaId,$tipo){
+        $pdf = new Dompdf();
+        $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
+        $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaotrospdf';
+        $pdf = \PDF::loadView($vista, compact('oferta'));
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
+    }
 
     /**
      * Show the form for creating a new resource.

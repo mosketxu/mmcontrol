@@ -16,58 +16,69 @@
                                 <h3 class="pl-1 font-semibold">Datos generales</h3>
                                 <input  wire:model.defer="presupuestoid" type="hidden"/>
                                 @if($tipo!='1')
-                                <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
+                                <select wire:model.defer="tipo"
+                                    class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+                                    {{$deshabilitado}}>
                                     <option value="2">Packaging</option>
                                     <option value="3">Propios</option>
-                                </x-select>
+                                </select>
                                 @endif
                             </div>
                             {{-- fecha-cliente-contacto-estado- --}}
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Fecha') }}</x-jet-label>
-                                    <input  wire:model.lazy="fecha" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
+                                    <input  wire:model.lazy="fecha" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        {{$deshabilitado}}/>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Cliente') }}</x-jet-label>
-                                    <x-selectcolor wire:model.lazy="cliente_id" selectname="cliente_id" color="blue" class="w-full py-1" >
+                                    <select wire:model.lazy="cliente_id"
+                                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+                                        {{$deshabilitado}}>
                                         <option value="">-- Selecciona cliente --</option>
                                         @foreach ($clientes as $cliente)
                                         <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
                                         @endforeach
-                                    </x-selectcol>
+                                    </select>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Contacto') }}</x-jet-label>
-                                    <x-selectcolor wire:model.lazy="contacto_id" selectname="contacto_id" color="blue" class="w-full py-1" >
-                                        @if (isset($contactos))
-                                            <option value="">-- Selecciona contacto --</option>
-                                            @foreach ($contactos as $contacto)
-                                            <option value="{{ $contacto->contacto_id }}">{{ $contacto->entidadcontacto->entidad ?? '-'  }}</option>
-                                            @endforeach
+                                    <select wire:model.lazy="contacto_id"
+                                    class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+                                    {{$deshabilitado}}>
+                                    @if (isset($contactos))
+                                    <option value="">-- Selecciona contacto --</option>
+                                    @foreach ($contactos as $contacto)
+                                    <option value="{{ $contacto->contacto_id }}">{{ $contacto->entidadcontacto->entidad ?? '-'  }}</option>
+                                    @endforeach
                                         @else
-                                            <option value="">-- Selecciona primero un cliente --</option>
+                                        <option value="">-- Selecciona primero un cliente --</option>
                                         @endif
-                                    </x-selectcolor>
+                                    </select>
                                 </div>
                                 <div class="w-full">
                                     <x-jet-label >{{ __('Estado') }}</x-jet-label>
-                                    <x-selectcolor wire:model.lazy="estado" selectname="estado" color="blue" class="w-full py-1" >
+                                    <select wire:model.lazy="estado"
+                                    class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+                                        {{$deshabilitado}}>
                                         <option value="0">En Espera</option>
                                         <option value="1">Aceptada</option>
                                         <option value="2">Rechazada</option>
-                                    </x-selectcolor>
+                                    </select>
                                 </div>
                             </div>
                             {{-- Descrip-isbn titulo --}}
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Descripción') }}</x-jet-label>
-                                    <textarea wire:model.defer="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1">{{ old('descripcion') }} </textarea>
+                                    <textarea wire:model.defer="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('ISBN') }}</x-jet-label>
-                                    <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="blue" class="w-full py-1" >
+                                    <select wire:model.lazy="producto_id"
+                                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+                                        {{$deshabilitado}}>
                                         @if (isset($productos))
                                             <option value="">-- Selecciona producto --</option>
                                             @foreach ($productos as $producto)
@@ -76,11 +87,13 @@
                                         @else
                                             <option value="">-- Selecciona primero un producto --</option>
                                         @endif
-                                    </x-selectcolor>
+                                    </select>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Título') }} </x-jet-label>
-                                    <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="blue" class="w-full py-1" >
+                                    <select wire:model.lazy="producto_id"
+                                        class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+                                        {{$deshabilitado}}>
                                         @if (isset($productos))
                                             <option value="">-- Selecciona un producto --</option>
                                             @foreach ($productos as $producto)
@@ -89,26 +102,25 @@
                                         @else
                                             <option value="">-- Selecciona primero un cliente --</option>
                                         @endif
-                                    </x-selectcolor>
+                                    </select>
                                 </div>
                             </div>
                             {{-- manipulacion-entrega-obs --}}
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Manipulación') }}</x-jet-label>
-                                    <textarea wire:model.defer="manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="1">{{ old('manipulacion') }} </textarea>
+                                    <textarea wire:model.defer="manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$deshabilitado}}>{{ old('manipulacion') }} </textarea>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Entrega') }}</x-jet-label>
-                                    <textarea wire:model.defer="entrega" class="w-full text-xs border-gray-300 rounded-md" rows="1">{{ old('entrega') }} </textarea>
+                                    <textarea wire:model.defer="entrega" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$deshabilitado}}>{{ old('entrega') }} </textarea>
                                 </div>
                                 <div class="w-full mt-1 form-item">
                                     <x-jet-label >{{ __('Observaciones') }}</x-jet-label>
-                                    <textarea wire:model.defer="observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="1">{{ old('observaciones') }} </textarea>
+                                    <textarea wire:model.defer="observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$deshabilitado}}>{{ old('observaciones') }} </textarea>
                                 </div>
                             </div>
                         </div>
-                        {{-- descrip producto --}}
                         <div class="px-1 bg-gray-50">
                             <div class="p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Descripción Producto</h3>
@@ -170,10 +182,16 @@
                         </div>
                     </div>
                     <div class="px-1 py-0 pb-1 mx-2 ">
-                        <div class="flex flex-col mx-2 mb-2 md:space-y-0 md:flex-row md:space-x-2">
-                            <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                            <x-jet-secondary-button  onclick="location.href = '{{route('oferta.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
-                        </div>
+                        @if(!Auth::user()->hasRole('Cliente'))
+                            <div class="flex flex-col mx-2 mb-2 md:space-y-0 md:flex-row md:space-x-2">
+                                <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
+                                <x-jet-secondary-button  onclick="location.href = '{{route('oferta.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            </div>
+                        @else
+                            <div class="flex flex-col mx-2 mb-2 md:space-y-0 md:flex-row md:space-x-2">
+                                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.oferta.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            </div>
+                        @endif
                     </div>
                 </form>
             </div>

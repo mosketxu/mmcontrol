@@ -52,7 +52,7 @@ class ClienteProds extends Component
     public function render(){
         $this->producto= new Producto;
         $entidadescliente=UserEmpresa::where('user_id',$this->cliente->id)->get();
-        // dd($entidadescliente);
+
         $entidades=Entidad::orderBy('entidad')
         ->whereIn('id',$entidadescliente->pluck('entidad_id'))
         ->get();

@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Livewire\Oferta;
+namespace App\Http\Livewire\Clientes;
 
 use Livewire\Component;
 
-use App\Models\{ Entidad, Mes, Oferta};
+use App\Models\{ Entidad, Mes, Oferta, UserEmpresa};
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use Illuminate\Support\Facades\Auth;
 
-class Ofertas extends Component
+class ClienteOfertas extends Component
 {
+
     use WithPagination, WithBulkActions;
 
     public $search='';
@@ -22,23 +23,29 @@ class Ofertas extends Component
     public $filtroisbn='';
     public $filtroestado='';
     public $deshabilitado='';
+    public $entidadescliente;
+    // public $cliente;
 
 
     public $tipo='';
 
-    public function mount($tipo)
-    {
+    public function mount($tipo){
         $this->tipo=$tipo;
+        // $this->cliente=Auth::user();
         $this->deshabilitado=Auth::user()->hasRole('Cliente')? 'disabled' :'';
+        $this->entidadescliente=UserEmpresa::where('user_id',Auth::user()->id)->pluck('entidad_id');
+
     }
 
     public function render(){
-        $clientes=Entidad::whereIn('entidadtipo_id',['1','2'])->orderBy('entidad')->get();
+        $clientes=Entidad::whereIn('entidadtipo_id',['1','2'])
+        ->orderBy('entidad')
+        ->get();
         $meses=Mes::orderBy('id')->get();
 
         if($this->selectAll) $this->selectPageRows();
         $ofertas = $this->rows;
-        return view('livewire.oferta.ofertas',compact('ofertas','clientes','meses'));
+        return view('livewire.clientes.oferta.cliente-ofertas',compact('ofertas','clientes','meses'));
     }
 
     public function updatingSearch(){$this->resetPage();}
@@ -48,12 +55,6 @@ class Ofertas extends Component
     public function updatingFiltroreferencia(){$this->resetPage();}
     public function updatingFiltroestado(){$this->resetPage();}
 
-    public function changeValor(Oferta $oferta,$campo,$valor)
-    {
-        $oferta->update([$campo=>$valor]);
-        $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
-    }
-
     public function getRowsQueryProperty(){
         if($this->tipo=='1')
             return Oferta::query()
@@ -61,6 +62,7 @@ class Ofertas extends Component
                 ->join('entidades','ofertas.cliente_id','=','entidades.id')
                 ->join('productos','ofertas.producto_id','=','productos.id')
                 ->select('ofertas.*', 'entidades.entidad', 'entidades.emailadm','productos.isbn','productos.referencia')
+                ->whereIn('ofertas.cliente_id',$this->entidadescliente)
                 ->where('ofertas.tipo',$this->tipo)
                 ->search('ofertas.id',$this->search)
                 ->when($this->filtroreferencia!='', function ($query){
@@ -81,6 +83,7 @@ class Ofertas extends Component
                 ->orderBy('ofertas.fecha','desc');
         else
             return Oferta::query()
+            ->whereIn('ofertas.cliente_id',$this->entidadescliente)
             ->with('cliente','contacto')
             ->join('entidades','ofertas.cliente_id','=','entidades.id')
             ->select('ofertas.*', 'entidades.entidad', 'entidades.emailadm')
@@ -106,24 +109,4 @@ class Ofertas extends Component
     public function getRowsProperty(){
         return $this->rowsQuery->get();
     }
-
-    public function deleteSelected(){
-        $deleteCount = $this->selectedRowsQuery->count();
-        $this->selectedRowsQuery->delete();
-        $this->showDeleteModal = false;
-
-        $this->dispatchBrowserEvent('notify', $deleteCount . ' ofertas eliminadas!');
-    }
-
-
-
-    public function delete($ofertaId)
-    {
-        $oferta = Oferta::find($ofertaId);
-        if ($oferta) {
-            $oferta->delete();
-            $this->dispatchBrowserEvent('notify', 'oferta borrada. ');
-        }
-    }
-
 }

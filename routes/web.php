@@ -108,15 +108,18 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     // Route::get('/presupuesto/{presupuesto}/archivos/{ruta}', [PresupuestoController::class, 'archivos'])->name('presupuesto.archivos');
 
     Route::get('cliente/entidad/index', [ClienteController::class,'entidadIndex'])->middleware('can:cliente.entidad.index')->name('cliente.entidad.index');
+
     Route::get('cliente/producto/{tipo}', [ClienteController::class,'productotipo'])->middleware('can:cliente.producto.index')->name('cliente.producto.tipo');
     Route::get('cliente/producto/{producto}/edit', [ClienteController::class,'productoedit'])->middleware('can:cliente.producto.index')->name('cliente.producto.edit');
     Route::get('cliente/producto/{prodId}/ficha/{tipo}/{tipopdf}', [ClienteController::class,'productoficha'])->middleware('can:cliente.producto.index')->name('cliente.producto.ficha');
     Route::get('cliente/producto/{producto}/archivos/{ruta}', [ClienteController::class, 'productoarchivos'])->middleware('can:cliente.producto.index')->name('cliente.producto.archivos');
 
+    // Route::get('cliente.presupuesto.index', [ClienteController::class,'presupuestoIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
 
+    Route::get('cliente/oferta/{tipo}', [ClienteController::class,'ofertatipo'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.tipo');
+    Route::get('cliente/oferta/{oferta}/editar/{ruta}', [ClienteController::class, 'ofertaeditar'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.editar');
+    Route::get('cliente/oferta/{ofertaId}/ficha/{tipo}', [ClienteController::class,'ofertaficha'])->name('cliente.oferta.ficha');
 
-    Route::get('cliente.presupuesto.index', [ClienteController::class,'presupuestoIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
-    Route::get('cliente.oferta.index', [ClienteController::class,'ofertaIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
     Route::get('cliente.pedido.index', [ClienteController::class,'pedidoIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
     Route::get('cliente.facturacion.index', [ClienteController::class,'facturacionIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
     Route::resource('cliente', ClienteController::class);

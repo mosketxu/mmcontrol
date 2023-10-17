@@ -32,7 +32,7 @@
                     <div>
                         @forelse ($ofertas as $oferta)
                         <div class="flex items-center w-full text-sm text-gray-500 border-t-0 border-y hover:bg-gray-100 hover:cursor-pointer" wire:loading.class.delay="opacity-50" >
-                            <div class="flex w-9/12 md:w-10/12" onclick="location.href = '{{ route('oferta.editar',[$oferta,'i']) }}'">
+                            <div class="flex w-9/12 md:w-10/12" onclick="location.href = '{{ route('cliente.oferta.editar',[$oferta,'i']) }}'">
                                 <div class="flex w-2/12 pl-2 text-left">{{ $oferta->id }}</div>
                                 <div class="flex w-3/12 text-left">{{ $oferta->cliente->entidad }}</div>
                                 <div class="flex w-2/12 text-left">{{ $oferta->ffecha2 }}</div>
@@ -53,7 +53,7 @@
                                     </select>
                                 </div>
                                 <div class="w-full text-center md:w-5/12">
-                                    <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{ route('oferta.ficha',[$oferta->id,$oferta->tipo]) }}"  target="_blank" title="Imprimir Oferta"/>
+                                    <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{ route('cliente.oferta.ficha',[$oferta->id,$oferta->tipo]) }}"  target="_blank" title="Imprimir Oferta"/>
                                     @if(!Auth::user()->hasRole('Cliente'))
                                         <x-icon.delete-a  class="w-7" wire:click.prevent="delete({{ $oferta->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
                                     @endif
