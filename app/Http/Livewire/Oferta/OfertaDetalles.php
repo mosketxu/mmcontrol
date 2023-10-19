@@ -19,7 +19,8 @@ class OfertaDetalles extends Component
     public $total='0';
     public $orden='0';
     public $observaciones='';
-    public $deshabilitado='';
+    // public $deshabilitado='';
+    public $escliente='';
 
     protected function rules()
     {
@@ -52,7 +53,7 @@ class OfertaDetalles extends Component
     {
         $this->oferta=Oferta::find($ofertaid);
         $this->oferta_id=$ofertaid;
-        $this->deshabilitado=Auth::user()->hasRole('Cliente')? 'disabled' :'';
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
     }
 
     public function render()

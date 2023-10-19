@@ -22,7 +22,7 @@ class ClienteOfertas extends Component
     public $filtroreferencia='';
     public $filtroisbn='';
     public $filtroestado='';
-    public $deshabilitado='';
+    public $escliente='';
     public $entidadescliente;
     // public $cliente;
 
@@ -32,7 +32,7 @@ class ClienteOfertas extends Component
     public function mount($tipo){
         $this->tipo=$tipo;
         // $this->cliente=Auth::user();
-        $this->deshabilitado=Auth::user()->hasRole('Cliente')? 'disabled' :'';
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
         $this->entidadescliente=UserEmpresa::where('user_id',Auth::user()->id)->pluck('entidad_id');
 
     }

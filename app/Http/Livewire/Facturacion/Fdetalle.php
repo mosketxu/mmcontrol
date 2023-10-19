@@ -23,6 +23,7 @@ class Fdetalle extends Component
     public $observaciones;
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     public $fdetalle;
     public $subtotalsiniva=0;
@@ -58,6 +59,7 @@ class Fdetalle extends Component
         $this->factura=Factura::find($facturaid);
         $this->bloqueado= $this->factura->estado =='0' ? '0' : '1';
         $this->deshabilitado= $deshabilitado;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

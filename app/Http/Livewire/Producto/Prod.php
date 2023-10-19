@@ -30,7 +30,7 @@ class Prod extends Component
     public $ficheropdf;
     public $tipo;
     public $titulo;
-    public $deshabilitado;
+    public $escliente;
 
 
     protected function rules(){
@@ -95,7 +95,7 @@ class Prod extends Component
         $this->producto=$producto;
         $this->tipo=$tipo;
         $this->titulo=$titulo;
-        $this->deshabilitado= Auth::user()->hasRole('Cliente') ? 'disabled' : '';
+        $this->escliente= Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

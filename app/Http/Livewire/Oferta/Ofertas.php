@@ -21,7 +21,7 @@ class Ofertas extends Component
     public $filtroreferencia='';
     public $filtroisbn='';
     public $filtroestado='';
-    public $deshabilitado='';
+    public $escliente='';
 
 
     public $tipo='';
@@ -29,7 +29,7 @@ class Ofertas extends Component
     public function mount($tipo)
     {
         $this->tipo=$tipo;
-        $this->deshabilitado=Auth::user()->hasRole('Cliente')? 'disabled' :'';
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
     }
 
     public function render(){

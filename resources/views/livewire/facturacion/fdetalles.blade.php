@@ -18,7 +18,7 @@
             </div>
         <div class="w-2/12">
             <select wire:model='pedido_id'
-                class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+                class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 {{ $deshabilitado }}>
                 @if(!$pedido_id)
                     <option value="" >-</option>
@@ -52,7 +52,7 @@
         </div>
         <div class="w-1/12">
             <select wire:model.lazy='iva'
-            class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50"
+            class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
             {{ $deshabilitado }}>
             <option value="0.00" > 0%</option>
             <option value="0.04" > 4%</option>

@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-
+        @if(!Auth::user()->hasRole('Cliente'))
         <div class="flex w-1/12 ">
             <div class="w-full">
                 <label class="px-1 text-sm text-gray-600">
@@ -81,6 +81,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="flex w-1/12">
             <div class="w-full">
                 <label class="px-1 text-sm text-gray-600">
@@ -127,6 +128,7 @@
                 </div>
             </div>
         </div>
+        @if(!Auth::user()->hasRole('Cliente'))
         <div class="flex w-1/12">
             <div class="w-full">
                 <label class="px-1 text-sm text-gray-600">
@@ -143,10 +145,8 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="w-1/12 text-center">
-            {{-- {{ $pedidos }} --}}
-            {{-- <x-icon.xls-a href="{{ route('pedido.export',[$tipo,
-            $search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado]) }}" class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/> --}}
             <x-icon.xls-a href="{{ route('pedido.export',[
                 $tipo,
                 $search=='' ? '@' : $search ,
@@ -159,10 +159,8 @@
                 $filtromes=='' ? '@' : $filtromes,
                 $filtroestado=='' ? '@' : $filtroestado,
                 $filtrofacturado=='' ? '@' : $filtrofacturado,
-                ]) }}" class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/>
-
-            {{-- <x-icon.xls-a wire:click="exportSelected" class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/> --}}
-
+                ]) }}"
+                class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/>
         </div>
     </div>
 </form>

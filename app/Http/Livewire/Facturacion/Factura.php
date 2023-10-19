@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Facturacion;
 
 use App\Models\{Entidad, EntidadContacto, Factura as ModelsFactura,Pedido};
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -26,6 +27,7 @@ class Factura extends Component
     public $mesagge;
     public $bloqueado='0';
     public $deshabilitado='';
+    public $escliente='';
     public $filtrocliente;
     public $cliente="";
 
@@ -87,6 +89,7 @@ class Factura extends Component
             $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$factura->cliente_id)->where('pedidocliente','<>','')->groupBy('pedidocliente')->get();
             $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$factura->cliente_id)->get();
         }
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

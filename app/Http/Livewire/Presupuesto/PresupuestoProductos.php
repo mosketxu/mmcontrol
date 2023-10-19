@@ -23,6 +23,7 @@ class PresupuestoProductos extends Component
 
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected $listeners = [ 'refreshpprod'];
 
@@ -59,6 +60,7 @@ class PresupuestoProductos extends Component
         $this->precio_ud=$pproducto->precio_ud;
         $this->preciototal=$pproducto->preciototal;
         $this->observaciones=$pproducto->observaciones;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

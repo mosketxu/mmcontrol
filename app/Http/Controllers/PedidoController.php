@@ -16,9 +16,11 @@ use App\Models\PedidoProducto;
 use App\Models\PedidoRetraso;
 use App\Models\Producto;
 use App\Models\Responsable;
+use App\Models\UserEmpresa;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use \PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -285,7 +287,7 @@ class PedidoController extends Controller
     }
 
     public function export($tipo,$search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado){
-        // dd($tipo,$search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado);
+
         $search=$search=='@' ? '' : $search;
         $filtroreferencia=$filtroreferencia=='@' ? '' : $filtroreferencia;
         $filtroisbn=$filtroisbn=='@' ? '' : $filtroisbn;
@@ -297,13 +299,14 @@ class PedidoController extends Controller
         $filtroestado=$filtroestado=='@' ? '' : $filtroestado;
         $filtrofacturado=$filtrofacturado=='@' ? '' : $filtrofacturado;
 
+
         if($tipo=='1')
             $pedidos= Pedido::query()
                 ->join('entidades as clientes','pedidos.cliente_id','=','clientes.id')
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
                 ->leftjoin('entidades as imprenta','pedidos.proveedor_id','=','imprenta.id')
-                ->select('clientes.entidad as cliente',
+                ->select('clientes.id as entidadId','clientes.entidad as cliente',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','imprenta.entidad as imprenta',
                 'pedidos.facturadopor',
                 'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
@@ -344,7 +347,7 @@ class PedidoController extends Controller
                 ->join('entidades','pedidos.cliente_id','=','entidades.id')
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
-                ->select('entidades.entidad',
+                ->select('entidades.id as entidadId','entidades.entidad',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
                 'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
                 'productos.isbn','productos.referencia',
@@ -380,8 +383,10 @@ class PedidoController extends Controller
                 ->groupBy('pedidos.id')
                 ->get();
 
-
-                // dd($pedidos);
+        if(Auth::user()->hasRole('Cliente')){
+            $empresascliente=UserEmpresa::where('user_id',Auth::user()->id)->pluck('entidad_id');
+            $pedidos=$pedidos->whereIn('entidadId',$empresascliente);
+        }
 
         return Excel::download(new PedidosExport($pedidos,$tipo), 'pedidos.xlsx');
     }

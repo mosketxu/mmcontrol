@@ -10,20 +10,20 @@
             <div class="w-full form-item sm:w-3/12">
                 <x-jet-label for="isbn">{{ __('Cod.') }}</x-jet-label>
                 <input wire:model.lazy="producto.isbn" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required autofocus {{$deshabilitado}}/>
+                required autofocus {{$escliente}}/>
             </div>
             {{-- Descripcion --}}
             <div class="w-full form-item sm:w-5/12">
                 <x-jet-label for="referencia">{{ __('Referencia') }}</x-jet-label>
                 <input wire:model.lazy="producto.referencia" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                required {{$deshabilitado}}/>
+                required {{$escliente}}/>
             </div>
             {{-- cliente --}}
             <div class="w-full form-item sm:w-4/12">
                 <x-jet-label for="entidad_id">{{ __('Cliente') }}</x-jet-label>
                 <select wire:model.lazy="producto.cliente_id"
-                    class="w-full text-xs py-1 border-gray-300 rounded-md shadow-sm   text-gray-600 focus:border-$color-300 focus:ring focus:ring-$color-200 focus:ring-opacity-50 "
-                    {{$deshabilitado}} >
+                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
+                    {{$escliente}} >
                     <option value=''>-- Selecciona cliente --</option>
                     @foreach ($clientes as $cliente)
                     <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
@@ -41,30 +41,30 @@
             <div class="w-2/12 form-item">
                 <x-jet-label for="material">{{ __('Material') }}</x-jet-label>
                 <input  wire:model.lazy="producto.material" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                {{$deshabilitado}}/>
+                {{$escliente}}/>
             </div>
             {{-- medidas --}}
             <div class="w-2/12 form-item">
                 <x-jet-label for="medidas">{{ __('Medidas') }}</x-jet-label>
                 <input  wire:model.lazy="producto.medidas" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                {{$deshabilitado}}/>
+                {{$escliente}}/>
             </div>
             {{-- troquel --}}
             <div class="w-2/12 form-item">
                 <x-jet-label for="troquel">{{ __('Troquel') }}</x-jet-label>
                 <input  wire:model.lazy="producto.troquel" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                {{$deshabilitado}}/>
+                {{$escliente}}/>
             </div>
             {{-- troquel --}}
             <div class="w-2/12 form-item">
                 <x-jet-label for="troquel">{{ __('Impresión') }}</x-jet-label>
                 <input  wire:model.lazy="producto.impresion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                {{$deshabilitado}}/>
+                {{$escliente}}/>
             </div>
             {{-- observaciones --}}
             <div class="w-4/12 form-item">
                 <x-jet-label for="observaciones">{{ __('Observaciones') }}</x-jet-label>
-                <textarea wire:model.defer="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$deshabilitado}}>{{ old('observaciones') }} </textarea>
+                <textarea wire:model.defer="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}}>{{ old('observaciones') }} </textarea>
                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
             </div>
         </div>

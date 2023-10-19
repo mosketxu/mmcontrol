@@ -22,6 +22,7 @@ class OfertaProductos extends Component
 
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected $listeners = [ 'refreshpprod'];
 
@@ -59,7 +60,7 @@ class OfertaProductos extends Component
         $this->preciototal=$pproducto->preciototal;
         $this->observaciones=$pproducto->observaciones;
         $this->deshabilitado= $deshabilitado;
-        if(Auth::user()->hasRole('Cliente')) $this->deshabilitado='disabled';
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

@@ -29,7 +29,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
         } elseif (Auth::user()->hasRole('Gestor')) {
             return redirect()->route('presupuesto.tipo',['1','i']);
         } elseif (Auth::user()->hasRole('Cliente')) {
-            return redirect()->route('cliente.index');
+            return redirect()->route('cliente.pedido.tipo',['1','i']);
         } else {
             return redirect()->route('presupuesto.tipo',['1','i']);
         }
@@ -101,14 +101,12 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('oferta', OfertaController::class);
 
     //Cliente
-    Route::get('cliente/{tipo}/ruta/{ruta}', [ClienteController::class,'tipo'])->middleware('can:cliente.index')->name('cliente.tipo');
-    // Route::get('/presupuesto/{tipo}/nuevo/{ruta}', [PresupuestoController::class, 'nuevo'])->name('presupuesto.nuevo');
-    // Route::get('/presupuesto/{presupuesto}/pdf', [PresupuestoController::class, 'presupuestoPDF'])->name('presupuesto.presupuestoPDF');
-    // Route::get('/presupuesto/{presupuesto}/editar/{ruta}', [PresupuestoController::class, 'editar'])->name('presupuesto.editar');
-    // Route::get('/presupuesto/{presupuesto}/archivos/{ruta}', [PresupuestoController::class, 'archivos'])->name('presupuesto.archivos');
+    // Route::get('cliente/{tipo}/ruta/{ruta}', [ClienteController::class,'tipo'])->middleware('can:cliente.index')->name('cliente.tipo');
 
+    // Entidades a las que accede el usuario invitado
     Route::get('cliente/entidad/index', [ClienteController::class,'entidadIndex'])->middleware('can:cliente.entidad.index')->name('cliente.entidad.index');
 
+    // Productos a las que accede el usuario invitado
     Route::get('cliente/producto/{tipo}', [ClienteController::class,'productotipo'])->middleware('can:cliente.producto.index')->name('cliente.producto.tipo');
     Route::get('cliente/producto/{producto}/edit', [ClienteController::class,'productoedit'])->middleware('can:cliente.producto.index')->name('cliente.producto.edit');
     Route::get('cliente/producto/{prodId}/ficha/{tipo}/{tipopdf}', [ClienteController::class,'productoficha'])->middleware('can:cliente.producto.index')->name('cliente.producto.ficha');
@@ -116,13 +114,18 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     // Route::get('cliente.presupuesto.index', [ClienteController::class,'presupuestoIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
 
+
+    // Ofertas a las que accede el usuario invitado
     Route::get('cliente/oferta/{tipo}', [ClienteController::class,'ofertatipo'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.tipo');
     Route::get('cliente/oferta/{oferta}/editar/{ruta}', [ClienteController::class, 'ofertaeditar'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.editar');
     Route::get('cliente/oferta/{ofertaId}/ficha/{tipo}', [ClienteController::class,'ofertaficha'])->name('cliente.oferta.ficha');
 
-    Route::get('cliente.pedido.index', [ClienteController::class,'pedidoIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
-    Route::get('cliente.facturacion.index', [ClienteController::class,'facturacionIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
-    Route::resource('cliente', ClienteController::class);
+    // Pedidos a las que accede el usuario invitado
+    Route::get('cliente/pedido/{tipo}/ruta/{ruta}', [ClienteController::class,'pedidotipo'])->middleware('can:cliente.pedido.index')->name('cliente.pedido.tipo');
+    Route::get('cliente/pedido/{pedido}/editar/{ruta}', [ClienteController::class, 'pedidoeditar'])->middleware('can:cliente.pedido.index')->name('cliente.pedido.editar');
+
+    // Facturas a las que accede el usuario invitado
+    Route::get('cliente/facturacion', [ClienteController::class,'facturacionindex'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.index');
 
 
 });

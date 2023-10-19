@@ -43,7 +43,7 @@
     </div>
 
     {{-- Nuevo detalle --}}
-    @if(!Auth::user()->hasRole('Cliente'))
+    @if(!$escliente)
         @if($bloqueado=='0')
         <form wire:submit.prevent="save">
             <div class="flex w-full py-0 my-0 space-x-1 text-left bg-green-100 border-t-0 border-y" wire:loading.class.delay="opacity-50">

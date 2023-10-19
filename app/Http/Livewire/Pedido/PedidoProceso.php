@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Pedido, PedidoProceso as ModelsPedidoProceso};
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 
@@ -19,6 +20,7 @@ class PedidoProceso extends Component
     public $descripcion='';
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected function rules(){
         return [
@@ -45,6 +47,7 @@ class PedidoProceso extends Component
         $this->pedido=Pedido::find($pedidoid);
         $this->pedido_id=$pedidoid;
         $this->deshabilitado= $deshabilitado;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, Factura, FacturaDetalle, PedidoProducto, Responsable};
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -55,13 +56,13 @@ class Pedido extends Component
     public $facturas;
     public $ofertas;
     public $deshabilitado;
+    public $escliente;
 
 
     protected $listeners = [ 'refreshpedido'];
 
     public function refreshpedido(){
         $this->mount($this->pedidoid,$this->tipo,$this->ruta,$this->titulo);
-    // $this->render();
     }
 
     protected function rules(){
@@ -169,10 +170,10 @@ class Pedido extends Component
                 $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
             }
         }
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
     public function render(){
-
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);

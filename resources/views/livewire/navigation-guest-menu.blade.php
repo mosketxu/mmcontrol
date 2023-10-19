@@ -124,12 +124,12 @@
                         </x-slot>
                         <x-slot name="content">
                             <div class="w-44">
-                                <x-jet-dropdown-link href="{{ route('pedido.tipo',['1','i'] ) }}" class="text-left">
+                                <x-jet-dropdown-link href="{{ route('cliente.pedido.tipo',['1','i'] ) }}" class="text-left">
                                     Editorial
                                 </x-jet-dropdown-link>
                             </div>
                             <div class="w-44">
-                                <x-jet-dropdown-link href="{{ route('pedido.tipo',['2','i'] ) }}" class="text-left">
+                                <x-jet-dropdown-link href="{{ route('cliente.pedido.tipo',['2','i'] ) }}" class="text-left">
                                     Packaging/Propios
                                 </x-jet-dropdown-link>
                             </div>
@@ -139,7 +139,7 @@
                 @endcan
                 @can('cliente.facturacion.index')
                 <div class="hidden text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
-                    <x-jet-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
+                    <x-jet-nav-link href="{{ route('cliente.facturacion.index') }}" :active="request()->routeIs('cliente.facturacion.index')">
                         {{ __('Facturación') }}
                     </x-jet-nav-link>
                 </div>
@@ -243,10 +243,10 @@
                     </x-slot>
                     <x-slot name="content">
                         <div class="w-44">
-                            <x-jet-dropdown-link href="{{ route('presupuesto.tipo',['1','i']) }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('cliente.presupuesto.tipo',['1','i']) }}" class="text-right">
                                 {{ __('Editorial') }}
                             </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('presupuesto.tipo',['2','i']) }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('cliente.presupuesto.tipo',['2','i']) }}" class="text-right">
                                 {{ __('Packaging/Propios') }}
                             </x-jet-dropdown-link>
                         </div>
@@ -269,13 +269,13 @@
                     </x-slot>
                     <x-slot name="content">
                         <div class="w-44">
-                            <x-jet-dropdown-link href="{{ route('oferta.tipo','1') }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('cliente.oferta.tipo','1') }}" class="text-right">
                                 {{ __('Editorial') }}
                             </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('oferta.tipo','2') }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('cliente.oferta.tipo','2') }}" class="text-right">
                                 {{ __('Packaging y propios') }}
                             </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('oferta.tipo','0') }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('cliente.oferta.tipo','0') }}" class="text-right">
                                 {{ __('Todos') }}
                             </x-jet-dropdown-link>
                         </div>
@@ -298,10 +298,10 @@
                     </x-slot>
                     <x-slot name="content">
                         <div class="w-44">
-                            <x-jet-dropdown-link href="{{ route('pedido.index',['1','i']) }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('cliente.pedido.tipo',['1','i']) }}" class="text-right">
                                 {{ __('Editorial') }}
                             </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('pedido.index',['2','i']) }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('cliente.pedido.tipo',['2','i']) }}" class="text-right">
                                 {{ __('Packaging/Propios') }}
                             </x-jet-dropdown-link>
                         </div>
@@ -310,7 +310,7 @@
             </div>
             @endcan
             @can('cliente.facturacion.index')
-            <x-jet-responsive-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
+            <x-jet-responsive-nav-link href="{{ route('cliente.facturacion.index') }}" :active="request()->routeIs('cliente.facturacion.index')">
                 {{ __('Facturación') }}
             </x-jet-responsive-nav-link>
             @endcan

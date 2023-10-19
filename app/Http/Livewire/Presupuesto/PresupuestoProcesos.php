@@ -21,6 +21,7 @@ class PresupuestoProcesos extends Component
 
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected function rules(){
         return [
@@ -55,6 +56,7 @@ class PresupuestoProcesos extends Component
         $this->preciototal=$pproceso->preciototal;
         $this->orden=$pproceso->orden;
         $this->visible=$pproceso->visible;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

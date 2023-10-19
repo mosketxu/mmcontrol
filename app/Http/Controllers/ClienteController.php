@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entidad;
+use App\Models\Mes;
 use App\Models\Oferta;
+use App\Models\Pedido;
 use App\Models\Producto;
+use App\Models\Responsable;
 use App\Models\UserEmpresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,17 +17,20 @@ class ClienteController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('can:cliente.producto.index');
+        // en las rutas cargo el can
+        // $this->middleware('can:cliente.pedido.index');
+
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(){
-        $cliente=Auth::user();
-        return view('clientes.index',compact(['cliente']));
-    }
+
+    // /**
+    //  * Display a listing of the resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function index(){
+    //     $cliente=Auth::user();
+    //     return view('clientes.index',compact(['cliente']));
+    // }
 
     public function entidadIndex(){
         $cliente=Auth::user();
@@ -84,69 +90,74 @@ class ClienteController extends Controller
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function pedidotipo($tipo,$ruta,Request $request ){
+
+        $search=$request->search;
+        $filtroreferencia=$request->filtroreferencia;
+        $filtroisbn=$request->filtroisbn;
+        $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
+
+        $filtrocliente=$request->filtrocliente;
+        $filtroproveedor=$request->filtroproveedor;
+        if($request->filtroestado==''){
+            $filtroestado='0';}
+        elseif($request->filtroestado == '3'){
+            $filtroestado='';
+        }else{
+            $filtroestado=$request->filtroestado;
+        }
+        $filtroestado=$request->filtroestado == '' ? '0' : $request->filtroestado;
+        $filtrofacturado=$request->filtrofacturado;
+        $filtroarchivos=$request->filtroarchivos;
+        $filtroplotter=$request->filtroplotter;
+        $filtroentrega=$request->filtroentrega;
+        $filtroanyo=$request->filtroanyo;
+        $filtromes=$request->filtromes;
+
+        $empresascliente=UserEmpresa::where('user_id',Auth::user()->id)->pluck('entidad_id');
+
+        $entidades=Entidad::whereIn('id',$empresascliente)->orderBy('entidad')->get();
+        $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
+        $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
+        $meses=Mes::orderBy('id')->get();
+        $responsables=Responsable::all();
+
+
+        $pedidos= Pedido::query()
+            ->with('cliente','proveedor')
+            ->join('entidades','pedidos.cliente_id','=','entidades.id')
+            ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
+            ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+            ->select('entidades.entidad as cli', 'entidades.nif','entidades.emailadm','productos.isbn as isbn','productos.referencia as ref','pedidos.*',)
+            ->where('pedidos.tipo',$tipo)
+            ->whereIn('pedidos.cliente_id',$empresascliente)
+            ->search('pedidos.id',$search)
+            ->when($filtroreferencia!='', function ($query) use($filtroreferencia) {$query->where('productos.referencia','like','%'.$filtroreferencia.'%');})
+            ->when($filtroisbn!='', function ($query) use($filtroisbn) {$query->where('productos.isbn','like','%'.$filtroisbn.'%');})
+            ->when($filtroresponsable!='', function ($query) use($filtroresponsable){$query->where('pedidos.responsable','like','%'.$filtroresponsable.'%');})
+            ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})
+            ->when($filtroproveedor!='', function ($query) use($filtroproveedor) {$query->where('pedidos.proveedor_id',$filtroproveedor);})
+            ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
+            ->when($filtrofacturado!='', function ($query) use($filtrofacturado) {$query->where('pedidos.facturado',$filtrofacturado);})
+            ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
+            ->when($filtroplotter!='', function ($query) use($filtroplotter) {$query->where('pedidos.ctrplotter',$filtroplotter);})
+            ->when($filtroentrega!='', function ($query) use($filtroentrega) {$query->where('pedidos.ctrentrega',$filtroentrega);})
+            ->searchYear('fechapedido',$filtroanyo)
+            ->searchMes('fechapedido',$filtromes)
+            ->orderBy('pedidos.estado','asc')
+            ->orderBy('entidades.entidad','asc')
+            ->orderBy('pedidos.fechaentrega','asc')
+            ->orderBy('pedidos.id','desc')
+            ->groupBy('pedidos.id')
+            ->paginate(30);
+
+        return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos',
+            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function pedidoeditar(Pedido $pedido,$ruta){
+        $tipo=$pedido->tipo;
+        $titulo=$tipo=='1' ? 'Pedido Editorial' : 'Pedido Packaging/Propio';
+        return view('clientes.pedido.edit',compact('pedido','tipo','ruta','titulo'));
     }
 }

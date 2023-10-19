@@ -22,6 +22,7 @@ class OfertaProcesos extends Component
 
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected function rules(){
         return [
@@ -58,7 +59,7 @@ class OfertaProcesos extends Component
         $this->orden=$pproceso->orden;
         $this->visible=$pproceso->visible;
         $this->deshabilitado=$deshabilitado;
-        if(Auth::user()->hasRole('Cliente')) $this->deshabilitado='disabled';
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){
