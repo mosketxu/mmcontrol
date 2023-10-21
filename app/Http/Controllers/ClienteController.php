@@ -121,7 +121,7 @@ class ClienteController extends Controller
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
         $responsables=Responsable::all();
-
+        $escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
 
         $pedidos= Pedido::query()
             ->with('cliente','proveedor')
@@ -151,13 +151,16 @@ class ClienteController extends Controller
             ->groupBy('pedidos.id')
             ->paginate(30);
 
-        return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos',
+
+            return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','escliente',
             'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function pedidoeditar(Pedido $pedido,$ruta){
         $tipo=$pedido->tipo;
         $titulo=$tipo=='1' ? 'Pedido Editorial' : 'Pedido Packaging/Propio';
-        return view('clientes.pedido.edit',compact('pedido','tipo','ruta','titulo'));
+        $escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
+
+        return view('clientes.pedido.edit',compact('pedido','tipo','ruta','titulo','escliente'));
     }
 }

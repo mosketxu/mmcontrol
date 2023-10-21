@@ -1,4 +1,9 @@
-<form method="GET" action="{{ route('pedido.tipo',[$tipo,'i']) }}">
+
+@if(!$escliente)
+    <form method="GET" action="{{ route('pedido.tipo',[$tipo,'i']) }}">
+@else
+    <form method="GET" action="{{ route('cliente.pedido.tipo',[$tipo,'i']) }}">
+@endif
 {{-- <form method="GET" action="{{ route('seguridad') }}"> --}}
     <div class="flex justify-between space-x-2 ">
         {{-- Pedido --}}
