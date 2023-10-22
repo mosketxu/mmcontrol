@@ -122,7 +122,6 @@ class PedidoParciales extends Component
         ->orderBy('fecha')
         ->get();
 
-
         return view('livewire.pedido.auxiliarpedidoscard',compact('valores'));
     }
 
@@ -139,8 +138,7 @@ class PedidoParciales extends Component
         return redirect()->route('pedido.parcial',[$this->pedidoid,$this->ruta,$parcialid]);
     }
 
-    public function save()
-    {
+    public function save(){
         $this->valorcampo2=$this->valorcampo2=='' ? '0' : $this->valorcampo2;
         $this->valorcampo3=$this->valorcampo3=='' ? '0' : $this->valorcampo3;
         $this->validate();
@@ -155,8 +153,6 @@ class PedidoParciales extends Component
         $pedido->hayParciales=$pedido->hayParciales+1;
         $pedido->save();
 
-        $this->dispatchBrowserEvent('notify', 'Parcial añadido con éxito');
-
         $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
         $this->valorcampo2='0';
         $this->valorcampo3='0';
@@ -167,11 +163,11 @@ class PedidoParciales extends Component
         $this->campo3visible=1;
         $this->campo4visible=1;
         $this->campoimgvisible=0;
-        // $this->emit('refresh');
 
         $this->ruta='e';
 
         return redirect()->route('pedido.parcial',[$this->pedidoid,$this->ruta,$p->id]);
+
 
     }
 

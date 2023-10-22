@@ -5,7 +5,7 @@
             <div class="flex mr-5">
                 <!-- Navigation Links -->
                 <div class="space-x-4 sm:-my-px sm:flex">
-                    @if (!$escliente)
+                    @if (!Auth::user()->hasRole('Cliente'))
                         <x-jet-nav-link href="{{route('pedido.editar',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.editar')">
                             <x-icon.edit class="text-blue-500 hover:text-blue-900" title="Editar"/>
                             <div class="hidden md:flex">Pedido</div>

@@ -46,6 +46,7 @@ class Prod extends Component
             'producto.tirada'=>'nullable|numeric',
             'producto.formato'=>'nullable',
             'producto.FSC'=>'nullable',
+            'producto.tipoimpresion'=>'nullable',
             'producto.materialinterior'=>'nullable',
             'producto.tintainterior'=>'nullable',
             'producto.gramajeinterior'=>'nullable',
@@ -153,21 +154,22 @@ class Prod extends Component
         if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
         if($this->producto->caja_id=='') $this->producto->caja_id=null;
         if($this->tipo) $this->producto->tipo=$this->tipo;
-
         if($this->producto->id){
             $i=$this->producto->id;
             $this->validate([
                 'producto.referencia'=>[
                     'required',
                     Rule::unique('productos','referencia')->ignore($this->producto->id)
-                    ],
+                ],
                 'producto.isbn'=>[
                     'nullable',
                     Rule::unique('productos','isbn')->ignore($this->producto->id)
-                    ],
-
                 ],
-            );
+
+            ],
+        );
+
+
             $mensaje=$this->producto->referencia . " actualizado satisfactoriamente";
 
         }else{
@@ -202,6 +204,7 @@ class Prod extends Component
             'tirada'=>$this->producto->tirada,
             'formato'=>$this->producto->formato,
             'FSC'=>$this->producto->FSC,
+            'tipoimpresion'=>$this->producto->tipoimpresion,
             'materialinterior'=>$this->producto->materialinterior,
             'tintainterior'=>$this->producto->tintainterior,
             'gramajeinterior'=>$this->producto->gramajeinterior,

@@ -23,6 +23,12 @@
             <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->paginas }}</td>
         </tr>
         @endif
+        @if($producto->tipoimpresion)
+        <tr style="">
+            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Tipo Impresión</td>
+            <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->tipoimpresion }}</td>
+        </tr>
+        @endif
         @if($producto->FSC)
         <tr style="">
             <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">FSC</td>

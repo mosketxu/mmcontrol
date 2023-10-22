@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Entidad;
+use App\Models\Factura;
+use App\Models\FacturaDetalle;
 use App\Models\Mes;
 use App\Models\Oferta;
 use App\Models\Pedido;
@@ -12,6 +15,7 @@ use App\Models\UserEmpresa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
@@ -162,5 +166,34 @@ class ClienteController extends Controller
         $escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
 
         return view('clientes.pedido.edit',compact('pedido','tipo','ruta','titulo','escliente'));
+    }
+
+
+    public function facturacionindex(){
+        return view('clientes.facturacion.index');
+    }
+
+    // public function facturacionedit($id)
+    // {
+    //     $factura=Factura::find($id);
+    //     return view('clientes.facturacion.edit',compact('factura'));
+    // }
+
+    public function facturacionshow($id)
+    {
+        $factura=Factura::with('facturadetalles','cliente')->find($id);
+        $totales = FacturaDetalle::where('factura_id',$factura->id)
+        ->select('iva',
+            DB::raw('SUM(subtotalsiniva) as subtotalsiniva'),
+            DB::raw('SUM(subtotaliva) as subtotaliva'),
+            DB::raw('SUM(subtotal) as subtotal'))
+        ->groupBy("iva")
+        ->get();
+
+        $pdf = new Dompdf();
+
+        $pdf = \PDF::loadView('facturacion.facturapdf', compact('factura','totales'));
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('factura_'.$id.'.pdf'); //asi lo muestra por pantalla
     }
 }

@@ -6,6 +6,7 @@ use App\Models\FacturaDetalle;
 use App\Models\Pedido;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Fdetalles extends Component
 {

@@ -1,5 +1,5 @@
 <div class="flex justify-between space-x-1">
-    <div class="text-gray-300 mt-8 w-0">
+    <div class="w-0 mt-8 text-gray-300">
         <x-icon.filter/>
     </div>
     <div class="flex w-2/12 ">
@@ -48,7 +48,9 @@
     </div>
     <div class="flex flex-row-reverse w-2/12 ">
         <div class="mt-3">
+            @if(!Auth::user()->hasRole('Cliente'))
             <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
+            @endif
         </div>
     </div>
 </div>

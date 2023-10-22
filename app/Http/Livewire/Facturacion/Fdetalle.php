@@ -9,6 +9,7 @@ use App\Models\Factura;
 use App\Models\FacturaDetalle as ModelsFacturaDetalle;
 use App\Models\Pedido;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Fdetalle extends Component
 {

@@ -14,7 +14,6 @@
                 <div class="mr-5">
                 {{-- @if($tipo=='1') --}}
                     @include('pedidos.pedidoeditorial-menu' )
-                    adas
                 {{-- @else
                     @include('pedidos.pedidootros-menu' )
                 @endif --}}

@@ -65,14 +65,14 @@
                 {{-- plastificado --}}
                 <div class="w-full form-item">
                     <x-jet-label for="plastificado">{{ __('Plastificado') }}</x-jet-label>
-                        <select wire:model.lazy="producto.plastificado"
-                            class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                            {{$escliente}} >
-                            <option value="">--Selecciona--</option>
-                            @foreach($plastificados as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        <select>
+                    <select wire:model.lazy="producto.plastificado"
+                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
+                        {{$escliente}} >
+                        <option value="">--Selecciona--</option>
+                        @foreach($plastificados as $item)
+                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
+                        @endforeach
+                    <select>
                 </div>
                 {{-- varios --}}
                 <div class="flex flex-row space-x-4">
@@ -81,10 +81,17 @@
                         <input  wire:model.lazy="producto.paginas" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                         {{$escliente}}/>
                     </div>
-                    {{-- <div class="w-full form-item">
-                        <x-jet-label for="tirada">{{ __('Tirada') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.tirada" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
-                    </div> --}}
+                    <div class="w-full form-item">
+                        <x-jet-label for="tipoimpresion">{{ __('Tipo Impresion') }}</x-jet-label>
+                        <select wire:model.lazy="producto.tipoimpresion"
+                            class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
+                            {{$escliente}} >
+                            <option value="">--Selecciona--</option>
+                            <option value="Estandár">Estandár</option>
+                            <option value="Premium">Premium</option>
+                        <select>
+                    </div>
+
                     <div class="form-item">
                         <x-jet-label for="FSC">{{ __('FSC') }}</x-jet-label>
                         <input type="checkbox" wire:model.lazy="producto.FSC"

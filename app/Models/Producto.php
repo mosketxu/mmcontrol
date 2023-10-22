@@ -10,7 +10,7 @@ class Producto extends Model
     use HasFactory;
     protected $table = 'productos';
 
-    protected $fillable=['cliente_id','tipo','isbn','referencia','preciocoste','tirada','formato','FSC','materialinterior','tintainterior',
+    protected $fillable=['cliente_id','tipo','isbn','referencia','preciocoste','tirada','formato','FSC','tipoimpresion','materialinterior','tintainterior',
     'gramajeinterior','paginas','materialcubierta','tintacubierta','gramajecubierta','plastificado','encuadernado','solapa','descripsolapa','guardas','descripguardas',
     'cd','descripcd','novedad','descripnovedad','caja_id','udxcaja','precioventa',
     'material','medidas','troquel','impresion','observaciones'];

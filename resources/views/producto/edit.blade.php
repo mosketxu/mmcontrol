@@ -7,7 +7,7 @@
                 </h2>
             </div>
             <div class="w-full">
-                @if(Auth::user()->hasRole('Cliente'))
+                @if(!Auth::user()->hasRole('Cliente'))
                     @include('producto.producto-menu' )
                 @else
                     @include('clientes.producto.producto-cliente-menu' )

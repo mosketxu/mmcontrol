@@ -21,7 +21,6 @@ class Pedidos extends Component
     public $responsable;
     public $cliente_id;
     public $proveedor_id;
-    // public $producto_id;
     public $fechapedido;
     public $fechaarchivos;
     public $fechaplotter;
