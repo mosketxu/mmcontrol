@@ -68,7 +68,6 @@
 
                      <table width=90% class="mx-auto mt-1 text-sm " style="color:rgb(30, 27, 27);">
                         <tr>
-                            {{ $oferta->ofertaproducto }}
                             <td width=20% class="font-bold" style="padding-top:8px"  >Ref:</td>
                             <td width=80%  class="font-bold"  style="padding-top:8px"  style="padding-top:8px">{{ $oferta->ofertaproducto->referencia }}</td>
                         </tr>
@@ -144,6 +143,12 @@
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Manipulación:</td>
                             <td width=80% class=""  style="padding-top:8px" >{{ $oferta->manipulacion }}</td>
+                        </tr>
+                        @endif
+                        @if($oferta->ofertaproducto->tipoimpresion!='')
+                        <tr>
+                            <td width=20% class="font-bold "  style="padding-top:8px">Tipo Impresión:</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->ofertaproducto->tipoimpresion }}</td>
                         </tr>
                         @endif
                         @if($oferta->ofertaproducto->FSC!='')

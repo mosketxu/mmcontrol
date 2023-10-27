@@ -4,8 +4,7 @@ namespace App\Http\Livewire\Oferta;
 
 use App\Models\OfertaProceso as ModelsOfertaProceso;
 use App\Models\Oferta;
-
-
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class OfertaProceso extends Component
@@ -21,6 +20,7 @@ class OfertaProceso extends Component
     public $descripcion='';
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected function rules(){
         return [
@@ -47,6 +47,7 @@ class OfertaProceso extends Component
         $this->oferta=Oferta::find($ofertaid);
         $this->oferta_id=$ofertaid;
         $this->deshabilitado= $deshabilitado;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){
@@ -85,12 +86,8 @@ class OfertaProceso extends Component
         $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
     }
 
-    public function delete($valorId)
-    {
-        $this->validate();
-
+    public function delete($valorId){
         $borrar = ModelsOfertaProceso::find($valorId);
-
         if ($borrar) {
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');

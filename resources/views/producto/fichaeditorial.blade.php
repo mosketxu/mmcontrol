@@ -26,6 +26,10 @@
             </td>
         </tr>
         <tr style="">
+            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Tipo Impresión</td>
+            <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->tipoimpresion }}</td>
+        </tr>
+        <tr style="">
             <td width=30% style="padding-left:3px; background-color: #CCC0D9;"  class="bordeleft1"></td>
             <td width=20% style="font-weight:bold; padding-left:3px; "  class="borde1" >Material</td>
             <td width=60% style="padding-left:3px; " class="borde1"> {{ $producto->materialinterior }}</td>

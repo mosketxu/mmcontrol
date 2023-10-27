@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Oferta;
 use Livewire\Component;
 
 use App\Models\{Entidad,Oferta,OfertaDetalle};
+use Illuminate\Support\Facades\Auth;
 
 class OfertaDetalles extends Component
 {
@@ -18,6 +19,8 @@ class OfertaDetalles extends Component
     public $total='0';
     public $orden='0';
     public $observaciones='';
+    // public $deshabilitado='';
+    public $escliente='';
 
     protected function rules()
     {
@@ -50,6 +53,7 @@ class OfertaDetalles extends Component
     {
         $this->oferta=Oferta::find($ofertaid);
         $this->oferta_id=$ofertaid;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
     }
 
     public function render()

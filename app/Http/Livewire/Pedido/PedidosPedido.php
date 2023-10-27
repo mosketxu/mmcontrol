@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Factura, FacturaDetalle, Pedido,Producto,PedidoProducto};
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -19,25 +20,21 @@ class PedidosPedido extends Component
     public $ctrentrega;
     public $facturado;
     public $producto='';
+    public $escliente='';
 
     protected $listeners = [ 'refreshpedidospedido' => '$refresh'];
 
     public function mount($pedido,$tipo){
-        // dd($pedido);
         $this->tipo=$tipo;
-        // $this->pedido=Pedido::query()
-        // ->join('entidades','pedidos.cliente_id','=','entidades.id')
-        // ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
-        // ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
-        // ->select('pedidos.*','entidades.entidad as cli', 'productos.isbn as isbn','productos.referencia as ref')
-        // ->find($pedidoId);
         $this->pedido=$pedido;
-        // dd($this->pedido);
         $this->estado=$this->pedido->estado;
         $this->facturado=$this->pedido->facturado;
         $this->ctrarchivos=$this->pedido->ctrarchivos;
         $this->ctrplotter=$this->pedido->ctrplotter;
         $this->ctrentrega=$this->pedido->ctrentrega;
+
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
+
     }
 
     public function render(){

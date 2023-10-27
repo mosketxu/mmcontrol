@@ -14,9 +14,9 @@ class ProductoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:producto.index')->only('tipo','ficha');
-        // $this->middleware('can:producto.index')->only('index','ficha');
         $this->middleware('can:producto.edit')->only('nuevo','edit','update');
+        $this->middleware('can:producto.index')->only('tipo','ficha');
+
     }
 
     /**

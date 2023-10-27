@@ -45,7 +45,8 @@
                             <div class="items-center flex-none w-3/12 md:flex md:w-2/12">
                                 <div class="w-full text-center md:w-7/12">
                                     <select wire:change="changeValor({{ $oferta }},'estado',$event.target.value)"
-                                        class="w-full text-left py-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $oferta->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                                        class="w-full text-left py-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $oferta->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
+                                        {{$escliente}}>
                                         <option value="0" {{ $oferta->estado== '0'? 'selected' : '' }}>Espera</option>
                                         <option value="1" {{ $oferta->estado== '1'? 'selected' : '' }}>Aceptada</option>
                                         <option value="2" {{ $oferta->estado== '2'? 'selected' : '' }}>Rechazada</option>
@@ -53,7 +54,9 @@
                                 </div>
                                 <div class="w-full text-center md:w-5/12">
                                     <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{ route('oferta.ficha',[$oferta->id,$oferta->tipo]) }}"  target="_blank" title="Imprimir Oferta"/>
-                                    <x-icon.delete-a  class="w-7" wire:click.prevent="delete({{ $oferta->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
+                                    @if(!$escliente)
+                                        <x-icon.delete-a  class="w-7" wire:click.prevent="delete({{ $oferta->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
+                                    @endif
                                 </div>
                             </div>
                         </div>

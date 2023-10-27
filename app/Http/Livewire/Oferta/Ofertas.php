@@ -4,9 +4,10 @@ namespace App\Http\Livewire\Oferta;
 
 use Livewire\Component;
 
-use App\Models\{ Entidad, EntidadContacto, Mes, Oferta};
+use App\Models\{ Entidad, Mes, Oferta};
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
+use Illuminate\Support\Facades\Auth;
 
 class Ofertas extends Component
 {
@@ -20,24 +21,23 @@ class Ofertas extends Component
     public $filtroreferencia='';
     public $filtroisbn='';
     public $filtroestado='';
+    public $escliente='';
+
 
     public $tipo='';
 
     public function mount($tipo)
     {
         $this->tipo=$tipo;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
     }
 
     public function render(){
-
-        // $ofertas=Oferta::with('contacto','cliente')->orderBy('id')->get();
         $clientes=Entidad::whereIn('entidadtipo_id',['1','2'])->orderBy('entidad')->get();
         $meses=Mes::orderBy('id')->get();
 
         if($this->selectAll) $this->selectPageRows();
         $ofertas = $this->rows;
-        // dd($ofertas);
-        // dd($this->rows);
         return view('livewire.oferta.ofertas',compact('ofertas','clientes','meses'));
     }
 

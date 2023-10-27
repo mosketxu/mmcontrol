@@ -7,7 +7,11 @@
                 </h2>
             </div>
             <div class="w-full">
-                @include('producto.producto-menu' )
+                @if(!Auth::user()->hasRole('Cliente'))
+                    @include('producto.producto-menu' )
+                @else
+                    @include('clientes.producto.producto-cliente-menu' )
+                @endif
             </div>
             <div class="flex flex-row-reverse w-full">
                 <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue"><x-icon.plus/>Nuevo</x-button.button>

@@ -50,13 +50,8 @@ class Prods extends Component
 
     }
 
-    public function render()
-    {
-        // if($this->tipo=='1') $titulo="Libros Editorial";
-        // else $titulo="Productos Packagind/Propios";
-
+    public function render(){
         $this->producto= new Producto;
-
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $productos=Producto::query()
@@ -80,7 +75,6 @@ class Prods extends Component
                 $query->orderBy($this->ordenarpor2,$this->orden2);
                 })
             ->get();
-
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
 

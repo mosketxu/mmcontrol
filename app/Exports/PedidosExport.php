@@ -21,6 +21,7 @@ class PedidosExport implements FromCollection,WithHeadings
     {
         if($this->tipo=='1')
         return [
+            'ClienteId',
             'Cliente',
             'Pedido',
             'Descripcion',
@@ -44,6 +45,7 @@ class PedidosExport implements FromCollection,WithHeadings
         ];
         else
         return [
+            'ClienteId',
             'Cliente',
             'Pedido',
             'Descripcion',

@@ -41,7 +41,6 @@ class OfertaController extends Controller
     public function edit(Oferta $oferta){
         $tipo=$oferta->tipo;
         return view('oferta.edit',compact('oferta','tipo'));
-
     }
 
     public function editar(Oferta $oferta,$ruta){

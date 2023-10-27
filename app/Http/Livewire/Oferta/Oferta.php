@@ -6,6 +6,8 @@ use App\Models\{Producto,EntidadContacto,Entidad,Oferta as ModelsOferta};
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
+use Illuminate\Support\Facades\Auth;
+
 class Oferta extends Component
 {
     public $ofertaid='';
@@ -28,11 +30,12 @@ class Oferta extends Component
     public $troquel='';
     public $observaciones='';
     public $estado='0';
+    public $deshabilitado='';
 
     public $filtroisbn='';
     public $filtroreferencia='';
     public $filtrocliente='';
-    public $deshabilitado='';
+    public $escliente='';
 
     public $contactos;
     public $productos;
@@ -81,6 +84,7 @@ class Oferta extends Component
         $this->titulo=$tipo=='1' ? 'Nuevo Presupuesto Editorial:' : 'Nueva Presupuesto Packaging/Propios:' ;
         $this->tipo=$tipo;
         $this->ruta=$ruta;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
 
         if ($ofertaid!='') {
             $oferta=ModelsOferta::find($ofertaid);

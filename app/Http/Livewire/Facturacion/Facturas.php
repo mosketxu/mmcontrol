@@ -42,7 +42,6 @@ class Facturas extends Component
 
 
     public function render(){
-        // $facturas=Factura::orderBy('id')->get();
         $clientes=Entidad::orderBy('entidad')->whereIn('entidadtipo_id',['1','2'])->get();
         $meses=Mes::orderBy('id')->get();
 
@@ -93,8 +92,6 @@ class Facturas extends Component
             ->searchMes2('fecha',$this->filtromes)
             ->orderBy('facturas.fecha','desc')
             ->orderBy('facturas.id','desc');
-
-            // ->paginate(5); solo contemplo la query, no el resultado. Luego pongo el resultado: get, paginate o lo que quiera
         }
 
     public function getRowsProperty(){

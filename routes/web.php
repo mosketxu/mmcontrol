@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController, PresupuestoController};
+use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController, PresupuestoController,ClienteController};
+use App\Models\UserEmpresa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
             return redirect()->route('seguridad');
         } elseif (Auth::user()->hasRole('Gestor')) {
             return redirect()->route('presupuesto.tipo',['1','i']);
+        } elseif (Auth::user()->hasRole('Cliente')) {
+            // return redirect()->route('cliente.pedido.tipo',['1','i']);
+            return redirect()->route('cliente.entidad.index'    );
         } else {
             return redirect()->route('presupuesto.tipo',['1','i']);
         }
@@ -46,6 +50,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('users', UserController::class)->except(['create'])->names('users'); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
 
     // Entidades
+    Route::get('/entidad/editar/{entidad}', [EntidadController::class, 'edita'])->name('entidad.edita');
     Route::get('/entidad/contactos/{entidad}', [EntidadController::class, 'contactos'])->name('entidad.contactos');
     Route::get('/entidad/{entidad}/destinos/{ruta}', [EntidadController::class, 'destinos'])->name('entidad.destinos');
     Route::get('/entidad/nuevocontacto/{entidad}', [EntidadController::class, 'createcontacto'])->name('entidad.createcontacto');
@@ -63,7 +68,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('producto', ProductoController::class);
 
     //Presupuestos
-    Route::get('presupuesto/{tipo}/ruta/{ruta}', [PresupuestoController::class,'tipo'])->middleware('can:presupuesto.index')->name('presupuesto.tipo');;
+    Route::get('presupuesto/{tipo}/ruta/{ruta}', [PresupuestoController::class,'tipo'])->middleware('can:presupuesto.index')->name('presupuesto.tipo');
     Route::get('/presupuesto/{tipo}/nuevo/{ruta}', [PresupuestoController::class, 'nuevo'])->name('presupuesto.nuevo');
     Route::get('/presupuesto/{presupuesto}/pdf', [PresupuestoController::class, 'presupuestoPDF'])->name('presupuesto.presupuestoPDF');
     Route::get('/presupuesto/{presupuesto}/editar/{ruta}', [PresupuestoController::class, 'editar'])->name('presupuesto.editar');
@@ -83,10 +88,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/pedido/{pedido}/distribuciones/{ruta}', [PedidoController::class, 'distribuciones'])->name('pedido.distribuciones');
     Route::get('/pedido/{pedido}/archivos/{ruta}', [PedidoController::class, 'archivos'])->name('pedido.archivos');
     Route::get('/pedido/{tipo}/nuevo/{ruta}', [PedidoController::class, 'nuevo'])->name('pedido.nuevo');
-    Route::get('pedido/{tipo}/ruta/{ruta}', [PedidoController::class,'tipo'])->middleware('can:pedido.index')->name('pedido.tipo');;
+    Route::get('pedido/{tipo}/ruta/{ruta}', [PedidoController::class,'tipo'])->middleware('can:pedido.index')->name('pedido.tipo');
     Route::resource('pedido', PedidoController::class);
-
-
 
     //Facturacion
     Route::resource('facturacion', FacturacionController::class);
@@ -98,5 +101,30 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('oferta/{tipo}', [OfertaController::class,'tipo'])->middleware('can:oferta.index')->name('oferta.tipo');
     Route::resource('oferta', OfertaController::class);
 
+    //Cliente
+        // Entidades a las que accede el usuario invitado
+        Route::get('cliente/entidad/index', [ClienteController::class,'entidadIndex'])->middleware('can:cliente.entidad.index')->name('cliente.entidad.index');
 
+        // Productos a las que accede el usuario invitado
+        Route::get('cliente/producto/{tipo}', [ClienteController::class,'productotipo'])->middleware('can:cliente.producto.index')->name('cliente.producto.tipo');
+        Route::get('cliente/producto/{producto}/edit', [ClienteController::class,'productoedit'])->middleware('can:cliente.producto.index')->name('cliente.producto.edit');
+        Route::get('cliente/producto/{prodId}/ficha/{tipo}/{tipopdf}', [ClienteController::class,'productoficha'])->middleware('can:cliente.producto.index')->name('cliente.producto.ficha');
+        Route::get('cliente/producto/{producto}/archivos/{ruta}', [ClienteController::class, 'productoarchivos'])->middleware('can:cliente.producto.index')->name('cliente.producto.archivos');
+
+        // Route::get('cliente.presupuesto.index', [ClienteController::class,'presupuestoIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
+
+
+        // Ofertas a las que accede el usuario invitado
+        Route::get('cliente/oferta/{tipo}', [ClienteController::class,'ofertatipo'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.tipo');
+        Route::get('cliente/oferta/{oferta}/editar/{ruta}', [ClienteController::class, 'ofertaeditar'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.editar');
+        Route::get('cliente/oferta/{ofertaId}/ficha/{tipo}', [ClienteController::class,'ofertaficha'])->name('cliente.oferta.ficha');
+
+        // Pedidos a las que accede el usuario invitado
+        Route::get('cliente/pedido/{tipo}/ruta/{ruta}', [ClienteController::class,'pedidotipo'])->middleware('can:cliente.pedido.index')->name('cliente.pedido.tipo');
+        Route::get('cliente/pedido/{pedido}/editar/{ruta}', [ClienteController::class, 'pedidoeditar'])->middleware('can:cliente.pedido.index')->name('cliente.pedido.editar');
+
+        // Facturas a las que accede el usuario invitado
+        Route::get('cliente/facturacion', [ClienteController::class,'facturacionindex'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.index');
+        // Route::get('cliente/facturacion/{factura}/edit', [ClienteController::class,'facturacionedit'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.edit');
+        Route::get('cliente/facturacion/{factura}/show', [ClienteController::class,'facturacionshow'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.show');
 });

@@ -20,6 +20,7 @@ class PresupuestoProceso extends Component
     public $descripcion='';
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected function rules(){
         return [
@@ -46,6 +47,7 @@ class PresupuestoProceso extends Component
         $this->presupuesto=Presupuesto::find($presupuestoid);
         $this->presupuesto_id=$presupuestoid;
         $this->deshabilitado= $deshabilitado;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

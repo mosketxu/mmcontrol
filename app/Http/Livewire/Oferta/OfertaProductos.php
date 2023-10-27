@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Oferta;
 
 use App\Models\{Producto,OfertaProducto};
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 
 class OfertaProductos extends Component
@@ -21,6 +22,7 @@ class OfertaProductos extends Component
 
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected $listeners = [ 'refreshpprod'];
 
@@ -57,6 +59,8 @@ class OfertaProductos extends Component
         $this->precio_ud=$pproducto->precio_ud;
         $this->preciototal=$pproducto->preciototal;
         $this->observaciones=$pproducto->observaciones;
+        $this->deshabilitado= $deshabilitado;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){
@@ -107,7 +111,6 @@ class OfertaProductos extends Component
     }
 
     public function delete($valorId){
-        $this->validate();
         $borrar = OfertaProducto::find($valorId);
         if ($borrar) {
             $borrar->delete();

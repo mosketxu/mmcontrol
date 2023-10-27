@@ -18,6 +18,7 @@ class PresupuestoProducto extends Component
     public $observaciones='';
     public $bloqueado=false;
     public $deshabilitado='';
+    public $escliente='';
 
     protected function rules(){
         return [
@@ -44,6 +45,7 @@ class PresupuestoProducto extends Component
         $this->presupuesto=Presupuesto::find($presupuestoid);
         $this->presupuesto_id=$presupuestoid;
         $this->deshabilitado= $deshabilitado;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){

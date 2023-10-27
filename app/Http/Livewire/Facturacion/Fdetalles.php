@@ -6,6 +6,7 @@ use App\Models\FacturaDetalle;
 use App\Models\Pedido;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Fdetalles extends Component
 {
@@ -25,6 +26,7 @@ class Fdetalles extends Component
 
     public $factura;
     public $deshabilitado='';
+    public $escliente='';
 
     protected function rules(){
         return [
@@ -60,6 +62,7 @@ class Fdetalles extends Component
         $this->visible=$fdetalle->visible;
         $this->observaciones=$fdetalle->observaciones;
         $this->deshabilitado=$deshabilitado;
+        $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){
