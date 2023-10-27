@@ -117,7 +117,7 @@
                 <div class="p-1 rounded-md bg-green-50">
                     <h3 class="pl-1 font-semibold">Interiores</h3>
                 </div>
-                {{-- gramaje interior --}}
+                {{-- gramaje interior   --}}
                 <div class="w-full form-item">
                     <x-jet-label for="gramajeinterior">{{ __('Gramaje Interior') }}</x-jet-label>
                     <select wire:model.lazy="producto.gramajeinterior"
