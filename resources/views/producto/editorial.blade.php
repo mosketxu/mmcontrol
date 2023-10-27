@@ -126,7 +126,7 @@
                             @endforeach
                         </x-selectcolor>
                 </div>
-                {{-- Material interior --}}
+                {{-- Material interior  --}}
                 <div class="w-full form-item">
                     <x-jet-label for="materialinterior">{{ __('Material Interior') }}</x-jet-label>
                         <x-selectcolor wire:model.lazy="producto.materialinterior" selectname="materialinterior" color="blue" class="w-full form-control" id="materialinterior">
