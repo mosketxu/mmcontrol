@@ -45,6 +45,7 @@ class Presupuesto extends Component
 
     public $contactos;
     public $productos;
+    public $escliente='';
 
 
     protected $listeners = [ 'refreshpresupuesto'];
