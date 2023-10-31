@@ -40,6 +40,7 @@ class ClienteFacturas extends Component
     public function render(){
         $empresascliente=UserEmpresa::where('user_id',Auth::user()->id)->pluck('entidad_id');
 
+
         $clientes=Entidad::orderBy('entidad')
             ->whereIn('entidadtipo_id',['1','2'])
             ->whereIn('id',$empresascliente)
