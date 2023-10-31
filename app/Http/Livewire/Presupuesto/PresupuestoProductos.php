@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Presupuesto;
 
 use App\Models\PresupuestoProducto;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Auth;
 
 use Livewire\Component;
 
@@ -60,6 +61,7 @@ class PresupuestoProductos extends Component
         $this->precio_ud=$pproducto->precio_ud;
         $this->preciototal=$pproducto->preciototal;
         $this->observaciones=$pproducto->observaciones;
+        $this->escliente=$deshabilitado;
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 

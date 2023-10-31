@@ -6,6 +6,7 @@ use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto,Pedido
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class Presupuesto extends Component
 {
@@ -45,6 +46,7 @@ class Presupuesto extends Component
 
     public $contactos;
     public $productos;
+    public $escliente;
 
 
     protected $listeners = [ 'refreshpresupuesto'];

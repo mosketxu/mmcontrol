@@ -38,7 +38,7 @@
                                             </div>
                                             <div class="w-3/12 text-left md:w-2/12" >
                                                 <div class="">{{ __('Cliente') }} </div>
-                                                {{-- @if($tipo=='1')<div class="text-xs text-blue-700">{{ __('Prov.') }}</div>@endif --}}
+                                                @if($tipo=='1')<div class="text-xs text-blue-700">{{ __('Prov.') }}</div>@endif
                                             </div>
                                             <div class="w-4/12 text-left md:w-6/12" >{{ $tipo=='1' ? 'ISBN/Ref' : 'Descripción'  }}</div>
                                             <div class="flex-none w-2/12 md:flex">

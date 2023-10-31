@@ -4,10 +4,6 @@
             <div class="">
                 @include('errores')
             </div>
-            {{-- <div class="mb-1">
-                    @include('presupuestos.presupuestoeditorialfilters')
-            </div> --}}
-            {{-- datos del presupuesto --}}
             <div class="flex-col space-y-1 text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 space-y-1">

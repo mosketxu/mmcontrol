@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Presupuesto;
 use App\Models\PresupuestoProceso;
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class PresupuestoProcesos extends Component
 {

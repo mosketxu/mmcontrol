@@ -20,9 +20,9 @@
         </div>
         <div class="flex-col w-3/12 pl-2 text-left md:w-2/12">
             <div class="">{{ $pedido->cliente->entidad }} </div>
-            @if(!$escliente)
+            {{-- @if(!$escliente) --}}
                 @if($tipo=='1')<div class="text-xs text-blue-700">{{ $pedido->proveedor->entidad ?? '' }}</div>@endif
-            @endif
+            {{-- @endif --}}
         </div>
         @if($pedido->tipo=='1')
             <div class="flex-col w-6/12 text-left">{{ $pedido->isbn }} - {{ $pedido->ref }}</div>

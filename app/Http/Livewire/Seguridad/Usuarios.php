@@ -95,11 +95,15 @@ class Usuarios extends Component
     }
 
     public function delete($valorId){
+
         $borrar = User::find($valorId);
 
         if ($borrar) {
             $empresasclienteborrar=UserEmpresa::where('user_id',$borrar->id)->get();
-            $empresasclienteborrar->delete();
+            foreach($empresasclienteborrar as $registro){
+                $ids[]=$registro->id;
+            }
+            // $empresasclienteborrar->delete();
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Usuario eliminado!');
         }

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Presupuesto;
 
 use App\Models\{Producto,PresupuestoProducto as ModelsPresupuestoProducto,Presupuesto};
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class PresupuestoProducto extends Component
@@ -41,10 +42,11 @@ class PresupuestoProducto extends Component
         ];
     }
 
-    public function mount($presupuestoid,$deshabilitado){
+    public function mount($presupuestoid,$escliente){
         $this->presupuesto=Presupuesto::find($presupuestoid);
         $this->presupuesto_id=$presupuestoid;
-        $this->deshabilitado= $deshabilitado;
+        $this->deshabilitado= $escliente;
+        $this->escliente= $escliente;
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
