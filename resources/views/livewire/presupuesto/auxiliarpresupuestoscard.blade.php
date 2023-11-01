@@ -101,7 +101,6 @@
                             @if($tipocampo3=='combo')
                                 <x-select selectname="valorcampo3" class="w-full mt-1 border-none hover:bg-gray-100"
                                     wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)">
-                                    {{-- {{ $presupuesto->estado== '0'? 'selected' : '' }} --}}
                                     @foreach ($seleccionables3 as $seleccion)
                                         <option value="{{ $seleccion->id }}" {{ $seleccion->id==$valor->valorcampo3 ? 'selected' :''  }}>{{ $seleccion->$campo3selectname }}</option>
                                     @endforeach

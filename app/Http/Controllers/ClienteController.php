@@ -9,6 +9,7 @@ use App\Models\FacturaDetalle;
 use App\Models\Mes;
 use App\Models\Oferta;
 use App\Models\Pedido;
+use App\Models\Presupuesto;
 use App\Models\Producto;
 use App\Models\Responsable;
 use App\Models\UserEmpresa;
@@ -94,8 +95,22 @@ class ClienteController extends Controller
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
     }
 
-    public function pedidotipo($tipo,$ruta,Request $request ){
+    public function presupuestotipo($tipo,$ruta,Request $request ){
+        $titulo=$tipo=='1' ? 'Presupuestos Editoriales' : 'Presupuestos Packaging/Propios';
+        return view('clientes.presupuesto.index',compact(['tipo','ruta','titulo']));
 
+    }
+
+    public function presupuestoeditar(Presupuesto $presupuesto,$ruta){
+        $tipo=$presupuesto->tipo;
+        $titulo=$tipo=='1' ? 'Presupuesto Editorial' : 'Presupuesto Packaging/Propio';
+        $escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
+
+        return view('clientes.presupuesto.edit',compact('presupuesto','tipo','ruta','titulo','escliente'));
+    }
+
+
+    public function pedidotipo($tipo,$ruta,Request $request ){
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;

@@ -94,7 +94,6 @@ class Presupuesto extends Component
             'facturadopor.required'=>'Definir quien facturará es necesario',
             'fechapresupuesto.required'=>'La fecha del presupuesto es necesaria',
             'fechapresupuesto.date'=>'La fecha debe ser válida',
-            'estado.required'=>'El estado es necesario',
             'espedido.required'=>'Definir si es pedido es necesario',
             'productoeditorialid.required'=>'El producto editorial es necesario',
         ];
@@ -347,7 +346,7 @@ class Presupuesto extends Component
 
         $pedidoid=$pedMax>=$pedidoid ? $pedMax+1 : $pedidoid;
 
-$ped=Pedido::create([
+        $ped=Pedido::create([
             'id'=>$pedidoid,
             'responsable'=>$presupuesto->responsable,
             'tipo'=>$presupuesto->tipo,

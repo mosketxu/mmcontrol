@@ -111,7 +111,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
         Route::get('cliente/producto/{prodId}/ficha/{tipo}/{tipopdf}', [ClienteController::class,'productoficha'])->middleware('can:cliente.producto.index')->name('cliente.producto.ficha');
         Route::get('cliente/producto/{producto}/archivos/{ruta}', [ClienteController::class, 'productoarchivos'])->middleware('can:cliente.producto.index')->name('cliente.producto.archivos');
 
-        // Route::get('cliente.presupuesto.index', [ClienteController::class,'presupuestoIndex'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.index');
+        // Pedidos a las que accede el usuario invitado
+        Route::get('cliente/presupuesto/{tipo}/ruta/{ruta}', [ClienteController::class,'presupuestotipo'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.tipo');
+        Route::get('cliente/presupuesto/{presupuesto}/editar/{ruta}', [ClienteController::class, 'presupuestoeditar'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.editar');
 
 
         // Ofertas a las que accede el usuario invitado
