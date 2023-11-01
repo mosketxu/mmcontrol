@@ -3,8 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Pedido,PedidoIncidencia as ModelsPedidoIncidencia};
-
-
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class PedidoIncidencia extends Component
@@ -86,6 +85,8 @@ class PedidoIncidencia extends Component
 
     public $editarvisible=0;
     public $search='';
+    public $escliente='';
+
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
@@ -113,6 +114,7 @@ class PedidoIncidencia extends Component
         $this->tipo=$tipo;
         $this->ruta=$ruta;
         $this->valorcampofecha=now()->format('Y-m-d');
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
     public function render()

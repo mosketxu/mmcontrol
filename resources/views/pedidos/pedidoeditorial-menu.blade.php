@@ -35,6 +35,14 @@
                             <div class="hidden md:ml-1 md:flex">Entrada Pedido</div>
                         </x-jet-nav-link>
                     @else
+                        <x-jet-nav-link href="{{route('pedido.incidencias',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.incidencias')">
+                            <x-icon.triangleexclamation class="w-5 {{ $pedido->incidenciascolor[0] }} hover:{{ $pedido->incidenciascolor[1] }} "  title="Incidencias"/>
+                            <div class="hidden md:ml-1 md:flex">Incidencias</div>
+                        </x-jet-nav-link>
+                        <x-jet-nav-link href="{{route('pedido.retrasos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.retrasos')">
+                            <x-icon.sandwatch  class="w-5 {{ $pedido->retrasoscolor[0] }} hover:{{ $pedido->retrasoscolor[1] }} "  title="Retrasos"/>
+                            <div class="hidden md:ml-1 md:flex">Retrasos</div>
+                        </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank">
                             <x-icon.pdf class="w-4 text-red-500 hover:text-red-900"/>
                             <div class="hidden md:ml-1 md:flex">Entrada Pedido</div>

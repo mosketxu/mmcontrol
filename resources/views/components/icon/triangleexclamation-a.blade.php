@@ -1,4 +1,4 @@
-<a {{ $attributes->merge(['type' => 'button', 'class' => 'w-5 h-5 mr-2 text-red-500 transform hover:text-red-700 hover:scale-125']) }}  title="PDF">
+<a {{ $attributes->merge(['type' => 'button', 'class' => 'w-5 h-5 mr-2  transform hover: hover:scale-125']) }}  title="PDF">
     <svg xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
         class="w-6 ">

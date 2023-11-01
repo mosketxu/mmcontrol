@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Pedido,PedidoArchivo as ModelsPedidoArchivo};
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 
@@ -89,6 +90,7 @@ class PedidoArchivo extends Component
 
     public $editarvisible=0;
     public $search='';
+    public $escliente='';
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
@@ -117,6 +119,8 @@ class PedidoArchivo extends Component
         $this->tipo=$tipo;
         $this->ruta=$ruta;
         $this->titulo="Archivos del pedido: ";
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
+
     }
 
     public function render()

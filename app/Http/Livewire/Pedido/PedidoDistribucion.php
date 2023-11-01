@@ -3,9 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{EntidadDestino, Pedido, PedidoDistribucion as ModelsPedidoDistribucion};
-
-
-
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class PedidoDistribucion extends Component
@@ -90,6 +88,7 @@ class PedidoDistribucion extends Component
 
     public $editarvisible=0;
     public $search='';
+    public $escliente='';
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
@@ -115,6 +114,8 @@ class PedidoDistribucion extends Component
         $this->pedido=Pedido::find($pedidoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
+
     }
 
     public function render(){

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Pedido, PedidoRetraso as ModelsPedidoRetraso};
-
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class PedidoRetraso extends Component
@@ -85,6 +85,7 @@ class PedidoRetraso extends Component
 
     public $editarvisible=1;
     public $search='';
+    public $escliente='';
 
 
     protected $listeners = [ 'refresh' => '$refresh'];
@@ -110,6 +111,7 @@ class PedidoRetraso extends Component
         $this->pedido=Pedido::find($pedidoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
     public function render(){

@@ -7,6 +7,7 @@ use App\Models\EntidadDestino;
 use App\Models\Pedido;
 use App\Models\PedidoParcial as ModelsPedidoParcial;
 use App\Models\PedidoparcialDetalle;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class PedidoParcial extends Component
@@ -17,6 +18,7 @@ class PedidoParcial extends Component
     public $parcialdetalles;
     public $ruta;
     public $tipo;
+    public $escliente='';
     // public $pedidoparcial;
 
     protected function rules(){
@@ -51,6 +53,7 @@ class PedidoParcial extends Component
         $this->parcial=ModelsPedidoParcial::find($parcialid);
         $this->ruta=$ruta;
         $this->tipo=$tipo;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
     public function render(){

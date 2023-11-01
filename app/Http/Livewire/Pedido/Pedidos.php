@@ -9,6 +9,7 @@ use App\Models\{ Pedido,Entidad, Mes, Responsable};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -61,6 +62,7 @@ class Pedidos extends Component
     public $destino='0';
 
     public $presupPDF='';
+    public $escliente='';
 
     protected function rules(){
         return [
@@ -113,6 +115,7 @@ class Pedidos extends Component
 
     public function mount($tipo){
         $this->tipo=$tipo;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
     public function render(){

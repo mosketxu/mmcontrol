@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\PedidoparcialDetalle as PedidoPedidoparcialDetalle;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class PedidoparcialDetalle extends Component
@@ -12,6 +13,7 @@ class PedidoparcialDetalle extends Component
     public $cantidad;
     public $precio_ud;
     public $total;
+    public $escliente='';
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
@@ -34,6 +36,7 @@ class PedidoparcialDetalle extends Component
 
     public function mount($parcialid){
         $this->parcialid=$parcialid;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
     public function render(){

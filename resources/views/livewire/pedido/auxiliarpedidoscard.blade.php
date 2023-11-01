@@ -76,7 +76,7 @@
                                 value="{{ $valor->valorcampofecha }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campofecha }}',$event.target.value)"
                                 class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
-                                $campofechadisabled />
+                                {{$campofechadisabled}} {{$escliente}}/>
                         </div>
                         @endif
                         @if ($campo2visible==1)
@@ -92,7 +92,7 @@
                             <input type="{{ $tipocampo2 }}" value="{{ $valor->valorcampo2 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)"
                                 class="w-full text-sm font-thin {{ $textcampo2 }} text-gray-500 border-0 rounded-md"
-                                {{ $campo2disabled }}/>
+                                {{ $campo2disabled }}  {{$escliente}}/>
                             @endif
                         </div>
                         @endif
@@ -110,7 +110,7 @@
                             <input type="{{ $tipocampo3 }}" value="{{ $valor->valorcampo3 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
                                 class="w-full text-sm font-thin {{ $textcampo3 }} text-gray-500 border-0 rounded-md"
-                                {{ $campo3disabled }}/>
+                                {{ $campo3disabled }} {{$escliente}}/>
                             @endif
                         </div>
                         @endif
@@ -119,12 +119,12 @@
                             @if($tipocampo4 =="textarea")
                                 <textarea  rows="2" cols="{{ $colstextarea4 }}"
                                     wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"
-                                    class="block text-xs font-thin text-left text-gray-500 border-0 rounded-md">{{ $valor->valorcampo4 }}</textarea>
+                                    class="block text-xs font-thin text-left text-gray-500 border-0 rounded-md" {{$escliente}}>{{ $valor->valorcampo4 }}</textarea>
                             @else
                             <input type="{{ $tipocampo4 }}" value="{{ $valor->valorcampo4 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"
                                 class="w-full {{ $textcampo4 }} text-sm font-thin text-gray-500 border-0 rounded-md"
-                                {{ $campo4disabled }}/>
+                                {{ $campo4disabled }} {{$escliente}}/>
                             @endif
                         </div>
                         @endif
@@ -133,7 +133,7 @@
                             <input type="{{ $tipocampo5 }}" value="{{ $valor->valorcampo5 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo5 }}',$event.target.value)"
                                 class="w-full text-sm font-thin {{ $textcampo5 }} text-gray-500 border-0 rounded-md"
-                                {{ $campo5disabled }}/>
+                                {{ $campo5disabled }} {{$escliente}}/>
                         </div>
                         @endif
                         @if ($campo6visible==1)
@@ -141,7 +141,7 @@
                             <input type="{{ $tipocampo6 }}" value="{{ $valor->valorcampo6 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo6 }}',$event.target.value)"
                                 class="w-full text-sm font-thin {{ $textcampo6 }} text-gray-500 border-0 rounded-md"
-                                {{ $campo6disabled }}/>
+                                {{ $campo6disabled }} {{$escliente}}/>
                         </div>
                         @endif
 
@@ -161,12 +161,16 @@
                         </div>
                         @endif
                         <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
-                            <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 mx-1"  title="Eliminar detalle"/>
+                            @if(!Auth::user()->hasRole('Cliente'))
+                                <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 mx-1"  title="Eliminar detalle"/>
+                            @endif
                             @if($pdfvisible=='1')
                                 <a href="{{route($routepdf,[$pedidoid,$ruta,$valor->id])}}" target="_blank" ><x-icon.pdf class="mx-1 text-red-500 hover:text-red-700 "/></a>
                             @endif
-                            @if($editarvisible=='1')
-                                <x-icon.edit-a wire:click="editar({{ $valor->id }})" class="mx-1"  title="Editar {{ $titulo }}"/>
+                            @if(!Auth::user()->hasRole('Cliente'))
+                                @if($editarvisible=='1')
+                                    <x-icon.edit-a wire:click="editar({{ $valor->id }})" class="mx-1"  title="Editar {{ $titulo }}"/>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -184,6 +188,7 @@
                         @endforelse
                 </div>
                 <div>
+                    @if(!Auth::user()->hasRole('Cliente'))
                     <form wire:submit.prevent="save">
                         <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                             @if ($campofechavisible==1)
@@ -275,15 +280,24 @@
                             </div>
                         </div>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
     <div class="m-2">
-        @if($ruta=='i')
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+        @if(!Auth::user()->hasRole('Cliente'))
+            @if($ruta=='i')
+                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @else
+                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @endif
         @else
-            <x-jet-secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @if($ruta=='i')
+                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @else
+                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @endif
         @endif
     </div>
 </div>

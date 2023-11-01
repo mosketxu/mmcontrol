@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pedido;
 
 use App\Models\{Pedido,PedidoParcial as ModelsPedidoParcial};
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class PedidoParciales extends Component
@@ -87,6 +88,7 @@ class PedidoParciales extends Component
 
     public $editarvisible=1;
     public $search='';
+    public $escliente='';
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
@@ -112,6 +114,7 @@ class PedidoParciales extends Component
         $this->tipo=$tipo;
         $this->ruta=$ruta;
         $this->pedidoid=$pedidoid;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
     public function render(){
