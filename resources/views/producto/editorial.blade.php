@@ -117,7 +117,7 @@
                 <div class="p-1 rounded-md bg-green-50">
                     <h3 class="pl-1 font-semibold">Interiores</h3>
                 </div>
-                {{-- gramaje interior --}}
+                {{-- gramaje interior   --}}
                 <div class="w-full form-item">
                     <x-jet-label for="gramajeinterior">{{ __('Gramaje Interior') }}</x-jet-label>
                     <select wire:model.lazy="producto.gramajeinterior"
@@ -141,15 +141,17 @@
                         @endforeach
                     </select>
                 </div>
-                {{-- Material interior --}}
+                {{-- Material interior  --}}
                 <div class="w-full form-item">
                     <x-jet-label for="materialinterior">{{ __('Material Interior') }}</x-jet-label>
-                        {{-- <select wire:model.lazy="producto.materialinterior" selectname="materialinterior" color="blue" class="w-full form-control" id="materialinterior" {{$escliente}}/>>
-                            <option value="">--Selecciona--</option>
-                            @foreach($materialesinterior as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        </select> --}}
+                    <select wire:model.lazy="producto.materialinterior"
+                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
+                        {{$escliente}}/>
+                        <option value="">--Selecciona--</option>
+                        @foreach($materialesinterior as $item)
+                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="flex flex-row space-x-4">
                     <div class="form-item">
@@ -180,12 +182,14 @@
                 {{-- Gramaje Cubierta --}}
                 <div class="w-full form-item">
                     <x-jet-label for="gramajecubierta">{{ __('Gramaje Cubierta') }}</x-jet-label>
-                        {{-- <select wire:model.lazy="producto.gramajecubierta" selectname="gramajecubierta" color="blue" class="w-full form-control" id="gramajecubierta" {{$escliente}}/>>
-                            <option value="">--Selecciona--</option>
-                            @foreach($gramajescubierta as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        </select> --}}
+                    <select wire:model.lazy="producto.gramajecubierta"
+                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
+                        {{$escliente}}/>
+                        <option value="">--Selecciona--</option>
+                        @foreach($gramajescubierta as $item)
+                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 {{-- Tinta Cubierta --}}
                 <div class="w-full form-item">

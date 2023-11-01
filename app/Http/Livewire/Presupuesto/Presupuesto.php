@@ -33,6 +33,7 @@ class Presupuesto extends Component
     public $especificacioneslogisticas;
     public $otros;
 
+
     public $productoeditorialid;
     public $presupuestoproductoid;
     public $titulo;
@@ -46,7 +47,11 @@ class Presupuesto extends Component
 
     public $contactos;
     public $productos;
+<<<<<<< HEAD
     public $escliente;
+=======
+    public $escliente='';
+>>>>>>> c557e054fad1b78fb245500993c76488440f5abf
 
 
     protected $listeners = [ 'refreshpresupuesto'];
