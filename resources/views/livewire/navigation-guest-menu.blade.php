@@ -145,6 +145,7 @@
                 </div>
                 @endcan
             </div>
+
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Settings Dropdown -->
                 <div class="relative ml-3">
@@ -189,7 +190,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             @can('cliente.entidad.index')
-            <x-jet-responsive-nav-link href="{{ route('cliente.entidad.index') }}" :active="request()->routeIs('facturacion.index')">
+            <x-jet-responsive-nav-link href="{{ route('cliente.entidad.index') }}" :active="request()->routeIs('cliente.entidad.index')">
                 {{ __('Empresas') }}
             </x-jet-responsive-nav-link>
             @endcan
