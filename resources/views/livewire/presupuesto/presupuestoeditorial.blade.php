@@ -200,39 +200,57 @@
                                     </select>
                                 </div>
                                 {{-- estado --}}
-                                <div class="w-full mx-auto">
-                                    <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
-                                    <select wire:model.lazy="estado"
+                                <div class="w-full mx-auto flex">
+                                    <div class="mx-auto w-10/12">
+                                        <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
+                                        <select wire:model.lazy="estado"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }}>
-                                        <option value="0">{{ __('Enviado') }}</option>
-                                        <option value="1">{{ __('Aceptado') }}</option>
-                                        <option value="2">{{ __('Rechazado') }}</option>
-                                    </select>
+                                        {{$escliente}}>
+                                        <option value="0">Enviado</option>
+                                        <option value="1">Aceptado</option>
+                                        <option value="2">Rechazado</option>
+                                        </select>
+                                    </div>
+                                    <div class="mx-auto w-2/12 text-center">
+                                        <x-jet-label for="okexterno">{{ __('OK Externo') }}</x-jet-label>
+                                        <input type="checkbox" wire:model.lazy="okexterno"
+                                        {{$okexterno=='1' ? 'checked' : ''}}
+                                        class="mx-auto py-1 text-xs text-blue-600 border-blue-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    </div>
                                 </div>
                                 {{-- es pedido o convertir a pedido --}}
                                 <div class="w-full text-center form-item">
-                                    @if($espedido=='1')
-                                    <div class="flex-none w-full md:flex">
-                                        <div class="w-full form-item">
-                                            <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
-                                            <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
+                                    @if(!Auth::user()->hasRole('Cliente'))
+                                        @if($espedido=='1')
+                                        <div class="flex-none w-full md:flex">
+                                            <div class="w-full form-item">
+                                                <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
+                                                <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
+                                            </div>
+                                            <div class=" form-item">
+                                                <x-jet-label for="asignarpedido">{{ __('Asignar otro pedido') }}</x-jet-label>
+                                                <x-select class="w-/12" selectname="pedido" wire:model.lazy="pedido">
+                                                    <option value="">-- Selecciona un pedido --</option>
+                                                    @foreach ($pedidos as $ped )
+                                                    <option value="{{ $ped->id }}">{{ $ped->id }}</option>
+                                                    @endforeach
+                                                </x-select>
+                                            </div>
                                         </div>
-                                        <div class=" form-item">
-                                            <x-jet-label for="asignarpedido">{{ __('Asignar otro pedido') }}</x-jet-label>
-                                            <x-select class="w-/12" selectname="pedido" wire:model.lazy="pedido">
-                                                <option value="">-- Selecciona un pedido --</option>
-                                                @foreach ($pedidos as $ped )
-                                                <option value="{{ $ped->id }}">{{ $ped->id }}</option>
-                                                @endforeach
-                                            </x-select>
-                                        </div>
-                                    </div>
+                                        @else
+                                            <button class="inline-flex items-center px-2 py-2 mt-2 text-sm font-semibold text-white transition bg-blue-600 border border-transparent rounded-md tracking-tigh hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25"
+                                                wire:click.prevent="pedido( {{ $presupuestoid }} )"
+                                                onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">{{ __('Convertir en Pedido') }}
+                                            </button>
+                                        @endif
                                     @else
-                                    <button class="inline-flex items-center px-2 py-2 mt-2 text-sm font-semibold text-white transition bg-blue-600 border border-transparent rounded-md tracking-tigh hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25"
-                                        wire:click.prevent="pedido( {{ $presupuestoid }} )"
-                                        onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">{{ __('Convertir en Pedido') }}
-                                    </button>
+                                        @if($espedido=='1')
+                                            <div class="flex-none w-full md:flex">
+                                                <div class="w-full form-item">
+                                                    <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
+                                                    <a class="text-blue-700 underline" href="{{ route('cliente.pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
+                                            </div>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -241,7 +259,11 @@
                     <div class="p-1 m-1 ">
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                            <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            @if(!Auth::user()->hasRole('Cliente'))
+                                <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            @else
+                                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            @endif
                             @if($presupuestoid)
                                 @if($escliente=='disabled')
                                     <x-icon.lock-a class="" wire:click.prevent="desbloquear()"  title="Bloqueado"/>

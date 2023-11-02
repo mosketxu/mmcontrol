@@ -14,7 +14,7 @@ class Presupuesto extends Model
 
     protected $fillable=['id','tipo','cliente_id','descripcion','responsable','contacto_id',
                     'proveedor_id','tirada','precio_ud','preciototal','facturadopor','fechapresupuesto',
-                    'estado','espedido','pedido','caja_id','uds_caja','manipulacion','transporte','troquel','especificacioneslogisticas','otros';
+                    'estado','okexterno','espedido','pedido','caja_id','uds_caja','manipulacion','transporte','troquel','especificacioneslogisticas','otros'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'']);}
@@ -27,7 +27,7 @@ class Presupuesto extends Model
         return [
             '0'=>['gray-200','Enviado'],
             '1'=>['green-500','Aceptado'],
-            '2'=>['red-500','Rechazado']
+            '2'=>['red-500','Rechazado'],
         ][$this->estado] ?? ['gray-100',''];
     }
 

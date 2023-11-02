@@ -23,6 +23,7 @@ class Presupuesto extends Component
     public $fechapresupuesto;
     public $tipo;
     public $estado=0;
+    public $okexterno=0;
     public $espedido=0;
     public $manipulacion='';
     public $pedido;
@@ -72,6 +73,7 @@ class Presupuesto extends Component
             'facturadopor'=>'required',
             'fechapresupuesto'=>'date|required',
             'estado'=>'nullable',
+            'okexterno'=>'nullable',
             'tipo'=>'required',
             'espedido'=>'required',
             'manipulacion'=>'nullable',
@@ -119,6 +121,7 @@ class Presupuesto extends Component
             $this->precio_ud=$presupuesto->precio_ud;
             $this->preciototal=$presupuesto->preciototal;
             $this->estado=$presupuesto->estado;
+            $this->okexterno=$presupuesto->okexterno;
             $this->tipo=$presupuesto->tipo;
             $this->espedido=$presupuesto->espedido;
             $this->manipulacion=$presupuesto->manipulacion;
@@ -250,6 +253,7 @@ class Presupuesto extends Component
     public function save(){
         $this->validate();
         $this->estado=$this->estado=='' ? '0' : $this->estado;
+        $this->okexterno=$this->okexterno=='' ? '0' : $this->okexterno;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
         if($this->contacto_id =='') $this->contacto_id=null;
         $mensaje="Presupuesto creado satisfactoriamente";
@@ -297,6 +301,7 @@ class Presupuesto extends Component
             'precio_ud'=>$this->precio_ud,
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
+            'okexterno'=>$this->okexterno,
             'tipo'=>$this->tipo,
             'espedido'=>$this->espedido,
             'manipulacion'=>$this->manipulacion,
@@ -362,6 +367,7 @@ class Presupuesto extends Component
             'precio'=>$presupuesto->precio_ud ? $presupuesto->precio_ud : '0' ,
             'preciototal'=>$presupuesto->precio_ud * $this->tiradanum($presupuesto->tirada),
             'estado'=>'0',
+            'okexterno'=>'0',
             'tipo'=>$presupuesto->tipo,
             'facturado'=>'0',
             'caja_id'=>$this->caja_id,

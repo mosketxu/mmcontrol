@@ -6,7 +6,7 @@ use App\Models\{Entidad,Mes, Pedido, Presupuesto};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
-
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Presupuestos extends Component
@@ -16,6 +16,7 @@ class Presupuestos extends Component
     public $presupuesto;
     public $espedido;
     public $estado;
+    public $okexterno;
 
     public $search='';
     public $filtroanyo='';
@@ -26,6 +27,7 @@ class Presupuestos extends Component
     public $filtroisbn='';
     public $filtroreferencia='';
     public $filtroestado='';
+    public $filtrookexterno='';
 
     public $message;
     public $tipo;
@@ -36,12 +38,14 @@ class Presupuestos extends Component
     public function mount($tipo,$titulo){
         $this->tipo=$tipo;
         $this->titulo=$titulo;
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
     protected function rules(){
         return [
             'presupuesto.espedido'=>'nullable',
             'presupuesto.estado'=>'nullable',
+            'presupuesto.okexterno'=>'nullable',
         ];
     }
     public function render(){
@@ -66,10 +70,21 @@ class Presupuestos extends Component
     public function updatingFiltroreferencia(){$this->resetPage();}
     public function updatingFiltroisbn(){$this->resetPage();}
     public function updatingFiltroestado(){$this->resetPage();}
+    public function updatingFiltrookexterno(){$this->resetPage();}
 
 
     public function changeValor(Presupuesto $presupuesto,$campo,$valor){
-        $presupuesto->update([$campo=>$valor]);
+        // dd($valor);
+        if($campo=='okexterno'){
+            $valor=$presupuesto->okexterno=='on' ? '0' : '1';
+            // dd($valor);
+            $presupuesto->estado=($valor=='1' && $presupuesto->estado!='1') ? $presupuesto->estado='1' : $presupuesto->estado;
+        }
+
+        $presupuesto->update([
+            $campo=>$valor,
+            'estado'=>$presupuesto->estado,
+        ]);
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
@@ -107,6 +122,9 @@ class Presupuestos extends Component
             ->when($this->filtroestado!='', function ($query){
                 $query->where('presupuestos.estado',$this->filtroestado);
             })
+            ->when($this->filtrookexterno!='', function ($query){
+                $query->where('presupuestos.okexterno',$this->filtrookexterno);
+            })
             ->searchYear('fechapresupuesto',$this->filtroanyo)
             ->searchMes('fechapresupuesto',$this->filtromes)
             ->orderBy('presupuestos.id','desc')
@@ -133,6 +151,9 @@ class Presupuestos extends Component
                 })
             ->when($this->filtroestado!='', function ($query){
                 $query->where('presupuestos.estado',$this->filtroestado);
+            })
+            ->when($this->filtrookexterno!='', function ($query){
+                $query->where('presupuestos.okexterno',$this->filtrookexterno);
             })
             ->searchYear('fechapresupuesto',$this->filtroanyo)
             ->searchMes('fechapresupuesto',$this->filtromes)

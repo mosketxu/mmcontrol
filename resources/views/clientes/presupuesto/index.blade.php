@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <x-slot name="header">
         <div class="flex">
             <div class="w-full">
@@ -18,4 +18,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-guest-layout>

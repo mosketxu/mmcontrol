@@ -136,6 +136,23 @@
             </div>
         </div>
     </div>
+    <div class="flex w-1/12">
+        <div class="w-full">
+            <label class="px-1 text-sm text-gray-600">
+                Ok Externo
+            </label>
+            <div class="flex">
+                <select wire:model="filtrookexterno"
+                    class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                    <option value="">-- selecciona --</option>
+                    <option value="1">Ok Externo</option>
+                </select>
+                @if($filtrookexterno!='')
+                    <x-icon.filter-slash-a wire:click="$set('filtrookexterno', '')" class="pb-1" title="reset filter" />
+                @endif
+            </div>
+        </div>
+    </div>
 
     {{-- <div class="flex flex-row-reverse w-1/12"> --}}
         {{-- <div class="inline-flex mt-3 space-x-2">
