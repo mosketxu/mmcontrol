@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController, PresupuestoController,ClienteController};
+use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController, PresupuestoController,ClienteController,MailController};
 use App\Models\UserEmpresa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -129,4 +129,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
         Route::get('cliente/facturacion', [ClienteController::class,'facturacionindex'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.index');
         // Route::get('cliente/facturacion/{factura}/edit', [ClienteController::class,'facturacionedit'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.edit');
         Route::get('cliente/facturacion/{factura}/show', [ClienteController::class,'facturacionshow'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.show');
-});
+
+    // Correo
+        Route::get('sendemail',[MailController::class,'sendEmail']);
+
+    });
