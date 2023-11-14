@@ -10,43 +10,43 @@
             <div class="w-1/12 ">
                 <input type="checkbox" wire:model.defer="visible"
                 class="ml-4 text-xs border-gray-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                {{$escliente}}/>
+                {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- orde --}}
             <div class="w-1/12">
                 <input type="number" wire:model.defer="orden"
                 class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"
-                {{$escliente}}/>
+                {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- proceso --}}
             <div class="w-3/12">
                 <input type="text" wire:model.defer="proceso"
                 class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"
-                {{$escliente}}/>
+                {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- descripcion --}}
             <div class="w-3/12">
                 <input type="text" wire:model.defer="descripcion"
                 class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"
-                {{$escliente}}/>
+                {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- cantidad --}}
             <div class="w-1/12">
                 <input type="number" step="any" wire:model.lazy="tirada"
                 class="w-full pr-2 text-xs font-thin text-right text-gray-500 border-0 rounded-md"
-                {{$escliente}}/>
+                {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- importe --}}
             <div class="w-1/12">
                 <input type="number" step="any" wire:model.lazy="precio_ud"
                 class="w-full pr-2 text-xs font-thin text-right text-gray-500 border-0 rounded-md"
-                {{$escliente}}/>
+                {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- subtotalsiniva --}}
             <div class="w-1/12">
                 <input type="text"  wire:model="preciototal"
                 class="w-full pr-2 text-xs font-thin text-right text-gray-500 border-0 rounded-m
-                {{$escliente}}d"
+                {{$escliente}} {{ $deshabilitado }}d"
                 disabled/>
             </div>
             {{-- botones --}}

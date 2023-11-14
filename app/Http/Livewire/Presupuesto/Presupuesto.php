@@ -141,6 +141,7 @@ class Presupuesto extends Component
             }
             $this->deshabilitado=$this->espedido=='1' ? 'disabled' : '';
         }
+        $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
     }
 
     public function render(){
@@ -340,6 +341,7 @@ class Presupuesto extends Component
     }
 
     public function pedido(ModelsPresupuesto $presupuesto){
+
         $pedidoid=null;
         $fechapedido=now()->format('Y-m-d');
         $anyo= substr($fechapedido, 0,4);

@@ -46,9 +46,18 @@
                                 @endif
                                 @if ($campo3visible==1)
                                 <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
-                                    <input type="text" value="{{ $valor->valorcampo3 }}"
-                                    wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
-                                    class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
+                                    @if(!$campo3=='activo')
+                                        <input type="text" value="{{ $valor->valorcampo3 }}"
+                                        wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
+                                        class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
+                                    @else
+                                        <select name="{{$valor->campo3}}" id="{{$valor->campo3}}"
+                                            wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
+                                            class="py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                                            <option value="1" {{$valor->valorcampo3=='1' ? 'selected' : ''}}>Sí</option>
+                                            <option value="0" {{$valor->valorcampo3=='0' ? 'selected' : ''}}>No</option>
+                                        </select>
+                                    @endif
                                 </td>
                                 @endif
                                 <td  class="px-4">

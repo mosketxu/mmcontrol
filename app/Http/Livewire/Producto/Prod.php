@@ -31,6 +31,7 @@ class Prod extends Component
     public $tipo;
     public $titulo;
     public $escliente;
+    public $deshabilitado;
 
 
     protected function rules(){

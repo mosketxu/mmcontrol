@@ -8,9 +8,10 @@
     <div class="py-3">
         <div class="mx-auto sm:px-6 lg:px-6">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                <div class="grid grid-cols-1 bg-gray-200 bg-opacity-25 md:grid-cols-3">
+                <div class="grid grid-cols-1 bg-gray-200 bg-opacity-25 md:grid-cols-4">
                     @livewire('seguridad.usuarios')
                     @livewire('seguridad.roles')
+                    @livewire('seguridad.responsables')
                     @livewire('seguridad.permisos')
                 </div>
             </div>

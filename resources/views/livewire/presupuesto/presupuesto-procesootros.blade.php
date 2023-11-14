@@ -49,32 +49,38 @@
             {{-- checkbox --}}
             <div class="w-1/12 ">
                 <input type="checkbox" wire:model.defer="visible"
-                class="ml-4 text-xs border-gray-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                class="ml-4 text-xs border-gray-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                {{$escliente}}/>
             </div>
             {{-- orde --}}
             <div class="w-1/12">
                 <input type="number" wire:model.defer="orden"
-                class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
+                class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"
+                {{$escliente}}/>
             </div>
             {{-- proceso_id --}}
             <div class="w-3/12">
                 <input type="text" step="any" wire:model.lazy="proceso"
-                class="w-full py-1 pr-2 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
+                class="w-full py-1 pr-2 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"
+                {{$escliente}}/>
             </div>
             {{-- descripcion --}}
             <div class="w-3/12">
                 <input type="text" step="any" wire:model.lazy="descripcion"
-                class="w-full py-1 pr-2 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
+                class="w-full py-1 pr-2 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"
+                {{$escliente}}/>
             </div>
             {{-- cantidad --}}
             <div class="w-1/12">
                 <input type="number" step="any" wire:model.lazy="tirada"
-                class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-100 border-0 rounded-md"/>
+                class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-100 border-0 rounded-md"
+                {{$escliente}}/>
             </div>
             {{-- importe --}}
             <div class="w-1/12">
                 <input type="number" step="any" wire:model.lazy="precio_ud"
-                class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-100 border-0 rounded-md"/>
+                class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-100 border-0 rounded-md"
+                {{$escliente}}/>
             </div>
             {{-- subtotalsiniva --}}
             <div class="w-1/12">
@@ -84,7 +90,9 @@
             </div>
             {{-- botones --}}
             <div class="w-1/12 text-right">
+                @if(!Auth::user()->hasRole('Cliente'))
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
+                @endif
             </div>
         </div>
     </form>

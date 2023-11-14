@@ -14,7 +14,7 @@ class AddColumnOkexternoToPresupuestosTable extends Migration
     public function up()
     {
         Schema::table('presupuestos', function (Blueprint $table) {
-            $table->integer('okexterno')->default('0')->after('estado');;
+            $table->integer('okexterno')->default('0')->after('estado');
         });
     }
 

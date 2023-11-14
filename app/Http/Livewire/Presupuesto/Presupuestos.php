@@ -34,6 +34,7 @@ class Presupuestos extends Component
     public $titulo;
 
     public $escliente;
+    public $deshabilitado;
 
     public function mount($tipo,$titulo){
         $this->tipo=$tipo;

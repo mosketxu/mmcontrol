@@ -119,7 +119,7 @@
                             @if($tipocampo4 =="textarea")
                                 <textarea  rows="2" cols="{{ $colstextarea4 }}"
                                     wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"
-                                    class="block text-xs font-thin text-left text-gray-500 border-0 rounded-md" {{$escliente}}>{{ $valor->valorcampo4 }}</textarea>
+                                    class="block text-xs font-thin text-left text-gray-500 border-0 rounded-md" {{ $campo4disabled }} {{$escliente}}>{{ $valor->valorcampo4 }}</textarea>
                             @else
                             <input type="{{ $tipocampo4 }}" value="{{ $valor->valorcampo4 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"

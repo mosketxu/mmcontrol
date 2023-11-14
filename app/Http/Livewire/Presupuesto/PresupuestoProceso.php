@@ -43,11 +43,10 @@ class PresupuestoProceso extends Component
         ];
     }
 
-    public function mount($presupuestoid,$escliente){
+    public function mount($presupuestoid,$escliente,$deshabilitado){
         $this->presupuesto=Presupuesto::find($presupuestoid);
         $this->presupuesto_id=$presupuestoid;
-        $this->deshabilitado= $escliente;
-        $this->escliente= $escliente;
+        $this->deshabilitado= $deshabilitado;
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 

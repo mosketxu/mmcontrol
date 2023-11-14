@@ -102,7 +102,6 @@ class Pedido extends Component
     public function messages(){
         return [
             'pedidoid.required'=>'El número de pedido es necesario',
-            // 'producto_id.required'=>'Debes elegir un producto',
             'responsable.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
             'facturadopor.required'=>'Debe estar definido quién facturará el pedido',
@@ -170,6 +169,7 @@ class Pedido extends Component
                 $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
             }
         }
+        $this->facturas=FacturaDetalle::where('pedido_id',$this->pedidoid)->get();
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
@@ -178,7 +178,6 @@ class Pedido extends Component
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $cajas=Caja::orderBy('name')->get();
-
 
         $this->productos=Producto::query()
             ->with('cliente')

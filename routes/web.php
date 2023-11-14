@@ -5,6 +5,7 @@ use App\Models\UserEmpresa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +49,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     //Users
     Route::resource('users', UserController::class)->except(['create'])->names('users'); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
+
 
     // Entidades
     Route::get('/entidad/editar/{entidad}', [EntidadController::class, 'edita'])->name('entidad.edita');

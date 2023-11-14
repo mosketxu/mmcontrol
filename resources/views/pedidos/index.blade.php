@@ -25,11 +25,6 @@
                                 @include('errores')
                             </div>
                             <div class="">
-                                {{-- <form method="GET" action="{{ route('pedido.export', $tipo) }}"> --}}
-                                    {{-- <x-button type='submit'>xls</x-button> --}}
-                                    {{-- <button type="submit"><x-icon.xls class="w-5 text-blue-500"/></button> --}}
-                                {{-- <x-icon.xls-a href="{{ route('pedido.export') }}" class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/> --}}
-                                {{-- </form> --}}
                                 @include('pedidos.pedidoseditorialfilters')
                                 {{ $pedidos->appends(request()->except('page'))->links() }}
                             </div>

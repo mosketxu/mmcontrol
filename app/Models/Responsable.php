@@ -9,5 +9,5 @@ class Responsable extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['responsable'];
+    protected $fillable = ['responsable','mailresponsable','activo'];
 }

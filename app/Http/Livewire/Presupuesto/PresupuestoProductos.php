@@ -61,11 +61,12 @@ class PresupuestoProductos extends Component
         $this->precio_ud=$pproducto->precio_ud;
         $this->preciototal=$pproducto->preciototal;
         $this->observaciones=$pproducto->observaciones;
-        $this->escliente=$deshabilitado;
+        $this->deshabilitado=$deshabilitado;
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
 
     public function render(){
+
         $productos=Producto::where('tipo','2')->orderBy('referencia')->get();
 
         return view('livewire.presupuesto.presupuesto-productosotros',compact('productos'));

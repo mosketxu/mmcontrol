@@ -48,13 +48,13 @@
                                     <div class="w-full md:w-2/12">
                                         <select wire:change="changeValor({{ $presupuesto }},'estado',$event.target.value)"
                                         class="w-full text-left py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $presupuesto->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                                        {{$escliente}}>
+                                        {{$escliente}} {{$deshabilitado}}>
                                         <option value="0" {{ $presupuesto->estado== '0'? 'selected' : '' }}>Enviado</option>
                                         <option value="1" {{ $presupuesto->estado== '1'? 'selected' : '' }}>Aceptado</option>
                                         <option value="2" {{ $presupuesto->estado== '2'? 'selected' : '' }}>Rechazado</option>
                                         </select>
                                     </div>
-                                    <div class="w-full md:w-2/12 text-center">
+                                    <div class="w-full text-center md:w-2/12">
                                         <input type="checkbox" {{$presupuesto->okexterno == '1' ? 'checked' : ''}} wire:change="changeValor({{ $presupuesto }},'okexterno',$event.target.value)"
                                             class="py-1 text-xs text-blue-600 border-blue-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                     </div>
@@ -68,10 +68,14 @@
                                         @endif
                                     </div>
                                     <div class="w-full space-x-2 text-center md:w-4/12">
+                                        @if(!Auth::user()->hasRole('Cliente'))
                                         <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('presupuesto.archivos',[$presupuesto->id,'i'])}}'" title="Archivo"/>
+                                        @endif
                                         <x-icon.pdf-a class="w-4 text-red-500 hover:text-red-700" href="{{route('presupuesto.presupuestoPDF',[$presupuesto,'n'])}}" target="_blank" title="PDF Presupuesto"/>
                                         <x-icon.pdf-a class="w-4 text-orange-500 hover:text-orange-700" href="{{route('presupuesto.presupuestoPDF',[$presupuesto,'r'])}}" target="_blank" title="PDF Presupuesto reducido"/>
+                                        @if(!Auth::user()->hasRole('Cliente'))
                                         <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

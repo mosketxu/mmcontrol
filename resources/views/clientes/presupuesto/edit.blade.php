@@ -7,7 +7,6 @@
                 </div>
             </div>
             <div class="flex flex-row-reverse w-full">
-                <x-button.button  class="py-1 ml-4" onclick="location.href = '{{ route('presupuesto.nuevo',[$tipo,$ruta]) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
                 @include('presupuestos.presupuesto-menu' )
             </div>
 

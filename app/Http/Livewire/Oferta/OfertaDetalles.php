@@ -19,7 +19,7 @@ class OfertaDetalles extends Component
     public $total='0';
     public $orden='0';
     public $observaciones='';
-    // public $deshabilitado='';
+    public $deshabilitado='';
     public $escliente='';
 
     protected function rules()
