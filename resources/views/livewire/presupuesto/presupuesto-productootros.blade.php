@@ -1,6 +1,6 @@
 <div class="py-1 ">
     <div class="">
-        @include('errores')
+        {{-- @include('errores') --}}
     </div>
     {{-- Titulos --}}
     <div class="flex w-full py-0 my-0 space-x-1 text-left text-gray-500 bg-blue-100 rounded-t-md" wire:loading.class.delay="opacity-50">

@@ -17,6 +17,7 @@ class Presupuestos extends Component
     public $espedido;
     public $estado;
     public $okexterno;
+    public $observacionesexterno;
 
     public $search='';
     public $filtroanyo='';
@@ -47,6 +48,7 @@ class Presupuestos extends Component
             'presupuesto.espedido'=>'nullable',
             'presupuesto.estado'=>'nullable',
             'presupuesto.okexterno'=>'nullable',
+            'presupuesto.observacionesexterno'=>'nullable',
         ];
     }
     public function render(){

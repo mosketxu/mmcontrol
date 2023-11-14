@@ -2,11 +2,14 @@
 
 namespace App\Http\Livewire\Presupuesto;
 
+use App\Mail\MilimetricaMail;
+use App\Mail\TestMail;
 use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto,PedidoProceso, Presupuesto as ModelsPresupuesto, PresupuestoProducto, PresupuestoProceso,Caja, Responsable};
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Presupuesto extends Component
 {
@@ -24,6 +27,7 @@ class Presupuesto extends Component
     public $tipo;
     public $estado=0;
     public $okexterno=0;
+    public $observacionesexterno='';
     public $espedido=0;
     public $manipulacion='';
     public $pedido;
@@ -55,9 +59,8 @@ class Presupuesto extends Component
 
     public function refreshpresupuesto(){
         $this->mount($this->presupuestoid,$this->tipo,$this->ruta,$this->titulo);
-    // $this->render();
+        $this->render();
     }
-
 
     protected function rules(){
         return [
@@ -74,6 +77,7 @@ class Presupuesto extends Component
             'fechapresupuesto'=>'date|required',
             'estado'=>'nullable',
             'okexterno'=>'nullable',
+            'observacionesexterno'=>'nullable',
             'tipo'=>'required',
             'espedido'=>'required',
             'manipulacion'=>'nullable',
@@ -122,6 +126,7 @@ class Presupuesto extends Component
             $this->preciototal=$presupuesto->preciototal;
             $this->estado=$presupuesto->estado;
             $this->okexterno=$presupuesto->okexterno;
+            $this->observacionesexterno=$presupuesto->observacionesexterno;
             $this->tipo=$presupuesto->tipo;
             $this->espedido=$presupuesto->espedido;
             $this->manipulacion=$presupuesto->manipulacion;
@@ -236,6 +241,7 @@ class Presupuesto extends Component
         $this->preciototal= $this->precio_ud * $this->tiradanum($this->tirada);
     }
 
+
     public function updatedCajaId(){
         if($this->caja_id=='') $this->caja_id=null;
     }
@@ -260,9 +266,17 @@ class Presupuesto extends Component
         $mensaje="Presupuesto creado satisfactoriamente";
         $i=null;
         $nuevo=null;
+        $okexternoOld=0;
+        $obsexternoOld=0;
+        $okexternoNew=$this->okexterno;
+        $obsexternoNew=$this->observacionesexterno;
+
 
         if ($this->presupuestoid!='') {
             $i=$this->presupuestoid;
+            $p=ModelsPresupuesto::find($this->presupuestoid);
+            $okexternoOld=$p->okexterno;
+            $obsexternoOld=$p->observacionesexterno;
             $mensaje="Presupuesto actualizado satisfactoriamente";
             $nuevo=false;
             $this->validate([
@@ -303,6 +317,7 @@ class Presupuesto extends Component
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
             'okexterno'=>$this->okexterno,
+            'observacionesexterno'=>$this->observacionesexterno,
             'tipo'=>$this->tipo,
             'espedido'=>$this->espedido,
             'manipulacion'=>$this->manipulacion,
@@ -335,9 +350,25 @@ class Presupuesto extends Component
 
         $i=null;
         if ($nuevo) {
-            return redirect()->route('presupuesto.editar', [$presup,'e']);
+            $notification = array(
+                'message' => '¡Presupuesto creado satisfactoriamente!',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('presupuesto.editar', [$presup,'e'])->with($notification);
         }
-        $this->dispatchBrowserEvent('notify', $mensaje);
+        $notification = array(
+            'message' => '¡Acción realizada con éxito!',
+            'alert-type' => 'success');
+
+        if($okexternoOld!=$okexternoNew || $obsexternoOld!=$obsexternoNew){
+            $this->enviamail($presup);
+        }
+        if(!Auth::user()->hasRole('Cliente'))
+            return redirect()->route('presupuesto.editar', [$presup,'e'])->with($notification);
+        else
+            return redirect()->route('cliente.presupuesto.editar', [$presup,'e'])->with($notification);
+
+        // $this->dispatchBrowserEvent('notify', $mensaje);
     }
 
     public function pedido(ModelsPresupuesto $presupuesto){
@@ -415,5 +446,20 @@ class Presupuesto extends Component
         $presupuesto->pedido=$ped->id;
         $presupuesto->save();
         return redirect()->route('pedido.editar',[$ped,'i']);
+    }
+
+    public function enviamail($presupuesto) {
+        $responsable=Responsable::where('responsable',$presupuesto->responsable)->first();
+
+        $details=[
+            'responsable'=>Responsable::where('responsable',$presupuesto->responsable)->first(),
+            'emailmilimetrica'=>$responsable->mailresponsable ? $responsable->mailresponsable : 'alex.arregui@sumaempresa.com',
+            'emailexterno'=>Auth::user()->email,
+            'title'=>'Cambios en el Presupuesto: ' .$presupuesto->id,
+            'subject'=>'Cambios en el Presupuesto: ' .$presupuesto->id,
+        ];
+
+        Mail::send(new MilimetricaMail($presupuesto,$details));
+        return "Correo enviado";
     }
 }

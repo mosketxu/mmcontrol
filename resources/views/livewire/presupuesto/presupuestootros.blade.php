@@ -105,60 +105,66 @@
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="tirada">{{ __('Cantidad') }}</x-jet-label>
                                     <input  wire:model.lazy="tirada" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $escliente }} {{$deshabilitado}}/>
                                 </div>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="precio_ud">{{ __('Precio Ud.') }}</x-jet-label>
                                     <input  wire:model.lazy="precio_ud" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $escliente }} {{$deshabilitado}}/>
                                 </div>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="preciototal">{{ __('Precio Total') }}</x-jet-label>
                                     <input  wire:model.lazy="preciototal"  type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm bg-blue-50 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $escliente }} {{$deshabilitado}}/>
                                 </div>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="transporte">{{ __('Transporte') }}</x-jet-label>
                                     <input  wire:model.lazy="transporte" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $escliente }} {{$deshabilitado}}/>
                                 </div>
                             </div>
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="troquel">{{ __('Troquel') }}</x-jet-label>
                                     <input  wire:model.lazy="troquel" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $escliente }} {{$deshabilitado}}/>
                                 </div>
                             </div>
-                            <div class="flex w-full mx-auto">
-                                <div class="w-10/12 mx-auto">
-                                    <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
-                                    <select wire:model.lazy="estado"
-                                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{$escliente}} {{$deshabilitado}}>
-                                    <option value="0">Enviado</option>
-                                    <option value="1">Aceptado</option>
-                                    <option value="2">Rechazado</option>
-                                    </select>
-                                </div>
-                                <div class="w-2/12 mx-auto text-center">
-                                    <x-jet-label for="okexterno">{{ __('OK Externo') }}</x-jet-label>
-                                    <input type="checkbox" wire:model.lazy="okexterno"
-                                    {{$okexterno=='1' ? 'checked' : ''}}
-                                    class="py-1 mx-auto text-xs text-blue-600 border-blue-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <div class="flex w-4/12 mx-auto">
+                                <div class="flex w-full">
+                                    <div class="w-2/12 mx-auto">
+                                        <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
+                                        <select wire:model.lazy="estado"
+                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        {{$escliente}} {{$deshabilitado}}>
+                                        <option value="0">Enviado</option>
+                                        <option value="1">Aceptado</option>
+                                        <option value="2">Rechazado</option>
+                                        </select>
+                                    </div>
+                                    <div class="w-2/12 mx-auto text-center">
+                                        <x-jet-label for="okexterno">{{ __('OK Externo') }}</x-jet-label>
+                                        <input type="checkbox" wire:model.lazy="okexterno"
+                                        class="py-1 mx-auto text-xs text-blue-600 border-blue-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="w-8/12 mx-auto text-center">
+                                        <x-jet-label for="observacionesexterno">{{ __('Obs.Ext') }}</x-jet-label>
+                                        <textarea wire:model.lazy="observacionesexterno" rows="3"
+                                        class="w-full py-1 mx-auto text-xs text-blue-600 border-blue-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="w-full text-center form-item">
+                            <div class="w-3/12 text-center form-item">
                                 @if(!Auth::user()->hasRole('Cliente'))
                                     @if($espedido=='1')
                                     <div class="flex-none w-full md:flex">

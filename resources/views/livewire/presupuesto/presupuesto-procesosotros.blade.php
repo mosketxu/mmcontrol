@@ -1,6 +1,6 @@
 <div class="">
     <div class="">
-        @include('errores')
+        {{-- @include('errores') --}}
     </div>
     @if($bloqueado=='0')
     {{-- Nuevo detalle --}}

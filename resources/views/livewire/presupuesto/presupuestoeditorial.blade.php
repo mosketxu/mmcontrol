@@ -177,7 +177,7 @@
                             </div>
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                                 {{-- facturado Por --}}
-                                <div class="w-full form-item">
+                                <div class="w-2/12 form-item">
                                     <x-jet-label for="facturadopor">{{ __('Facturado x') }}</x-jet-label>
                                     <select wire:model.lazy="facturadopor"
                                     class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -188,7 +188,7 @@
                                     </select>
                                 </div>
                                 {{-- responsable MM --}}
-                                <div class="w-full form-item">
+                                <div class="w-2/12 form-item">
                                     <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
                                     <select wire:model.lazy="responsable"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -200,8 +200,8 @@
                                     </select>
                                 </div>
                                 {{-- estado --}}
-                                <div class="flex w-full mx-auto">
-                                    <div class="w-10/12 mx-auto">
+                                <div class="flex w-5/12 mx-auto ">
+                                    <div class="w-3/12 mx-auto">
                                         <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
                                         <select wire:model.lazy="estado"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -214,12 +214,16 @@
                                     <div class="w-2/12 mx-auto text-center">
                                         <x-jet-label for="okexterno">{{ __('OK Externo') }}</x-jet-label>
                                         <input type="checkbox" wire:model.lazy="okexterno"
-                                        {{$okexterno=='1' ? 'checked' : ''}}
                                         class="py-1 mx-auto text-xs text-blue-600 border-blue-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                    </div>
+                                    <div class="w-7/12 mx-auto text-center">
+                                        <x-jet-label for="observacionesexterno">{{ __('Obs.Ext') }}</x-jet-label>
+                                        <textarea wire:model.lazy="observacionesexterno" rows="3"
+                                            class="w-full py-1 mx-auto text-xs text-blue-600 border-blue-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
                                     </div>
                                 </div>
                                 {{-- es pedido o convertir a pedido --}}
-                                <div class="w-full text-center form-item">
+                                <div class="w-3/12 text-center form-item">
                                     @if(!Auth::user()->hasRole('Cliente'))
                                         @if($espedido=='1')
                                         <div class="flex-none w-full md:flex">
@@ -229,7 +233,7 @@
                                             </div>
                                             <div class=" form-item">
                                                 <x-jet-label for="asignarpedido">{{ __('Asignar otro pedido') }}</x-jet-label>
-                                                <x-select class="w-/12" selectname="pedido" wire:model.lazy="pedido">
+                                                <x-select class="w-full" selectname="pedido" wire:model.lazy="pedido">
                                                     <option value="">-- Selecciona un pedido --</option>
                                                     @foreach ($pedidos as $ped )
                                                     <option value="{{ $ped->id }}">{{ $ped->id }}</option>
