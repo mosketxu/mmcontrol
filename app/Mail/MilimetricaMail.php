@@ -35,8 +35,10 @@ class MilimetricaMail extends Mailable
     {
         // dd($this->details['emailexterno']);
 
-        return $this->from($this->details['emailexterno'], config('mail.from.name', 'Externo'))
-            ->to($this->details['emailmilimetrica'])
+        // dd($this->details['emailexterno']);
+
+        // return $this->from($this->details['emailexterno'], config('mail.from.name', 'Externo'))
+        return $this->to($this->details['emailmilimetrica'])
             ->subject($this->details['subject'])
             ->view('emails.milimetricamail');
 

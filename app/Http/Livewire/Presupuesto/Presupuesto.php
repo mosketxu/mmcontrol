@@ -449,6 +449,7 @@ class Presupuesto extends Component
     }
 
     public function enviamail($presupuesto) {
+
         $responsable=Responsable::where('responsable',$presupuesto->responsable)->first();
 
         $details=[

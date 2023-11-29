@@ -44,7 +44,7 @@
             </div>
             <br>
             <div>
-                <x-jet-label >{{ __('Ok Externos ') }} {{$presupuesto->okexterno}}</x-jet-label>
+                <x-jet-label >{{ __('Ok Externos ') }} {{$presupuesto->okexterno=='0' ? "No" : 'Sí'}}</x-jet-label>
             </div>
             <div>
                 <x-jet-label >{{ __('Observaciones Externas: ') }} </x-jet-label>
