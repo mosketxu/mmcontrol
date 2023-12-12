@@ -109,6 +109,7 @@ class Fdetalles extends Component
 
     public function save(){
         $this->validate();
+        if($this->pedido_id=='') $this->pedido_id=null;
         $fd=FacturaDetalle::find($this->fdetalle_id)->update([
             'factura_id'=>$this->factura_id,
             'pedido_id'=>$this->pedido_id,
@@ -154,7 +155,7 @@ class Fdetalles extends Component
         $this->dispatchBrowserEvent('notify', $mensaje);
     }
 
-    public function delete($valorId, $numpedido){
+    public function delete($valorId, $numpedido=''){
 
         $borrar = FacturaDetalle::find($valorId);
         $numfrasconestepedido=FacturaDetalle::where('pedido_id',$numpedido)->count();

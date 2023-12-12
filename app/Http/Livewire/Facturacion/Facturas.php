@@ -116,8 +116,7 @@ class Facturas extends Component
         $this->dispatchBrowserEvent('notify', $deleteCount . ' facturas eliminados!');
     }
 
-    public function delete($facturaId)
-    {
+    public function delete($facturaId){
         $factura = Factura::find($facturaId);
         if ($factura) {
             $factura->delete();

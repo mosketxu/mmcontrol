@@ -199,6 +199,7 @@ class Fdetalle extends Component
     }
 
     public function delete($valorId){
+        dd('1');
         //vemos si este pedido está en alguna otra factura
         // $numfrasconestepedido=ModelsFacturaDetalle::where('pedido_id',$valorId)->count();
         // $facturado= $numfrasconestepedido > 1 ? '2' : '0';

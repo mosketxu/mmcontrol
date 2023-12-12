@@ -47,8 +47,7 @@
                 <x-jet-label >{{ __('Ok Externos ') }} {{$presupuesto->okexterno=='0' ? "No" : 'Sí'}}</x-jet-label>
             </div>
             <div>
-                <x-jet-label >{{ __('Observaciones Externas: ') }} </x-jet-label>
-                <p>{!! nl2br(e($presupuesto->observacionesexterno)) !!}</p>
+                <x-jet-label >{{ __('Observaciones Externas: ') }} </x-jet-label>{!! nl2br(e($presupuesto->observacionesexterno)) !!}
             </div>
         </div>
     </div>

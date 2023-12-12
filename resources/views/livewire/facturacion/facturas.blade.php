@@ -34,7 +34,7 @@
                                 <div class="w-1/12 text-right">{{ $factura->ffacturavto }}</div>
                                 <div class="w-1/12 text-right">{{ $factura->importe }}</div>
                                 <div class="w-1/12 text-center">{{ $factura->facturatipo[1] }}</div>
-                                <div class="w-4/12 text-left"><textarea class=" pl-2 w-full text-sm bg-transparent border-0 rounded-md" rows="1" readonly>{{ $factura->observaciones }}</textarea></div>
+                                <div class="w-4/12 text-left"><textarea class="w-full pl-2 text-sm bg-transparent border-0 rounded-md " rows="1" readonly>{{ $factura->observaciones }}</textarea></div>
                             </div>
                             <div class="flex items-center w-2/12 " >
                                 <div class="w-6/12 pl-2">

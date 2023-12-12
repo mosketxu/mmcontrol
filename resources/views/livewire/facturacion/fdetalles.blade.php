@@ -39,6 +39,7 @@
             <input type="number" step="any" wire:model.lazy='cantidad'
             class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 border-0 rounded-md"
             {{ $deshabilitado }}/>
+
         </div>
         <div class="w-1/12">
             <input type="number" step="any" wire:model.lazy='importe'
