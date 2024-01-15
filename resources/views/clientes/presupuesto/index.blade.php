@@ -14,7 +14,9 @@
     <div class="p-2">
         <div class="max-w-full mx-auto">
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
-                @livewire('presupuesto.presupuestos',['tipo'=>$tipo,'titulo'=>$titulo])
+                {{-- clientes.cliente-ofertas --}}
+                @livewire('clientes.cliente-presupuestos',['tipo'=>$tipo,'titulo'=>$titulo])
+                {{-- @livewire('presupuesto.presupuestos',['tipo'=>$tipo,'titulo'=>$titulo]) --}}
             </div>
         </div>
     </div>

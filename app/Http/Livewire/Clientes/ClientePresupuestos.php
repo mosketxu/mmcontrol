@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Livewire\Presupuesto;
+namespace App\Http\Livewire\Clientes;
 
-use App\Models\{Entidad,Mes, Pedido, Presupuesto};
-use Illuminate\Support\Facades\Storage;
+use App\Models\{Entidad,Mes, Pedido, Presupuesto, UserEmpresa};
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class Presupuestos extends Component
+class ClientePresupuestos extends Component
 {
     use WithPagination, WithBulkActions;
 
@@ -33,14 +32,18 @@ class Presupuestos extends Component
     public $message;
     public $tipo;
     public $titulo;
+    public $cliente;
+    public $entidadescliente;
 
     public $escliente;
     public $deshabilitado;
 
     public function mount($tipo,$titulo){
+        $this->cliente=Auth::user();
         $this->tipo=$tipo;
         $this->titulo=$titulo;
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
+        $this->entidadescliente=UserEmpresa::where('user_id',$this->cliente->id)->get();
     }
 
     protected function rules(){
@@ -53,7 +56,10 @@ class Presupuestos extends Component
     }
 
     public function render(){
-        $entidades=Entidad::orderBy('entidad')->get();
+        $entidades=Entidad::orderBy('entidad')
+        ->whereIn('id',$this->entidadescliente->pluck('entidad_id'))
+        ->get();
+
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
@@ -61,11 +67,11 @@ class Presupuestos extends Component
         if($this->selectAll) $this->selectPageRows();
 
         $presupuestos = $this->rows;
-
-        // dd($presupuestos->first());
-        // dd($presupuestos->where('id','2300659'));
-        $view=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoseditorial' : 'livewire.presupuesto.presupuestosotros' ;
+        $view=$this->tipo=='1' ? 'livewire.clientes.presupuesto.presupuestoseditorial' : 'livewire.clientes.presupuesto.presupuestosotros' ;
+        // return view($view,compact('presupuestos','clientes','proveedores','meses'));
         return view($view,compact('presupuestos','clientes','proveedores','meses'));
+
+        // return view('livewire.clientes.cliente-presupuestos');
     }
 
     public function updatingSearch(){$this->resetPage();}
@@ -109,6 +115,7 @@ class Presupuestos extends Component
             ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
             ->join('productos','presupuesto_productos.producto_id','=','productos.id')
             ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia')
+            ->whereIn('presupuestos.cliente_id',$this->entidadescliente->pluck('entidad_id'))
             ->where('presupuestos.tipo',$this->tipo)
             ->search('presupuestos.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){
@@ -142,6 +149,7 @@ class Presupuestos extends Component
             // ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
             // ->join('productos','presupuesto_productos.producto_id','=','productos.id')
             ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm')
+            ->whereIn('presupuestos.cliente_id',$this->entidadescliente->pluck('entidad_id'))
             ->where('presupuestos.tipo',$this->tipo)
             ->search('presupuestos.id',$this->search)
             ->when($this->filtroreferencia!='', function ($query){
@@ -171,20 +179,19 @@ class Presupuestos extends Component
         return $this->rowsQuery->get();
     }
 
-    public function delete($presupuestoId){
-        $existe=Storage::disk('archivospresupuesto')->exists($presupuestoId);
-        if ($existe) Storage::disk('archivospresupuesto')->deleteDirectory($presupuestoId);
+    // public function delete($presupuestoId){
+    //     $existe=Storage::disk('archivospresupuesto')->exists($presupuestoId);
+    //     if ($existe) Storage::disk('archivospresupuesto')->deleteDirectory($presupuestoId);
 
-        $pedidocount=Pedido::where('presupuesto_id',$presupuestoId)->count();
-        if($pedidocount>0)
-            $this->dispatchBrowserEvent('notifyred', 'Este presupuesto tiene un pedido asociado. No se puede eliminar. ');
-        else{
-            $presupuesto = Presupuesto::find($presupuestoId);
-            if ($presupuesto) {
-                $presupuesto->delete();
-                $this->dispatchBrowserEvent('notify', 'presupuesto borrado. ');
-            }
-        }
-    }
-
+    //     $pedidocount=Pedido::where('presupuesto_id',$presupuestoId)->count();
+    //     if($pedidocount>0)
+    //         $this->dispatchBrowserEvent('notifyred', 'Este presupuesto tiene un pedido asociado. No se puede eliminar. ');
+    //     else{
+    //         $presupuesto = Presupuesto::find($presupuestoId);
+    //         if ($presupuesto) {
+    //             $presupuesto->delete();
+    //             $this->dispatchBrowserEvent('notify', 'presupuesto borrado. ');
+    //         }
+    //     }
+    // }
 }

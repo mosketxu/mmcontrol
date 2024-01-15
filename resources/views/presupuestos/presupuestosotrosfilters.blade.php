@@ -63,7 +63,7 @@
             </div>
         </div>
     {{-- Proveedor  --}}
-    <div class="flex w-2/12 ">
+    {{-- <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Proveedor
@@ -80,7 +80,7 @@
                 @endif
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- Año --}}
     <div class="flex w-1/12">
         <div class="w-full">

@@ -109,6 +109,29 @@ class ClienteController extends Controller
         return view('clientes.presupuesto.edit',compact('presupuesto','tipo','ruta','titulo','escliente'));
     }
 
+    public function presupuestoPDF(Presupuesto $presupuesto){
+        $proveedor=Entidad::find($presupuesto->proveedor_id);
+        $cliente=Entidad::find($presupuesto->cliente_id);
+        $pdf = new Dompdf();
+
+        if($presupuesto->tipo=='1'){
+            $producto=$presupuesto->presupuestoproductos->first()->producto;
+            if($tipopdf='n')
+            $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+            else
+            $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+        }
+        else{
+            // $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->where('id',$presupuesto->id)->first();
+            $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->find($presupuesto->id);
+            $pdf = \PDF::loadView('presupuestos.presupuestopdfotros', compact('presupuesto','proveedor','cliente'));
+        }
+
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('presupuesto.pdf'); //asi lo muestra por pantalla
+    }
+
+
 
     public function pedidotipo($tipo,$ruta,Request $request ){
         $search=$request->search;

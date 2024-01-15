@@ -30,8 +30,7 @@ class Prods extends Component
 
     public Producto $producto;
 
-    public function mount($tipo,$titulo,)
-    {
+    public function mount($tipo,$titulo,){
         $this->titulo=$titulo;
         $this->tipo=$tipo;
         if($tipo=='1'){
@@ -51,6 +50,7 @@ class Prods extends Component
     }
 
     public function render(){
+
         $this->producto= new Producto;
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
