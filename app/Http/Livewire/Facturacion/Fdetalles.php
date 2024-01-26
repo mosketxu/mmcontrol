@@ -92,9 +92,9 @@ class Fdetalles extends Component
     }
 
     public function calculos(){
-        $this->subtotalsiniva=round($this->importe * $this->cantidad ,2);
-        $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva ,2);
-        $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) ,2);
+        $this->subtotalsiniva=round($this->importe * $this->cantidad ,4);
+        $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva ,4);
+        $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) ,4);
     }
 
     public function UpdatedCantidad(){if($this->cantidad=='') $this->cantidad=='0'; $this->calculos(); $this->save();}

@@ -62,24 +62,24 @@ class OfertaDetalles extends Component
 
         return view('livewire.oferta.oferta-detalles',compact('odetalles'));
     }
-    public function UpdatedCantidad(){ $this->total=round($this->cantidad * $this->importe,2);}
-    public function UpdatedImporte(){ $this->total=round($this->cantidad * $this->importe,2);}
+    public function UpdatedCantidad(){ $this->total=round($this->cantidad * $this->importe,4);}
+    public function UpdatedImporte(){ $this->total=round($this->cantidad * $this->importe,4);}
 
     public function changeValor(OfertaDetalle $odetalle,$campo,$valor){
         // dd($odetalle,$campo,$valor);
         if($campo=='cantidad')
-            $this->total=round($valor * $odetalle->importe,2);
+            $this->total=round($valor * $odetalle->importe,4);
         elseif($campo=='importe')
-            $this->total=round($valor * $odetalle->cantidad,2);
+            $this->total=round($valor * $odetalle->cantidad,4);
         $this->oferta_id=$odetalle->oferta_id;
         $this->validate();
         // $this->oferta_id='';
-        // $this->total=round($this->cantidad * $this->importe,2);
+        // $this->total=round($this->cantidad * $this->importe,4);
         $odetalle->update([
             $campo=>$valor,
             'total'=>$this->total]);
         // $odetalle->update([
-        //     'total'=>round($this->cantidad * $this->importe,2)
+        //     'total'=>round($this->cantidad * $this->importe,4)
         //     ]);
 
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
@@ -89,7 +89,7 @@ class OfertaDetalles extends Component
         // $this->oferta_id;
         if(!$this->cantidad) $this->cantidad=0;
         if(!$this->importe) $this->importe=0;
-        $this->total=round($this->cantidad * $this->importe,2);
+        $this->total=round($this->cantidad * $this->importe,4);
 
         $this->validate();
         $odetalle=OfertaDetalle::create([

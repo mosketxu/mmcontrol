@@ -6,7 +6,7 @@
                 <td class="text-right"> Fecha: {{ date("d/m/Y", strtotime($parcial->fecha)) }}</td>
             </tr>
         </table>
-        <div class="border m-5 p-5 text-sm ">
+        <div class="p-5 m-5 text-sm border ">
             <table>
                 <tr>
                     <td>
@@ -36,19 +36,19 @@
                 <tr class="border-t-2">
                     <td> </td>
                     <td class="text-right"></td>
-                    <td class="text-right font-bold italic"> Total</td>
-                    <td class="text-right font-bold italic">{{ number_format(round($detalle->sum('total'),2),2) }}</td>
+                    <td class="italic font-bold text-right"> Total</td>
+                    <td class="italic font-bold text-right">{{ number_format(round($detalle->sum('total'),2),2) }}</td>
 
                 </tr>
             </table>
             <div class="mt-24">
-                <div class="ml-2 w-24 font-bold">Enviar a: {{ $parcial->destino }} </div>
+                <div class="w-24 ml-2 font-bold">Enviar a: {{ $parcial->destino }} </div>
                 <div class="ml-2">Att.: {{ $parcial->atencion }}</div>
                 <div class="ml-2">Dirección: {{ $parcial->direccion }}</div>
                 <div class="ml-2">Localidad: {{ $parcial->localidad }} ({{ $parcial->cp }}) </div>
                 <div class="ml-2">Horario: {{ $parcial->horario }}</div>
                 <div class="ml-2">Tfno.: {{ $parcial->tfno }}</div>
-                <div class="ml-2">Observaciones:<textarea rows="1" class="border-0 text-sm mt-0">{{ $parcial->observaciones }}</textarea></div>
+                <div class="ml-2">Observaciones:<textarea rows="1" class="mt-0 text-sm border-0">{{ $parcial->observaciones }}</textarea></div>
             </div>
         </div>
         </div>

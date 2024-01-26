@@ -100,9 +100,9 @@ class Fdetalle extends Component
     }
 
     public function calculos(){
-        $this->subtotalsiniva=round($this->importe * $this->cantidad ,2);
-        $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva ,2);
-        $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) ,2);
+        $this->subtotalsiniva=round($this->importe * $this->cantidad ,4);
+        $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva ,4);
+        $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) ,4);
     }
 
     public function UpdatedCantidad(){ if($this->cantidad=='') $this->cantidad=='0'; $this->calculos(); }
@@ -113,9 +113,9 @@ class Fdetalle extends Component
         $this->validate();
         $facturadetalle->update([$campo=>$valor]);
         $facturadetalle->update([
-            'subtotalsiniva'=>round($facturadetalle->importe * $facturadetalle->cantidad ,2),
-            'subtotaliva'=>round($facturadetalle->importe * $facturadetalle->cantidad * $facturadetalle->iva ,2),
-            'subtotal'=>round($facturadetalle->importe *$facturadetalle->cantidad * (1+$facturadetalle->iva) ,2),
+            'subtotalsiniva'=>round($facturadetalle->importe * $facturadetalle->cantidad ,4),
+            'subtotaliva'=>round($facturadetalle->importe * $facturadetalle->cantidad * $facturadetalle->iva ,4),
+            'subtotal'=>round($facturadetalle->importe *$facturadetalle->cantidad * (1+$facturadetalle->iva) ,4),
             ]);
 
         $totales = ModelsFacturaDetalle::where('factura_id',$this->factura->id)
@@ -156,9 +156,9 @@ class Fdetalle extends Component
             'cantidad'=>$this->cantidad,
             'iva'=>$this->iva,
             'importe'=>$this->importe,
-            'subtotalsiniva'=>round($this->importe * $this->cantidad ,2),
-            'subtotaliva'=>round($this->importe * $this->cantidad * $this->iva,2),
-            'subtotal'=>round($this->importe * $this->cantidad * (1+$this->iva),2),
+            'subtotalsiniva'=>round($this->importe * $this->cantidad ,4),
+            'subtotaliva'=>round($this->importe * $this->cantidad * $this->iva,4),
+            'subtotal'=>round($this->importe * $this->cantidad * (1+$this->iva),4),
             'orden'=>$this->orden,
             'visible'=>$this->visible,
             'observaciones'=>$this->observaciones,
