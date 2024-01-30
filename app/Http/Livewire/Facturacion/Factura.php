@@ -78,7 +78,7 @@ class Factura extends Component
             $this->fecha=$factura->fecha;
             $this->fechavencimiento=$factura->fechavencimiento;
             $this->pedidocliente=$factura->pedidocliente;
-            $this->importe=number_format($factura->importe,2,',','.');
+            $this->importe=number_format($factura->importe,4,',','.');
             $this->iva=number_format($factura->iva,2,',','.');
             $this->total=number_format($factura->total,2,',','.');
             $this->estado=$factura->estado;

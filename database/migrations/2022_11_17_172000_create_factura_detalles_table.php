@@ -19,7 +19,7 @@ class CreateFacturaDetallesTable extends Migration
             $table->foreignId('pedido_id')->nullable()->constrained('pedidos');
             $table->string('concepto')->nullable();
             $table->bigInteger('cantidad')->default(0.00);
-            $table->double('importe', 15, 2)->nullable()->default(0.00);
+            $table->double('importe', 15, 4)->nullable()->default(0.00);
             $table->double('iva', 15, 2)->default(0.21);
             $table->double('subtotalsiniva', 15, 2)->default(0.21);
             $table->double('subtotaliva', 15, 2)->default(0.21);

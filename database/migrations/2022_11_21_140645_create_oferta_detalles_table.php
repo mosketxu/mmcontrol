@@ -19,7 +19,7 @@ class CreateOfertaDetallesTable extends Migration
             $table->string('titulo')->nullable();
             $table->string('concepto')->nullable();
             $table->integer('cantidad')->default('0');
-            $table->double('importe', 15, 2)->nullable()->default(0.00);
+            $table->double('importe', 15, 4)->nullable()->default(0.00);
             $table->double('total', 15, 2)->nullable()->default(0.00);
             $table->string('observaciones')->nullable();
             $table->integer('orden')->nullable()->default('0');
