@@ -131,6 +131,10 @@ class ClienteController extends Controller
         return $pdf->stream('presupuesto.pdf'); //asi lo muestra por pantalla
     }
 
+    public function archivos(Presupuesto $presupuesto, $ruta){
+        return view('presupuestos.archivos',compact('presupuesto','ruta'));
+    }
+
 
 
     public function pedidotipo($tipo,$ruta,Request $request ){

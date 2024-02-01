@@ -21,7 +21,7 @@ class CreateFacturasTable extends Migration
             $table->string('pedidocliente')->nullable()->index();
             $table->date('fecha');
             $table->date('fechavencimiento')->nullable();
-            $table->double('importe', 15, 2)->nullable()->default(0.00);
+            $table->double('importe', 15, 4)->nullable()->default(0.00);
             $table->double('iva', 15, 2)->nullable()->default(0.00);
             $table->double('total', 15, 2)->nullable()->default(0.00);
             $table->integer('estado')->default('0');

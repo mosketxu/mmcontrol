@@ -159,7 +159,9 @@
                         </div>
                         @endif
                         <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
+                            @if(!Auth::user()->hasRole('Cliente'))
                             <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 mx-1"  title="Eliminar detalle"/>
+                            @endif
                             @if($pdfvisible=='1')
                                 <a href="{{route($routepdf,[$presupuestoid,$ruta,$valor->id])}}" target="_blank" ><x-icon.pdf class="mx-1 text-red-500 hover:text-red-700 "/></a>
                             @endif
@@ -184,6 +186,7 @@
                 {{-- <div>
                     {{ $valores->links() }}
                 </div> --}}
+                @if(!Auth::user()->hasRole('Cliente'))
                 <div>
                     <form wire:submit.prevent="save">
                         <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
@@ -268,14 +271,23 @@
                         </div>
                     </form>
                 </div>
+                @endif
             </div>
         </div>
     </div>
     <div class="m-2">
         @if($ruta=='i')
-            <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @if(!Auth::user()->hasRole('Cliente'))
+                <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @else
+                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.presupuesto.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @endif
         @else
-            <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.editar',[$presupuestoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @if(!Auth::user()->hasRole('Cliente'))
+                <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.editar',[$presupuestoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @else
+                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.presupuesto.editar',[$presupuestoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+            @endif
         @endif
     </div>
 </div>

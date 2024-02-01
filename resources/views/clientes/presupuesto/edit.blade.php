@@ -9,8 +9,6 @@
             <div class="flex flex-row-reverse w-full">
                 @include('presupuestos.presupuesto-menu' )
             </div>
-
-
         </div>
     </x-slot>
     <div class="p-2">

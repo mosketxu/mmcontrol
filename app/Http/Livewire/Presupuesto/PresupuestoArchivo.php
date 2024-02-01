@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Presupuesto;
 
 use App\Models\{Presupuesto,PresupuestoArchivo as ModelsPresupuestoArchivo};
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
 
 use Livewire\Component;
@@ -90,6 +90,7 @@ class PresupuestoArchivo extends Component
     public $editarvisible=0;
     public $search='';
 
+
     protected $listeners = [ 'refresh' => '$refresh'];
 
     protected function rules()
@@ -117,6 +118,15 @@ class PresupuestoArchivo extends Component
         $this->tipo=$tipo;
         $this->ruta=$ruta;
         $this->titulo="Archivos del presupuesto: ";
+        if(Auth::user()->hasRole('Cliente')){
+            $this->campofechadisabled='disabled';
+            $this->campo2disabled='disabled';
+            $this->campo3disabled='disabled';
+            $this->campo4disabled='disabled';
+            $this->campo5disabled='disabled';
+            $this->campo6disabled='disabled';
+        }
+
     }
 
     public function render()

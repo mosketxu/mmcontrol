@@ -7,6 +7,7 @@
             <div class="w-full">
                     @include('presupuestos.presupuestoseditorialfilters')
             </div>
+
             {{-- tabla presupuesots --}}
             <div class="flex-col space-y-4">
                 <div>
@@ -68,9 +69,9 @@
                                         @endif
                                     </div>
                                     <div class="w-full space-x-2 text-center md:w-4/12">
-                                        {{-- @if(!Auth::user()->hasRole('Cliente'))
-                                        <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('presupuesto.archivos',[$presupuesto->id,'i'])}}'" title="Archivo"/>
-                                        @endif --}}
+                                        {{-- @if(!Auth::user()->hasRole('Cliente')) --}}
+                                        <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('cliente.presupuesto.archivos',[$presupuesto->id,'i'])}}'" title="Archivo"/>
+                                        {{-- @endif --}}
                                         <x-icon.pdf-a class="w-4 text-red-500 hover:text-red-700" href="{{route('cliente.presupuesto.presupuestoPDF',[$presupuesto,'n'])}}" target="_blank" title="PDF Presupuesto"/>
                                         <x-icon.pdf-a class="w-4 text-green-500 hover:text-orange-700" href="{{route('cliente.presupuesto.presupuestoPDF',[$presupuesto,'r'])}}" target="_blank" title="PDF Presupuesto reducido"/>
                                         {{-- @if(!Auth::user()->hasRole('Cliente'))
