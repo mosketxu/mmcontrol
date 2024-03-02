@@ -26,22 +26,33 @@
             </table>
             <hr style="border-top: 3px solid rgb(112, 173, 71);">
         </header>
-        <footer style="position:fixed;left:0px;bottom:0px;height:320px;width:100%">
-            <table width="80%" style="" class="mx-auto">
+        <footer style="position:fixed;left:0px;bottom:0px;height:325px;width:100%">
+
+
+            {{-- <table width="90%" style="" class="mx-auto">
                 <tr>
-                    <td width=45%>
+                    <td width=50%></td>
+                    <td width=50% style="border: solid; border-width:0.6px">SELLO Y FIRMA <br> <br> <br> <br></td>
+                </tr>
+            </table> --}}
+
+            <table width="90%" style="" class="mx-auto">
+                <tr>
+                    <td width=50% class="test-right">
+                        {{-- <div class="text-right">
+                            <img src="{{asset('img/SelloSostenibilidad.png')}}" class="text-right" width="260px">
+                        </div> --}}
+                    </td>
+                    <td width=50%>
                         <div class="h-24 p-3 border border-blue-900">
                             SELLO Y FIRMA
-                        </div>
-                    <td width=55% class="test-right">
-                        <div class="text-right">
-                            {{-- <img src="{{asset('img/SelloSostenibilidad.png')}}" class="text-right" width="260px"> --}}
                         </div>
                     </td>
                 </tr>
             </table>
             <div >
                 <div style="margin-left: 50px;font-size: 0.5rem;">
+                    <p class="text-bold">IVA no incluido.</p>
                     <p>Oferta válida durante 30 días.</p>
                     <p>El precio no incluye retoques de archivos.</p>
                     <p>Milimetrica Producciones tiene la potestad de destruir archivos o troquel sin previo aviso, pasados 2 años desde su última fabricación </p>
@@ -93,10 +104,12 @@
                             <td width=80% >{{ $oferta->impresion}}</td>
                         </tr>
                         @endif
+                        @if($oferta->manipulacion!='' && $oferta->manipulacion!='-')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Manipulación:</td>
                             <td width=80% >{{ $oferta->manipulacion}}</td>
                         </tr>
+                        @endif
                         @if($oferta->embalaje!='')
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:1px">Embalaje:</td>

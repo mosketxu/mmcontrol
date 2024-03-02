@@ -19,7 +19,10 @@
                             <div class="w-3/12 text-left " >{{ __('Cliente') }}</div>
                             <div class="w-2/12 text-left " >{{ __('Fecha') }}</div>
                             @if($tipo=='1')
-                                <div class="w-5/12 text-left " >{{ __('Isbn/Título') }} </div>
+                            <div class="flex w-5/12">
+                                <div class="w-3/12 text-left " >{{ __('Isbn') }} </div>
+                                <div class="w-9/12 text-left " >{{ __('Título') }} </div>
+                            </div>
                             @else
                                 <div class="w-5/12 text-left " >{{ __('Referencia') }} </div>
                             @endif
@@ -37,8 +40,10 @@
                                 <div class="flex w-3/12 text-left">{{ $oferta->cliente->entidad }}</div>
                                 <div class="flex w-2/12 text-left">{{ $oferta->ffecha2 }}</div>
                                 @if($tipo=='1')
-                                {{$oferta->ofertaproducto}}
-                                    <div class="flex w-5/12 text-left">{{ $oferta->ofertaproducto->isbn ??' ' }} {{ $oferta->ofertaproducto->referencia ?? ' '}}</div>
+                                <div class="flex w-5/12">
+                                    <div class="w-3/12 text-left">{{ $oferta->isbn }} </div>
+                                    <div class="w-9/12 text-left">{{ $oferta->referencia}}</div>
+                                </div>
                                 @else
                                     <div class="flex w-5/12 text-left">{{ $oferta->descripcion }}</div>
                                 @endif

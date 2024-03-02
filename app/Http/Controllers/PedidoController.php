@@ -75,7 +75,7 @@ class PedidoController extends Controller
             ->when($filtroresponsable!='', function ($query) use($filtroresponsable){$query->where('pedidos.responsable','like','%'.$filtroresponsable.'%');})
             ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})
             ->when($filtroproveedor!='', function ($query) use($filtroproveedor) {$query->where('pedidos.proveedor_id',$filtroproveedor);})
-            ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
+            ->when($filtroestado!='0' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
             ->when($filtrofacturado!='', function ($query) use($filtrofacturado) {$query->where('pedidos.facturado',$filtrofacturado);})
             ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
             ->when($filtroplotter!='', function ($query) use($filtroplotter) {$query->where('pedidos.ctrplotter',$filtroplotter);})
@@ -88,8 +88,6 @@ class PedidoController extends Controller
             ->orderBy('pedidos.id','desc')
             ->groupBy('pedidos.id')
             ->paginate(30);
-            // ->get();
-
 
         return view('pedidos.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos',
         'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));

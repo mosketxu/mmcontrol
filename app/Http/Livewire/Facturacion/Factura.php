@@ -86,7 +86,17 @@ class Factura extends Component
             $this->observaciones=$factura->observaciones;
             $this->bloqueado=$this->estado!='0' ? '1' : '0';
             $this->deshabilitado=$this->bloqueado=='1' ? 'disabled' : '';
-            $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$factura->cliente_id)->where('pedidocliente','<>','')->groupBy('pedidocliente')->get();
+
+            $pedidossinfacturar=Pedido::select('pedidocliente','facturado')
+                ->where('cliente_id',$factura->cliente_id)
+                ->where('pedidocliente','<>','')
+                ->where('facturado','<>','1')
+                ->groupBy('pedidocliente')->get();
+            $pedidodeestafactura=Pedido::select('pedidocliente','facturado')
+                ->where('pedidocliente',$this->pedidocliente)
+                ->get();
+            $this->pedidos=$pedidossinfacturar->concat($pedidodeestafactura);
+
             $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$factura->cliente_id)->get();
         }
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';

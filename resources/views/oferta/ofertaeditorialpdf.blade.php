@@ -32,7 +32,7 @@
             </table>
             <hr style="border-top: 3px solid rgb(49, 72, 172);">
         </header>
-        <footer style="position:fixed;left:0px;bottom:0px;height:270px;width:100%">
+        <footer style="position:fixed;left:0px;bottom:0px;height:280px;width:100%">
             <table width="90%" style="" class="mx-auto">
                 <tr>
                     <td width=50%></td>
@@ -41,6 +41,7 @@
             </table>
             <div >
                 <div style="margin-left: 50px;font-size: 0.5rem;">
+                    <p class="text-bold">IVA no incluido.</p>
                     <p>Oferta válida durante 30 días.</p>
                     <p>El precio no incluye retoques de archivos.</p>
                     <p>Milimetrica Producciones tiene la potestad de destruir archivos o troquel sin previo aviso, pasados 2 años desde su última fabricación </p>
@@ -120,6 +121,12 @@
                         <tr>
                             <td width=20% class="font-bold "  style="padding-top:8px">Encuadernado:</td>
                             <td width=80% class=""  style="padding-top:8px" >{{ $oferta->ofertaproducto->encuadernado }}</td>
+                        </tr>
+                        @endif
+                        @if($oferta->ofertaproducto->plastificado!='')
+                        <tr>
+                            <td width=20% class="font-bold "  style="padding-top:8px">Laminado:</td>
+                            <td width=80% class=""  style="padding-top:8px" >{{ $oferta->ofertaproducto->plastificado }}</td>
                         </tr>
                         @endif
                         @if($oferta->ofertaproducto->descripsolapa!='')

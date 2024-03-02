@@ -37,9 +37,14 @@
             <br>
             <hr style="border-top: 3px solid rgb(49, 72, 172);">
         </header>
-        <footer style="position:fixed;left:0px;bottom:0px;height:130px;width:100%">
-            <div>
-                <div class="mt-10 mb-5 text-center " style="font-size: 0.7rem">
+        <footer style="position:fixed;left:0px;bottom:0px;height:180px;width:100%">
+                <div class="text-center" style="font-size: 0.7rem;text-align: justify; margin-left:40px; margin-right:40px">
+                    Sus datos personales expuestos en este documento y facilitados por usted, sólo serán utilizados para el control administrativo, facturación y contacto promocional.
+                    Se procederá a tratar los datos de manera lícita, leal, transparente, adecuada, pertinente, limitada, exacta y actualizada.
+                    De acuerdo con los derechos que le confiere la normativa vigente podrá ejercer los derechos de acceso, rectificación, limitación de tratamiento, supresión,
+                    portabilidad y oposición al tratamiento de sus datos de carácter personal, dirigiéndose a la dirección arriba indicada mediante escrito y al que acompañe fotocopia de su Documento Nacional de Identidad.
+                </div>
+                <div class="mt-5 mb-5 text-center " style="font-size: 0.7rem">
                     Milimétrica Producciones, S.L. • NIF: B-63941835 • C/ Zamora 46-48,  Ático 5ª • 08005 Barcelona • 93 624 38 33
                 </div>
                 <hr style="border-top: 3px solid rgb(49, 72, 172);">
@@ -106,7 +111,7 @@
                         @endif
                         @endforeach
                     </table>
-                    <div style="position:fixed;left:0px;bottom:0px;height:250px;width:100%">
+                    <div style="position:fixed;left:0px;bottom:0px;height:280px;width:100%">
                         <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
                             <tr class="border-b-2" >
                                 <td class="font-bold text-right">IMPORTE</td>
@@ -139,7 +144,7 @@
                                 @if($factura->cliente->iban2!='')
                                 <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN {{ $factura->cliente->iban2 }}</td>
                                 @else
-                                <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN ES11 2013 3221  3102 1024 3770</td>
+                                <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN ES47 0182 8611 7602 0010 3154</td>
                                 @endif
                             </tr>
                         </table>

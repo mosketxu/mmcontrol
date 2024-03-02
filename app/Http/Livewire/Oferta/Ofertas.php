@@ -39,6 +39,8 @@ class Ofertas extends Component
         if($this->selectAll) $this->selectPageRows();
         $ofertas = $this->rows;
 
+        // dd($ofertas->first());
+
         // $o=Oferta::query()
         //     ->with('cliente','contacto')
         //     // ->join('entidades','ofertas.cliente_id','=','entidades.id')
