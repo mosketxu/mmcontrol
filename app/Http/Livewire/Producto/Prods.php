@@ -74,7 +74,8 @@ class Prods extends Component
             ->when($this->ordenarpor2!='', function ($query){
                 $query->orderBy($this->ordenarpor2,$this->orden2);
                 })
-            ->get();
+            ->paginate(50);
+            // ->get();
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
 

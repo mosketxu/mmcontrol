@@ -37,6 +37,7 @@
                                 <div class="flex w-3/12 text-left">{{ $oferta->cliente->entidad }}</div>
                                 <div class="flex w-2/12 text-left">{{ $oferta->ffecha2 }}</div>
                                 @if($tipo=='1')
+                                {{$oferta->ofertaproducto}}
                                     <div class="flex w-5/12 text-left">{{ $oferta->ofertaproducto->isbn ??' ' }} {{ $oferta->ofertaproducto->referencia ?? ' '}}</div>
                                 @else
                                     <div class="flex w-5/12 text-left">{{ $oferta->descripcion }}</div>

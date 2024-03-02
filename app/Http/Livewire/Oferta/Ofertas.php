@@ -38,6 +38,18 @@ class Ofertas extends Component
 
         if($this->selectAll) $this->selectPageRows();
         $ofertas = $this->rows;
+
+        // $o=Oferta::query()
+        //     ->with('cliente','contacto')
+        //     // ->join('entidades','ofertas.cliente_id','=','entidades.id')
+        //     // ->join('productos','ofertas.producto_id','=','productos.id')
+        //     // ->select('ofertas.*', 'entidades.entidad', 'entidades.emailadm','productos.isbn','productos.referencia')
+        //     ->where('ofertas.tipo','1')
+        //     ->where('ofertas.id','2300016')->get();
+
+        //         dd($o);
+
+
         return view('livewire.oferta.ofertas',compact('ofertas','clientes','meses'));
     }
 

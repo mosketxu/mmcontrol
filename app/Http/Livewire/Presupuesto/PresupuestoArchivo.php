@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Presupuesto;
 
-use App\Models\{Presupuesto,PresupuestoArchivo as ModelsPresupuestoArchivo};
+use App\Mail\MilimetricaMail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\{Presupuesto,PresupuestoArchivo as ModelsPresupuestoArchivo, Responsable};
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
+
 
 use Livewire\Component;
 
@@ -93,8 +96,7 @@ class PresupuestoArchivo extends Component
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
-    protected function rules()
-    {
+    protected function rules(){
         return [
             // 'valorcampofecha'=>'required||date',
             // 'valorcampo2'=>'nullable',
@@ -104,16 +106,14 @@ class PresupuestoArchivo extends Component
         ];
     }
 
-    public function messages()
-    {
+    public function messages(){
         return [
             'valorcampo4.required'=>'El comentario es necesario',
             'valorcampoimg.required'=>'El fichero es necesario',
         ];
     }
 
-    public function mount($presupuestoid,$ruta,$tipo)
-    {
+    public function mount($presupuestoid,$ruta,$tipo){
         $this->presupuesto=Presupuesto::find($presupuestoid);
         $this->tipo=$tipo;
         $this->ruta=$ruta;
@@ -129,8 +129,7 @@ class PresupuestoArchivo extends Component
 
     }
 
-    public function render()
-    {
+    public function render(){
         $valores=ModelsPresupuestoArchivo::query()
         ->search('comentario', $this->search)
         ->select('id', 'nombrearchivooriginal as valorcampo3','comentario as valorcampo4', 'archivo as valorcampoimg')
@@ -141,16 +140,14 @@ class PresupuestoArchivo extends Component
         return view('livewire.presupuesto.auxiliarpresupuestoscard', compact('valores'));
     }
 
-    public function changeCampo(ModelsPresupuestoArchivo $valor, $campo, $valorcampo)
-    {
+    public function changeCampo(ModelsPresupuestoArchivo $valor, $campo, $valorcampo){
         $p=ModelsPresupuestoArchivo::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
         $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
     }
 
-    public function updatedValorcampoimg()
-    {
+    public function updatedValorcampoimg(){
         $this->validate(['valorcampoimg'=>'file|max:5000']);
     }
 
@@ -164,8 +161,7 @@ class PresupuestoArchivo extends Component
     //     }
     // }
 
-    public function save()
-    {
+    public function save(){
         $this->validate();
         $filename="";
         $extension="";
@@ -186,10 +182,29 @@ class PresupuestoArchivo extends Component
             }
         }
 
+        $this->enviamail($this->presupuesto);
 
         $this->dispatchBrowserEvent('notify', 'Archivo añadido con éxito');
 
         return redirect()->route('presupuesto.archivos',[$this->presupuestoid,$this->ruta]);
+    }
+
+    public function enviamail($presupuesto) {
+
+        $responsable=Responsable::where('responsable',$presupuesto->responsable)->first();
+
+        $details=[
+            'responsable'=>Responsable::where('responsable',$presupuesto->responsable)->first(),
+            'emailmilimetrica'=>$responsable->mailresponsable ? $responsable->mailresponsable : 'alex.arregui@sumaempresa.com',
+            'emailexterno'=>Auth::user()->email,
+            'title'=>'Se ha subido un archivo en el Presupuesto: ' .$presupuesto->id,
+            'subject'=>'Se ha subido un archivo en el Presupuesto: ' .$presupuesto->id,
+        ];
+
+        // dd($details);
+
+        Mail::send(new MilimetricaMail($presupuesto,$details));
+        return "Correo enviado";
     }
 
     public function delete($valorId)

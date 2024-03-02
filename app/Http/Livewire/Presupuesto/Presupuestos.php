@@ -62,8 +62,6 @@ class Presupuestos extends Component
 
         $presupuestos = $this->rows;
 
-        // dd($presupuestos->first());
-        // dd($presupuestos->where('id','2300659'));
         $view=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoseditorial' : 'livewire.presupuesto.presupuestosotros' ;
         return view($view,compact('presupuestos','clientes','proveedores','meses'));
     }
@@ -81,17 +79,20 @@ class Presupuestos extends Component
 
 
     public function changeValor(Presupuesto $presupuesto,$campo,$valor){
-        // dd($valor);
         if($campo=='okexterno'){
             $valor=$presupuesto->okexterno=='on' ? '0' : '1';
             // dd($valor);
             $presupuesto->estado=($valor=='1' && $presupuesto->estado!='1') ? $presupuesto->estado='1' : $presupuesto->estado;
-        }
+            $presupuesto->update([
+                $campo=>$valor,
+                'estado'=>$presupuesto->estado,
+            ]);
+        }else
+            $presupuesto->update([
+                $campo=>$valor,
+            ]);
 
-        $presupuesto->update([
-            $campo=>$valor,
-            'estado'=>$presupuesto->estado,
-        ]);
+
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
 
@@ -168,7 +169,8 @@ class Presupuestos extends Component
     }
 
     public function getRowsProperty(){
-        return $this->rowsQuery->get();
+        // return $this->rowsQuery->get();
+        return $this->rowsQuery->paginate(50);
     }
 
     public function delete($presupuestoId){

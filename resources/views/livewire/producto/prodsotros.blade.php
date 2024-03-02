@@ -9,6 +9,9 @@
                 @include('producto.productootrosfilters')
             </div>
             <div class="flex-col space-y-1">
+                <div>
+                    {{ $productos->links() }}
+                </div>
                 <div class="flex w-full py-1 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
                     <div class="flex w-11/12 ">
                         <div class="flex w-1/12 pl-2 " >{{ __('Cod.') }}</div>
