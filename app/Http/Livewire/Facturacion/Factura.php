@@ -92,9 +92,12 @@ class Factura extends Component
                 ->where('pedidocliente','<>','')
                 ->where('facturado','<>','1')
                 ->groupBy('pedidocliente')->get();
+
             $pedidodeestafactura=Pedido::select('pedidocliente','facturado')
                 ->where('pedidocliente',$this->pedidocliente)
+                ->where('pedidocliente','<>','')
                 ->get();
+
             $this->pedidos=$pedidossinfacturar->concat($pedidodeestafactura);
 
             $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$factura->cliente_id)->get();
