@@ -19,16 +19,16 @@ class Factura extends Model
     public function getStatusColorAttribute(){
         return [
             '0'=>['gray-200','Sin Enviar'],
-            '1'=>['red-500','Env. P.cobro'],
-            '2'=>['green-500','Cobrada']
+            '1'=>['red-200','Env. P.cobro'],
+            '2'=>['green-200','Cobrada']
         ][$this->estado] ?? ['gray-100',''];
     }
 
     public function getFacturaTipoAttribute(){
         return [
             '1'=>['gray-200','Editorial'],
-            '2'=>['red-500','Packaging'],
-            '3'=>['green-500','Propios']
+            '2'=>['red-200','Packaging'],
+            '3'=>['green-200','Propios']
         ][$this->tipo] ?? ['gray-100',''];
     }
     public function getFfacturaAttribute(){
