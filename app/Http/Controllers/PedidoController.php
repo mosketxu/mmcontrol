@@ -28,24 +28,25 @@ use function PHPUnit\Framework\isNull;
 
 class PedidoController extends Controller
 {
-    public function __construct()
-    {
+
+    public function __construct(){
         $this->middleware('can:pedido.index')->only('index');;
         $this->middleware('can:pedido.edit')->only('nuevo','editar','update','parcial');
     }
 
     public function tipo($tipo,$ruta,Request $request ){
+
+
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;
         $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
-
         $filtrocliente=$request->filtrocliente;
         $filtroproveedor=$request->filtroproveedor;
 
         if($request->filtroestado==''){$filtroestado='0';}
-            elseif($request->filtroestado == '3'){$filtroestado='';}
-                else{$filtroestado=$request->filtroestado;}
+        elseif($request->filtroestado == '3'){$filtroestado='';}
+        else{$filtroestado=$request->filtroestado;}
 
         $filtroestado=$request->filtroestado == '' ? '0' : $request->filtroestado;
         $filtrofacturado=$request->filtrofacturado;
@@ -54,7 +55,6 @@ class PedidoController extends Controller
         $filtroentrega=$request->filtroentrega;
         $filtroanyo=$request->filtroanyo;
         $filtromes=$request->filtromes;
-
 
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
@@ -75,7 +75,7 @@ class PedidoController extends Controller
             ->when($filtroresponsable!='', function ($query) use($filtroresponsable){$query->where('pedidos.responsable','like','%'.$filtroresponsable.'%');})
             ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})
             ->when($filtroproveedor!='', function ($query) use($filtroproveedor) {$query->where('pedidos.proveedor_id',$filtroproveedor);})
-            ->when($filtroestado!='0' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
+            ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
             ->when($filtrofacturado!='', function ($query) use($filtrofacturado) {$query->where('pedidos.facturado',$filtrofacturado);})
             ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
             ->when($filtroplotter!='', function ($query) use($filtroplotter) {$query->where('pedidos.ctrplotter',$filtroplotter);})
@@ -180,7 +180,6 @@ class PedidoController extends Controller
         $filtromes=$filtromes=='@' ? '' : $filtromes;
         $filtroestado=$filtroestado=='@' ? '' : $filtroestado;
         $filtrofacturado=$filtrofacturado=='@' ? '' : $filtrofacturado;
-
 
         if($tipo=='1')
             $pedidos= Pedido::query()
