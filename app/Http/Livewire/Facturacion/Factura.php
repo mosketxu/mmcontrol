@@ -121,8 +121,14 @@ class Factura extends Component
     public function numfactura(){
         $anyo= substr($this->fecha, 0,4);
         $anyo2= substr($anyo, -2);
-        $fac=ModelsFactura::inYear($anyo)->max('id') ;
-        return !isset($fac) ? ($anyo2 * 100000 +1961) :$fac + 1 ;
+        // quieren el la facturacion no empieza de 1 cada año sino que siga la numeracion del año anterior. Segun JM en enero 2024
+        // $fac=ModelsFactura::inYear($anyo)->max('id') ;
+        // return !isset($fac) ? ($anyo2 * 100000 +1961) :$fac + 1 ;
+
+        // lo calculo sin iniciar de 1
+        $fac=$anyo2.substr(ModelsFactura::max('id')+1, -5);
+        return !isset($fac) ? ($anyo2 * 100000 +1961) :$fac  ;
+
     }
 
     public function save(){

@@ -21,7 +21,7 @@
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
                                 <x-jet-label for="facturaid">{{ __('Nº Factura') }}</x-jet-label>
-                                <input  wire:model.lazy="facturaid" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm bg-blue-50 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                <input  wire:model.lazy="facturaid" type="number" class="w-full px-0 py-1 text-xs text-center border-gray-300 rounded-md shadow-sm bg-blue-50 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
                             <div class="w-full form-item md:w-1/12 lg:w-3/12">
