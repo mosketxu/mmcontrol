@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Presupuesto;
 
 use App\Mail\MilimetricaMail;
 use Illuminate\Support\Facades\Mail;
-use App\Models\{Presupuesto,PresupuestoArchivo as ModelsPresupuestoArchivo, Responsable};
+use App\Models\{Entidad, Presupuesto,PresupuestoArchivo as ModelsPresupuestoArchivo, Responsable, UserEmpresa};
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
 
@@ -189,21 +189,25 @@ class PresupuestoArchivo extends Component
         return redirect()->route('presupuesto.archivos',[$this->presupuestoid,$this->ruta]);
     }
 
-    public function enviamail($presupuesto) {
+    public function enviamail(Presupuesto $presupuesto) {
+
 
         $responsable=Responsable::where('responsable',$presupuesto->responsable)->first();
 
-        $details=[
-            'responsable'=>Responsable::where('responsable',$presupuesto->responsable)->first(),
-            'emailmilimetrica'=>$responsable->mailresponsable ? $responsable->mailresponsable : 'alex.arregui@sumaempresa.com',
-            'emailexterno'=>Auth::user()->email,
-            'title'=>'Se ha subido un archivo en el Presupuesto: ' .$presupuesto->id,
-            'subject'=>'Se ha subido un archivo en el Presupuesto: ' .$presupuesto->id,
-        ];
-
-        // dd($details);
-
-        Mail::send(new MilimetricaMail($presupuesto,$details));
+        $cliente=Entidad::find($presupuesto->cliente_id);
+        $userempresas=UserEmpresa::with('user')->where('entidad_id',$cliente->id)->get();
+        foreach ($userempresas as $userempresa) {
+            $destinatario=$userempresa->user->email;
+            $details=[
+                'origen'=>'Archivo',
+                'responsable'=>Responsable::where('responsable',$presupuesto->responsable)->first(),
+                'emailmilimetrica'=>$responsable->mailresponsable ? $responsable->mailresponsable : 'alex.arregui@sumaempresa.com',
+                'emailexterno'=>$destinatario,
+                'title'=>'Se ha subido un archivo en el Presupuesto: ' .$presupuesto->id,
+                'subject'=>'Se ha subido un archivo en el Presupuesto: ' .$presupuesto->id,
+            ];
+            Mail::send(new MilimetricaMail($presupuesto,$details));
+        }
         return "Correo enviado";
     }
 

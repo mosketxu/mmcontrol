@@ -33,14 +33,13 @@ class MilimetricaMail extends Mailable
      */
     public function build()
     {
-        // dd($this->details['emailexterno']);
-
-        // dd($this->details['emailexterno']);
-
-        // return $this->from($this->details['emailexterno'], config('mail.from.name', 'Externo'))
-        return $this->to($this->details['emailmilimetrica'])
-            ->subject($this->details['subject'])
-            ->view('emails.milimetricamail');
-
+        if($this->details['origen']=='Presupuesto')
+            return $this->to($this->details['emailmilimetrica'])
+                ->subject($this->details['subject'])
+                ->view('emails.milimetricamail');
+        elseif($this->details['origen']=='Archivo')
+                return $this->to($this->details['emailexterno'])
+                ->subject($this->details['subject'])
+                ->view('emails.milimetricamail');
     }
 }

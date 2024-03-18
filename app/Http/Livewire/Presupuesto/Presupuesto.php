@@ -451,8 +451,8 @@ class Presupuesto extends Component
     public function enviamail($presupuesto) {
 
         $responsable=Responsable::where('responsable',$presupuesto->responsable)->first();
-
         $details=[
+            'origen'=>'Presupuesto',
             'responsable'=>Responsable::where('responsable',$presupuesto->responsable)->first(),
             'emailmilimetrica'=>$responsable->mailresponsable ? $responsable->mailresponsable : 'alex.arregui@sumaempresa.com',
             'emailexterno'=>Auth::user()->email,
