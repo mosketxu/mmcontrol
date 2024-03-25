@@ -111,51 +111,45 @@
                         @endif
                         @endforeach
                     </table>
-                    <div style="position:fixed;left:0px;bottom:0px;height:280px;width:100%">
-                        <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
-                            <tr class="border-b-2" >
-                                <td class="font-bold text-right">IMPORTE</td>
-                                <td class="font-bold text-right">%IVA</td>
-                                <td class="font-bold text-right">IMPORTE IVA</td>
-                                <td class="font-bold text-right">TOTAL FACTURA</td>
-                            </tr>
-                            @foreach ($totales as $total)
-                            <tr >
-                                <td class="text-right">{{ number_format($total->subtotalsiniva,2,',','.') }}</td>
-                                <td class="text-right">% {{ number_format($total->iva*100,0)  }} </td>
-                                <td class="text-right">{{ number_format($total->subtotaliva,2,',','.') }}</td>
-                                <td class="text-right">{{ number_format($total->subtotal,2,',','.') }}</td>
-                            </tr>
-                            @endforeach
-                            @if($totales->count()>1)
-                            <tr>
-                                <td class="font-bold text-right">{{ number_format($factura->importe,2,',','.') }}</td>
-                                <td></td >
-                                <td class="font-bold text-right">{{ number_format($factura->iva,2,',','.') }}</td>
-                                <td class="font-bold text-right">{{ number_format($factura->total,2,',','.') }}</td>
-                            </tr>
-                            @endif
-                        </table>
-
-                        <table width="100%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
-                            <tr>
-                                <td width="30%" class="text-xs italic text-right"  >Vto: {{ $factura->ffacturavto }}</td>
-                                <td width="10%" class="text-xs italic text-right"  ></td>
-                                @if($factura->cliente->iban2!='')
-                                <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN {{ $factura->cliente->iban2 }}</td>
-                                @else
-                                <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN ES47 0182 8611 7602 0010 3154</td>
-                                @endif
-                            </tr>
-                        </table>
-                    </div>
-
-                    {{-- <table width=90% class="mx-auto mt-20 text-sm " style="color:rgb(30, 27, 27);">
-                        <tr>
-                            <td class="" >Nuestro presupuesto: ¿cómo ponemos el dato, sobre todo si hay más de un pedido?</td>
-                        </tr>
-                    </table> --}}
                 </div>
+            </div>
+            <div style="position:fixed;left:0px;bottom:0px;height:310px;width:100%">
+                <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                    <tr class="border-b-2" >
+                        <td class="font-bold text-right">IMPORTE</td>
+                        <td class="font-bold text-right">%IVA</td>
+                        <td class="font-bold text-right">IMPORTE IVA</td>
+                        <td class="font-bold text-right">TOTAL FACTURA</td>
+                    </tr>
+                    @foreach ($totales as $total)
+                    <tr >
+                        <td class="text-right">{{ number_format($total->subtotalsiniva,2,',','.') }}</td>
+                        <td class="text-right">% {{ number_format($total->iva*100,0)  }} </td>
+                        <td class="text-right">{{ number_format($total->subtotaliva,2,',','.') }}</td>
+                        <td class="text-right">{{ number_format($total->subtotal,2,',','.') }}</td>
+                    </tr>
+                    @endforeach
+                    @if($totales->count()>1)
+                    <tr>
+                        <td class="font-bold text-right">{{ number_format($factura->importe,2,',','.') }}</td>
+                        <td></td >
+                        <td class="font-bold text-right">{{ number_format($factura->iva,2,',','.') }}</td>
+                        <td class="font-bold text-right">{{ number_format($factura->total,2,',','.') }}</td>
+                    </tr>
+                    @endif
+                </table>
+
+                <table width="100%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                    <tr>
+                        <td width="30%" class="text-xs italic text-right"  >Vto: {{ $factura->ffacturavto }}</td>
+                        <td width="10%" class="text-xs italic text-right"  ></td>
+                        @if($factura->cliente->iban2!='')
+                        <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN {{ $factura->cliente->iban2 }}</td>
+                        @else
+                        <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN ES47 0182 8611 7602 0010 3154</td>
+                        @endif
+                    </tr>
+                </table>
             </div>
         </main>
     </body>
