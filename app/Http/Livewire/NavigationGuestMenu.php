@@ -16,8 +16,7 @@ class NavigationGuestMenu extends Component
         'refresh-navigation-guest-menu' => '$refresh',
     ];
 
-    public function render()
-    {
+    public function render(){
         return view('livewire.navigation-guest-menu');
     }
 }

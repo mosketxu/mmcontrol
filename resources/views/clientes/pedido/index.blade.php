@@ -41,7 +41,8 @@
                                                 @if($tipo=='1')<div class="text-xs text-blue-700">{{ __('Prov.') }}</div>@endif
                                             </div>
                                             <div class="w-4/12 text-left md:w-6/12" >{{ $tipo=='1' ? 'ISBN/Ref' : 'Descripción'  }}</div>
-                                            <div class="flex-none w-2/12 md:flex">
+                                            <div class="w-1/12 text-left md:w-1/12" >{{ __('Lam.Pl') }}</div>
+                                            <div class="flex-none w-1/12 md:flex md:w-2/12">
                                                 <div class="w-full text-center md:w-6/12">Q.Prev.</div>
                                                 <div class="w-full text-center md:w-6/12">Q.Real</div>
                                             </div>

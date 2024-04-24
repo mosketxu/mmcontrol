@@ -142,6 +142,9 @@ class ClienteController extends Controller
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;
         $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
+        $filtrolaminadoplastico=$request->filtrolaminadoplastico;
+
+
 
         $filtrocliente=$request->filtrocliente;
         $filtroproveedor=$request->filtroproveedor;
@@ -188,6 +191,7 @@ class ClienteController extends Controller
             ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
             ->when($filtroplotter!='', function ($query) use($filtroplotter) {$query->where('pedidos.ctrplotter',$filtroplotter);})
             ->when($filtroentrega!='', function ($query) use($filtroentrega) {$query->where('pedidos.ctrentrega',$filtroentrega);})
+            ->when($filtrolaminadoplastico!='', function ($query) use($filtrolaminadoplastico) {$query->where('pedidos.laminadoplastico',$filtrolaminadoplastico);})
             ->searchYear('fechapedido',$filtroanyo)
             ->searchMes('fechapedido',$filtromes)
             ->orderBy('pedidos.estado','asc')
@@ -199,7 +203,7 @@ class ClienteController extends Controller
 
 
             return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','escliente',
-            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtrolaminadoplastico','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function pedidoeditar(Pedido $pedido,$ruta){

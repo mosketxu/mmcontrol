@@ -212,7 +212,7 @@
                                     {{$escliente}} {{$deshabilitado}}>
                                         <option value="">--Selecciona --</option>
                                         <option value="0">No</option>
-                                        <option value="1">Sí</option>
+                                        <option value="1">Natureflex</option>
                                 </select>
                             </div>
                             {{-- Cajas --}}
