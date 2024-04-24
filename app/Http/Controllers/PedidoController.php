@@ -35,14 +35,14 @@ class PedidoController extends Controller
     }
 
     public function tipo($tipo,$ruta,Request $request ){
-
-
+        // dd($request->filtrolaminadoplastico);
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;
         $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
         $filtrocliente=$request->filtrocliente;
         $filtroproveedor=$request->filtroproveedor;
+        $filtrolaminadoplastico=$request->filtrolaminadoplastico;
 
         if($request->filtroestado==''){$filtroestado='0';}
         elseif($request->filtroestado == '3'){$filtroestado='';}
@@ -80,6 +80,7 @@ class PedidoController extends Controller
             ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
             ->when($filtroplotter!='', function ($query) use($filtroplotter) {$query->where('pedidos.ctrplotter',$filtroplotter);})
             ->when($filtroentrega!='', function ($query) use($filtroentrega) {$query->where('pedidos.ctrentrega',$filtroentrega);})
+            ->when($filtrolaminadoplastico!='', function ($query) use($filtrolaminadoplastico) {$query->where('pedidos.laminadoplastico',$filtrolaminadoplastico);})
             ->searchYear('fechapedido',$filtroanyo)
             ->searchMes('fechapedido',$filtromes)
             ->orderBy('pedidos.estado','asc')
@@ -90,7 +91,7 @@ class PedidoController extends Controller
             ->paginate(30);
 
         return view('pedidos.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos',
-        'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+        'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrolaminadoplastico','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function nuevo($tipo,$ruta){
@@ -168,7 +169,7 @@ class PedidoController extends Controller
         return view('pedidos.distribuciones',compact('pedido','ruta'));
     }
 
-    public function export($tipo,$search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado){
+    public function export($tipo,$search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtrolaminadoplastico,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado){
 
         $search=$search=='@' ? '' : $search;
         $filtroreferencia=$filtroreferencia=='@' ? '' : $filtroreferencia;
@@ -176,6 +177,7 @@ class PedidoController extends Controller
         $filtroresponsable=$filtroresponsable=='@' ? '' : $filtroresponsable;
         $filtrocliente=$filtrocliente=='@' ? '' : $filtrocliente;
         $filtroproveedor=$filtroproveedor=='@' ? '' : $filtroproveedor;
+        $filtrolaminadoplastico=$filtrolaminadoplastico=='@' ? '' : $filtrolaminadoplastico;
         $filtroanyo=$filtroanyo=='@' ? '' : $filtroanyo;
         $filtromes=$filtromes=='@' ? '' : $filtromes;
         $filtroestado=$filtroestado=='@' ? '' : $filtroestado;
@@ -192,7 +194,7 @@ class PedidoController extends Controller
                 'pedidos.facturadopor',
                 'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
                 'productos.isbn','productos.referencia',
-                'pedidos.estado','pedidos.facturado','otros',
+                'pedidos.tiradaprevista','pedidos.tiradareal','pedidos.estado','pedidos.laminadoplastico','pedidos.facturado','otros',
                 )
                 ->where('pedidos.tipo',$tipo)
                 ->search('pedidos.id',$search)
@@ -210,6 +212,9 @@ class PedidoController extends Controller
                     })
                 ->when($filtroproveedor!='', function ($query) use($filtroproveedor){
                     $query->where('pedidos.proveedor_id',$filtroproveedor);
+                    })
+                ->when($filtrolaminadoplastico!='', function ($query) use($filtrolaminadoplastico){
+                    $query->where('pedidos.laminadoplastico',$filtrolaminadoplastico);
                     })
                 ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado){
                     $query->where('pedidos.estado',$filtroestado);

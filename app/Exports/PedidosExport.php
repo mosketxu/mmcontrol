@@ -40,6 +40,7 @@ class PedidosExport implements FromCollection,WithHeadings
             'Tirada Prevista',
             'Tirada Real',
             'estado',
+            'laminadoplastico',
             'facturado',
             'otros',
         ];

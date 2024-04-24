@@ -78,7 +78,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     //Pedidos
     // Route::get('/pedido/contadores', [PedidoController::class, 'contadores'])->name('pedido.contadores');
-    Route::get('/pedido/{tipo}/{search?}/{fref?}/{fisbn?}/{fresp?}/{fcli?}/{fprov?}/{fanyo?}/{fmes?}/{festado?}/{ffact?}/export', [PedidoController::class, 'export'])->name('pedido.export');
+    Route::get('/pedido/{tipo}/{search?}/{fref?}/{fisbn?}/{fresp?}/{fcli?}/{fprov?}/{flamplast?}/{fanyo?}/{fmes?}/{festado?}/{ffact?}/export', [PedidoController::class, 'export'])->name('pedido.export');
     Route::get('/pedido/{pedido}/entrada/{tipo}/{ruta}', [PedidoController::class, 'entrada'])->name('pedido.entrada');
     Route::get('/pedido/{pedido}/editar/{ruta}', [PedidoController::class, 'editar'])->name('pedido.editar');
     Route::get('/pedido/{pedido}/retrasos/{ruta}', [PedidoController::class, 'retrasos'])->name('pedido.retrasos');

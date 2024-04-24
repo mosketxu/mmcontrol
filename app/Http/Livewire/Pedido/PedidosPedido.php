@@ -19,6 +19,7 @@ class PedidosPedido extends Component
     public $ctrplotter;
     public $ctrentrega;
     public $facturado;
+    public $laminadoplastico;
     public $producto='';
     public $escliente='';
 
@@ -29,6 +30,7 @@ class PedidosPedido extends Component
         $this->pedido=$pedido;
         $this->estado=$this->pedido->estado;
         $this->facturado=$this->pedido->facturado;
+        $this->laminadoplastico=$this->pedido->laminadoplastico;
         $this->ctrarchivos=$this->pedido->ctrarchivos;
         $this->ctrplotter=$this->pedido->ctrplotter;
         $this->ctrentrega=$this->pedido->ctrentrega;
@@ -49,7 +51,6 @@ class PedidosPedido extends Component
 
         $this->pedido->estado=$this->estado;
         $this->pedido->save();
-
     }
 
     public function cambiaEstadocontrolfecha($ctrl){

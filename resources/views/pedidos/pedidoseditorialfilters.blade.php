@@ -133,6 +133,22 @@
                 </div>
             </div>
         </div>
+        <div class="flex w-1/12">
+            <div class="w-full">
+                <label class="px-1 text-sm text-gray-600">
+                    Laminado Plástico
+                </label>
+                <div class="flex">
+                    <select name="filtrolaminadoplastico"
+                        class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" onchange="this.form.submit()">
+                        <option value="">-- selecciona --</option>
+                        <option value="" {{ $filtrolaminadoplastico==''? 'selected' : ''  }}>Todos</option>
+                        <option value="0" {{ $filtrolaminadoplastico=='0'? 'selected' : ''  }}>No</option>
+                        <option value="1" {{ $filtrolaminadoplastico=='1'? 'selected' : ''  }}>Sí</option>
+                    </select>
+                </div>
+            </div>
+        </div>
         @if(!Auth::user()->hasRole('Cliente'))
         <div class="flex w-1/12">
             <div class="w-full">
@@ -159,6 +175,7 @@
                 $filtroresponsable=='' ? '@' : $filtroresponsable,
                 $filtrocliente=='' ? '@' : $filtrocliente,
                 $filtroproveedor=='' ? '@' : $filtroproveedor,
+                $filtrolaminadoplastico=='' ? '@' : $filtrolaminadoplastico,
                 $filtroanyo=='' ? '@' : $filtroanyo,
                 $filtromes=='' ? '@' : $filtromes,
                 $filtroestado=='' ? '@' : $filtroestado,

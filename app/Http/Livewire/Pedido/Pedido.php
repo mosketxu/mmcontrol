@@ -21,6 +21,7 @@ class Pedido extends Component
     public $facturadopor;
     public $muestra;
     public $pruebacolor;
+    public $laminadoplastico;
     public $contacto_id;
     // public $producto_id;
     public $fechapedido;
@@ -139,6 +140,7 @@ class Pedido extends Component
             $this->facturadopor=$pedido->facturadopor;
             $this->muestra=$pedido->muestra;
             $this->pruebacolor=$pedido->pruebacolor;
+            $this->laminadoplastico=$pedido->laminadoplastico;
             $this->fechapedido=$pedido->fechapedido;
             $this->fechaarchivos=$pedido->fechaarchivos;
             $this->fechaplotter=$pedido->fechaplotter;
@@ -296,6 +298,7 @@ class Pedido extends Component
             // 'producto_id'=>$this->producto_id,
             'muestra'=>$this->muestra,
             'pruebacolor'=>$this->pruebacolor,
+            'laminadoplastico'=>$this->laminadoplastico,
             'facturadopor'=>$this->facturadopor,
             'fechapedido'=>$this->fechapedido,
             'fechaarchivos'=>$this->fechaarchivos,

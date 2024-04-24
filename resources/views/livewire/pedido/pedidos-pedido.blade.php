@@ -29,6 +29,13 @@
         @else
             <div class="flex-col w-4/12 text-left md:w-6/12">{{ $pedido->descripcion }}</div>
         @endif
+        <div class="flex w-2/12 mx-auto text-center ">
+            @if($pedido->laminadoplastico=='1')
+                <x-icon.validate class="w-5"/>
+            {{-- @else
+                <x-icon.cross class="w-4"/> --}}
+            @endif
+        </div>
         <div class="flex w-2/12 mx-auto text-center bg-gray-50">
             <div class="w-6/12">{{ $pedido->tiradaprevista }}</div>
             <div class="w-1/12">/</div>
