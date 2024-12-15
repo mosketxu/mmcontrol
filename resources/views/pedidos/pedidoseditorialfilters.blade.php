@@ -136,7 +136,7 @@
         <div class="flex w-1/12">
             <div class="w-full">
                 <label class="px-1 text-sm text-gray-600">
-                    Laminado Plástico
+                    Natureflex
                 </label>
                 <div class="flex">
                     <select name="filtrolaminadoplastico"

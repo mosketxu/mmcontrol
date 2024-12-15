@@ -206,13 +206,13 @@
                             </div>
                             {{-- prueba color --}}
                             <div class="w-full form-item">
-                                <x-jet-label for="laminadoplastico">{{ __('Lam.Plástico') }}</x-jet-label>
+                                <x-jet-label for="laminadoplastico">{{ __('Natureflex') }}</x-jet-label>
                                 <select wire:model.lazy="laminadoplastico"
                                     class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{$escliente}} {{$deshabilitado}}>
                                         <option value="">--Selecciona --</option>
                                         <option value="0">No</option>
-                                        <option value="1">Natureflex</option>
+                                        <option value="1">Sí</option>
                                 </select>
                             </div>
                             {{-- Cajas --}}
