@@ -87,6 +87,8 @@ class PedidoRetraso extends Component
     public $search='';
     public $escliente='';
 
+    protected $queryString=['search'];
+
 
     protected $listeners = [ 'refresh' => '$refresh'];
 

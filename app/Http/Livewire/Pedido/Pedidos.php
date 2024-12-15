@@ -58,6 +58,9 @@ class Pedidos extends Component
     public $filtroplotter='';
     public $filtroentrega='';
 
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroproveedor','filtroreferencia','filtroisbn','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega'];
+
+
     public $message;
     public $destino='0';
 

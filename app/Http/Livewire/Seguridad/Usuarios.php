@@ -29,7 +29,6 @@ class Usuarios extends Component
     public $editarvisible=1;
     public $search='';
 
-
     protected $listeners = [ 'refresh' => '$refresh'];
 
     protected function rules()

@@ -54,6 +54,8 @@ class Presupuesto extends Component
     public $productos;
     public $escliente;
 
+    protected $queryString=['filtrocliente','filtroproveedor','filtroreferencia','filtroisbn'];
+
 
     protected $listeners = [ 'refreshpresupuesto'];
 

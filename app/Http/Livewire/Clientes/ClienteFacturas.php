@@ -31,6 +31,9 @@ class ClienteFacturas extends Component
 
     public $message;
 
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroestado','filtroFi','filtroFf','filtrotipo'];
+
+
     protected function rules(){
         return [
             'estado'=>'nullable',

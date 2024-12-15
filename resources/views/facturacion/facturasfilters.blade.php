@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="flex w-3/12 ">
+    <div class="flex w-2/12 ">
         <div class="w-full">
             <label class="px-1 text-xs text-gray-600">
                 Cliente
@@ -27,6 +27,24 @@
                 </select>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="flex w-1/12 ">
+        <div class="w-full">
+            <label class="px-1 text-xs text-gray-600">
+                Tipo
+            </label>
+            <div class="flex">
+                <select wire:model="filtroTipo" class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                    <option value="">Todos</option>
+                    <option value="1">Editorial</option>
+                    <option value="2">Packaging</option>
+                    <option value="3">Propios</option>
+                </select>
+                @if($filtroTipo!='')
+                    <x-icon.filter-slash-a wire:click="$set('filtroTipo', '')" class="pb-1" title="reset filter"/>
                 @endif
             </div>
         </div>

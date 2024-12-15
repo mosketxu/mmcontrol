@@ -92,10 +92,9 @@
 
                             <div class="flex mt-2 ml-2 space-x-4">
                                 <div class="space-x-3">
-                                    <x-jet-button class="bg-blue-600">
-                                        {{ __('Guardar') }}
-                                    </x-jet-button>
-                                    <x-jet-secondary-button  onclick="location.href = '{{route('seguridad')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                                    <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
+                                    {{-- <x-jet-secondary-button  onclick="location.href = '{{route('seguridad')}}'">{{ __('Volver') }}</x-jet-secondary-button> --}}
+                                    <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
                                 </div>
                             </div>
                         </form>

@@ -29,6 +29,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
             return redirect()->route('seguridad');
         } elseif (Auth::user()->hasRole('Gestor')) {
             return redirect()->route('presupuesto.tipo',['1','i']);
+        } elseif (Auth::user()->hasRole('Comercial')) {
+            return redirect()->route('entidad.index');
         } elseif (Auth::user()->hasRole('Cliente')) {
             // return redirect()->route('cliente.pedido.tipo',['1','i']);
             return redirect()->route('cliente.entidad.index'    );

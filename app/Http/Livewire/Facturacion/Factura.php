@@ -21,7 +21,7 @@ class Factura extends Component
     public $iva=0;
     public $total=0;
     public $estado=0;
-    public $tipo='1';
+    public $tipo='';
     public $observaciones;
 
     public $mesagge;
@@ -52,7 +52,7 @@ class Factura extends Component
             'fecha'=>'date|required',
             'fechavencimiento'=>'nullable|date',
             'estado'=>'nullable',
-            'tipo'=>'nullable',
+            'tipo'=>'required',
             'observaciones'=>'nullable',
         ];
     }
@@ -61,6 +61,7 @@ class Factura extends Component
         return [
             'facturaid.required'=>'El número de factura es necesario.',
             'cliente_id.required'=>'El cliente es necesario.',
+            'tipo.required'=>'Es obligatorio el tipo de factura.',
             'fecha.required'=>'La fecha es necesaria.',
             'fecha.date'=>'La fecha debe ser válida.',
             'fechavencimiento.date'=>'La fecha de vencimiento debe ser válida.',

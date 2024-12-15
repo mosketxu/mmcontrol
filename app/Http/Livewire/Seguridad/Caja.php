@@ -26,6 +26,9 @@ class Caja extends Component
     public $editarvisible=0;
     public $search='';
 
+    protected $queryString=['search'];
+
+
     protected $listeners = [ 'refresh' => '$refresh'];
 
     protected function rules()

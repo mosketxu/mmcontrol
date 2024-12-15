@@ -93,6 +93,8 @@ class PresupuestoArchivo extends Component
     public $editarvisible=0;
     public $search='';
 
+    protected $queryString=['search'];
+
 
     protected $listeners = [ 'refresh' => '$refresh'];
 

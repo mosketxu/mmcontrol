@@ -41,6 +41,8 @@ class Oferta extends Component
     public $productos;
     public $titulo='';
 
+    protected $queryString=['filtroisbn','filtrorefencia','filtrocliente'];
+
 
     protected $listeners = [ 'refreshoferta'];
 

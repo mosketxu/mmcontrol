@@ -27,7 +27,6 @@ class Responsables extends Component
     public $editarvisible=0;
     public $search='';
 
-
     protected $listeners = [ 'refresh' => '$refresh'];
 
     protected function rules(){

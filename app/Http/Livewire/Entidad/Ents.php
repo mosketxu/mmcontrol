@@ -18,6 +18,8 @@ class Ents extends Component
     public $orden='asc';
     public $entidadtipo_id='';
 
+    protected $queryString=['search','filtroresponsable','filtrofini','filtroffin'];
+
     public Entidad $entidad;
 
     public function render(){

@@ -318,12 +318,13 @@
                     </div>
                     <div class="p-2 m-2 ">
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                            @if(!Auth::user()->hasRole('Cliente'))
+                            <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
+                            {{-- @if(!Auth::user()->hasRole('Cliente'))
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
                             <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
                             @else
                             <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
-                            @endif
+                            @endif --}}
                         </div>
                     </div>
                 </form>

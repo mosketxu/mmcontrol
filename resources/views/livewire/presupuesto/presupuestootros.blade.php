@@ -211,11 +211,12 @@
                     <div class="p-1 m-1 ">
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                            @if(!Auth::user()->hasRole('Cliente'))
+                            <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
+                            {{-- @if(!Auth::user()->hasRole('Cliente'))
                                 <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
                             @else
                                 <x-jet-secondary-button  onclick="location.href = '{{route('cliente.presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
-                            @endif
+                            @endif --}}
                             @if($presupuestoid)
                                 @if($escliente=='disabled' || $deshabilitado =='disabled')
                                     <x-icon.lock-a class="" wire:click.prevent="desbloquear()"  title="Bloqueado"/>

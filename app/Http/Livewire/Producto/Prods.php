@@ -27,6 +27,8 @@ class Prods extends Component
     public $ordenarpor2='';
     public $orden2='';
 
+    protected $queryString=['filtroisbn','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion'];
+
 
     public Producto $producto;
 
@@ -54,28 +56,22 @@ class Prods extends Component
         $this->producto= new Producto;
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
-        $productos=Producto::query()
+
+        $datos=Producto::query()
             ->with('cliente')
-            ->when($this->tipo!='', function ($query){
-                $query->where('tipo',$this->tipo);
-                })
-            ->when($this->filtroisbn!='', function ($query){
-                $query->where('isbn', 'like', '%'.$this->filtroisbn.'%');
-                })
-            ->when($this->filtroreferencia!='', function ($query){
-                $query->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
-                })
-            ->when($this->filtrocliente!='', function ($query){
-                $query->where('cliente_id',$this->filtrocliente);
-                })
-            ->search('productos.material',$this->filtromaterial)
-            ->search('productos.impresion',$this->filtroimpresion)
             ->orderBy($this->ordenarpor1,$this->orden1)
             ->when($this->ordenarpor2!='', function ($query){
                 $query->orderBy($this->ordenarpor2,$this->orden2);
-                })
-            ->paginate(50);
-            // ->get();
+                });
+
+        if($this->tipo) $datos->where('tipo',$this->tipo);
+        if($this->filtroisbn) $datos->where('isbn', 'like', '%'.$this->filtroisbn.'%');
+        if($this->filtroreferencia) $datos->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
+        if($this->filtrocliente) $datos->where('cliente_id',$this->filtrocliente);
+        if($this->filtromaterial) $datos->search('productos.material',$this->filtromaterial);
+        if($this->filtroimpresion) $datos->search('productos.impresion',$this->filtroimpresion);
+
+        $productos=$datos->paginate(50);
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
 

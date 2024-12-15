@@ -49,6 +49,8 @@ class Pedido extends Component
     public $filtroreferencia;
     public $filtrocliente;
 
+
+
     public $titulo='';
     public $productoeditorialid;
     public $pedidoproductoid;
@@ -59,6 +61,7 @@ class Pedido extends Component
     public $deshabilitado;
     public $escliente;
 
+    protected $queryString=['filtrocliente','filtroreferencia','filtroisbn'];
 
     protected $listeners = [ 'refreshpedido'];
 

@@ -5,7 +5,7 @@
                 @include('errores')
             </div>
             {{-- datos del parcial --}}
-            <div class="grid grid-cols-3 gap-1 border m-2 p-2">
+            <div class="grid grid-cols-3 gap-1 p-2 m-2 border">
                 <div class="">
                     <div class="w-full ">Nº Albarán: {{ $parcial->id }}</div>
                     <div class="w-full ">Fecha: {{ $parcial->fecha }}</div>
@@ -31,7 +31,7 @@
                                 <input type="text" wire:model="parcial.destino"
                                         class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
-                            <div class="flex w-full space-x-2 ml-2">
+                            <div class="flex w-full ml-2 space-x-2">
                                 <label class="" for="" >Atención:</label>
                                 <input type="text" wire:model="parcial.atencion"
                                         class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
@@ -50,7 +50,7 @@
                                 <input type="text" wire:model="parcial.localidad"
                                     class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
-                            <div class="flex w-full space-x-2 ml-2">
+                            <div class="flex w-full ml-2 space-x-2">
                                 <label for="" >Cod.Postal:</label>
                                 <input type="text" wire:model="parcial.cp"
                                         class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
@@ -62,7 +62,7 @@
                                 <input type="text" wire:model="parcial.horario"
                                     class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
-                            <div class="flex w-full space-x-2 ml-2">
+                            <div class="flex w-full ml-2 space-x-2">
                                 <label for="" >Tfno.:</label>
                                 <input type="text" wire:model="parcial.tfno"
                                     class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
@@ -76,9 +76,10 @@
                             </div>
                         </div>
                         <div class="flex">
-                            <div class="flex w-full space-x-2 mt-2">
+                            <div class="flex w-full mt-2 space-x-2">
                                 <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.parciales',[$pedido,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                                <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
+                                {{-- <x-jet-secondary-button  onclick="location.href = '{{route('pedido.parciales',[$pedido,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button> --}}
                             </div>
                         </div>
                     </form>

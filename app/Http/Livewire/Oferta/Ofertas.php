@@ -23,6 +23,7 @@ class Ofertas extends Component
     public $filtroestado='';
     public $escliente='';
 
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtrocontacto','filtroreferencia','filtroisbn','filtroestado'];
 
     public $tipo='';
 

@@ -28,11 +28,11 @@ class Facturas extends Component
     public $filtroestado='';
     public $filtroFi='';
     public $filtroFf='';
-    public $filtrotipo='';
+    public $filtroTipo='';
 
     public $message;
 
-
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroestado','filtroFi','filtroFf','filtroTipo'];
 
     protected function rules(){
         return [
@@ -58,7 +58,7 @@ class Facturas extends Component
     // public function updatingFiltroestado(){$this->resetPage();}
     // public function updatingFiltroFi(){$this->resetPage();}
     // public function updatingFiltroFf(){$this->resetPage();}
-    // public function updatingFiltrotipo(){$this->resetPage();}
+    // public function updatingFiltroTipo(){$this->resetPage();}
 
     public function changeValor(Factura $factura,$campo,$valor){
         $factura->update([$campo=>$valor]);
@@ -76,8 +76,8 @@ class Facturas extends Component
             ->when($this->filtroestado!='', function ($query){
                 $query->where('facturas.estado',$this->filtroestado);
             })
-            ->when($this->filtrotipo!='', function ($query){
-                $query->where('facturas.tipo',$this->filtrotipo);
+            ->when($this->filtroTipo!='', function ($query){
+                $query->where('facturas.tipo',$this->filtroTipo);
             })
             ->when($this->filtroFi && !$this->filtroFf, function ($query) {
                 $query->where('fecha','>=', $this->filtroFi);

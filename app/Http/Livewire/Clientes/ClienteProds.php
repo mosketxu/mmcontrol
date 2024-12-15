@@ -28,6 +28,9 @@ class ClienteProds extends Component
     public $ordenarpor2='';
     public $orden2='';
 
+    protected $queryString=['filtroisbn','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion','ordenarpor1','orden1','ordenarpor2','orden2'];
+
+
     public Producto $producto;
 
     public function mount($tipo,$cliente,$titulo)

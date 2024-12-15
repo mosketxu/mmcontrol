@@ -286,7 +286,8 @@
         </div>
     </div>
     <div class="m-2">
-        @if(!Auth::user()->hasRole('Cliente'))
+        <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
+        {{-- @if(!Auth::user()->hasRole('Cliente'))
             @if($ruta=='i')
                 <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
             @else
@@ -298,6 +299,6 @@
             @else
                 <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
             @endif
-        @endif
+        @endif --}}
     </div>
 </div>

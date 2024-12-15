@@ -31,6 +31,7 @@ class Entidad extends Model
 
     public function scopeFiltrosEntidad(Builder $query, $search, $filtroresponsable, $entidadtipo_id,$fini,$ffin) : Builder
     {
+        //creo que ya no lo uso porque meto las v
         return $query ->search('entidad',$search)
         ->when($filtroresponsable!='', function ($query) use($filtroresponsable){
             $query->where('responsable','like','%'.$filtroresponsable.'%');

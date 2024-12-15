@@ -11,12 +11,14 @@
                         <div class="flex p-1 rounded-md bg-blue-50">
                             <h3 class="pl-1 font-semibold">Datos de la factura</h3>
                             <input  wire:model.defer="facturaid" type="hidden"/>
-                            @if($tipo!='1')
-                            <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
+                            {{-- @if($tipo!='1') --}}
+                            <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" required >
+                                <option value="">--Selecciona--</option>
+                                <option value="1">Editorial</option>
                                 <option value="2">Packaging</option>
                                 <option value="3">Propios</option>
                             </x-select>
-                            @endif
+                            {{-- @endif --}}
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
@@ -131,7 +133,8 @@
                     <div class="p-0 m-2 ">
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                            <x-jet-secondary-button  onclick="location.href = '{{route('facturacion.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                            {{-- <x-jet-secondary-button  onclick="location.href = '{{route('facturacion.index')}}'">{{ __('Volver') }}</x-jet-secondary-button> --}}
+                            <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
                             @if($bloqueado!='0')
                                 <x-icon.lock/>
                                 @else

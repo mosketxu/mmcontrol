@@ -26,6 +26,8 @@ class ClienteOfertas extends Component
     public $entidadescliente;
     // public $cliente;
 
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroestado','filtroisbn','filtroreferencia'];
+
 
     public $tipo='';
 
