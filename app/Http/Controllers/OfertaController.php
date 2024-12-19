@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Oferta;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class OfertaController extends Controller
 {
@@ -24,9 +25,21 @@ class OfertaController extends Controller
     }
 
     public function ficha($ofertaId,$tipo){
-        $pdf = new Dompdf();
         $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
+
+        // Determina si es una sola página o última página (ejemplo básico)
+        // $isSinglePage = count($oferta->ofertadetalles) <= 10; // Ajusta este número según tu diseño
+        // $isLastPage = true; // Siempre se pasa como verdadero para la última página
+
+        $pdf = new Dompdf();
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+        $pdf->setOptions($options);
+        // dd('sdf');
+
         $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaotrospdf';
+        // $pdf = \PDF::loadView($vista, compact('oferta','isSinglePage', 'isLastPage'));
         $pdf = \PDF::loadView($vista, compact('oferta'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
