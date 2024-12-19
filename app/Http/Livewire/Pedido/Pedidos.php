@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Pedido;
 use App\Exports\PedidosExport;
 use Livewire\Component;
 
-use App\Models\{ Pedido,Entidad, Mes, Responsable};
+use App\Models\{ Pedido,Entidad, Laminado, Mes, Responsable};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
@@ -57,8 +57,9 @@ class Pedidos extends Component
     public $filtroarchivos='';
     public $filtroplotter='';
     public $filtroentrega='';
+    public $filtrolaminado='';
 
-    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroproveedor','filtroreferencia','filtroisbn','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega'];
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroproveedor','filtroreferencia','filtroisbn','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtrolaminado'];
 
 
     public $message;
@@ -127,11 +128,12 @@ class Pedidos extends Component
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
         $responsables=Responsable::all();
+        $laminados=Laminado::get();
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
 
-        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables','meses'));
+        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables','meses','laminados'));
     }
 
     public function updatingSearch(){$this->resetPage();}
@@ -152,7 +154,7 @@ class Pedidos extends Component
 
     public function getRowsQuery1Property(){
         return Pedido::query()
-            ->with('cliente','proveedor')
+            ->with('cliente','proveedor','laminado')
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
@@ -189,6 +191,9 @@ class Pedidos extends Component
             ->when($this->filtroentrega!='', function ($query){
                 $query->where('pedidos.ctrentrega',$this->filtroentrega);
             })
+            ->when($this->filtrolaminado!='', function ($query){
+                $query->where('pedidos.laminado_id',$this->filtrolaminado);
+            })
             ->searchYear('fechapedido',$this->filtroanyo)
             ->searchMes('fechapedido',$this->filtromes)
             ->orderBy('pedidos.estado','asc')
@@ -202,7 +207,7 @@ class Pedidos extends Component
 
     public function getRowsQuery2Property(){
         return Pedido::query()
-            ->with('cliente','proveedor')
+            ->with('cliente','proveedor','laminado')
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
@@ -239,6 +244,9 @@ class Pedidos extends Component
             ->when($this->filtroentrega!='', function ($query){
                 $query->where('pedidos.ctrentrega',$this->filtroentrega);
             })
+            ->when($this->filtrolaminado!='', function ($query){
+                $query->where('pedidos.laminado_id',$this->filtrolaminado);
+            })
             ->searchYear('fechapedido',$this->filtroanyo)
             ->searchMes('fechapedido',$this->filtromes)
             ->orderBy('pedidos.estado','asc')
@@ -266,11 +274,13 @@ class Pedidos extends Component
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
                 ->leftjoin('entidades as imprenta','pedidos.proveedor_id','=','imprenta.id')
+                ->leftjoin('laminados as laminado','pedidos.laminado_id','=','laminados.id')
                 ->select('clientes.entidad as cliente',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','imprenta.entidad as imprenta',
                 'pedidos.facturadopor',
                 'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
                 'productos.isbn','productos.referencia',
+                'laminados.name',
                 'pedidos.estado','pedidos.facturado','otros',
                 )
                 ->where('pedidos.tipo',$this->tipo)
@@ -295,6 +305,9 @@ class Pedidos extends Component
                 })
                 ->when($this->filtrofacturado!='', function ($query){
                     $query->where('pedidos.facturado',$this->filtrofacturado);
+                })
+                ->when($this->filtrolaminado!='', function ($query){
+                    $query->where('pedidos.laminado_id',$this->filtrolaminado);
                 })
                 ->searchYear('fechapedido',$this->filtroanyo)
                 ->searchMes('fechapedido',$this->filtromes)
@@ -331,6 +344,9 @@ class Pedidos extends Component
                     })
                 ->when($this->filtroestado!='', function ($query){
                     $query->where('pedidos.estado',$this->filtroestado);
+                })
+                ->when($this->filtrolaminado!='', function ($query){
+                    $query->where('pedidos.laminado_id',$this->filtrolaminado);
                 })
                 ->when($this->filtrofacturado!='', function ($query){
                     $query->where('pedidos.facturado',$this->filtrofacturado);

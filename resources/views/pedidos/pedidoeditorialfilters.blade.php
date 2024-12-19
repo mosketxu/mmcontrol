@@ -1,5 +1,5 @@
 <div class="flex justify-between space-x-1">
-    <div class="text-gray-300 mt-7 w-10">
+    <div class="w-10 text-gray-300 mt-7">
         <x-icon.filter/>
     </div>
     <div class="flex w-2/12 ">

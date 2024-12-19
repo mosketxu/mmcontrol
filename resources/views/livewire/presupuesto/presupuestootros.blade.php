@@ -119,6 +119,16 @@
                                     {{ $escliente }} {{$deshabilitado}}/>
                                 </div>
                             </div>
+                            {{-- Moneda --}}
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="precio_ud">{{ __('Moneda') }}</x-jet-label>
+                                    <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
+                                        <option value="€">€</option>
+                                        <option value="$">$</option>
+                                    </x-select>
+                                </div>
+                            </div>
                             <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="preciototal">{{ __('Precio Total') }}</x-jet-label>
@@ -211,12 +221,12 @@
                     <div class="p-1 m-1 ">
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                            <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
-                            {{-- @if(!Auth::user()->hasRole('Cliente'))
+                            {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
+                            @if(!Auth::user()->hasRole('Cliente'))
                                 <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
                             @else
                                 <x-jet-secondary-button  onclick="location.href = '{{route('cliente.presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
-                            @endif --}}
+                            @endif
                             @if($presupuestoid)
                                 @if($escliente=='disabled' || $deshabilitado =='disabled')
                                     <x-icon.lock-a class="" wire:click.prevent="desbloquear()"  title="Bloqueado"/>

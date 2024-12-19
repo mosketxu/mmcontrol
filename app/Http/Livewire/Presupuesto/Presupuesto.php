@@ -21,6 +21,7 @@ class Presupuesto extends Component
     public $proveedor_id;
     public $tirada='0';
     public $precio_ud=0;
+    public $moneda='$';
     public $preciototal=0;
     public $facturadopor;
     public $fechapresupuesto;
@@ -74,6 +75,7 @@ class Presupuesto extends Component
             'proveedor_id'=>'nullable',
             'tirada'=>'required',
             'precio_ud'=>'nullable',
+            'moneda'=>'required',
             'preciototal'=>'nullable',
             'facturadopor'=>'required',
             'fechapresupuesto'=>'date|required',
@@ -125,6 +127,7 @@ class Presupuesto extends Component
             $this->fechapresupuesto=$presupuesto->fechapresupuesto;
             $this->tirada=$presupuesto->tirada;
             $this->precio_ud=$presupuesto->precio_ud;
+            $this->moneda=$presupuesto->moneda;
             $this->preciototal=$presupuesto->preciototal;
             $this->estado=$presupuesto->estado;
             $this->okexterno=$presupuesto->okexterno;
@@ -316,6 +319,7 @@ class Presupuesto extends Component
             'facturadopor'=>$this->facturadopor,
             'fechapresupuesto'=>$this->fechapresupuesto,
             'precio_ud'=>$this->precio_ud,
+            'moneda'=>$this->moneda,
             'preciototal'=>$this->preciototal,
             'estado'=>$this->estado,
             'okexterno'=>$this->okexterno,
@@ -400,6 +404,7 @@ class Presupuesto extends Component
             'tiradaprevista'=>$this->tiradanum($presupuesto->tirada) ,
             'tiradareal'=>'0',
             'precio'=>$presupuesto->precio_ud ? $presupuesto->precio_ud : '0' ,
+            'moneda'=>$presupuesto->moneda ,
             'preciototal'=>$presupuesto->precio_ud * $this->tiradanum($presupuesto->tirada),
             'estado'=>'0',
             'okexterno'=>'0',

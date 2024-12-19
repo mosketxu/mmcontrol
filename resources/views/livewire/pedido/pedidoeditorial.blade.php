@@ -205,8 +205,8 @@
                                 {{$escliente}} {{$deshabilitado}}/>
                             </div>
                             {{-- prueba color --}}
-                            <div class="w-full form-item">
-                                <x-jet-label for="laminadoplastico">{{ __('Natureflex') }}</x-jet-label>
+                            {{-- <div class="w-full form-item">
+                                <x-jet-label for="laminadoplastico">{{ __('Laminado') }}</x-jet-label>
                                 <select wire:model.lazy="laminadoplastico"
                                     class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{$escliente}} {{$deshabilitado}}>
@@ -214,6 +214,27 @@
                                         <option value="0">No</option>
                                         <option value="1">Sí</option>
                                 </select>
+                            </div> --}}
+                            <div class="w-full form-item">
+                                <x-jet-label for="laminado_id">{{ __('Laminado') }}</x-jet-label>
+                                <select wire:model.lazy="laminado_id"
+                                    class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    {{$escliente}} {{$deshabilitado}} required>
+                                    <option value="">--Selecciona Laminado--</option>
+                                    @foreach ($laminados as $laminado )
+                                        <option value="{{ $laminado->id }}">{{ $laminado->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="consumo">{{ __('Consumo') }}</x-jet-label>
+                                <input  wire:model.lazy="consumo" type="number" step="any" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
+                                {{$escliente}} {{$deshabilitado}}/>
+                            </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="unidad_consumo">{{ __('Ud.Consumo') }}</x-jet-label>
+                                <input  wire:model.lazy="unidad_consumo" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
+                                {{$escliente}} {{$deshabilitado}}/>
                             </div>
                             {{-- Cajas --}}
                             <div class="w-full form-item">
@@ -318,13 +339,14 @@
                     </div>
                     <div class="p-2 m-2 ">
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                            <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
-                            {{-- @if(!Auth::user()->hasRole('Cliente'))
+                            @if(!Auth::user()->hasRole('Cliente'))
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
+                            {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
                             <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
                             @else
+                            {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
                             <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
-                            @endif --}}
+                            @endif
                         </div>
                     </div>
                 </form>

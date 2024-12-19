@@ -136,15 +136,24 @@
         <div class="flex w-1/12">
             <div class="w-full">
                 <label class="px-1 text-sm text-gray-600">
-                    Natureflex
+                    Laminado
                 </label>
-                <div class="flex">
+                {{-- <div class="flex">
                     <select name="filtrolaminadoplastico"
                         class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" onchange="this.form.submit()">
                         <option value="">-- selecciona --</option>
                         <option value="" {{ $filtrolaminadoplastico==''? 'selected' : ''  }}>Todos</option>
                         <option value="0" {{ $filtrolaminadoplastico=='0'? 'selected' : ''  }}>No</option>
                         <option value="1" {{ $filtrolaminadoplastico=='1'? 'selected' : ''  }}>Sí</option>
+                    </select>
+                </div> --}}
+                <div class="flex">
+                    <select name="filtrolaminado"
+                        class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" onchange="this.form.submit()">
+                        <option value="">Todos</option>
+                        @foreach ($laminados as $laminado )
+                            <option value="{{ $laminado->id }}" {{ $laminado->id == $filtrolaminado ? 'selected' : ''  }}>{{ $laminado->name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -175,7 +184,8 @@
                 $filtroresponsable=='' ? '@' : $filtroresponsable,
                 $filtrocliente=='' ? '@' : $filtrocliente,
                 $filtroproveedor=='' ? '@' : $filtroproveedor,
-                $filtrolaminadoplastico=='' ? '@' : $filtrolaminadoplastico,
+                // $filtrolaminadoplastico=='' ? '@' : $filtrolaminadoplastico,
+                $filtrolaminado=='' ? '@' : $filtrolaminado,
                 $filtroanyo=='' ? '@' : $filtroanyo,
                 $filtromes=='' ? '@' : $filtromes,
                 $filtroestado=='' ? '@' : $filtroestado,

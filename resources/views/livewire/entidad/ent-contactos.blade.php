@@ -110,8 +110,8 @@
             </div>
             <div class="flex pl-2 mt-2 mb-2 ml-2 space-x-4">
                 <div class="space-x-3">
-                    <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
-                    {{-- <x-jet-secondary-button  onclick="location.href = '{{route('entidad.index' )}}'">{{ __('Volver') }}</x-jet-secondary-button> --}}
+                    {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
+                    <x-jet-secondary-button  onclick="location.href = '{{route('entidad.index' )}}'">{{ __('Volver') }}</x-jet-secondary-button>
                 </div>
             </div>
         </div>

@@ -9,6 +9,14 @@
                         <x-icon.edit class="text-gray-500 hover:text-gray-900"/>
                         <div class="hidden md:flex">Pedido</div>
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{route('pedido.subpedidos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.subpedidos')">
+                        <x-icon.folder-tree class="bg-green-200 hover:bg-green-500" title="Subpedidos"/>
+                        <div class="hidden md:ml-1 md:flex">Subpedidos</div>
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{route('pedido.tareas',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.tareas')">
+                        <x-icon.calendar-day class="bg-green-200 hover:bg-green-500" title="tareas"/>
+                        <div class="hidden md:ml-1 md:flex">Subpedidos</div>
+                    </x-jet-nav-link>
                     <x-jet-nav-link href="{{route('pedido.parciales',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.parciales')">
                         <x-icon.truck/>
                         <div class="hidden md:flex">Albaranes</div>

@@ -15,7 +15,7 @@ class Pedido extends Model
 
     protected $fillable=['id','tipo','cliente_id','descripcion','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
         'proveedor_id','facturadopor','fechapedido','fechaarchivos','ctrarchivos','fechaplotter','ctrplotter','fechaentrega','ctrentrega',
-        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','laminadoplastico','estado','facturado','caja_id','uds_caja',
+        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','laminadoplastico','laminado_id','consumo','unidad_consumo','estado','facturado','caja_id','uds_caja',
         'transporte','hayDistribuciones','hayFacturaciones','hayIncidencias','hayParciales','hayRetrasos','hayFacturacion','otros'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
@@ -25,6 +25,8 @@ class Pedido extends Model
     public function caja(){return $this->belongsTo(Caja::class,'caja_id','id')->withDefault(['caja'=>'']);}
     public function pedidoproductos(){return $this->hasMany(PedidoProducto::class,'pedido_id','id');}
     public function pedidoprocesos(){return $this->hasMany(PedidoProceso::class,'pedido_id','id');}
+    public function subpedidos(){return $this->hasMany(PedidoSubpedido::class, 'pedido_id');}
+    public function tareas(){return $this->hasMany(PedidoTarea::class, 'pedido_id');}
 
     public function parciales(){return $this->hasMany(PedidoParcial::class,'pedido_id','id');}
     public function archivos(){return $this->hasMany(PedidoArchivo::class,'pedido_id','id');}
@@ -32,6 +34,7 @@ class Pedido extends Model
     public function retrasos(){return $this->hasMany(PedidoRetraso::class,'pedido_id','id');}
     public function distribuciones(){return $this->hasMany(PedidoDistribucion::class,'pedido_id','id');}
     public function facturadetalles(){return $this->hasMany(facturadetalle::class,'pedido_id','id');}
+    public function laminado(){return $this->belongsTo(Laminado::class);}
 
 
     public function getStatusColorAttribute(){

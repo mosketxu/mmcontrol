@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, Factura, FacturaDetalle, PedidoProducto, Responsable};
+use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, Factura, FacturaDetalle, Laminado, PedidoProducto, Responsable};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -22,6 +22,9 @@ class Pedido extends Component
     public $muestra;
     public $pruebacolor;
     public $laminadoplastico;
+    public $laminado_id;
+    public $consumo;
+    public $unidad_consumo;
     public $contacto_id;
     // public $producto_id;
     public $fechapedido;
@@ -144,6 +147,9 @@ class Pedido extends Component
             $this->muestra=$pedido->muestra;
             $this->pruebacolor=$pedido->pruebacolor;
             $this->laminadoplastico=$pedido->laminadoplastico;
+            $this->laminado_id=$pedido->laminado_id;
+            $this->consumo=$pedido->consumo;
+            $this->unidad_consumo=$pedido->unidad_consumo;
             $this->fechapedido=$pedido->fechapedido;
             $this->fechaarchivos=$pedido->fechaarchivos;
             $this->fechaplotter=$pedido->fechaplotter;
@@ -182,6 +188,7 @@ class Pedido extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
+        $laminados=Laminado::get();
         $cajas=Caja::orderBy('name')->get();
 
         $this->productos=Producto::query()
@@ -204,7 +211,7 @@ class Pedido extends Component
             $responsables=Responsable::all();
 
         $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoeditorial' : 'livewire.pedido.pedidootros';
-        return view($vista,compact(['entidades','clientes','proveedores','responsables','cajas']));
+        return view($vista,compact(['entidades','clientes','proveedores','responsables','cajas','laminados']));
     }
 
     public function updatedClienteId(){
@@ -302,6 +309,9 @@ class Pedido extends Component
             'muestra'=>$this->muestra,
             'pruebacolor'=>$this->pruebacolor,
             'laminadoplastico'=>$this->laminadoplastico,
+            'laminado_id'=>$this->laminado_id,
+            'consumo'=>$this->consumo,
+            'unidad_consumo'=>$this->unidad_consumo,
             'facturadopor'=>$this->facturadopor,
             'fechapedido'=>$this->fechapedido,
             'fechaarchivos'=>$this->fechaarchivos,

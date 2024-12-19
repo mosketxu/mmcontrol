@@ -228,11 +228,11 @@
         </div>
     </div>
     <div class="m-2">
-        <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button>
-        {{-- @if($ruta=='i')
+        {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
+        @if($ruta=='i')
             <x-jet-secondary-button  onclick="location.href = '{{route('entidad.tipo','1')}}'">{{ __('Volver') }}</x-jet-secondary-button>
         @else
             <x-jet-secondary-button  onclick="location.href = '{{route('entidad.tipo',$ent->id)}}'">{{ __('Volver') }}</x-jet-secondary-button>
-        @endif --}}
+        @endif
     </div>
 </div>

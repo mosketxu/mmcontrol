@@ -13,7 +13,7 @@ class Presupuesto extends Model
     public $incrementing = false;
 
     protected $fillable=['id','tipo','cliente_id','descripcion','responsable','contacto_id',
-                    'proveedor_id','tirada','precio_ud','preciototal','facturadopor','fechapresupuesto',
+                    'proveedor_id','tirada','precio_ud','preciototal','moneda','facturadopor','fechapresupuesto',
                     'estado','okexterno','observacionesexterno','espedido','pedido','caja_id','uds_caja','manipulacion','transporte','troquel','especificacioneslogisticas','otros'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'']);}

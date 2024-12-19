@@ -29,10 +29,12 @@
         @else
             <div class="flex-col w-4/12 text-left md:w-6/12">{{ $pedido->descripcion }}</div>
         @endif
-        <div class="flex w-1/12 mx-auto text-center ">
-            @if($pedido->laminadoplastico=='1')
+        <div class="flex-none w-1/12 mx-auto ">
+            <div class="">{{$pedido->laminado->name}}</div>
+            <div class="">{{$pedido->consumo}} {{$pedido->unidad_consumo}}</div>
+            {{-- @if($pedido->laminadoplastico=='1')
                 <x-icon.validate class="w-5"/>
-            @endif
+            @endif --}}
         </div>
         <div class="flex-none w-1/12 mx-auto text-center bg-gray-50 md:flex md:w-2/12">
             <div class="w-6/12">{{ $pedido->tiradaprevista }}</div>
