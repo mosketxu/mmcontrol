@@ -23,6 +23,7 @@
                     @if($tipo=='material') @livewire('seguridad.material') @endif
                     @if($tipo=='plastificado') @livewire('seguridad.plastificado') @endif
                     @if($tipo=='tinta') @livewire('seguridad.tinta') @endif
+                    @if($tipo=='stock') @livewire('seguridad.stock') @endif
                 </div>
             </div>
         </div>

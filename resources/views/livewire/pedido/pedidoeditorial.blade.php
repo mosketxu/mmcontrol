@@ -227,7 +227,7 @@
                                 </select>
                             </div>
                             <div class="w-full form-item">
-                                <x-jet-label for="consumo">{{ __('Consumo') }}</x-jet-label>
+                                <x-jet-label for="consumo">{{ __('Consumo/Stock') }}</x-jet-label>
                                 <input  wire:model.lazy="consumo" type="number" step="any" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
                                 {{$escliente}} {{$deshabilitado}}/>
                             </div>

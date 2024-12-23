@@ -170,6 +170,11 @@
                                     Packaging/Propios
                                 </x-jet-dropdown-link>
                             </div>
+                            <div class="w-44">
+                                <x-jet-dropdown-link href="{{ route('pedido.stock',['2','i'] ) }}" class="text-left">
+                                    Stock
+                                </x-jet-dropdown-link>
+                            </div>
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
@@ -390,11 +395,14 @@
                     </x-slot>
                     <x-slot name="content">
                         <div class="w-44">
-                            <x-jet-dropdown-link href="{{ route('pedido.index',['1','i']) }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('pedido.tipo',['1','i']) }}" class="text-right">
                                 {{ __('Editorial') }}
                             </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('pedido.index',['2','i']) }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('pedido.tipo',['2','i']) }}" class="text-right">
                                 {{ __('Packaging/Propios') }}
+                            </x-jet-dropdown-link>
+                            <x-jet-dropdown-link href="{{ route('pedido.stock',['2','i']) }}" class="text-right">
+                                {{ __('Stock') }}
                             </x-jet-dropdown-link>
                         </div>
                     </x-slot>

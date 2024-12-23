@@ -99,6 +99,12 @@ class PedidoController extends Controller
         'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
+    public function stock($tipo,$ruta){
+        $titulo="Stock y consumos";
+
+        return view('pedidos.stock', compact('tipo','ruta','titulo'));
+    }
+
     public function nuevo($tipo,$ruta){
         $titulo=$tipo=='1' ? 'Nuevo Pedido Editorial' : 'Nuevo Pedido Packaging/Propios';
         return view('pedidos.create',compact('tipo','ruta','titulo'));

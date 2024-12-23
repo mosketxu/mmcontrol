@@ -39,6 +39,11 @@
                         {{ __('Tintas') }}
                     </x-jet-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('caracteristicas','stock') }}" :active="request()->routeIs('stock')">
+                        {{ __('Productos Stock') }}
+                    </x-jet-nav-link>
+                </div>
             </div>
         </div>
     </div>

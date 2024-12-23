@@ -172,6 +172,27 @@
                                 <input wire:model.lazy="preciototal"  type="number" step="any" class="w-full py-1.5 text-xs bg-blue-50 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="laminado_id">{{ __('Laminado') }}</x-jet-label>
+                                <select wire:model.lazy="laminado_id"
+                                    class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    {{$escliente}} {{$deshabilitado}} required>
+                                    <option value="">--Selecciona Laminado--</option>
+                                    @foreach ($laminados as $laminado )
+                                        <option value="{{ $laminado->id }}">{{ $laminado->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="consumo">{{ __('Consumo/Stock') }}</x-jet-label>
+                                <input  wire:model.lazy="consumo" type="number" step="any" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
+                                {{$escliente}} {{$deshabilitado}}/>
+                            </div>
+                            <div class="w-full form-item">
+                                <x-jet-label for="unidad_consumo">{{ __('Ud.Consumo') }}</x-jet-label>
+                                <input  wire:model.lazy="unidad_consumo" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
+                                {{$escliente}} {{$deshabilitado}}/>
+                            </div>
                         </div>
                         {{-- otros --}}
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">

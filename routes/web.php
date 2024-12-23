@@ -95,6 +95,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/pedido/{pedido}/tareas/{ruta}', [PedidoController::class, 'tareas'])->name('pedido.tareas');
     Route::get('/pedido/{tipo}/nuevo/{ruta}', [PedidoController::class, 'nuevo'])->name('pedido.nuevo');
     Route::get('pedido/{tipo}/ruta/{ruta}', [PedidoController::class,'tipo'])->middleware('can:pedido.index')->name('pedido.tipo');
+    Route::get('stock/{tipo}/ruta/{ruta}', [PedidoController::class,'stock'])->middleware('can:pedido.index')->name('pedido.stock');
     Route::resource('pedido', PedidoController::class);
 
     //Facturacion
