@@ -96,4 +96,14 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+    <script>
+        Livewire.on('pedidoEliminado', () => {
+            location.reload();
+            });
+    </script>
+    @endpush
+    <script>
+
+    </script>
 </x-app-layout>

@@ -25,7 +25,6 @@ class PedidosPedido extends Component
     public $producto='';
     public $escliente='';
 
-    protected $listeners = [ 'refreshpedidospedido' => '$refresh'];
 
     public function mount($pedido,$tipo){
         $this->tipo=$tipo;
@@ -141,9 +140,8 @@ class PedidosPedido extends Component
         $pedido = Pedido::find($pedidoId);
         if ($pedido) {
             $pedido->delete();
-            $this->emit('refreshpedidospedido');
             $this->dispatchBrowserEvent('notify', 'pedido borrado. ');
-
+             $this->emit('pedidoEliminado');
         }
 
     }

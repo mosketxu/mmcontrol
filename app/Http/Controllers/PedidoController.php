@@ -36,6 +36,7 @@ class PedidoController extends Controller
     }
 
     public function tipo($tipo,$ruta,Request $request ){
+
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;

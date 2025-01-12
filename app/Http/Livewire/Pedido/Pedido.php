@@ -22,7 +22,7 @@ class Pedido extends Component
     public $muestra;
     public $pruebacolor;
     public $laminadoplastico;
-    public $laminado_id;
+    public $laminado_id='1';
     public $consumo=0;
     public $unidad_consumo;
     public $contacto_id;
