@@ -21,7 +21,7 @@ class Presupuesto extends Component
     public $proveedor_id;
     public $tirada='0';
     public $precio_ud=0;
-    public $moneda='$';
+    public $moneda='€';
     public $preciototal=0;
     public $facturadopor;
     public $fechapresupuesto;
