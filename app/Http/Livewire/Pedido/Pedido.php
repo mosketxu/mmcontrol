@@ -23,7 +23,7 @@ class Pedido extends Component
     public $pruebacolor;
     public $laminadoplastico;
     public $laminado_id;
-    public $consumo;
+    public $consumo=0;
     public $unidad_consumo;
     public $contacto_id;
     // public $producto_id;
@@ -274,6 +274,7 @@ class Pedido extends Component
         if($this->contacto_id =='') $this->contacto_id=null;
 
         if($this->precio=='') $this->precio='0';
+        if($this->consumo=='') $this->consumo='0';
         $mensaje="Pedido creado satisfactoriamente";
         $i="";
         if ($this->pedidoid!='') {
