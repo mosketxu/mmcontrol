@@ -38,7 +38,7 @@ class ClientePresupuestos extends Component
     public $escliente;
     public $deshabilitado;
 
-    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroestado','filtroproveedor','filtrotresponsable','filtroisbn','filtroreferencia','filtroestado','filtrookexterno'];
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroestado','filtroproveedor','filtroresponsable','filtroisbn','filtroreferencia','filtroestado','filtrookexterno'];
 
 
     public function mount($tipo,$titulo){

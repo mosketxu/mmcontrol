@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Entidad;
 use App\Models\Factura;
 use App\Models\FacturaDetalle;
+use App\Models\Laminado;
 use App\Models\Mes;
 use App\Models\Oferta;
 use App\Models\Pedido;
@@ -138,28 +139,26 @@ class ClienteController extends Controller
 
 
     public function pedidotipo($tipo,$ruta,Request $request ){
+
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;
         $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
-        $filtrolaminadoplastico=$request->filtrolaminadoplastico;
-
-
-
         $filtrocliente=$request->filtrocliente;
         $filtroproveedor=$request->filtroproveedor;
-        if($request->filtroestado==''){
-            $filtroestado='0';}
-        elseif($request->filtroestado == '3'){
-            $filtroestado='';
-        }else{
-            $filtroestado=$request->filtroestado;
-        }
+        // $filtrolaminadoplastico=$request->filtrolaminadoplastico;
+        $filtrolaminado=$request->filtrolaminado;
+
+        if($request->filtroestado==''){$filtroestado='0';}
+        elseif($request->filtroestado == '3'){$filtroestado='';}else{
+            $filtroestado=$request->filtroestado;}
+
         $filtroestado=$request->filtroestado == '' ? '0' : $request->filtroestado;
         $filtrofacturado=$request->filtrofacturado;
         $filtroarchivos=$request->filtroarchivos;
         $filtroplotter=$request->filtroplotter;
         $filtroentrega=$request->filtroentrega;
+        $filtrolaminado=$request->filtrolaminado;
         $filtroanyo=$request->filtroanyo;
         $filtromes=$request->filtromes;
 
@@ -170,6 +169,7 @@ class ClienteController extends Controller
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
         $responsables=Responsable::all();
+        $laminados=Laminado::get();
         $escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
 
         $pedidos= Pedido::query()
@@ -177,6 +177,7 @@ class ClienteController extends Controller
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
             ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
             ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+            ->leftjoin('laminados','pedidos.laminado_id','=','laminados.id')
             ->select('entidades.entidad as cli', 'entidades.nif','entidades.emailadm','productos.isbn as isbn','productos.referencia as ref','pedidos.*',)
             ->where('pedidos.tipo',$tipo)
             ->whereIn('pedidos.cliente_id',$empresascliente)
@@ -191,7 +192,8 @@ class ClienteController extends Controller
             ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
             ->when($filtroplotter!='', function ($query) use($filtroplotter) {$query->where('pedidos.ctrplotter',$filtroplotter);})
             ->when($filtroentrega!='', function ($query) use($filtroentrega) {$query->where('pedidos.ctrentrega',$filtroentrega);})
-            ->when($filtrolaminadoplastico!='', function ($query) use($filtrolaminadoplastico) {$query->where('pedidos.laminadoplastico',$filtrolaminadoplastico);})
+            // ->when($filtrolaminadoplastico!='', function ($query) use($filtrolaminadoplastico) {$query->where('pedidos.laminadoplastico',$filtrolaminadoplastico);})
+            ->when($filtrolaminado!='', function ($query) use($filtrolaminado) {$query->where('pedidos.laminado_id',$filtrolaminado);})
             ->searchYear('fechapedido',$filtroanyo)
             ->searchMes('fechapedido',$filtromes)
             ->orderBy('pedidos.estado','asc')
@@ -202,8 +204,8 @@ class ClienteController extends Controller
             ->paginate(30);
 
 
-            return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','escliente',
-            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtrolaminadoplastico','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+            return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados','escliente',
+            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtrolaminado','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function pedidoeditar(Pedido $pedido,$ruta){
