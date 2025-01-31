@@ -50,6 +50,10 @@
             page-break-after: always;
         }
 
+        tr.page-break {
+        page-break-before: always;
+    }
+
         .last-page-footer {
             display: none;
         }
@@ -96,20 +100,6 @@
     </header>
 
     <footer>
-        {{-- <table width="90%" style="" class="mx-auto">
-            <tr>
-                <td width=50%></td>
-                <td width=50% style="border: solid; border-width:0.6px">SELLO Y FIRMA <br> <br> <br> <br></td>
-            </tr>
-        </table>
-        <div >
-            <div style="margin-left: 50px;font-size: 0.5rem;">
-                <p class="text-bold">IVA no incluido.</p>
-                <p>Oferta válida durante 30 días.</p>
-                <p>El precio no incluye retoques de archivos.</p>
-                <p>Milimetrica Producciones tiene la potestad de destruir archivos o troquel sin previo aviso, pasados 2 años desde su última fabricación </p>
-                <p>La cantidad suministrada se ajustará al pedido, admitiéndose las siguientes variaciones en +/-25% (pedidos menores de 500 uds.), 20% (pedidos entre 501 y 1.000 uds.), 10% (pedidos entre 1.001 y 15.000 uds.) y 5% (pedidos mayores de 15.000 uds)</p>
-            </div> --}}
         <div class="">
             <div class="mt-10 mb-5 text-center " style="font-size: 0.7rem">
                 C/ Zamora 46-48,  Ático 5ª • 08005 Barcelona • 93 624 38 33
@@ -267,7 +257,8 @@
                         <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio unitario</td>
                         <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio total</td>
                     </tr>
-                    @foreach($oferta->ofertadetalles as $index=>$odetalle)
+
+                    {{-- @foreach($oferta->ofertadetalles as $index=>$odetalle)
                     @if (($index + 1) % 10 == 0) <!-- Detecta múltiplos de 10 -->
                         <tr class="page-break">
                             <td width=51% class="pl-2" style="border-style: solid;border-width: .6;border-color: gray" colspan="2"><span class="font-bold">{{ $odetalle->titulo }}</span> {{ $odetalle->concepto }}</td>
@@ -289,8 +280,70 @@
                             <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->total }}</td>
                         </tr>
                     @endif
-                   @endforeach
-               </table>
+                    @endforeach --}}
+
+                    @foreach($oferta->ofertadetalles as $index=>$odetalle)
+                    @if ($index == $salto && $primera==1)
+                        @php
+                            $primera=0;
+                            $cont=0;
+                        @endphp
+                        <tr class="page-break">
+                        </table>
+                        <table width="90%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                        <tr>
+                            <td width=57% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Opciones</td>
+                            <td width=15% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                            <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio unitario</td>
+                            <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio total</td>
+                        </tr>
+                    @elseif($cont > $controlsaltopag2)
+                        @php
+                            $cont=0;
+                        @endphp
+                        <tr class="page-break">
+                        </table>
+                        <table width="90%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                        <tr>
+                            <td width=57% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Opciones</td>
+                            <td width=15% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                            <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio unitario</td>
+                            <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio total</td>
+                        </tr>
+                    @endif
+                        @php
+                            $cont++;
+                        @endphp
+                        <tr>
+                            <td width=51% class="pl-2" style="border-style: solid;border-width: .6;border-color: gray" colspan="2"><span class="font-bold">{{ $odetalle->titulo }}</span> {{ $odetalle->concepto }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->cantidad }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->importe }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->total }}</td>
+                        </tr>
+                    <!-- Detecta múltiplos de 10 -->
+                        {{--
+                        <tr class="page-break">
+                            <td width=51% class="pl-2" style="border-style: solid;border-width: .6;border-color: gray" colspan="2"><span class="font-bold">{{ $odetalle->titulo }}</span> {{ $odetalle->concepto }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->cantidad }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->importe }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->total }}</td>
+                        </tr>
+                        <tr style="margin-top: 20px">
+                            <td width=57% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Opciones</td>
+                            <td width=15% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                            <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio unitario</td>
+                            <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio total</td>
+                        </tr>
+                    @else --}}
+                        {{-- <tr>
+                            <td width=51% class="pl-2" style="border-style: solid;border-width: .6;border-color: gray" colspan="2"><span class="font-bold">{{$index}}-{{$primera}} {{ $odetalle->titulo }}</span> {{ $odetalle->concepto }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->cantidad }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->importe }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->total }}</td>
+                        </tr> --}}
+                    {{-- @endif --}}
+                    @endforeach
+                </table>
             </div>
 
             <div class="piepedido">

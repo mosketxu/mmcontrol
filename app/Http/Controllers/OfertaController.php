@@ -27,8 +27,32 @@ class OfertaController extends Controller
     public function ficha($ofertaId,$tipo){
         $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
 
-        // Determina si es una sola página o última página (ejemplo básico)
-        // $isSinglePage = count($oferta->ofertadetalles) <= 10; // Ajusta este número según tu diseño
+        $lineascabecera=1; //Ref que es fijo
+        if($tipo=='1'){
+            $lineascabecera=$oferta->ofertaproducto->formato!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->paginas!='0' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->materialinterior!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->materialcubierta!='' ? $lineascabecera+2 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->encuadernado!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->plastificado!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->descripsolapa!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->descripguardas!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->manipulacion!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->tipoimpresion!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->FSC!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->ofertaproducto->observaciones!='' ? $lineascabecera+2 : $lineascabecera;
+            // el maximo de $lineasoferta serian 14;
+            $lineasoferta=$oferta->ofertadetalles->count();
+            $lineas=$lineasoferta + $lineascabecera;
+            //para una sola pagina en editorial empieza a quedar mal con 19
+            $limite=18;
+            $salto=$limite-$lineascabecera;
+            $primera=1;
+            $cont=0;
+            $controlsaltopag2=30;
+        }
+
+        // dd($isSinglePage);
         // $isLastPage = true; // Siempre se pasa como verdadero para la última página
 
         $pdf = new Dompdf();
@@ -36,11 +60,13 @@ class OfertaController extends Controller
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true);
         $pdf->setOptions($options);
-        // dd('sdf');
 
         $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaotrospdf';
         // $pdf = \PDF::loadView($vista, compact('oferta','isSinglePage', 'isLastPage'));
-        $pdf = \PDF::loadView($vista, compact('oferta'));
+        if($tipo=='1')
+            $pdf = \PDF::loadView('oferta.ofertaeditorialpdf', compact('oferta','lineascabecera','lineas','lineasoferta','lineascabecera','salto','primera','cont','controlsaltopag2'));
+        else
+            $pdf = \PDF::loadView('oferta.ofertaotrospdf', compact('oferta'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
     }
