@@ -11,6 +11,14 @@
         <style>
             @page {margin: 0px 0px 0px 0px;}
             .page-break {page-break-after: always;}
+            tr.page-break {page-break-before: always;}
+            .elemento-final {
+                position: fixed;
+                bottom: 120px; /* 100px por encima del final del PDF */
+                left: 0;
+                width: 100%;
+                /* text-align: center; */
+            }
         </style>
 
     </head>
@@ -26,43 +34,15 @@
             </table>
             <hr style="border-top: 3px solid rgb(112, 173, 71);">
         </header>
-        <footer style="position:fixed;left:0px;bottom:0px;height:325px;width:100%">
-
-
-            {{-- <table width="90%" style="" class="mx-auto">
-                <tr>
-                    <td width=50%></td>
-                    <td width=50% style="border: solid; border-width:0.6px">SELLO Y FIRMA <br> <br> <br> <br></td>
-                </tr>
-            </table> --}}
-
-            <table width="90%" style="" class="mx-auto">
-                <tr>
-                    <td width=50% class="test-right">
-                        {{-- <div class="text-right">
-                            <img src="{{asset('img/SelloSostenibilidad.png')}}" class="text-right" width="260px">
-                        </div> --}}
-                    </td>
-                    <td width=50%>
-                        <div class="h-24 p-3 border border-blue-900">
-                            SELLO Y FIRMA
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div >
-                <div style="margin-left: 50px;font-size: 0.5rem;">
-                    <p class="text-bold">IVA no incluido.</p>
-                    <p>Oferta válida durante 30 días.</p>
-                    <p>El precio no incluye retoques de archivos.</p>
-                    <p>Milimetrica Producciones tiene la potestad de destruir archivos o troquel sin previo aviso, pasados 2 años desde su última fabricación </p>
-                    <p>La cantidad suministrada se ajustará al pedido, admitiéndose las siguientes variaciones en +/-25% (pedidos menores de 500 uds.), 20% (pedidos entre 501 y 1.000 uds.), 10% (pedidos entre 1.001 y 15.000 uds.) y 5% (pedidos mayores de 15.000 uds)</p>
-                </div>
-                <div class="text-center">
-                    <img src="{{asset('img/piehierba.png')}}" class="mt-2" width="800px">
-                </div>
+        @php
+            $pag=0;
+        @endphp
+        <footer style="position:fixed;left:0px;bottom:0px;height:125px;width:100%">
+            <div class="text-center">
+                <img src="{{asset('img/piehierba.png')}}" class="mt-2" width="800px">
             </div>
-        </footer>
+
+       </footer>
 
     <!-- Wrap the content of your PDF inside a main tag -->
         <main style=" margin-right: 10px; margin-top:10px">
@@ -134,14 +114,35 @@
                                 <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
                                 <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
                             </tr>
-                            @foreach($oferta->ofertaprocesos as $oproceso)
-                            <tr>
-                                <td width=20% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproceso->proceso}}</td>
-                                <td width=30% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->descripcion }}</td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->tirada}}</td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->precio_ud}}</td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproceso->precio_ud * $oproceso->tirada,2) }}</td>
-                            </tr>
+                            @foreach($oferta->ofertaprocesos as $index=>$oproceso)
+                                @if ($cont>$salto)
+                                    @php
+                                        // $primera=0;
+                                        $cont=0;
+                                        $pag++;
+                                    @endphp
+                                    <tr class="page-break">
+                                    </table>
+                                    <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                                    <tr>
+                                        <td width=20% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Proceso</td>
+                                        <td width=30% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Descripcion</td>
+                                        <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                                        <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
+                                        <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
+                                    </tr>
+                                @else
+                                    @php
+                                        $cont++;
+                                    @endphp
+                                    <tr>
+                                        <td width=20% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproceso->proceso}}</td>
+                                        <td width=30% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->descripcion }}</td>
+                                        <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->tirada}}</td>
+                                        <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->precio_ud}}</td>
+                                        <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproceso->precio_ud * $oproceso->tirada,2) }}</td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </table>
                     </div>
@@ -157,16 +158,36 @@
                                 <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
                                 <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
                             </tr>
-                            @foreach($oferta->ofertaproductos as $oproducto)
-                            <tr>
-                                {{-- <td width=30% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproducto->producto->referencia?? ''}}</td> --}}
-                                <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">
-                                    <p>{!! nl2br(e($oproducto->observaciones)) !!}</p>
-                                </td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
-                                <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->tirada ,2)}}</td>
-                            </tr>
+                            @foreach($oferta->ofertaproductos as $index=>$oproducto)
+                                @if ($cont>$salto)
+                                    @php
+                                        $cont=0;
+                                        $pag++;
+                                    @endphp
+                                    <tr class="page-break">
+                                    </table>
+                                    <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                                        <tr>
+                                            {{-- <td width=40% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Producto</td> --}}
+                                            <td width=55% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Observaciones</td>
+                                            <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                                            <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
+                                            <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
+                                        </tr>
+                                    @else
+                                        @php
+                                            $cont++;
+                                        @endphp
+                                        <tr>
+                                            {{-- <td width=30% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproducto->producto->referencia?? ''}}</td> --}}
+                                            <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">
+                                                <p>{!! nl2br(e($oproducto->observaciones)) !!}</p>
+                                            </td>
+                                            <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
+                                            <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
+                                            <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->tirada ,2)}}</td>
+                                        </tr>
+                                    @endif
                             @endforeach
                         </table>
                     </div>
@@ -205,6 +226,36 @@
                     </table> --}}
                 </div>
             </div>
+            {{-- @if($pag===1) --}}
+            <div class="elemento-final">
+                <table width="90%" style="" class="mx-auto">
+                    <tr>
+                        <td width=50% class="test-right">
+                            {{-- <div class="text-right">
+                                <img src="{{asset('img/SelloSostenibilidad.png')}}" class="text-right" width="260px">
+                            </div> --}}
+                        </td>
+                        <td width=50%>
+                            <div class="h-24 p-3 border border-blue-900">
+                                SELLO Y FIRMA
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div >
+                    <div style="margin-left: 50px;font-size: 0.5rem;">
+                        <p class="text-bold">IVA no incluido.</p>
+                        <p>Oferta válida durante 30 días.</p>
+                        <p>El precio no incluye retoques de archivos.</p>
+                        <p>Milimetrica Producciones tiene la potestad de destruir archivos o troquel sin previo aviso, pasados 2 años desde su última fabricación </p>
+                        <p>La cantidad suministrada se ajustará al pedido, admitiéndose las siguientes variaciones en +/-25% (pedidos menores de 500 uds.), 20% (pedidos entre 501 y 1.000 uds.), 10% (pedidos entre 1.001 y 15.000 uds.) y 5% (pedidos mayores de 15.000 uds)</p>
+                    </div>
+                    {{-- <div class="text-center">
+                        <img src="{{asset('img/piehierba.png')}}" class="mt-2" width="800px">
+                    </div> --}}
+                </div>
+            </div>
+        {{-- @endif --}}
         </main>
     </body>
 </html>

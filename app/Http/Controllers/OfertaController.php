@@ -50,6 +50,26 @@ class OfertaController extends Controller
             $primera=1;
             $cont=0;
             $controlsaltopag2=30;
+        }elseif($tipo='2'){
+            $lineascabecera=$oferta->material!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->medidas!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->impresion!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=($oferta->manipulacion!='' && $oferta->manipulacion!='-') ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->embalaje!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$oferta->transporte!='' ? $lineascabecera+1 : $lineascabecera;
+
+            $lineasoferta=$oferta->ofertaprocesos->count();
+            $lineas=$lineasoferta + $lineascabecera;
+            $limite=8;
+            $salto=$limite-$lineascabecera;
+
+            $paginas = ceil($lineas / $limite);
+            $pagina=0;
+            // dd($salto,$lineascabecera,$limite);
+            // $salto=4;
+            $primera=1;
+            $cont=0;
+            $controlsaltopag2=30;
         }
 
         // dd($isSinglePage);
@@ -66,7 +86,7 @@ class OfertaController extends Controller
         if($tipo=='1')
             $pdf = \PDF::loadView('oferta.ofertaeditorialpdf', compact('oferta','lineascabecera','lineas','lineasoferta','lineascabecera','salto','primera','cont','controlsaltopag2'));
         else
-            $pdf = \PDF::loadView('oferta.ofertaotrospdf', compact('oferta'));
+            $pdf = \PDF::loadView('oferta.ofertaotrospdf', compact('oferta','lineascabecera','lineas','lineasoferta','lineascabecera','salto','paginas','pagina','primera','cont','controlsaltopag2'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
     }
