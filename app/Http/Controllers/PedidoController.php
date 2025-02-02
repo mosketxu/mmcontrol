@@ -146,11 +146,11 @@ class PedidoController extends Controller
         if($tipo=='1'){
             $vista='pedidos.fichaentradaeditorialpdf';
             $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;
-            $pedido=Pedido::with('cliente','contacto','distribuciones')->find($pedidoid);
+            $pedido=Pedido::with('cliente','contacto','distribuciones','subpedidos','tareas')->find($pedidoid);
             $pdf = \PDF::loadView($vista, compact('pedido','productos'));
         }else{
             $vista='pedidos.fichaentradaotrospdf';
-            $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos')->find($pedidoid);
+            $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos','subpedidos','tareas')->find($pedidoid);
             // dd($pedido->pedidoproductos);
             $pedidoproductos=PedidoProducto::where('pedido_id',$pedidoid)->pluck('producto_id');
             $productos=Producto::whereIn('id',$pedidoproductos)->get();

@@ -152,6 +152,39 @@
                         </table>
                     </div>
                     @endif --}}
+                    <table width="80%" style="margin-top:20px; " cellspacing="0" cellpadding="2" class="mx-auto ">
+                        @foreach ($pedido->subpedidos as $subpedido )
+                        <tr>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Subpedido {{ $loop->index +1 }}: </td>
+                            {{-- <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Referencia </td> --}}
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
+                                <div class="">Referencia: {{$subpedido->referencia}}</div>
+                                <div class="">Uds: {{$subpedido->unidades}}</div>
+                                <div class="">Otros: {{$subpedido->otros}}</div>
+                                <div class="">F.Archivos: {{$subpedido->fecha_archivos}}</div>
+                                <div class="">F.Plotters: {{$subpedido->fecha_plotters}}</div>
+                                <div class="">F.Entrega: {{$subpedido->fecha_entrega}}</div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
+                    <table width="80%" style="margin-top:20px; " cellspacing="0" cellpadding="2" class="mx-auto ">
+                        @foreach ($pedido->tareas as $tarea )
+                        <tr>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Tarea {{ $loop->index +1 }}: </td>
+                            {{-- <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Referencia </td> --}}
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
+                                <div class="">Tarea: {{$tarea->referencia}}</div>
+                                <div class="">Uds: {{$tarea->unidades}}</div>
+                                <div class="">Otros: {{$tarea->otros}}</div>
+                                <div class="">F.Inicio: {{$tarea->fecha_inicio}}</div>
+                                <div class="">F.Fin: {{$tarea->fecha_fin}}</div>
+                                <div class="">Asignado a: {{$tarea->asignado_a}}</div>
+                                <div class="">Estado: {{$tarea->estadotext}}</div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </table>
                 </div>
             </div>
         </main>
