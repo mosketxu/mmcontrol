@@ -18,6 +18,8 @@ class PedidosPedido extends Component
     public $ctrarchivos;
     public $ctrplotter;
     public $ctrentrega;
+    // public $ctrsubpedidos;
+    // public $ctrtareas;
     public $facturado;
     public $consumo;
     public $laminadoplastico;
@@ -36,12 +38,17 @@ class PedidosPedido extends Component
         $this->ctrarchivos=$this->pedido->ctrarchivos;
         $this->ctrplotter=$this->pedido->ctrplotter;
         $this->ctrentrega=$this->pedido->ctrentrega;
+        // $this->ctrsubpedidos=$this->pedido->ctrsubpedidos;
+        // $this->ctrtareas=$this->pedido->ctrtareas;
 
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
+
+        // dd($pedido->subpedidoscolor);
 
     }
 
     public function render(){
+
         return view('livewire.pedido.pedidos-pedido');
     }
 

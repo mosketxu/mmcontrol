@@ -100,6 +100,10 @@ class PedidoTarea extends Component
             'asignado_a'=> $this->asignado_a
         ]);
 
+        $pedido=Pedido::find($this->pedidoid);
+        $pedido->hayTareas=$pedido->hayTareas+1;
+        $pedido->save();
+
         $this->dispatchBrowserEvent('notify', 'Tarea añadida con éxito');
 
         return redirect()->route('pedido.tareas',[$this->pedidoid,$this->ruta]);
@@ -112,6 +116,7 @@ class PedidoTarea extends Component
         if ($borrar) {
             $borrar->delete();
             $pedido=ModelsPedidoTarea::find($borrar->pedido_id);
+            $pedido->hayTareas=$pedido->hayTareas-1;
             $pedido->save();
             $this->dispatchBrowserEvent('notify', 'Tarea eliminada!');
         }

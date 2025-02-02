@@ -36,7 +36,6 @@ class PedidoController extends Controller
     }
 
     public function tipo($tipo,$ruta,Request $request ){
-
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;
@@ -95,6 +94,7 @@ class PedidoController extends Controller
             ->orderBy('pedidos.id','desc')
             ->groupBy('pedidos.id')
             ->paginate(30);
+
 
         return view('pedidos.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados',
         'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));

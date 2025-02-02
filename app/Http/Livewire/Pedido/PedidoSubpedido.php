@@ -98,6 +98,10 @@ class PedidoSubpedido extends Component{
 
         $this->dispatchBrowserEvent('notify', 'Subpedido añadido con éxito');
 
+        $pedido=Pedido::find($this->pedidoid);
+        $pedido->haySubpedidos=$pedido->haySubpedidos+1;
+        $pedido->save();
+
         return redirect()->route('pedido.subpedidos',[$this->pedidoid,$this->ruta]);
     }
 
@@ -108,6 +112,7 @@ class PedidoSubpedido extends Component{
         if ($borrar) {
             $borrar->delete();
             $pedido=ModelsPedidoSubpedido::find($borrar->pedido_id);
+            $pedido->haySubpedidos=$pedido->haySubpedidos-1;
             $pedido->save();
             $this->dispatchBrowserEvent('notify', 'Subpedido eliminado!');
         }

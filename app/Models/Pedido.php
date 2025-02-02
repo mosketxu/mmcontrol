@@ -16,7 +16,7 @@ class Pedido extends Model
     protected $fillable=['id','tipo','cliente_id','descripcion','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
         'proveedor_id','facturadopor','fechapedido','fechaarchivos','ctrarchivos','fechaplotter','ctrplotter','fechaentrega','ctrentrega',
         'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','laminadoplastico','laminado_id','consumo','unidad_consumo','estado','facturado','caja_id','uds_caja',
-        'transporte','hayDistribuciones','hayFacturaciones','hayIncidencias','hayParciales','hayRetrasos','hayFacturacion','otros'];
+        'transporte','hayDistribuciones','hayFacturaciones','hayIncidencias','hayParciales','hayRetrasos','hayFacturacion','haySubpedidos','hayTareas','otros'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function presupuesto(){return $this->belongsTo(Presupuesto::class,'presupuesto_id','id');}
@@ -96,6 +96,24 @@ class Pedido extends Model
             '1'=>['text-green-500','text-green-800'],
         // ][$hay] ?? ['gray-500',''];
         ][$this->hayArchivos] ?? ['text-gray-500',''];
+    }
+
+    public function getSubpedidosColorAttribute(){
+        // $hay=$this->archivos->count()> '0' ? '1' : '0';
+        return [
+            '0'=>['text-gray-300','text-gray-500'],
+            '1'=>['text-red-400','text-red-700'],
+        // ][$hay] ?? ['gray-500',''];
+        ][$this->haySubpedidos] ?? ['text-gray-500',''];
+    }
+
+    public function getTareasColorAttribute(){
+        // $hay=$this->archivos->count()> '0' ? '1' : '0';
+        return [
+            '0'=>['text-gray-300','text-gray-500'],
+            '1'=>['text-green-500','text-green-800'],
+        // ][$hay] ?? ['gray-500',''];
+        ][$this->hayTareas] ?? ['text-gray-500',''];
     }
 
     public function getCtrlArchivosColorAttribute(){

@@ -125,7 +125,7 @@
                 <x-icon.truck-a class="w-5 {{ $pedido->parcialescolor[0] }} hover:{{ $pedido->parcialescolor[1] }} " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes: {{ $pedido->hayParciales }}"/>
                 <x-icon.building-circle-arrow-right-a class="w-5 {{ $pedido->distribucionescolor[0] }} hover:{{ $pedido->distribucionescolor[1] }} " onclick="location.href = '{{route('pedido.distribuciones',[$pedido->id,'i'])}}'" title="Distribuciones: {{ $pedido->hayDistribuciones }}"/>
                 <x-icon.clip-a class="w-5 {{ $pedido->archivoscolor[0] }} hover:{{ $pedido->archivoscolor[1] }} " onclick="location.href = '{{route('pedido.archivos',[$pedido->id,'i'])}}'" title="Archivos: {{ $pedido->hayArchivos }}"/>
-                    <x-icon.triangleexclamation-a class="w-6 mb-1 {{ $pedido->incidenciascolor[0] }} hover:{{ $pedido->incidenciascolor[1] }} " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias: {{ $pedido->hayIncidencias }}"/>
+                <x-icon.triangleexclamation-a class="w-6 mb-1 {{ $pedido->incidenciascolor[0] }} hover:{{ $pedido->incidenciascolor[1] }} " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias: {{ $pedido->hayIncidencias }}"/>
                 <x-icon.sandwatch-a class="w-4 {{ $pedido->retrasoscolor[0] }} hover:{{ $pedido->retrasoscolor[1] }} " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos: {{ $pedido->hayRetrasos }}"/>
                 @if($pedido->facturado!='0')
                     <x-icon.euro-a class="w-6 {{ $pedido->facturadocolor[0] }} hover:{{ $pedido->facturadocolor[1] }} " wire:click="generarfactura" title="Facturación"/>
@@ -133,6 +133,8 @@
                     <x-icon.euro-a class="w-6 {{ $pedido->facturadocolor[0] }} hover:{{ $pedido->facturadocolor[1] }} " title="Facturación"
                         wire:click.prevent="generarfactura" onclick="confirm('¿Quieres generar un factura con este pedido?') || event.stopImmediatePropagation()"/>
                 @endif
+                <x-icon.folder-tree-a class="{{ $pedido->subpedidoscolor[0] }} hover:{{ $pedido->subpedidoscolor[1] }}" onclick="location.href = '{{route('pedido.subpedidos',[$pedido,'i'])}}'" title="subpedidos" target="_blank"/>
+                <x-icon.calendar-day-a class="{{ $pedido->tareascolor[0] }} hover:{{ $pedido->tareascolor[1] }}" onclick="location.href = '{{route('pedido.tareas',[$pedido,'i'])}}'" title="tareas" target="_blank"/>
                 <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank"/>
                 <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Borrar"/>
             @else

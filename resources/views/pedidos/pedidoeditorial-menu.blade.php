@@ -11,11 +11,11 @@
                             <div class="hidden md:flex">Pedido</div>
                         </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('pedido.subpedidos',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.subpedidos')">
-                            <x-icon.folder-tree class="text-red-400 hover:text-red-500" title="Subpedidos"/>
+                            <x-icon.folder-tree  class="w-5 {{ $pedido->subpedidoscolor[0] }} hover:{{ $pedido->subpedidoscolor[1] }} "  title="Subpedidos"/>
                             <div class="hidden md:ml-1 md:flex">Subpedidos</div>
                         </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('pedido.tareas',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.tareas')">
-                            <x-icon.calendar-day class="text-green-400 hover:text-green-500" title="tareas"/>
+                            <x-icon.calendar-day  class="w-5 {{ $pedido->tareascolor[0] }} hover:{{ $pedido->tareascolor[1] }} "  title="Tareas"/>
                             <div class="hidden md:ml-1 md:flex">Tareas</div>
                         </x-jet-nav-link>
                         <x-jet-nav-link href="{{route('pedido.parciales',[$pedido,$ruta])}}" :active="request()->routeIs('pedido.parciales')">
