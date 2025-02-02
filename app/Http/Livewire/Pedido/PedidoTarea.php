@@ -109,15 +109,14 @@ class PedidoTarea extends Component
         return redirect()->route('pedido.tareas',[$this->pedidoid,$this->ruta]);
     }
 
-    public function delete($valorId)
-    {
+    public function delete($valorId){
         $borrar = ModelsPedidoTarea::find($valorId);
-
         if ($borrar) {
-            $borrar->delete();
-            $pedido=ModelsPedidoTarea::find($borrar->pedido_id);
-            $pedido->hayTareas=$pedido->hayTareas-1;
+            $pedido=Pedido::find($borrar->pedido_id);
+            if($pedido->hayTareas>0)
+                $pedido->hayTareas=$pedido->hayTareas-1;
             $pedido->save();
+            $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Tarea eliminada!');
         }
     }

@@ -111,8 +111,9 @@ class PedidoSubpedido extends Component{
 
         if ($borrar) {
             $borrar->delete();
-            $pedido=ModelsPedidoSubpedido::find($borrar->pedido_id);
-            $pedido->haySubpedidos=$pedido->haySubpedidos-1;
+            $pedido=Pedido::find($borrar->pedido_id);
+            if($pedido->haySubpedidos>0)
+                $pedido->haySubpedidos=$pedido->haySubpedidos-1;
             $pedido->save();
             $this->dispatchBrowserEvent('notify', 'Subpedido eliminado!');
         }
