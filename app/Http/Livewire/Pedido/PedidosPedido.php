@@ -48,7 +48,6 @@ class PedidosPedido extends Component
     }
 
     public function render(){
-
         return view('livewire.pedido.pedidos-pedido');
     }
 

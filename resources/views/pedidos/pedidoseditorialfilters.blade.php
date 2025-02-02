@@ -21,7 +21,11 @@
         <div class="flex w-2/12 ">
             <div class="w-full">
                 <label class="px-1 text-sm text-gray-600">
-                    Título
+                    @if($tipo==1)
+                        Título
+                    @else
+                        Descripción
+                    @endif
                 </label>
                 <div class="flex">
                     <input type="search" name="filtroreferencia"  value="{{ old('filtroreferencia',$filtroreferencia) }}" class="w-full py-1 text-sm border border-blue-100 rounded-lg" onchange="this.form.submit()"/>
@@ -29,6 +33,7 @@
             </div>
         </div>
         {{-- ISBN --}}
+        @if($tipo==1)
         <div class="flex w-1/12 ">
             <div class="w-full">
                 <label class="px-1 text-sm text-gray-600">
@@ -39,6 +44,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="flex w-1/12 ">
             <div class="w-full">
                 <label class="px-1 text-sm text-gray-600">

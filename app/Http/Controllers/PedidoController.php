@@ -36,6 +36,7 @@ class PedidoController extends Controller
     }
 
     public function tipo($tipo,$ruta,Request $request ){
+
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;
@@ -65,6 +66,8 @@ class PedidoController extends Controller
         $responsables=Responsable::get();
         $laminados=Laminado::get();
 
+        // dd($filtroreferencia);
+
         $pedidos= Pedido::query()
             ->with('cliente','proveedor','laminado')
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
@@ -74,7 +77,14 @@ class PedidoController extends Controller
             ->select('entidades.entidad as cli', 'entidades.nif','entidades.emailadm','productos.isbn as isbn','productos.referencia as ref','pedidos.*','laminados.name',)
             ->where('pedidos.tipo',$tipo)
             ->search('pedidos.id',$search)
-            ->when($filtroreferencia!='', function ($query) use($filtroreferencia) {$query->where('productos.referencia','like','%'.$filtroreferencia.'%');})
+            ->when($filtroreferencia != '', function ($query) use ($filtroreferencia, $tipo) {
+                if ($tipo == 1) {
+                    $query->where('productos.referencia', 'like', '%' . $filtroreferencia . '%');
+                } else {
+                    $query->where('pedidos.descripcion', 'like', '%' . $filtroreferencia . '%');
+                }
+            })
+            // ->when($filtroreferencia!='', function ($query) use($filtroreferencia) {$query->where('productos.referencia','like','%'.$filtroreferencia.'%');})
             ->when($filtroisbn!='', function ($query) use($filtroisbn) {$query->where('productos.isbn','like','%'.$filtroisbn.'%');})
             ->when($filtroresponsable!='', function ($query) use($filtroresponsable){$query->where('pedidos.responsable','like','%'.$filtroresponsable.'%');})
             ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})

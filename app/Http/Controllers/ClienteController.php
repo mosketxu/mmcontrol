@@ -182,7 +182,14 @@ class ClienteController extends Controller
             ->where('pedidos.tipo',$tipo)
             ->whereIn('pedidos.cliente_id',$empresascliente)
             ->search('pedidos.id',$search)
-            ->when($filtroreferencia!='', function ($query) use($filtroreferencia) {$query->where('productos.referencia','like','%'.$filtroreferencia.'%');})
+            ->when($filtroreferencia != '', function ($query) use ($filtroreferencia, $tipo) {
+                if ($tipo == 1) {
+                    $query->where('productos.referencia', 'like', '%' . $filtroreferencia . '%');
+                } else {
+                    $query->where('pedidos.descripcion', 'like', '%' . $filtroreferencia . '%');
+                }
+            })
+            // ->when($filtroreferencia!='', function ($query) use($filtroreferencia) {$query->where('productos.referencia','like','%'.$filtroreferencia.'%');})
             ->when($filtroisbn!='', function ($query) use($filtroisbn) {$query->where('productos.isbn','like','%'.$filtroisbn.'%');})
             ->when($filtroresponsable!='', function ($query) use($filtroresponsable){$query->where('pedidos.responsable','like','%'.$filtroresponsable.'%');})
             ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})
