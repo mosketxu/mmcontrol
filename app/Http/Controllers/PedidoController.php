@@ -303,7 +303,6 @@ class PedidoController extends Controller
                 ->groupBy('pedidos.id')
                 ->get();
 
-        dd($pedidos->count());
         if(Auth::user()->hasRole('Cliente')){
             $empresascliente=UserEmpresa::where('user_id',Auth::user()->id)->pluck('entidad_id');
             $pedidos=$pedidos->whereIn('entidadId',$empresascliente);
