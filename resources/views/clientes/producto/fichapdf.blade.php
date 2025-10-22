@@ -17,7 +17,8 @@
             <table width="100%" style="margin-top:0px; " class="tablacentrada">
                 <tr>
                     <td style="text-align: right;" width="200px">
-                        <img src="{{asset('img/logo.png')}}" width="200px">
+                        {{-- <img src="{{asset('img/logo.png')}}" width="200px"> --}}
+                        <img src="{{asset('img/logo.png')}}" width="130px">
                     </td>
                     <td style="text-align:right;color: #6b7280">
                         C/ del Joncar 19, planta 5 08005 Barcelona (España) <br>

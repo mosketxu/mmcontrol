@@ -18,7 +18,8 @@
             <table width="100%" style="margin-top:0px; ">
                 <tr>
                     <td style="text-align: left;" width="250px">
-                        <img src="{{asset('img/milimetrica.png')}}" width="250px">
+                        {{-- <img src="{{asset('img/milimetrica.png')}}" width="250px"> --}}
+                        <img src="{{asset('img/milimetrica.png')}}" width="130px">
                     </td>
                 </tr>
                 <tr style="">

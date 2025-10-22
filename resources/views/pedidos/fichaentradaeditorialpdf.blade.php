@@ -20,7 +20,8 @@
             <table width="90%" style="margin-top:0px; " class="mx-auto">
                 <tr>
                     <td style="text-align: left"  width=50%>
-                        <img src="{{asset('img/milimetricatexto.png')}}" class="mt-10" width="250px">
+                        {{-- <img src="{{asset('img/milimetricatexto.png')}}" class="mt-10" width="250px"> --}}
+                        <img src="{{asset('img/milimetricatexto.png')}}" class="" width="100px">
                     </td>
                     <td style="text-align: right; font-size:0.8rem" width=50%>
                         <p>C/ del Joncar 19, planta 5 • 08005 Barcelona (España)</p>

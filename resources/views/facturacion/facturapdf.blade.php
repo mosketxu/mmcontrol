@@ -27,7 +27,8 @@
             <table width="90%" style="margin-top:0px; " class="mx-auto">
                 <tr>
                     <td style="text-align: left"  width=50%>
-                        <img src="{{asset('img/milimetricatexto.png')}}" class="mt-10" width="250px">
+                        {{-- <img src="{{asset('img/milimetricatexto.png')}}" class="mt-10" width="200px"> --}}
+                        <img src="{{asset('img/milimetricatexto.png')}}" class="" width="130px">
                     </td>
                     <td style="text-align: right;" width=50%>
                         <img src="{{asset('img/imageneseco.png')}}" width="250px">
