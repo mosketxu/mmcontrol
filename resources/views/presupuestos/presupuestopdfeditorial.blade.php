@@ -41,12 +41,12 @@
         <main style=" margin-right: 10px; margin-top:0px">
             <table width="100%" style="margin-top:0px; " class="tablacentrada">
                 <tr>
-                    <td style="text-align: left;" width="250px">
+                    <td style="text-align: left;  >
                         {{-- <img src="{{asset('img/milimetrica.png')}}" width="250px"> --}}
-                        <img src="{{asset('img/milimetrica.png')}}" width="130px">
+                      <img src="{{asset('img/milimetrica.png')}}" width="130px">
                     </td>
-                </tr>
-                <tr style="">
+                {{-- </tr>
+                <tr style=""> --}}
                     <td class="text-xs " style="text-align:right;color: #6b7280">
                         C/ del Joncar 19, planta 5 - 08005 Barcelona (España) <br>
                         <a href="http://www.milimetrica.es" class="colorazul">www.milimetrica.es</a> <br>

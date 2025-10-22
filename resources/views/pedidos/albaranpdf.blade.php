@@ -16,11 +16,9 @@
         <header>
             <table width="100%" style="margin-top:0px; " class="tablacentrada">
                 <tr>
-                    <td style="text-align: left;" width="250px">
-                        <img src="{{asset('img/logo.png')}}" width="250px">
+                    <td style="text-align: left;" >
+                        <img src="{{asset('img/logo.png')}}" width="130px">
                     </td>
-                </tr>
-                <tr style="margin-top:50px;">
                     <td class="text-xs " style="text-align:right;color: #6b7280">
                         <br>
                         <br>
