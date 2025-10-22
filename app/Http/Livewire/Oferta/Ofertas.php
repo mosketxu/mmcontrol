@@ -34,7 +34,7 @@ class Ofertas extends Component
     }
 
     public function render(){
-        $clientes=Entidad::whereIn('entidadtipo_id',['1','2'])->orderBy('entidad')->get();
+        $clientes=Entidad::whereIn('entidadtipo_id',['1','2','4'])->orderBy('entidad')->get();
         $meses=Mes::orderBy('id')->get();
 
         if($this->selectAll) $this->selectPageRows();

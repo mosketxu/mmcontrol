@@ -117,7 +117,7 @@ class Oferta extends Component
 
     public function render(){
         $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
+        $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
         $this->productos=Producto::query()
             // ->with('cliente')
             ->when($this->cliente_id!='', function ($query){
