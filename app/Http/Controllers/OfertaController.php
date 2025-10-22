@@ -59,7 +59,7 @@ class OfertaController extends Controller
 
             $lineasoferta=$oferta->ofertaprocesos->count();
             $lineas=$lineasoferta + $lineascabecera;
-            $limite=20  ;
+            $limite=20;
             $salto=$limite-$lineascabecera;
 
             $paginas = ceil($lineas / $limite);
