@@ -26,7 +26,6 @@ class OfertaController extends Controller
 
     public function ficha($ofertaId,$tipo){
         $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
-
         $lineascabecera=1; //Ref que es fijo
         if($tipo=='1'){
             $lineascabecera=$oferta->ofertaproducto->formato!='' ? $lineascabecera+1 : $lineascabecera;
@@ -60,7 +59,7 @@ class OfertaController extends Controller
 
             $lineasoferta=$oferta->ofertaprocesos->count();
             $lineas=$lineasoferta + $lineascabecera;
-            $limite=8;
+            $limite=20  ;
             $salto=$limite-$lineascabecera;
 
             $paginas = ceil($lineas / $limite);
