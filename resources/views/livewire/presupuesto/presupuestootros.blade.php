@@ -153,7 +153,7 @@
                                     {{ $escliente }} {{$deshabilitado}}/>
                                 </div>
                             </div>
-                            <div class="flex w-4/12 mx-auto">
+                            <div class="flex w-3/12 mx-auto">
                                 <div class="flex w-full">
                                     <div class="w-2/12 mx-auto">
                                         <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
@@ -177,7 +177,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-2/12 text-center form-item">
+                            <div class="w-3/12 text-center form-item">
                                 @if(!Auth::user()->hasRole('Cliente'))
                                     @if($espedido=='1')
                                     <div class="flex-none w-full md:flex">
@@ -187,7 +187,7 @@
                                         </div>
                                         <div class=" form-item">
                                             <x-jet-label for="asignarpedido">{{ __('Asignar otro pedido') }}</x-jet-label>
-                                            <x-select class="w-/12" selectname="pedido" wire:model.lazy="pedido">
+                                            <x-select class="w-full" selectname="pedido" wire:model.lazy="pedido">
                                                 <option value="">-- Selecciona un pedido --</option>
                                                 @foreach ($pedidos as $ped )
                                                 <option value="{{ $ped->id }}">{{ $ped->id }}</option>
