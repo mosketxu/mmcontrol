@@ -45,8 +45,6 @@
                         {{-- <img src="{{asset('img/milimetrica.png')}}" width="250px"> --}}
                       <img src="{{asset('img/milimetrica.png')}}" width="130px">
                     </td>
-                {{-- </tr>
-                <tr style=""> --}}
                     <td class="text-xs " style="text-align:right;color: #6b7280">
                         C/ del Joncar 19, planta 5 - 08005 Barcelona (España) <br>
                         <a href="http://www.milimetrica.es" class="colorazul">www.milimetrica.es</a> <br>
