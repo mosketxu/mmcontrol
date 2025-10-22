@@ -21,7 +21,7 @@
                         <img src="{{asset('img/milimetricatexto.png')}}" class="mt-10" width="250px">
                     </td>
                     <td style="text-align: right; font-size:0.8rem" width=50%>
-                        <p>C/ Zamora 46-48,  Ático 5ª • 08005 Barcelona (España)</p>
+                        <p>C/ del Joncar 19, planta 5 • 08005 Barcelona (España)</p>
                         <p><a href="www.milimetrica.es">www.milimetrica.es</a></p>
                         <p>Milimétrica Producciones, S.L. - NIF: B-63941835</p>
                     </td>

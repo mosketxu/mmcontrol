@@ -48,7 +48,7 @@
                     <p>La cantidad suministrada se ajustará al pedido, admitiéndose las siguientes variaciones en +/-25% (pedidos menores de 500 uds.), 20% (pedidos entre 501 y 1.000 uds.), 10% (pedidos entre 1.001 y 15.000 uds.) y 5% (pedidos mayores de 15.000 uds)</p>
                 </div>
                 <div class="mt-10 mb-5 text-center " style="font-size: 0.7rem">
-                     C/ Zamora 46-48,  Ático 5ª • 08005 Barcelona • 93 624 38 33
+                     C/ del Joncar 19, planta 5 • 08005 Barcelona • 93 624 38 33
                 </div>
                 <hr style="border-top: 3px solid rgb(49, 72, 172);">
 

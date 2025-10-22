@@ -20,7 +20,7 @@
                         <img src="{{asset('img/logo.png')}}" width="200px">
                     </td>
                     <td style="text-align:right;color: #6b7280">
-                        C/ ZAMORA 46-48 ÁTICO 5ª - 08005 Barcelona (España) <br>
+                        C/ del Joncar 19, planta 5 - 08005 Barcelona (España) <br>
                         <a href="http://www.milimetrica.es" class="colorazul">www.milimetrica.es</a> <br>
                         milimétrica producciones, s.l. – N.I.F. B-63.941.835
                     </td>

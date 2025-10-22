@@ -45,7 +45,7 @@
                     portabilidad y oposición al tratamiento de sus datos de carácter personal, dirigiéndose a la dirección arriba indicada mediante escrito y al que acompañe fotocopia de su Documento Nacional de Identidad.
                 </div>
                 <div class="mt-5 mb-5 text-center " style="font-size: 0.7rem">
-                    Milimétrica Producciones, S.L. • NIF: B-63941835 • C/ Zamora 46-48,  Ático 5ª • 08005 Barcelona • 93 624 38 33
+                    Milimétrica Producciones, S.L. • NIF: B-63941835 • C/ del Joncar 19, planta 5  • 08005 Barcelona • 93 624 38 33
                 </div>
                 <hr style="border-top: 3px solid rgb(49, 72, 172);">
 
