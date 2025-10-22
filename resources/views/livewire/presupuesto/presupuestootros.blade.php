@@ -1,4 +1,4 @@
-<div class="">
+    <div class="">
     <div class="h-full p-1 mx-2">
         <div class="py-0 space-y-2">
             <div class="">
@@ -108,8 +108,10 @@
                             <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="tirada">{{ __('Cantidad') }}</x-jet-label>
-                                    <input  wire:model.lazy="tirada" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $escliente }} {{$deshabilitado}}/>
+                                    {{-- <input  wire:model.lazy="tirada" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    {{ $escliente }} {{$deshabilitado}}/> --}}
+                                    <input  wire:model.lazy="tirada" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        {{ $escliente }} {{$deshabilitado}}/>
                                 </div>
                             </div>
                             <div class="w-1/12 form-item">
@@ -120,13 +122,14 @@
                                 </div>
                             </div>
                             {{-- Moneda --}}
-                            <div class="w-full form-item">
+                            <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="precio_ud">{{ __('Moneda') }}</x-jet-label>
-                                    <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
+                                    <select wire:model.defer="tipo" selectname="tipo"
+                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                         <option value="€">€</option>
                                         <option value="$">$</option>
-                                    </x-select>
+                                    </select>
                                 </div>
                             </div>
                             <div class="w-1/12 form-item">
@@ -174,7 +177,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-3/12 text-center form-item">
+                            <div class="w-2/12 text-center form-item">
                                 @if(!Auth::user()->hasRole('Cliente'))
                                     @if($espedido=='1')
                                     <div class="flex-none w-full md:flex">
@@ -243,7 +246,7 @@
                 {{-- <div class="grid grid-cols-2 gap-1 "> --}}
                     <div class="p-1 border rounded-md">
                         Procesos
-                        @livewire('presupuesto.presupuesto-proceso',['presupuestoid'=>$presupuestoid,'escliente'=>$escliente ,'deshabilitado'=>$deshabilitado],key($presupuestoid.now()))
+                        {{-- @livewire('presupuesto.presupuesto-proceso',['presupuestoid'=>$presupuestoid,'escliente'=>$escliente ,'deshabilitado'=>$deshabilitado],key($presupuestoid.now())) --}}
                     </div>
                     <div class="p-1 border rounded-md">
                         Productos
