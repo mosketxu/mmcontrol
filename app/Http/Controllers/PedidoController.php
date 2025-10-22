@@ -200,6 +200,7 @@ class PedidoController extends Controller
     }
 
     public function export($tipo,$search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtrolaminado,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado){
+
         $search=$search=='@' ? '' : $search;
         $filtroreferencia=$filtroreferencia=='@' ? '' : $filtroreferencia;
         $filtroisbn=$filtroisbn=='@' ? '' : $filtroisbn;
@@ -214,7 +215,7 @@ class PedidoController extends Controller
 
         if($tipo=='1')
             $pedidos= Pedido::query()
-                ->join('entidades as clientes','pedidos.cliente_id','=','clientes.id')
+                ->leftjoin('entidades as clientes','pedidos.cliente_id','=','clientes.id')
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
                 ->leftjoin('entidades as imprenta','pedidos.proveedor_id','=','imprenta.id')
@@ -263,7 +264,7 @@ class PedidoController extends Controller
                 ->get();
         else
             $pedidos= Pedido::query()
-                ->join('entidades','pedidos.cliente_id','=','entidades.id')
+                ->leftjoin('entidades','pedidos.cliente_id','=','entidades.id')
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
                 ->select('entidades.id as entidadId','entidades.entidad',
@@ -302,6 +303,7 @@ class PedidoController extends Controller
                 ->groupBy('pedidos.id')
                 ->get();
 
+        dd($pedidos->count());
         if(Auth::user()->hasRole('Cliente')){
             $empresascliente=UserEmpresa::where('user_id',Auth::user()->id)->pluck('entidad_id');
             $pedidos=$pedidos->whereIn('entidadId',$empresascliente);
