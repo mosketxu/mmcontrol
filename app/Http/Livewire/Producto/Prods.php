@@ -55,7 +55,7 @@ class Prods extends Component
 
         $this->producto= new Producto;
         $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
+        $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
 
         $datos=Producto::query()
             ->with('cliente')

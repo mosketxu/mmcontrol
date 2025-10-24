@@ -118,7 +118,7 @@ class Prod extends Component
         $this->encuadernaciones=Encuadernacion::orderBy('name')->get();
         $this->cajas=Caja::orderBy('name')->get();
         $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
+        $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodeditorial' : 'livewire.producto.prodotros';
 
