@@ -64,8 +64,6 @@ class OfertaController extends Controller
 
             $paginas = ceil($lineas / $limite);
             $pagina=0;
-            // dd($salto,$lineascabecera,$limite);
-            // $salto=4;
             $primera=1;
             $cont=0;
             $controlsaltopag2=30;

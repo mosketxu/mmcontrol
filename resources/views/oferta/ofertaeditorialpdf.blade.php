@@ -71,7 +71,7 @@
 
         .piepedido {
             position: fixed;
-            bottom: 80px;
+            bottom: 60px;
             left: 0;
             right: 0;
             /* height: 60px; */
@@ -348,7 +348,7 @@
             </div>
 
             <div class="piepedido">
-                <table width="90%" style="fixed" class="mx-auto">
+                <table width="90%" style="" class="mx-auto">
                     <tr>
                         <td width=50%></td>
                         <td width=50% style="border: solid; border-width:0.6px">SELLO Y FIRMA <br> <br> <br> <br></td>
