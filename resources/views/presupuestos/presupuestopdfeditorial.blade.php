@@ -43,7 +43,7 @@
                 <tr>
                     <td style="text-align: left; background-color: white" >
                         {{-- <img src="{{asset('img/milimetrica.png')}}" width="250px"> --}}
-                      <img src="{{asset('img/milimetrica.png')}}" width="130px">
+                      <img src="{{asset('img/milimetrica.png')}}" width="200px">
                     </td>
                 {{-- </tr>
                 <tr style=""> --}}

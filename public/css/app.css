@@ -1486,9 +1486,6 @@ select {
 .h-12 {
   height: 3rem;
 }
-.h-14 {
-  height: 3.5rem;
-}
 .h-16 {
   height: 4rem;
 }
@@ -1525,8 +1522,8 @@ select {
 .h-full {
   height: 100%;
 }
-.h-40 {
-  height: 10rem;
+.h-14 {
+  height: 3.5rem;
 }
 .min-h-screen {
   min-height: 100vh;

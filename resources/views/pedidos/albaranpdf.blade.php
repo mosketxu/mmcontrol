@@ -17,7 +17,7 @@
             <table width="100%" style="margin-top:0px; " class="tablacentrada">
                 <tr>
                     <td style="text-align: left;" >
-                        <img src="{{asset('img/logo.png')}}" width="130px">
+                        <img src="{{asset('img/logo.png')}}" width="200px">
                     </td>
                     <td class="text-xs " style="text-align:right;color: #6b7280">
                         <br>

@@ -19,7 +19,7 @@
                 <tr>
                     <td style="text-align: left;">
                         {{-- <img src="{{asset('img/milimetrica.png')}}" width="250px"> --}}
-                        <img src="{{asset('img/milimetrica.png')}}" width="130px">
+                        <img src="{{asset('img/milimetrica.png')}}" width="200px">
                     </td>
                     <td class="text-xs " style="text-align:right;color: #6b7280">
                         C/ del Joncar 19, planta 5 - 08005 Barcelona (España) <br>

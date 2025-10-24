@@ -87,7 +87,7 @@
             <tr>
                 <td style="text-align: left"  width=50%>
                     {{-- <img src="{{asset('img/milimetricatexto.png')}}" class="mt-2" width="250px"> --}}
-                    <img src="{{asset('img/milimetricatexto.png')}}" class="" width="130px">
+                    <img src="{{asset('img/milimetricatexto.png')}}" class="" width="200px">
                 </td>
                 <td style="text-align: right; padding-right:40px" width=50%>
                     <br>
