@@ -50,6 +50,12 @@
                                 {{ $pedido->facturadopor=='1' ? 'Milimetrica' : $pedido->cliente->entidad }}
                             </td>
                         </tr>
+                        <tr class="">
+                            <td width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B; border-style: solid; border-width: .6; border-color: gray"   >Nº Pedido Cliente</td>
+                            <td width=75% style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">
+                                {{ $pedido->pedidocliente }}
+                            </td>
+                        </tr>
                         <tr style="">
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Descripción</td>
                             <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">
