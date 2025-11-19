@@ -29,9 +29,11 @@ class Pedido extends Component
     // public $producto_id;
     public $fechapedido;
     public $fechaarchivos;
+    public $fechamaqueta;
     public $fechaplotter;
     public $fechaentrega;
     public $ctrarchivos;
+    public $ctrmaqueta;
     public $ctrplotter;
     public $ctrentrega;
     public $tiradaprevista=0;
@@ -86,9 +88,11 @@ class Pedido extends Component
             'muestra'=>'nullable',
             'fechapedido'=>'required|date',
             'fechaarchivos'=>'nullable|date',
+            'fechamaqueta'=>'nullable|date',
             'fechaplotter'=>'nullable|date',
             'fechaentrega'=>'nullable|date',
             'ctrarchivos'=>'nullable',
+            'ctrmaqueta'=>'nullable',
             'ctrplotter'=>'nullable',
             'ctrentrega'=>'nullable',
             'tiradaprevista'=>'required|numeric',
@@ -116,6 +120,7 @@ class Pedido extends Component
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
             'fechapedido.required'=>'La fecha del pedido es necesaria',
             'fechaarchivos.date'=>'La fecha de los archivos debe ser válida',
+            'fechamaqueta.date'=>'La fecha de la maqueta debe ser válida',
             'fechaplotter.date'=>'La fecha del plotter debe ser válida',
             'fechaentrega.date'=>'La fecha de entrega debe ser válida',
             'fechaentrega.required'=>'La fecha de entrega es necesaria',
@@ -152,9 +157,11 @@ class Pedido extends Component
             $this->unidad_consumo=$pedido->unidad_consumo;
             $this->fechapedido=$pedido->fechapedido;
             $this->fechaarchivos=$pedido->fechaarchivos;
+            $this->fechamaqueta=$pedido->fechamaqueta;
             $this->fechaplotter=$pedido->fechaplotter;
             $this->fechaentrega=$pedido->fechaentrega;
             $this->ctrarchivos=$pedido->ctrarchivos;
+            $this->ctrmaqueta=$pedido->ctrmaqueta;
             $this->ctrplotter=$pedido->ctrplotter;
             $this->ctrentrega=$pedido->ctrentrega;
             $this->tiradaprevista=$pedido->tiradaprevista;
@@ -266,9 +273,11 @@ class Pedido extends Component
 
     public function save(){
         if($this->fechaarchivos=='')$this->fechaarchivos=null;
+        if($this->fechamaqueta=='')$this->fechamaqueta=null;
         if($this->fechaentrega =='') $this->fechaentrega=null;
         if($this->fechaplotter =='') $this->fechaplotter=null;
         if($this->ctrarchivos=='')$this->ctrarchivos='0';
+        if($this->ctrmaqueta=='')$this->ctrmaqueta='0';
         if($this->ctrentrega =='') $this->ctrentrega='0';
         if($this->ctrplotter =='') $this->ctrplotter='0';
         if($this->contacto_id =='') $this->contacto_id=null;
@@ -316,9 +325,11 @@ class Pedido extends Component
             'facturadopor'=>$this->facturadopor,
             'fechapedido'=>$this->fechapedido,
             'fechaarchivos'=>$this->fechaarchivos,
+            'fechamaqueta'=>$this->fechamaqueta,
             'fechaplotter'=>$this->fechaplotter,
             'fechaentrega'=>$this->fechaentrega,
             'ctrarchivos'=>$this->ctrarchivos,
+            'ctrmaqueta'=>$this->ctrmaqueta,
             'ctrplotter'=>$this->ctrplotter,
             'ctrentrega'=>$this->ctrentrega,
             'tiradaprevista'=>$this->tiradaprevista,

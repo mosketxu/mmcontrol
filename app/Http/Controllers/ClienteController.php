@@ -156,6 +156,7 @@ class ClienteController extends Controller
         $filtroestado=$request->filtroestado == '' ? '0' : $request->filtroestado;
         $filtrofacturado=$request->filtrofacturado;
         $filtroarchivos=$request->filtroarchivos;
+        $filtromaqueta=$request->filtromaqueta;
         $filtroplotter=$request->filtroplotter;
         $filtroentrega=$request->filtroentrega;
         $filtrolaminado=$request->filtrolaminado;
@@ -197,6 +198,7 @@ class ClienteController extends Controller
             ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
             ->when($filtrofacturado!='', function ($query) use($filtrofacturado) {$query->where('pedidos.facturado',$filtrofacturado);})
             ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
+            ->when($filtromaqueta!='', function ($query) use($filtromaqueta) {$query->where('pedidos.ctrmaqueta',$filtromaqueta);})
             ->when($filtroplotter!='', function ($query) use($filtroplotter) {$query->where('pedidos.ctrplotter',$filtroplotter);})
             ->when($filtroentrega!='', function ($query) use($filtroentrega) {$query->where('pedidos.ctrentrega',$filtroentrega);})
             // ->when($filtrolaminadoplastico!='', function ($query) use($filtrolaminadoplastico) {$query->where('pedidos.laminadoplastico',$filtrolaminadoplastico);})
@@ -212,7 +214,7 @@ class ClienteController extends Controller
 
 
             return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados','escliente',
-            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtrolaminado','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtrolaminado','filtroestado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function pedidoeditar(Pedido $pedido,$ruta){

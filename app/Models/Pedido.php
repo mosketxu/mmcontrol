@@ -14,7 +14,7 @@ class Pedido extends Model
     public $incrementing = false;
 
     protected $fillable=['id','tipo','cliente_id','descripcion','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
-        'proveedor_id','facturadopor','fechapedido','fechaarchivos','ctrarchivos','fechaplotter','ctrplotter','fechaentrega','ctrentrega',
+        'proveedor_id','facturadopor','fechapedido','fechaarchivos','fechamaqueta','ctrarchivos','ctrmaqueta','fechaplotter','ctrplotter','fechaentrega','ctrentrega',
         'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','laminadoplastico','laminado_id','consumo','unidad_consumo','estado','facturado','caja_id','uds_caja',
         'transporte','hayDistribuciones','hayFacturaciones','hayIncidencias','hayParciales','hayRetrasos','hayFacturacion','haySubpedidos','hayTareas','otros'];
 
@@ -123,6 +123,13 @@ class Pedido extends Model
         ][$this->ctrarchivos] ?? ['text-red-500','text-red-500'];
     }
 
+    public function getCtrlMaquetaColorAttribute(){
+        return [
+            '0'=>['text-red-500','text-red-500'],
+            '1'=>['text-green-500','text-green-800'],
+        ][$this->ctrmaqueta] ?? ['text-red-500','text-red-500'];
+    }
+
     public function getCtrlPlotterColorAttribute(){
         return [
             '0'=>['text-red-500','text-red-500'],
@@ -179,6 +186,23 @@ class Pedido extends Model
             return '';
         }
     }
+
+    public function getFMaquetaAttribute(){
+        if ($this->fechamaqueta) {
+            return Carbon::parse($this->fechamaqueta)->format('d/m/y');
+        } else {
+            return '';
+        }
+    }
+
+    public function getFMaqueta4Attribute(){
+        if ($this->fechamaqueta) {
+            return Carbon::parse($this->fechamaqueta)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+
 
     public function getFPlotterAttribute(){
         if ($this->fechaplotter) {

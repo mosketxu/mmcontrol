@@ -24,9 +24,11 @@ class Pedidos extends Component
     public $proveedor_id;
     public $fechapedido;
     public $fechaarchivos;
+    public $fechamaqueta;
     public $fechaplotter;
     public $fechaentrega;
     public $ctrarchivos;
+    public $ctrmaqueta;
     public $ctrplotter;
     public $ctrentrega;
     public $tiradaprevista;
@@ -55,11 +57,12 @@ class Pedidos extends Component
     public $filtroestado='';
     public $filtrofacturado='';
     public $filtroarchivos='';
+    public $filtromaqueta='';
     public $filtroplotter='';
     public $filtroentrega='';
     public $filtrolaminado='';
 
-    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroproveedor','filtroreferencia','filtroisbn','filtroestado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtrolaminado'];
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroproveedor','filtroreferencia','filtroisbn','filtroestado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtrolaminado'];
 
 
     public $message;
@@ -76,9 +79,11 @@ class Pedidos extends Component
             'proveedor_id'=>'nullable',
             'fechapedido'=>'required|date',
             'fechaarchivos'=>'nullable|date',
+            'fechamaqueta'=>'nullable|date',
             'fechaplotter'=>'nullable|date',
             'fechaentrega'=>'required|date',
             'ctrarchivos'=>'nullable',
+            'ctrmaqueta'=>'nullable',
             'ctrplotter'=>'nullable',
             'ctrentrega'=>'required',
             'tiradaprevista'=>'required|numeric',
@@ -105,6 +110,7 @@ class Pedidos extends Component
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
             'fechapedido.required'=>'La fecha del pedido es necesaria',
             'fechaarchivos.date'=>'La fecha de los archivos debe ser válida',
+            'fechamaqueta.date'=>'La fecha de la maqueta debe ser válida',
             'fechaplotter.date'=>'La fecha del plotter debe ser válida',
             'fechaentrega.date'=>'La fecha de entrega debe ser válida',
             'fechaentrega.required'=>'La fecha de entrega es necesaria',
@@ -185,6 +191,9 @@ class Pedidos extends Component
             ->when($this->filtroarchivos!='', function ($query){
                 $query->where('pedidos.ctrarchivos',$this->filtroarchivos);
             })
+            ->when($this->filtromaqueta!='', function ($query){
+                $query->where('pedidos.ctrmaqueta',$this->filtromaqueta);
+            })
             ->when($this->filtroplotter!='', function ($query){
                 $query->where('pedidos.ctrplotter',$this->filtroplotter);
             })
@@ -240,6 +249,9 @@ class Pedidos extends Component
             ->when($this->filtroarchivos!='', function ($query){
                 $query->where('pedidos.ctrarchivos',$this->filtroarchivos);
             })
+            ->when($this->filtromaqueta!='', function ($query){
+                $query->where('pedidos.ctrmaqueta',$this->filtromaqueta);
+            })
             ->when($this->filtroplotter!='', function ($query){
                 $query->where('pedidos.ctrplotter',$this->filtroplotter);
             })
@@ -282,7 +294,7 @@ class Pedidos extends Component
                 ->select('clientes.entidad as cliente',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','imprenta.entidad as imprenta',
                 'pedidos.facturadopor',
-                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
                 'productos.isbn','productos.referencia',
                 'laminados.name',
                 'pedidos.estado','pedidos.facturado','otros',
@@ -327,7 +339,7 @@ class Pedidos extends Component
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
                 ->select('entidades.entidad',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
-                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
                 'productos.isbn','productos.referencia',
                 'pedidos.estado','pedidos.facturado','otros',
                 )

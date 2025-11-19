@@ -53,6 +53,7 @@ class PedidoController extends Controller
         $filtroestado=$request->filtroestado == '' ? '0' : $request->filtroestado;
         $filtrofacturado=$request->filtrofacturado;
         $filtroarchivos=$request->filtroarchivos;
+        $filtromaqueta=$request->filtromaqueta;
         $filtroplotter=$request->filtroplotter;
         $filtroentrega=$request->filtroentrega;
         $filtrolaminado=$request->filtrolaminado;
@@ -92,6 +93,7 @@ class PedidoController extends Controller
             ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
             ->when($filtrofacturado!='', function ($query) use($filtrofacturado) {$query->where('pedidos.facturado',$filtrofacturado);})
             ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
+            ->when($filtromaqueta!='', function ($query) use($filtromaqueta) {$query->where('pedidos.ctrmaqueta',$filtromaqueta);})
             ->when($filtroplotter!='', function ($query) use($filtroplotter) {$query->where('pedidos.ctrplotter',$filtroplotter);})
             ->when($filtroentrega!='', function ($query) use($filtroentrega) {$query->where('pedidos.ctrentrega',$filtroentrega);})
             // ->when($filtrolaminadoplastico!='', function ($query) use($filtrolaminadoplastico) {$query->where('pedidos.laminadoplastico',$filtrolaminadoplastico);})
@@ -107,7 +109,7 @@ class PedidoController extends Controller
 
 
         return view('pedidos.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados',
-        'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+        'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function stock($tipo,$ruta){
@@ -223,7 +225,7 @@ class PedidoController extends Controller
                 ->select('clientes.id as entidadId','clientes.entidad as cliente',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','imprenta.entidad as imprenta',
                 'pedidos.facturadopor',
-                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
                 'productos.isbn','productos.referencia',
                 'pedidos.tiradaprevista','pedidos.tiradareal','pedidos.estado','pedidos.facturado',
                 'laminados.name as laminado',
@@ -269,7 +271,7 @@ class PedidoController extends Controller
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
                 ->select('entidades.id as entidadId','entidades.entidad',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
-                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.ctrarchivos','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
                 'productos.isbn','productos.referencia',
                 'pedidos.estado','pedidos.facturado','otros',
                 )

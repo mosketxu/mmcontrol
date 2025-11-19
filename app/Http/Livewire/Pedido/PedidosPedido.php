@@ -16,6 +16,7 @@ class PedidosPedido extends Component
     public $tipo;
     public $estado;
     public $ctrarchivos;
+    public $ctrmaqueta;
     public $ctrplotter;
     public $ctrentrega;
     // public $ctrsubpedidos;
@@ -36,6 +37,7 @@ class PedidosPedido extends Component
         $this->laminadoplastico=$this->pedido->laminadoplastico;
         $this->laminado_id=$this->pedido->laminado_id;
         $this->ctrarchivos=$this->pedido->ctrarchivos;
+        $this->ctrmaqueta=$this->pedido->ctrmaqueta;
         $this->ctrplotter=$this->pedido->ctrplotter;
         $this->ctrentrega=$this->pedido->ctrentrega;
         // $this->ctrsubpedidos=$this->pedido->ctrsubpedidos;
