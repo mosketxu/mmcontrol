@@ -194,8 +194,10 @@ class Pedidos extends Component
             ->when($this->filtrolaminado!='', function ($query){
                 $query->where('pedidos.laminado_id',$this->filtrolaminado);
             })
-            ->searchYear('fechapedido',$this->filtroanyo)
-            ->searchMes('fechapedido',$this->filtromes)
+            // ->searchYear('fechapedido',$this->filtroanyo)
+            // ->searchMes('fechapedido',$this->filtromes)
+            ->searchYear('fechaentrega',$this->filtroanyo)
+            ->searchMes('fechaentrega',$this->filtromes)
             ->orderBy('pedidos.estado','asc')
             ->orderBy('entidades.entidad','asc')
             ->orderBy('pedidos.fechaentrega','asc')
@@ -247,8 +249,10 @@ class Pedidos extends Component
             ->when($this->filtrolaminado!='', function ($query){
                 $query->where('pedidos.laminado_id',$this->filtrolaminado);
             })
-            ->searchYear('fechapedido',$this->filtroanyo)
-            ->searchMes('fechapedido',$this->filtromes)
+            // ->searchYear('fechapedido',$this->filtroanyo)
+            // ->searchMes('fechapedido',$this->filtromes)
+            ->searchYear('fechaentrega',$this->filtroanyo)
+            ->searchMes('fechaentrega',$this->filtromes)
             ->orderBy('pedidos.estado','asc')
             ->orderBy('entidades.entidad','asc')
             ->orderBy('pedidos.fechaentrega','asc')
@@ -309,8 +313,10 @@ class Pedidos extends Component
                 ->when($this->filtrolaminado!='', function ($query){
                     $query->where('pedidos.laminado_id',$this->filtrolaminado);
                 })
-                ->searchYear('fechapedido',$this->filtroanyo)
-                ->searchMes('fechapedido',$this->filtromes)
+                // ->searchYear('fechapedido',$this->filtroanyo)
+                // ->searchMes('fechapedido',$this->filtromes)
+                ->searchYear('fechaentrega',$this->filtroanyo)
+                ->searchMes('fechaentrega',$this->filtromes)
                 ->orderBy('pedidos.fechapedido','desc')
                 ->orderBy('pedidos.id','desc')
                 ->get();
@@ -351,8 +357,10 @@ class Pedidos extends Component
                 ->when($this->filtrofacturado!='', function ($query){
                     $query->where('pedidos.facturado',$this->filtrofacturado);
                 })
-                ->searchYear('fechapedido',$this->filtroanyo)
-                ->searchMes('fechapedido',$this->filtromes)
+                // ->searchYear('fechapedido',$this->filtroanyo)
+                // ->searchMes('fechapedido',$this->filtromes)
+                ->searchYear('fechaentrega',$this->filtroanyo)
+                ->searchMes('fechaentrega',$this->filtromes)
                 ->orderBy('pedidos.fechapedido','desc')
                 ->orderBy('pedidos.id','desc')
                 ->get();
