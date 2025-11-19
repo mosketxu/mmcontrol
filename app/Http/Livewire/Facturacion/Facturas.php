@@ -90,8 +90,8 @@ class Facturas extends Component
             })
             ->searchYear('fecha',$this->filtroanyo)
             ->searchMes2('fecha',$this->filtromes)
-            ->orderBy('facturas.fecha','desc')
-            ->orderBy('facturas.id','desc');
+            ->orderBy('facturas.id','desc')
+            ->orderBy('facturas.fecha','desc');
         }
 
     public function getRowsProperty(){
