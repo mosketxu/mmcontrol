@@ -44,7 +44,11 @@
     </div>
     <div class="flex items-center w-3/12 space-x-2 text-sm text-gray-500 border-t-0 cursor-pointer border-y " wire:loading.class.delay="opacity-50" >
         <div class="flex-none w-4/12 md:flex md:w-full">
+            @if($tipo!=1)
             <div class="w-3/12">
+            @else
+            <div class="w-4/12">
+            @endif
                 <div class="flex font-bold">
                     Arch:
                     @if($pedido->ctrarchivos=='1')<x-icon.validate class="w-4"/>@endif
@@ -55,6 +59,7 @@
                     <div class=" {{ $pedido->ctrlarchivoscolor[0] }}">{{ $pedido->farchivos }}</div>
                 @endif
             </div>
+            @if($tipo!=1)
             <div class="w-3/12">
                 <div class="flex font-bold">
                     Maqueta:
@@ -66,7 +71,12 @@
                     <div class=" {{ $pedido->ctrlmaquetacolor[0] }}">{{ $pedido->fmaqueta }}</div>
                 @endif
             </div>
+            @endif
+            @if($tipo!=1)
             <div class="w-3/12">
+            @else
+            <div class="w-4/12">
+            @endif
                 <div class="flex font-bold">
                     Plot:
                     @if($pedido->ctrplotter=='1')<x-icon.validate class="w-4"/>@endif
@@ -77,7 +87,11 @@
                     <div class="{{ $pedido->ctrlplottercolor[0] }}" >{{ $pedido->fplotter }}</div>
                 @endif
             </div>
+            @if($tipo!=1)
             <div class="w-3/12">
+            @else
+            <div class="w-4/12">
+            @endif
                 <div class="flex font-bold">
                     Entr:
                     @if($pedido->ctrentrega=='1')<x-icon.validate class="w-4"/>@endif

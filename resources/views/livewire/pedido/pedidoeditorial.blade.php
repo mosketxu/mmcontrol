@@ -140,8 +140,8 @@
                                     <option value="1">OK</option>
                                 </select>
                             </div>
-                            {{-- Fecha archivos --}}
-                            <div class="w-full form-item">
+                            {{-- Fecha maqueta --}}
+                            {{-- <div class="w-full form-item">
                                 <x-jet-label for="fechamaqueta">{{ __('Fecha maqueta') }}</x-jet-label>
                                 <input  wire:model.lazy="fechamaqueta" type="date" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
                                 {{$escliente}} {{$deshabilitado}}/>
@@ -154,7 +154,7 @@
                                     <option value="0">KO</option>
                                     <option value="1">OK</option>
                                 </select>
-                            </div>
+                            </div> --}}
                             {{-- Fecha plotter --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="fechaplotter">{{ __('Fecha plotter') }}</x-jet-label>
