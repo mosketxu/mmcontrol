@@ -12,19 +12,19 @@ return new class extends Migration
    public function up()
     {
         Schema::table('presupuestos', function (Blueprint $table) {
-            $table->text('otros')->change();
+            $table->text('otros')->nullable()->change();
         });
 
         Schema::table('pedidos', function (Blueprint $table) {
-            $table->text('otros')->change();
+            $table->text('otros')->nullable()->change();
         });
 
         Schema::table('pedido_subpedidos', function (Blueprint $table) {
-            $table->text('otros')->change();
+            $table->text('otros')->nullable()->change();
         });
 
         Schema::table('pedido_tareas', function (Blueprint $table) {
-            $table->text('otros')->change();
+            $table->text('otros')->nullable()->change();
         });
     }
 
