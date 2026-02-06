@@ -231,7 +231,7 @@
     </div>
         <div class="flex flex-col mx-2 space-y-2 md:space-y-0 md:flex-row md:space-x-4">
             {{-- cajas --}}
-            <div class="w-full form-item md:w-3/12">
+            <div class="w-full form-item md:w-2/12">
                 <x-jet-label for="caja">{{ __('Caja') }}</x-jet-label>
                     <select wire:model.lazy="producto.caja_id"
                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
@@ -242,7 +242,11 @@
                         @endforeach
                     </select>
             </div>
-            {{-- uds cajas --}}
+            {{-- etiqueta --}}
+            <div class="w-full form-item md:w-1/12 ">
+                <x-jet-label for="etiqueta">{{ __('Etiqueta') }}</x-jet-label>
+                <input  wire:model.lazy="producto.etiqueta" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" {{$escliente}} {{$deshabilitado}}/>
+            </div>
             <div class="w-full form-item md:w-1/12 ">
                 <x-jet-label for="udxcaja">{{ __('Uds. x caja') }}</x-jet-label>
                 <input  wire:model.lazy="producto.udxcaja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" {{$escliente}} {{$deshabilitado}}/>
