@@ -175,7 +175,7 @@
                                         <x-jet-label class="font-bold">{{ __('Caja') }}<span class="font-light"> {{ $prod->caja->name ?? ''  }} </span></x-jet-label>
                                     </div>
                                     <div class="">
-                                        <x-jet-label class="font-bold">{{ __('Udx x Caja') }}<span class="font-light"> {{ $prod->udxcaja  ?? ''}} Uds x caja</span></x-jet-label>
+                                        <x-jet-label class="font-bold">{{ __('Udx x Caja') }}<span class="font-light"> {{ $prod->udxcaja  ?? ''}}</span></x-jet-label>
                                     </div>
                                 </div>
                             </div>
