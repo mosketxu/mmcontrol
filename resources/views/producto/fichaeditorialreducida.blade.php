@@ -133,6 +133,12 @@
             <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->caja->name ?? ''}}</td>
         </tr>
         @endif
+        @if($producto->etiqueta)
+        <tr style="">
+            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Etiqueta</td>
+            <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->etiqueta}}</td>
+        </tr>
+        @endif
         @if($producto->observaciones)
         <tr style="">
             <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Otro</td>
