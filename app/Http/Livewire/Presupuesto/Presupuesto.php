@@ -33,6 +33,7 @@ class Presupuesto extends Component
     public $manipulacion='';
     public $pedido;
     public $caja_id;
+    public $etiqueta;
     public $uds_caja=0;
     public $transporte;
     public $troquel;
@@ -86,6 +87,7 @@ class Presupuesto extends Component
             'espedido'=>'required',
             'manipulacion'=>'nullable',
             'caja_id'=>'nullable',
+            'etiqueta'=>'nullable',
             'uds_caja'=>'nullable',
             'transporte'=>'nullable',
             'troquel'=>'nullable',
@@ -137,6 +139,7 @@ class Presupuesto extends Component
             $this->manipulacion=$presupuesto->manipulacion;
             $this->pedido=$presupuesto->pedido;
             $this->caja_id=$presupuesto->caja_id;
+            $this->etiqueta=$presupuesto->etiqueta;
             $this->uds_caja=$presupuesto->uds_caja;
             $this->transporte=$presupuesto->transporte;
             $this->troquel=$presupuesto->troquel;
@@ -228,6 +231,7 @@ class Presupuesto extends Component
             $this->precio_ud=$p->precio_ud;
             $this->preciototal=$p->precio_ud * $this->tiradanum($p->tirada);
             $this->caja_id=$p->caja_id;
+            $this->etiqueta=$p->etiqueta;
             $this->uds_caja=$p->udxcaja;
         }
     }
@@ -329,6 +333,7 @@ class Presupuesto extends Component
             'manipulacion'=>$this->manipulacion,
             'pedido'=>$this->pedido,
             'caja_id'=>$this->caja_id,
+            'etiqueta'=>$this->etiqueta,
             'uds_caja'=>$this->uds_caja,
             'transporte'=>$this->transporte,
             'troquel'=>$this->troquel,
@@ -411,6 +416,7 @@ class Presupuesto extends Component
             'tipo'=>$presupuesto->tipo,
             'facturado'=>'0',
             'caja_id'=>$this->caja_id,
+            'etiqueta'=>$this->etiqueta,
             'uds_caja'=>$presupuesto->uds_caja,
             'transporte'=>$presupuesto->transporte,
             'troquel'=>$presupuesto->troquel,

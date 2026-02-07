@@ -15,7 +15,7 @@ class Pedido extends Model
 
     protected $fillable=['id','tipo','cliente_id','descripcion','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
         'proveedor_id','facturadopor','fechapedido','fechaarchivos','fechamaqueta','ctrarchivos','ctrmaqueta','fechaplotter','ctrplotter','fechaentrega','ctrentrega',
-        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','laminadoplastico','laminado_id','consumo','unidad_consumo','estado','facturado','caja_id','uds_caja',
+        'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','laminadoplastico','laminado_id','consumo','unidad_consumo','estado','facturado','caja_id','etiqueta','uds_caja',
         'transporte','hayDistribuciones','hayFacturaciones','hayIncidencias','hayParciales','hayRetrasos','hayFacturacion','haySubpedidos','hayTareas','otros'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}

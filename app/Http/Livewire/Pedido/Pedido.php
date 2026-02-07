@@ -45,6 +45,7 @@ class Pedido extends Component
     public $tipo;
     public $facturado;
     public $caja_id;
+    public $etiqueta;
     public $uds_caja;
     public $transporte;
     public $otros;
@@ -103,6 +104,7 @@ class Pedido extends Component
             'tipo'=>'nullable',
             'facturado'=>'nullable',
             'caja_id'=>'nullable',
+            'etiqueta'=>'nullable',
             'uds_caja'=>'nullable',
             'transporte'=>'nullable',
             'otros'=>'nullable',
@@ -171,6 +173,7 @@ class Pedido extends Component
             $this->estado=$pedido->estado;
             $this->facturado=$pedido->facturado;
             $this->caja_id=$pedido->caja_id;
+            $this->etiqueta=$pedido->etiqueta;
             $this->uds_caja=$pedido->uds_caja;
             $this->transporte=$pedido->transporte;
             $this->otros=$pedido->otros;
@@ -238,6 +241,7 @@ class Pedido extends Component
             $p=Producto::find($this->productoeditorialid);
             $this->precio=$p->precioventa;
             $this->caja_id=$p->caja_id;
+            $this->etiqueta=$p->etiqueta;
             $this->uds_caja=$p->udxcaja;
             $this->preciototal=$this->precio * $this->tiradareal;
         }
@@ -340,6 +344,7 @@ class Pedido extends Component
             'tipo'=>$this->tipo,
             'facturado'=>$this->facturado == '' ? '0' : $this->facturado,
             'caja_id'=>$this->caja_id,
+            'etiqueta'=>$this->etiqueta,
             'uds_caja'=>$this->uds_caja,
             'transporte'=>$this->transporte,
             'otros'=>$this->otros,

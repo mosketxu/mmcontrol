@@ -193,6 +193,10 @@
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Modelo Caja</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->caja->name ?? ''}}</td>
                     </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Etiqueta</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->etiqueta}}</td>
+                    </tr>
                     @if($presupuesto->uds_caja>0)
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Uds x Caja</td>

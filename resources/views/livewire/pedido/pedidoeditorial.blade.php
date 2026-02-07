@@ -265,6 +265,12 @@
                                     </select>
                                 </div>
                             </div>
+                            {{-- etiqueta --}}
+                            <div class="w-full form-item">
+                                <x-jet-label for="etiqueta">{{ __('Etiqueta') }}</x-jet-label>
+                                <input  wire:model.lazy="etiqueta" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
+                                {{$escliente}} {{$deshabilitado}}/>
+                            </div>
                             {{-- Uds x caja --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="uds_caja">{{ __('Uds x Caja') }}</x-jet-label>
