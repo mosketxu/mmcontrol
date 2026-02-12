@@ -91,6 +91,22 @@
                             {{-- <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->laminadoplastico == '1' ? 'Sí' : 'No'  }}</td> --}}
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->laminado->name }}</td>
                         </tr>
+
+                   <tr style="">
+                        <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Modelo Caja</td>
+                        <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->caja->name ?? ''}}</td>
+                    </tr>
+                    <tr style="">
+                        <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Etiqueta</td>
+                        <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->etiqueta}}</td>
+                    </tr>
+                    @if($pedido ->uds_caja>0)
+                    <tr style="">
+                        <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Uds x Caja</td>
+                        <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->uds_caja }}</td>
+                    </tr>
+                    @endif
+
                         @foreach ($pedido->distribuciones as $distribucion )
                         <tr>
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Distribucion {{ $loop->index +1 }}</td>
