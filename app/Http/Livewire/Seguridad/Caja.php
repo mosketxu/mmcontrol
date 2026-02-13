@@ -12,16 +12,16 @@ class Caja extends Component
 {
     public $titulo='Cajas';
     public $valorcampo1='';
-    public $valorcampo2='';
+    public $valorcampo2='1';
     public $valorcampo3='';
     public $titcampo1='Caja';
     public $titcampo2='Destino';
     public $titcampo3='Descripcion';
     public $campo1='name';
-    public $campo2='familia';
+    public $campo2='tipo';
     public $campo3='descripcion';
     public $campo1visible=1;
-    public $campo2visible=0;
+    public $campo2visible=1;
     public $campo3visible=1;
     public $editarvisible=0;
     public $search='';
@@ -35,7 +35,7 @@ class Caja extends Component
     {
         return [
             'valorcampo1'=>'required|unique:cajas,name',
-            'valorcampo2'=>'nullable',
+            'valorcampo2'=>'required',
             'valorcampo3'=>'nullable',
         ];
     }
@@ -44,14 +44,16 @@ class Caja extends Component
         return [
             'valorcampo1.required' => 'El nombre de la caja es necesaria,',
             'valorcampo1.unique' => 'La caja ya existe. Elige otro nombre,',
+            'valorcampo2.required' => 'Hay que definir si es caja Editorial o Packing/Otros',
         ];
     }
 
     public function render()
     {
+        // dd('1');
         $valores=ModelsCaja::query()
             ->search('name',$this->search)
-            ->select('id','name as valorcampo1','familia as valorcampo2','descripcion as valorcampo3')
+            ->select('id','name as valorcampo1','tipo as valorcampo2','descripcion as valorcampo3')
             ->orderBy('name')
             ->get();
         return view('livewire.auxiliarcard',compact('valores'));
@@ -59,6 +61,7 @@ class Caja extends Component
 
     public function changeCampo(ModelsCaja $valor,$campo,$valorcampo)
     {
+        // dd($valor . $campo . $valorcampo);
         Validator::make(['valorcampo'=>$valorcampo],[
             'valorcampo'=>'required|unique:cajas,name',
             ])->validate();
@@ -79,9 +82,10 @@ class Caja extends Component
     {
         $this->validate();
 
+
         ModelsCaja::create([
             'name'=>$this->valorcampo1,
-            'familia'=>strtoupper($this->valorcampo2),
+            'tipo'=>($this->valorcampo2),
             'descripcion'=>$this->valorcampo3,
         ]);
 

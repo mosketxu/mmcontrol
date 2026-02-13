@@ -121,7 +121,7 @@ class Prod extends Component
         $this->tintascubierta=$tintas->whereIn('familia',['','CUB']);
         $this->plastificados=Plastificado::orderBy('name')->get();
         $this->encuadernaciones=Encuadernacion::orderBy('name')->get();
-        $this->cajas=Caja::orderBy('name')->get();
+        $this->cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
 

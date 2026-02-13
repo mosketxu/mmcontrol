@@ -38,15 +38,31 @@
                                 </td>
                                 @endif
                                 @if ($campo2visible==1)
-                                <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
-                                    <input type="text" value="{{ $valor->valorcampo2 }}"
-                                    wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)"
-                                    class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
-                                </td>
+                                    @if($titcampo1=='Caja')
+                                        <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
+                                            <select name="{{$valor->campo2}}" id="{{$valor->campo2}}"
+                                                wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)"
+                                                class="py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                                                <option value="1" {{$valor->valorcampo2=='1' ? 'selected' : ''}}>Editorial</option>
+                                                <option value="2" {{$valor->valorcampo2=='2' ? 'selected' : ''}}>Packaging/Otros</option>
+                                            </select>
+                                        </td>
+                                    @else
+                                    <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
+                                        <input type="text" value="{{ $valor->valorcampo2 }}"
+                                        wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)"
+                                        class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
+                                    </td>
+                                    @endif
                                 @endif
                                 @if ($campo3visible==1)
                                 <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
-                                    @if(!$campo3=='activo')
+                                    <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
+                                        <input type="text" value="{{ $valor->valorcampo3 }}"
+                                        wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
+                                        class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
+                                    </td>
+                                    {{-- @if(!$campo3=='activo')
                                         <input type="text" value="{{ $valor->valorcampo3 }}"
                                         wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
                                         class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
@@ -57,7 +73,7 @@
                                             <option value="1" {{$valor->valorcampo3=='1' ? 'selected' : ''}}>Sí</option>
                                             <option value="0" {{$valor->valorcampo3=='0' ? 'selected' : ''}}>No</option>
                                         </select>
-                                    @endif
+                                    @endif --}}
                                 </td>
                                 @endif
                                 <td  class="px-4">
@@ -81,10 +97,20 @@
                                 </td>
                                 @endif
                                 @if ($campo2visible==1)
-                                <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                    <input type="text" wire:model.defer="valorcampo2"
-                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
-                                </td>
+                                 @if($titcampo1=='Caja')
+                                        <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
+                                            <select wire:model.defer="valorcampo2"
+                                                class="py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                                                <option value="1" {{$valor->valorcampo2=='1' ? 'selected' : ''}}>Editorial</option>
+                                                <option value="2" {{$valor->valorcampo2=='2' ? 'selected' : ''}}>Packaging/Otros</option>
+                                            </select>
+                                        </td>
+                                    @else
+                                        <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
+                                            <input type="text" wire:model.defer="valorcampo2"
+                                            class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                        </td>
+                                    @endif
                                 @endif
                                 @if ($campo3visible==1)
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >

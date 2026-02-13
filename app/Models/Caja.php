@@ -9,7 +9,7 @@ class Caja extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','descripcion','familia'];
+    protected $fillable = ['name','descripcion','familia','tipo'];
 
     public function caja(){return $this->hasMany(Producto::class);}
 

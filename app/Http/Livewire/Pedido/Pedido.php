@@ -201,7 +201,7 @@ class Pedido extends Component
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $laminados=Laminado::get();
-        $cajas=Caja::orderBy('name')->get();
+        $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
 
         $this->productos=Producto::query()
             ->where(function($q) {
