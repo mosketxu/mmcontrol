@@ -53,11 +53,7 @@ class Presupuesto extends Component
     public $filtroproveedor;
 
     public $contactos;
-    public $searchProducto = '';
     public $productos;
-    public $productosFiltrados = [];
-     public $showDropdown = false;  // controla si se muestra la lista
-     public $highlightIndex = 0;     // índice para navegación con flechas
     public $escliente;
 
     protected $queryString=['filtrocliente','filtroproveedor','filtroreferencia','filtroisbn'];
@@ -160,24 +156,20 @@ class Presupuesto extends Component
         }
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
 
+        $this->productos = Producto::with('cliente')
+            ->where('productoestado', '1')
+            ->when($this->cliente_id != '', function ($query) {
+                $query->where('cliente_id', $this->cliente_id);
+            })
+            ->when($this->filtroisbn!='', function ($query) {
+                 $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+            })
+            ->when($this->filtroreferencia!='', function ($query) {
+                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+            })
+            ->orderBy('referencia', 'asc')
+            ->get();
 
-        $this->loadProductos();
-
-        // $this->productos=Producto::query()
-        //     ->with('cliente')
-        //     ->where('productoestado','=','1')
-        //     ->when($this->cliente_id!='', function ($query) {
-        //         $query->where('cliente_id', $this->cliente_id);
-        //     })
-        //     ->orderBy('referencia', 'asc')
-        //     ->get();
-
-        // $this->productosFiltrados = $this->productos; // inicialmente mostrar todos
-
-        // if ($this->productoeditorialid) {
-        //     $producto = Producto::find($this->productoeditorialid);
-        //     $this->searchProducto = $producto?->isbn ?? '';
-        // }
     }
 
     public function render(){
@@ -201,89 +193,9 @@ class Presupuesto extends Component
         $vista=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoeditorial' : 'livewire.presupuesto.presupuestootros' ;
 
         return view($vista, compact(['entidades','clientes','proveedores','responsables','cajas','pedidos']));
-        // return view($vista, compact('entidades','clientes','proveedores','responsables','cajas','pedidos',
-        // 'productos','productoeditorialid','searchProducto'));
-    }
-
-
-
-    // --- Cargar productos según cliente ---
-    public function loadProductos(){
-       $this->productos = Producto::with('cliente')
-            ->where('productoestado', '1')  // solo activos
-            ->when($this->cliente_id != '', function ($query) {
-                $query->where('cliente_id', $this->cliente_id);
-            })
-            ->orderBy('referencia', 'asc')
-            ->get();
-
-        $this->productosFiltrados = $this->productos;
-
-        // Si hay producto seleccionado, mostrar su ISBN
-        if ($this->productoeditorialid) {
-            $producto = $this->productos->firstWhere('id', $this->productoeditorialid);
-            $this->searchProducto = $producto?->isbn ?? '';
-        } else {
-            $this->searchProducto = '';
-        }
-
-        $this->highlightIndex = 0;
-    }
-
-        // --- Filtrado mientras se escribe ---
-        public function updatedSearchProducto($value){
-            $this->showDropdown = true;
-            $this->productosFiltrados = $this->productos->filter(function ($producto) use ($value) {
-                return str_contains(strtolower($producto->isbn), strtolower($value))
-                    || $producto->id == $this->productoeditorialid;
-            })->values();
-
-            $this->highlightIndex = 0;
-        }
-
-
-    // seleccionar producto desde la lista
-    public function selectProducto($id, $isbn){
-        $this->productoeditorialid = $id;
-        $this->searchProducto = $isbn;
-        $this->showDropdown = false;
-
-        // Actualizar filtrados para incluir siempre el seleccionado
-        // $this->productosFiltrados = $this->productos->filter(function ($producto) {
-        //     return str_contains(strtolower($producto->isbn), strtolower($this->searchProducto))
-        //            || $producto->id == $this->productoeditorialid;
-        // })->values();
-    }
-
-    // --- Navegación con flechas ---
-    public function moveUp()
-    {
-        if ($this->highlightIndex > 0) {
-            $this->highlightIndex--;
-        }
-    }
-
-    public function moveDown()
-    {
-        if ($this->highlightIndex < $this->productosFiltrados->count() - 1) {
-            $this->highlightIndex++;
-        }
-    }
-
-    public function selectHighlighted()
-    {
-        if ($this->productosFiltrados->count() > 0 && isset($this->productosFiltrados[$this->highlightIndex])) {
-            $producto = $this->productosFiltrados[$this->highlightIndex];
-            $this->selectProducto($producto->id, $producto->isbn);
-        }
     }
 
     public function updatedClienteId(){
-        $this->productoeditorialid = null;
-        $this->searchProducto = '';
-        $this->showDropdown = false;
-        $this->loadProductos();
-
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         if (!$this->fechapresupuesto) {
             $this->fechapresupuesto=now()->format('Y-m-d');
@@ -291,7 +203,53 @@ class Presupuesto extends Component
 
         $resp=Entidad::find($this->cliente_id);
         if($resp->responsable!='') $this->responsable=$resp->responsable;
+
+        $this->productos = Producto::with('cliente')
+            ->where('productoestado', '1')
+            ->when($this->cliente_id != '', function ($query) {
+                $query->where('cliente_id', $this->cliente_id);
+            })
+            ->when($this->filtroisbn!='', function ($query) {
+                 $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+            })
+            ->when($this->filtroreferencia!='', function ($query) {
+                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+            })
+            ->orderBy('referencia', 'asc')
+            ->get();
     }
+
+    public function updatedFiltroisbn(){
+        $this->productos = Producto::with('cliente')
+            ->where('productoestado', '1')
+            ->when($this->cliente_id != '', function ($query) {
+                $query->where('cliente_id', $this->cliente_id);
+            })
+            ->when($this->filtroisbn!='', function ($query) {
+                 $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+            })
+            ->when($this->filtroreferencia!='', function ($query) {
+                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+            })
+            ->orderBy('referencia', 'asc')
+            ->get();
+        }
+
+        public function updatedFiltroreferencia(){
+        $this->productos = Producto::with('cliente')
+            ->where('productoestado', '1')
+            ->when($this->cliente_id != '', function ($query) {
+                $query->where('cliente_id', $this->cliente_id);
+            })
+            ->when($this->filtroisbn!='', function ($query) {
+                 $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+            })
+            ->when($this->filtroreferencia!='', function ($query) {
+                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+            })
+            ->orderBy('referencia', 'asc')
+            ->get();
+        }
 
     public function updatedPedido(){
         $presup=ModelsPresupuesto::find($this->presupuestoid);
