@@ -18,7 +18,7 @@
                             <div class="w-2/12 ml-2" >{{ __('ISBN') }}</div>
                             <div class="w-4/12 " >{{ __('Título') }}</div>
                             <div class="w-2/12 " >{{ __('Cliente') }} </div>
-                            {{-- <div class="w-1/12 " >{{ __('€ Coste') }}</div> --}}
+                            <div class="w-1/12 " >{{ __('Estado') }}</div>
                             <div class="w-4/12 " >{{ __('Observaciones') }}</div>
                         </div>
                         <div class="flex w-1/12 ">
@@ -33,6 +33,15 @@
                                     <div class="w-2/12 ml-2">{{ $producto->isbn }}</div>
                                     <div class="w-4/12">{{ $producto->referencia }}</div>
                                     <div class="w-2/12">{{ $producto->cliente->entidad }}</div>
+                                    <div class="w-1/12">
+                                        @php
+                                            $icon = \App\Enums\ProductoEstado::iconData($producto->productoestado);
+                                        @endphp
+                                        <x-dynamic-component
+                                            :component="$icon['component']"
+                                            class="{{ $icon['class'] }}"
+                                        />
+                                    </div>
                                     <div class="w-4/12">
                                             <textarea rows="1" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" disabled>{{ $producto->observaciones }}</textarea>
                                     </div>

@@ -4,16 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\ProductoEstado;
 
 class Producto extends Model
 {
     use HasFactory;
     protected $table = 'productos';
 
-    protected $fillable=['cliente_id','tipo','isbn','referencia','preciocoste','tirada','formato','FSC','tipoimpresion','materialinterior','tintainterior',
+    protected $fillable=['cliente_id','tipo','isbn','productoestado','referencia','preciocoste','tirada','formato','FSC','tipoimpresion','materialinterior','tintainterior',
     'gramajeinterior','paginas','materialcubierta','tintacubierta','gramajecubierta','plastificado','encuadernado','solapa','descripsolapa','guardas','descripguardas',
     'cd','descripcd','novedad','descripnovedad','caja_id','etiqueta','udxcaja','precioventa',
     'material','medidas','troquel','impresion','observaciones'];
+
+    protected $casts = ['productoestado' => ProductoEstado::class,];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}

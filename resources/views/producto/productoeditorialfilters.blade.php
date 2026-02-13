@@ -46,6 +46,25 @@
             </div>
         </div>
     </div>
+    <div class="flex w-1/12 ">
+        <div class="w-full">
+            <label class="px-1 text-sm text-gray-600">
+                Estado
+            </label>
+            <div class="flex">
+                <select wire:model="filtroproductoestado" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                    <option value="">-- Selecciona Estado --</option>
+                    @foreach($productosestado as $value => $label)
+                        <option value="{{ $value }}"
+                        {{ old('estadoproducto', $producto->estadoproducto?->value ?? '') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($filtroproductoestado!='')
+                    <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
+                @endif
+            </div>
+        </div>
+    </div>
     <div class="flex flex-row-reverse w-2/12 ">
         <div class="mt-3">
             @if(!Auth::user()->hasRole('Cliente'))

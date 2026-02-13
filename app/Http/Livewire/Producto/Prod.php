@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Producto;
 
+use App\Enums\ProductoEstado;
 use Livewire\Component;
 
 use App\Models\{Caja, Encuadernacion, Entidad, Formato, Gramaje, Material, Plastificado, Producto, Tinta};
@@ -16,6 +17,8 @@ class Prod extends Component
     use WithFileUploads;
 
     public $producto;
+    // public $productoestado;
+    public $productosestado;
     public $formatos;
     public $listaformatos;
     public $gramajesinterior;
@@ -41,6 +44,7 @@ class Prod extends Component
             'producto.cliente_id'=>'nullable',
             // 'producto.isbn'=>'nullable||unique:productos,isbn',
             'producto.isbn'=>'nullable',
+            'producto.productoestado'=>'nullable',
             'producto.referencia'=>'required||unique:productos,referencia',
             'producto.preciocoste'=>'nullable|numeric',
             'producto.precioventa'=>'nullable|numeric',
@@ -121,6 +125,9 @@ class Prod extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
 
+        $this->productosestado=ProductoEstado::options();
+
+
         $vista= $this->tipo=='1' ? 'livewire.producto.prodeditorial' : 'livewire.producto.prodotros';
 
         return view($vista,compact('clientes'));
@@ -147,6 +154,7 @@ class Prod extends Component
     public function updatedProductodescripcd(){if($this->producto->descripcd!='') $this->producto->cd=true;}
     public function updatedProductoDescripsolapa(){if($this->producto->descripsolapa!='') $this->producto->solapa=true;}
     public function updatedProductoUdxcaja(){if($this->producto->udxcaja=='') $this->producto->udxcaja='0';}
+    public function updatedProductoestado(){if($this->producto->productoestado=='') $this->producto->productoestado='1';}
 
     public function updatedficheropdf(){
         $this->validate(['ficheropdf'=>'file|max:5000']);
@@ -155,6 +163,7 @@ class Prod extends Component
     public function save(){
         if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
         if($this->producto->caja_id=='') $this->producto->caja_id=null;
+        if($this->producto->productoestado=='') $this->producto->productoestado='';
         if($this->tipo) $this->producto->tipo=$this->tipo;
         if($this->producto->id){
             $i=$this->producto->id;
@@ -162,16 +171,13 @@ class Prod extends Component
                 'producto.referencia'=>[
                     'required',
                     Rule::unique('productos','referencia')->ignore($this->producto->id)
-                ],
+                    ],
                 'producto.isbn'=>[
                     'nullable',
                     Rule::unique('productos','isbn')->ignore($this->producto->id)
+                    ],
                 ],
-
-            ],
-        );
-
-
+            );
             $mensaje=$this->producto->referencia . " actualizado satisfactoriamente";
 
         }else{
@@ -180,26 +186,12 @@ class Prod extends Component
             $message=$this->producto->referencia . " creado satisfactoriamente";
         }
 
-        // Validator::make([
-        //     'descripsolapa'=>$this->producto->descripsolapa,
-        //     'descripguardas'=>$this->producto->descripguardas,
-        //     'descripcd'=>$this->producto->descripcd,
-
-        // ],[
-        //     'descripsolapa' => Rule::requiredIf($this->producto->solapa==true),
-        //     'descripguardas' => Rule::requiredIf($this->producto->guardas==true),
-        //     'descripcd' => Rule::requiredIf($this->producto->cd==true),
-        // ],[
-        //     'descripsolapa.required' => 'La descripcion de las solapas es necesaria si se ha seleccionado la opción Solapas. ',
-        //     'descripguardas.required' => 'La descripcion de las guardas es necesaria si se ha seleccionado la opción Guardas. ',
-        //     'descripcd.required' => 'La descripcion del cd es necesaria si se ha seleccionado la opción CD. ',
-        // ])->validate();
-
         $prod=Producto::updateOrCreate([
             'id'=>$i
             ],
             [
             'isbn'=>$this->producto->isbn,
+            'productoestado'=>$this->producto->productoestado,
             'referencia'=>$this->producto->referencia,
             'cliente_id'=>$this->producto->cliente_id,
             'tipo'=>$this->producto->tipo,

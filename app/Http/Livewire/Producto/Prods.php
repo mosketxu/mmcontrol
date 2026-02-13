@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Producto;
 
+use App\Enums\ProductoEstado;
 use App\Models\{Entidad,Producto};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
@@ -16,6 +17,7 @@ class Prods extends Component
 
     // public $search='';
     public $filtroisbn='';
+    public $filtroproductoestado='1';
     public $filtroreferencia='';
     public $filtrocliente='';
     public $filtromaterial='';
@@ -26,8 +28,9 @@ class Prods extends Component
     public $orden1='';
     public $ordenarpor2='';
     public $orden2='';
+    public $productosestado='1';
 
-    protected $queryString=['filtroisbn','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion'];
+    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion'];
 
 
     public Producto $producto;
@@ -48,7 +51,7 @@ class Prods extends Component
             $this->orden2='asc';
         }
 
-
+        $this->productosestado=ProductoEstado::options();
     }
 
     public function render(){
@@ -66,6 +69,7 @@ class Prods extends Component
 
         if($this->tipo) $datos->where('tipo',$this->tipo);
         if($this->filtroisbn) $datos->where('isbn', 'like', '%'.$this->filtroisbn.'%');
+        if($this->filtroproductoestado) $datos->where('productoestado', $this->filtroproductoestado);
         if($this->filtroreferencia) $datos->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
         if($this->filtrocliente) $datos->where('cliente_id',$this->filtrocliente);
         if($this->filtromaterial) $datos->search('productos.material',$this->filtromaterial);
@@ -78,11 +82,12 @@ class Prods extends Component
         return view($vista,compact('productos','clientes'));
     }
 
-    public function updatingFiltroisbn(){$this->resetPage();}
-    public function updatingFiltroreferencia(){$this->resetPage();}
-    public function updatingFiltrocliente(){$this->resetPage();}
-    public function updatingFiltromaterial(){$this->resetPage();}
-    public function updatingFiltroimpresion(){$this->resetPage();}
+        public function updatingFiltroisbn(){$this->resetPage();}
+        public function updatingFiltroproductoestado(){$this->resetPage();}
+        public function updatingFiltroreferencia(){$this->resetPage();}
+        public function updatingFiltrocliente(){$this->resetPage();}
+        public function updatingFiltromaterial(){$this->resetPage();}
+        public function updatingFiltroimpresion(){$this->resetPage();}
 
 
     public function delete($productoId)

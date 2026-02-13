@@ -60,6 +60,7 @@ class Pedido extends Component
     public $titulo='';
     public $productoeditorialid;
     public $pedidoproductoid;
+    public $prod;
     public $contactos;
     public $productos;
     public $facturas;
@@ -187,6 +188,7 @@ class Pedido extends Component
             }
             if ($tipo=='1') {
                 $this->productoeditorialid=$pedido->pedidoproductos->first()->producto->id;
+                $this->prod=$pedido->pedidoproductos->first()->producto;
                 $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
             }
         }
@@ -202,6 +204,13 @@ class Pedido extends Component
         $cajas=Caja::orderBy('name')->get();
 
         $this->productos=Producto::query()
+            ->where(function($q) {
+                $q->where('productoestado', '1');
+                // Si hay un producto seleccionado, incluimos su id aunque no cumpla la condición
+                if ($this->prod?->id) {
+                    $q->orWhere('id', $this->prod->id);
+                }
+            })
             ->with('cliente')
             ->when($this->cliente_id!='', function ($query){
                 $query->where('cliente_id',$this->cliente_id);

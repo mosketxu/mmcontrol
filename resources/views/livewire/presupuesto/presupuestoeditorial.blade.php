@@ -55,7 +55,7 @@
                                     </select>
                                 </div>
                                 {{-- producto ISBN --}}
-                                <div class="w-full form-item">
+                                {{-- <div class="w-full form-item">
                                     <x-jet-label >{{ __('ISBN/Cód.') }}</x-jet-label>
                                     <select wire:model.lazy="productoeditorialid"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -65,7 +65,43 @@
                                             <option value="{{ $producto->id }}" >{{ $producto->isbn }}</option>
                                         @endforeach
                                     </select>
-                                </div>
+                                </div> --}}
+
+
+<div class="relative w-full form-item">
+    <x-jet-label>{{ __('ISBN/Cód.') }}</x-jet-label>
+
+    <!-- Input filtrable -->
+    <input type="text"
+        wire:model="searchProducto"
+        wire:keydown.enter.prevent
+        wire:focus="$set('showDropdown', true)"
+        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+        placeholder="Escribe para buscar..."
+        {{ $deshabilitado ? 'disabled' : '' }}>
+
+    <!-- Lista filtrable -->
+    @if($showDropdown && $productosFiltrados->count() > 0)
+        <ul class="absolute z-50 w-full mt-1 overflow-auto bg-white border border-gray-200 rounded-md shadow-lg max-h-48">
+            @foreach($productosFiltrados as $producto)
+                <li
+                    wire:click.prevent="selectProducto({{ $producto->id }}, '{{ $producto->isbn }}')"
+                    class="px-2 py-1 cursor-pointer hover:bg-blue-100">
+                    {{ $producto->isbn }}
+                </li>
+            @endforeach
+        </ul>
+    @elseif($showDropdown)
+        <ul class="absolute z-50 w-full mt-1 overflow-auto bg-white border border-gray-200 rounded-md shadow-lg max-h-48">
+            <li class="px-2 py-1 text-gray-400">No hay resultados</li>
+        </ul>
+    @endif
+</div>
+
+
+
+
+
                                 {{-- producto titulo --}}
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Título/Ref.') }}</x-jet-label>

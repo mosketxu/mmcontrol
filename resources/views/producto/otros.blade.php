@@ -30,6 +30,19 @@
                     @endforeach
                 </select>
             </div>
+                        {{-- estadoproducto --}}
+            <div class="w-full form-item md:w-4/12">
+                <x-jet-label for="entidad_id">{{ __('Estado') }}</x-jet-label>
+                <select wire:model.lazy="producto.productoestado"
+                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
+                    {{$escliente}} {{$deshabilitado}} >
+                    <option value=''>-- Selecciona Estado --</option>
+                   @foreach($productosestado as $value => $label)
+                        <option value="{{ $value }}"
+                        {{ old('estadoproducto', $producto->estadoproducto?->value ?? '') == $value ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
     </div>
     <div class="p-1 m-2 ">

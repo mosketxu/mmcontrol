@@ -118,18 +118,24 @@ class Oferta extends Component
     public function render(){
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
-        $this->productos=Producto::query()
-            // ->with('cliente')
-            ->when($this->cliente_id!='', function ($query){
-                $query->where('cliente_id', '=',$this->cliente_id);
-                })
-            ->when($this->filtroreferencia!='', function ($query){
-                $query->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
-                })
-            ->when($this->filtrocliente!='', function ($query){
-                $query->where('cliente_id',$this->filtrocliente);
-                })
-            ->orderBy('referencia','asc')
+        $this->productos = Producto::query()
+            ->where(function($q) {
+                $q->where('productoestado', '1');
+                // Si hay un producto seleccionado, incluimos su id aunque no cumpla la condición
+                if ($this->prod?->id) {
+                    $q->orWhere('id', $this->prod->id);
+                }
+            })
+            ->when($this->cliente_id != '', function ($query) {
+                $query->where('cliente_id', '=', $this->cliente_id);
+            })
+            ->when($this->filtroreferencia != '', function ($query) {
+                $query->where('referencia', 'like', '%' . $this->filtroreferencia . '%');
+            })
+            ->when($this->filtrocliente != '', function ($query) {
+                $query->where('cliente_id', $this->filtrocliente);
+            })
+            ->orderBy('referencia', 'asc')
             ->get();
 
         $vista=$this->tipo=='1' ? 'livewire.oferta.ofertaeditorial' : 'livewire.oferta.ofertaotros'  ;

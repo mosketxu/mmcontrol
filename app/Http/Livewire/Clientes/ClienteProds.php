@@ -16,6 +16,7 @@ class ClienteProds extends Component
 
     // public $search='';
     public $filtroisbn='';
+    public $filtroproductoestado='';
     public $filtroreferencia='';
     public $filtrocliente='';
     public $filtromaterial='';
@@ -28,7 +29,7 @@ class ClienteProds extends Component
     public $ordenarpor2='';
     public $orden2='';
 
-    protected $queryString=['filtroisbn','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion','ordenarpor1','orden1','ordenarpor2','orden2'];
+    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion','ordenarpor1','orden1','ordenarpor2','orden2'];
 
 
     public Producto $producto;
@@ -69,6 +70,9 @@ class ClienteProds extends Component
             ->when($this->filtroisbn!='', function ($query){
                 $query->where('isbn', 'like', '%'.$this->filtroisbn.'%');
                 })
+            ->when($this->filtroproductoestado!='', function ($query){
+                $query->where('productoestado',$this->filtroproductoestado);
+                })
             ->when($this->filtroreferencia!='', function ($query){
                 $query->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
                 })
@@ -89,6 +93,7 @@ class ClienteProds extends Component
     }
 
     public function updatingFiltroisbn(){$this->resetPage();}
+    public function updatingFiltroproductoestado(){$this->resetPage();}
     public function updatingFiltroreferencia(){$this->resetPage();}
     public function updatingFiltrocliente(){$this->resetPage();}
     public function updatingFiltromaterial(){$this->resetPage();}
