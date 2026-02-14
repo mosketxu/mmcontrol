@@ -14,7 +14,7 @@ class Producto extends Model
     protected $fillable=['cliente_id','tipo','isbn','productoestado','referencia','preciocoste','tirada','formato','FSC','tipoimpresion','materialinterior','tintainterior',
     'gramajeinterior','paginas','materialcubierta','tintacubierta','gramajecubierta','plastificado','encuadernado','solapa','descripsolapa','guardas','descripguardas',
     'cd','descripcd','novedad','descripnovedad','caja_id','etiqueta','udxcaja','precioventa',
-    'material','medidas','troquel','impresion','observaciones'];
+    'material','medidas','troquel','impresion','desarrollocaja','gramajecaja','acabadocaja','medidasnido','materialnido','impresionnido','procesospack','manipulacion','observaciones'];
 
     protected $casts = ['productoestado' => ProductoEstado::class,];
 

@@ -17,13 +17,9 @@
                         <div class="flex w-1/12 pl-2 " >{{ __('Cod.') }}</div>
                         <div class="flex w-3/12 pl-2 " >{{ __('Referencia') }}</div>
                         <div class="flex w-1/12 pl-2 " >{{ __('Cliente') }}</div>
+                        <div class="flex w-2/12 pl-2 " >{{ __('Caja') }}</div>
+                        <div class="flex w-4/12 pl-2 " >{{ __('Observaciones') }}</div>
                         <div class="flex w-1/12 pl-2 " >{{ __('Estado') }}</div>
-                        <div class="flex w-2/12 pl-2 " >{{ __('Material') }} </div>
-                        <div class="flex w-2/12 pl-2 " >{{ __('Medidas') }}</div>
-                        <div class="flex w-1/12 pl-2 " >{{ __('Impresion') }}</div>
-                        {{-- <div class="flex w-1/12" >{{ __('€. Coste') }}</div>
-                        <div class="flex w-1/12" >{{ __('€. Venta') }}</div> --}}
-                        <div class="flex w-1/12 pl-2 " >{{ __('Troquel') }}</div>
                     </div>
                     <div class="flex w-1/12 ">
                         <div class="w-full" ></div>
@@ -36,19 +32,12 @@
                             <div class="w-1/12 ">{{ $producto->isbn }}</div>
                             <div class="w-3/12 ">{{ $producto->referencia }}</div>
                             <div class="w-1/12">{{ $producto->cliente->entidad }}</div>
-                            <div class="w-1/12">
-                                        @php
-                                            $icon = \App\Enums\ProductoEstado::iconData($producto->productoestado);
-                                        @endphp
-                                        <x-dynamic-component
-                                            :component="$icon['component']"
-                                            class="{{ $icon['class'] }}"
-                                        />
-                                    </div>
-                            <div class="w-2/12 ">{{ $producto->material }}</div>
-                            <div class="w-2/12 ">{{ $producto->medidas }}</div>
-                            <div class="w-1/12 ">{{ $producto->impresion }}</div>
-                            <div class="w-1/12 ">{{ $producto->troquel }}</div>
+                            <div class="w-2/12 ">{{ $producto->caja->name?? '-' }}</div>
+                            <div class="w-4/12 ">{{ $producto->observaciones }}</div>
+                            <div class="w-1/12 ">
+                                @php $icon = \App\Enums\ProductoEstado::iconData($producto->productoestado); @endphp
+                                <x-dynamic-component :component="$icon['component']" class="{{ $icon['class'] }}"/>
+                            </div>
                         </div>
                         <div class="items-center flex-none w-1/12 md:flex">
                             <div class="w-full text-center">

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Producto;
 
 use App\Enums\ProductoEstado;
-use App\Models\{Entidad,Producto};
+use App\Models\{Caja, Entidad,Producto};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 
@@ -22,6 +22,7 @@ class Prods extends Component
     public $filtrocliente='';
     public $filtromaterial='';
     public $filtroimpresion='';
+    public $filtrocaja='';
     public $tipo;
     public $titulo;
     public $ordenarpor1='';
@@ -30,7 +31,7 @@ class Prods extends Component
     public $orden2='';
     public $productosestado='1';
 
-    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion'];
+    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion','filtrocaja'];
 
 
     public Producto $producto;
@@ -59,6 +60,7 @@ class Prods extends Component
         $this->producto= new Producto;
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
+        $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
 
         $datos=Producto::query()
             ->with('cliente')
@@ -74,12 +76,13 @@ class Prods extends Component
         if($this->filtrocliente) $datos->where('cliente_id',$this->filtrocliente);
         if($this->filtromaterial) $datos->search('productos.material',$this->filtromaterial);
         if($this->filtroimpresion) $datos->search('productos.impresion',$this->filtroimpresion);
+        if($this->filtrocaja) $datos->search('productos.caja_id',$this->filtrocaja);
 
         $productos=$datos->paginate(50);
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
 
-        return view($vista,compact('productos','clientes'));
+        return view($vista,compact('productos','clientes','cajas'));
     }
 
         public function updatingFiltroisbn(){$this->resetPage();}
@@ -88,6 +91,7 @@ class Prods extends Component
         public function updatingFiltrocliente(){$this->resetPage();}
         public function updatingFiltromaterial(){$this->resetPage();}
         public function updatingFiltroimpresion(){$this->resetPage();}
+        public function updatingFiltrocaja(){$this->resetPage();}
 
 
     public function delete($productoId)

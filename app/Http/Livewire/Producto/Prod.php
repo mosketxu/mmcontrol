@@ -81,6 +81,14 @@ class Prod extends Component
             'producto.medidas'=>'nullable',
             'producto.troquel'=>'nullable',
             'producto.impresion'=>'nullable',
+            'producto.desarrollocaja'=>'nullable',
+            'producto.gramajecaja'=>'nullable',
+            'producto.acabadocaja'=>'nullable',
+            'producto.medidasnido'=>'nullable',
+            'producto.materialnido'=>'nullable',
+            'producto.impresionnido'=>'nullable',
+            'producto.procesospack'=>'nullable',
+            'producto.manipulacion'=>'nullable',
         ];
     }
 
@@ -110,15 +118,19 @@ class Prod extends Component
         elseif($this->tipo=='2' && $this->producto->id)  $this->titulo='Ficha del producto: '. $this->producto->referencia;
 
         $this->formatos=Formato::orderBy('name')->get();
+        //son dependientes
         $gramajes=Gramaje::orderBy('name')->get();
         $this->gramajesinterior=$gramajes->whereIn('familia',['','INT']);
         $this->gramajescubierta=$gramajes->whereIn('familia',['','CUB']);
+        //son dependientes
         $materiales=Material::orderBy('name')->get();
         $this->materialesinterior=$materiales->whereIn('familia',['','INT']);
         $this->materialescubierta=$materiales->whereIn('familia',['','CUB']);
+        //son dependientes
         $tintas=Tinta::orderBy('name')->get();
         $this->tintasinterior=$tintas->whereIn('familia',['','INT']);
         $this->tintascubierta=$tintas->whereIn('familia',['','CUB']);
+        //
         $this->plastificados=Plastificado::orderBy('name')->get();
         $this->encuadernaciones=Encuadernacion::orderBy('name')->get();
         $this->cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
@@ -163,7 +175,7 @@ class Prod extends Component
     public function save(){
         if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
         if($this->producto->caja_id=='') $this->producto->caja_id=null;
-        if($this->producto->productoestado=='') $this->producto->productoestado='';
+        if($this->producto->productoestado=='') $this->producto->productoestado='1';
         if($this->tipo) $this->producto->tipo=$this->tipo;
         if($this->producto->id){
             $i=$this->producto->id;
@@ -226,6 +238,14 @@ class Prod extends Component
             'medidas'=>$this->producto->medidas,
             'troquel'=>$this->producto->troquel,
             'impresion'=>$this->producto->impresion,
+            'desarrollocaja'=>$this->producto->desarrollocaja,
+            'gramajecaja'=>$this->producto->gramajecaja,
+            'acabadocaja'=>$this->producto->acabadocaja,
+            'medidasnido'=>$this->producto->medidasnido,
+            'materialnido'=>$this->producto->materialnido,
+            'impresionnido'=>$this->producto->impresionnido,
+            'procesospack'=>$this->producto->procesospack,
+            'manipulacion'=>$this->producto->manipulacion,
 
             ]
         );

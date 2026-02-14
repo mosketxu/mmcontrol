@@ -44,7 +44,11 @@
                     @include('producto.fichaeditorialreducida')
                 @endif
             @else
-                @include('producto.fichaotros')
+                @if($tipopdf=='n')
+                    @include('producto.fichaotros')
+                @else
+                    @include('producto.fichaotrosreducida')
+                @endif
             @endif
         </main>
     </body>
