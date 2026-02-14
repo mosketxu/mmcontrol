@@ -43,6 +43,7 @@
                             <div class="w-full text-center">
                                 <x-icon.clip-a  class="text-green-500 hover:text-green-700"  href="{{route('producto.archivos',[$producto,'i'])}}"title="Archivos Producto"/>
                                 <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " href="{{route('producto.ficha',[$producto->id,$tipo,'n'])}}" target="_blank"   title="Ficha Producto"/>
+                                <x-icon.clipboard-a class="text-orange-500 hover:text-orange-700 " href="{{route('producto.ficha',[$producto->id,$tipo,'r'])}}" target="_blank"   title="Ficha Producto Reducida"/>
                                 <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $producto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" />
                             </div>
                         </div>
