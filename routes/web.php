@@ -74,7 +74,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     //Presupuestos
     Route::get('presupuesto/{tipo}/ruta/{ruta}', [PresupuestoController::class,'tipo'])->middleware('can:presupuesto.index')->name('presupuesto.tipo');
     Route::get('/presupuesto/{tipo}/nuevo/{ruta}', [PresupuestoController::class, 'nuevo'])->name('presupuesto.nuevo');
-    Route::get('/presupuesto/{presupuesto}/pdf', [PresupuestoController::class, 'presupuestoPDF'])->name('presupuesto.presupuestoPDF');
+    Route::get('/presupuesto/{presupuesto}/{reducido}/{idioma}/pdf', [PresupuestoController::class, 'presupuestoPDF'])->name('presupuesto.presupuestoPDF');
     Route::get('/presupuesto/{presupuesto}/editar/{ruta}', [PresupuestoController::class, 'editar'])->name('presupuesto.editar');
     Route::get('/presupuesto/{presupuesto}/archivos/{ruta}', [PresupuestoController::class, 'archivos'])->name('presupuesto.archivos');
 

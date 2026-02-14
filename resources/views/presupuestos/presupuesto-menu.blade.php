@@ -17,8 +17,11 @@
                         <x-icon.clip/>Archivos
                     </x-jet-nav-link>
                     @endif
-                    <x-jet-nav-link href="{{route('presupuesto.presupuestoPDF',$presupuesto)}}" target="_blank"  :active="request()->routeIs('presupuesto.presupuestoPDF')">
-                        <x-icon.pdf/>PDF
+                    <x-jet-nav-link href="{{route('presupuesto.presupuestoPDF',[$presupuesto,'n','ES'])}}" target="_blank"  :active="request()->routeIs('presupuesto.presupuestoPDF')">
+                        <x-icon.pdf/>PDF ES
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{route('presupuesto.presupuestoPDF',[$presupuesto,'n','EN'])}}" target="_blank"  :active="request()->routeIs('presupuesto.presupuestoPDF')">
+                        <x-icon.pdf/>PDF EN
                     </x-jet-nav-link>
                 </div>
             </div>

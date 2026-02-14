@@ -28,22 +28,31 @@ class PresupuestoController extends Controller
         return view('presupuestos.create',compact('tipo','ruta','titulo'));
     }
 
-    public function presupuestoPDF(Presupuesto $presupuesto){
+    public function presupuestoPDF(Presupuesto $presupuesto,$reducido,$idioma){
         $proveedor=Entidad::find($presupuesto->proveedor_id);
         $cliente=Entidad::find($presupuesto->cliente_id);
         $pdf = new Dompdf();
 
         if($presupuesto->tipo=='1'){
             $producto=$presupuesto->presupuestoproductos->first()->producto;
-            if($tipopdf='n')
-            $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+            if($idioma=='ES')
+                if($tipopdf='n')
+                $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+                else
+                $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
             else
-            $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+                if($tipopdf='n')
+                $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorialingles', compact('presupuesto','producto','proveedor','cliente'));
+                else
+                $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorialingles', compact('presupuesto','producto','proveedor','cliente'));
         }
         else{
             // $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->where('id',$presupuesto->id)->first();
             $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->find($presupuesto->id);
-            $pdf = \PDF::loadView('presupuestos.presupuestopdfotros', compact('presupuesto','proveedor','cliente'));
+            if($idioma=='ES')
+                $pdf = \PDF::loadView('presupuestos.presupuestopdfotros', compact('presupuesto','proveedor','cliente'));
+            else
+                $pdf = \PDF::loadView('presupuestos.presupuestopdfotrosingles', compact('presupuesto','proveedor','cliente'));
         }
 
         $pdf->setPaper('a4','portrait');
