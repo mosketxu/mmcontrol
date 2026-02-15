@@ -11,11 +11,11 @@
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 ">
                         <div class="flex p-1 rounded-md bg-blue-50">
-                            <h3 class="pl-1 font-semibold">Datos generales</h3>
+                            <h3 class="w-1/12 pt-1 pl-1 font-semibold">Datos generales</h3>
                             <input wire:model.defer="pedidoid" type="hidden"/>
                             @if($tipo!='1')
                             <select wire:model.defer="tipo"
-                                class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
+                                class="w-11/12 py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
                                 {{$escliente}} {{$deshabilitado}}>
                                 <option value="2">Packaging</option>
                                 <option value="3">Propios</option>
@@ -77,13 +77,39 @@
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
+                            {{-- Cod --}}
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label >{{ __('Cód.') }} </x-jet-label>
+                                    <select wire:model.lazy="productoeditorialid"
+                                        class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
+                                        {{$escliente}} {{$deshabilitado}}>
+                                        <option value=''>-- Selecciona Cód. --</option>
+                                        @foreach ($productos as $producto)
+                                        <option value="{{ $producto->id }}">{{ $producto->isbn }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            {{-- titulo --}}
+                            <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label >{{ __('Título/Ref.') }}</x-jet-label>
+                                    <select wire:model.lazy="productoeditorialid"
+                                        class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
+                                        {{$escliente}} {{$deshabilitado}}>
+                                        <option value="">-- Selecciona Referencia --</option>
+                                        @foreach ($productos as $producto)
+                                        <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="w-full form-item">
                                 <x-jet-label for="descripcion">{{ __('Descripción') }}</x-jet-label>
                                 <textarea wire:model.defer="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
                                 <input-error for="descripcion" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                             </div>
-                        </div>
-                        <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Proveedor') }}</x-jet-label>
@@ -312,7 +338,8 @@
                     </div>
                 </form>
             </div>
-            <div class="">
+
+            {{-- <div class="">
                 @if($pedidoid)
                     <div class="p-1 border rounded-md">
                         Procesos
@@ -323,7 +350,7 @@
                         @livewire('pedido.pedido-producto',['pedidoid'=>$pedidoid,'deshabilitado'=>$deshabilitado],key($pedidoid.now()))
                     </div>
                 @endif
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

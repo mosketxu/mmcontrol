@@ -257,7 +257,8 @@ class Presupuesto extends Component
             ->get();
         }
 
-    public function updatedPedido(){
+
+        public function updatedPedido(){
         $presup=ModelsPresupuesto::find($this->presupuestoid);
         $pold=Pedido::where('presupuesto_id',$presup->id)->first();
         if($pold){
@@ -303,7 +304,6 @@ class Presupuesto extends Component
         $this->preciototal= $this->precio_ud * $this->tiradanum($this->tirada);
     }
 
-
     public function updatedCajaId(){
         if($this->caja_id=='') $this->caja_id=null;
     }
@@ -320,7 +320,6 @@ class Presupuesto extends Component
     }
 
     public function save(){
-
         $this->validate();
         $this->estado=$this->estado=='' ? '0' : $this->estado;
         $this->okexterno=$this->okexterno=='' ? '0' : $this->okexterno;

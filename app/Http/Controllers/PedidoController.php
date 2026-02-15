@@ -7,25 +7,18 @@ use App\Models\Entidad;
 use App\Models\Laminado;
 use App\Models\Mes;
 use App\Models\Pedido;
-use App\Models\PedidoArchivo;
-use App\Models\PedidoDistribucion;
-use App\Models\PedidoIncidencia;
 use App\Models\PedidoparcialDetalle;
 use App\Models\PedidoParcial;
-use App\Models\PedidoPresupuesto;
 use App\Models\PedidoProducto;
-use App\Models\PedidoRetraso;
 use App\Models\Producto;
 use App\Models\Responsable;
 use App\Models\UserEmpresa;
-use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use \PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
-use function PHPUnit\Framework\isNull;
 
 class PedidoController extends Controller
 {
@@ -43,7 +36,6 @@ class PedidoController extends Controller
         $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
         $filtrocliente=$request->filtrocliente;
         $filtroproveedor=$request->filtroproveedor;
-        // $filtrolaminadoplastico=$request->filtrolaminadoplastico;
         $filtrolaminado=$request->filtrolaminado;
 
         if($request->filtroestado==''){$filtroestado='0';}
@@ -67,8 +59,6 @@ class PedidoController extends Controller
         $responsables=Responsable::get();
         $laminados=Laminado::get();
 
-        // dd($filtroreferencia);
-
         $pedidos= Pedido::query()
             ->with('cliente','proveedor','laminado')
             ->join('entidades','pedidos.cliente_id','=','entidades.id')
@@ -85,7 +75,6 @@ class PedidoController extends Controller
                     $query->where('pedidos.descripcion', 'like', '%' . $filtroreferencia . '%');
                 }
             })
-            // ->when($filtroreferencia!='', function ($query) use($filtroreferencia) {$query->where('productos.referencia','like','%'.$filtroreferencia.'%');})
             ->when($filtroisbn!='', function ($query) use($filtroisbn) {$query->where('productos.isbn','like','%'.$filtroisbn.'%');})
             ->when($filtroresponsable!='', function ($query) use($filtroresponsable){$query->where('pedidos.responsable','like','%'.$filtroresponsable.'%');})
             ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})
@@ -145,19 +134,22 @@ class PedidoController extends Controller
 
     public function entrada($pedidoid,$tipo,$ruta){
         $pdf = new Dompdf();
-        if($tipo=='1'){
+
+        $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;
+        $pedido=Pedido::with('cliente','contacto','distribuciones','subpedidos','tareas')->find($pedidoid);
+
+        // $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos','subpedidos','tareas')->find($pedidoid);
+        // dd($pedido->pedidoproductos);
+        $pedidoproductos=PedidoProducto::where('pedido_id',$pedidoid)->pluck('producto_id');
+
+        //desde febrero 2026 editorial y otros son iguales
+        if($tipo=='1')
             $vista='pedidos.fichaentradaeditorialpdf';
-            $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;
-            $pedido=Pedido::with('cliente','contacto','distribuciones','subpedidos','tareas')->find($pedidoid);
-            $pdf = \PDF::loadView($vista, compact('pedido','productos'));
-        }else{
+        else
             $vista='pedidos.fichaentradaotrospdf';
-            $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos','subpedidos','tareas')->find($pedidoid);
-            // dd($pedido->pedidoproductos);
-            $pedidoproductos=PedidoProducto::where('pedido_id',$pedidoid)->pluck('producto_id');
-            $productos=Producto::whereIn('id',$pedidoproductos)->get();
-            $pdf = \PDF::loadView($vista, compact('pedido','productos'));
-        }
+
+        $pdf = \PDF::loadView($vista, compact('pedido','productos'));
+
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('pedido.pdf'); //asi lo muestra por pantalla
     }

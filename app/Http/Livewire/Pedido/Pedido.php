@@ -109,7 +109,8 @@ class Pedido extends Component
             'uds_caja'=>'nullable',
             'transporte'=>'nullable',
             'otros'=>'nullable',
-            'productoeditorialid'=>'required_if:tipo,1'
+            'productoeditorialid'=>'nullable',
+            // 'productoeditorialid'=>'required_if:tipo,1'
         ];
     }
 
@@ -132,7 +133,7 @@ class Pedido extends Component
             'tiradareal.numeric'=>'El valor de la tirada real debe ser numérico',
             'precio.numeric'=>'El valor del precio de venta debe ser numérico',
             'preciototal.numeric'=>'El valor del precio total debe ser numérico',
-            'productoeditorialid.required_if'=>'El Producto es necesario',
+            // 'productoeditorialid.required_if'=>'El Producto es necesario',
         ];
     }
 
@@ -186,11 +187,12 @@ class Pedido extends Component
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
                 $this->ofertas=Oferta::where('cliente_id', '=', $this->cliente_id)->orderBy('id')->get();
             }
-            if ($tipo=='1') {
+            //desde febrero 2026 se comportan los editoria y otros igual
+            // if ($tipo=='1') {
                 $this->productoeditorialid=$pedido->pedidoproductos->first()->producto->id;
                 $this->prod=$pedido->pedidoproductos->first()->producto;
                 $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
-            }
+            // }
         }
         $this->facturas=FacturaDetalle::where('pedido_id',$this->pedidoid)->get();
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
@@ -211,6 +213,7 @@ class Pedido extends Component
                     $q->orWhere('id', $this->prod->id);
                 }
             })
+            ->where('tipo',$this->tipo)
             ->with('cliente')
             ->when($this->cliente_id!='', function ($query){
                 $query->where('cliente_id',$this->cliente_id);
@@ -225,9 +228,9 @@ class Pedido extends Component
                 $query->where('cliente_id',$this->filtrocliente);
                 })
             ->orderBy('referencia','asc')
-            ->get();
+            ->get();pPedidoC
 
-            $responsables=Responsable::all();
+        $responsables=Responsable::all();
 
         $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoeditorial' : 'livewire.pedido.pedidootros';
         return view($vista,compact(['entidades','clientes','proveedores','responsables','cajas','laminados']));
@@ -239,12 +242,10 @@ class Pedido extends Component
         if(!$this->fechapedido) $this->fechapedido=now()->format('Y-m-d');
         $resp=Entidad::find($this->cliente_id);
         if($resp->responsable!='') $this->responsable=$resp->responsable;
-
     }
 
     public function updatedProductoeditorialid(){
         if ($this->productoeditorialid=='') {
-            // dd($this->productoeditorialid);
             $this->precio=0;
         } else {
             $p=Producto::find($this->productoeditorialid);
@@ -358,8 +359,8 @@ class Pedido extends Component
             'transporte'=>$this->transporte,
             'otros'=>$this->otros,
         ]);
-        // dd($this->productoeditorialid .'-'. $ped->id);
-        if ($this->tipo=='1') {
+        //desde febrero 2026 actuan igual editorial y otros
+        // if ($this->tipo=='1') {
             $pprod=PedidoProducto::where('pedido_id',$ped->id)->first();    // miro si ya hay un producto. Si lo hay modifico o actualizo la linea
             if($pprod) $i=$pprod->id;                                       // si no lo creo. Si habia uno el producto es otro lo modifico. No añado
             $pedidopprod=PedidoProducto::updateOrCreate(
@@ -374,12 +375,11 @@ class Pedido extends Component
                 'preciototal'=>$this->preciototal,
             ]
             );
-        }
+        // }
 
         // $this->titulo= $this->tipo='1' ? 'Pedido Editorial:': 'Pedido Packaging/Propios:';
         $pedido=ModeloPedido::find($ped->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
-        // if($nuevo) return redirect()->route('pedido.editar',[$pedido,$this->ruta,$this->titulo]);
         return redirect()->route('pedido.editar',[$pedido,$this->ruta,$this->titulo]);
     }
 

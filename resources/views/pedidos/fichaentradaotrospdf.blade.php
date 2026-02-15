@@ -57,6 +57,15 @@
                             </td>
                         </tr>
                         <tr style="">
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Cód.Prod.</td>
+                            <td  width=75% style="padding-left:10px;background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $productos->isbn }}</td>
+                        </tr>
+                        <tr style="">
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Ref.Prod.</td>
+                            <td  width=75% style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $productos->referencia }}</td>
+                        </tr>
+
+                        <tr style="">
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Descripción</td>
                             <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 <p>{!! nl2br(e($pedido->descripcion)) !!}</p>
@@ -76,6 +85,31 @@
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Fecha de entrega</td>
                             <td style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->fentrega4 }}</td>
                         </tr>
+                        <tr style="">
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Prueba color</td>
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->pruebacolor }}</td>
+                        </tr>
+                        <tr style="">
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Laminado</td>
+                            {{-- <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->laminadoplastico == '1' ? 'Sí' : 'No'  }}</td> --}}
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->laminado->name }}</td>
+                        </tr>
+
+                        <tr style="">
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Modelo Caja</td>
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->caja->name ?? ''}}</td>
+                        </tr>
+                        <tr style="">
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Etiqueta</td>
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->etiqueta}}</td>
+                        </tr>
+                        @if($pedido ->uds_caja>0)
+                            <tr style="">
+                                <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Uds x Caja</td>
+                                <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->uds_caja }}</td>
+                            </tr>
+                        @endif
+
                         @foreach ($pedido->distribuciones as $distribucion )
                         <tr>
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Distribucion {{ $loop->index +1 }}</td>
@@ -93,20 +127,7 @@
                         </tr>
                     </table>
                     {{-- Productos --}}
-                    @if($productos->count()>0)
-                    {{-- @foreach ($productos as $producto)
-                    <tr>
-                        <td class="text-center">{{ $producto->isbn}}</td>
-                        <td>{{ $producto->referencia }}</td>
-                        <td>{{ $producto->material}}</td>
-                        <td>{{ $producto->medidas }}</td>
-                        <td>{{ $producto->troquel }}</td>
-                        <td>{{ $producto->impresion }}</td>
-                        <td style="text-align: right;" class="pr-2">{{ $producto->tirada}} </td>
-                    </tr>
-
-                    @endforeach --}}
-
+                    {{-- @if($productos->count()>0)
                     <div class="mx-20 mt-8 border ">
                         <table  width="100%" style="" cellspacing="0" cellpadding="2" class="mx-auto text-xs" >
                             <tr >
@@ -117,8 +138,6 @@
                                 <td class="font-bold">Descripción</td>
                                 <td class="font-bold">Material</td>
                                 <td class="font-bold">Medidas</td>
-                                {{-- <td class="font-bold">Troquel</td>
-                                <td class="font-bold">Impresión</td> --}}
                                 <td class="pr-2 font-bold text-right">Cantidad</td>
                             </tr>
 
@@ -129,31 +148,7 @@
                                 <td>{{ $producto->referencia }}</td>
                                 <td>{{ $producto->material}}</td>
                                 <td>{{ $producto->medidas }}</td>
-                                {{-- <td>{{ $producto->troquel }}</td>
-                                <td>{{ $producto->impresion }}</td> --}}
                                 <td style="text-align: right;" class="pr-2">{{ $producto->tirada}} </td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                    @endif
-                    {{-- Procesos --}}
-                    {{-- @if($pedido->pedidoprocesos->count()>0)
-                    <div class="mx-20 mt-8 border">
-                        <table width="100%" style="" cellspacing="0" cellpadding="2" class="mx-auto text-xs">
-                            <tr >
-                                <td class="pl-2 bg-blue-300" style="background-color: #bcd0f3; font-weight:bold;" colspan="3"  >Procesos:</td>
-                            </tr>
-                            <tr>
-                                <td class="pl-2 font-bold">Proceso</td>
-                                <td class="font-bold">Descripción</td>
-                                <td class="pr-2 font-bold text-right" >Cantidad</td>
-                            </tr>
-                            @foreach ($pedido->pedidoprocesos as $pproceso)
-                            <tr>
-                                <td class="pl-2" >{{ $pproceso->proceso}}</td>
-                                <td>{{ $pproceso->descripcion}}</td>
-                                <td class="pr-2" style="text-align: right;">{{ $pproceso->tirada}}</td>
                             </tr>
                             @endforeach
                         </table>
@@ -163,7 +158,6 @@
                         @foreach ($pedido->subpedidos as $subpedido )
                         <tr>
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Subpedido {{ $loop->index +1 }}: </td>
-                            {{-- <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Referencia </td> --}}
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 <div class="">Referencia: {{$subpedido->referencia}}</div>
                                 <div class="">Uds: {{$subpedido->unidades}}</div>
@@ -179,7 +173,6 @@
                         @foreach ($pedido->tareas as $tarea )
                         <tr>
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Tarea {{ $loop->index +1 }}: </td>
-                            {{-- <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Referencia </td> --}}
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 <div class="">Tarea: {{$tarea->referencia}}</div>
                                 <div class="">Uds: {{$tarea->unidades}}</div>

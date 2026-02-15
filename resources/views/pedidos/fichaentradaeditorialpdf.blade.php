@@ -92,20 +92,20 @@
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->laminado->name }}</td>
                         </tr>
 
-                   <tr style="">
-                        <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Modelo Caja</td>
-                        <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->caja->name ?? ''}}</td>
-                    </tr>
-                    <tr style="">
-                        <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Etiqueta</td>
-                        <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->etiqueta}}</td>
-                    </tr>
-                    @if($pedido ->uds_caja>0)
-                    <tr style="">
-                        <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Uds x Caja</td>
-                        <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->uds_caja }}</td>
-                    </tr>
-                    @endif
+                        <tr style="">
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Modelo Caja</td>
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->caja->name ?? ''}}</td>
+                        </tr>
+                        <tr style="">
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Etiqueta</td>
+                            <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->etiqueta}}</td>
+                        </tr>
+                        @if($pedido ->uds_caja>0)
+                            <tr style="">
+                                <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Uds x Caja</td>
+                                <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->uds_caja }}</td>
+                            </tr>
+                        @endif
 
                         @foreach ($pedido->distribuciones as $distribucion )
                         <tr>
@@ -127,7 +127,6 @@
                         @foreach ($pedido->subpedidos as $subpedido )
                         <tr>
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Subpedido {{ $loop->index +1 }}: </td>
-                            {{-- <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Referencia </td> --}}
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 <div class="">Referencia: {{$subpedido->referencia}}</div>
                                 <div class="">Uds: {{$subpedido->unidades}}</div>
@@ -143,7 +142,6 @@
                         @foreach ($pedido->tareas as $tarea )
                         <tr>
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Tarea {{ $loop->index +1 }}: </td>
-                            {{-- <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Referencia </td> --}}
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 <div class="">Tarea: {{$tarea->referencia}}</div>
                                 <div class="">Uds: {{$tarea->unidades}}</div>
