@@ -4,10 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Presupuesto {{ $presupuesto->id }}</title>
-        <link rel="stylesheet" href="{{ asset('css/app.css')}}">
-        {{-- <link rel="stylesheet" href="{{ asset('css/pdf.css')}}"> --}}
-
-        {{-- sobreescribo margenes de app.css --}}
+        <link rel="stylesheet" href="{{ asset('css/pdf.css')}}">
         <style>
             @page {margin: 20px 40px 20px 40px;}
         </style>
@@ -15,19 +12,6 @@
     <body>
         <!-- Define header and footer blocks before your content -->
         <header>
-            <table width="100%" style="margin-top:0px; ">
-                <tr>
-                    <td style="text-align: left;">
-                        {{-- <img src="{{asset('img/milimetrica.png')}}" width="250px"> --}}
-                        <img src="{{asset('img/milimetrica.png')}}" width="200px">
-                    </td>
-                    <td class="text-xs " style="text-align:right;color: #6b7280">
-                        C/ del Joncar 19, planta 5 - 08005 Barcelona (España) <br>
-                        <a href="http://www.milimetrica.es" class="colorazul">www.milimetrica.es</a> <br>
-                        milimétrica producciones, s.l. – N.I.F. B-63.941.835
-                    </td>
-                </tr>
-            </table>
         </header>
         <footer>
             <div>
@@ -37,15 +21,23 @@
         </footer>
 
     <!-- Wrap the content of your PDF inside a main tag -->
-        <main style=" margin-right: 10px; margin-top:50px" class="text-sm">
-            <table width="90%" style="margin-top:10px; " class="mx-auto" cellspacing="0" cellpadding="2" >
-                <tr  >
-                    <td style="padding-left:3px;"  class="" >Demanda de presupuesto núm.: <span class="font-bold">{{ $presupuesto->id }} </span></td>
-                    <td style="text-align: right;"  class="" >Fecha: <span class="font-bold">{{ $presupuesto->fpresupuesto4}}</span></td>
-                </tr>
+        <main style=" margin-right: 10px; margin-top:0px">
+            <table width="100%" style="margin-top:0px; " class="tablacentrada">
                 <tr>
-                    <td style="padding-left:3px;"  class="" >Cliente: <span class="font-bold"> {{ $presupuesto->facturadopor=='1' ? 'Milimétrica' : $presupuesto->cliente->entidad}} </span></td>
-                    <td style="text-align: center;"  class="" ></td>
+                    <td style="text-align: left; background-color: white" >
+                        <img src="{{asset('img/milimetrica.png')}}" width="200px">
+                    </td>
+                    <td class="text-xs " style="text-align:right;color: #6b7280">
+                        C/ del Joncar 19, planta 5 - 08005 Barcelona (España) <br>
+                        <a href="http://www.milimetrica.es" class="colorazul">www.milimetrica.es</a> <br>
+                        milimétrica producciones, s.l. – N.I.F. B-63.941.835
+                    </td>
+                </tr>
+            </table>
+            <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
+                <tr>
+                    <td style="padding-left:3px;"  class="" >Demanda de presupuesto núm. <span style="font-weight:bold;">{{ $presupuesto->id }} </span></td>
+                    <td style="text-align: right;"  class="" >Fecha: <span style="font-weight:bold;">{{ $presupuesto->fpresupuesto4}}</span></td>
                 </tr>
                 <tr>
                     <td>Solicitado por: <span style="font-weight:bold;">
@@ -55,96 +47,182 @@
                 <tr>
                     <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
                 </tr>
-                <tr>
-                    <td style="padding-left:3px;"  class="" >Descripción: <span class="font-bold">{{ $presupuesto->descripcion}} </span></td>
-                </tr>
-                <tr>
-                    <td style="padding-left:3px;"  class="" >Cantidad Total: <span class="font-bold">{{ $presupuesto->tirada}} </span></td>
-                </tr>
             </table>
 
-            {{-- Procesos --}}
-            @if($presupuesto->presupuestoprocesos->count()>0)
-            <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto text-xs">
-                <tr  >
-                    <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="3"  class="" >Procesos:</td>
-                </tr>
-                <tr>
-                    <td class="font-bold">Proceso</td>
-                    <td class="font-bold">Descripción</td>
-                    <td class="font-bold text-right" >Cantidad</td>
-                </tr>
-                @foreach ($presupuesto->presupuestoprocesos as $pproceso)
-                <tr>
-                    <td>{{ $pproceso->proceso}}</td>
-                    <td>{{ $pproceso->descripcion}}</td>
-                    <td style="text-align: right;">{{ $pproceso->tirada}}</td>
-                </tr>
-                @if($pproceso->observaciones!='')
-                <tr>
-                    <td>Observaciones:</td>
-                    <td colspan="2"><p>{!! nl2br(e($pproceso->observaciones)) !!}</p></td>
-                </tr>
-                @endif
-                @endforeach
-            </table>
-            @endif
-
-            {{-- Productos --}}
-            @if($presupuesto->presupuestoproductos->count()>0)
-                <table width="90%" style="margin-top:40px; " cellspacing="0" cellpadding="2" class="mx-auto text-xs" >
-                    <tr>
-                        <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="7"  class="" >Productos:</td>
+            {{-- <div class="" style="margin-top:40px; "> --}}
+                <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
+                    <tr  >
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1" >Cliente </td>
+                        <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">
+                            {{ $presupuesto->facturadopor=='1' ? 'Milimetrica' : $presupuesto->cliente->entidad }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td class="font-bold">Cod./Ref.</td>
-                        <td class="font-bold">Descripción</td>
-                        <td class="pr-2 font-bold text-right">Cantidad</td>
-                        <td class="font-bold">Material</td>
-                        <td class="font-bold">Medidas</td>
-                        <td class="font-bold">Troquel</td>
-                        <td class="font-bold">Impresión</td>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Cód.Producto</td>
+                        <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->isbn }}</td>
                     </tr>
-                    @foreach ($presupuesto->presupuestoproductos as $pproducto)
-                    <tr>
-                        <td>{{ $pproducto->producto->isbn }}</td>
-                        <td>{{ $pproducto->producto->referencia }}</td>
-                        <td style="text-align: right;" class="pr-2">{{ $pproducto->tirada}} </td>
-                        <td>{{ $pproducto->producto->material}}</td>
-                        <td>{{ $pproducto->producto->medidas }}</td>
-                        <td>{{ $pproducto->producto->troquel }}</td>
-                        <td>{{ $pproducto->producto->impresion }}</td>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Ref.Producto</td>
+                        <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->referencia }}</td>
                     </tr>
-                    @if($pproducto->producto->observaciones!='')
-                    <tr class="border-b-2 border-gray-400 ">
-                        <td>Observaciones:</td>
-                        <td colspan="6"><p>{!! nl2br(e($pproducto->producto->observaciones)) !!}</p></td>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Descripcion</td>
+                        <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $presupuesto->referencia }}</td>
+                    </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;" class="borde1">Tirada</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->tirada }}</td>
+                    </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Modelo Caja</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->caja->name ?? ''}}</td>
+                    </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Etiqueta</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->etiqueta}}</td>
+                    </tr>
+                    @if($presupuesto->uds_caja>0)
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Uds x Caja</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->uds_caja }}</td>
                     </tr>
                     @endif
-                    @endforeach
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Manipulación</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            <p>{!! nl2br(e($presupuesto->manipulacion)) !!}</p>
+                        </td>
+                    </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Distribución</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            <p>{!! nl2br(e($presupuesto->transporte)) !!}</p>
+                        </td>
+                    </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Espec. logísticas</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            <p>{!! nl2br(e($presupuesto->especificacioneslogisticas)) !!}</p>
+                        </td>
+                    </tr>
+                    <tr style="">
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Otros</td>
+                        <td style="padding-left:3px;" class="borde1" colspan="2">
+                            <p>{!! nl2br(e($presupuesto->otros)) !!}</p>
+                        </td>
+                    </tr>
                 </table>
-            @endif
 
-
-        {{-- resto --}}
-            <table width="90%" style="margin-top:10px; " class="mx-auto" cellspacing="0" cellpadding="2" >
-                <tr>
-                    <td style="padding-left:3px; font-weight:bold;background-color:rgb(215, 212, 212);" colspan="7"  class="" >Otros:</td>
-                </tr>
-
-                <tr>
-                    <td style="padding-left:3px;"  class="" ><span class="font-bold">Transporte: </span>{{ $presupuesto->transporte}} </td>
-                </tr>
-                <tr>
-                    <td style="padding-left:3px;"  class="" > <span class="font-bold">Troquel: </span>{{ $presupuesto->troquel}}</td>
-                </tr>
-                <tr>
-                    <td> <span class="font-bold">Observaciones: </span>
-                        <p>{!! nl2br(e($presupuesto->otros)) !!}</p>
-                    </td>
-                </tr>
-            </table>
-
+                @if($producto->isbn || $producto->referencia )
+                <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
+                    <tr  >
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;text-decoration:underline" colspan="3"  class="borde1" >Detalle del producto</td>
+                    </tr>
+                    @if($producto->caja_id || $producto->medidas || $producto->desarrollocaja || $producto->material || $producto->gramajecaja || $producto->impresion || $producto->acabadocaja)
+                        <tr style="margin-top=10px;font-weight: bold; ">
+                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">Datos Caja</td>
+                        </tr>
+                        @if($producto->caja_id )
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;" class="borde1">Caja</td>
+                                <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->caja->name?? '-' }}</td>
+                        </tr>
+                        @endif
+                        @if($producto->medidas )
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Medidas (LxAxH)</td>
+                                <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->medidas }}</td>
+                            </tr>
+                        @endif
+                        @if( $producto->desarrollocaja)
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Desarrollo</td>
+                                <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->desarrollocaja }}</td>
+                            </tr>
+                        @endif
+                        @if( $producto->material)
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Material</td>
+                                <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->material }}</td>
+                            </tr>
+                        @endif
+                        @if( $producto->gramajecaja)
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Gramaje</td>
+                                <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->gramajecaja }}</td>
+                            </tr>
+                        @endif
+                        @if( $producto->impresion)
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Impresión</td>
+                                <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->impresion }}</td>
+                            </tr>
+                        @endif
+                        @if( $producto->acabadocaja)
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Acabado</td>
+                                <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->acabadocaja }}</td>
+                            </tr>
+                        @endif
+                    @endif
+                    @if($producto->medidasnido || $producto->materialnido || $producto->impresionnido )
+                        <tr style="margin-top=10px;font-weight: bold; ">
+                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">Datos Nido</td>
+                        </tr>
+                        @if($producto->medidasnido)
+                        <tr style="">
+                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Medidas</td>
+                            <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->medidasnido }}</td>
+                        </tr>
+                        @endif
+                        @if($producto->materialnido)
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Material</td>
+                                <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->materialnido }}</td>
+                            </tr>
+                        @endif
+                        @if($producto->impresionnido)
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Impresión</td>
+                                <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->impresionnido }}</td>
+                            </tr>
+                        @endif
+                    @endif
+                    @if($producto->procesospack || $producto->manipulacion  )
+                        <tr style="margin-top=10px;font-weight: bold; ">
+                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">Otros</td>
+                        </tr>
+                        @if($producto->procesospack )
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Procesos</td>
+                                <td style="padding-left:3px;" class="borde1" colspan="2">
+                                    <p>{!! nl2br(e($producto->procesospack)) !!}</p>
+                                </td>
+                            </tr>
+                        @endif
+                        @if($producto->manipulacion )
+                            <tr style="">
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Manipulación</td>
+                                <td style="padding-left:3px;" class="borde1" colspan="2">
+                                    <p>{!! nl2br(e($producto->manipulacion)) !!}</p>
+                                </td>
+                            </tr>
+                        @endif
+                    @endif
+                    @if($producto->observaciones)
+                        <tr style="margin-top=10px;font-weight: bold; ">
+                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class=""></td>
+                        </tr>
+                        <tr style="">
+                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Observaciones</td>
+                            <td style="padding-left:3px;" class="borde1" colspan="2">
+                                <p>{!! nl2br(e($producto->observaciones)) !!}</p>
+                            </td>
+                        </tr>
+                    @endif
+                </table>
+                @endif
+            </div>
         </main>
     </body>
 </html>

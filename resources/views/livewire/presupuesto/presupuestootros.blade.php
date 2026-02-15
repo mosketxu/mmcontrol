@@ -65,16 +65,17 @@
                                 {{-- producto ISBN --}}
                                 <div class="w-full form-item">
                                     <div class="flex py-2">
-                                        <x-jet-label class="h-5 px-2">{{ __('ISBN/Cód.') }}</x-jet-label>
-                                        <input type="search" wire:model="filtroisbn" class="w-full h-5 px-2 py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                                        <x-jet-label class="h-5 px-2">{{ __('Código') }}</x-jet-label>
+                                        <input type="search" wire:model="filtroisbn" placeholder="Escribe para filtrar" class="w-full h-5 px-2 py-1 text-sm border border-blue-100 rounded-lg" />
                                         @if($filtroisbn!='')
                                         <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                                         @endif
                                     </div>
+
                                     <select wire:model.lazy="productoeditorialid"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{ $escliente }} {{$deshabilitado}}>
-                                        <option value=''>-- Selecciona ISBN --</option>
+                                        <option value=''>-- Selecciona Código --</option>
                                         @foreach ($productos as $producto)
                                             <option value="{{ $producto->id }}" >{{ $producto->isbn }}</option>
                                         @endforeach
@@ -84,7 +85,7 @@
                                 <div class="w-full form-item">
                                     <div class="flex py-2">
                                         <x-jet-label class="h-5 px-2">{{ __('Título/Ref.') }}</x-jet-label>
-                                        <input type="search" wire:model="filtroreferencia" class="w-full h-5 px-2 py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                                        <input type="search" wire:model="filtroreferencia" placeholder="Escribe para filtrar"  class="w-full h-5 px-2 py-1 text-sm border border-blue-100 rounded-lg" />
                                         @if($filtroreferencia!='')
                                         <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
                                         @endif
@@ -106,7 +107,7 @@
                             </div>
                         </div>
                         {{-- Detalle presupuesto --}}
-                        <div class="space-y-1">
+                        <div class="space-y-0.5">
                             <div class="p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Detalle</h3>
                                 <input  wire:model.defer="presupuestoid" type="hidden"/>
@@ -124,7 +125,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-              {{-- Tirada --}}
+                                {{-- Tirada --}}
                                 <div class="w-full form-item">
                                     <div class="w-full form-item">
                                         <x-jet-label for="tirada">{{ __('Tirada') }}</x-jet-label>
@@ -160,8 +161,81 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="flex flex-col mx-2 space-y-0.5 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
+                                <div class="w-full mx-auto">
+                                        <x-jet-label for="caja_id">{{ __('Caja') }}</x-jet-label>
+                                        <select wire:model.lazy="caja_id"
+                                            class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                            {{ $escliente }} {{$deshabilitado}}>
+                                                <option value="">--Selecciona Caja--</option>
+                                                @foreach ($cajas as $caja )
+                                                    <option value="{{ $caja->id }}">{{ $caja->name }}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                {{-- etiqueta --}}
                                 <div class="w-full form-item">
+                                    <div class="w-full form-item">
+                                        <x-jet-label for="etiqueta">{{ __('Etiqueta') }}</x-jet-label>
+                                        <input  wire:model.lazy="etiqueta" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        {{ $escliente }} {{$deshabilitado}}/>
+                                    </div>
+                                </div>
+                                {{-- uds x caja --}}
+                                <div class="w-full form-item">
+                                    <div class="w-full form-item">
+                                        <x-jet-label for="uds_caja">{{ __('Uds x Caja') }}</x-jet-label>
+                                        <input  wire:model.lazy="uds_caja" type="number" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        {{ $escliente }} {{$deshabilitado}}/>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Manipulacion    --}}
+                            <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="manipulacion">{{ __('Manipulación') }}</x-jet-label>
+                                    <textarea wire:model.defer="manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                </div>
+                                <div class="w-full form-item">
+                                    <x-jet-label for="transporte">{{ __('Distribución') }}</x-jet-label>
+                                    <textarea wire:model.defer="transporte" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                </div>
+                                <div class="w-full form-item">
+                                    <x-jet-label for="especificacioneslogisticas">{{ __('Especificaciones Logísticas') }}</x-jet-label>
+                                    <textarea wire:model.defer="especificacioneslogisticas" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                </div>
+                            </div>
+                            {{-- otros --}}
+                            <div class="flex flex-col mx-2 space-y-0.5 md:space-y-0 md:flex-row md:space-x-2">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="otros">{{ __('Otros') }}</x-jet-label>
+                                    <textarea wire:model.defer="otros" class="w-full py-1 text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- control pedido --}}
+                        <div class="">
+                            <div class="p-1 rounded-md bg-blue-50">
+                                <h3 class="pl-1 font-semibold">Control del pedido</h3>
+                                <input  wire:model.defer="presupuestoid" type="hidden"/>
+                            </div>
+                            <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
+                                {{-- facturado Por --}}
+                                <div class="w-2/12 form-item">
+                                    <x-jet-label for="facturadopor">{{ __('Facturado x') }}</x-jet-label>
+                                    <select wire:model.lazy="facturadopor"
+                                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    {{ $escliente }} {{$deshabilitado}}>
+                                        <option value="">- ¿Quién factura? -</option>
+                                        <option value="1">Milimetrica</option>
+                                        <option value="0">Proveedor</option>
+                                    </select>
+                                </div>
+                                {{-- responsable MM --}}
+                                <div class="w-2/12 form-item">
                                     <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
                                     <select wire:model.lazy="responsable"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -172,112 +246,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
-                            <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="facturadopor">{{ __('Facturado x') }}</x-jet-label>
-                                    <select wire:model.lazy="facturadopor"
-                                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $escliente }} {{$deshabilitado}}>
-                                        <option value="">- ¿Quién factura? -</option>
-                                        <option value="1">Milimetrica</option>
-                                        <option value="0">Proveedor</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
-                            {{-- producto codigo --}}
-                                <div class="w-full form-item">
-                                    <div class="flex py-2">
-                                        <x-jet-label class="h-5 px-2">{{ __('Cód.') }}</x-jet-label>
-                                        <input type="search" wire:model="filtroisbn" class="w-full h-5 px-2 py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
-                                        @if($filtroisbn!='')
-                                        <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
-                                        @endif
-                                    </div>
-                                    <select wire:model.lazy="productoeditorialid"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }} {{$deshabilitado}}>
-                                        <option value=''>-- Selecciona Código --</option>
-                                        @foreach ($productos as $producto)
-                                            <option value="{{ $producto->id }}" >{{ $producto->isbn }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                {{-- producto titulo --}}
-                                <div class="w-full form-item">
-                                    <div class="flex py-2">
-                                        <x-jet-label class="h-5 px-2">{{ __('Título/Ref.') }}</x-jet-label>
-                                        <input type="search" wire:model="filtroreferencia" class="w-full h-5 px-2 py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
-                                        @if($filtroreferencia!='')
-                                        <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
-                                        @endif
-                                    </div>
-                                    <select wire:model.lazy="productoeditorialid"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }} {{$deshabilitado}}>
-                                        <option value="">-- Selecciona Referencia --</option>
-                                        @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                        </div>
-                        <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
-                            <div class="w-1/12 form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="tirada">{{ __('Cantidad') }}</x-jet-label>
-                                    {{-- <input  wire:model.lazy="tirada" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $escliente }} {{$deshabilitado}}/> --}}
-                                    <input  wire:model.lazy="tirada" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }} {{$deshabilitado}}/>
-                                </div>
-                            </div>
-                            <div class="w-1/12 form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="precio_ud">{{ __('Precio Ud.') }}</x-jet-label>
-                                    <input  wire:model.lazy="precio_ud" type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $escliente }} {{$deshabilitado}}/>
-                                </div>
-                            </div>
-                            {{-- Moneda --}}
-                            <div class="w-1/12 form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="precio_ud">{{ __('Moneda') }}</x-jet-label>
-                                    <select wire:model.defer="tipo" selectname="tipo"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                        <option value="€">€</option>
-                                        <option value="$">$</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="w-1/12 form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="preciototal">{{ __('Precio Total') }}</x-jet-label>
-                                    <input  wire:model.lazy="preciototal"  type="number" step="any" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm bg-blue-50 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $escliente }} {{$deshabilitado}}/>
-                                </div>
-                            </div>
-                            <div class="w-1/12 form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="transporte">{{ __('Transporte') }}</x-jet-label>
-                                    <input  wire:model.lazy="transporte" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $escliente }} {{$deshabilitado}}/>
-                                </div>
-                            </div>
-                            <div class="w-1/12 form-item">
-                                <div class="w-full form-item">
-                                    <x-jet-label for="troquel">{{ __('Troquel') }}</x-jet-label>
-                                    <input  wire:model.lazy="troquel" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $escliente }} {{$deshabilitado}}/>
-                                </div>
-                            </div>
-                            <div class="flex w-3/12 mx-auto">
-                                <div class="flex w-full">
-                                    <div class="w-2/12 mx-auto">
+                                {{-- estado --}}
+                                <div class="flex w-5/12 mx-auto ">
+                                    <div class="w-3/12 mx-auto">
                                         <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
                                         <select wire:model.lazy="estado"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -292,54 +263,47 @@
                                         <input type="checkbox" wire:model.lazy="okexterno"
                                         class="py-1 mx-auto text-xs text-blue-600 border-blue-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                     </div>
-                                    <div class="w-8/12 mx-auto text-center">
+                                    <div class="w-7/12 mx-auto text-center">
                                         <x-jet-label for="observacionesexterno">{{ __('Obs.Ext') }}</x-jet-label>
-                                        <textarea wire:model.lazy="observacionesexterno" rows="3"
-                                        class="w-full py-1 mx-auto text-xs text-blue-600 border-blue-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
+                                        <textarea wire:model.lazy="observacionesexterno" rows="2"
+                                            class="w-full py-1 mx-auto text-xs text-blue-600 border-blue-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="w-3/12 text-center form-item">
-                                @if(!Auth::user()->hasRole('Cliente'))
-                                    @if($espedido=='1')
-                                    <div class="flex-none w-full md:flex">
-                                        <div class="w-full form-item">
-                                            <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
-                                            <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
+                                {{-- es pedido o convertir a pedido --}}
+                                <div class="w-3/12 text-center form-item">
+                                    @if(!Auth::user()->hasRole('Cliente'))
+                                        @if($espedido=='1')
+                                        <div class="flex-none w-full md:flex">
+                                            <div class="w-full form-item">
+                                                <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
+                                                <a class="text-blue-700 underline" href="{{ route('pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
+                                            </div>
+                                            <div class=" form-item">
+                                                <x-jet-label for="asignarpedido">{{ __('Asignar otro pedido') }}</x-jet-label>
+                                                <x-select class="w-full" selectname="pedido" wire:model.lazy="pedido">
+                                                    <option value="">-- Selecciona un pedido --</option>
+                                                    @foreach ($pedidos as $ped )
+                                                    <option value="{{ $ped->id }}">{{ $ped->id }}</option>
+                                                    @endforeach
+                                                </x-select>
+                                            </div>
                                         </div>
-                                        <div class=" form-item">
-                                            <x-jet-label for="asignarpedido">{{ __('Asignar otro pedido') }}</x-jet-label>
-                                            <x-select class="w-full" selectname="pedido" wire:model.lazy="pedido">
-                                                <option value="">-- Selecciona un pedido --</option>
-                                                @foreach ($pedidos as $ped )
-                                                <option value="{{ $ped->id }}">{{ $ped->id }}</option>
-                                                @endforeach
-                                            </x-select>
-                                        </div>
-                                    </div>
+                                        @else
+                                            <button class="inline-flex items-center px-2 py-2 mt-2 text-sm font-semibold text-white transition bg-blue-600 border border-transparent rounded-md tracking-tigh hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25"
+                                                wire:click.prevent="pedido( {{ $presupuestoid }} )"
+                                                onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">{{ __('Convertir en Pedido') }}
+                                            </button>
+                                        @endif
                                     @else
-                                        @if(!Auth::user()->hasRole('Cliente'))
-                                        <button class="inline-flex items-center px-2 py-2 mt-2 text-sm font-semibold text-white transition bg-blue-600 border border-transparent rounded-md tracking-tigh hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring focus:ring-blue-300 disabled:opacity-25"
-                                            wire:click.prevent="pedido( {{ $presupuestoid }} )"
-                                            onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()">{{ __('Convertir en Pedido') }}
-                                        </button>
+                                        @if($espedido=='1')
+                                            <div class="flex-none w-full md:flex">
+                                                <div class="w-full form-item">
+                                                    <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
+                                                    <a class="text-blue-700 underline" href="{{ route('cliente.pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
+                                            </div>
                                         @endif
                                     @endif
-                                @else
-                                @if($espedido=='1')
-                                    <div class="flex-none w-full md:flex">
-                                        <div class="w-full form-item">
-                                            <x-jet-label for="espedido">{{ __('Pedido') }}</x-jet-label>
-                                            <a class="text-blue-700 underline" href="{{ route('cliente.pedido.editar',[$pedido,'i']) }}"  title="Pedido">{{ $pedido }}</a>
-                                    </div>
-                                @endif
-                            @endif
-                            </div>
-                        </div>
-                        <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
-                            <div class="w-full form-item">
-                                <x-jet-label for="otros">{{ __('Otros') }}</x-jet-label>
-                                <textarea wire:model.defer="otros" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -362,20 +326,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="">
-                @if($presupuestoid)
-                {{-- <div class="grid grid-cols-2 gap-1 "> --}}
-                    <div class="p-1 border rounded-md">
-                        Procesos
-                        {{-- @livewire('presupuesto.presupuesto-proceso',['presupuestoid'=>$presupuestoid,'escliente'=>$escliente ,'deshabilitado'=>$deshabilitado],key($presupuestoid.now())) --}}
-                    </div>
-                    <div class="p-1 border rounded-md">
-                        Productos
-                        @livewire('presupuesto.presupuesto-producto',['presupuestoid'=>$presupuestoid,'escliente'=>$escliente,'deshabilitado'=>$deshabilitado],key($presupuestoid.now()))
-                    </div>
-                {{-- </div> --}}
-                @endif
             </div>
         </div>
     </div>

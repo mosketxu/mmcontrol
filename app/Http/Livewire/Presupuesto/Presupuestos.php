@@ -106,7 +106,8 @@ class Presupuestos extends Component
     }
 
     public function getRowsQueryProperty(){
-        if($this->tipo=='1')
+        // desde febrero 2026 son iguales para los dos
+        // if($this->tipo=='1')
         return Presupuesto::query()
             ->with('cliente','proveedor')
             ->join('entidades','presupuestos.cliente_id','=','entidades.id')
@@ -140,35 +141,36 @@ class Presupuestos extends Component
             ->searchMes('fechapresupuesto',$this->filtromes)
             ->orderBy('presupuestos.id','desc')
             ->groupBy('presupuestos.id');
-        else
-        return Presupuesto::query()
-            ->join('entidades','presupuestos.cliente_id','=','entidades.id')
-            // ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
-            // ->join('productos','presupuesto_productos.producto_id','=','productos.id')
-            ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm')
-            ->where('presupuestos.tipo',$this->tipo)
-            ->search('presupuestos.id',$this->search)
-            ->when($this->filtroreferencia!='', function ($query){
-                $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
-            })
-            ->when($this->filtroisbn!='', function ($query){
-                $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
-            })
-            ->when($this->filtroresponsable!='', function ($query){
-                $query->where('presupuestos.responsable','like','%'.$this->filtroresponsable.'%');
-            })
-            ->when($this->filtrocliente!='', function ($query){
-                $query->where('presupuestos.cliente_id',$this->filtrocliente);
-                })
-            ->when($this->filtroestado!='', function ($query){
-                $query->where('presupuestos.estado',$this->filtroestado);
-            })
-            ->when($this->filtrookexterno!='', function ($query){
-                $query->where('presupuestos.okexterno',$this->filtrookexterno);
-            })
-            ->searchYear('fechapresupuesto',$this->filtroanyo)
-            ->searchMes('fechapresupuesto',$this->filtromes)
-            ->orderBy('presupuestos.id','desc');
+    //     else
+    //     return Presupuesto::query()
+    //         ->join('entidades','presupuestos.cliente_id','=','entidades.id')
+    //         // ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
+    //         // ->join('productos','presupuesto_productos.producto_id','=','productos.id')
+    //         ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm')
+    //         ->where('presupuestos.tipo',$this->tipo)
+    //         ->search('presupuestos.id',$this->search)
+    //         ->when($this->filtroreferencia!='', function ($query){
+    //             $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
+    //         })
+    //         ->when($this->filtroisbn!='', function ($query){
+    //             $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
+    //         })
+    //         ->when($this->filtroresponsable!='', function ($query){
+    //             $query->where('presupuestos.responsable','like','%'.$this->filtroresponsable.'%');
+    //         })
+    //         ->when($this->filtrocliente!='', function ($query){
+    //             $query->where('presupuestos.cliente_id',$this->filtrocliente);
+    //             })
+    //         ->when($this->filtroestado!='', function ($query){
+    //             $query->where('presupuestos.estado',$this->filtroestado);
+    //         })
+    //         ->when($this->filtrookexterno!='', function ($query){
+    //             $query->where('presupuestos.okexterno',$this->filtrookexterno);
+    //         })
+    //         ->searchYear('fechapresupuesto',$this->filtroanyo)
+    //         ->searchMes('fechapresupuesto',$this->filtromes)
+    //         ->orderBy('presupuestos.id','desc');
+    //
     }
 
     public function getRowsProperty(){

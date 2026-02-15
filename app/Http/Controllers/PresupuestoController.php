@@ -47,12 +47,20 @@ class PresupuestoController extends Controller
                 $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorialingles', compact('presupuesto','producto','proveedor','cliente'));
         }
         else{
-            // $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->where('id',$presupuesto->id)->first();
-            $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->find($presupuesto->id);
+            // $producto=$presupuesto->presupuestoproductos->first()->producto;
+            // $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->find($presupuesto->id);
+
+            $presupuesto = Presupuesto::with([
+                'presupuestoproductos.producto',
+                'presupuestoprocesos'
+            ])->find($presupuesto->id);
+
+            $producto = $presupuesto->presupuestoproductos->first()?->producto;
+
             if($idioma=='ES')
-                $pdf = \PDF::loadView('presupuestos.presupuestopdfotros', compact('presupuesto','proveedor','cliente'));
+                $pdf = \PDF::loadView('presupuestos.presupuestopdfotros', compact('presupuesto','proveedor','cliente','producto'));
             else
-                $pdf = \PDF::loadView('presupuestos.presupuestopdfotrosingles', compact('presupuesto','proveedor','cliente'));
+                $pdf = \PDF::loadView('presupuestos.presupuestopdfotrosingles', compact('presupuesto','proveedor','cliente','producto'));
         }
 
         $pdf->setPaper('a4','portrait');

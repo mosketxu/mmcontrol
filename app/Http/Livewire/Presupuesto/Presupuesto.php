@@ -70,7 +70,8 @@ class Presupuesto extends Component
         return [
             // 'presupuestoid'=>'required',
             'cliente_id'=>'required',
-            'descripcion'=>Rule::requiredIf($this->tipo!='1'),
+            // 'descripcion'=>Rule::requiredIf($this->tipo!='1'),
+            'descripcion'=>'nullable',
             'responsable'=>'nullable',
             'contacto_id'=>'nullable',
             'proveedor_id'=>'nullable',
@@ -148,16 +149,18 @@ class Presupuesto extends Component
             if ($this->cliente_id) {
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
             }
-            if ($tipo=='1') {
+            // Desde febrero 26 se comportan igual editorial y resto
+            // if ($tipo=='1') {
                 $this->productoeditorialid=$presupuesto->presupuestoproductos->first()->producto->id;
                 $this->presupuestoproductoid=$presupuesto->presupuestoproductos->first()->id;
-            }
+            // }
             $this->deshabilitado=$this->espedido=='1' ? 'disabled' : '';
         }
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
 
         $this->productos = Producto::with('cliente')
             ->where('productoestado', '1')
+            ->where('tipo', $this->tipo)
             ->when($this->cliente_id != '', function ($query) {
                 $query->where('cliente_id', $this->cliente_id);
             })
@@ -206,6 +209,7 @@ class Presupuesto extends Component
 
         $this->productos = Producto::with('cliente')
             ->where('productoestado', '1')
+            ->where('tipo', $this->tipo)
             ->when($this->cliente_id != '', function ($query) {
                 $query->where('cliente_id', $this->cliente_id);
             })
@@ -222,6 +226,7 @@ class Presupuesto extends Component
     public function updatedFiltroisbn(){
         $this->productos = Producto::with('cliente')
             ->where('productoestado', '1')
+            ->where('tipo', $this->tipo)
             ->when($this->cliente_id != '', function ($query) {
                 $query->where('cliente_id', $this->cliente_id);
             })
@@ -238,6 +243,7 @@ class Presupuesto extends Component
         public function updatedFiltroreferencia(){
         $this->productos = Producto::with('cliente')
             ->where('productoestado', '1')
+            ->where('tipo', $this->tipo)
             ->when($this->cliente_id != '', function ($query) {
                 $query->where('cliente_id', $this->cliente_id);
             })
@@ -314,6 +320,7 @@ class Presupuesto extends Component
     }
 
     public function save(){
+
         $this->validate();
         $this->estado=$this->estado=='' ? '0' : $this->estado;
         $this->okexterno=$this->okexterno=='' ? '0' : $this->okexterno;
@@ -347,11 +354,11 @@ class Presupuesto extends Component
         }
 
         if($this->tipo!='1')
-            Validator::make(
-                ['descripcion'=>$this->descripcion,],
-                ['descripcion' => 'required',],
-                ['descripcion.required'=>'La descripción es necesaria.'])
-                ->validate();
+            // Validator::make(
+            //     ['descripcion'=>$this->descripcion,],
+            //     ['descripcion' => 'required',],
+            //     ['descripcion.required'=>'La descripción es necesaria.'])
+            //     ->validate();
 
         // Esto lo hago tanto para Editorial como para Packaging
         $presup=ModelsPresupuesto::updateOrCreate(
@@ -390,7 +397,9 @@ class Presupuesto extends Component
         );
 
         // Esto solo para editorial ya que debo crear el producto en la lista de los productos del presupuesto
-        if ($this->tipo=='1') {
+        // desde febrero 2026 es igual para las dos
+        // if ($this->tipo=='1') {
+        // dd($this->productoeditorialid);
             $presupprod=PresupuestoProducto::updateOrCreate(
                 [
                 'id'=>$this->presupuestoproductoid
@@ -404,7 +413,7 @@ class Presupuesto extends Component
 
             ]
             );
-        }
+        // }
 
         $i=null;
         if ($nuevo) {

@@ -19,8 +19,9 @@
                                 <div class="w-2/12 pl-2 text-left" >{{ __('N.Pres') }}</div>
                                 <div class="w-1/12 text-left" >{{ __('Factura') }}</div>
                                 <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
-                                <div class="w-3/12 text-left" >{{ __('Descripción') }}</div>
-                                <div class="w-2/12 text-left">{{ __('F.Presup') }}</div>
+                                <div class="w-2/12 text-left" >{{ __('Descripción') }}</div>
+                                <div class="w-2/12 text-left" >{{ __('Cod/Referencia') }}</div>
+                                <div class="w-1/12 text-left">{{ __('F.Presup') }}</div>
                                 <div class="w-2/12 text-left">{{ __('Proveedor') }}</div>
                             </div>
                             <div class="flex w-3/12">
@@ -42,8 +43,9 @@
                                 <div class="w-2/12 pl-2">{{ $presupuesto->id }}</div>
                                 <div class="w-1/12 ">{{ $presupuesto->facturadopor=='1' ? 'MM' : 'Proveedor' }}</div>
                                 <div class="w-2/12 ">{{ $presupuesto->cliente->entidad }}</div>
-                                <div class="w-3/12 ">{{ $presupuesto->descripcion }}</div>
-                                <div class="w-2/12 ">{{ $presupuesto->fpresupuesto4 }}</div>
+                                <div class="w-2/12 ">{{ $presupuesto->descripcion }}</div>
+                                <div class="w-2/12 ">{{ $presupuesto->isbn }} /  {{ $presupuesto->referencia }}</div>
+                                <div class="w-1/12 ">{{ $presupuesto->fpresupuesto4 }}</div>
                                 <div class="w-2/12 ">{{ $presupuesto->proveedor->entidad }}</div>
                             </div>
                             <div class="items-center flex-none w-3/12 md:flex">
