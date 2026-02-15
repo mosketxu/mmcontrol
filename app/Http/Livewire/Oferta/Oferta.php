@@ -55,9 +55,11 @@ class Oferta extends Component
             'ofertaid'=>'nullable',
             'cliente_id'=>'required',
             'contacto_id'=>'nullable',
-            'descripcion'=>'required_if:tipo,2',
+            // 'descripcion'=>'required_if:tipo,2',
+            'descripcion'=>'nullable',
             'fecha'=>'date|required',
-            'producto_id'=>'required_if:tipo,1',
+            // 'producto_id'=>'required_if:tipo,1',
+            'producto_id'=>'nullable',
             'acabado'=>'nullable',
             'manipulacion'=>'nullable',
             'material'=>'nullable',
@@ -126,6 +128,7 @@ class Oferta extends Component
                     $q->orWhere('id', $this->prod->id);
                 }
             })
+            ->where('tipo',$this->tipo)
             ->when($this->cliente_id != '', function ($query) {
                 $query->where('cliente_id', '=', $this->cliente_id);
             })
@@ -148,6 +151,7 @@ class Oferta extends Component
         if(!$this->fecha) $this->fecha=now()->format('Y-m-d');
         $this->productos=Producto::query()
             ->with('cliente')
+            ->where('tipo',$this->tipo)
             ->when($this->cliente_id!='', function ($query){
                 $query->where('cliente_id', '=',$this->cliente_id);
                 })
@@ -160,16 +164,6 @@ class Oferta extends Component
             ->orderBy('referencia','asc')
             ->get();
     }
-
-    // public function updatedProductoId(){
-    //     if ($this->producto_id=='') {
-    //         $this->preciocoste=0;
-    //     } else {
-    //         $this->prod=Producto::find($this->producto_id);
-    //         $this->precio=$this->prod->precio;
-    //         $this->preciocoste=$this->prod->preciocoste;
-    //     }
-    // }
 
     public function numoferta(){
         $anyo= substr($this->fecha, 0,4);

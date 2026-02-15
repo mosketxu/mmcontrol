@@ -41,8 +41,7 @@
             <div class="text-center">
                 <img src="{{asset('img/piehierba.png')}}" class="mt-2" width="800px">
             </div>
-
-       </footer>
+        </footer>
 
     <!-- Wrap the content of your PDF inside a main tag -->
         <main style=" margin-right: 10px; margin-top:10px">
@@ -65,44 +64,38 @@
                         </tr>
                     </table>
 
-                    <table width=80% class="mx-auto mt-4 text-sm " style="color:rgb(30, 27, 27);">
-                        @if($oferta->material!='')
+                    <table width="80%" align="center" style="margin-top:10px; font-size:12px; color:#1e1b1b;">
                         <tr>
-                            <td width=20% class="font-bold" style=""  >Material:</td>
-                            <td width=80% >{{ $oferta->material}}</td>
+                            @if($hayCaja && $hayNido)
+                                <td width="50%" valign="top">
+                                    @include('oferta.ofertaotrospdftablacaja')
+                                </td>
+                                <td width="50%" valign="top">
+                                    @include('oferta.ofertaotrospdftablanido')
+                                </td>
+                            @elseif($hayCaja)
+                                <td width="100%">
+                                    @include('oferta.ofertaotrospdftablacaja')
+                                </td>
+                            @elseif($hayNido)
+                                <td width="100%">
+                                    @include('oferta.ofertaotrospdftablanido')
+                                </td>
+                            @endif
                         </tr>
-                        @endif
-                        @if($oferta->medidas!='')
-                        <tr>
-                            <td width=20% class="font-bold "  style="padding-top:1px">Medidas:</td>
-                            <td width=80% >{{ $oferta->medidas}}</td>
-                        </tr>
-                        @endif
-                        @if($oferta->impresion!='')
-                        <tr>
-                            <td width=20% class="font-bold "  style="padding-top:1px">Impresión:</td>
-                            <td width=80% >{{ $oferta->impresion}}</td>
-                        </tr>
-                        @endif
-                        @if($oferta->manipulacion!='' && $oferta->manipulacion!='-')
-                        <tr>
-                            <td width=20% class="font-bold "  style="padding-top:1px">Manipulación:</td>
-                            <td width=80% >{{ $oferta->manipulacion}}</td>
-                        </tr>
-                        @endif
-                        @if($oferta->embalaje!='')
-                        <tr>
-                            <td width=20% class="font-bold "  style="padding-top:1px">Embalaje:</td>
-                            <td width=80% >{{ $oferta->embalaje }}</td>
-                        </tr>
-                        @endif
-                        @if($oferta->transporte!='')
-                        <tr>
-                            <td width=20% class="font-bold "  style="padding-top:1px">Transporte:</td>
-                            <td width=80% >{{ $oferta->transporte }}</td>
-                        </tr>
-                        @endif
                     </table>
+                    @if($countbloques > 0)
+                    <table width="80%" align="center" style="margin-top:10px; font-size:12px;">
+                        <tr>
+                            @foreach($bloques as $titulo => $contenido)
+                                <td width="{{ 100 / $countbloques }}%" valign="top" style="padding-right:10px;">
+                                    <strong>{{ $titulo }}</strong><br>
+                                    {!! $contenido !!}
+                                </td>
+                            @endforeach
+                        </tr>
+                    </table>
+                    @endif
 
                     @if($oferta->ofertaprocesos->count()>0)
                     <div class="py-0 space-y-2 text-xs">

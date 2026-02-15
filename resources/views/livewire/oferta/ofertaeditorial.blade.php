@@ -6,18 +6,18 @@
             </div>
             <div class="">
             </div>
-            {{-- datos del pedido --}}
+            {{-- datos de la oferta --}}
             <div class="flex-col text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 ">
                         {{-- datos oferta --}}
                         <div class="">
                             <div class="flex p-1 rounded-md bg-blue-50">
-                                <h3 class="pl-1 font-semibold">Datos generales</h3>
+                                <h3 class="w-1/12 pl-1 font-semibold">Datos generales</h3>
                                 <input  wire:model.defer="presupuestoid" type="hidden"/>
                                 @if($tipo!='1')
                                 <select wire:model.defer="tipo"
-                                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                    class="w-11/12 py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{$escliente}} {{$deshabilitado}}>
                                     <option value="2">Packaging</option>
                                     <option value="3">Propios</option>

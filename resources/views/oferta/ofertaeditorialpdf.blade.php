@@ -16,9 +16,6 @@
             left: 0;
             right: 0;
             height: 120px;
-            /* text-align: center; */
-            /* line-height: 30px; */
-            /* background-color: #2c18a0; */
         }
 
         footer {
@@ -26,16 +23,12 @@
             bottom: -50px;
             left: 0;
             right: 0;
-            /* height: 60px; */
             text-align: left;
-            /* background-color: #8a2328; */
-            /* line-height: 30px; */
         }
 
         body {
             margin: 120px 0px 100px 0px;
             padding: 0;
-            /* background-color: #22bb55; */
 
         }
 
@@ -66,7 +59,6 @@
             right: 0;
             height: 50px;
             text-align: center;
-            /* background-color: #f5f5f5; */
         }
 
         .piepedido {
@@ -74,10 +66,7 @@
             bottom: 60px;
             left: 0;
             right: 0;
-            /* height: 60px; */
             text-align: left;
-            /* background-color: #8a2328; */
-            /* line-height: 30px; */
         }
     </style>
 </head>
@@ -86,7 +75,6 @@
         <table width="90%" style="margin-top:0px; " class="mx-auto">
             <tr>
                 <td style="text-align: left"  width=50%>
-                    {{-- <img src="{{asset('img/milimetricatexto.png')}}" class="mt-2" width="250px"> --}}
                     <img src="{{asset('img/milimetricatexto.png')}}" class="" width="200px">
                 </td>
                 <td style="text-align: right; padding-right:40px" width=50%>
