@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,FacturacionController, OfertaController, PresupuestoController,ClienteController,MailController};
-use App\Models\UserEmpresa;
+use App\Http\Controllers\{RoleController, PedidoController, ProductoController, UserController,EntidadController,
+    FacturacionController, OfertaController, PresupuestoController,ClienteController,MailController,
+    CompraController};
+// use App\Models\UserEmpresa;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,6 +99,20 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('pedido/{tipo}/ruta/{ruta}', [PedidoController::class,'tipo'])->middleware('can:pedido.index')->name('pedido.tipo');
     Route::get('stock/{tipo}/ruta/{ruta}', [PedidoController::class,'stock'])->middleware('can:pedido.index')->name('pedido.stock');
     Route::resource('pedido', PedidoController::class);
+
+    //Compras
+    // Route::get('/compra/{tipo}/{search?}/{fref?}/{fisbn?}/{fresp?}/{fcli?}/{fprov?}/{flamplast?}/{fanyo?}/{fmes?}/{festado?}/{ffact?}/export', [CompraController::class, 'export'])->name('compra.export');
+    // Route::get('compra/{tipo}/tipo', [CompraController::class,'tipo'])->middleware('can:compra.index')->name('compra.tipo');
+    Route::get('/compra/{compra}/entrada/{tipo}/{ruta}', [CompraController::class, 'entrada'])->name('compra.entrada');
+    Route::get('/compra/{compra}/editar/{ruta}', [CompraController::class, 'editar'])->name('compra.editar');
+    Route::get('/compra/{compra}/albaranes/{ruta}', [CompraController::class, 'albaranes'])->name('compra.albaranes');
+    Route::get('/compra/{compra}/albarances/{ruta}/albaran/{albaranid}', [CompraController::class, 'albaran'])->name('compra.albaran');
+    Route::get('/compra/albaran/{compraid}/{ruta}/albaran/{albaranid}', [CompraController::class, 'albaran'])->name('compra.albaran');
+    Route::get('/compra/{compra}/distribuciones/{ruta}', [CompraController::class, 'distribuciones'])->name('compra.distribuciones');
+    Route::get('/compra/{compra}/archivos/{ruta}', [CompraController::class, 'archivos'])->name('compra.archivos');
+    Route::get('/compra/{tipo}/nuevo/{ruta}', [CompraController::class, 'nuevo'])->name('compra.nuevo');
+    Route::get('compra/{tipo}/ruta/{ruta}', [CompraController::class,'tipo'])->middleware('can:compra.index')->name('compra.tipo');
+    Route::resource('compra', CompraController::class);
 
     //Facturacion
     Route::resource('facturacion', FacturacionController::class);

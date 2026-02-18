@@ -14,21 +14,16 @@ return new class extends Migration
         Schema::create('compras', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned(); // to remove primary key
             $table->primary('id'); //to add primary keys
+            $table->integer('tipo');
             $table->date('fecha');
-            $table->foreignId('proveedor_id')->constrained('proveedores');
+            $table->foreignId('proveedor_id')->constrained('entidades');
             $table->string('descripcion');
             $table->foreignId('producto_id')->nullable()->constrained('productos');
-            $table->integer('tipo');
-            $table->string('acabado')->nullable();
-            $table->string('manipulacion')->nullable();
-            $table->string('material')->nullable();
-            $table->string('medidas')->nullable();
-            $table->string('impresion')->nullable();
-            $table->string('embalaje')->nullable();
-            $table->string('entrega')->nullable();
-            $table->string('transporte')->nullable();
+            $table->double('precio', 15, 6)->nullable()->default(0.00);
+            $table->integer('ud_precio')->default('1');
+            $table->integer('cantidad')->default('1');
+            $table->double('total', 15, 6)->nullable()->default(0.00);
             $table->string('observaciones')->nullable();
-            $table->integer('estado')->default('0');
             $table->timestamps();
 
         });

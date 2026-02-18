@@ -228,7 +228,7 @@ class Pedido extends Component
                 $query->where('cliente_id',$this->filtrocliente);
                 })
             ->orderBy('referencia','asc')
-            ->get();pPedidoC
+            ->get();
 
         $responsables=Responsable::all();
 
