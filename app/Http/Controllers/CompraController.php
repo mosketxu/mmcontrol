@@ -42,4 +42,9 @@ class CompraController extends Controller
         'search','filtroproveedor','filtroanyo','filtromes']));
     }
 
+    public function nuevo($tipo,$ruta){
+        $titulo=$tipo=='1' ? 'Nueva Compra Editorial' : 'Nueva Compra Packaging';
+        return view('compras.create',compact('tipo','ruta','titulo'));
+    }
+
 }
