@@ -13,25 +13,19 @@ class CreateOfertasTable extends Migration
      */
     public function up()
     {
-        Schema::create('ofertas', function (Blueprint $table) {
-             $table->bigInteger('id')->unsigned(); // to remove primary key
+        Schema::create('compras', function (Blueprint $table) {
+            $table->bigInteger('id')->unsigned(); // to remove primary key
+            $table->integer('tipo');
             $table->primary('id'); //to add primary keys
             $table->foreignId('cliente_id')->constrained('entidades');
             $table->foreignId('contacto_id')->nullable()->nullable()->constrained('entidades');
             $table->string('descripcion');
             $table->date('fecha');
             $table->foreignId('producto_id')->nullable()->constrained('productos');
-            $table->integer('tipo');
-            $table->string('acabado')->nullable();
-            $table->string('manipulacion')->nullable();
-            $table->string('material')->nullable();
-            $table->string('medidas')->nullable();
-            $table->string('impresion')->nullable();
-            $table->string('embalaje')->nullable();
-            $table->string('entrega')->nullable();
-            $table->string('transporte')->nullable();
-            $table->string('observaciones')->nullable();
-            $table->integer('estado')->default('0');
+            $table->double('precio', 15, 6)->default(0.00);
+            $table->integer('ud_precio')->default('1');
+            $table->integer('cantidad')->default('1');
+                        $table->string('observaciones')->nullable();
             $table->timestamps();
         });
     }
@@ -43,6 +37,6 @@ class CreateOfertasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ofertas');
+        Schema::dropIfExists('compras');
     }
 }
