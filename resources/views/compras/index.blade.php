@@ -44,7 +44,7 @@
                                 <div>
                                     @forelse ($compras as $compra)
                                     <div class="" wire:loading.class.delay="opacity-50">
-                                        {{-- @livewire('compra.compras-compra',['compra'=>$compra,'tipo'=>$tipo],key("'ped-'.$compra->id")) --}}
+                                        @livewire('compra.compras',['compra'=>$compra,'tipo'=>$tipo],key("$compra->id"))
                                     </div>
                                     @empty
                                     <div class="flex w-full text-sm text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">

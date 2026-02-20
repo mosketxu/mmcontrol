@@ -1,10 +1,7 @@
 
 @if(!Auth::user()->hasRole('Cliente'))
-    <form method="GET" action="{{ route('pedido.tipo',[$tipo,'i']) }}">
-{{-- @else
-    <form method="GET" action="{{ route('cliente.pedido.tipo',[$tipo,'i']) }}"> --}}
+    <form method="GET" action="{{ route('compra.tipo',[$tipo,'i']) }}">
 @endif
-{{-- <form method="GET" action="{{ route('seguridad') }}"> --}}
     <div class="flex space-x-2 ">
         {{-- Compra --}}
         <div class="flex w-1/12 ">
@@ -29,6 +26,32 @@
                         <option value="{{ $proveedor->id }}" {{ $proveedor->id == $filtroproveedor ? 'selected' : ''  }}>{{ $proveedor->entidad }}</option>
                         @endforeach
                     </select>
+                </div>
+            </div>
+        </div>
+        <div class="flex w-2/12 ">
+            <div class="w-full">
+                <label class="px-1 text-sm text-gray-600">
+                    Prd.Cod
+                </label>
+                <div class="flex">
+                    <input type="text" wire:model.lazy="filtroisbn" class="w-full py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" autofocus/>
+                    @if($filtroisbn!='')
+                        <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="flex w-3/12 ">
+            <div class="w-full">
+                <label class="px-1 text-sm text-gray-600">
+                    Prod.Ref
+                </label>
+                <div class="flex">
+                    <input type="text" wire:model.lazy="filtroreferencia" class="w-full py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" placeholder="Búsqueda Entidad/Factura" autofocus/>
+                    @if($filtroreferencia!='')
+                        <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
+                    @endif
                 </div>
             </div>
         </div>

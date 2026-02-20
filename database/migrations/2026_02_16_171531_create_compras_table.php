@@ -15,7 +15,11 @@ return new class extends Migration
             $table->bigInteger('id')->unsigned(); // to remove primary key
             $table->primary('id'); //to add primary keys
             $table->integer('tipo');
+            $table->year('anyo');
+            $table->unsignedInteger('numero');
+            $table->string('codigo')->unique(); // OF-2026-001
             $table->date('fecha');
+            $table->date('fechaentrega')->nullable();
             $table->foreignId('proveedor_id')->constrained('entidades');
             $table->string('descripcion');
             $table->foreignId('producto_id')->nullable()->constrained('productos');

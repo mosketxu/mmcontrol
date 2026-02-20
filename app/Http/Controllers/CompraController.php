@@ -22,12 +22,17 @@ class CompraController extends Controller
         $filtroarchivos=$request->filtroarchivos;
         $filtroanyo=$request->filtroanyo;
         $filtromes=$request->filtromes;
+        $filtroisbn=$request->filtroisbn;
+        $filtroreferencia=$request->filtroreferencia;
+
 
         $proveedores=Entidad::orderBy('entidad')->get();
         $meses=Mes::orderBy('id')->get();
 
+        $compras= Compra::query()->get();
+
         $compras= Compra::query()
-            ->with('proveedor','productos')
+            ->with('proveedor','producto')
             ->where('compras.tipo',$tipo)
             ->search('compras.id',$search)
             ->when($filtroproveedor!='', function ($query) use($filtroproveedor) {$query->where('compras.proveedor_id',$filtroproveedor);})
@@ -39,12 +44,18 @@ class CompraController extends Controller
             ->paginate(30);
 
         return view('compras.index',compact(['tipo','ruta','compras','proveedores','meses',
-        'search','filtroproveedor','filtroanyo','filtromes']));
+        'search','filtroproveedor','filtroanyo','filtromes','filtroisbn','filtroreferencia']));
     }
 
     public function nuevo($tipo,$ruta){
         $titulo=$tipo=='1' ? 'Nueva Compra Editorial' : 'Nueva Compra Packaging';
         return view('compras.create',compact('tipo','ruta','titulo'));
+    }
+
+        public function editar(Compra $compra,$ruta){
+        $tipo=$compra->tipo;
+        $titulo=$tipo=='1' ? 'Compra Editorial' : 'Compra Packaging';
+        return view('compras.edit',compact('compra','tipo','ruta','titulo'));
     }
 
 }
