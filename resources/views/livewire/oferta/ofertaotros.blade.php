@@ -127,6 +127,7 @@
                                 <h3 class="pl-1 font-semibold">Descripción Producto</h3>
                                 <input  wire:model.defer="pedidoid" type="hidden"/>
                             </div>
+                            @if($prod)
                             <div class="flex flex-col mx-1 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
                                     <div class="">Datos caja</div>
@@ -161,6 +162,12 @@
                                     </div>
                                 </div>
                             </div>
+                            @else
+                            <div class="flex flex-col mx-1 md:space-y-0 md:flex-row md:space-x-2">
+                                <div class="w-full form-item">
+                                    <div class="">No hay producto seleccionado</div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <div class="px-2 py-0 pb-2 mx-2 ">
