@@ -146,7 +146,7 @@
                     </x-jet-dropdown>
                 </div>
                 @endcan
-                @can('compra.index')
+                {{-- @can('compra.index')
                 <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left" width="60" >
                         <x-slot name="trigger">
@@ -173,7 +173,7 @@
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
-                @endcan
+                @endcan --}}
                 @can('pedido.index')
                 <div class="hidden pt-2 text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-dropdown  align="left" width="60" >
@@ -408,7 +408,7 @@
                 </x-jet-dropdown>
             </div>
             @endcan
-            @can('compra.index')
+            {{-- @can('compra.index')
             <div class="relative mt-3 ml-3">
                 <x-jet-dropdown align="right" width="60" >
                     <x-slot name="trigger">
@@ -436,7 +436,7 @@
                     </x-slot>
                 </x-jet-dropdown>
             </div>
-            @endcan
+            @endcan --}}
             @can('pedido.index')
             <div class="relative mt-3 ml-3">
                 <x-jet-dropdown align="right" width="60" >
