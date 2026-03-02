@@ -307,6 +307,7 @@ class Presupuesto extends Component
     }
 
     public function numpresupuesto(){
+        //
         $anyo= substr($this->fechapresupuesto, 0, 4);
         $anyo2= substr($anyo, -2);
         $presup=ModelsPresupuesto::inYear($anyo)->max('id') ;
