@@ -21,6 +21,7 @@ class PermissionSeeder extends Seeder
         $admin=Role::find('1');
         $gestor=Role::find('2');
         $milimetrica=Role::find('3');
+        $cliente=Role::find('4');
         // dd($admin . '-'. $gestor .'-'.$milimetrica);
         // \\DB::table('permissions')->delete();
 
@@ -108,11 +109,19 @@ class PermissionSeeder extends Seeder
         // Permission::create(['name'=>'oferta.update'])->syncRoles($admin, $gestor, $milimetrica);
         // Permission::create(['name'=>'oferta.delete'])->syncRoles($admin, $gestor, $milimetrica);
 
-        // compras
-        Permission::create(['name'=>'compra.index'])->syncRoles($admin, $gestor, $milimetrica);
-        Permission::create(['name'=>'compra.create'])->syncRoles($admin, $gestor, $milimetrica);
-        Permission::create(['name'=>'compra.edit'])->syncRoles($admin, $gestor, $milimetrica);
-        Permission::create(['name'=>'compra.update'])->syncRoles($admin, $gestor, $milimetrica);
-        Permission::create(['name'=>'compra.delete'])->syncRoles($admin, $gestor, $milimetrica);
+        // // compras
+        // Permission::create(['name'=>'compra.index'])->syncRoles($admin, $gestor, $milimetrica);
+        // Permission::create(['name'=>'compra.create'])->syncRoles($admin, $gestor, $milimetrica);
+        // Permission::create(['name'=>'compra.edit'])->syncRoles($admin, $gestor, $milimetrica);
+        // Permission::create(['name'=>'compra.update'])->syncRoles($admin, $gestor, $milimetrica);
+        // Permission::create(['name'=>'compra.delete'])->syncRoles($admin, $gestor, $milimetrica);
+
+        // clientes
+        Permission::create(['name'=>'cliente.entidad.index'])->syncRoles($admin, $gestor, $milimetrica,$cliente);
+        Permission::create(['name'=>'cliente.producto.index'])->syncRoles($admin, $gestor, $milimetrica,$cliente);
+        Permission::create(['name'=>'cliente.presupuesto.index'])->syncRoles($admin, $gestor, $milimetrica,$cliente);
+        Permission::create(['name'=>'cliente.oferta.index'])->syncRoles($admin, $gestor, $milimetrica,$cliente);
+        Permission::create(['name'=>'cliente.pedido.index'])->syncRoles($admin, $gestor, $milimetrica,$cliente);
+        Permission::create(['name'=>'cliente.facturacion.index'])->syncRoles($admin, $gestor, $milimetrica,$cliente);
     }
 }

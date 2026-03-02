@@ -35,7 +35,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
             return redirect()->route('entidad.index');
         } elseif (Auth::user()->hasRole('Cliente')) {
             // return redirect()->route('cliente.pedido.tipo',['1','i']);
-            return redirect()->route('cliente.entidad.index'    );
+            return redirect()->route('cliente.entidad.index');
         } else {
             return redirect()->route('presupuesto.tipo',['1','i']);
         }
@@ -139,8 +139,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
         Route::get('cliente/presupuesto/{tipo}/ruta/{ruta}', [ClienteController::class,'presupuestotipo'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.tipo');
         Route::get('cliente/presupuesto/{presupuesto}/editar/{ruta}', [ClienteController::class, 'presupuestoeditar'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.editar');
         Route::get('cliente/presupuesto/{presupuesto}/pdf', [ClienteController::class, 'presupuestoPDF'])->name('cliente.presupuesto.presupuestoPDF');
-
-
 
         // Ofertas a las que accede el usuario invitado
         Route::get('cliente/oferta/{tipo}', [ClienteController::class,'ofertatipo'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.tipo');
