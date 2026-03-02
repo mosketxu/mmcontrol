@@ -351,7 +351,7 @@ class Presupuesto extends Component
             $nuevo=true;
         }
 
-        if($this->tipo!='1')
+        // if($this->tipo!='1')
             // Validator::make(
             //     ['descripcion'=>$this->descripcion,],
             //     ['descripcion' => 'required',],
