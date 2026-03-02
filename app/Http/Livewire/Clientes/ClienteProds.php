@@ -2,7 +2,8 @@
 
 namespace App\Http\Livewire\Clientes;
 
-use App\Models\{Entidad,Producto, UserEmpresa};
+use App\Enums\ProductoEstado;
+use App\Models\{Caja,Entidad,Producto, UserEmpresa};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 
@@ -21,6 +22,7 @@ class ClienteProds extends Component
     public $filtrocliente='';
     public $filtromaterial='';
     public $filtroimpresion='';
+    public $filtrocaja='';
     public $tipo;
     public $titulo;
     public $cliente;
@@ -28,8 +30,9 @@ class ClienteProds extends Component
     public $orden1='';
     public $ordenarpor2='';
     public $orden2='';
+    public $productosestado='1';
 
-    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion','ordenarpor1','orden1','ordenarpor2','orden2'];
+    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion','filtrocaja','ordenarpor1','orden1','ordenarpor2','orden2'];
 
 
     public Producto $producto;
@@ -51,11 +54,13 @@ class ClienteProds extends Component
             $this->ordenarpor2='referencia';
             $this->orden2='asc';
         }
+        $this->productosestado=ProductoEstado::options();
     }
 
     public function render(){
         $this->producto= new Producto;
         $entidadescliente=UserEmpresa::where('user_id',$this->cliente->id)->get();
+         $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
 
         $entidades=Entidad::orderBy('entidad')
         ->whereIn('id',$entidadescliente->pluck('entidad_id'))
@@ -81,6 +86,7 @@ class ClienteProds extends Component
                 })
             ->search('productos.material',$this->filtromaterial)
             ->search('productos.impresion',$this->filtroimpresion)
+            ->search('productos.caja_id',$this->filtrocaja)
             ->orderBy($this->ordenarpor1,$this->orden1)
             ->when($this->ordenarpor2!='', function ($query){
                 $query->orderBy($this->ordenarpor2,$this->orden2);
@@ -89,7 +95,7 @@ class ClienteProds extends Component
 
         $vista= $this->tipo=='1' ? 'livewire.clientes.producto.prodseditorial-cliente' : 'livewire.clientes.producto.prodsotros-cliente';
 
-        return view($vista,compact('productos','clientes'));
+        return view($vista,compact('productos','clientes','cajas'));
     }
 
     public function updatingFiltroisbn(){$this->resetPage();}
@@ -98,4 +104,5 @@ class ClienteProds extends Component
     public function updatingFiltrocliente(){$this->resetPage();}
     public function updatingFiltromaterial(){$this->resetPage();}
     public function updatingFiltroimpresion(){$this->resetPage();}
+    public function updatingFiltrocaja(){$this->resetPage();}
 }
