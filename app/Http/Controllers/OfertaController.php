@@ -49,45 +49,40 @@ class OfertaController extends Controller
             $primera=1;
             $cont=0;
             $controlsaltopag2=30;
-        }elseif($tipo='2'){
+        }elseif($tipo=='2'){
             $p = $oferta->ofertaproducto;
-            // dd($p);
-            $hayCaja = $p->caja_id!='' || $p->medidas!='' || $p->desarrollocaja!='' || $p->material!='' || $p->gramajecaja!='' || $p->impresion!='' || $p->acabadocaja!='';
-            $hayNido = $p->medidasnido!='' || $p->materialnido!='' || $p->impresionnido!='';
-
+            $hayCaja = false;
+            $hayNido = false;
             $bloques = [];
+            $countbloques = 0;
 
-            if($p->procesospack!='') {
-                $bloques['Procesos'] = nl2br(e($p->procesospack));
-            }
-            if($p->manipulacion!='') {
-                $bloques['Manipulación'] = nl2br(e($p->manipulacion));
-            }
-            if($p->observaciones!='') {
-                $bloques['Observaciones'] = nl2br(e($p->observaciones));
-            }
+            if($p){
+                $hayCaja = $p->caja_id!='' || $p->medidas!='' || $p->desarrollocaja!='' || $p->material!='' || $p->gramajecaja!='' || $p->impresion!='' || $p->acabadocaja!='';
+                $hayNido = $p->medidasnido!='' || $p->materialnido!='' || $p->impresionnido!='';
+                if($p->procesospack!='') {$bloques['Procesos'] = nl2br(e($p->procesospack));}
+                if($p->manipulacion!='') {$bloques['Manipulación'] = nl2br(e($p->manipulacion));}
+                if($p->observaciones!='') {$bloques['Observaciones'] = nl2br(e($p->observaciones));}
+                $countbloques = count($bloques);
 
-            $countbloques = count($bloques);
-
-            ($lineascabecera=$p->isbn!='' || $lineascabecera=$p->referencia!='') ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p-> caja_id!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->medidas!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->desarrollocaja!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->material!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->gramajecaja!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->impresion!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->acabadocaja!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->medidasnido!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->materialnido!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->impresionnido!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$p->procesos!='' ? $lineascabecera+2 : $lineascabecera;
-            $lineascabecera=$p->manipulacion!='' ? $lineascabecera+2 : $lineascabecera;
-            $lineascabecera=$p->observaciones!='' ? $lineascabecera+2 : $lineascabecera;
+                if($p->isbn != '' || $p->referencia != '') $lineascabecera++;
+                if($p->caja_id != '') $lineascabecera++;
+                if($p->medidas != '') $lineascabecera++;
+                if($p->desarrollocaja != '') $lineascabecera++;
+                if($p->material != '') $lineascabecera++;
+                if($p->gramajecaja != '') $lineascabecera++;
+                if($p->impresion != '') $lineascabecera++;
+                if($p->acabadocaja != '') $lineascabecera++;
+                if($p->medidasnido != '') $lineascabecera++;
+                if($p->materialnido != '') $lineascabecera++;
+                if($p->impresionnido != '') $lineascabecera++;
+                if($p->procesospack != '') $lineascabecera += 2;
+                if($p->manipulacion != '') $lineascabecera += 2;
+                if($p->observaciones != '') $lineascabecera += 2;
             // el maximo de $lineasoferta serian 17;
-
+            }
             $lineasoferta=$oferta->ofertaprocesos->count();
             $lineas=$lineasoferta + $lineascabecera;
-            $limite=25;
+            $limite=18;
             $salto=$limite-$lineascabecera;
 
             $paginas = ceil($lineas / $limite);
