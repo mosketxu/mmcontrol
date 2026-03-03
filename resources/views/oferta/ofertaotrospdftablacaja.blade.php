@@ -3,7 +3,8 @@
         <td colspan="2"><strong>Datos Caja</strong></td>
     </tr>
 
-    @if($p->caja->name!='')
+    {{-- @if($p->caja->name!='') --}}
+    @if($p->caja?->name)
     <tr>
         <td width="30%"><strong>Caja:</strong></td>
         <td>{{ $p->caja->name }}</td>
