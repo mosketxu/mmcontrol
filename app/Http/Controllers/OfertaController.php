@@ -78,18 +78,21 @@ class OfertaController extends Controller
                 if($p->procesospack != '') $lineascabecera += 2;
                 if($p->manipulacion != '') $lineascabecera += 2;
                 if($p->observaciones != '') $lineascabecera += 2;
-            // el maximo de $lineasoferta serian 17;
+                // el maximo de $lineasoferta serian 17;
+                $limite=18;
+                $salto=$limite-$lineascabecera;
+                $primera=1;
+                $cont=0;
+                $controlsaltopag2=30;
+                $lineasoferta=$oferta->ofertadetalles->count();
+                $lineas=$lineasoferta + $lineascabecera;
+                // $salto=$limite-$lineascabecera;
+                $salto=$limite-$lineas;
             }
-            $lineasoferta=$oferta->ofertaprocesos->count();
-            $lineas=$lineasoferta + $lineascabecera;
-            $limite=18;
-            $salto=$limite-$lineascabecera;
-
             $paginas = ceil($lineas / $limite);
             $pagina=0;
             $primera=1;
             $cont=0;
-            $controlsaltopag2=30;
         }
 
         $pdf = new Dompdf();

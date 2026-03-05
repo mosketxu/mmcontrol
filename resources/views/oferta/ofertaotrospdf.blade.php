@@ -84,6 +84,7 @@
                             @endif
                         </tr>
                     </table>
+
                     @if($countbloques > 0)
                     <table width="80%" align="center" style="margin-top:10px; font-size:12px;">
                         <tr>
@@ -97,126 +98,84 @@
                     </table>
                     @endif
 
-                    @if($oferta->ofertaprocesos->count()>0)
-                    <div class="py-0 space-y-2 text-xs">
-                        <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
-                            <tr>
-                                <td width=20% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Proceso</td>
-                                <td width=30% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Descripcion</td>
-                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
-                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
-                                <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
-                            </tr>
-                            @foreach($oferta->ofertaprocesos as $index=>$oproceso)
-                                @if ($cont>$salto)
-                                    @php
-                                        // $primera=0;
-                                        $cont=0;
-                                        $pag++;
-                                    @endphp
-                                    <tr class="page-break">
-                                    </table>
-                                    <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
-                                    <tr>
-                                        <td width=20% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Proceso</td>
-                                        <td width=30% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Descripcion</td>
-                                        <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
-                                        <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
-                                        <td width=10% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
-                                    </tr>
-                                @else
-                                    @php
-                                        $cont++;
-                                    @endphp
-                                    <tr>
-                                        <td width=20% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproceso->proceso}}</td>
-                                        <td width=30% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->descripcion }}</td>
-                                        <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->tirada}}</td>
-                                        <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproceso->precio_ud}}</td>
-                                        <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproceso->precio_ud * $oproceso->tirada,2) }}</td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </table>
-                    </div>
-                    @endif
-
-                    @if($oferta->ofertaproductos->count()>0)
-                    <div class="py-0 space-y-2">
-                        <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
-                            <tr>
-                                {{-- <td width=40% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Producto</td> --}}
-                                <td width=55% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Observaciones</td>
-                                <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
-                                <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
-                                <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
-                            </tr>
-                            @foreach($oferta->ofertaproductos as $index=>$oproducto)
-                                @if ($cont>$salto)
-                                    @php
-                                        $cont=0;
-                                        $pag++;
-                                    @endphp
-                                    <tr class="page-break">
-                                    </table>
-                                    <table width="80%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
-                                        <tr>
-                                            {{-- <td width=40% class="pl-2 text-xs font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Producto</td> --}}
-                                            <td width=55% class="pl-2 text-xs font-bold text-left " style="border-style: solid;border-width: .6;border-color: gray">Observaciones</td>
-                                            <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
-                                            <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Importe</td>
-                                            <td width=15% class="pr-2 text-xs font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Total</td>
-                                        </tr>
-                                    @else
-                                        @php
-                                            $cont++;
-                                        @endphp
-                                        <tr>
-                                            {{-- <td width=30% class="pl-2 text-xs" style="border-style: solid;border-width: .6;border-color: gray" colspan="2">{{ $oproducto->producto->referencia?? ''}}</td> --}}
-                                            <td width=20% class="pl-2 text-xs text-left" style="border-style: solid;border-width: .6;border-color: gray">
-                                                <p>{!! nl2br(e($oproducto->observaciones)) !!}</p>
-                                            </td>
-                                            <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->tirada}}</td>
-                                            <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $oproducto->precio_ud }}</td>
-                                            <td width=10% class="pr-2 text-xs text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ round($oproducto->precio_ud * $oproducto->tirada ,2)}}</td>
-                                        </tr>
-                                    @endif
-                            @endforeach
-                        </table>
-                    </div>
-                    @endif
-
-
-                    {{-- resto --}}
-                    <div class="py-0 space-y-2 text-xs">
-                        <table width="80%" style="margin-top:10px; " class="mx-auto" cellspacing="0" cellpadding="2" >
-                            @if($oferta->troquel!='')
-                            <tr>
-                                <td style="padding-left:3px;"  class="" > <span class="font-bold">Troquel: </span>{{ $oferta->troquel}}</td>
-                            </tr>
+                    <table width="80%" style="margin-top:10px; font-size:12px" class="mx-auto" cellspacing="0" cellpadding="2" >
+                        @if($oferta->observaciones!='' || $oferta->manipulacion!='' || $oferta->entrega!='')
+                        <tr>
+                            @if($oferta->manipulacion!='')
+                            <td> <span class="font-bold">Manipulación Gral.: </span>
+                                <p>{!! nl2br(e($oferta->manipulacion)) !!}</p>
+                            </td>
+                            @endif
+                            @if($oferta->entrega!='')
+                            <td> <span class="font-bold">Entrega: </span>
+                                <p>{!! nl2br(e($oferta->entrega)) !!}</p>
+                            </td>
                             @endif
                             @if($oferta->observaciones!='')
-                            <tr>
-                                <td> <span class="font-bold">Observaciones: </span>
-                                    <p>{!! nl2br(e($oferta->observaciones)) !!}</p>
-                                </td>
-                            </tr>
+                            <td> <span class="font-bold">Observaciones: </span>
+                                <p>{!! nl2br(e($oferta->observaciones)) !!}</p>
+                            </td>
                             @endif
-                        </table>
-                    </div>
+                        </tr>
+                        @endif
+                    </table>
 
-                    {{-- <table width=80% class="mx-auto mt-4 text-sm " style="color:rgb(30, 27, 27);">
+                    {{-- Escandallo --}}
+                    <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                    <tr>
+                        <td width=57% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Opciones</td>
+                        <td width=15% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                        <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio unitario</td>
+                        <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio total</td>
+                    </tr>
+
+                    @foreach($oferta->ofertadetalles as $index=>$odetalle)
+                    @if ($index == $salto && $primera==1)
+                        @php
+                            $primera=0;
+                            $cont=0;
+                        @endphp
+                        <tr class="page-break">
+                        </table>
+                        <table width="90%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
                         <tr>
-                            <td>Troquel</td>
-                            <td>{{ $oferta->troquel }}</td>
+                            <td width=57% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Opciones</td>
+                            <td width=15% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                            <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio unitario</td>
+                            <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio total</td>
                         </tr>
+                    @elseif($cont > $controlsaltopag2)
+                        @php
+                            $cont=0;
+                        @endphp
+                        <tr class="page-break">
+                        </table>
+                        <table width="90%" style="margin-top:30px; " cellspacing="0" cellpadding="0" class="mx-auto text-sm">
+                            <tr>
+                                <td width=57% class="pl-2 font-bold " style="border-style: solid;border-width: .6;border-color: gray" colspan="2">Opciones</td>
+                                <td width=15% class="pr-2 font-bold text-right " style="border-style: solid;border-width: .6;border-color: gray">Cantidad</td>
+                                <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio unitario</td>
+                                <td width=15% class="pr-2 font-bold text-right" style="border-style: solid;border-width: .6;border-color: gray">Precio total</td>
+                            </tr>
+                    @endif
+                        @php
+                            $cont++;
+                        @endphp
                         <tr>
-                            <td colspan="2" class="font-bold" style=""  >Observaciones:</td>
+                            <td width=51% class="pl-2" style="border-style: solid;border-width: .6;border-color: gray" colspan="2"><span class="font-bold">{{ $odetalle->titulo }}</span> {{ $odetalle->concepto }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->cantidad }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->importe }}</td>
+                            <td width=15% class="pr-2 text-right" style="border-style: solid;border-width: .6;border-color: gray">{{ $odetalle->total }}</td>
                         </tr>
-                        <tr>
-                            <td colspan ="2" width=80% >{{ $oferta->observaciones}}</td>
-                        </tr>
-                    </table> --}}
+                    @endforeach
+                </table>
+
+
+            </div>
+
+
+
+
                 </div>
             </div>
             {{-- @if($pag===1) --}}
