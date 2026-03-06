@@ -25,7 +25,8 @@
             <table width="100%" style="margin-top:0px; " class="tablacentrada">
                 <tr>
                     <td style="text-align: left; background-color: white" >
-                        <img src="{{asset('img/milimetrica.png')}}" width="200px">
+                        {{-- <img src="{{asset('img/milimetrica.png')}}" width="200px"> --}}
+                        <img src="{{ public_path('img/milimetrica.png') }}" width="200">
                     </td>
                     <td class="text-xs " style="text-align:right;color: #6b7280">
                         C/ del Joncar 19, planta 5 - 08005 Barcelona (España) <br>
@@ -41,11 +42,11 @@
                 </tr>
                 <tr>
                     <td>Solicitado por: <span style="font-weight:bold;">
-                        {{ $presupuesto->facturadopor=='1' ? $presupuesto->responsable : $presupuesto->cliente->entidad }}
+                        {{ $presupuesto->facturadopor=='1' ? $presupuesto->responsable : $presupuesto->cliente->entidad ?? '' }}
                     </span></td>
                 </tr>
                 <tr>
-                    <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
+                    <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad ?? ''}} </span></td>
                 </tr>
             </table>
 
@@ -54,17 +55,19 @@
                     <tr  >
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1" >Cliente </td>
                         <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">
-                            {{ $presupuesto->facturadopor=='1' ? 'Milimetrica' : $presupuesto->cliente->entidad }}
+                            {{ $presupuesto->facturadopor=='1' ? 'Milimetrica' : $presupuesto->cliente->entidad ?? '' }}
                         </td>
                     </tr>
-                    <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Cód.Producto</td>
-                        <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->isbn }}</td>
-                    </tr>
-                    <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Ref.Producto</td>
-                        <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->referencia }}</td>
-                    </tr>
+                    @if($producto && ($producto->isbn || $producto->referencia))
+                        <tr style="">
+                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Cód.Producto</td>
+                            <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->isbn }}</td>
+                        </tr>
+                        <tr style="">
+                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Ref.Producto</td>
+                            <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->referencia }}</td>
+                        </tr>
+                    @endif
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Descripcion</td>
                         <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $presupuesto->referencia }}</td>
@@ -90,30 +93,35 @@
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Manipulación</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
-                            <p>{!! nl2br(e($presupuesto->manipulacion)) !!}</p>
+                            {{-- <p>{!! nl2br(e($presupuesto->manipulacion)) !!}</p> --}}
+                            {!! nl2br(e($presupuesto->manipulacion)) !!}
                         </td>
                     </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Distribución</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
-                            <p>{!! nl2br(e($presupuesto->transporte)) !!}</p>
+                            {{-- <p>{!! nl2br(e($presupuesto->transporte)) !!}</p> --}}
+                            {!! nl2br(e($presupuesto->transporte)) !!}
                         </td>
                     </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Espec. logísticas</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
-                            <p>{!! nl2br(e($presupuesto->especificacioneslogisticas)) !!}</p>
+                            {{-- <p>{!! nl2br(e($presupuesto->especificacioneslogisticas)) !!}</p> --}}
+                            {!! nl2br(e($presupuesto->especificacioneslogisticas)) !!}
                         </td>
                     </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Otros</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
-                            <p>{!! nl2br(e($presupuesto->otros)) !!}</p>
+                            {{-- <p>{!! nl2br(e($presupuesto->otros)) !!}</p> --}}
+                            {!! nl2br(e($presupuesto->otros)) !!}
                         </td>
                     </tr>
                 </table>
 
-                @if($producto->isbn || $producto->referencia )
+                {{-- @if($producto->isbn || $producto->referencia ) --}}
+                @if(!empty($producto) && ($producto->isbn || $producto->referencia))
                 <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
                     <tr  >
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;text-decoration:underline" colspan="3"  class="borde1" >Detalle del producto</td>
@@ -196,7 +204,8 @@
                             <tr style="">
                                 <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Procesos</td>
                                 <td style="padding-left:3px;" class="borde1" colspan="2">
-                                    <p>{!! nl2br(e($producto->procesospack)) !!}</p>
+                                    {{-- <p>{!! nl2br(e($producto->procesospack)) !!}</p> --}}
+                                    {!! nl2br(e($producto->procesospack)) !!}
                                 </td>
                             </tr>
                         @endif
@@ -205,6 +214,7 @@
                                 <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Manipulación</td>
                                 <td style="padding-left:3px;" class="borde1" colspan="2">
                                     <p>{!! nl2br(e($producto->manipulacion)) !!}</p>
+                                    {!! nl2br(e($producto->manipulacion)) !!}
                                 </td>
                             </tr>
                         @endif
@@ -216,13 +226,14 @@
                         <tr style="">
                             <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Observaciones</td>
                             <td style="padding-left:3px;" class="borde1" colspan="2">
-                                <p>{!! nl2br(e($producto->observaciones)) !!}</p>
+                                {{-- <p>{!! nl2br(e($producto->observaciones)) !!}</p> --}}
+                                {!! nl2br(e($producto->observaciones)) !!}
                             </td>
                         </tr>
                     @endif
                 </table>
                 @endif
-            </div>
+            {{-- </div> --}}
         </main>
     </body>
 </html>
