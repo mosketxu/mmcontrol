@@ -27,8 +27,10 @@ class OfertaController extends Controller
     public function ficha($ofertaId,$tipo){
         $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
         $lineascabecera=1; //Ref que es fijo
+        $p = $oferta->ofertaproducto;
         if($tipo=='1'){
-            $lineascabecera=$oferta->ofertaproducto->formato!='' ? $lineascabecera+1 : $lineascabecera;
+            // $lineascabecera=$oferta->ofertaproducto->formato!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera += ($p && $p->formato!='') ? 1 : 0;
             $lineascabecera=$oferta->ofertaproducto->paginas!='0' ? $lineascabecera+1 : $lineascabecera;
             $lineascabecera=$oferta->ofertaproducto->materialinterior!='' ? $lineascabecera+1 : $lineascabecera;
             $lineascabecera=$oferta->ofertaproducto->materialcubierta!='' ? $lineascabecera+2 : $lineascabecera;
@@ -46,11 +48,20 @@ class OfertaController extends Controller
             //para una sola pagina en editorial empieza a quedar mal con 19
             $limite=18;
             $salto=$limite-$lineascabecera;
+            $salto = max(1, $limite - $lineascabecera);
             $primera=1;
             $cont=0;
             $controlsaltopag2=30;
         }elseif($tipo=='2'){
-            $p = $oferta->ofertaproducto;
+            $p = $oferta->ofertaproducto ?? null;
+
+            // el maximo de $lineasoferta serian 17;
+            $limite = 18;
+            $lineas = 0;
+            $lineasoferta = 0;
+            $salto=0;
+            $controlsaltopag2 = 30;
+
             $hayCaja = false;
             $hayNido = false;
             $bloques = [];
@@ -78,34 +89,38 @@ class OfertaController extends Controller
                 if($p->procesospack != '') $lineascabecera += 2;
                 if($p->manipulacion != '') $lineascabecera += 2;
                 if($p->observaciones != '') $lineascabecera += 2;
-                // el maximo de $lineasoferta serian 17;
-                $limite=18;
-                $salto=$limite-$lineascabecera;
+                // $salto=$limite-$lineascabecera;
+
                 $primera=1;
                 $cont=0;
                 $controlsaltopag2=30;
                 $lineasoferta=$oferta->ofertadetalles->count();
                 $lineas=$lineasoferta + $lineascabecera;
                 // $salto=$limite-$lineascabecera;
-                $salto=$limite-$lineas;
+                // $salto=$limite-$lineas;
+                $salto = max(1, $limite-$lineas);
+                }else{
+                    $lineas = $oferta->ofertadetalles->count() + $lineascabecera;
+                    $salto = max(1, $limite-$lineas);
             }
-            $paginas = ceil($lineas / $limite);
+
+            $paginas = $limite ? ceil($lineas / $limite) : 1;
             $pagina=0;
             $primera=1;
             $cont=0;
         }
 
-        $pdf = new Dompdf();
-        $options = new Options();
-        $options->set('isHtml5ParserEnabled', true);
-        $options->set('isRemoteEnabled', true);
-        $pdf->setOptions($options);
+        // $pdf = new Dompdf();
+        // $options = new Options();
+        // $options->set('isHtml5ParserEnabled', true);
+        // $options->set('isRemoteEnabled', true);
+        // $pdf->setOptions($options);
 
-        $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaotrospdf';
+        // $vista= $oferta->tipo=='1' ? 'oferta.ofertaeditorialpdf' : 'oferta.ofertaotrospdf';
         if($tipo=='1')
-            $pdf = \PDF::loadView('oferta.ofertaeditorialpdf', compact('oferta','lineascabecera','lineas','lineasoferta','lineascabecera','salto','primera','cont','controlsaltopag2'));
+            $pdf = \PDF::loadView('oferta.ofertaeditorialpdf', compact('oferta','lineascabecera','lineas','lineasoferta','salto','primera','cont','controlsaltopag2'));
         else
-            $pdf = \PDF::loadView('oferta.ofertaotrospdf', compact('oferta','lineascabecera','lineas','lineasoferta','lineascabecera','salto','paginas','pagina','primera','cont','controlsaltopag2','p','hayCaja','hayNido','bloques','countbloques'));
+            $pdf = \PDF::loadView('oferta.ofertaotrospdf', compact('oferta','lineascabecera','lineas','lineasoferta','salto','paginas','pagina','primera','cont','controlsaltopag2','p','hayCaja','hayNido','bloques','countbloques'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('oferta'.$ofertaId.'.pdf'); //asi lo muestra por pantalla
     }
