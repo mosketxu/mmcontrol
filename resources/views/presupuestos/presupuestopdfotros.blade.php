@@ -70,7 +70,7 @@
                     @endif
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Descripcion</td>
-                        <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $presupuesto->referencia }}</td>
+                        <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $presupuesto->descripcion }}</td>
                     </tr>
                     <tr style="">
                         <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;" class="borde1">Tirada</td>
