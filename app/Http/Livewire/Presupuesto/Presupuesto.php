@@ -61,7 +61,7 @@ class Presupuesto extends Component
 
     public function refreshpresupuesto(){
         $this->mount($this->presupuestoid,$this->tipo,$this->ruta,$this->titulo);
-        $this->render();
+        // $this->render();
     }
 
     protected function rules(){
@@ -149,32 +149,40 @@ class Presupuesto extends Component
             }
             // Desde febrero 26 se comportan igual editorial y resto
             // if ($tipo=='1') {
-                $this->productoeditorialid=$presupuesto->presupuestoproductos->first()->producto->id;
-                $this->presupuestoproductoid=$presupuesto->presupuestoproductos->first()->id;
+            $prod = $presupuesto->presupuestoproductos->first();
+            if($prod){
+               $this->productoeditorialid = $prod->producto->id ?? null;
+                $this->presupuestoproductoid = $prod->id ?? null;
+            }
+                // $this->productoeditorialid=$presupuesto->presupuestoproductos->first()->producto->id;
+                // $this->presupuestoproductoid=$presupuesto->presupuestoproductos->first()->id;
             // }
             $this->deshabilitado=$this->espedido=='1' ? 'disabled' : '';
         }
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
 
-        $this->productos = Producto::with('cliente')
-            ->where('productoestado', '1')
-            ->where('tipo', $this->tipo)
-            ->when($this->cliente_id != '', function ($query) {
-                $query->where('cliente_id', $this->cliente_id);
-            })
-            ->when($this->filtroisbn!='', function ($query) {
-                 $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-            })
-            ->when($this->filtroreferencia!='', function ($query) {
-                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-            })
-            ->orderBy('referencia', 'asc')
-            ->get();
+        $this->cargarProductos();
+
+        // $this->productos = Producto::with('cliente')
+        //     ->where('productoestado', '1')
+        //     ->where('tipo', $this->tipo)
+        //     ->when($this->cliente_id != '', function ($query) {
+        //         $query->where('cliente_id', $this->cliente_id);
+        //     })
+        //     ->when($this->filtroisbn!='', function ($query) {
+        //          $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+        //     })
+        //     ->when($this->filtroreferencia!='', function ($query) {
+        //          $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+        //     })
+        //     ->orderBy('referencia', 'asc')
+        //     ->get();
 
     }
 
     public function render(){
-        $entidades=Entidad::orderBy('entidad')->get();
+        // $entidades=Entidad::orderBy('entidad')->get();
+        $entidades = Entidad::select('id','entidad','entidadtipo_id')->orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id', ['1','2','4']);
         $proveedores=$entidades->whereIn('entidadtipo_id', ['2','3']);
         $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
@@ -205,59 +213,62 @@ class Presupuesto extends Component
         $resp=Entidad::find($this->cliente_id);
         if($resp->responsable!='') $this->responsable=$resp->responsable;
 
-        $this->productos = Producto::with('cliente')
-            ->where('productoestado', '1')
-            ->where('tipo', $this->tipo)
-            ->when($this->cliente_id != '', function ($query) {
-                $query->where('cliente_id', $this->cliente_id);
-            })
-            ->when($this->filtroisbn!='', function ($query) {
-                 $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-            })
-            ->when($this->filtroreferencia!='', function ($query) {
-                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-            })
-            ->orderBy('referencia', 'asc')
-            ->get();
+        $this->cargarProductos();
+
+        // $this->productos = Producto::with('cliente')
+        //     ->where('productoestado', '1')
+        //     ->where('tipo', $this->tipo)
+        //     ->when($this->cliente_id != '', function ($query) {
+        //         $query->where('cliente_id', $this->cliente_id);
+        //     })
+        //     ->when($this->filtroisbn!='', function ($query) {
+        //         $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+        //     })
+        //     ->when($this->filtroreferencia!='', function ($query) {
+        //         $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+        //     })
+        //     ->orderBy('referencia', 'asc')
+        //     ->get();
     }
 
     public function updatedFiltroisbn(){
-        $this->productos = Producto::with('cliente')
-            ->where('productoestado', '1')
-            ->where('tipo', $this->tipo)
-            ->when($this->cliente_id != '', function ($query) {
-                $query->where('cliente_id', $this->cliente_id);
-            })
-            ->when($this->filtroisbn!='', function ($query) {
-                 $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-            })
-            ->when($this->filtroreferencia!='', function ($query) {
-                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-            })
-            ->orderBy('referencia', 'asc')
-            ->get();
-        }
+        // $this->productos = Producto::with('cliente')
+        //     ->where('productoestado', '1')
+        //     ->where('tipo', $this->tipo)
+        //     ->when($this->cliente_id != '', function ($query) {
+        //         $query->where('cliente_id', $this->cliente_id);
+        //     })
+        //     ->when($this->filtroisbn!='', function ($query) {
+        //         $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+        //     })
+        //     ->when($this->filtroreferencia!='', function ($query) {
+        //         $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+        //     })
+        //     ->orderBy('referencia', 'asc')
+        //     ->get();
+        $this->cargarProductos();
+    }
 
 
-        public function updatedFiltroreferencia(){
-        $this->productos = Producto::with('cliente')
-            ->where('productoestado', '1')
-            ->where('tipo', $this->tipo)
-            ->when($this->cliente_id != '', function ($query) {
-                $query->where('cliente_id', $this->cliente_id);
-            })
-            ->when($this->filtroisbn!='', function ($query) {
-                 $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-            })
-            ->when($this->filtroreferencia!='', function ($query) {
-                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-            })
-            ->orderBy('referencia', 'asc')
-            ->get();
-        }
+    public function updatedFiltroreferencia(){
+        // $this->productos = Producto::with('cliente')
+        //     ->where('productoestado', '1')
+        //     ->where('tipo', $this->tipo)
+        //     ->when($this->cliente_id != '', function ($query) {
+        //         $query->where('cliente_id', $this->cliente_id);
+        //     })
+        //     ->when($this->filtroisbn!='', function ($query) {
+        //         $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+        //     })
+        //     ->when($this->filtroreferencia!='', function ($query) {
+        //         $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+        //     })
+        //     ->orderBy('referencia', 'asc')
+        //     ->get();
+        $this->cargarProductos();
+    }
 
-
-        public function updatedPedido(){
+    public function updatedPedido(){
         $presup=ModelsPresupuesto::find($this->presupuestoid);
         $pold=Pedido::where('presupuesto_id',$presup->id)->first();
         if($pold){
@@ -265,9 +276,13 @@ class Presupuesto extends Component
             $pold->save();
         }
 
-        $pnew=Pedido::find($this->pedido);
-        $pnew->presupuesto_id=$this->presupuestoid;
-        $pnew->save();
+        if($this->pedido){
+            $pnew=Pedido::find($this->pedido);
+            if($pnew){
+                $pnew->presupuesto_id=$this->presupuestoid;
+                $pnew->save();
+            }
+        }
         $presup->pedido=$this->pedido;
         $presup->save();
     }
@@ -276,13 +291,31 @@ class Presupuesto extends Component
         return is_numeric($tirada) ? $tirada : 0;
     }
 
+    private function cargarProductos(){
+    $this->productos = Producto::with('cliente')
+        ->where('productoestado', '1')
+        ->where('tipo', $this->tipo)
+        ->when($this->cliente_id != '', function ($query) {
+            $query->where('cliente_id', $this->cliente_id);
+        })
+        ->when($this->filtroisbn!='', function ($query) {
+            $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+        })
+        ->when($this->filtroreferencia!='', function ($query) {
+            $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+        })
+        ->orderBy('referencia', 'asc')
+        ->get();
+    }
+
     public function updatedProductoeditorialid(){
         if ($this->productoeditorialid=='') {
             $this->precio_ud=0;
         } else {
             $p=Producto::find($this->productoeditorialid);
             $this->precio_ud=$p->precio_ud;
-            $this->preciototal=$p->precio_ud * $this->tiradanum($p->tirada);
+            // $this->preciototal=$p->precio_ud * $this->tiradanum($p->tirada);
+            $this->preciototal = $p->precio_ud * $this->tiradanum($this->tirada);
             $this->caja_id=$p->caja_id;
             $this->etiqueta=$p->etiqueta;
             $this->uds_caja=$p->udxcaja;
@@ -380,7 +413,6 @@ class Presupuesto extends Component
             'estado'=>$this->estado,
             'okexterno'=>$this->okexterno,
             'observacionesexterno'=>$this->observacionesexterno,
-            'tipo'=>$this->tipo,
             'espedido'=>$this->espedido,
             'manipulacion'=>$this->manipulacion,
             'pedido'=>$this->pedido,
@@ -399,20 +431,19 @@ class Presupuesto extends Component
         // desde febrero 2026 es igual para las dos
         // if ($this->tipo=='1') {
         // dd($this->productoeditorialid);
+        if($this->productoeditorialid){
             $presupprod=PresupuestoProducto::updateOrCreate(
-                [
-                'id'=>$this->presupuestoproductoid
-                ],
-                [
-                'presupuesto_id'=>$presup->id,
-                'producto_id'=>$this->productoeditorialid,
-                'tirada'=>$this->tirada,
-                'precio_ud'=>$this->precio_ud,
-                'preciototal'=>$this->tiradanum($this->tirada) * $this->precio_ud,
-
-            ]
-            );
-        // }
+            [
+            'id'=>$this->presupuestoproductoid
+            ],
+            [
+            'presupuesto_id'=>$presup->id,
+            'producto_id'=>$this->productoeditorialid,
+            'tirada'=>$this->tirada,
+            'precio_ud'=>$this->precio_ud,
+            'preciototal'=>$this->tiradanum($this->tirada) * $this->precio_ud,
+            ]);
+        }
 
         $i=null;
         if ($nuevo) {
@@ -487,7 +518,8 @@ class Presupuesto extends Component
                 'producto_id'=>$presproducto->producto_id,
                 'tirada'=>$this->tiradanum($presproducto->tirada),
                 'precio_ud'=>$presproducto->precio_ud,
-                'preciototal'=> $this->tiradanum($presproducto->tirada) * $this->precio_ud,
+                // 'preciototal'=> $this->tiradanum($presproducto->tirada) * $this->precio_ud,
+                'preciototal'=> $this->tiradanum($presproducto->tirada) * $presproducto->precio_ud,
                 'observaciones'=>$presproducto->observaciones,
                 'visible'=>$presproducto->visible,
                 'orden'=>$presproducto->orden,
@@ -503,6 +535,7 @@ class Presupuesto extends Component
                 'descripcion'=>$presproceso->descripcion,
                 'tirada'=>$presproceso->tirada,
                 'precio_ud'=>$presproceso->precio_ud,
+                // 'preciototal'=>$this->tiradanum($presproceso->tirada) * $this->precio_ud,
                 'preciototal'=>$this->tiradanum($presproceso->tirada) * $this->precio_ud,
                 'observaciones'=>$presproceso->observaciones,
                 'visible'=>$presproceso->visible,
