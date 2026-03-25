@@ -132,10 +132,18 @@ class PedidoController extends Controller
     }
 
     public function entrada($pedidoid,$tipo,$ruta){
+
         $pdf = new Dompdf();
 
-        $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;
-        $pedido=Pedido::with('cliente','contacto','distribuciones','subpedidos','tareas')->find($pedidoid);
+        // $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;
+        $pedProd = PedidoProducto::with('producto')
+            ->where('pedido_id',$pedidoid)
+        ->first();
+
+        $productos = $pedProd?->producto;
+
+        // $pedido=Pedido::with('cliente','contacto','distribuciones','subpedidos','tareas')->find($pedidoid);
+        $pedido = Pedido::with(['cliente','contacto','distribuciones','subpedidos','tareas','laminado','caja',])->find($pedidoid);
 
         // $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos','subpedidos','tareas')->find($pedidoid);
         // dd($pedido->pedidoproductos);
