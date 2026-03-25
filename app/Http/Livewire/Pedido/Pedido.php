@@ -141,8 +141,10 @@ class Pedido extends Component
         $this->titulo=$titulo;
         $this->tipo=$tipo;
         $this->ruta=$ruta;
+
         if ($pedidoid!='') {
-            $pedido=ModeloPedido::find($pedidoid);
+            // $pedido=ModeloPedido::find($pedidoid);
+            $pedido = ModeloPedido::with('pedidoproductos.producto')->find($pedidoid);
             $this->tipo=$pedido->tipo;
             $this->pedidoid=$pedido->id;
             $this->responsable=$pedido->responsable;
@@ -181,20 +183,32 @@ class Pedido extends Component
             $this->otros=$pedido->otros;
             $this->titulo=$this->tipo=='1'?'Pedido Editorial':'Pedido Packaging/Propios';
             $this->facturas=FacturaDetalle::where('pedido_id',$pedido->id)->get();
-            // dd($pedido->id);
-            // dd($this->facturas);
+
             if($this->cliente_id){
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
                 $this->ofertas=Oferta::where('cliente_id', '=', $this->cliente_id)->orderBy('id')->get();
             }
+
             //desde febrero 2026 se comportan los editoria y otros igual
             // if ($tipo=='1') {
-                $this->productoeditorialid=$pedido->pedidoproductos->first()->producto->id;
-                $this->prod=$pedido->pedidoproductos->first()->producto;
-                $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
+                $prod = $pedido->pedidoproductos->first();
+
+                if($prod && $prod->producto){
+                    $this->productoeditorialid = $prod->producto->id;
+                    $this->prod = $prod->producto;
+                    $this->pedidoproductoid = $prod->id;
+                }
+
+                // $this->productoeditorialid=$pedido->pedidoproductos->first()->producto->id;
+                // $this->prod=$pedido->pedidoproductos->first()->producto;
+                // $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
             // }
         }
-        $this->facturas=FacturaDetalle::where('pedido_id',$this->pedidoid)->get();
+        // $this->facturas=FacturaDetalle::where('pedido_id',$this->pedidoid)->get();
+            $this->facturas = $this->pedidoid
+                ? FacturaDetalle::where('pedido_id',$this->pedidoid)->get()
+                : collect();
+
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
 
