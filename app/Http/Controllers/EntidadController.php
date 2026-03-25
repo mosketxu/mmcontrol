@@ -9,7 +9,7 @@ class EntidadController extends Controller
     public function __construct()
     {
         $this->middleware('can:entidad.index')->only('index');
-        $this->middleware('can:entidad.edit')->only('edit','update');
+        $this->middleware('can:entidad.edit')->only('edita','update');
     }
 
     public function index()
@@ -46,9 +46,12 @@ class EntidadController extends Controller
         return view('entidad.destinos',compact('entidad','ruta'));
     }
 
-    public function createcontacto($contactoId)
+    // public function createcontacto($contactoId)
+    public function createContacto(Entidad $entidad)
     {
-        $contacto=Entidad::find($contactoId);
+        // $contacto=Entidad::find($contactoId);
+        // $contacto = Entidad::findOrFail($contactoId); // 404 automático
+        $contacto=$entidad;
         return view('entidad.createcontacto',compact('contacto'));
     }
 
