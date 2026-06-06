@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProductosExport;
+use Illuminate\Http\Request;
 
 use \PDF;
 // use Barryvdh\DomPDF\Facade as PDF;
@@ -65,4 +68,19 @@ class ProductoController extends Controller
         return view('producto.edit',compact('producto','tipo','titulo'));
     }
 
+    public function exportProducto(Request $request){
+        return Excel::download(
+            new ProductosExport(
+                $request->tipo,
+                $request->filtroisbn,
+                $request->filtroproductoestado,
+                $request->filtroreferencia,
+                $request->filtrocliente,
+                $request->filtromaterial,
+                $request->filtroimpresion,
+                $request->filtrocaja
+            ),
+            'productos.xlsx'
+        );
+    }
 }

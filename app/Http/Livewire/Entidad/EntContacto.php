@@ -11,6 +11,7 @@ class EntContacto extends Component
     public $entidad;
     public $entidadId;
     public $contacto;
+    public $contactoId;
     public $nombre;
     public $telefono;
     public $movil;

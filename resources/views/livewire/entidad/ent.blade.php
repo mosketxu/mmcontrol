@@ -157,6 +157,26 @@
                         <option value="90">90</option>
                     </x-select>
                 </div> --}}
+                <div class="w-1/12 form-item">
+                    <x-jet-label for="credito" >{{ __('Crédito') }}</x-jet-label>
+                    <input type="checkbox" wire:model.lazy="entidad.credito"/>
+                    <x-jet-input-error for="credito" class="mt-2" />
+                </div>
+                <div class="w-full form-item">
+                    <x-jet-label for="empresacredito" >{{ __('Empresa Crédito') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.empresacredito" type="text" id="empresacredito" name="empresacredito" :value="old('empresacredito')" class="w-full"/>
+                    <x-jet-input-error for="empresacredito" class="mt-2" />
+                </div>
+                <div class="w-full form-item">
+                    <x-jet-label for="importecredito" >{{ __('Importe Crédito') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.importecredito" type="number" step="any" id="importecredito" name="importecredito" :value="old('importecredito')" class="w-full"/>
+                    <x-jet-input-error for="importecredito" class="mt-2" />
+                </div>
+                <div class="w-full form-item">
+                    <x-jet-label for="vigenciacredito" >{{ __('Vigencia Crédito') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.vigenciacredito" type="text" id="vigenciacredito" name="vigenciacredito" :value="old('vigenciacredito')" class="w-full"/>
+                    <x-jet-input-error for="vigenciacredito" class="mt-2" />
+                </div>
                 <div class="w-full form-item">
                     <x-jet-label for="metodopago"  title="Método de pago">{{ __('Método Pago:') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.metodopago" type="text" id="metodopago" name="metodopago" :value="old('metodopago')" class="w-full"/>
@@ -166,7 +186,7 @@
                     <x-jet-input  wire:model.defer="entidad.vencimientofechafactura" type="text" id="vencimientofechafactura" name="vencimientofechafactura" :value="old('vencimientofechafactura')" class="w-full"/>
                 </div>
             </div>
-            <div class="px-2 mx-2 my-2 rounded-md bg-blue-50">
+            {{-- <div class="px-2 mx-2 my-2 rounded-md bg-blue-50">
                 <h3 class="font-semibold ">Datos Crédito</h3>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
@@ -190,7 +210,7 @@
                     <x-jet-input  wire:model.defer="entidad.vigenciacredito" type="text" id="vigenciacredito" name="vigenciacredito" :value="old('vigenciacredito')" class="w-full"/>
                     <x-jet-input-error for="vigenciacredito" class="mt-2" />
                 </div>
-            </div>
+            </div> --}}
 
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 <div class="w-full form-item">

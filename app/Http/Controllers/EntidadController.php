@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entidad;
+use App\Exports\EntidadesExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
 
 class EntidadController extends Controller
 {
@@ -57,5 +60,20 @@ class EntidadController extends Controller
         return view('entidad.createcontacto',compact('contacto'));
     }
 
+    public function exportEntidad(Request $request)
+    {
+        return Excel::download(
+            new EntidadesExport(
+                $request->search,
+                $request->filtroresponsable,
+                $request->entidadtipo_id,
+                $request->filtrofini,
+                $request->filtroffin,
+                $request->ordenarpor ?? 'entidad',
+                $request->orden ?? 'asc'
+            ),
+            'entidades.xlsx'
+        );
+}
 
 }

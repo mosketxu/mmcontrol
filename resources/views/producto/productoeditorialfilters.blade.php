@@ -60,16 +60,29 @@
                     @endforeach
                 </select>
                 @if($filtroproductoestado!='')
-                    <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
+                    <x-icon.filter-slash-a wire:click="$set('filtroproductoestado', '')" class="pb-1" title="reset filter"/>
                 @endif
             </div>
         </div>
     </div>
-    <div class="flex flex-row-reverse w-2/12 ">
+    <div class="flex flex-row-reverse w-2/12 gap-4">
         <div class="mt-3">
             @if(!Auth::user()->hasRole('Cliente'))
             <x-button.button  onclick="location.href = '{{ route('producto.nuevo',$tipo) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
             @endif
+        </div>
+        <div >
+            <x-icon.xls-a href="{{ route('producto.export',[
+                    'tipo' => $tipo,
+                    'filtroisbn' => $filtroisbn,
+                    'filtroproductoestado' => $filtroproductoestado,
+                    'filtroreferencia' => $filtroreferencia,
+                    'filtrocliente' => $filtrocliente,
+                    'filtromaterial' => $filtromaterial,
+                    'filtroimpresion' => $filtroimpresion,
+                    'filtrocaja' => $filtrocaja
+                ]) }}"
+                class="mt-3 mr-1 text-green-400 w-7" title="Exportar productos"/>
         </div>
     </div>
 </div>

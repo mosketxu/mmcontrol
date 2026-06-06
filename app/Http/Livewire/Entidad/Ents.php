@@ -18,7 +18,7 @@ class Ents extends Component
     public $orden='asc';
     public $entidadtipo_id='';
 
-    protected $queryString=['search','filtroresponsable','filtrofini','filtroffin'];
+    protected $queryString=['search','filtroresponsable','filtrofini','filtroffin','entidadtipo_id','ordenarpor','orden'];
 
     public Entidad $entidad;
 
@@ -99,5 +99,20 @@ class Ents extends Component
             $entidad->delete();
             $this->dispatchBrowserEvent('notify', 'La entidad: '.$entidad->entidad.' ha sido eliminada!');
         }
+    }
+
+    public function exportEntidad(){
+        return Excel::download(
+            new EntidadesExport(
+                $this->search,
+                $this->filtroresponsable,
+                $this->entidadtipo_id,
+                $this->filtrofini,
+                $this->filtroffin,
+                $this->ordenarpor,
+                $this->orden
+            ),
+            'entidades.xlsx'
+        );
     }
 }

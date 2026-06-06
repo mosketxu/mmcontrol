@@ -52,6 +52,7 @@ class EntContactos extends Component
             $entidad->update([$campo => $valor]);
             session()->flash('success', 'Contacto modificado con éxito');
             // $this->dispatchBrowserEvent('notify', 'Contacto modificado con éxito');
+            $this->emitSelf('$refresh');
         }
     }
 
@@ -61,6 +62,7 @@ class EntContactos extends Component
             $relacion->update([$campo => $valor]);
             session()->flash('success', 'Contacto modificado con éxito');
             // $this->dispatchBrowserEvent('notify', 'Contacto modificado con éxito');
+            $this->emitSelf('$refresh');
         }
     }
 
@@ -80,7 +82,7 @@ class EntContactos extends Component
             'entidadtipo_id'=>'0',
         ]);
         if($nuevoContacto){
-             EntidadContacto::create([
+            EntidadContacto::create([
                 'entidad_id'=>$this->entidad->id,
                 'contacto_id'=>$nuevoContacto->id,
                 'departamento'=>$this->departamento,
@@ -88,7 +90,8 @@ class EntContactos extends Component
             ]);
             session()->flash('success', 'Contacto añadido con éxito');
             //  $this->dispatchBrowserEvent('notify', 'Contacto añadido con éxito');
-             $this->reset(['nombre', 'tfno', 'emailgral', 'departamento', 'comentarios']);
+            $this->reset(['nombre', 'tfno', 'emailgral', 'departamento', 'comentarios']);
+            $this->emitSelf('$refresh');
         }
     }
 
@@ -100,6 +103,7 @@ class EntContactos extends Component
         if ($contactoBorrar) {
             $contactoBorrar->delete();
             // $this->dispatchBrowserEvent('notify', 'El contacto '.$e->entidad.' ha sido eliminado!');
+            $this->emitSelf('$refresh');
         }
     }
 

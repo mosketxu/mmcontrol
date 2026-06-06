@@ -63,10 +63,11 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('entidad/{tipo}/tipo', [EntidadController::class,'tipo'])->middleware('can:entidad.index')->name('entidad.tipo'); //
     Route::get('entidad/{entidadtipo_id}/nueva', [EntidadController::class,'nueva'])->name('entidad.nueva');
     Route::resource('entidad', EntidadController::class)->only(['index','create', 'edit']); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
-
+    Route::get('/entidades/export', [EntidadController::class, 'exportEntidad'])->name('entidad.export');
 
     // Producto
     // Route::get('producto/{producto}/adjunto', [ProductoController::class,'adjunto'])->name('producto.adjunto');
+    Route::get('/producto/export', [ProductoController::class, 'exportProducto'])->name('producto.export');
     Route::get('producto/{prodId}/ficha/{tipo}/{tipopdf}', [ProductoController::class,'ficha'])->name('producto.ficha');
     Route::get('producto/{tipo}', [ProductoController::class,'tipo'])->middleware('can:producto.index')->name('producto.tipo');
     Route::get('/producto/{producto}/archivos/{ruta}', [ProductoController::class, 'archivos'])->name('producto.archivos');

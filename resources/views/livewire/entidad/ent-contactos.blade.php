@@ -20,6 +20,7 @@
                     {{ session('success') }}
                 </div>
             @endif
+
             {{-- tabla contactos --}}
             <div class="flex-col space-y-4">
                 <div>
