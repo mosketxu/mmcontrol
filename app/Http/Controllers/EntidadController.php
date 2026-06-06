@@ -38,7 +38,9 @@ class EntidadController extends Controller
 
     public function contactos(Entidad $entidad)
     {
-        return view('entidad.contactos',compact('entidad'));
+        $ruta = url()->previous();
+        // dd($ruta);
+        return view('entidad.contactos',compact('entidad','ruta'));
     }
 
     public function destinos(Entidad $entidad,$ruta)

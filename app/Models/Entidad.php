@@ -37,6 +37,7 @@ class Entidad extends Model
             $query->where('responsable','like','%'.$filtroresponsable.'%');
         })
         //  para el valor 0 no pongo condicion, salen todos
+        //  Jma no quiere que salgan los contactos 05/06/26
         ->when($entidadtipo_id=='1', function ($query){
             $query->whereIn('entidadtipo_id',[1,2]);
         })

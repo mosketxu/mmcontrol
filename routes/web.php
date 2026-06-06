@@ -126,37 +126,38 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     //Cliente
 
+    // Route::prefix('cliente')->name('cliente.')->group(function () {
     Route::prefix('cliente')->name('cliente.')->group(function () {
-        Route::get('entidad/index', [ClienteController::class, 'entidadIndex'])->middleware('can:cliente.entidad.index')->name('entidad.index');
+      //  Route::get('entidad/index', [ClienteController::class, 'entidadIndex'])->middleware('can:cliente.entidad.index')->name('entidad.index');
         // ... resto de rutas cliente
         // Entidades a las que accede el usuario invitado
-        Route::get('entidad/index', [ClienteController::class,'entidadIndex'])->middleware('can:cliente.entidad.index')->name('cliente.entidad.index');
+        Route::get('entidad/index', [ClienteController::class,'entidadIndex'])->middleware('can:cliente.entidad.index')->name('entidad.index');
 
         // Productos a las que accede el usuario invitado
-        Route::get('producto/{tipo}', [ClienteController::class,'productotipo'])->middleware('can:cliente.producto.index')->name('cliente.producto.tipo');
-        Route::get('producto/{producto}/edit', [ClienteController::class,'productoedit'])->middleware('can:cliente.producto.index')->name('cliente.producto.edit');
-        Route::get('producto/{prodId}/ficha/{tipo}/{tipopdf}', [ClienteController::class,'productoficha'])->middleware('can:cliente.producto.index')->name('cliente.producto.ficha');
-        Route::get('producto/{producto}/archivos/{ruta}', [ClienteController::class, 'productoarchivos'])->middleware('can:cliente.producto.index')->name('cliente.producto.archivos');
+        Route::get('producto/{tipo}', [ClienteController::class,'productotipo'])->middleware('can:cliente.producto.index')->name('producto.tipo');
+        Route::get('producto/{producto}/edit', [ClienteController::class,'productoedit'])->middleware('can:cliente.producto.index')->name('producto.edit');
+        Route::get('producto/{prodId}/ficha/{tipo}/{tipopdf}', [ClienteController::class,'productoficha'])->middleware('can:cliente.producto.index')->name('producto.ficha');
+        Route::get('producto/{producto}/archivos/{ruta}', [ClienteController::class, 'productoarchivos'])->middleware('can:cliente.producto.index')->name('producto.archivos');
 
         // Presupuestos a las que accede el usuario invitado
-        Route::get('presupuesto/{presupuesto}/archivos/{ruta}', [ClienteController::class, 'archivos'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.archivos');
-        Route::get('presupuesto/{tipo}/ruta/{ruta}', [ClienteController::class,'presupuestotipo'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.tipo');
-        Route::get('presupuesto/{presupuesto}/editar/{ruta}', [ClienteController::class, 'presupuestoeditar'])->middleware('can:cliente.presupuesto.index')->name('cliente.presupuesto.editar');
-        Route::get('presupuesto/{presupuesto}/pdf', [ClienteController::class, 'presupuestoPDF'])->name('cliente.presupuesto.presupuestoPDF');
+        Route::get('presupuesto/{presupuesto}/archivos/{ruta}', [ClienteController::class, 'archivos'])->middleware('can:cliente.presupuesto.index')->name('presupuesto.archivos');
+        Route::get('presupuesto/{tipo}/ruta/{ruta}', [ClienteController::class,'presupuestotipo'])->middleware('can:cliente.presupuesto.index')->name('presupuesto.tipo');
+        Route::get('presupuesto/{presupuesto}/editar/{ruta}', [ClienteController::class, 'presupuestoeditar'])->middleware('can:cliente.presupuesto.index')->name('presupuesto.editar');
+        Route::get('presupuesto/{presupuesto}/pdf', [ClienteController::class, 'presupuestoPDF'])->name('presupuesto.presupuestoPDF');
 
         // Ofertas a las que accede el usuario invitado
-        Route::get('oferta/{tipo}', [ClienteController::class,'ofertatipo'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.tipo');
-        Route::get('oferta/{oferta}/editar/{ruta}', [ClienteController::class, 'ofertaeditar'])->middleware('can:cliente.oferta.index')->name('cliente.oferta.editar');
-        Route::get('oferta/{ofertaId}/ficha/{tipo}', [ClienteController::class,'ofertaficha'])->name('cliente.oferta.ficha');
+        Route::get('oferta/{tipo}', [ClienteController::class,'ofertatipo'])->middleware('can:cliente.oferta.index')->name('oferta.tipo');
+        Route::get('oferta/{oferta}/editar/{ruta}', [ClienteController::class, 'ofertaeditar'])->middleware('can:cliente.oferta.index')->name('oferta.editar');
+        Route::get('oferta/{ofertaId}/ficha/{tipo}', [ClienteController::class,'ofertaficha'])->name('oferta.ficha');
 
         // Pedidos a las que accede el usuario invitado
-        Route::get('pedido/{tipo}/ruta/{ruta}', [ClienteController::class,'pedidotipo'])->middleware('can:cliente.pedido.index')->name('cliente.pedido.tipo');
-        Route::get('pedido/{pedido}/editar/{ruta}', [ClienteController::class, 'pedidoeditar'])->middleware('can:cliente.pedido.index')->name('cliente.pedido.editar');
+        Route::get('pedido/{tipo}/ruta/{ruta}', [ClienteController::class,'pedidotipo'])->middleware('can:cliente.pedido.index')->name('pedido.tipo');
+        Route::get('pedido/{pedido}/editar/{ruta}', [ClienteController::class, 'pedidoeditar'])->middleware('can:cliente.pedido.index')->name('pedido.editar');
 
         // Facturas a las que accede el usuario invitado
-        Route::get('facturacion', [ClienteController::class,'facturacionindex'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.index');
+        Route::get('facturacion', [ClienteController::class,'facturacionindex'])->middleware('can:cliente.facturacion.index')->name('facturacion.index');
         // Route::get('cliente/facturacion/{factura}/edit', [ClienteController::class,'facturacionedit'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.edit');
-        Route::get('facturacion/{factura}/show', [ClienteController::class,'facturacionshow'])->middleware('can:cliente.facturacion.index')->name('cliente.facturacion.show');
+        Route::get('facturacion/{factura}/show', [ClienteController::class,'facturacionshow'])->middleware('can:cliente.facturacion.index')->name('facturacion.show');
     });
 
     // Correo

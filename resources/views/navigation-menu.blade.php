@@ -45,11 +45,11 @@
                                     Prospección/Colaboradores
                                 </x-jet-dropdown-link>
                             </div>
-                            <div class="w-44">
+                            {{-- <div class="w-44">
                                 <x-jet-dropdown-link href="{{ route('entidad.tipo','0') }}" class="text-left">
                                     Contactos
                                 </x-jet-dropdown-link>
-                            </div>
+                            </div> --}}
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
@@ -310,9 +310,12 @@
                             <x-jet-dropdown-link href="{{ route('entidad.tipo','2') }}" class="text-right">
                                 {{ __('Proveedores') }}
                             </x-jet-dropdown-link>
-                            <x-jet-dropdown-link href="{{ route('entidad.tipo','0') }}" class="text-right">
+                            <x-jet-dropdown-link href="{{ route('entidad.tipo','4') }}" class="text-left">
+                                {{__('Prospección/Colaboradores')}}
+                                </x-jet-dropdown-link>
+                            {{-- <x-jet-dropdown-link href="{{ route('entidad.tipo','0') }}" class="text-right">
                                 {{ __('Todos') }}
-                            </x-jet-dropdown-link>
+                            </x-jet-dropdown-link> --}}
                         </div>
                     </x-slot>
                 </x-jet-dropdown>
