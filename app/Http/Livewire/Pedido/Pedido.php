@@ -244,7 +244,7 @@ class Pedido extends Component
             ->orderBy('referencia','asc')
             ->get();
 
-        $responsables=Responsable::all();
+        $responsables=Responsable::where('activo','1')->get();
 
         $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoeditorial' : 'livewire.pedido.pedidootros';
         return view($vista,compact(['entidades','clientes','proveedores','responsables','cajas','laminados']));

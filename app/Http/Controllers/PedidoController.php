@@ -56,7 +56,7 @@ class PedidoController extends Controller
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
-        $responsables=Responsable::get();
+        $responsables=Responsable::where('activo','1')->get();
         $laminados=Laminado::get();
 
         $pedidos= Pedido::query()

@@ -197,7 +197,7 @@ class Presupuesto extends Component
             ->orderBy('id')
             ->get();
 
-        $responsables=Responsable::all();
+        $responsables=Responsable::where('activo','1')->get();
 
         $vista=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoeditorial' : 'livewire.presupuesto.presupuestootros' ;
 

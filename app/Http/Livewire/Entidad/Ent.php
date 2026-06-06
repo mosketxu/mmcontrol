@@ -79,7 +79,7 @@ class Ent extends Component
         $this->contactoId=$contacto->id;
         $tiposentidad=EntidadTipo::orderby('id')->get();
 
-        $responsables=Responsable::all();
+        $responsables=Responsable::where('activo','1')->get();
         $metodopagos=MetodoPago::all();
         $provincias=Provincia::orderBy('provincia')->get();
         $paises=Pais::all();
