@@ -123,7 +123,7 @@
                 <h3 class="font-semibold ">Datos Facturación</h3>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
-                <div class="w-full form-item">
+                {{-- <div class="w-full form-item">
                     <x-jet-label for="banco1" >{{ __('Banco 1') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.banco1" type="text" id="banco1" name="banco1" :value="old('banco1')" class="w-full"/>
                 </div>
@@ -138,8 +138,8 @@
                 <div class="w-full form-item">
                     <x-jet-label for="iban2" title="Cuenta a la que el cliente hará la transferencia">{{ __('Iban Transferencia 2') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.iban2" type="text" id="iban2" name="iban2" :value="old('iban2')" class="w-full"/>
-                </div>
-                <div class="w-full form-item">
+                </div> --}}
+                {{-- <div class="w-full form-item">
                     <x-jet-label for="metodopago_id">{{ __('Método Pago') }}</x-jet-label>
                     <x-select wire:model.defer="entidad.metodopago_id" class="w-full" selectname="metodopago_id">
                         <option value="">-- choose --</option>
@@ -147,8 +147,8 @@
                         <option value="{{ $metodopago->id }}">{{ $metodopago->nombrecorto }}</option>
                         @endforeach
                     </x-select>
-                </div>
-                <div class="w-full form-item">
+                </div> --}}
+                {{-- <div class="w-full form-item">
                     <x-jet-label for="vencimientofechafactura">{{ __('Vto. Factura') }}</x-jet-label>
                     <x-select wire:model.defer="entidad.vencimientofechafactura" class="w-full" selectname="vencimientofechafactura">
                         <option value="">-- choose --</option>
@@ -156,6 +156,14 @@
                         <option value="60">60</option>
                         <option value="90">90</option>
                     </x-select>
+                </div> --}}
+                <div class="w-full form-item">
+                    <x-jet-label for="metodopago"  title="Método de pago">{{ __('Método Pago:') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.metodopago" type="text" id="metodopago" name="metodopago" :value="old('metodopago')" class="w-full"/>
+                </div>
+                <div class="w-full form-item">
+                    <x-jet-label for="vencimientofechafactura"  title="Método de pago">{{ __('Fecha Vencimiento:') }}</x-jet-label>
+                    <x-jet-input  wire:model.defer="entidad.vencimientofechafactura" type="text" id="vencimientofechafactura" name="vencimientofechafactura" :value="old('vencimientofechafactura')" class="w-full"/>
                 </div>
             </div>
             <div class="px-2 mx-2 my-2 rounded-md bg-blue-50">

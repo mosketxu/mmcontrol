@@ -16,7 +16,7 @@ class Entidad extends Model
                         'nif','tfno','emailgral','emailadm','emailaux','web',
                         'banco1','iban1','banco2','iban2',
                         'vencimientofechafactura','credito','empresacredito','importecredito','vigenciacredito',
-                        'metodopago_id','diavencimiento','observaciones'];
+                        'metodopago_id','metodopago','diavencimiento','observaciones'];
 
     public function pais(){ return $this->belongsTo(Pais::class);}
     public function provincia(){return $this->belongsTo(Provincia::class);}
