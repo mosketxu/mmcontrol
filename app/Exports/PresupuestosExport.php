@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class ExportPresupuestos implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize
+class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize
 {
     protected $filters;
 
@@ -20,7 +20,7 @@ class ExportPresupuestos implements FromQuery, WithHeadings, WithMapping, Should
     public function query()
     {
         return Presupuesto::query()
-            ->with(['cliente', 'proveedor'])
+            ->with(['cliente', 'proveedor','presupuestoproductos.producto'])
             ->join('entidades', 'presupuestos.cliente_id', '=', 'entidades.id')
             ->join('presupuesto_productos', 'presupuesto_productos.presupuesto_id', '=', 'presupuestos.id')
             ->join('productos', 'presupuesto_productos.producto_id', '=', 'productos.id')
@@ -64,29 +64,88 @@ class ExportPresupuestos implements FromQuery, WithHeadings, WithMapping, Should
 
     public function headings(): array
     {
-        return [
-            'ID',
-            'Fecha',
-            'Cliente',
-            'Proveedor',
-            'Responsable',
-            'Estado',
-            'OK Externo',
-            'Observaciones'
-        ];
+        if($this->filters['tipo'] == '1') {
+            return [
+                'Presupuesto Editorial',
+                'Facturado por',
+                'Fecha',
+                'Cliente',
+                'Proveedor',
+                'Responsable',
+                'ISBN/Referencia',
+                'Estado',
+                'Pedido',
+                'OK Externo',
+                'Observaciones Externo',
+                'Otros',
+            ];
+        }else{
+            return [
+                'Presupuesto Otros',
+                'Facturado por',
+                'Fecha',
+                'Cliente',
+                'Proveedor',
+                'Responsable',
+                'Descripcion',
+                'ISBN/Referencia',
+                'Estado',
+                'Pedido',
+                'OK Externo',
+                'Observaciones Externo',
+                'Otros',
+            ];
+        }
     }
 
-    public function map($presupuesto): array
-    {
-        return [
-            $presupuesto->id,
-            $presupuesto->fechapresupuesto,
-            $presupuesto->cliente->entidad ?? '',
-            $presupuesto->proveedor->entidad ?? '',
-            $presupuesto->responsable,
-            $presupuesto->estado,
-            $presupuesto->okexterno,
-            $presupuesto->observacionesexterno,
-        ];
-    }
+    public function map($presupuesto): array{
+
+        $producto = optional($presupuesto->presupuestoproductos->first())->producto;
+
+        $estado = match ((int)$presupuesto->estado) {
+            0 => 'Enviado',
+            1 => 'Aceptado',
+            2 => 'Rechazado',
+            default => '',
+        };
+
+        $codigo = collect([
+            $producto->isbn ?? null,
+            $producto->referencia ?? null,
+        ])->filter()->implode(' / ');
+
+        $facturadoPor = $presupuesto->facturadopor == 1? 'Milimetrica' : 'Proveedor';
+
+        if($this->filters['tipo'] == '1') {
+            return [
+                $presupuesto->id,
+                $facturadoPor,
+                $presupuesto->fechapresupuesto,
+                $presupuesto->cliente->entidad ?? '',
+                $presupuesto->proveedor->entidad ?? '',
+                $presupuesto->responsable,
+                $codigo,
+                $estado,
+                $presupuesto->okexterno == 1 ? 'Sí' : 'No',
+                $presupuesto->pedido,
+                $presupuesto->observacionesexterno,
+                ];
+        }else{
+            return [
+                $presupuesto->id,
+                $facturadoPor,
+                $presupuesto->fechapresupuesto,
+                $presupuesto->cliente->entidad ?? '',
+                $presupuesto->proveedor->entidad ?? '',
+                $presupuesto->responsable,
+                $presupuesto->descripcion,
+                $codigo,
+                $estado,
+                $presupuesto->pedido,
+                $presupuesto->okexterno == 1 ? 'Sí' : 'No',
+                $presupuesto->observacionesexterno,
+                $presupuesto->otros,
+            ];
+        }
+}
 }

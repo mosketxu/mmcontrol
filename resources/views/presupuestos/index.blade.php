@@ -6,18 +6,17 @@
                     {{ $titulo }}
                 </h2>
             </div>
-            <div class="flex flex-row-reverse w-full">
-                <x-button.button  class="py-1" onclick="location.href = '{{ route('presupuesto.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
+            <div class="flex flex-row-reverse">
+                <div class=" w-full">
+                    <x-button.button  class="py-1" onclick="location.href = '{{ route('presupuesto.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
+                </div>
+                <div onclick="Livewire.emit('exportPresupuestos')" class="cursor-pointer mr-10" title="Exportar presupuestos">
+                    <x-icon.xls class="mr-1 text-green-600 w-7" />
+                </div>
             </div>
 
-            <x-button.button
-    class="py-1"
-    color="green"
-    onclick="Livewire.emit('exportPresupuestos')"
->
-    Excel
-</x-button.button>
         </div>
+
     </x-slot>
     <div class="p-2">
         <div class="max-w-full mx-auto">
