@@ -50,7 +50,10 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
         $entidadescliente = UserEmpresa::where('user_id',Auth::id())->pluck('entidad_id');
 
         // Si tiene empresas asociadas, es cliente y solo ve sus productos
-        if ($entidadescliente->count() > 0) {$query->whereIn('cliente_id', $entidadescliente);}
+        if (Auth::user()->hasRole('Cliente')) {
+            $entidadescliente = UserEmpresa::where('user_id',Auth::id())->pluck('entidad_id');
+            $query->whereIn('cliente_id', $entidadescliente);
+        }
 
         return $query
             ->when($this->tipo, fn($q) => $q->where('tipo', $this->tipo))

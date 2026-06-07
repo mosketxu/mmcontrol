@@ -7,6 +7,8 @@ use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PresupuestosExport;
 
 class ClientePresupuestos extends Component
 {
@@ -48,6 +50,10 @@ class ClientePresupuestos extends Component
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
         $this->entidadescliente=UserEmpresa::where('user_id',$this->cliente->id)->get();
     }
+
+    protected $listeners = [
+        'exportPresupuestos' => 'export'
+    ];
 
     protected function rules(){
         return [
@@ -197,4 +203,23 @@ class ClientePresupuestos extends Component
     //         }
     //     }
     // }
+
+    public function export(){
+        return Excel::download(
+            new PresupuestosExport([
+                'tipo'         => $this->tipo,
+                'search'       => $this->search,
+                'anyo'         => $this->filtroanyo,
+                'mes'          => $this->filtromes,
+                'cliente'      => $this->filtrocliente,
+                'proveedor'    => $this->filtroproveedor,
+                'responsable'  => $this->filtroresponsable,
+                'referencia'   => $this->filtroreferencia,
+                'isbn'         => $this->filtroisbn,
+                'estado'       => $this->filtroestado,
+                'okexterno'    => $this->filtrookexterno,
+            ]),
+            'presupuestosimprenta.xlsx'
+        );
+    }
 }
