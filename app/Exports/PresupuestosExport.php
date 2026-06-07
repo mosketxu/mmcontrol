@@ -22,18 +22,15 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
     public function query()
     {
         $query = Presupuesto::query()
-            ->with(['cliente', 'proveedor', 'presupuestoproductos.producto'])
-            ->join('entidades', 'presupuestos.cliente_id', '=', 'entidades.id')
-            ->join('presupuesto_productos', 'presupuesto_productos.presupuesto_id', '=', 'presupuestos.id')
-            ->join('productos', 'presupuesto_productos.producto_id', '=', 'productos.id')
-            ->select('presupuestos.*');
+            ->with(['cliente', 'proveedor', 'presupuestoproductos.producto']);
+            // ->join('entidades', 'presupuestos.cliente_id', '=', 'entidades.id')
+            // ->join('presupuesto_productos', 'presupuesto_productos.presupuesto_id', '=', 'presupuestos.id')
+            // ->join('productos', 'presupuesto_productos.producto_id', '=', 'productos.id')
+            // ->select('presupuestos.*');
 
         // 🔒 CONTROL DE ACCESO (cliente vs propietario)
         if (Auth::user()->hasRole('Cliente')) {
-
-            $entidadescliente = UserEmpresa::where('user_id', Auth::id())
-                ->pluck('entidad_id');
-
+            $entidadescliente = UserEmpresa::where('user_id', Auth::id())->pluck('entidad_id');
             $query->whereIn('presupuestos.cliente_id', $entidadescliente);
         }
 
@@ -71,8 +68,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
             ->when($this->filters['okexterno'] ?? null, fn($q, $ok) =>
                 $q->where('presupuestos.okexterno', $ok)
             )
-            ->groupBy('presupuestos.id')
-            ->orderByDesc('presupuestos.id');
+            ->orderByDesc('id');
     }
 
     public function headings(): array
@@ -91,23 +87,23 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
                 'Pedido',
                 'Observaciones Externo',
             ];
+        }else{
+            return [
+                'Presupuesto Otros',
+                'Facturado por',
+                'Fecha',
+                'Cliente',
+                'Proveedor',
+                'Responsable',
+                'Descripción',
+                'ISBN/Referencia',
+                'Estado',
+                'OK Externo',
+                'Pedido',
+                'Observaciones Externo',
+                'Otros',
+            ];
         }
-
-        return [
-            'Presupuesto Otros',
-            'Facturado por',
-            'Fecha',
-            'Cliente',
-            'Proveedor',
-            'Responsable',
-            'Descripción',
-            'ISBN/Referencia',
-            'Estado',
-            'OK Externo',
-            'Pedido',
-            'Observaciones Externo',
-            'Otros',
-        ];
     }
 
     public function map($presupuesto): array
@@ -144,22 +140,22 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
                 $presupuesto->pedido,
                 $presupuesto->observacionesexterno,
             ];
+        }else{
+            return [
+                $presupuesto->id,
+                $facturadoPor,
+                $presupuesto->fechapresupuesto,
+                $presupuesto->cliente->entidad ?? '',
+                $presupuesto->proveedor->entidad ?? '',
+                $presupuesto->responsable,
+                $presupuesto->descripcion,
+                $codigo,
+                $estado,
+                $presupuesto->okexterno == 1 ? 'Sí' : 'No',
+                $presupuesto->pedido,
+                $presupuesto->observacionesexterno,
+                $presupuesto->otros,
+            ];
         }
-
-        return [
-            $presupuesto->id,
-            $facturadoPor,
-            $presupuesto->fechapresupuesto,
-            $presupuesto->cliente->entidad ?? '',
-            $presupuesto->proveedor->entidad ?? '',
-            $presupuesto->responsable,
-            $presupuesto->descripcion,
-            $codigo,
-            $estado,
-            $presupuesto->okexterno == 1 ? 'Sí' : 'No',
-            $presupuesto->pedido,
-            $presupuesto->observacionesexterno,
-            $presupuesto->otros,
-        ];
     }
 }
