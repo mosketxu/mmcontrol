@@ -9,9 +9,15 @@
             {{-- <div class="w-full">
                 @include('producto.producto-menu' )
             </div> --}}
-            <div class="flex flex-row-reverse w-full">
+            <div class="flex flex-row-reverse">
+            <div class="w-full">
                 <x-button.button  class="py-1" onclick="location.href = '{{ route('facturacion.create') }}'" color="blue" >{{ __('Nueva') }}</x-button.button>
             </div>
+                <div onclick="Livewire.emit('exportFacturacion')"
+                    class="cursor-pointer mr-10"
+                    title="Exportar facturas">
+                    <x-icon.xls class="text-green-600 w-7" />
+                </div>
         </div>
     </x-slot>
     <div class="p-2">

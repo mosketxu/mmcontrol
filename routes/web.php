@@ -117,6 +117,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('compra', CompraController::class);
 
     //Facturacion
+     Route::get('/facturacion/export', [FacturacionController::class, 'exportFacturacion'])->name('facturacion.export');
     Route::resource('facturacion', FacturacionController::class);
 
     //Oferta

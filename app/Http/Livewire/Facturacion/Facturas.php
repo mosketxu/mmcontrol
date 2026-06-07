@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Facturacion;
 
 use App\Models\{Entidad,Factura, Mes};
 use Livewire\Component;
+use App\Exports\FacturacionExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 use Livewire\WithPagination;
@@ -39,6 +41,8 @@ class Facturas extends Component
             'estado'=>'nullable',
         ];
     }
+
+    protected $listeners = ['exportFacturacion' => 'exportFacturacion'];
 
 
     public function render(){
@@ -123,4 +127,24 @@ class Facturas extends Component
             $this->dispatchBrowserEvent('notify', 'factura borrado, ');
         }
     }
+
+    public function filters(){
+        return [
+            'search' => $this->search,
+            'filtroanyo' => $this->filtroanyo,
+            'filtromes' => $this->filtromes,
+            'filtrocliente' => $this->filtrocliente,
+            'filtroestado' => $this->filtroestado,
+            'filtroFi' => $this->filtroFi,
+            'filtroFf' => $this->filtroFf,
+            'filtroTipo' => $this->filtroTipo,
+        ];
+    }
+
+    public function exportFacturacion(){
+        return Excel::download(
+            new FacturacionExport($this->filters()),
+            'facturas.xlsx'
+        );
+}
 }
