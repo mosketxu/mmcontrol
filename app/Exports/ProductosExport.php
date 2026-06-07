@@ -8,6 +8,8 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use App\Models\UserEmpresa;
+use Illuminate\Support\Facades\Auth;
 
 class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithColumnFormatting
 {
@@ -41,8 +43,16 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
     }
 
     public function collection(){
-        return Producto::query()
-            ->with('proveedor','cliente')
+
+        $query = Producto::query()->with('proveedor', 'cliente');
+
+        // Empresas a las que tiene acceso el usuario actual
+        $entidadescliente = UserEmpresa::where('user_id',Auth::id())->pluck('entidad_id');
+
+        // Si tiene empresas asociadas, es cliente y solo ve sus productos
+        if ($entidadescliente->count() > 0) {$query->whereIn('cliente_id', $entidadescliente);}
+
+        return $query
             ->when($this->tipo, fn($q) => $q->where('tipo', $this->tipo))
             ->when($this->filtroisbn, fn($q) => $q->where('isbn', 'like', "%{$this->filtroisbn}%"))
             ->when($this->filtroproductoestado, fn($q) => $q->where('productoestado', $this->filtroproductoestado))
@@ -52,7 +62,7 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
             ->when($this->filtroimpresion, fn($q) => $q->where('impresion', $this->filtroimpresion))
             ->when($this->filtrocaja, fn($q) => $q->where('caja', $this->filtrocaja))
             ->get();
-    }
+        }
 
    public function map($p): array
     {
