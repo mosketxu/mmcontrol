@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entidad;
-use App\Models\Pedido;
 use App\Models\Presupuesto;
-use App\Models\Producto;
 use App\Exports\PresupuestosExport;
-use Carbon\Carbon;
 use Dompdf\Dompdf;
-use \PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
@@ -98,7 +94,7 @@ class PresupuestoController extends Controller
 
         return Excel::download(
             new PresupuestosExport($filters),
-            'presupuestos.xlsx'
+            'presupuestosimprenta.xlsx'
         );
     }
 }

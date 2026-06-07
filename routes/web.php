@@ -120,6 +120,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::resource('facturacion', FacturacionController::class);
 
     //Oferta
+    Route::get('/oferta/export', [OfertaController::class, 'exportOferta'])->name('oferta.export');
     Route::get('/oferta/{oferta}/editar/{ruta}', [OfertaController::class, 'editar'])->name('oferta.editar');
     Route::get('oferta/{ofertaId}/ficha/{tipo}', [OfertaController::class,'ficha'])->name('oferta.ficha');
     Route::get('/oferta/{tipo}/nuevo/{ruta}', [OfertaController::class, 'nuevo'])->name('oferta.nuevo');

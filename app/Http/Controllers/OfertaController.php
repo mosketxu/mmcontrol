@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Oferta;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
+use App\Exports\OfertasExport;
 
 class OfertaController extends Controller
 {
@@ -141,4 +142,25 @@ class OfertaController extends Controller
         $titulo=$tipo=='1' ? 'Presupuesto MM Editorial' : 'Presupuesto MM Packaging/Propios';
         return view('oferta.edit',compact('oferta','tipo','ruta','titulo'));
     }
+
+    public function exportOferta(Request $request){
+
+        $filters = [
+            'tipo' => $request->input('tipo'),
+            'search' => $request->input('search'),
+            'anyo' => $request->input('filtroanyo'),
+            'mes' => $request->input('filtromes'),
+            'cliente' => $request->input('filtrocliente'),
+            'contacto' => $request->input('filtrocontacto'),
+            'referencia' => $request->input('filtroreferencia'),
+            'isbn' => $request->input('filtroisbn'),
+            'estado' => $request->input('filtroestado'),
+        ];
+
+        return Excel::download(
+            new OfertasExport($filters),
+            'presupuestosmilimetica.xlsx'
+        );
+    }
+
 }

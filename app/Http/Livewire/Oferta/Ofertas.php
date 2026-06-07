@@ -23,7 +23,7 @@ class Ofertas extends Component
     public $filtroestado='';
     public $escliente='';
 
-    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtrocontacto','filtroreferencia','filtroisbn','filtroestado'];
+    protected $queryString=['tipo','search','filtroanyo','filtromes','filtrocliente','filtrocontacto','filtroreferencia','filtroisbn','filtroestado'];
 
     public $tipo='';
 
@@ -32,6 +32,10 @@ class Ofertas extends Component
         $this->tipo=$tipo;
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
     }
+
+    protected $listeners = [
+        'exportOfertas' => 'export'
+    ];
 
     public function render(){
         $clientes=Entidad::whereIn('entidadtipo_id',['1','2','4'])->orderBy('entidad')->get();
@@ -141,4 +145,18 @@ class Ofertas extends Component
         }
     }
 
+        public function export()
+    {
+        return redirect()->route('oferta.export', [
+            'tipo' => $this->tipo,
+            'search' => $this->search,
+            'filtroanyo' => $this->filtroanyo,
+            'filtromes' => $this->filtromes,
+            'filtrocliente' => $this->filtrocliente,
+            'filtrocontacto' => $this->filtrocontacto,
+            'filtroreferencia' => $this->filtroreferencia,
+            'filtroisbn' => $this->filtroisbn,
+            'filtroestado' => $this->filtroestado,
+        ]);
+    }
 }

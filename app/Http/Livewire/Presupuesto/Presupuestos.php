@@ -8,8 +8,6 @@ use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\ExportPresupuestos;
 
 class Presupuestos extends Component
 {

@@ -6,10 +6,14 @@
                     {{ $titulo }}
                 </h2>
             </div>
-            <div class="flex flex-row-reverse w-full">
-                <x-button.button  class="py-1" onclick="location.href = '{{ route('oferta.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
+            <div class="flex flex-row-reverse">
+                <div class=" w-full">
+                    <x-button.button  class="py-1" onclick="location.href = '{{ route('oferta.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
+                </div>
+                <div onclick="Livewire.emit('exportOfertas')" class="cursor-pointer mr-10" title="Exportar ofertas">
+                    <x-icon.xls class="mr-1 text-green-600 w-7" />
+                </div>
             </div>
-        </div>
     </x-slot>
     <div class="p-2">
         <div class="max-w-full mx-auto">
