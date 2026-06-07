@@ -6,9 +6,13 @@ use App\Models\Entidad;
 use App\Models\Pedido;
 use App\Models\Presupuesto;
 use App\Models\Producto;
+use App\Exports\PresupuestosExport;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use \PDF;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\Request;
+
 
 class PresupuestoController extends Controller
 {
@@ -77,4 +81,24 @@ class PresupuestoController extends Controller
         return view('presupuestos.archivos',compact('presupuesto','ruta'));
     }
 
+    public function exportPresupuesto(Request $request){
+        $filters = [
+            'tipo' => $request->input('tipo'),
+            'search' => $request->input('search'),
+            'anyo' => $request->input('filtroanyo'),
+            'mes' => $request->input('filtromes'),
+            'cliente' => $request->input('filtrocliente'),
+            'proveedor' => $request->input('filtroproveedor'),
+            'responsable' => $request->input('filtroresponsable'),
+            'referencia' => $request->input('filtroreferencia'),
+            'isbn' => $request->input('filtroisbn'),
+            'estado' => $request->input('filtroestado'),
+            'okexterno' => $request->input('filtrookexterno'),
+        ];
+
+        return Excel::download(
+            new PresupuestosExport($filters),
+            'presupuestos.xlsx'
+        );
+    }
 }

@@ -9,6 +9,14 @@
             <div class="flex flex-row-reverse w-full">
                 <x-button.button  class="py-1" onclick="location.href = '{{ route('presupuesto.nuevo',[$tipo,'i']) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button>
             </div>
+
+            <x-button.button
+    class="py-1"
+    color="green"
+    onclick="Livewire.emit('exportPresupuestos')"
+>
+    Excel
+</x-button.button>
         </div>
     </x-slot>
     <div class="p-2">

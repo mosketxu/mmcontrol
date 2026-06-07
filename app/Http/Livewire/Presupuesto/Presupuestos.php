@@ -8,6 +8,8 @@ use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportPresupuestos;
 
 class Presupuestos extends Component
 {
@@ -45,6 +47,10 @@ class Presupuestos extends Component
         $this->titulo=$titulo;
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
     }
+
+    protected $listeners = [
+        'exportPresupuestos' => 'export'
+    ];
 
     protected function rules(){
         return [
@@ -141,36 +147,7 @@ class Presupuestos extends Component
             ->searchMes('fechapresupuesto',$this->filtromes)
             ->orderBy('presupuestos.id','desc')
             ->groupBy('presupuestos.id');
-    //     else
-    //     return Presupuesto::query()
-    //         ->join('entidades','presupuestos.cliente_id','=','entidades.id')
-    //         // ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
-    //         // ->join('productos','presupuesto_productos.producto_id','=','productos.id')
-    //         ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm')
-    //         ->where('presupuestos.tipo',$this->tipo)
-    //         ->search('presupuestos.id',$this->search)
-    //         ->when($this->filtroreferencia!='', function ($query){
-    //             $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
-    //         })
-    //         ->when($this->filtroisbn!='', function ($query){
-    //             $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
-    //         })
-    //         ->when($this->filtroresponsable!='', function ($query){
-    //             $query->where('presupuestos.responsable','like','%'.$this->filtroresponsable.'%');
-    //         })
-    //         ->when($this->filtrocliente!='', function ($query){
-    //             $query->where('presupuestos.cliente_id',$this->filtrocliente);
-    //             })
-    //         ->when($this->filtroestado!='', function ($query){
-    //             $query->where('presupuestos.estado',$this->filtroestado);
-    //         })
-    //         ->when($this->filtrookexterno!='', function ($query){
-    //             $query->where('presupuestos.okexterno',$this->filtrookexterno);
-    //         })
-    //         ->searchYear('fechapresupuesto',$this->filtroanyo)
-    //         ->searchMes('fechapresupuesto',$this->filtromes)
-    //         ->orderBy('presupuestos.id','desc');
-    //
+
     }
 
     public function getRowsProperty(){
@@ -192,6 +169,23 @@ class Presupuestos extends Component
                 $this->dispatchBrowserEvent('notify', 'presupuesto borrado. ');
             }
         }
+    }
+
+    public function export()
+    {
+        return redirect()->route('presupuesto.export', [
+            'tipo' => $this->tipo,
+            'search' => $this->search,
+            'filtroanyo' => $this->filtroanyo,
+            'filtromes' => $this->filtromes,
+            'filtrocliente' => $this->filtrocliente,
+            'filtroproveedor' => $this->filtroproveedor,
+            'filtroresponsable' => $this->filtroresponsable,
+            'filtroreferencia' => $this->filtroreferencia,
+            'filtroisbn' => $this->filtroisbn,
+            'filtroestado' => $this->filtroestado,
+            'filtrookexterno' => $this->filtrookexterno,
+        ]);
     }
 
 }
