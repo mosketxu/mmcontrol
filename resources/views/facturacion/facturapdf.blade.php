@@ -90,7 +90,7 @@
                             <td>{{ $detalle->pedido->oferta_id ?? '' }} </td>
                             <td>{{ $detalle->concepto }}</td>
                             <td class="text-right">{{ number_format($detalle->cantidad,0,',','.') }}</td>
-                            <td class="text-right">{{ number_format($detalle->importe,2,',','.') }}</td>
+                            <td class="text-right">{{ number_format($detalle->importe,3,',','.') }}</td>
                             <td class="text-right">{{ number_format($detalle->subtotalsiniva,2,',','.') }}</td>
                             <td class="text-right">{{ number_format($detalle->iva*100,0) }} %</td>
                             <td class="text-right">{{ number_format($detalle->subtotaliva,2,',','.') }}</td>
@@ -131,7 +131,7 @@
                     @endforeach
                     @if($totales->count()>1)
                     <tr>
-                        <td class="font-bold text-right">{{ number_format($factura->importe,2,',','.') }}</td>
+                        <td class="font-bold text-right">{{ number_format($factura->importe,3,',','.') }}</td>
                         <td></td >
                         <td class="font-bold text-right">{{ number_format($factura->iva,2,',','.') }}</td>
                         <td class="font-bold text-right">{{ number_format($factura->total,2,',','.') }}</td>
