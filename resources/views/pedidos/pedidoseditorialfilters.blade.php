@@ -181,6 +181,7 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="w-1/12 text-center">
             <x-icon.xls-a href="{{ route('pedido.export',[
                 $tipo,
@@ -199,6 +200,5 @@
                 ]) }}"
                 class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/>
         </div>
-        @endif
     </div>
 </form>

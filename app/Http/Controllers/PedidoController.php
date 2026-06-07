@@ -10,13 +10,11 @@ use App\Models\Pedido;
 use App\Models\PedidoparcialDetalle;
 use App\Models\PedidoParcial;
 use App\Models\PedidoProducto;
-use App\Models\Producto;
 use App\Models\Responsable;
 use App\Models\UserEmpresa;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use \PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -200,7 +198,7 @@ class PedidoController extends Controller
         return view('pedidos.distribuciones',compact('pedido','ruta'));
     }
 
-    public function export($tipo,$search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtrolaminado,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado){
+   public function export($tipo,$search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtrolaminado,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado){
 
         $search=$search=='@' ? '' : $search;
         $filtroreferencia=$filtroreferencia=='@' ? '' : $filtroreferencia;

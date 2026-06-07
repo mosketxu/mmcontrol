@@ -139,7 +139,6 @@ class ClienteController extends Controller
 
 
     public function pedidotipo($tipo,$ruta,Request $request ){
-
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;

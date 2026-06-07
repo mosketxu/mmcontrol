@@ -12,6 +12,11 @@
             </div>
             <div class="flex flex-row-reverse w-full">
                 {{-- <x-button.button  class="py-1" onclick="location.href = '{{ route('pedido.nuevo',[$tipo,$ruta]) }}'" color="blue" >{{ __('Nuevo') }}</x-button.button> --}}
+                {{-- <div class="flex flex-row-reverse">
+                <div onclick="Livewire.emit('exportPedidos')" class="cursor-pointer mr-10" title="Exportar pedidos">
+                    <x-icon.xls class="mr-1 text-green-600 w-7" />
+                </div> --}}
+            {{-- </div> --}}
             </div>
         </div>
     </x-slot>
