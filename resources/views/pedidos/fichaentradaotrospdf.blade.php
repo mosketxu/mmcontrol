@@ -38,89 +38,89 @@
                 <div class="py-0 space-y-2 text-sm">
                     <table width="80%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto ">
                         <tr>
-                            <td>{{ __('pedido_pdf.pedido') }}: {{ $pedido->id }} </td>
-                            <td class="text-right">{{__('pedido_pdf.fecha')}}: {{ $pedido->fpedido4 }}</td>
+                            <td>{{ __('milimetrica_pdf.pedido') }}: {{ $pedido->id }} </td>
+                            <td class="text-right">{{__('milimetrica_pdf.fecha')}}: {{ $pedido->fpedido4 }}</td>
                         </tr>
                     </table>
 
                     <table width="80%" style="margin-top:20px; " cellspacing="0" cellpadding="2" class="mx-auto ">
                         <tr class="">
-                            <td width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B; border-style: solid; border-width: .6; border-color: gray"   >{{__('pedido_pdf.cliente')}}</td>
+                            <td width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B; border-style: solid; border-width: .6; border-color: gray"   >{{__('milimetrica_pdf.cliente')}}</td>
                             <td width=75% style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 {{ $pedido->facturadopor=='1' ? 'Milimetrica' : $pedido->cliente->entidad }}
                             </td>
                         </tr>
                         <tr class="">
-                            <td width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B; border-style: solid; border-width: .6; border-color: gray"   >{{__('pedido_pdf.num_pedido_cliente')}}</td>
+                            <td width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B; border-style: solid; border-width: .6; border-color: gray"   >{{__('milimetrica_pdf.num_pedido_cliente')}}</td>
                             <td width=75% style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 {{ $pedido->pedidocliente }}
                             </td>
                         </tr>
                         <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.codigo_producto')}}</td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.codigo_producto')}}</td>
                             <td  width=75% style="padding-left:10px;background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $productos?->isbn }}</td>
                         </tr>
                         <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.referencia')}}</td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.referencia')}}</td>
                             <td  width=75% style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $productos?->referencia }}</td>
                         </tr>
 
                         <tr style="">
-                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.descripcion')}}</td>
+                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.descripcion')}}</td>
                             <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 <p>{!! nl2br(e($pedido->descripcion)) !!}</p>
                             </td>
                         </tr>
                         <tr style="">
-                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.tirada')}}</td>
+                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.tirada')}}</td>
                             <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->tiradaprevista }}</td>
                         </tr>
                         <tr style="">
                         </tr>
                         <tr style="">
-                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.fecha_archivos')}}</td>
+                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.fecha_archivos')}}</td>
                             <td style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->farchivos4 }}</td>
                         </tr>
                         <tr style="">
-                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.fecha_entrega')}}</td>
+                            <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.fecha_entrega')}}</td>
                             <td style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->fentrega4 }}</td>
                         </tr>
                         <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.prueba_color')}}</td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.prueba_color')}}</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->pruebacolor }}</td>
                         </tr>
                         <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.laminado')}}</td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.laminado')}}</td>
                             {{-- <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->laminadoplastico == '1' ? 'Sí' : 'No'  }}</td> --}}
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->laminado->name }}</td>
                         </tr>
 
                         <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.modelo_caja')}}</td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.modelo_caja')}}</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->caja->name ?? ''}}</td>
                         </tr>
                         <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.etiqueta')}}</td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.etiqueta')}}</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido ->etiqueta}}</td>
                         </tr>
                         @if($pedido ->uds_caja>0)
                             <tr style="">
-                                <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.uds_caja')}}</td>
+                                <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.uds_caja')}}</td>
                                 <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->uds_caja }}</td>
                             </tr>
                         @endif
 
                         @foreach ($pedido->distribuciones as $distribucion )
                         <tr>
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.distribucion')}} {{ $loop->index +1 }}</td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.distribucion')}} {{ $loop->index +1 }}</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
-                                {{__('pedido_pdf.cantidad')}}: {{ $distribucion->cantidad }}
+                                {{__('milimetrica_pdf.cantidad')}}: {{ $distribucion->cantidad }}
                                 <p>{!! nl2br(e($distribucion->comentario)) !!}</p>
                             </td>
                         </tr>
                         @endforeach
                         <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.otros')}}</td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.otros')}}</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 <p>{!! nl2br(e($pedido->otros)) !!}</p>
                             </td>
@@ -157,14 +157,14 @@
                     <table width="80%" style="margin-top:20px; " cellspacing="0" cellpadding="2" class="mx-auto ">
                         @foreach ($pedido->subpedidos as $subpedido )
                         <tr>
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('pedido_pdf.subpedido')}} {{ $loop->index +1 }}: </td>
+                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.subpedido')}} {{ $loop->index +1 }}: </td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
-                                <div class="">{{__('pedido_pdf.referencia')}}: {{$subpedido->referencia}}</div>
-                                <div class="">{{__('pedido_pdf.uds')}}: {{$subpedido->unidades}}</div>
-                                <div class="">{{__('pedido_pdf.otros')}}: {{$subpedido->otros}}</div>
-                                <div class="">{{__('pedido_pdf.fecha_archivos')}}: {{$subpedido->fecha_archivos}}</div>
-                                <div class="">{{__('pedido_pdf.fecha_plotters')}}: {{$subpedido->fecha_plotters}}</div>
-                                <div class="">{{__('pedido_pdf.fecha_entrega')}}: {{$subpedido->fecha_entrega}}</div>
+                                <div class="">{{__('milimetrica_pdf.referencia')}}: {{$subpedido->referencia}}</div>
+                                <div class="">{{__('milimetrica_pdf.uds')}}: {{$subpedido->unidades}}</div>
+                                <div class="">{{__('milimetrica_pdf.otros')}}: {{$subpedido->otros}}</div>
+                                <div class="">{{__('milimetrica_pdf.fecha_archivos')}}: {{$subpedido->fecha_archivos}}</div>
+                                <div class="">{{__('milimetrica_pdf.fecha_plotters')}}: {{$subpedido->fecha_plotters}}</div>
+                                <div class="">{{__('milimetrica_pdf.fecha_entrega')}}: {{$subpedido->fecha_entrega}}</div>
                             </td>
                         </tr>
                         @endforeach
@@ -174,13 +174,13 @@
                         <tr>
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">Tarea {{ $loop->index +1 }}: </td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
-                                <div class="">{{__('pedido_pdf.tarea')}}: {{$tarea->referencia}}</div>
-                                <div class="">{{__('pedido_pdf.uds')}}: {{$tarea->unidades}}</div>
-                                <div class="">{{__('pedido_pdf.otros')}}: {{$tarea->otros}}</div>
-                                <div class="">{{__('pedido_pdf.fecha_inicio')}}: {{$tarea->fecha_inicio}}</div>
-                                <div class="">{{__('pedido_pdf.fecha_fin')}}: {{$tarea->fecha_fin}}</div>
-                                <div class="">{{__('pedido_pdf.asignado_a')}}: {{$tarea->asignado_a}}</div>
-                                <div class="">{{__('pedido_pdf.estado')}}: {{$tarea->estadotext}}</div>
+                                <div class="">{{__('milimetrica_pdf.tarea')}}: {{$tarea->referencia}}</div>
+                                <div class="">{{__('milimetrica_pdf.uds')}}: {{$tarea->unidades}}</div>
+                                <div class="">{{__('milimetrica_pdf.otros')}}: {{$tarea->otros}}</div>
+                                <div class="">{{__('milimetrica_pdf.fecha_inicio')}}: {{$tarea->fecha_inicio}}</div>
+                                <div class="">{{__('milimetrica_pdf.fecha_fin')}}: {{$tarea->fecha_fin}}</div>
+                                <div class="">{{__('milimetrica_pdf.asignado_a')}}: {{$tarea->asignado_a}}</div>
+                                <div class="">{{__('milimetrica_pdf.estado')}}: {{$tarea->estadotext}}</div>
                             </td>
                         </tr>
                         @endforeach
