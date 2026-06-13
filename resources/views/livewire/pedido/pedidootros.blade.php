@@ -71,6 +71,19 @@
                                 </div>
                             </div>
                             <div class="w-full form-item">
+                                <div class="w-full form-item">
+                                    <x-jet-label for="idioma_id">{{ __('Idioma') }}</x-jet-label>
+                                    <select wire:model.lazy="idioma_id"
+                                        class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
+                                        {{$escliente}} {{$deshabilitado}}>
+                                        <option value="">-- Selecciona idioma --</option>
+                                        @foreach ($idiomas as $idioma)
+                                        <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="w-full form-item">
                                 <x-jet-label for="pedidocliente">{{ __('Pedido Cliente') }}</x-jet-label>
                                 <input wire:model.lazy="pedidocliente" type="text" class="w-full py-1.5 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 {{$escliente}} {{$deshabilitado}}/>
@@ -86,7 +99,7 @@
                                         {{$escliente}} {{$deshabilitado}}>
                                         <option value=''>-- Selecciona Cód. --</option>
                                         @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->isbn }}</option>
+                                        <option value="{{ $producto->id }}">{{ $producto->isbn_completo }}</option>
                                         @endforeach
                                     </select>
                                 </div>

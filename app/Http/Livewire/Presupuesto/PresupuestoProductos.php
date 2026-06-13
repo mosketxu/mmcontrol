@@ -4,7 +4,9 @@ namespace App\Http\Livewire\Presupuesto;
 
 use App\Models\PresupuestoProducto;
 use App\Models\Producto;
+use App\Models\Presupuesto as ModelsPresupuesto;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 use Livewire\Component;
 
@@ -12,6 +14,7 @@ class PresupuestoProductos extends Component
 {
 
     public $presupuesto_id;
+    public $presupuesto;
     public $pproductoid='';
     public $pproducto;
     public $producto_id;
@@ -54,6 +57,7 @@ class PresupuestoProductos extends Component
         $this->pproducto=$pproducto;
         $this->pproductoid=$pproducto->id;
         $this->presupuesto_id=$pproducto->presupuesto_id;
+        $this->presupuesto=ModelsPresupuesto::find($this->presupuesto_id);
         $this->producto_id=$pproducto->producto_id;
         $this->orden=$pproducto->orden;
         $this->visible=$pproducto->visible;
@@ -67,7 +71,12 @@ class PresupuestoProductos extends Component
 
     public function render(){
 
-        $productos=Producto::where('tipo','2')->orderBy('referencia')->get();
+        $productos=Producto::where('tipo','2')
+            ->when($this->presupuesto?->idioma_id, function ($query) {
+                $query->where('idioma_id', $this->presupuesto->idioma_id);
+            })
+            ->orderBy('referencia')
+            ->get();
 
         return view('livewire.presupuesto.presupuesto-productosotros',compact('productos'));
     }
@@ -95,6 +104,7 @@ class PresupuestoProductos extends Component
         if(!$this->preciototal) $this->preciototal=0;
 
         $this->validate();
+        $this->validarIdiomaProducto();
         $pprod=PresupuestoProducto::updateOrCreate([
             'id'=>$this->pproductoid
             ],
@@ -128,5 +138,15 @@ class PresupuestoProductos extends Component
 
     }
 
-}
+    private function validarIdiomaProducto(){
+        if(!$this->producto_id || !$this->presupuesto?->idioma_id) return;
 
+        $producto=Producto::find($this->producto_id);
+        if($producto && (string) $producto->idioma_id !== (string) $this->presupuesto->idioma_id){
+            throw ValidationException::withMessages([
+                'producto_id' => 'El producto seleccionado debe tener el mismo idioma que el presupuesto.',
+            ]);
+        }
+    }
+
+}

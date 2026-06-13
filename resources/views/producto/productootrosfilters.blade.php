@@ -67,6 +67,24 @@
     <div class="flex w-1/12 ">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
+                Idioma
+            </label>
+            <div class="flex">
+                <select wire:model="filtroidioma" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                    <option value=""></option>
+                    @foreach ($idiomas as $idioma)
+                    <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
+                    @endforeach
+                </select>
+                @if($filtroidioma!='')
+                    <x-icon.filter-slash-a wire:click="$set('filtroidioma', '')" class="pb-1" title="reset filter"/>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="flex w-1/12 ">
+        <div class="w-full">
+            <label class="px-1 text-sm text-gray-600">
                 Estado
             </label>
             <div class="flex">
@@ -120,6 +138,7 @@
                     'filtroproductoestado' => $filtroproductoestado,
                     'filtroreferencia' => $filtroreferencia,
                     'filtrocliente' => $filtrocliente,
+                    'filtroidioma' => $filtroidioma,
                     'filtromaterial' => $filtromaterial,
                     'filtroimpresion' => $filtroimpresion,
                     'filtrocaja' => $filtrocaja

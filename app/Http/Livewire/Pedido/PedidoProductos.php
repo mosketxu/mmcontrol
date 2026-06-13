@@ -4,13 +4,16 @@ namespace App\Http\Livewire\Pedido;
 
 use Livewire\Component;
 use App\Models\PedidoProducto;
+use App\Models\Pedido as ModelsPedido;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class PedidoProductos extends Component
 {
 
     public $pedido_id;
+    public $pedido;
     public $pproductoid='';
     public $pproducto;
     public $producto_id;
@@ -53,6 +56,7 @@ class PedidoProductos extends Component
         $this->pproducto=$pproducto;
         $this->pproductoid=$pproducto->id;
         $this->pedido_id=$pproducto->pedido_id;
+        $this->pedido=ModelsPedido::find($this->pedido_id);
         $this->producto_id=$pproducto->producto_id;
         $this->orden=$pproducto->orden;
         $this->visible=$pproducto->visible;
@@ -64,7 +68,12 @@ class PedidoProductos extends Component
     }
 
     public function render(){
-        $productos=Producto::where('tipo','2')->orderBy('referencia')->get();
+        $productos=Producto::where('tipo','2')
+            ->when($this->pedido?->idioma_id, function ($query) {
+                $query->where('idioma_id', $this->pedido->idioma_id);
+            })
+            ->orderBy('referencia')
+            ->get();
 
         return view('livewire.pedido.pedido-productosotros',compact('productos'));
     }
@@ -92,6 +101,7 @@ class PedidoProductos extends Component
         if(!$this->preciototal) $this->preciototal=0;
 
         $this->validate();
+        $this->validarIdiomaProducto();
         $pprod=PedidoProducto::updateOrCreate([
             'id'=>$this->pproductoid
             ],
@@ -122,6 +132,17 @@ class PedidoProductos extends Component
         }
 
         $this->emit('refreshpedido');
+    }
+
+    private function validarIdiomaProducto(){
+        if(!$this->producto_id || !$this->pedido?->idioma_id) return;
+
+        $producto=Producto::find($this->producto_id);
+        if($producto && (string) $producto->idioma_id !== (string) $this->pedido->idioma_id){
+            throw ValidationException::withMessages([
+                'producto_id' => 'El producto seleccionado debe tener el mismo idioma que el pedido.',
+            ]);
+        }
     }
 
 }

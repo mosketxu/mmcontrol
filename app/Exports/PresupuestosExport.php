@@ -22,7 +22,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
     public function query()
     {
         $query = Presupuesto::query()
-            ->with(['cliente', 'proveedor', 'presupuestoproductos.producto']);
+            ->with(['cliente', 'proveedor', 'idioma', 'presupuestoproductos.producto']);
             // ->join('entidades', 'presupuestos.cliente_id', '=', 'entidades.id')
             // ->join('presupuesto_productos', 'presupuesto_productos.presupuesto_id', '=', 'presupuestos.id')
             // ->join('productos', 'presupuesto_productos.producto_id', '=', 'productos.id')
@@ -50,6 +50,9 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
             ->when($this->filters['cliente'] ?? null, fn($q, $cliente) =>
                 $q->where('presupuestos.cliente_id', $cliente)
             )
+            ->when($this->filters['idioma'] ?? null, fn($q, $idioma) =>
+                $q->where('presupuestos.idioma_id', $idioma)
+            )
             ->when($this->filters['proveedor'] ?? null, fn($q, $proveedor) =>
                 $q->where('presupuestos.proveedor_id', $proveedor)
             )
@@ -57,10 +60,14 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
                 $q->where('presupuestos.responsable', 'like', "%$resp%")
             )
             ->when($this->filters['referencia'] ?? null, fn($q, $ref) =>
-                $q->where('productos.referencia', 'like', "%$ref%")
+                $q->whereHas('presupuestoproductos.producto', fn($producto) =>
+                    $producto->where('referencia', 'like', "%$ref%")
+                )
             )
             ->when($this->filters['isbn'] ?? null, fn($q, $isbn) =>
-                $q->where('productos.isbn', 'like', "%$isbn%")
+                $q->whereHas('presupuestoproductos.producto', fn($producto) =>
+                    $producto->where('isbn', 'like', "%$isbn%")
+                )
             )
             ->when($this->filters['estado'] ?? null, fn($q, $estado) =>
                 $q->where('presupuestos.estado', $estado)
@@ -79,6 +86,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
                 'Facturado por',
                 'Fecha',
                 'Cliente',
+                'Idioma',
                 'Proveedor',
                 'Responsable',
                 'ISBN/Referencia',
@@ -93,6 +101,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
                 'Facturado por',
                 'Fecha',
                 'Cliente',
+                'Idioma',
                 'Proveedor',
                 'Responsable',
                 'Descripción',
@@ -132,6 +141,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
                 $facturadoPor,
                 $presupuesto->fechapresupuesto,
                 $presupuesto->cliente->entidad ?? '',
+                $presupuesto->idioma?->nombre ?? '',
                 $presupuesto->proveedor->entidad ?? '',
                 $presupuesto->responsable,
                 $codigo,
@@ -146,6 +156,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
                 $facturadoPor,
                 $presupuesto->fechapresupuesto,
                 $presupuesto->cliente->entidad ?? '',
+                $presupuesto->idioma?->nombre ?? '',
                 $presupuesto->proveedor->entidad ?? '',
                 $presupuesto->responsable,
                 $presupuesto->descripcion,

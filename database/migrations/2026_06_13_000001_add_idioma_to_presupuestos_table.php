@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('productos', function (Blueprint $table) {
+        Schema::table('presupuestos', function (Blueprint $table) {
             $table->foreignId('idioma_id')
                 ->default(1)
-                ->after('isbn')
+                ->after('cliente_id')
                 ->constrained('idiomas');
         });
 
-        DB::table('productos')
+        DB::table('presupuestos')
             ->whereNull('idioma_id')
             ->update(['idioma_id' => 1]);
     }
@@ -28,7 +28,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('productos', function (Blueprint $table) {
+        Schema::table('presupuestos', function (Blueprint $table) {
             $table->dropConstrainedForeignId('idioma_id');
         });
     }

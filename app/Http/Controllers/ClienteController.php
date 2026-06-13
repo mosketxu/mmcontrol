@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Entidad;
 use App\Models\Factura;
 use App\Models\FacturaDetalle;
+use App\Models\Idioma;
 use App\Models\Laminado;
 use App\Models\Mes;
 use App\Models\Oferta;
@@ -111,21 +112,22 @@ class ClienteController extends Controller
     }
 
     public function presupuestoPDF(Presupuesto $presupuesto){
+        $presupuesto->loadMissing('idioma', 'presupuestoproductos.producto', 'presupuestoprocesos');
+        $idiomaPdf=strtoupper($presupuesto->idioma?->codigo ?? 'ES');
         $proveedor=Entidad::find($presupuesto->proveedor_id);
         $cliente=Entidad::find($presupuesto->cliente_id);
         $pdf = new Dompdf();
 
         if($presupuesto->tipo=='1'){
-            $producto=$presupuesto->presupuestoproductos->first()->producto;
-            if($tipopdf='n')
-            $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
-            else
-            $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+            $producto=$presupuesto->presupuestoproductos->first()?->producto;
+            $vista=$idiomaPdf=='ES' ? 'presupuestos.presupuestopdfeditorial' : 'presupuestos.presupuestopdfeditorialingles';
+            $pdf = \PDF::loadView($vista, compact('presupuesto','producto','proveedor','cliente'));
         }
         else{
             // $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->where('id',$presupuesto->id)->first();
-            $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->find($presupuesto->id);
-            $pdf = \PDF::loadView('presupuestos.presupuestopdfotros', compact('presupuesto','proveedor','cliente'));
+            $producto = $presupuesto->presupuestoproductos->first()?->producto;
+            $vista=$idiomaPdf=='ES' ? 'presupuestos.presupuestopdfotros' : 'presupuestos.presupuestopdfotrosingles';
+            $pdf = \PDF::loadView($vista, compact('presupuesto','proveedor','cliente','producto'));
         }
 
         $pdf->setPaper('a4','portrait');
@@ -144,6 +146,7 @@ class ClienteController extends Controller
         $filtroisbn=$request->filtroisbn;
         $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
         $filtrocliente=$request->filtrocliente;
+        $filtroidioma=$request->filtroidioma;
         $filtroproveedor=$request->filtroproveedor;
         // $filtrolaminadoplastico=$request->filtrolaminadoplastico;
         $filtrolaminado=$request->filtrolaminado;
@@ -170,6 +173,7 @@ class ClienteController extends Controller
         $meses=Mes::orderBy('id')->get();
         $responsables=Responsable::where('activo','1')->get();
         $laminados=Laminado::get();
+        $idiomas=Idioma::orderBy('nombre')->get();
         $escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
 
         $pedidos= Pedido::query()
@@ -193,6 +197,7 @@ class ClienteController extends Controller
             ->when($filtroisbn!='', function ($query) use($filtroisbn) {$query->where('productos.isbn','like','%'.$filtroisbn.'%');})
             ->when($filtroresponsable!='', function ($query) use($filtroresponsable){$query->where('pedidos.responsable','like','%'.$filtroresponsable.'%');})
             ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})
+            ->when($filtroidioma!='', function ($query) use($filtroidioma) {$query->where('pedidos.idioma_id',$filtroidioma);})
             ->when($filtroproveedor!='', function ($query) use($filtroproveedor) {$query->where('pedidos.proveedor_id',$filtroproveedor);})
             ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
             ->when($filtrofacturado!='', function ($query) use($filtrofacturado) {$query->where('pedidos.facturado',$filtrofacturado);})
@@ -212,8 +217,8 @@ class ClienteController extends Controller
             ->paginate(30);
 
 
-            return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados','escliente',
-            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtrolaminado','filtroestado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+            return view('clientes.pedido.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados','idiomas','escliente',
+            'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtroidioma','filtroproveedor','filtrolaminado','filtroestado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function pedidoeditar(Pedido $pedido,$ruta){

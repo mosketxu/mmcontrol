@@ -29,7 +29,9 @@
                 <div class="hover:bg-gray-100 hover:cursor-pointer">
                     <div class="flex items-center w-full text-sm text-gray-500 border-t-0 border-y" wire:loading.class.delay="opacity-50" >
                         <div class="flex items-center w-11/12 "  onclick="location.href = '{{ route('producto.edit',$producto) }}'">
-                            <div class="w-1/12 ">{{ $producto->isbn }}</div>
+                            <div class="w-1/12 ">
+                                {{ $producto->isbn_completo }}
+                            </div>
                             <div class="w-3/12 ">{{ $producto->referencia }}</div>
                             <div class="w-1/12">{{ $producto->cliente->entidad }}</div>
                             <div class="w-2/12 ">{{ $producto->caja->name?? '-' }}</div>

@@ -12,7 +12,7 @@ class Presupuesto extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','tipo','cliente_id','descripcion','responsable','contacto_id',
+    protected $fillable=['id','tipo','cliente_id','idioma_id','descripcion','responsable','contacto_id',
                     'proveedor_id','tirada','precio_ud','preciototal','moneda','facturadopor','fechapresupuesto',
                     'estado','okexterno','observacionesexterno','espedido','pedido','caja_id','etiqueta','uds_caja','manipulacion','transporte','troquel','especificacioneslogisticas','otros'];
 
@@ -20,6 +20,7 @@ class Presupuesto extends Model
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'']);}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}
     public function caja(){return $this->belongsTo(Caja::class,'caja_id','id')->withDefault(['name'=>'']);}
+    public function idioma(){return $this->belongsTo(Idioma::class, 'idioma_id');}
     public function presupuestoproductos(){return $this->hasMany(PresupuestoProducto::class,'presupuesto_id','id');}
     public function presupuestoprocesos(){return $this->hasMany(PresupuestoProceso::class,'presupuesto_id','id');}
 

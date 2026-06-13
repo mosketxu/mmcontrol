@@ -6,6 +6,7 @@ use Livewire\Component;
 
 use App\Models\{PedidoProducto as ModelsPedidoProducto, Producto,Pedido};
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class PedidoProducto extends Component
 {
@@ -51,7 +52,12 @@ class PedidoProducto extends Component
     }
 
     public function render(){
-        $productos=Producto::where('tipo','2')->orderBy('referencia')->get();
+        $productos=Producto::where('tipo','2')
+            ->when($this->pedido?->idioma_id, function ($query) {
+                $query->where('idioma_id', $this->pedido->idioma_id);
+            })
+            ->orderBy('referencia')
+            ->get();
         $pedproductos=ModelsPedidoProducto::where('pedido_id',$this->pedido_id)->get();
         return view('livewire.pedido.pedido-productootros',compact('productos','pedproductos'));
     }
@@ -77,6 +83,7 @@ class PedidoProducto extends Component
         if(!$this->precio_ud) $this->precio_ud=0;
         if(!$this->preciototal) $this->preciototal=0;
         $this->validate();
+        $this->validarIdiomaProducto();
 
         $pprod=ModelsPedidoProducto::create([
             'pedido_id'=>$this->pedido_id,
@@ -111,6 +118,17 @@ class PedidoProducto extends Component
         if ($borrar) {
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+        }
+    }
+
+    private function validarIdiomaProducto(){
+        if(!$this->producto_id || !$this->pedido?->idioma_id) return;
+
+        $producto=Producto::find($this->producto_id);
+        if($producto && (string) $producto->idioma_id !== (string) $this->pedido->idioma_id){
+            throw ValidationException::withMessages([
+                'producto_id' => 'El producto seleccionado debe tener el mismo idioma que el pedido.',
+            ]);
         }
     }
 

@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Pedido;
 use App\Exports\PedidosExport;
 use Livewire\Component;
 
-use App\Models\{ Pedido,Entidad, Laminado, Mes, Responsable};
+use App\Models\{ Pedido,Entidad, Idioma, Laminado, Mes, Responsable};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
@@ -50,6 +50,7 @@ class Pedidos extends Component
     public $filtroanyo='';
     public $filtromes='';
     public $filtrocliente='';
+    public $filtroidioma='';
     public $filtroproveedor='';
     public $filtroresponsable='';
     public $filtroreferencia='';
@@ -62,7 +63,7 @@ class Pedidos extends Component
     public $filtroentrega='';
     public $filtrolaminado='';
 
-    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroproveedor','filtroreferencia','filtroisbn','filtroestado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtrolaminado'];
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroidioma','filtroproveedor','filtroreferencia','filtroisbn','filtroestado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtrolaminado'];
 
 
     public $message;
@@ -135,17 +136,19 @@ class Pedidos extends Component
         $meses=Mes::orderBy('id')->get();
         $responsables=Responsable::where('activo','1')->get();
         $laminados=Laminado::get();
+        $idiomas=Idioma::orderBy('nombre')->get();
 
         if($this->selectAll) $this->selectPageRows();
         $pedidos = $this->rows;
 
-        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables','meses','laminados'));
+        return view('livewire.pedido.pedidos',compact('pedidos','clientes','proveedores','responsables','meses','laminados','idiomas'));
     }
 
     public function updatingSearch(){$this->resetPage();}
     public function updatingFiltroanyo(){$this->resetPage();}
     public function updatingFiltromes(){$this->resetPage();}
     public function updatingFiltrocliente(){$this->resetPage();}
+    public function updatingFiltroidioma(){$this->resetPage();}
     public function updatingFiltroproveedor(){$this->resetPage();}
     public function updatingFiltroresponsable(){$this->resetPage();}
     public function updatingFiltroreferencia(){$this->resetPage();}
@@ -178,6 +181,9 @@ class Pedidos extends Component
             })
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('pedidos.cliente_id',$this->filtrocliente);
+                })
+            ->when($this->filtroidioma!='', function ($query){
+                $query->where('pedidos.idioma_id',$this->filtroidioma);
                 })
             ->when($this->filtroproveedor!='', function ($query){
                 $query->where('pedidos.proveedor_id',$this->filtroproveedor);
@@ -236,6 +242,9 @@ class Pedidos extends Component
             })
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('pedidos.cliente_id',$this->filtrocliente);
+                })
+            ->when($this->filtroidioma!='', function ($query){
+                $query->where('pedidos.idioma_id',$this->filtroidioma);
                 })
             ->when($this->filtroproveedor!='', function ($query){
                 $query->where('pedidos.proveedor_id',$this->filtroproveedor);

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Presupuesto;
 
 use App\Models\{Producto,PresupuestoProducto as ModelsPresupuestoProducto,Presupuesto};
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class PresupuestoProducto extends Component
@@ -50,7 +51,12 @@ class PresupuestoProducto extends Component
     }
 
     public function render(){
-        $productos=Producto::where('tipo','2')->orderBy('referencia')->get();
+        $productos=Producto::where('tipo','2')
+            ->when($this->presupuesto?->idioma_id, function ($query) {
+                $query->where('idioma_id', $this->presupuesto->idioma_id);
+            })
+            ->orderBy('referencia')
+            ->get();
         $presupproductos=ModelsPresupuestoProducto::where('presupuesto_id',$this->presupuesto_id)->get();
         return view('livewire.presupuesto.presupuesto-productootros',compact('productos','presupproductos'));
     }
@@ -77,6 +83,7 @@ class PresupuestoProducto extends Component
         if(!$this->preciototal) $this->preciototal=0;
 
         $this->validate();
+        $this->validarIdiomaProducto();
         $pprod=ModelsPresupuestoProducto::create([
             'presupuesto_id'=>$this->presupuesto_id,
             'producto_id'=>$this->producto_id,
@@ -108,6 +115,17 @@ class PresupuestoProducto extends Component
         if ($borrar) {
             $borrar->delete();
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+        }
+    }
+
+    private function validarIdiomaProducto(){
+        if(!$this->producto_id || !$this->presupuesto?->idioma_id) return;
+
+        $producto=Producto::find($this->producto_id);
+        if($producto && (string) $producto->idioma_id !== (string) $this->presupuesto->idioma_id){
+            throw ValidationException::withMessages([
+                'producto_id' => 'El producto seleccionado debe tener el mismo idioma que el presupuesto.',
+            ]);
         }
     }
 

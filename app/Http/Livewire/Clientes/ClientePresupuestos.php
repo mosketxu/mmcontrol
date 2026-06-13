@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Clientes;
 
-use App\Models\{Entidad,Mes, Pedido, Presupuesto, UserEmpresa};
+use App\Models\{Entidad, Idioma, Mes, Pedido, Presupuesto, UserEmpresa};
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +24,7 @@ class ClientePresupuestos extends Component
     public $filtroanyo='';
     public $filtromes='';
     public $filtrocliente='';
+    public $filtroidioma='';
     public $filtroproveedor='';
     public $filtroresponsable='';
     public $filtroisbn='';
@@ -40,7 +41,7 @@ class ClientePresupuestos extends Component
     public $escliente;
     public $deshabilitado;
 
-    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroestado','filtroproveedor','filtroresponsable','filtroisbn','filtroreferencia','filtroestado','filtrookexterno'];
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroidioma','filtroestado','filtroproveedor','filtroresponsable','filtroisbn','filtroreferencia','filtroestado','filtrookexterno'];
 
 
     public function mount($tipo,$titulo){
@@ -72,13 +73,14 @@ class ClientePresupuestos extends Component
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
+        $idiomas=Idioma::orderBy('nombre')->get();
 
         if($this->selectAll) $this->selectPageRows();
 
         $presupuestos = $this->rows;
         $view=$this->tipo=='1' ? 'livewire.clientes.presupuesto.presupuestoseditorial' : 'livewire.clientes.presupuesto.presupuestosotros' ;
         // return view($view,compact('presupuestos','clientes','proveedores','meses'));
-        return view($view,compact('presupuestos','clientes','proveedores','meses'));
+        return view($view,compact('presupuestos','clientes','proveedores','meses','idiomas'));
 
         // return view('livewire.clientes.cliente-presupuestos');
     }
@@ -87,6 +89,7 @@ class ClientePresupuestos extends Component
     public function updatingFiltroanyo(){$this->resetPage();}
     public function updatingFiltromes(){$this->resetPage();}
     public function updatingFiltrocliente(){$this->resetPage();}
+    public function updatingFiltroidioma(){$this->resetPage();}
     public function updatingFiltroproveedor(){$this->resetPage();}
     public function updatingFiltroresponsable(){$this->resetPage();}
     public function updatingFiltroreferencia(){$this->resetPage();}
@@ -139,6 +142,9 @@ class ClientePresupuestos extends Component
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('presupuestos.cliente_id',$this->filtrocliente);
                 })
+            ->when($this->filtroidioma!='', function ($query){
+                $query->where('presupuestos.idioma_id',$this->filtroidioma);
+                })
             ->when($this->filtroproveedor!='', function ($query){
                 $query->where('presupuestos.proveedor_id',$this->filtroproveedor);
                 })
@@ -172,6 +178,9 @@ class ClientePresupuestos extends Component
             })
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('presupuestos.cliente_id',$this->filtrocliente);
+                })
+            ->when($this->filtroidioma!='', function ($query){
+                $query->where('presupuestos.idioma_id',$this->filtroidioma);
                 })
             ->when($this->filtroestado!='', function ($query){
                 $query->where('presupuestos.estado',$this->filtroestado);
@@ -212,6 +221,7 @@ class ClientePresupuestos extends Component
                 'anyo'         => $this->filtroanyo,
                 'mes'          => $this->filtromes,
                 'cliente'      => $this->filtrocliente,
+                'idioma'       => $this->filtroidioma,
                 'proveedor'    => $this->filtroproveedor,
                 'responsable'  => $this->filtroresponsable,
                 'referencia'   => $this->filtroreferencia,

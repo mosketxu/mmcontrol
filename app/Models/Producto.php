@@ -11,7 +11,7 @@ class Producto extends Model
     use HasFactory;
     protected $table = 'productos';
 
-    protected $fillable=['cliente_id','tipo','isbn','idioma','productoestado','referencia','preciocoste','tirada','formato','FSC','tipoimpresion','materialinterior','tintainterior',
+    protected $fillable=['cliente_id','tipo','isbn','idioma_id','productoestado','referencia','preciocoste','tirada','formato','FSC','tipoimpresion','materialinterior','tintainterior',
     'gramajeinterior','paginas','materialcubierta','tintacubierta','gramajecubierta','plastificado','encuadernado','solapa','descripsolapa','guardas','descripguardas',
     'cd','descripcd','novedad','descripnovedad','caja_id','etiqueta','udxcaja','precioventa',
     'material','medidas','troquel','impresion','desarrollocaja','gramajecaja','acabadocaja','medidasnido','materialnido','impresionnido','procesospack','manipulacion','observaciones'];
@@ -24,7 +24,12 @@ class Producto extends Model
     public function procesos(){return $this->hasMany(ProductoProceso::class,'producto_id','id');}
     public function ofertas(){return $this->hasMany(Oferta::class,'producto_id','id');}
     public function caja(){return $this->belongsTo(Caja::class,'caja_id','id');}
-    public function idioma(){return $this->belongsTo(Idioma::class, 'idioma', 'codigo');}
+    public function idioma(){return $this->belongsTo(Idioma::class, 'idioma_id');}
+
+    public function getIsbnCompletoAttribute(){
+        if (!$this->isbn) {return '';}
+        return $this->isbn . ($this->idioma->codigo ?? '');
+    }
 
 }
 

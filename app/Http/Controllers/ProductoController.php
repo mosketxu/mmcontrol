@@ -49,7 +49,7 @@ class ProductoController extends Controller
 
     public function ficha($prodId,$tipo,$tipopdf){
         $pdf = new Dompdf();
-        $producto=Producto::with('cliente')->find($prodId);
+        $producto=Producto::with('cliente', 'idioma')->find($prodId);
         $pdf = \PDF::loadView('producto.fichapdf', compact('producto','tipo','tipopdf'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
@@ -76,6 +76,7 @@ class ProductoController extends Controller
                 $request->filtroproductoestado,
                 $request->filtroreferencia,
                 $request->filtrocliente,
+                $request->filtroidioma,
                 $request->filtromaterial,
                 $request->filtroimpresion,
                 $request->filtrocaja

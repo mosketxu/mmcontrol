@@ -60,6 +60,20 @@
                                         @endif
                                     </select>
                                 </div>
+                                {{-- idioma --}}
+                                <div class="w-full form-item">
+                                    <div class="flex py-2">
+                                        <x-jet-label for="idioma_id">{{ __('Idioma') }}</x-jet-label>
+                                    </div>
+                                    <select wire:model.lazy="idioma_id"
+                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                                        {{ $escliente }} {{$deshabilitado}}>
+                                        <option value="">-- Selecciona idioma --</option>
+                                        @foreach ($idiomas as $idioma)
+                                            <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 {{-- producto ISBN --}}
                                 <div class="w-full form-item">
                                     <div class="flex py-2">
@@ -74,7 +88,7 @@
                                         {{ $escliente }} {{$deshabilitado}}>
                                         <option value=''>-- Selecciona ISBN --</option>
                                         @foreach ($productos as $producto)
-                                            <option value="{{ $producto->id }}" >{{ $producto->isbn }}</option>
+                                            <option value="{{ $producto->id }}" >{{ $producto->isbn_completo }}</option>
                                         @endforeach
                                     </select>
                                 </div>

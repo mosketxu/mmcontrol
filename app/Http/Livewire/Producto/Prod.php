@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Producto;
 use App\Enums\ProductoEstado;
 use Livewire\Component;
 
-use App\Models\{Caja, Encuadernacion, Entidad, Formato, Gramaje, Material, Plastificado, Producto, Tinta};
+use App\Models\{Caja, Encuadernacion, Entidad, Formato, Gramaje, Idioma, Material, Plastificado, Producto, Tinta};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
@@ -30,6 +30,7 @@ class Prod extends Component
     public $plastificados;
     public $encuadernaciones;
     public $cajas;
+    public $idiomas;
     public $ficheropdf;
     public $tipo;
     public $titulo;
@@ -44,8 +45,9 @@ class Prod extends Component
             'producto.cliente_id'=>'nullable',
             // 'producto.isbn'=>'nullable||unique:productos,isbn',
             'producto.isbn'=>'nullable',
+            'producto.idioma_id'=>'nullable|exists:idiomas,id',
             'producto.productoestado'=>'nullable',
-            'producto.referencia'=>'required||unique:productos,referencia',
+            'producto.referencia'=>'required',
             'producto.preciocoste'=>'nullable|numeric',
             'producto.precioventa'=>'nullable|numeric',
             'producto.tirada'=>'nullable|numeric',
@@ -95,8 +97,8 @@ class Prod extends Component
     public function messages(){
         return [
             'producto.referencia.required' => 'La referencia es necesaria.',
-            'producto.referencia.unique' => 'Esta referencia ya existe.',
-            'producto.isbn.unique' => 'El ISBN o el Cod./Ref. ya existe.',
+            // 'producto.referencia.unique' => 'Esta referencia ya existe.',
+            // 'producto.isbn.unique' => 'El ISBN o el Cod./Ref. ya existe.',
             'producto.preciocoste.numeric' => 'El precio de compra debe ser numérico',
             'producto.precioventa.numeric' => 'El precio de venta debe ser numérico',
             'producto.descripsolapa.required' => 'La descripcion de las solapas es necesaria si se ha seleccionado la opción Solapas. ',
@@ -134,6 +136,7 @@ class Prod extends Component
         $this->plastificados=Plastificado::orderBy('name')->get();
         $this->encuadernaciones=Encuadernacion::orderBy('name')->get();
         $this->cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
+        $this->idiomas=Idioma::orderBy('nombre')->get();
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
 
@@ -175,6 +178,7 @@ class Prod extends Component
     public function save(){
         if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
         if($this->producto->caja_id=='') $this->producto->caja_id=null;
+        if($this->producto->idioma_id=='') $this->producto->idioma_id=null;
         if($this->producto->productoestado=='') $this->producto->productoestado='1';
         if($this->tipo) $this->producto->tipo=$this->tipo;
         if($this->producto->id){
@@ -182,12 +186,13 @@ class Prod extends Component
             $this->validate([
                 'producto.referencia'=>[
                     'required',
-                    Rule::unique('productos','referencia')->ignore($this->producto->id)
+                    // Rule::unique('productos','referencia')->ignore($this->producto->id)
                     ],
                 'producto.isbn'=>[
                     'nullable',
-                    Rule::unique('productos','isbn')->ignore($this->producto->id)
+                    // Rule::unique('productos','isbn')->ignore($this->producto->id)
                     ],
+                'producto.idioma_id'=>'nullable|exists:idiomas,id',
                 ],
             );
             $mensaje=$this->producto->referencia . " actualizado satisfactoriamente";
@@ -203,6 +208,7 @@ class Prod extends Component
             ],
             [
             'isbn'=>$this->producto->isbn,
+            'idioma_id'=>$this->producto->idioma_id,
             'productoestado'=>$this->producto->productoestado,
             'referencia'=>$this->producto->referencia,
             'cliente_id'=>$this->producto->cliente_id,

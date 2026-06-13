@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\PedidosExport;
 use App\Models\Entidad;
+use App\Models\Idioma;
 use App\Models\Laminado;
 use App\Models\Mes;
 use App\Models\Pedido;
@@ -33,6 +34,7 @@ class PedidoController extends Controller
         $filtroisbn=$request->filtroisbn;
         $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
         $filtrocliente=$request->filtrocliente;
+        $filtroidioma=$request->filtroidioma;
         $filtroproveedor=$request->filtroproveedor;
         $filtrolaminado=$request->filtrolaminado;
 
@@ -56,6 +58,7 @@ class PedidoController extends Controller
         $meses=Mes::orderBy('id')->get();
         $responsables=Responsable::where('activo','1')->get();
         $laminados=Laminado::get();
+        $idiomas=Idioma::orderBy('nombre')->get();
 
         $pedidos= Pedido::query()
             ->with('cliente','proveedor','laminado')
@@ -76,6 +79,7 @@ class PedidoController extends Controller
             ->when($filtroisbn!='', function ($query) use($filtroisbn) {$query->where('productos.isbn','like','%'.$filtroisbn.'%');})
             ->when($filtroresponsable!='', function ($query) use($filtroresponsable){$query->where('pedidos.responsable','like','%'.$filtroresponsable.'%');})
             ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})
+            ->when($filtroidioma!='', function ($query) use($filtroidioma) {$query->where('pedidos.idioma_id',$filtroidioma);})
             ->when($filtroproveedor!='', function ($query) use($filtroproveedor) {$query->where('pedidos.proveedor_id',$filtroproveedor);})
             ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
             ->when($filtrofacturado!='', function ($query) use($filtrofacturado) {$query->where('pedidos.facturado',$filtrofacturado);})
@@ -94,8 +98,8 @@ class PedidoController extends Controller
             ->groupBy('pedidos.id')
             ->paginate(30);
 
-        return view('pedidos.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados',
-        'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtrocliente','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+        return view('pedidos.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados','idiomas',
+        'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtroidioma','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function stock($tipo,$ruta){
@@ -111,7 +115,7 @@ class PedidoController extends Controller
 
     public function ficha($pedId,$tipo){
         $pdf = new Dompdf();
-        $pedido=Pedido::with('cliente')->find($pedId);
+        $pedido=Pedido::with('cliente', 'idioma')->find($pedId);
         $pdf = \PDF::loadView('pedidos.fichapdf', compact('pedido'));
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
@@ -141,7 +145,7 @@ class PedidoController extends Controller
         $productos = $pedProd?->producto;
 
         // $pedido=Pedido::with('cliente','contacto','distribuciones','subpedidos','tareas')->find($pedidoid);
-        $pedido = Pedido::with(['cliente','contacto','distribuciones','subpedidos','tareas','laminado','caja',])->find($pedidoid);
+        $pedido = Pedido::with(['cliente','contacto','idioma','distribuciones','subpedidos','tareas','laminado','caja',])->find($pedidoid);
 
         // $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos','subpedidos','tareas')->find($pedidoid);
         // dd($pedido->pedidoproductos);
@@ -217,11 +221,12 @@ class PedidoController extends Controller
                 ->leftjoin('entidades as clientes','pedidos.cliente_id','=','clientes.id')
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+                ->leftjoin('idiomas','pedidos.idioma_id','=','idiomas.id')
                 ->leftjoin('entidades as imprenta','pedidos.proveedor_id','=','imprenta.id')
                 ->leftjoin('laminados','pedidos.laminado_id','=','laminados.id')
                 ->select('clientes.id as entidadId','clientes.entidad as cliente',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','imprenta.entidad as imprenta',
-                'pedidos.facturadopor',
+                'pedidos.facturadopor','idiomas.nombre as idioma',
                 'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
                 'productos.isbn','productos.referencia',
                 'pedidos.tiradaprevista','pedidos.tiradareal','pedidos.estado','pedidos.facturado',
@@ -266,8 +271,9 @@ class PedidoController extends Controller
                 ->leftjoin('entidades','pedidos.cliente_id','=','entidades.id')
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
+                ->leftjoin('idiomas','pedidos.idioma_id','=','idiomas.id')
                 ->select('entidades.id as entidadId','entidades.entidad',
-                'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
+                'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor','idiomas.nombre as idioma',
                 'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
                 'productos.isbn','productos.referencia',
                 'pedidos.estado','pedidos.facturado','otros',

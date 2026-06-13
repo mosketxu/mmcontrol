@@ -20,6 +20,7 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
         public $filtroproductoestado,
         public $filtroreferencia,
         public $filtrocliente,
+        public $filtroidioma,
         public $filtromaterial,
         public $filtroimpresion,
         public $filtrocaja,
@@ -37,6 +38,7 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
         return [
             'ISBN',
             'Titulo/Referencia',
+            'Idioma',
             'Cliente',
             'Estado',
         ];
@@ -44,7 +46,7 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
 
     public function collection(){
 
-        $query = Producto::query()->with('proveedor', 'cliente');
+        $query = Producto::query()->with('proveedor', 'cliente', 'idioma');
 
         // Empresas a las que tiene acceso el usuario actual
         $entidadescliente = UserEmpresa::where('user_id',Auth::id())->pluck('entidad_id');
@@ -61,6 +63,7 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
             ->when($this->filtroproductoestado, fn($q) => $q->where('productoestado', $this->filtroproductoestado))
             ->when($this->filtroreferencia, fn($q) => $q->where('referencia', 'like', "%{$this->filtroreferencia}%"))
             ->when($this->filtrocliente, fn($q) => $q->where('cliente_id', $this->filtrocliente))
+            ->when($this->filtroidioma, fn($q) => $q->where('idioma_id', $this->filtroidioma))
             ->when($this->filtromaterial, fn($q) => $q->where('material', $this->filtromaterial))
             ->when($this->filtroimpresion, fn($q) => $q->where('impresion', $this->filtroimpresion))
             ->when($this->filtrocaja, fn($q) => $q->where('caja', $this->filtrocaja))
@@ -76,6 +79,7 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
         return [
             $isbn,
             $p->referencia,
+            $p->idioma?->nombre ?? '',
             $p->cliente?->entidad ?? '',
             $p->productoestado?->value ?? '',
         ];

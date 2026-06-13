@@ -29,19 +29,21 @@ class PresupuestoController extends Controller
     }
 
     public function presupuestoPDF(Presupuesto $presupuesto,$reducido,$idioma){
+        $presupuesto->loadMissing('idioma', 'presupuestoproductos.producto', 'presupuestoprocesos');
+        $idiomaPdf=strtoupper($presupuesto->idioma?->codigo ?? $idioma);
         $proveedor=Entidad::find($presupuesto->proveedor_id);
         $cliente=Entidad::find($presupuesto->cliente_id);
         $pdf = new Dompdf();
 
         if($presupuesto->tipo=='1'){
-            $producto=$presupuesto->presupuestoproductos->first()->producto;
-            if($idioma=='ES')
-                if($tipopdf='n')
+            $producto=$presupuesto->presupuestoproductos->first()?->producto;
+            if($idiomaPdf=='ES')
+                if($reducido=='n')
                 $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
                 else
                 $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
             else
-                if($tipopdf='n')
+                if($reducido=='n')
                 $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorialingles', compact('presupuesto','producto','proveedor','cliente'));
                 else
                 $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorialingles', compact('presupuesto','producto','proveedor','cliente'));
@@ -50,14 +52,9 @@ class PresupuestoController extends Controller
             // $producto=$presupuesto->presupuestoproductos->first()->producto;
             // $presupuesto=Presupuesto::with('presupuestoproductos','presupuestoprocesos')->find($presupuesto->id);
 
-            $presupuesto = Presupuesto::with([
-                'presupuestoproductos.producto',
-                'presupuestoprocesos'
-            ])->find($presupuesto->id);
-
             $producto = $presupuesto->presupuestoproductos->first()?->producto;
 
-            if($idioma=='ES')
+            if($idiomaPdf=='ES')
                 $pdf = \PDF::loadView('presupuestos.presupuestopdfotros', compact('presupuesto','proveedor','cliente','producto'));
             else
                 $pdf = \PDF::loadView('presupuestos.presupuestopdfotrosingles', compact('presupuesto','proveedor','cliente','producto'));
@@ -84,6 +81,7 @@ class PresupuestoController extends Controller
             'anyo' => $request->input('filtroanyo'),
             'mes' => $request->input('filtromes'),
             'cliente' => $request->input('filtrocliente'),
+            'idioma' => $request->input('filtroidioma'),
             'proveedor' => $request->input('filtroproveedor'),
             'responsable' => $request->input('filtroresponsable'),
             'referencia' => $request->input('filtroreferencia'),

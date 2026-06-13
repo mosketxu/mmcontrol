@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Producto;
 
 use App\Enums\ProductoEstado;
-use App\Models\{Caja, Entidad,Producto};
+use App\Models\{Caja, Entidad, Idioma, Producto};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 
@@ -20,6 +20,7 @@ class Prods extends Component
     public $filtroproductoestado='1';
     public $filtroreferencia='';
     public $filtrocliente='';
+    public $filtroidioma='';
     public $filtromaterial='';
     public $filtroimpresion='';
     public $filtrocaja='';
@@ -31,7 +32,7 @@ class Prods extends Component
     public $orden2='';
     public $productosestado='1';
 
-    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion','filtrocaja'];
+    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtroidioma','filtromaterial','filtroimpresion','filtrocaja'];
 
 
     public Producto $producto;
@@ -61,9 +62,10 @@ class Prods extends Component
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
         $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
+        $idiomas=Idioma::orderBy('nombre')->get();
 
         $datos=Producto::query()
-            ->with('cliente')
+            ->with('cliente','idioma')
             ->orderBy($this->ordenarpor1,$this->orden1)
             ->when($this->ordenarpor2!='', function ($query){
                 $query->orderBy($this->ordenarpor2,$this->orden2);
@@ -74,6 +76,7 @@ class Prods extends Component
         if($this->filtroproductoestado) $datos->where('productoestado', $this->filtroproductoestado);
         if($this->filtroreferencia) $datos->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
         if($this->filtrocliente) $datos->where('cliente_id',$this->filtrocliente);
+        if($this->filtroidioma) $datos->where('idioma_id',$this->filtroidioma);
         if($this->filtromaterial) $datos->search('productos.material',$this->filtromaterial);
         if($this->filtroimpresion) $datos->search('productos.impresion',$this->filtroimpresion);
         if($this->filtrocaja) $datos->search('productos.caja_id',$this->filtrocaja);
@@ -82,13 +85,14 @@ class Prods extends Component
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
 
-        return view($vista,compact('productos','clientes','cajas'));
+        return view($vista,compact('productos','clientes','cajas','idiomas'));
     }
 
         public function updatingFiltroisbn(){$this->resetPage();}
         public function updatingFiltroproductoestado(){$this->resetPage();}
         public function updatingFiltroreferencia(){$this->resetPage();}
         public function updatingFiltrocliente(){$this->resetPage();}
+        public function updatingFiltroidioma(){$this->resetPage();}
         public function updatingFiltromaterial(){$this->resetPage();}
         public function updatingFiltroimpresion(){$this->resetPage();}
         public function updatingFiltrocaja(){$this->resetPage();}

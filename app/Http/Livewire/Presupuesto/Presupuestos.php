@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Presupuesto;
 
-use App\Models\{Entidad,Mes, Pedido, Presupuesto};
+use App\Models\{Entidad, Idioma, Mes, Pedido, Presupuesto};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 use App\Http\Livewire\DataTable\WithBulkActions;
@@ -23,6 +23,7 @@ class Presupuestos extends Component
     public $filtroanyo='';
     public $filtromes='';
     public $filtrocliente='';
+    public $filtroidioma='';
     public $filtroproveedor='';
     public $filtroresponsable='';
     public $filtroisbn='';
@@ -37,7 +38,7 @@ class Presupuestos extends Component
     public $escliente;
     public $deshabilitado;
 
-    protected $queryString=['tipo','search','filtroanyo','filtromes','filtrocliente','filtroproveedor','filtroresponsable','filtroreferencia','filtroisbn','filtroestado','filtrookexterno'];
+    protected $queryString=['tipo','search','filtroanyo','filtromes','filtrocliente','filtroidioma','filtroproveedor','filtroresponsable','filtroreferencia','filtroisbn','filtroestado','filtrookexterno'];
 
 
     public function mount($tipo,$titulo){
@@ -64,19 +65,21 @@ class Presupuestos extends Component
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $meses=Mes::orderBy('id')->get();
+        $idiomas=Idioma::orderBy('nombre')->get();
 
         if($this->selectAll) $this->selectPageRows();
 
         $presupuestos = $this->rows;
 
         $view=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoseditorial' : 'livewire.presupuesto.presupuestosotros' ;
-        return view($view,compact('presupuestos','clientes','proveedores','meses'));
+        return view($view,compact('presupuestos','clientes','proveedores','meses','idiomas'));
     }
 
     public function updatingSearch(){$this->resetPage();}
     public function updatingFiltroanyo(){$this->resetPage();}
     public function updatingFiltromes(){$this->resetPage();}
     public function updatingFiltrocliente(){$this->resetPage();}
+    public function updatingFiltroidioma(){$this->resetPage();}
     public function updatingFiltroproveedor(){$this->resetPage();}
     public function updatingFiltroresponsable(){$this->resetPage();}
     public function updatingFiltroreferencia(){$this->resetPage();}
@@ -113,7 +116,7 @@ class Presupuestos extends Component
         // desde febrero 2026 son iguales para los dos
         // if($this->tipo=='1')
         return Presupuesto::query()
-            ->with('cliente','proveedor')
+            ->with('cliente','proveedor','idioma')
             ->join('entidades','presupuestos.cliente_id','=','entidades.id')
             ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
             ->join('productos','presupuesto_productos.producto_id','=','productos.id')
@@ -131,6 +134,9 @@ class Presupuestos extends Component
             })
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('presupuestos.cliente_id',$this->filtrocliente);
+                })
+            ->when($this->filtroidioma!='', function ($query){
+                $query->where('presupuestos.idioma_id',$this->filtroidioma);
                 })
             ->when($this->filtroproveedor!='', function ($query){
                 $query->where('presupuestos.proveedor_id',$this->filtroproveedor);
@@ -177,6 +183,7 @@ class Presupuestos extends Component
             'filtroanyo' => $this->filtroanyo,
             'filtromes' => $this->filtromes,
             'filtrocliente' => $this->filtrocliente,
+            'filtroidioma' => $this->filtroidioma,
             'filtroproveedor' => $this->filtroproveedor,
             'filtroresponsable' => $this->filtroresponsable,
             'filtroreferencia' => $this->filtroreferencia,

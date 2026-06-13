@@ -3,8 +3,9 @@
 namespace App\Http\Livewire\Presupuesto;
 
 use App\Mail\MilimetricaMail;
-use App\Models\{Producto,Entidad, EntidadContacto, Pedido, PedidoProducto,PedidoProceso, Presupuesto as ModelsPresupuesto, PresupuestoProducto, PresupuestoProceso,Caja, Responsable};
+use App\Models\{Producto,Entidad, EntidadContacto, Idioma, Pedido, PedidoProducto,PedidoProceso, Presupuesto as ModelsPresupuesto, PresupuestoProducto, PresupuestoProceso,Caja, Responsable};
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -13,6 +14,7 @@ class Presupuesto extends Component
 {
     public $presupuestoid='';
     public $cliente_id;
+    public $idioma_id;
     public $descripcion;
     public $responsable;
     public $contacto_id;
@@ -52,6 +54,7 @@ class Presupuesto extends Component
 
     public $contactos;
     public $productos;
+    public $idiomas;
     public $escliente;
 
     protected $queryString=['filtrocliente','filtroproveedor','filtroreferencia','filtroisbn'];
@@ -68,6 +71,7 @@ class Presupuesto extends Component
         return [
             // 'presupuestoid'=>'required',
             'cliente_id'=>'required',
+            'idioma_id'=>'nullable|exists:idiomas,id',
             // 'descripcion'=>Rule::requiredIf($this->tipo!='1'),
             'descripcion'=>'nullable',
             'responsable'=>'nullable',
@@ -121,6 +125,7 @@ class Presupuesto extends Component
             $this->presupuestoid=$presupuesto->id;
             $this->responsable=$presupuesto->responsable;
             $this->cliente_id=$presupuesto->cliente_id;
+            $this->idioma_id=$presupuesto->idioma_id;
             $this->descripcion=$presupuesto->descripcion;
             $this->contacto_id=$presupuesto->contacto_id;
             $this->proveedor_id=$presupuesto->proveedor_id;
@@ -162,22 +167,6 @@ class Presupuesto extends Component
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
 
         $this->cargarProductos();
-
-        // $this->productos = Producto::with('cliente')
-        //     ->where('productoestado', '1')
-        //     ->where('tipo', $this->tipo)
-        //     ->when($this->cliente_id != '', function ($query) {
-        //         $query->where('cliente_id', $this->cliente_id);
-        //     })
-        //     ->when($this->filtroisbn!='', function ($query) {
-        //          $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-        //     })
-        //     ->when($this->filtroreferencia!='', function ($query) {
-        //          $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-        //     })
-        //     ->orderBy('referencia', 'asc')
-        //     ->get();
-
     }
 
     public function render(){
@@ -186,6 +175,7 @@ class Presupuesto extends Component
         $clientes=$entidades->whereIn('entidadtipo_id', ['1','2','4']);
         $proveedores=$entidades->whereIn('entidadtipo_id', ['2','3']);
         $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
+        $this->idiomas=Idioma::orderBy('nombre')->get();
         $cliente=$this->cliente_id;
         $tipo=$this->tipo;
 
@@ -215,56 +205,19 @@ class Presupuesto extends Component
 
         $this->cargarProductos();
 
-        // $this->productos = Producto::with('cliente')
-        //     ->where('productoestado', '1')
-        //     ->where('tipo', $this->tipo)
-        //     ->when($this->cliente_id != '', function ($query) {
-        //         $query->where('cliente_id', $this->cliente_id);
-        //     })
-        //     ->when($this->filtroisbn!='', function ($query) {
-        //         $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-        //     })
-        //     ->when($this->filtroreferencia!='', function ($query) {
-        //         $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-        //     })
-        //     ->orderBy('referencia', 'asc')
-        //     ->get();
+    }
+
+    public function updatedIdiomaId(){
+        if($this->idioma_id=='') $this->idioma_id=null;
+        $this->cargarProductos();
+        $this->limpiarProductoSiNoCoincideIdioma();
     }
 
     public function updatedFiltroisbn(){
-        // $this->productos = Producto::with('cliente')
-        //     ->where('productoestado', '1')
-        //     ->where('tipo', $this->tipo)
-        //     ->when($this->cliente_id != '', function ($query) {
-        //         $query->where('cliente_id', $this->cliente_id);
-        //     })
-        //     ->when($this->filtroisbn!='', function ($query) {
-        //         $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-        //     })
-        //     ->when($this->filtroreferencia!='', function ($query) {
-        //         $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-        //     })
-        //     ->orderBy('referencia', 'asc')
-        //     ->get();
         $this->cargarProductos();
     }
 
-
     public function updatedFiltroreferencia(){
-        // $this->productos = Producto::with('cliente')
-        //     ->where('productoestado', '1')
-        //     ->where('tipo', $this->tipo)
-        //     ->when($this->cliente_id != '', function ($query) {
-        //         $query->where('cliente_id', $this->cliente_id);
-        //     })
-        //     ->when($this->filtroisbn!='', function ($query) {
-        //         $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-        //     })
-        //     ->when($this->filtroreferencia!='', function ($query) {
-        //         $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-        //     })
-        //     ->orderBy('referencia', 'asc')
-        //     ->get();
         $this->cargarProductos();
     }
 
@@ -292,20 +245,23 @@ class Presupuesto extends Component
     }
 
     private function cargarProductos(){
-    $this->productos = Producto::with('cliente')
-        ->where('productoestado', '1')
-        ->where('tipo', $this->tipo)
-        ->when($this->cliente_id != '', function ($query) {
-            $query->where('cliente_id', $this->cliente_id);
-        })
-        ->when($this->filtroisbn!='', function ($query) {
-            $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
-        })
-        ->when($this->filtroreferencia!='', function ($query) {
-            $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
-        })
-        ->orderBy('referencia', 'asc')
-        ->get();
+        $this->productos = Producto::with('cliente')
+            ->where('productoestado', '1')
+            ->where('tipo', $this->tipo)
+            ->when($this->idioma_id != '', function ($query) {
+                $query->where('idioma_id', $this->idioma_id);
+            })
+            ->when($this->cliente_id != '', function ($query) {
+                $query->where('cliente_id', $this->cliente_id);
+            })
+            ->when($this->filtroisbn!='', function ($query) {
+                $query->where('isbn', 'like','%'.$this->filtroisbn.'%');
+            })
+            ->when($this->filtroreferencia!='', function ($query) {
+                $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
+            })
+            ->orderBy('referencia', 'asc')
+            ->get();
     }
 
     public function updatedProductoeditorialid(){
@@ -313,6 +269,17 @@ class Presupuesto extends Component
             $this->precio_ud=0;
         } else {
             $p=Producto::find($this->productoeditorialid);
+            if(!$p){
+                $this->productoeditorialid='';
+                $this->precio_ud=0;
+                return;
+            }
+            if($this->idioma_id && $p && (string) $p->idioma_id !== (string) $this->idioma_id){
+                $this->productoeditorialid='';
+                $this->precio_ud=0;
+                $this->dispatchBrowserEvent('notify', 'El producto no coincide con el idioma del presupuesto.');
+                return;
+            }
             $this->precio_ud=$p->precio_ud;
             // $this->preciototal=$p->precio_ud * $this->tiradanum($p->tirada);
             $this->preciototal = $p->precio_ud * $this->tiradanum($this->tirada);
@@ -357,6 +324,9 @@ class Presupuesto extends Component
         $this->okexterno=$this->okexterno=='' ? '0' : $this->okexterno;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
         if($this->contacto_id =='') $this->contacto_id=null;
+        if($this->idioma_id =='') $this->idioma_id=null;
+        $this->validarIdiomaProducto($this->productoeditorialid);
+        $this->validarIdiomaProductosPresupuesto();
         $mensaje="Presupuesto creado satisfactoriamente";
         $i=null;
         $nuevo=null;
@@ -364,6 +334,7 @@ class Presupuesto extends Component
         $obsexternoOld=0;
         $okexternoNew=$this->okexterno;
         $obsexternoNew=$this->observacionesexterno;
+
 
 
         if ($this->presupuestoid!='') {
@@ -383,14 +354,6 @@ class Presupuesto extends Component
             $i=$this->presupuestoid;
             $nuevo=true;
         }
-
-        // if($this->tipo!='1')
-            // Validator::make(
-            //     ['descripcion'=>$this->descripcion,],
-            //     ['descripcion' => 'required',],
-            //     ['descripcion.required'=>'La descripción es necesaria.'])
-            //     ->validate();
-
         // Esto lo hago tanto para Editorial como para Packaging
         $presup=ModelsPresupuesto::updateOrCreate(
             [
@@ -401,6 +364,7 @@ class Presupuesto extends Component
             'responsable'=>$this->responsable,
             'tipo'=>$this->tipo,
             'cliente_id'=>$this->cliente_id,
+            'idioma_id'=>$this->idioma_id,
             'descripcion'=>$this->descripcion,
             'contacto_id'=>$this->contacto_id,
             'proveedor_id'=>$this->proveedor_id ,
@@ -486,6 +450,7 @@ class Presupuesto extends Component
             'responsable'=>$presupuesto->responsable,
             'tipo'=>$presupuesto->tipo,
             'cliente_id'=>$presupuesto->cliente_id,
+            'idioma_id'=>$presupuesto->idioma_id,
             'descripcion'=>$presupuesto->descripcion,
             'contacto_id'=>$presupuesto->contacto_id,
             'presupuesto_id'=>$presupuesto->id,
@@ -547,6 +512,36 @@ class Presupuesto extends Component
         $presupuesto->pedido=$ped->id;
         $presupuesto->save();
         return redirect()->route('pedido.editar',[$ped,'i']);
+    }
+
+    private function limpiarProductoSiNoCoincideIdioma(){
+        if(!$this->productoeditorialid || !$this->idioma_id) return;
+
+        $producto=Producto::find($this->productoeditorialid);
+        if($producto && (string) $producto->idioma_id !== (string) $this->idioma_id){
+            $this->productoeditorialid='';
+            $this->precio_ud=0;
+            $this->preciototal=0;
+        }
+    }
+
+    private function validarIdiomaProducto($productoId){
+        if(!$productoId || !$this->idioma_id) return;
+
+        $producto=Producto::find($productoId);
+        if($producto && (string) $producto->idioma_id !== (string) $this->idioma_id){
+            throw ValidationException::withMessages([
+                'productoeditorialid' => 'El producto seleccionado debe tener el mismo idioma que el presupuesto.',
+            ]);
+        }
+    }
+
+    private function validarIdiomaProductosPresupuesto(){
+        if(!$this->presupuestoid || !$this->idioma_id) return;
+
+        $productoidioma=Producto::find($this->productoeditorialid)->idioma_id;
+        if($this->idioma_id!=$productoidioma)
+            throw ValidationException::withMessages(['idioma_id' => 'Hay productos asociados que no tienen el mismo idioma que el presupuesto.',]);
     }
 
     public function enviamail($presupuesto) {

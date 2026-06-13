@@ -12,8 +12,20 @@
                 <input wire:model.lazy="producto.isbn" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 {{$escliente}} {{$deshabilitado}}/>
             </div>
+            {{-- idioma --}}
+            <div class="w-full form-item md:w-2/12">
+                <x-jet-label for="idioma_id">{{ __('Idioma') }}</x-jet-label>
+                <select wire:model.lazy="producto.idioma_id"
+                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
+                    {{$escliente}} {{$deshabilitado}} >
+                    <option value=''>-- Selecciona idioma --</option>
+                    @foreach ($idiomas as $idioma)
+                    <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
+                    @endforeach
+                </select>
+            </div>
             {{-- titulo --}}
-            <div class="w-full form-item md:w-5/12">
+            <div class="w-full form-item md:w-4/12">
                 <x-jet-label for="referencia">{{ __('Título') }}</x-jet-label>
                 <input wire:model.lazy="producto.referencia" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" autofocus
                 {{$escliente}} {{$deshabilitado}}/>

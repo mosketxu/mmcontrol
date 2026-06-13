@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Models\{Producto,EntidadContacto,Entidad, Oferta, Pedido as ModeloPedido,Caja, Factura, FacturaDetalle, Laminado, PedidoProducto, Responsable};
+use App\Models\{Producto,EntidadContacto,Entidad, Idioma, Oferta, Pedido as ModeloPedido,Caja, Factura, FacturaDetalle, Laminado, PedidoProducto, Responsable};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
 class Pedido extends Component
@@ -14,6 +15,7 @@ class Pedido extends Component
     public $ruta;
     public $responsable;
     public $cliente_id;
+    public $idioma_id;
     public $descripcion;
     public $proveedor_id;
     public $pedidocliente;
@@ -63,6 +65,7 @@ class Pedido extends Component
     public $prod;
     public $contactos;
     public $productos;
+    public $idiomas;
     public $facturas;
     public $ofertas;
     public $deshabilitado;
@@ -81,6 +84,7 @@ class Pedido extends Component
             'pedidoid'=>'required',
             'responsable'=>'nullable',
             'cliente_id'=>'required',
+            'idioma_id'=>'nullable|exists:idiomas,id',
             'descripcion'=>'nullable',
             'contacto_id'=>'nullable',
             'proveedor_id'=>'nullable',
@@ -149,6 +153,7 @@ class Pedido extends Component
             $this->pedidoid=$pedido->id;
             $this->responsable=$pedido->responsable;
             $this->cliente_id=$pedido->cliente_id;
+            $this->idioma_id=$pedido->idioma_id;
             $this->descripcion=$pedido->descripcion;
             $this->pedidocliente=$pedido->pedidocliente;
             $this->oferta_id=$pedido->oferta_id;
@@ -218,6 +223,7 @@ class Pedido extends Component
         $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
         $laminados=Laminado::get();
         $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
+        $this->idiomas=Idioma::orderBy('nombre')->get();
 
         $this->productos=Producto::query()
             ->where(function($q) {
@@ -229,6 +235,9 @@ class Pedido extends Component
             })
             ->where('tipo',$this->tipo)
             ->with('cliente')
+            ->when($this->idioma_id!='', function ($query){
+                $query->where('idioma_id',$this->idioma_id);
+                })
             ->when($this->cliente_id!='', function ($query){
                 $query->where('cliente_id',$this->cliente_id);
                 })
@@ -258,11 +267,27 @@ class Pedido extends Component
         if($resp->responsable!='') $this->responsable=$resp->responsable;
     }
 
+    public function updatedIdiomaId(){
+        if($this->idioma_id=='') $this->idioma_id=null;
+        $this->limpiarProductoSiNoCoincideIdioma();
+    }
+
     public function updatedProductoeditorialid(){
         if ($this->productoeditorialid=='') {
             $this->precio=0;
         } else {
             $p=Producto::find($this->productoeditorialid);
+            if(!$p){
+                $this->productoeditorialid='';
+                $this->precio=0;
+                return;
+            }
+            if($this->idioma_id && (string) $p->idioma_id !== (string) $this->idioma_id){
+                $this->productoeditorialid='';
+                $this->precio=0;
+                $this->dispatchBrowserEvent('notify', 'El producto no coincide con el idioma del pedido.');
+                return;
+            }
             $this->precio=$p->precioventa;
             $this->caja_id=$p->caja_id;
             $this->etiqueta=$p->etiqueta;
@@ -309,9 +334,12 @@ class Pedido extends Component
         if($this->ctrentrega =='') $this->ctrentrega='0';
         if($this->ctrplotter =='') $this->ctrplotter='0';
         if($this->contacto_id =='') $this->contacto_id=null;
+        if($this->idioma_id =='') $this->idioma_id=null;
 
         if($this->precio=='') $this->precio='0';
         if($this->consumo=='') $this->consumo='0';
+        $this->validarIdiomaProducto($this->productoeditorialid);
+        $this->validarIdiomaProductosPedido();
         $mensaje="Pedido creado satisfactoriamente";
         $i="";
         if ($this->pedidoid!='') {
@@ -338,6 +366,7 @@ class Pedido extends Component
             'responsable'=>$this->responsable,
             'tipo'=>$this->tipo,
             'cliente_id'=>$this->cliente_id,
+            'idioma_id'=>$this->idioma_id,
             'descripcion'=>$this->descripcion,
             'contacto_id'=>$this->contacto_id,
             'pedidocliente'=>$this->pedidocliente,
@@ -395,6 +424,36 @@ class Pedido extends Component
         $pedido=ModeloPedido::find($ped->id);
         $this->dispatchBrowserEvent('notify', $mensaje);
         return redirect()->route('pedido.editar',[$pedido,$this->ruta,$this->titulo]);
+    }
+
+    private function limpiarProductoSiNoCoincideIdioma(){
+        if(!$this->productoeditorialid || !$this->idioma_id) return;
+
+        $producto=Producto::find($this->productoeditorialid);
+        if($producto && (string) $producto->idioma_id !== (string) $this->idioma_id){
+            $this->productoeditorialid='';
+            $this->precio=0;
+            $this->preciototal=0;
+        }
+    }
+
+    private function validarIdiomaProducto($productoId){
+        if(!$productoId || !$this->idioma_id) return;
+
+        $producto=Producto::find($productoId);
+        if($producto && (string) $producto->idioma_id !== (string) $this->idioma_id){
+            throw ValidationException::withMessages([
+                'productoeditorialid' => 'El producto seleccionado debe tener el mismo idioma que el pedido.',
+            ]);
+        }
+    }
+
+    private function validarIdiomaProductosPedido(){
+        if(!$this->pedidoid || !$this->idioma_id) return;
+
+        $productoidioma=Producto::find($this->productoeditorialid)->idioma_id;
+        if($this->idioma_id!=$productoidioma)
+            throw ValidationException::withMessages(['idioma_id' => 'Hay productos asociados que no tienen el mismo idioma que el pedido.',]);
     }
 
 }

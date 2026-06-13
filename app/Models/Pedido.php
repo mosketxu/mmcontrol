@@ -13,12 +13,13 @@ class Pedido extends Model
 
     public $incrementing = false;
 
-    protected $fillable=['id','tipo','cliente_id','descripcion','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
+    protected $fillable=['id','tipo','cliente_id','idioma_id','descripcion','responsable','presupuesto_id','pedidocliente','oferta_id','contacto_id',
         'proveedor_id','facturadopor','fechapedido','fechaarchivos','fechamaqueta','ctrarchivos','ctrmaqueta','fechaplotter','ctrplotter','fechaentrega','ctrentrega',
         'tiradaprevista','tiradareal','precio','preciototal','parcial','muestra','pruebacolor','laminadoplastico','laminado_id','consumo','unidad_consumo','estado','facturado','caja_id','etiqueta','uds_caja',
         'transporte','hayDistribuciones','hayFacturaciones','hayIncidencias','hayParciales','hayRetrasos','hayFacturacion','haySubpedidos','hayTareas','otros'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id')->withDefault(['entidad'=>'-']);}
+    public function idioma(){return $this->belongsTo(Idioma::class, 'idioma_id');}
     public function presupuesto(){return $this->belongsTo(Presupuesto::class,'presupuesto_id','id');}
     public function proveedor(){return $this->belongsTo(Entidad::class,'proveedor_id','id')->withDefault(['entidad'=>'-']);}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id')->withDefault(['entidad'=>'-']);}

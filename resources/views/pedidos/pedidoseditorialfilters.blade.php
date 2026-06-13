@@ -76,6 +76,21 @@
                 </div>
             </div>
         </div>
+        <div class="flex w-1/12 ">
+            <div class="w-full">
+                <label class="px-1 text-sm text-gray-600">
+                    Idioma
+                </label>
+                <div class="flex">
+                    <select name="filtroidioma" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" onchange="this.form.submit()">
+                        <option value="">-- Todos --</option>
+                        @foreach ($idiomas as $idioma)
+                        <option value="{{ $idioma->id }}" {{ $idioma->id == $filtroidioma ? 'selected' : '' }}>{{ $idioma->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
         @if(!Auth::user()->hasRole('Cliente'))
         <div class="flex w-1/12 ">
             <div class="w-full">

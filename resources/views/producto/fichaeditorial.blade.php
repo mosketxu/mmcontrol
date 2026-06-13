@@ -11,6 +11,12 @@
             <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">ISBN/Referencia</td>
             <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->isbn }}</td>
         </tr>
+        @if($producto->idioma)
+        <tr style="">
+            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Idioma</td>
+            <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->idioma->nombre }}</td>
+        </tr>
+        @endif
         <tr style="">
             <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;" class="borde1">Formato</td>
             <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->formato }}</td>
