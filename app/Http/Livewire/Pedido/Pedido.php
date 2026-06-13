@@ -187,7 +187,7 @@ class Pedido extends Component
             $this->transporte=$pedido->transporte;
             $this->otros=$pedido->otros;
             $this->titulo=$this->tipo=='1'?'Pedido Editorial':'Pedido Packaging/Propios';
-            $this->facturas=FacturaDetalle::where('pedido_id',$pedido->id)->get();
+            // $this->facturas=FacturaDetalle::where('pedido_id',$pedido->id)->get(); la tengo mas abajo mejor
 
             if($this->cliente_id){
                 $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
@@ -209,7 +209,6 @@ class Pedido extends Component
                 // $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
             // }
         }
-        // $this->facturas=FacturaDetalle::where('pedido_id',$this->pedidoid)->get();
             $this->facturas = $this->pedidoid
                 ? FacturaDetalle::where('pedido_id',$this->pedidoid)->get()
                 : collect();
@@ -234,7 +233,7 @@ class Pedido extends Component
                 }
             })
             ->where('tipo',$this->tipo)
-            ->with('cliente')
+            ->with('cliente','idioma','caja')
             ->when($this->idioma_id!='', function ($query){
                 $query->where('idioma_id',$this->idioma_id);
                 })
