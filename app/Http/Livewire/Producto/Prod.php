@@ -17,6 +17,7 @@ class Prod extends Component
     use WithFileUploads;
 
     public $producto;
+    public $clientes;
     // public $productoestado;
     public $productosestado;
     public $formatos;
@@ -113,39 +114,40 @@ class Prod extends Component
         $this->tipo=$tipo;
         $this->titulo=$titulo;
         $this->escliente= Auth::user()->hasRole('Cliente') ? 'disabled' : '';
+
+        $this->formatos = Formato::orderBy('name')->get();
+
+        $gramajes = Gramaje::orderBy('name')->get();
+        $this->gramajesinterior = $gramajes->whereIn('familia', ['', 'INT']);
+        $this->gramajescubierta = $gramajes->whereIn('familia', ['', 'CUB']);
+
+        $materiales = Material::orderBy('name')->get();
+        $this->materialesinterior = $materiales->whereIn('familia', ['', 'INT']);
+        $this->materialescubierta = $materiales->whereIn('familia', ['', 'CUB']);
+
+        $tintas = Tinta::orderBy('name')->get();
+        $this->tintasinterior = $tintas->whereIn('familia', ['', 'INT']);
+        $this->tintascubierta = $tintas->whereIn('familia', ['', 'CUB']);
+
+        $this->plastificados = Plastificado::orderBy('name')->get();
+        $this->encuadernaciones = Encuadernacion::orderBy('name')->get();
+        $this->cajas = Caja::where('tipo', $this->tipo)->orderBy('name')->get();
+        $this->idiomas = Idioma::orderBy('nombre')->get();
+
+        $this->clientes = Entidad::whereIn('entidadtipo_id', ['1', '2', '4'])
+            ->orderBy('entidad')
+            ->get();
+
+        $this->productosestado = ProductoEstado::options();
     }
 
     public function render(){
         if($this->tipo=='1' && $this->producto->id) $this->titulo='Ficha del libro: '. $this->producto->referencia;
         elseif($this->tipo=='2' && $this->producto->id)  $this->titulo='Ficha del producto: '. $this->producto->referencia;
 
-        $this->formatos=Formato::orderBy('name')->get();
-        //son dependientes
-        $gramajes=Gramaje::orderBy('name')->get();
-        $this->gramajesinterior=$gramajes->whereIn('familia',['','INT']);
-        $this->gramajescubierta=$gramajes->whereIn('familia',['','CUB']);
-        //son dependientes
-        $materiales=Material::orderBy('name')->get();
-        $this->materialesinterior=$materiales->whereIn('familia',['','INT']);
-        $this->materialescubierta=$materiales->whereIn('familia',['','CUB']);
-        //son dependientes
-        $tintas=Tinta::orderBy('name')->get();
-        $this->tintasinterior=$tintas->whereIn('familia',['','INT']);
-        $this->tintascubierta=$tintas->whereIn('familia',['','CUB']);
-        //
-        $this->plastificados=Plastificado::orderBy('name')->get();
-        $this->encuadernaciones=Encuadernacion::orderBy('name')->get();
-        $this->cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
-        $this->idiomas=Idioma::orderBy('nombre')->get();
-        $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
+       $vista= $this->tipo=='1' ? 'livewire.producto.prodeditorial' : 'livewire.producto.prodotros';
 
-        $this->productosestado=ProductoEstado::options();
-
-
-        $vista= $this->tipo=='1' ? 'livewire.producto.prodeditorial' : 'livewire.producto.prodotros';
-
-        return view($vista,compact('clientes'));
+        return view($vista,['clientes' => $this->clientes]);
     }
 
     public function updatedProductoPreciocoste(){

@@ -57,7 +57,12 @@ class Pedido extends Component
     public $filtroreferencia;
     public $filtrocliente;
 
-
+    public $entidades;
+    public $clientes;
+    public $proveedores;
+    public $laminados;
+    public $cajas;
+    public $responsables;
 
     public $titulo='';
     public $productoeditorialid;
@@ -214,16 +219,17 @@ class Pedido extends Component
                 : collect();
 
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' : '';
+
+        $this->entidades = Entidad::orderBy('entidad')->get();
+        $this->clientes = $this->entidades->whereIn('entidadtipo_id', ['1', '2']);
+        $this->proveedores = $this->entidades->whereIn('entidadtipo_id', ['2', '3']);
+        $this->laminados = Laminado::get();
+        $this->cajas = Caja::where('tipo', $this->tipo)->orderBy('name')->get();
+        $this->idiomas = Idioma::orderBy('nombre')->get();
+        $this->responsables = Responsable::where('activo', '1')->get();
     }
 
     public function render(){
-        $entidades=Entidad::orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
-        $proveedores=$entidades->whereIn('entidadtipo_id',['2','3']);
-        $laminados=Laminado::get();
-        $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
-        $this->idiomas=Idioma::orderBy('nombre')->get();
-
         $this->productos=Producto::query()
             ->where(function($q) {
                 $q->where('productoestado', '1');
@@ -252,17 +258,24 @@ class Pedido extends Component
             ->orderBy('referencia','asc')
             ->get();
 
-        $responsables=Responsable::where('activo','1')->get();
-
         $vista=$this->tipo=='1' ? 'livewire.pedido.pedidoeditorial' : 'livewire.pedido.pedidootros';
-        return view($vista,compact(['entidades','clientes','proveedores','responsables','cajas','laminados']));
-    }
+        // return view($vista,compact(['entidades','clientes','proveedores','responsables','cajas','laminados']));
+        return view($vista, [
+                'entidades' => $this->entidades,
+                'clientes' => $this->clientes,
+                'proveedores' => $this->proveedores,
+                'responsables' => $this->responsables,
+                'cajas' => $this->cajas,
+                'laminados' => $this->laminados,
+            ]);
+
+        }
 
     public function updatedClienteId(){
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         $this->ofertas=Oferta::where('cliente_id', $this->cliente_id)->get();
         if(!$this->fechapedido) $this->fechapedido=now()->format('Y-m-d');
-        $resp=Entidad::find($this->cliente_id);
+        $resp=$this->entidades->firstWhere('id', $this->cliente_id);
         if($resp->responsable!='') $this->responsable=$resp->responsable;
     }
 

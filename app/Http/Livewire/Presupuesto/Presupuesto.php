@@ -57,6 +57,13 @@ class Presupuesto extends Component
     public $idiomas;
     public $escliente;
 
+    public $entidades;
+    public $clientes;
+    public $proveedores;
+    public $cajas;
+    public $responsables;
+    public $pedidos;
+
     protected $queryString=['filtrocliente','filtroproveedor','filtroreferencia','filtroisbn'];
 
 
@@ -120,7 +127,8 @@ class Presupuesto extends Component
         $this->ruta=$ruta;
 
         if ($presupuestoid!='') {
-            $presupuesto=ModelsPresupuesto::find($presupuestoid);
+            // $presupuesto=ModelsPresupuesto::find($presupuestoid);
+            $presupuesto = ModelsPresupuesto::with('presupuestoproductos.producto')->find($presupuestoid);
             $this->tipo=$presupuesto->tipo;
             $this->presupuestoid=$presupuesto->id;
             $this->responsable=$presupuesto->responsable;
@@ -166,32 +174,65 @@ class Presupuesto extends Component
         }
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
 
+        // $this->entidades = Entidad::select('id', 'entidad', 'entidadtipo_id', 'responsable')->orderBy('entidad')->get();
+        // $this->clientes = $this->entidades->whereIn('entidadtipo_id', ['1', '2', '4']);
+        // $this->proveedores = $this->entidades->whereIn('entidadtipo_id', ['2', '3']);
+        // $this->cajas = Caja::where('tipo', $this->tipo)->orderBy('name')->get();
+        // $this->idiomas = Idioma::orderBy('nombre')->get();
+        // $this->responsables = Responsable::where('activo', '1')->get();
+
+        $this->entidades = Entidad::select('id', 'entidad', 'entidadtipo_id', 'responsable')->orderBy('entidad')->get();
+        $this->clientes = $this->entidades->whereIn('entidadtipo_id', ['1', '2', '4']);
+        $this->proveedores = $this->entidades->whereIn('entidadtipo_id', ['2', '3']);
+        $this->cajas = Caja::where('tipo', $this->tipo)->orderBy('name')->get();
+        $this->idiomas = Idioma::orderBy('nombre')->get();
+        $this->responsables = Responsable::where('activo', '1')->get();
+
+        $this->cargarPedidos();
         $this->cargarProductos();
     }
 
     public function render(){
         // $entidades=Entidad::orderBy('entidad')->get();
-        $entidades = Entidad::select('id','entidad','entidadtipo_id')->orderBy('entidad')->get();
-        $clientes=$entidades->whereIn('entidadtipo_id', ['1','2','4']);
-        $proveedores=$entidades->whereIn('entidadtipo_id', ['2','3']);
-        $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
-        $this->idiomas=Idioma::orderBy('nombre')->get();
-        $cliente=$this->cliente_id;
-        $tipo=$this->tipo;
+        // $entidades = Entidad::select('id','entidad','entidadtipo_id')->orderBy('entidad')->get();
+        // $clientes=$entidades->whereIn('entidadtipo_id', ['1','2','4']);
+        // $proveedores=$entidades->whereIn('entidadtipo_id', ['2','3']);
+        // $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
+        // $this->idiomas=Idioma::orderBy('nombre')->get();
+        // $cliente=$this->cliente_id;
+        // $tipo=$this->tipo;
 
-        $pedidos=Pedido::query()
-            ->when($cliente!='', function ($query) use($cliente) {
-                $query->where('cliente_id', $cliente);})
-            ->when($tipo!='', function ($query) use($tipo) {
-                $query->where('tipo', $tipo);})
-            ->orderBy('id')
-            ->get();
+        // $pedidos=Pedido::query()
+        //     ->when($cliente!='', function ($query) use($cliente) {
+        //         $query->where('cliente_id', $cliente);})
+        //     ->when($tipo!='', function ($query) use($tipo) {
+        //         $query->where('tipo', $tipo);})
+        //     ->orderBy('id')
+        //     ->get();
 
-        $responsables=Responsable::where('activo','1')->get();
+        // $responsables=Responsable::where('activo','1')->get();
 
         $vista=$this->tipo=='1' ? 'livewire.presupuesto.presupuestoeditorial' : 'livewire.presupuesto.presupuestootros' ;
 
-        return view($vista, compact(['entidades','clientes','proveedores','responsables','cajas','pedidos']));
+        // return view($vista, compact(['entidades','clientes','proveedores','responsables','cajas','pedidos']));
+
+        // return view($vista, [
+        //     'entidades' => $this->entidades,
+        //     'clientes' => $this->clientes,
+        //     'proveedores' => $this->proveedores,
+        //     'responsables' => $this->responsables,
+        //     'cajas' => $this->cajas,
+        //     'pedidos' => $this->pedidos,
+        // ]);
+
+        return view($vista, [
+            'entidades' => $this->entidades ?? collect(),
+            'clientes' => $this->clientes ?? collect(),
+            'proveedores' => $this->proveedores ?? collect(),
+            'responsables' => $this->responsables ?? collect(),
+            'cajas' => $this->cajas ?? collect(),
+            'pedidos' => $this->pedidos ?? collect(),
+        ]);
     }
 
     public function updatedClienteId(){
@@ -200,9 +241,11 @@ class Presupuesto extends Component
             $this->fechapresupuesto=now()->format('Y-m-d');
         }
 
-        $resp=Entidad::find($this->cliente_id);
+        $resp = $this->entidades->firstWhere('id', $this->cliente_id);
+
         if($resp->responsable!='') $this->responsable=$resp->responsable;
 
+        $this->cargarPedidos();
         $this->cargarProductos();
 
     }
@@ -245,7 +288,7 @@ class Presupuesto extends Component
     }
 
     private function cargarProductos(){
-        $this->productos = Producto::with('cliente')
+        $this->productos = Producto::with('cliente', 'idioma', 'caja')
             ->where('productoestado', '1')
             ->where('tipo', $this->tipo)
             ->when($this->idioma_id != '', function ($query) {
@@ -261,6 +304,18 @@ class Presupuesto extends Component
                 $query->where('referencia', 'like','%'.$this->filtroreferencia.'%');
             })
             ->orderBy('referencia', 'asc')
+            ->get();
+    }
+
+    private function cargarPedidos(){
+        $this->pedidos = Pedido::query()
+            ->when($this->cliente_id != '', function ($query) {
+                $query->where('cliente_id', $this->cliente_id);
+            })
+            ->when($this->tipo != '', function ($query) {
+                $query->where('tipo', $this->tipo);
+            })
+            ->orderBy('id')
             ->get();
     }
 

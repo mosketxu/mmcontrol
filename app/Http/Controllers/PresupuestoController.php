@@ -35,14 +35,15 @@ class PresupuestoController extends Controller
         $cliente=Entidad::find($presupuesto->cliente_id);
         $pdf = new Dompdf();
 
-        app()->setLocale(strtolower($presupuesto->idioma?->nombre ?? 'es'));
+        $locale = strtolower(trim($presupuesto->idioma?->nombre ?? 'es'));
+        app()->setLocale($locale);
 
         if($presupuesto->tipo=='1'){
             $producto=$presupuesto->presupuestoproductos->first()?->producto;
-                if($reducido=='n')
+                // if($reducido=='n')
                 $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
-                else
-                $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
+                // else
+                // $pdf = \PDF::loadView('presupuestos.presupuestopdfeditorial', compact('presupuesto','producto','proveedor','cliente'));
         }
         else{
             $producto = $presupuesto->presupuestoproductos->first()?->producto;

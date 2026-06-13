@@ -1,5 +1,5 @@
 <!doctype html>
-    <html lang="es">
+   <html lang="{{ app()->getLocale() }}">
 
     <head>
         <meta charset="UTF-8">
@@ -25,8 +25,7 @@
             <table width="100%" style="margin-top:0px; " class="tablacentrada">
                 <tr>
                     <td style="text-align: left; background-color: white" >
-                        {{-- <img src="{{asset('img/milimetrica.png')}}" width="200px"> --}}
-                        <img src="{{ public_path('img/milimetrica.png') }}" width="200">
+                        <img src="{{asset('img/milimetrica.png')}}" width="200px">
                     </td>
                     <td class="text-xs " style="text-align:right;color: #6b7280">
                         C/ del Joncar 19, planta 5 - 08005 Barcelona (España) <br>
@@ -37,82 +36,84 @@
             </table>
             <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
                 <tr>
-                    <td style="padding-left:3px;"  class="" >Demanda de presupuesto núm. <span style="font-weight:bold;">{{ $presupuesto->id }} </span></td>
+                    <td style="padding-left:3px;"  class="" > {{ __('milimetrica_pdf.presupuesto') }} <span style="font-weight:bold;">{{ $presupuesto->id }} </span></td>
                     <td style="text-align: right;"  class="" >Fecha: <span style="font-weight:bold;">{{ $presupuesto->fpresupuesto4}}</span></td>
                 </tr>
                 <tr>
-                    <td>Solicitado por: <span style="font-weight:bold;">
-                        {{ $presupuesto->facturadopor=='1' ? $presupuesto->responsable : $presupuesto->cliente->entidad ?? '' }}
+                    <td>{{ __('milimetrica_pdf.solicitado_por') }}: <span style="font-weight:bold;">
+                        {{ $presupuesto->facturadopor=='1' ? $presupuesto->responsable : $presupuesto->cliente->entidad }}
                     </span></td>
                 </tr>
                 <tr>
-                    <td>Proveedor: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad ?? ''}} </span></td>
+                    <td>{{ __('milimetrica_pdf.proveedor') }}: <span style="font-weight:bold;">{{ $presupuesto->proveedor->entidad}} </span></td>
                 </tr>
             </table>
 
-            {{-- <div class="" style="margin-top:40px; "> --}}
-                <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
+            {{-- Datos producto  --}}
+            <div class="" style="margin-top:40px; ">
+                <table width="80%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
                     <tr  >
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1" >Cliente </td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1" >{{ __('milimetrica_pdf.cliente') }} </td>
                         <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">
-                            {{ $presupuesto->facturadopor=='1' ? 'Milimetrica' : $presupuesto->cliente->entidad ?? '' }}
+                            {{ $presupuesto->facturadopor=='1' ? 'Milimetrica' : $presupuesto->cliente->entidad }}
                         </td>
                     </tr>
+
                     @if($producto && ($producto->isbn || $producto->referencia))
                         <tr style="">
-                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Cód.Producto</td>
+                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.codigo_producto') }}</td>
                             <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->isbn }}</td>
                         </tr>
                         <tr style="">
-                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Ref.Producto</td>
+                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.referencia') }}</td>
                             <td style="padding-left:3px;background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $producto->referencia }}</td>
                         </tr>
                     @endif
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Descripcion</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.descripcion') }}</td>
                         <td style="padding-left:3px; background-color: #E5DFEC;"  class="borde1" colspan="2">{{ $presupuesto->descripcion }}</td>
                     </tr>
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;" class="borde1">Tirada</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;" class="borde1">{{ __('milimetrica_pdf.tirada') }}</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->tirada }}</td>
                     </tr>
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Modelo Caja</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.modelo_caja') }}</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->caja->name ?? ''}}</td>
                     </tr>
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Etiqueta</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.etiqueta') }}</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->etiqueta}}</td>
                     </tr>
                     @if($presupuesto->uds_caja>0)
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Uds x Caja</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.uds_caja') }}</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">{{ $presupuesto->uds_caja }}</td>
                     </tr>
                     @endif
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Manipulación</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.manipulacion') }}</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
                             {{-- <p>{!! nl2br(e($presupuesto->manipulacion)) !!}</p> --}}
                             {!! nl2br(e($presupuesto->manipulacion)) !!}
                         </td>
                     </tr>
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Distribución</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.distribucion') }}</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
                             {{-- <p>{!! nl2br(e($presupuesto->transporte)) !!}</p> --}}
                             {!! nl2br(e($presupuesto->transporte)) !!}
                         </td>
                     </tr>
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Espec. logísticas</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.logistica') }}</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
                             {{-- <p>{!! nl2br(e($presupuesto->especificacioneslogisticas)) !!}</p> --}}
                             {!! nl2br(e($presupuesto->especificacioneslogisticas)) !!}
                         </td>
                     </tr>
                     <tr style="">
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Otros</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.otros') }}</td>
                         <td style="padding-left:3px;" class="borde1" colspan="2">
                             {{-- <p>{!! nl2br(e($presupuesto->otros)) !!}</p> --}}
                             {!! nl2br(e($presupuesto->otros)) !!}
@@ -124,85 +125,85 @@
                 @if(!empty($producto) && ($producto->isbn || $producto->referencia))
                 <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="2" class="tablacentrada">
                     <tr  >
-                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;text-decoration:underline" colspan="3"  class="borde1" >Detalle del producto</td>
+                        <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;text-decoration:underline" colspan="3"  class="borde1" >{{ __('milimetrica_pdf.detalle_producto') }}</td>
                     </tr>
                     @if($producto->caja_id || $producto->medidas || $producto->desarrollocaja || $producto->material || $producto->gramajecaja || $producto->impresion || $producto->acabadocaja)
                         <tr style="margin-top=10px;font-weight: bold; ">
-                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">Datos Caja</td>
+                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">{{ __('milimetrica_pdf.datos_caja') }}</td>
                         </tr>
                         @if($producto->caja_id )
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;" class="borde1">Caja</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;" class="borde1">{{ __('milimetrica_pdf.caja') }}</td>
                                 <td style="padding-left:3px;" class="borde1" colspan="2">{{ $producto->caja->name?? '-' }}</td>
                         </tr>
                         @endif
                         @if($producto->medidas )
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Medidas (LxAxH)</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.medidas') }} (LxAxH)</td>
                                 <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->medidas }}</td>
                             </tr>
                         @endif
                         @if( $producto->desarrollocaja)
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Desarrollo</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.desarrollo') }}</td>
                                 <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->desarrollocaja }}</td>
                             </tr>
                         @endif
                         @if( $producto->material)
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Material</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.material') }}</td>
                                 <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->material }}</td>
                             </tr>
                         @endif
                         @if( $producto->gramajecaja)
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Gramaje</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.gramaje') }}</td>
                                 <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->gramajecaja }}</td>
                             </tr>
                         @endif
                         @if( $producto->impresion)
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Impresión</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.tipo_impresion') }}</td>
                                 <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->impresion }}</td>
                             </tr>
                         @endif
                         @if( $producto->acabadocaja)
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Acabado</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.acabado') }}</td>
                                 <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->acabadocaja }}</td>
                             </tr>
                         @endif
                     @endif
                     @if($producto->medidasnido || $producto->materialnido || $producto->impresionnido )
                         <tr style="margin-top=10px;font-weight: bold; ">
-                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">Datos Nido</td>
+                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">{{ __('milimetrica_pdf.datos_nido') }}</td>
                         </tr>
                         @if($producto->medidasnido)
                         <tr style="">
-                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Medidas</td>
+                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.medidas') }}</td>
                             <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->medidasnido }}</td>
                         </tr>
                         @endif
                         @if($producto->materialnido)
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Material</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.material') }}</td>
                                 <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->materialnido }}</td>
                             </tr>
                         @endif
                         @if($producto->impresionnido)
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Impresión</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.tipo_impresion') }}</td>
                                 <td style=" padding-left:3px;" class="borde1" colspan="2">{{ $producto->impresionnido }}</td>
                             </tr>
                         @endif
                     @endif
                     @if($producto->procesospack || $producto->manipulacion  )
                         <tr style="margin-top=10px;font-weight: bold; ">
-                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">Otros</td>
+                            <td style="font-weight:bold; padding-left:3px;" colspan="3" class="">{{ __('milimetrica_pdf.otros') }}</td>
                         </tr>
                         @if($producto->procesospack )
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Procesos</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.procesos') }}</td>
                                 <td style="padding-left:3px;" class="borde1" colspan="2">
                                     {{-- <p>{!! nl2br(e($producto->procesospack)) !!}</p> --}}
                                     {!! nl2br(e($producto->procesospack)) !!}
@@ -211,7 +212,7 @@
                         @endif
                         @if($producto->manipulacion )
                             <tr style="">
-                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Manipulación</td>
+                                <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.manipulacion') }}</td>
                                 <td style="padding-left:3px;" class="borde1" colspan="2">
                                     <p>{!! nl2br(e($producto->manipulacion)) !!}</p>
                                     {!! nl2br(e($producto->manipulacion)) !!}
@@ -224,7 +225,7 @@
                             <td style="font-weight:bold; padding-left:3px;" colspan="3" class=""></td>
                         </tr>
                         <tr style="">
-                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">Observaciones</td>
+                            <td style="font-weight:bold; padding-left:3px;background-color: #CCC0D9;"  class="borde1">{{ __('milimetrica_pdf.observaciones') }}</td>
                             <td style="padding-left:3px;" class="borde1" colspan="2">
                                 {{-- <p>{!! nl2br(e($producto->observaciones)) !!}</p> --}}
                                 {!! nl2br(e($producto->observaciones)) !!}
