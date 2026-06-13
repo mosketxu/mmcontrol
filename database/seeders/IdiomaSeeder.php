@@ -10,8 +10,8 @@ class IdiomaSeeder extends Seeder
     public function run(): void
     {
         DB::table('idiomas')->insert([
-            ['codigo' => 'ES', 'nombre' => 'Español'],
-            ['codigo' => 'EN', 'nombre' => 'Inglés'],
+            ['codigo' => '', 'nombre' => 'es'],
+            ['codigo' => '-en', 'nombre' => 'en'],
         ]);
     }
 }

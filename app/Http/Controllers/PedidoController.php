@@ -137,18 +137,20 @@ class PedidoController extends Controller
 
         $pdf = new Dompdf();
 
+        $p=Pedido::find($pedidoid);
+        app()->setLocale(strtolower($p->idioma?->nombre ?? 'es'));
+
         // $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;
         $pedProd = PedidoProducto::with('producto')
-            ->where('pedido_id',$pedidoid)
+        ->where('pedido_id',$pedidoid)
         ->first();
 
         $productos = $pedProd?->producto;
 
-        // $pedido=Pedido::with('cliente','contacto','distribuciones','subpedidos','tareas')->find($pedidoid);
+// );
+
         $pedido = Pedido::with(['cliente','contacto','idioma','distribuciones','subpedidos','tareas','laminado','caja',])->find($pedidoid);
 
-        // $pedido=Pedido::with('cliente','contacto','pedidoproductos','pedidoprocesos','subpedidos','tareas')->find($pedidoid);
-        // dd($pedido->pedidoproductos);
         $pedidoproductos=PedidoProducto::where('pedido_id',$pedidoid)->pluck('producto_id');
 
         //desde febrero 2026 editorial y otros son iguales
