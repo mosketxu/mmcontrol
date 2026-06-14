@@ -7,6 +7,7 @@ use App\Models\{Entidad, EntidadContacto, EntidadTipo,  MetodoPago,Pais,Provinci
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 
 
@@ -16,6 +17,7 @@ class Ent extends Component
     public $contacto;
     public $entidadtipo;
     public $fechacli;
+    public $fechaIni;
     public $contactoId;
     public $departamento;
     public $comentario;
@@ -50,6 +52,7 @@ class Ent extends Component
             'entidad.empresacredito'=>'nullable',
             'entidad.vigenciacredito'=>'nullable',
             'entidad.observaciones'=>'nullable',
+            'fechaIni'=>'nullable|date',
         ];
     }
 
@@ -69,6 +72,7 @@ class Ent extends Component
         $this->contacto=$contacto;
 
         $this->fechacli=$this->entidad->created_at;
+        $this->fechaIni=$this->entidad->fecha_ini ? Carbon::parse($this->entidad->fecha_ini)->format('Y-m-d') : now()->format('Y-m-d');
         $this->entidad->entidadtipo_id=$entidadtipoId;
         $this->entidadtipo=EntidadTipo::find($entidadtipoId);
     }
@@ -119,6 +123,7 @@ class Ent extends Component
             [
             'entidad'=>$this->entidad->entidad,
             'entidadtipo_id'=>$this->entidad->entidadtipo_id,
+            'fecha_ini'=>$this->fechaIni ?: now()->format('Y-m-d'),
             'responsable'=>$this->entidad->responsable,
             'nif'=>$this->entidad->nif,
             'direccion'=>$this->entidad->direccion,
@@ -146,9 +151,12 @@ class Ent extends Component
             'observaciones'=>$this->entidad->observaciones,
             ]
         );
+
         if(!$this->entidad->id){
             $this->entidad->id=$ent->id;
         }
+        $this->entidad=$ent->fresh();
+        $this->fechaIni=$this->entidad->fecha_ini ? Carbon::parse($this->entidad->fecha_ini)->format('Y-m-d') : '';
 
         if($this->contactoId){
             EntidadContacto::create([

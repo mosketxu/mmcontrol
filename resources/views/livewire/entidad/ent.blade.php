@@ -64,6 +64,11 @@
                     </x-select>
                     <x-jet-input-error for="responsable" class="mt-2" />
                 </div>
+                <div class="w-4/12 form-item">
+                    <x-jet-label for="fechaIni">{{ __('F.Ini') }}</x-jet-label>
+                    <x-jet-input wire:model.defer="fechaIni" type="date" id="fechaIni" name="fechaIni" class="w-full"/>
+                    <x-jet-input-error for="fechaIni" class="mt-2" />
+                </div>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 <div class="w-full form-item">

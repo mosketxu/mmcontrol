@@ -40,7 +40,13 @@ class Ents extends Component
         $this->resetPage();
     }
 
-    public function changeValor(Entidad $entidad, $campo, $valor){
+    public function changeValor($entidadId, $campo, $valor){
+        $entidad = Entidad::find($entidadId);
+
+        if (! $entidad) {
+            return;
+        }
+
         $entidad->update([$campo=>$valor]);
         $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
     }

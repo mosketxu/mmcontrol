@@ -12,11 +12,15 @@ class Entidad extends Model
 {
     use HasFactory;
     protected $table = 'entidades';
-    protected $fillable=['entidad','entidadtipo_id','responsable','direccion','cp','localidad','provincia_id','pais_id',
+    protected $fillable=['entidad','entidadtipo_id','fecha_ini','responsable','direccion','cp','localidad','provincia_id','pais_id',
                         'nif','tfno','emailgral','emailadm','emailaux','web',
                         'banco1','iban1','banco2','iban2',
                         'vencimientofechafactura','credito','empresacredito','importecredito','vigenciacredito',
                         'metodopago_id','metodopago','diavencimiento','observaciones'];
+
+    protected $casts = [
+        'fecha_ini' => 'date',
+    ];
 
     public function pais(){ return $this->belongsTo(Pais::class);}
     public function provincia(){return $this->belongsTo(Provincia::class);}
@@ -67,7 +71,25 @@ class Entidad extends Model
     public function getFechacliAttribute()
     {
         if ($this->created_at) {
-            return Carbon::parse($this->created_at)->format('d-m-Y');
+            return Carbon::parse($this->created_at)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+
+    public function getFechaIniVistaAttribute()
+    {
+        if ($this->fecha_ini) {
+            return Carbon::parse($this->fecha_ini)->format('d/m/Y');
+        } else {
+            return '';
+        }
+    }
+
+    public function getFechaIniInputAttribute()
+    {
+        if ($this->fecha_ini) {
+            return Carbon::parse($this->fecha_ini)->format('Y-m-d');
         } else {
             return '';
         }
