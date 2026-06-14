@@ -13,7 +13,7 @@ class CreateOfertasTable extends Migration
      */
     public function up()
     {
-        Schema::create('compras', function (Blueprint $table) {
+        Schema::create('ofertas', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned(); // to remove primary key
             $table->integer('tipo');
             $table->primary('id'); //to add primary keys

@@ -29,6 +29,7 @@ return [
     'tirada' => 'Print Run',
     'fecha_archivos' => 'File Date',
     'fecha_entrega' => 'Delivery date',
+    'fecha_plotters' => 'Plotters date',
     'prueba_color' => 'Color proof',
     'laminado' => 'Laminate',
     'encuadernacion' => 'Binding',
