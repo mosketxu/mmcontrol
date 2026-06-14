@@ -25,7 +25,16 @@ class CreateOfertasTable extends Migration
             $table->double('precio', 15, 6)->default(0.00);
             $table->integer('ud_precio')->default('1');
             $table->integer('cantidad')->default('1');
-                        $table->string('observaciones')->nullable();
+            $table->string('manipulacion')->nullable();
+            $table->string('acabado')->nullable();
+            $table->string('material')->nullable();
+            $table->string('medidas')->nullable();
+            $table->string('impresion')->nullable();
+            $table->string('embalaje')->nullable();
+            $table->string('transporte')->nullable();
+            $table->string('entrega')->nullable();
+            $table->string('observaciones')->nullable();
+            $table->integer('estado')->default('0');
             $table->timestamps();
         });
     }
@@ -37,6 +46,6 @@ class CreateOfertasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('compras');
+        Schema::dropIfExists('ofertas');
     }
 }
