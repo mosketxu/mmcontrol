@@ -120,12 +120,11 @@ class ClientePresupuestos extends Component
     }
 
     public function getRowsQueryProperty(){
-        if($this->tipo=='1')
         return Presupuesto::query()
-            ->with('cliente','proveedor')
+            ->with('cliente','proveedor','idioma')
             ->join('entidades','presupuestos.cliente_id','=','entidades.id')
-            ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
-            ->join('productos','presupuesto_productos.producto_id','=','productos.id')
+            ->leftJoin('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
+            ->leftJoin('productos','presupuesto_productos.producto_id','=','productos.id')
             ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm','productos.isbn','productos.referencia')
             ->whereIn('presupuestos.cliente_id',$this->entidadescliente->pluck('entidad_id'))
             ->where('presupuestos.tipo',$this->tipo)
@@ -158,39 +157,6 @@ class ClientePresupuestos extends Component
             ->searchMes('fechapresupuesto',$this->filtromes)
             ->orderBy('presupuestos.id','desc')
             ->groupBy('presupuestos.id');
-        else
-        return Presupuesto::query()
-            ->join('entidades','presupuestos.cliente_id','=','entidades.id')
-            // ->join('presupuesto_productos','presupuesto_productos.presupuesto_id','=','presupuestos.id')
-            // ->join('productos','presupuesto_productos.producto_id','=','productos.id')
-            ->select('presupuestos.*', 'entidades.entidad', 'entidades.nif','entidades.emailadm')
-            ->whereIn('presupuestos.cliente_id',$this->entidadescliente->pluck('entidad_id'))
-            ->where('presupuestos.tipo',$this->tipo)
-            ->search('presupuestos.id',$this->search)
-            ->when($this->filtroreferencia!='', function ($query){
-                $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
-            })
-            ->when($this->filtroisbn!='', function ($query){
-                $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
-            })
-            ->when($this->filtroresponsable!='', function ($query){
-                $query->where('presupuestos.responsable','like','%'.$this->filtroresponsable.'%');
-            })
-            ->when($this->filtrocliente!='', function ($query){
-                $query->where('presupuestos.cliente_id',$this->filtrocliente);
-                })
-            ->when($this->filtroidioma!='', function ($query){
-                $query->where('presupuestos.idioma_id',$this->filtroidioma);
-                })
-            ->when($this->filtroestado!='', function ($query){
-                $query->where('presupuestos.estado',$this->filtroestado);
-            })
-            ->when($this->filtrookexterno!='', function ($query){
-                $query->where('presupuestos.okexterno',$this->filtrookexterno);
-            })
-            ->searchYear('fechapresupuesto',$this->filtroanyo)
-            ->searchMes('fechapresupuesto',$this->filtromes)
-            ->orderBy('presupuestos.id','desc');
     }
 
     public function getRowsProperty(){

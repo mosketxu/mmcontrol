@@ -27,11 +27,11 @@ class ClienteFacturas extends Component
     public $filtroestado='';
     public $filtroFi='';
     public $filtroFf='';
-    public $filtrotipo='';
+    public $filtroTipo='';
 
     public $message;
 
-    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroestado','filtroFi','filtroFf','filtrotipo'];
+    protected $queryString=['search','filtroanyo','filtromes','filtrocliente','filtroestado','filtroFi','filtroFf','filtroTipo'];
 
 
     protected function rules(){
@@ -49,11 +49,12 @@ class ClienteFacturas extends Component
             ->whereIn('id',$empresascliente)
             ->get();
         $meses=Mes::orderBy('id')->get();
+        $estados=Factura::ESTADOS;
 
         if($this->selectAll) $this->selectPageRows();
         $facturas = $this->rows;
 
-        return view('livewire.clientes.cliente-facturas',compact('facturas','clientes','meses'));
+        return view('livewire.clientes.cliente-facturas',compact('facturas','clientes','meses','estados'));
     }
 
     public function getRowsQueryProperty(){
@@ -70,8 +71,8 @@ class ClienteFacturas extends Component
             ->when($this->filtroestado!='', function ($query){
                 $query->where('facturas.estado',$this->filtroestado);
             })
-            ->when($this->filtrotipo!='', function ($query){
-                $query->where('facturas.tipo',$this->filtrotipo);
+            ->when($this->filtroTipo!='', function ($query){
+                $query->where('facturas.tipo',$this->filtroTipo);
             })
             ->when($this->filtroFi && !$this->filtroFf, function ($query) {
                 $query->where('fecha','>=', $this->filtroFi);

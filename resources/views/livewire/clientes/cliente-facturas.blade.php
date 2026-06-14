@@ -30,7 +30,7 @@
                             {{-- <div class="flex items-center w-10/12"  onclick="location.href = '{{ route('cliente.facturacion.edit',$factura) }}'"> --}}
                             <div class="flex items-center w-10/12" >
                                 <div class="w-1/12 pl-2 text-left">{{ $factura->id }}</div>
-                                <div class="w-3/12 text-left">{{ $factura->cliente->entidad }}</div>
+                                <div class="w-3/12 text-left">{{ $factura->entidad }}</div>
                                 <div class="w-1/12 text-right">{{ $factura->ffactura }}</div>
                                 <div class="w-1/12 text-right">{{ $factura->ffacturavto }}</div>
                                 <div class="w-1/12 text-right">{{ $factura->importe }}</div>
@@ -42,9 +42,9 @@
                                     <select
                                         class="w-full text-center py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $factura->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
                                         disabled>
-                                        <option value="0" {{ $factura->estado== '0'? 'selected' : '' }}>Sin enviar</option>
-                                        <option value="1" {{ $factura->estado== '1'? 'selected' : '' }}>Env. P.cobro</option>
-                                        <option value="2" {{ $factura->estado== '2'? 'selected' : '' }}>Cobrada</option>
+                                        @foreach ($estados as $valor => $estado)
+                                            <option value="{{ $valor }}" {{ $factura->estado == $valor ? 'selected' : '' }}>{{ $estado[1] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="w-6/12 text-center ">

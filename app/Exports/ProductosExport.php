@@ -13,6 +13,59 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithColumnFormatting
 {
+    protected array $columns = [
+        'id',
+        'cliente_id',
+        'cliente',
+        'tipo',
+        'isbn',
+        'idioma_id',
+        'idioma',
+        'productoestado',
+        'referencia',
+        'preciocoste',
+        'tirada',
+        'formato',
+        'FSC',
+        'tipoimpresion',
+        'materialinterior',
+        'tintainterior',
+        'gramajeinterior',
+        'paginas',
+        'materialcubierta',
+        'tintacubierta',
+        'gramajecubierta',
+        'plastificado',
+        'encuadernado',
+        'solapa',
+        'descripsolapa',
+        'guardas',
+        'descripguardas',
+        'cd',
+        'descripcd',
+        'novedad',
+        'descripnovedad',
+        'caja_id',
+        'caja',
+        'etiqueta',
+        'udxcaja',
+        'precioventa',
+        'material',
+        'medidas',
+        'troquel',
+        'impresion',
+        'desarrollocaja',
+        'gramajecaja',
+        'acabadocaja',
+        'medidasnido',
+        'materialnido',
+        'impresionnido',
+        'procesospack',
+        'manipulacion',
+        'observaciones',
+        'created_at',
+        'updated_at',
+    ];
 
     public function __construct(
         public $tipo,
@@ -26,27 +79,21 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
         public $filtrocaja,
     ) {}
 
-        public function columnFormats(): array
+    public function columnFormats(): array
     {
         return [
-            'A' => NumberFormat::FORMAT_TEXT, // ISBN
+            'E' => NumberFormat::FORMAT_TEXT, // ISBN
         ];
     }
 
    public function headings(): array
     {
-        return [
-            'ISBN',
-            'Titulo/Referencia',
-            'Idioma',
-            'Cliente',
-            'Estado',
-        ];
+        return $this->columns;
     }
 
     public function collection(){
 
-        $query = Producto::query()->with('proveedor', 'cliente', 'idioma');
+        $query = Producto::query()->with('proveedor', 'cliente', 'idioma', 'caja');
 
         // Empresas a las que tiene acceso el usuario actual
         $entidadescliente = UserEmpresa::where('user_id',Auth::id())->pluck('entidad_id');
@@ -72,17 +119,70 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
 
    public function map($p): array
     {
-        $isbn = $p->isbn;
-        if (!empty($isbn) && is_numeric($isbn) && strlen((string)$isbn) > 10) {
-            $isbn = "'" . $isbn;
-        }
+        $isbn = $this->formatIsbn($p->isbn);
+
         return [
-            $isbn,
-            $p->referencia,
-            $p->idioma?->nombre ?? '',
+            $p->id,
+            $p->cliente_id,
             $p->cliente?->entidad ?? '',
-            $p->productoestado?->value ?? '',
+            $p->tipo == '1' ? 'Editorial' : 'Packaging/Otros',
+            $isbn,
+            $p->idioma_id,
+            $p->idioma?->nombre ?? '',
+            $p->productoestado?->label() ?? '',
+            $p->referencia,
+            $p->preciocoste,
+            $p->tirada,
+            $p->formato,
+            $p->FSC,
+            $p->tipoimpresion,
+            $p->materialinterior,
+            $p->tintainterior,
+            $p->gramajeinterior,
+            $p->paginas,
+            $p->materialcubierta,
+            $p->tintacubierta,
+            $p->gramajecubierta,
+            $p->plastificado,
+            $p->encuadernado,
+            $p->solapa,
+            $p->descripsolapa,
+            $p->guardas,
+            $p->descripguardas,
+            $p->cd,
+            $p->descripcd,
+            $p->novedad,
+            $p->descripnovedad,
+            $p->caja_id,
+            $p->caja?->name ?? '',
+            $p->etiqueta,
+            $p->udxcaja,
+            $p->precioventa,
+            $p->material,
+            $p->medidas,
+            $p->troquel,
+            $p->impresion,
+            $p->desarrollocaja,
+            $p->gramajecaja,
+            $p->acabadocaja,
+            $p->medidasnido,
+            $p->materialnido,
+            $p->impresionnido,
+            $p->procesospack,
+            $p->manipulacion,
+            $p->observaciones,
+            optional($p->created_at)->format('d/m/Y'),
+            optional($p->updated_at)->format('d/m/Y'),
         ];
+    }
+
+    protected function formatIsbn($isbn): string
+    {
+        if (!empty($isbn) && is_numeric($isbn) && strlen((string)$isbn) > 10) {
+            return "'" . $isbn;
+        }
+
+        return (string) $isbn;
     }
 }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Clientes;
 
 use App\Enums\ProductoEstado;
-use App\Models\{Caja,Entidad,Producto, UserEmpresa};
+use App\Models\{Caja,Entidad,Idioma,Producto, UserEmpresa};
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithPagination;
 
@@ -20,6 +20,7 @@ class ClienteProds extends Component
     public $filtroproductoestado='';
     public $filtroreferencia='';
     public $filtrocliente='';
+    public $filtroidioma='';
     public $filtromaterial='';
     public $filtroimpresion='';
     public $filtrocaja='';
@@ -32,7 +33,7 @@ class ClienteProds extends Component
     public $orden2='';
     public $productosestado='1';
 
-    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtromaterial','filtroimpresion','filtrocaja','ordenarpor1','orden1','ordenarpor2','orden2'];
+    protected $queryString=['filtroisbn','filtroproductoestado','filtroreferencia','filtrocliente','filtroidioma','filtromaterial','filtroimpresion','filtrocaja','ordenarpor1','orden1','ordenarpor2','orden2'];
 
 
     public Producto $producto;
@@ -60,14 +61,15 @@ class ClienteProds extends Component
     public function render(){
         $this->producto= new Producto;
         $entidadescliente=UserEmpresa::where('user_id',$this->cliente->id)->get();
-         $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
+        $cajas=Caja::where('tipo',$this->tipo)->orderBy('name')->get();
+        $idiomas=Idioma::orderBy('nombre')->get();
 
         $entidades=Entidad::orderBy('entidad')
         ->whereIn('id',$entidadescliente->pluck('entidad_id'))
         ->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2']);
         $productos=Producto::query()
-            ->with('cliente')
+            ->with('cliente','idioma')
             ->whereIn('cliente_id',$entidadescliente->pluck('entidad_id'))
             ->when($this->tipo!='', function ($query){
                 $query->where('tipo',$this->tipo);
@@ -84,6 +86,9 @@ class ClienteProds extends Component
             ->when($this->filtrocliente!='', function ($query){
                 $query->where('cliente_id',$this->filtrocliente);
                 })
+            ->when($this->filtroidioma!='', function ($query){
+                $query->where('idioma_id',$this->filtroidioma);
+                })
             ->search('productos.material',$this->filtromaterial)
             ->search('productos.impresion',$this->filtroimpresion)
             ->search('productos.caja_id',$this->filtrocaja)
@@ -95,13 +100,14 @@ class ClienteProds extends Component
 
         $vista= $this->tipo=='1' ? 'livewire.clientes.producto.prodseditorial-cliente' : 'livewire.clientes.producto.prodsotros-cliente';
 
-        return view($vista,compact('productos','clientes','cajas'));
+        return view($vista,compact('productos','clientes','cajas','idiomas'));
     }
 
     public function updatingFiltroisbn(){$this->resetPage();}
     public function updatingFiltroproductoestado(){$this->resetPage();}
     public function updatingFiltroreferencia(){$this->resetPage();}
     public function updatingFiltrocliente(){$this->resetPage();}
+    public function updatingFiltroidioma(){$this->resetPage();}
     public function updatingFiltromaterial(){$this->resetPage();}
     public function updatingFiltroimpresion(){$this->resetPage();}
     public function updatingFiltrocaja(){$this->resetPage();}
