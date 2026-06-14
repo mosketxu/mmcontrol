@@ -40,18 +40,21 @@ class Compras extends Component{
 
 
     public function render(){
-        $compras=Compra::with('producto','proveedor')
-        ->where('compras.tipo',$this->tipo)
-        ->search('compras.numero',$this->search)
-        ->search('compras.codigo',$this->search)
-        ->when($this->filtroreferencia!='', function ($query){
-            $query->where('productos.referencia','like','%'.$this->filtroreferencia.'%');
-        })
-        ->when($this->filtroisbn!='', function ($query){
-            $query->where('productos.isbn','like','%'.$this->filtroisbn.'%');
-        })
-        // ->orderBy('entidad')
-        ->paginate(30);
+        $compras = Compra::with('producto','proveedor')
+            ->where('compras.tipo', $this->tipo)
+            ->search('compras.numero', $this->search)
+            ->search('compras.codigo', $this->search)
+            ->when($this->filtroreferencia != '', function ($query) {
+                $query->whereHas('producto', function ($producto) {
+                    $producto->where('referencia', 'like', '%' . $this->filtroreferencia . '%');
+                });
+            })
+            ->when($this->filtroisbn != '', function ($query) {
+                $query->whereHas('producto', function ($producto) {
+                    $producto->where('isbn', 'like', '%' . $this->filtroisbn . '%');
+                });
+            })
+            ->paginate(30);
         $proveedores=Entidad::orderBy('entidad')->get();
         $meses=Mes::orderBy('id')->get();
 

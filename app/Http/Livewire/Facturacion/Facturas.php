@@ -108,7 +108,9 @@ class Facturas extends Component
     }
 
     public function exportSelected(){
-        dd('en proceso');
+        $this->dispatchBrowserEvent('notifyred', 'Opción en desarrollo, contacte al administrador.');
+        return;
+
         //toCsv es una macro a n AppServiceProvider
         return response()->streamDownload(function(){
             echo $this->selectedRowsQuery->toCsv();

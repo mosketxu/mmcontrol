@@ -72,7 +72,8 @@ class Compra extends Component
         ];
     }
 
-        public function mount($compraid=null, int $tipo, $ruta, $titulo){
+        public function mount($compraid, int $tipo, $ruta, $titulo){
+        $compraid = $compraid ?: null;
         $this->titulo=$titulo;
         $this->tipo=$tipo;
         $this->ruta=$ruta;

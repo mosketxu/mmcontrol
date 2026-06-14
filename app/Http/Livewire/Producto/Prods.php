@@ -65,7 +65,7 @@ class Prods extends Component
         $idiomas=Idioma::orderBy('nombre')->get();
 
         $datos=Producto::query()
-            ->with('cliente','idioma')
+            ->with('cliente','idioma','caja')
             ->orderBy($this->ordenarpor1,$this->orden1)
             ->when($this->ordenarpor2!='', function ($query){
                 $query->orderBy($this->ordenarpor2,$this->orden2);
