@@ -55,6 +55,7 @@
                                 <div class="items-center w-1/12 text-center " >
                                     <x-icon.usergroup-a href="{{ route('entidad.contactos',$entidad) }}"  title="Contactos"/>
                                     <x-icon.plane-a class="text-gray-900 transform hover:text-black" href="{{ route('entidad.destinos',[$entidad,'i']) }}"  title="Destinos"/>
+                                    <x-icon.clipboard-a class="text-gray-900 transform hover:text-black" href="{{ route('entidad.acciones',[$entidad,'i']) }}"  title="Acciones"/>
                                     <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6"/>
                                 </div>
                             </div>

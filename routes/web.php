@@ -59,6 +59,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/entidad/editar/{entidad}', [EntidadController::class, 'edita'])->name('entidad.edita');
     Route::get('/entidad/contactos/{entidad}', [EntidadController::class, 'contactos'])->name('entidad.contactos');
     Route::get('/entidad/{entidad}/destinos/{ruta}', [EntidadController::class, 'destinos'])->name('entidad.destinos');
+    Route::get('/entidad/{entidad}/acciones/{ruta}', [EntidadController::class, 'acciones'])->name('entidad.acciones');
     Route::get('/entidad/nuevocontacto/{entidad}', [EntidadController::class, 'createcontacto'])->name('entidad.createcontacto');
     Route::get('entidad/{tipo}/tipo', [EntidadController::class,'tipo'])->middleware('can:entidad.index')->name('entidad.tipo'); //
     Route::get('entidad/{entidadtipo_id}/nueva', [EntidadController::class,'nueva'])->name('entidad.nueva');

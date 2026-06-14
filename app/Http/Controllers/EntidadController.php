@@ -51,6 +51,11 @@ class EntidadController extends Controller
         return view('entidad.destinos',compact('entidad','ruta'));
     }
 
+    public function acciones(Entidad $entidad,$ruta)
+    {
+        return view('entidad.acciones',compact('entidad','ruta'));
+    }
+
     // public function createcontacto($contactoId)
     public function createContacto(Entidad $entidad)
     {

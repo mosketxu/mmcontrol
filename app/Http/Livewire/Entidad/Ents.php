@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Entidad;
 
-use App\Models\{Entidad, EntidadContacto, EntidadDestino, EntidadTipo, Pedido, Presupuesto, Producto, User};
+use App\Models\{Entidad, EntidadAccion, EntidadContacto, EntidadDestino, EntidadTipo, Pedido, Presupuesto, Producto, User};
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -96,6 +96,7 @@ class Ents extends Component
         if ($entidad && $mensaje=='') {
             if($entidad->contactos->count()>0) EntidadContacto::where('contacto_id',$entidadId)->delete();
             if($entidad->destinos->count()>0) EntidadDestino::where('entidad_id',$entidadId)->delete();
+            if($entidad->acciones->count()>0) EntidadAccion::where('entidad_id',$entidadId)->delete();
             $entidad->delete();
             $this->dispatchBrowserEvent('notify', 'La entidad: '.$entidad->entidad.' ha sido eliminada!');
         }
