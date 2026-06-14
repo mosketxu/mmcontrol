@@ -114,9 +114,9 @@
                                 <div class="w-full form-item">
                                     <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
                                     <x-selectcolor wire:model.lazy="estado" selectname="estado" class="w-full" >
-                                        <option value="0" >Sin enviar</option>
-                                        <option value="1" >Env. P.cobro</option>
-                                        <option value="2" >Cobrada</option>
+                                        @foreach ($estados as $valor => $estado)
+                                            <option value="{{ $valor }}">{{ $estado[1] }}</option>
+                                        @endforeach
                                     </x-selectcolor>
                                 </div>
                             </div>
@@ -152,4 +152,3 @@
         </div>
     </div>
 </div>
-

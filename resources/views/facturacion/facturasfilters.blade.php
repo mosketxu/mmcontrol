@@ -112,9 +112,9 @@
                 <select wire:model="filtroestado"
                     class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value="">-- selecciona --</option>
-                    <option value="0">Sin Enviar</option>
-                    <option value="1">Env. P.Cobro</option>
-                    <option value="2">Cobrada</option>
+                    @foreach ($estados as $valor => $estado)
+                        <option value="{{ $valor }}">{{ $estado[1] }}</option>
+                    @endforeach
                 </select>
                 @if($filtroestado!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroestado', '')" class="pb-1" title="reset filter" />

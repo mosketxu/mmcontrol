@@ -28,8 +28,8 @@ class FacturacionExport implements FromQuery, WithHeadings, WithMapping, ShouldA
             ->when($this->filters['filtrocliente'] ?? null, function ($q, $cliente) {
                 $q->where('facturas.cliente_id', $cliente);
             })
-            ->when($this->filters['filtroestado'] ?? null, function ($q, $estado) {
-                $q->where('facturas.estado', $estado);
+            ->when(($this->filters['filtroestado'] ?? '') !== '', function ($q) {
+                $q->where('facturas.estado', $this->filters['filtroestado']);
             })
             ->when($this->filters['filtroTipo'] ?? null, function ($q, $tipo) {
                 $q->where('facturas.tipo', $tipo);
@@ -68,12 +68,7 @@ class FacturacionExport implements FromQuery, WithHeadings, WithMapping, ShouldA
             $factura->fecha,
             $factura->entidad ?? '',
             $factura->nif ?? '',
-            match ((int) $factura->estado) {
-                0 => 'Pendiente',
-                1 => 'Pagada',
-                2 => 'Anulada',
-                default => '',
-            },
+            $factura->status_color[1],
             $factura->importe ?? '',
         ];
     }

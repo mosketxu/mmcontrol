@@ -10,6 +10,12 @@ class Factura extends Model
 {
     use HasFactory;
 
+    public const ESTADOS = [
+        '0' => ['gray-200', 'Sin Enviar'],
+        '1' => ['red-200', 'Env. P.cobro'],
+        '2' => ['green-200', 'Cobrada'],
+    ];
+
     protected $fillable = ['id','cliente_id','contacto_id','fecha','fechavencimiento','pedidocliente','importe','iva','total','estado','tipo','observaciones'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}
@@ -17,11 +23,7 @@ class Factura extends Model
     public function facturadetalles(){return $this->hasMany(FacturaDetalle::class,'factura_id');}
 
     public function getStatusColorAttribute(){
-        return [
-            '0'=>['gray-200','Sin Enviar'],
-            '1'=>['red-200','Env. P.cobro'],
-            '2'=>['green-200','Cobrada']
-        ][$this->estado] ?? ['gray-100',''];
+        return self::ESTADOS[$this->estado] ?? ['gray-100',''];
     }
 
     public function getFacturaTipoAttribute(){

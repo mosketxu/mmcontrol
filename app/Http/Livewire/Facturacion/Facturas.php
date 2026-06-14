@@ -48,11 +48,12 @@ class Facturas extends Component
     public function render(){
         $clientes=Entidad::orderBy('entidad')->whereIn('entidadtipo_id',['1','2'])->get();
         $meses=Mes::orderBy('id')->get();
+        $estados=Factura::ESTADOS;
 
         if($this->selectAll) $this->selectPageRows();
         $facturas = $this->rows;
 
-        return view('livewire.facturacion.facturas',compact('facturas','clientes','meses'));
+        return view('livewire.facturacion.facturas',compact('facturas','clientes','meses','estados'));
     }
 
     // public function updatingSearch(){$this->resetPage();}
