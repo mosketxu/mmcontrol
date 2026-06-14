@@ -22,6 +22,7 @@ class Entidad extends Model
     public function provincia(){return $this->belongsTo(Provincia::class);}
     public function metodopago(){return $this->belongsTo(MetodoPago::class);}
     public function contactos(){return $this->hasMany(EntidadContacto::class,'contacto_id');}
+    public function contactosEntidad(){return $this->hasMany(EntidadContacto::class,'entidad_id');}
     public function destinos(){return $this->hasMany(EntidadDestino::class);}
     public function acciones(){return $this->hasMany(EntidadAccion::class);}
     public function entidadtipo(){return $this->belongsTo(EntidadTipo::class);}

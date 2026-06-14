@@ -65,6 +65,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('entidad/{entidadtipo_id}/nueva', [EntidadController::class,'nueva'])->name('entidad.nueva');
     Route::resource('entidad', EntidadController::class)->only(['index','create', 'edit']); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
     Route::get('/entidades/export', [EntidadController::class, 'exportEntidad'])->name('entidad.export');
+    Route::get('/entidades/acciones/export', [EntidadController::class, 'exportEntidadAcciones'])->name('entidad.acciones.export');
+    Route::get('/entidades/contactos/export', [EntidadController::class, 'exportEntidadContactos'])->name('entidad.contactos.export');
 
     // Producto
     // Route::get('producto/{producto}/adjunto', [ProductoController::class,'adjunto'])->name('producto.adjunto');

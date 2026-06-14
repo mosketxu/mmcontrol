@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Entidad;
 use App\Exports\EntidadesExport;
+use App\Exports\EntidadesAccionesExport;
+use App\Exports\EntidadesContactosExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
@@ -80,5 +82,37 @@ class EntidadController extends Controller
             'entidades.xlsx'
         );
 }
+
+    public function exportEntidadAcciones(Request $request)
+    {
+        return Excel::download(
+            new EntidadesAccionesExport(
+                $request->search,
+                $request->filtroresponsable,
+                $request->entidadtipo_id,
+                $request->filtrofini,
+                $request->filtroffin,
+                $request->ordenarpor ?? 'entidad',
+                $request->orden ?? 'asc'
+            ),
+            'acciones_entidades.xlsx'
+        );
+    }
+
+    public function exportEntidadContactos(Request $request)
+    {
+        return Excel::download(
+            new EntidadesContactosExport(
+                $request->search,
+                $request->filtroresponsable,
+                $request->entidadtipo_id,
+                $request->filtrofini,
+                $request->filtroffin,
+                $request->ordenarpor ?? 'entidad',
+                $request->orden ?? 'asc'
+            ),
+            'contactos_entidades.xlsx'
+        );
+    }
 
 }

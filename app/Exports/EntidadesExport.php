@@ -32,13 +32,19 @@ class EntidadesExport implements FromCollection,WithHeadings,WithMapping
             'Teléfono',
             'Email',
             'Responsable',
-            'Creado'
+            'Fecha creacion',
+            'Fecha ultima accion',
         ];
     }
 
     public function collection(){
         return Entidad::query()
-            ->with('entidadtipo')
+            ->with([
+                'entidadtipo',
+                'acciones' => function ($query) {
+                    $query->orderByDesc('fechaaccion');
+                },
+            ])
             ->filtrosEntidad(
                 $this->search,
                 $this->filtroresponsable,
@@ -60,7 +66,8 @@ class EntidadesExport implements FromCollection,WithHeadings,WithMapping
             'tfno' => $entidad->tfno,
             'emailgral' => $entidad->emailgral,
             'responsable' => $entidad->responsable,
-            'created_at' => $entidad->created_at
+            'created_at' => optional($entidad->created_at)->format('d/m/Y'),
+            'ultima_accion' => optional($entidad->acciones->first()?->fechaaccion)->format('d/m/Y'),
         ];
     }
 }

@@ -52,7 +52,7 @@
         </div>
 
     </div>
-    <div class="flex flex-row-reverse w-2/12">
+    <div class="flex flex-row-reverse w-2/12 gap-2">
         <div class="mt-3 ml-10">
             <x-button.button  onclick="location.href = '{{ route('entidad.nueva',$entidadtipo->id) }}'" color="blue">Nuevo</x-button.button>
         </div>
@@ -66,7 +66,31 @@
                     'ordenarpor' => $ordenarpor,
                     'orden' => $orden,
                 ]) }}"
-                class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/>
+                class="mt-3 mr-1 w-7" style="color: #22c55e;" title="Exportar entidades"/>
+        </div>
+        <div class="">
+            <x-icon.xls-a href="{{ route('entidad.acciones.export',[
+                    'search' => $search,
+                    'filtroresponsable' => $filtroresponsable,
+                    'entidadtipo_id' => $entidadtipo_id,
+                    'filtrofini' => $filtrofini,
+                    'filtroffin' => $filtroffin,
+                    'ordenarpor' => $ordenarpor,
+                    'orden' => $orden,
+                ]) }}"
+                class="mt-3 mr-1 w-7" style="color: #3b82f6;" title="Exportar acciones"/>
+        </div>
+        <div class="">
+            <x-icon.xls-a href="{{ route('entidad.contactos.export',[
+                    'search' => $search,
+                    'filtroresponsable' => $filtroresponsable,
+                    'entidadtipo_id' => $entidadtipo_id,
+                    'filtrofini' => $filtrofini,
+                    'filtroffin' => $filtroffin,
+                    'ordenarpor' => $ordenarpor,
+                    'orden' => $orden,
+                ]) }}"
+                class="mt-3 mr-1 w-7" style="color: #f97316;" title="Exportar contactos"/>
         </div>
     </div>
 </div>
