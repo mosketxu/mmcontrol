@@ -29,7 +29,7 @@
                         <div class="flex items-center w-full text-sm text-gray-500 border-t-0 border-y hover:bg-gray-100 hover:cursor-pointer" wire:loading.class.delay="opacity-50" >
                             <div class="flex items-center w-10/12"  onclick="location.href = '{{ route('facturacion.edit',$factura) }}'">
                                 <div class="w-1/12 pl-2 text-left">{{ $factura->id }}</div>
-                                <div class="w-3/12 text-left">{{ $factura->cliente->entidad }}</div>
+                                <div class="w-3/12 text-left">{{ $factura->entidad }}</div>
                                 <div class="w-1/12 text-right">{{ $factura->ffactura }}</div>
                                 <div class="w-1/12 text-right">{{ $factura->ffacturavto }}</div>
                                 <div class="w-1/12 text-right">{{ $factura->importe }}</div>
@@ -38,7 +38,7 @@
                             </div>
                             <div class="flex items-center w-2/12 " >
                                 <div class="w-6/12 pl-2">
-                                    <select wire:change="changeValor({{ $factura }},'estado',$event.target.value)"
+                                    <select wire:change="changeValor({{ $factura->id }},'estado',$event.target.value)"
                                         class="w-full text-center py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $factura->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                                         <option value="0" {{ $factura->estado== '0'? 'selected' : '' }}>Sin enviar</option>
                                         <option value="1" {{ $factura->estado== '1'? 'selected' : '' }}>Env. P.cobro</option>

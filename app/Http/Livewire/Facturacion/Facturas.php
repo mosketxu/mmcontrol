@@ -64,9 +64,13 @@ class Facturas extends Component
     // public function updatingFiltroFf(){$this->resetPage();}
     // public function updatingFiltroTipo(){$this->resetPage();}
 
-    public function changeValor(Factura $factura,$campo,$valor){
-        $factura->update([$campo=>$valor]);
-        $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
+    public function changeValor($facturaId,$campo,$valor){
+        $factura = Factura::find($facturaId);
+
+        if ($factura) {
+            $factura->update([$campo=>$valor]);
+            $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
+        }
     }
 
     public function getRowsQueryProperty(){
