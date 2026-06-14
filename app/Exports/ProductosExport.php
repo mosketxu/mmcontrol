@@ -4,14 +4,18 @@ namespace App\Exports;
 
 use App\Models\Producto;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use App\Models\UserEmpresa;
 use Illuminate\Support\Facades\Auth;
 
-class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithColumnFormatting
+class ProductosExport extends DefaultValueBinder implements FromCollection,WithHeadings,WithMapping,WithColumnFormatting,WithCustomValueBinder
 {
     protected array $columns = [
         'id',
@@ -178,11 +182,17 @@ class ProductosExport implements FromCollection,WithHeadings,WithMapping,WithCol
 
     protected function formatIsbn($isbn): string
     {
-        if (!empty($isbn) && is_numeric($isbn) && strlen((string)$isbn) > 10) {
-            return "'" . $isbn;
+        return (string) $isbn;
+    }
+
+    public function bindValue(Cell $cell, $value)
+    {
+        if ($cell->getColumn() === 'E') {
+            $cell->setValueExplicit((string) $value, DataType::TYPE_STRING);
+            return true;
         }
 
-        return (string) $isbn;
+        return parent::bindValue($cell, $value);
     }
 }
 
