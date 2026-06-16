@@ -58,6 +58,8 @@ class Prods extends Component
 
     public function render(){
 
+        session(['producto_index_url' => $this->indexUrl()]);
+
         $this->producto= new Producto;
         $entidades=Entidad::orderBy('entidad')->get();
         $clientes=$entidades->whereIn('entidadtipo_id',['1','2','4']);
@@ -108,5 +110,21 @@ class Prods extends Component
             $producto->delete();
             $this->dispatchBrowserEvent('notify', 'El producto: '.$producto->referencia.' ha sido eliminado!');
         }
+    }
+
+    private function indexUrl(): string
+    {
+        $query = collect([
+            'filtroisbn' => $this->filtroisbn,
+            'filtroproductoestado' => $this->filtroproductoestado,
+            'filtroreferencia' => $this->filtroreferencia,
+            'filtrocliente' => $this->filtrocliente,
+            'filtroidioma' => $this->filtroidioma,
+            'filtromaterial' => $this->filtromaterial,
+            'filtroimpresion' => $this->filtroimpresion,
+            'filtrocaja' => $this->filtrocaja,
+        ])->filter(fn ($value) => $value !== null && $value !== '' && $value !== 1)->all();
+
+        return route('producto.tipo', $this->tipo).($query ? '?'.http_build_query($query) : '');
     }
 }

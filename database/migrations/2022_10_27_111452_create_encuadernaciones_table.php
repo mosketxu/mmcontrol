@@ -15,7 +15,7 @@ class CreateEncuadernacionesTable extends Migration
     {
         Schema::create('encuadernaciones', function (Blueprint $table) {
             $table->id();
-            $table->string('name','30')->unique()->index();
+            $table->string('name','50')->unique()->index();
             $table->string('descripcion')->nullable();
             $table->string('familia')->nullable();
             $table->timestamps();

@@ -37,6 +37,7 @@ class Prod extends Component
     public $titulo;
     public $escliente;
     public $deshabilitado;
+    public $returnUrl;
 
 
     protected function rules(){
@@ -113,6 +114,7 @@ class Prod extends Component
         $this->producto=$producto;
         $this->tipo=$tipo;
         $this->titulo=$titulo;
+        $this->returnUrl = session('producto_index_url', route('producto.tipo', $tipo));
         $this->escliente= Auth::user()->hasRole('Cliente') ? 'disabled' : '';
 
         $this->formatos = Formato::orderBy('name')->get();

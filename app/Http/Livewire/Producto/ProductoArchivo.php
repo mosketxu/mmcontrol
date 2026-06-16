@@ -46,6 +46,7 @@ class ProductoArchivo extends Component
     public $editarvisible=0;
     public $search='';
     public $tipo;
+    public $returnUrl;
 
     protected $listeners = [ 'refresh' => '$refresh'];
 
@@ -68,9 +69,12 @@ class ProductoArchivo extends Component
     }
 
     public function mount($productoid,$ruta,$tipo){
+        $this->productoid=$productoid;
+        $this->ruta=$ruta;
         $this->prod=Producto::find($productoid);
         $this->titulo="Archivos del producto: ". $this->prod->referencia;
         $this->tipo=$tipo;
+        $this->returnUrl = session('producto_index_url', route('producto.tipo', $tipo));
     }
 
     public function render(){

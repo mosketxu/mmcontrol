@@ -151,7 +151,7 @@
         {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
         @if(!Auth::user()->hasRole('Cliente'))
             @if($ruta=='i')
-                <x-jet-secondary-button  onclick="location.href = '{{route('producto.tipo',$tipo)}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                <x-jet-secondary-button  onclick="location.href = '{{ $returnUrl }}'">{{ __('Volver') }}</x-jet-secondary-button>
             @else
                 <x-jet-secondary-button  onclick="location.href = '{{route('producto.edit',$productoid)}}'">{{ __('Volver') }}</x-jet-secondary-button>
             @endif

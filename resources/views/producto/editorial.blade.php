@@ -291,7 +291,7 @@
                 @else
                     <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
                     {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
-                    <x-jet-secondary-button  onclick="location.href = '{{route('producto.tipo','1')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                    <x-jet-secondary-button  onclick="location.href = '{{ $returnUrl }}'">{{ __('Volver') }}</x-jet-secondary-button>
                 @endif
             </div>
         </div>
