@@ -12,7 +12,9 @@ class ImportProductosExcel extends Command
     protected $signature = 'productos:import-excel
         {file : Ruta del Excel a importar}
         {--commit : Graba los cambios. Sin esta opcion solo valida}
-        {--update : Actualiza productos existentes por isbn+idioma_id si los encuentra}';
+        {--update : Actualiza productos existentes por isbn+idioma_id si los encuentra}
+        {--rollback : Elimina un producto coincidente por cada fila del Excel}
+        {--since= : En rollback, solo considera productos creados desde esta fecha}';
 
     protected $description = 'Importa productos desde un Excel con cabeceras equivalentes a la tabla productos';
 
@@ -71,7 +73,7 @@ class ImportProductosExcel extends Command
             }
 
             $rowNumber = $excelRow + 1;
-            $rowErrors = $this->validateRow($data);
+            $rowErrors = $this->validateRow($data, ! $this->option('rollback'));
 
             if ($rowErrors) {
                 foreach ($rowErrors as $error) {
@@ -97,6 +99,10 @@ class ImportProductosExcel extends Command
 
         $this->info('Productos validados: '.count($payloads));
 
+        if ($this->option('rollback')) {
+            return $this->rollback($payloads);
+        }
+
         if (! $this->option('commit')) {
             $this->warn('Dry-run: no se ha grabado nada. Repite con --commit para importar.');
             return self::SUCCESS;
@@ -119,6 +125,79 @@ class ImportProductosExcel extends Command
         $this->info('Importacion completada: '.count($payloads).' productos.');
 
         return self::SUCCESS;
+    }
+
+    private function rollback(array $payloads): int
+    {
+        if ($this->option('update')) {
+            $this->error('No combines --rollback con --update.');
+            return self::FAILURE;
+        }
+
+        $since = $this->option('since');
+
+        if ($since && strtotime($since) === false) {
+            $this->error('El valor de --since no es una fecha valida. Usa formato "YYYY-MM-DD".');
+            return self::FAILURE;
+        }
+
+        if ($this->option('commit') && ! $since) {
+            $this->error('Por seguridad, el rollback real requiere --since="YYYY-MM-DD".');
+            return self::FAILURE;
+        }
+
+        $candidates = collect($payloads)
+            ->map(fn (array $data) => $this->rollbackCandidate($data, $since))
+            ->filter();
+
+        $this->warn('Rollback: productos encontrados para eliminar: '.$candidates->count());
+
+        if ($candidates->count() !== count($payloads)) {
+            $this->warn('Atencion: el numero de coincidencias no coincide con las filas del Excel.');
+        }
+
+        if (! $this->option('commit')) {
+            $this->warn('Dry-run: no se ha borrado nada. Repite con --rollback --commit para eliminar.');
+            return self::SUCCESS;
+        }
+
+        DB::transaction(function () use ($candidates) {
+            Producto::whereIn('id', $candidates->pluck('id'))->delete();
+        });
+
+        $this->info('Rollback completado: '.$candidates->count().' productos eliminados.');
+
+        return self::SUCCESS;
+    }
+
+    private function rollbackCandidate(array $data, ?string $since = null): ?Producto
+    {
+        $query = Producto::query()
+            ->where('referencia', $data['referencia'])
+            ->where('cliente_id', $data['cliente_id'] ?? null)
+            ->where('idioma_id', $data['idioma_id'] ?? 1)
+            ->where('tipo', $data['tipo'] ?? null)
+            ->where('productoestado', $data['productoestado'] ?? null)
+            ->where('caja_id', $data['caja_id'] ?? null)
+            ->where('etiqueta', $data['etiqueta'] ?? null);
+
+        $this->whereNullable($query, 'isbn', $data['isbn'] ?? null);
+
+        if ($since) {
+            $query->where('created_at', '>=', $since);
+        }
+
+        return $query->orderByDesc('id')->first();
+    }
+
+    private function whereNullable($query, string $column, $value): void
+    {
+        if ($value === null || $value === '') {
+            $query->whereNull($column);
+            return;
+        }
+
+        $query->where($column, $value);
     }
 
     private function headers(array $row): array
@@ -221,7 +300,7 @@ class ImportProductosExcel extends Command
         return collect($data)->filter(fn ($value) => $value !== null && $value !== '')->isEmpty();
     }
 
-    private function validateRow(array $data): array
+    private function validateRow(array $data, bool $checkForeignKeys = true): array
     {
         $errors = [];
 
@@ -229,9 +308,11 @@ class ImportProductosExcel extends Command
             $errors[] = 'referencia es obligatoria';
         }
 
-        foreach (['cliente_id' => 'entidades', 'caja_id' => 'cajas', 'idioma_id' => 'idiomas'] as $column => $table) {
-            if (! empty($data[$column]) && ! DB::table($table)->where('id', $data[$column])->exists()) {
-                $errors[] = "{$column}={$data[$column]} no existe en {$table}";
+        if ($checkForeignKeys) {
+            foreach (['cliente_id' => 'entidades', 'caja_id' => 'cajas', 'idioma_id' => 'idiomas'] as $column => $table) {
+                if (! empty($data[$column]) && ! DB::table($table)->where('id', $data[$column])->exists()) {
+                    $errors[] = "{$column}={$data[$column]} no existe en {$table}";
+                }
             }
         }
 
