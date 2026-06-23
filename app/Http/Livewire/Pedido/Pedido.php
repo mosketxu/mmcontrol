@@ -154,6 +154,7 @@ class Pedido extends Component
         if ($pedidoid!='') {
             // $pedido=ModeloPedido::find($pedidoid);
             $pedido = ModeloPedido::with('pedidoproductos.producto')->find($pedidoid);
+            abort_if(!$pedido, 404, 'Pedido no encontrado.');
             $this->tipo=$pedido->tipo;
             $this->pedidoid=$pedido->id;
             $this->responsable=$pedido->responsable;
@@ -462,10 +463,18 @@ class Pedido extends Component
 
     private function validarIdiomaProductosPedido(){
         if(!$this->pedidoid || !$this->idioma_id) return;
+        $hayProductosOtroIdioma=PedidoProducto::where('pedido_id', $this->pedidoid)
+            ->whereHas('producto', function ($query) {
+                $query->where('idioma_id', '!=', $this->idioma_id)
+                    ->orWhereNull('idioma_id');
+            })
+            ->exists();
 
-        $productoidioma=Producto::find($this->productoeditorialid)->idioma_id;
-        if($this->idioma_id!=$productoidioma)
-            throw ValidationException::withMessages(['idioma_id' => 'Hay productos asociados que no tienen el mismo idioma que el pedido.',]);
+        if($hayProductosOtroIdioma){
+            throw ValidationException::withMessages([
+                'idioma_id' => 'Hay productos asociados que no tienen el mismo idioma que el pedido.',
+            ]);
+        }
     }
 
 }
