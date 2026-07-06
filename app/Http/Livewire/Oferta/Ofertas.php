@@ -78,7 +78,7 @@ class Ofertas extends Component
             return Oferta::query()
                 ->with('cliente','contacto')
                 ->join('entidades','ofertas.cliente_id','=','entidades.id')
-                ->join('productos','ofertas.producto_id','=','productos.id')
+                ->leftJoin('productos','ofertas.producto_id','=','productos.id')
                 ->select('ofertas.*', 'entidades.entidad', 'entidades.emailadm','productos.isbn','productos.referencia')
                 ->where('ofertas.tipo',$this->tipo)
                 ->search('ofertas.id',$this->search)
