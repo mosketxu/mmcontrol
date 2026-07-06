@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Oferta;
+use App\Models\Producto;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Exports\OfertasExport;
@@ -27,22 +28,24 @@ class OfertaController extends Controller
 
     public function ficha($ofertaId,$tipo){
         $oferta=Oferta::with('cliente','contacto','ofertaproducto','ofertadetalles')->find($ofertaId);
+        abort_if(!$oferta, 404);
         $lineascabecera=1; //Ref que es fijo
-        $p = $oferta->ofertaproducto;
+        $p = $oferta->ofertaproducto ?? new Producto(['paginas' => '0']);
+        $oferta->setRelation('ofertaproducto', $p);
         if($tipo=='1'){
             // $lineascabecera=$oferta->ofertaproducto->formato!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera += ($p && $p->formato!='') ? 1 : 0;
-            $lineascabecera=$oferta->ofertaproducto->paginas!='0' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->materialinterior!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->materialcubierta!='' ? $lineascabecera+2 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->encuadernado!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->plastificado!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->descripsolapa!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->descripguardas!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->manipulacion!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->tipoimpresion!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->FSC!='' ? $lineascabecera+1 : $lineascabecera;
-            $lineascabecera=$oferta->ofertaproducto->observaciones!='' ? $lineascabecera+2 : $lineascabecera;
+            $lineascabecera += $p->formato!='' ? 1 : 0;
+            $lineascabecera=$p->paginas!='0' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->materialinterior!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->materialcubierta!='' ? $lineascabecera+2 : $lineascabecera;
+            $lineascabecera=$p->encuadernado!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->plastificado!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->descripsolapa!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->descripguardas!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->manipulacion!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->tipoimpresion!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->FSC!='' ? $lineascabecera+1 : $lineascabecera;
+            $lineascabecera=$p->observaciones!='' ? $lineascabecera+2 : $lineascabecera;
             // el maximo de $lineasoferta serian 14;
             $lineasoferta=$oferta->ofertadetalles->count();
             $lineas=$lineasoferta + $lineascabecera;
