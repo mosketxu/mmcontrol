@@ -71,6 +71,12 @@
 
         @livewireScripts
 
+        <script>
+            window.addEventListener('presupuesto-recargar', () => {
+                window.setTimeout(() => window.location.reload(), 1500);
+            });
+        </script>
+
         @stack('scripts')
 
     </body>

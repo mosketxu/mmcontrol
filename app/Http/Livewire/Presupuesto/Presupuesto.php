@@ -487,7 +487,15 @@ class Presupuesto extends Component
         // $this->dispatchBrowserEvent('notify', $mensaje);
     }
 
-    public function pedido(ModelsPresupuesto $presupuesto){
+    public function pedido(?ModelsPresupuesto $presupuesto = null){
+
+        // Livewire puede no resolver el model si la pantalla conserva un estado
+        // anterior. Avisamos y recargamos para recuperar el estado actual.
+        if (!$presupuesto || !$presupuesto->exists) {
+            $this->dispatchBrowserEvent('notifyred', 'El presupuesto se ha actualizado. La página se recargará automáticamente.');
+            $this->dispatchBrowserEvent('presupuesto-recargar');
+            return;
+        }
 
         $pedidoid=null;
         $fechapedido=now()->format('Y-m-d');
