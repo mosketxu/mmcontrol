@@ -6,7 +6,7 @@
             </div>
             <div class="flex flex-row-reverse w-2/12">
                 <div class="flex w-full">
-                    <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Busqueda" autofocus/>
+                    <input type="text" wire:model.live="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Busqueda" autofocus/>
                     @if($search!='')
                         <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                     @endif
@@ -75,11 +75,11 @@
                 <form wire:submit.prevent="save">
                     <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                         <div class="flex-col w-1/12 text-left">
-                            <input type="date" wire:model.defer="fechaaccion"
+                            <input type="date" wire:model="fechaaccion"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <select wire:model.defer="contacto_id"
+                            <select wire:model="contacto_id"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">-- Contacto --</option>
                                 @foreach ($contactos as $contacto)
@@ -88,19 +88,19 @@
                             </select>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <input type="text" wire:model.defer="nombre"
+                            <input type="text" wire:model="nombre"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <textarea rows="1" wire:model.defer="accion"
+                            <textarea rows="1" wire:model="accion"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <textarea rows="1" wire:model.defer="descripcion"
+                            <textarea rows="1" wire:model="descripcion"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <input type="text" wire:model.defer="proximaaccion"
+                            <input type="text" wire:model="proximaaccion"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                         <div class="flex-col w-1/12 text-left">
@@ -116,9 +116,9 @@
 
     <div class="m-2">
         @if($ruta=='i')
-            <x-jet-secondary-button onclick="location.href = '{{route('entidad.tipo','1')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet::secondary-button onclick="location.href = '{{route('entidad.tipo','1')}}'">{{ __('Volver') }}</x-jet::secondary-button>
         @else
-            <x-jet-secondary-button onclick="location.href = '{{route('entidad.tipo',$ent->id)}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet::secondary-button onclick="location.href = '{{route('entidad.tipo',$ent->id)}}'">{{ __('Volver') }}</x-jet::secondary-button>
         @endif
     </div>
 </div>

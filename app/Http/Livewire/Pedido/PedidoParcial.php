@@ -98,6 +98,6 @@ class PedidoParcial extends Component
         $parc->observaciones=$this->parcial->observaciones;
         $parc->save();
 
-        $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
+        $this->dispatch('notify', 'Guardado con éxito.');
     }
 }

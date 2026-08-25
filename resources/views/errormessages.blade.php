@@ -24,4 +24,4 @@
         </div>
     </div>
 @endif
-{{-- <x-jet-validation-errors/> --}}
+{{-- <x-jet::validation-errors/> --}}

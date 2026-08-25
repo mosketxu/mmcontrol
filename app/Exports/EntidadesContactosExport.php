@@ -44,7 +44,7 @@ class EntidadesContactosExport implements FromCollection, WithHeadings, WithEven
         ];
     }
 
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $this->groupRows = [];
 

@@ -34,7 +34,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <select wire:model="filtrocliente" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtrocliente" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value=""></option>
                     @foreach ($clientes as $cliente)
                     <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
@@ -52,7 +52,7 @@
                 Caja
             </label>
             <div class="flex">
-                <select wire:model="filtrocaja" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtrocaja" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value=""></option>
                     @foreach ($cajas as $caja)
                     <option value="{{ $caja->id }}">{{ $caja->name }}</option>
@@ -70,7 +70,7 @@
                 Idioma
             </label>
             <div class="flex">
-                <select wire:model="filtroidioma" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtroidioma" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value=""></option>
                     @foreach ($idiomas as $idioma)
                     <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
@@ -88,7 +88,7 @@
                 Estado
             </label>
             <div class="flex">
-                <select wire:model="filtroproductoestado" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtroproductoestado" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value="">-- Seleccionar --</option>
                     @foreach($productosestado as $value => $label)
                         <option value="{{ $value }}"

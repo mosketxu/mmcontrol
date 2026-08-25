@@ -132,15 +132,15 @@ class Fdetalle extends Component
                 'total'=>$totales->subtotal]
         );
 
-        $this->emitUp('refreshfactura');
+        $this->dispatch('refreshfactura');
 
-        $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
+        $this->dispatch('notify', 'Actualizado con éxito.');
     }
 
     public function changeVisible(ModelsFacturaDetalle $facturadetalle,$visible){
         $facturadetalle->visible=$facturadetalle->visible=='1'? '0' : '1';
         $facturadetalle->update(['visible'=>$facturadetalle->visible]);
-        $this->dispatchBrowserEvent('notify', 'Visible Actualizado.');
+        $this->dispatch('notify', 'Visible Actualizado.');
     }
 
     public function save(){
@@ -195,11 +195,11 @@ class Fdetalle extends Component
         $this->orden='0';
         $this->visible=true;
         $this->observaciones='';
-        $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
+        $this->dispatch('notify', 'Guardado con éxito.');
     }
 
     public function delete($valorId){
-        $this->dispatchBrowserEvent('notifyred', 'Opción en desarrollo, contacte al administrador.');
+        $this->dispatch('notifyred', 'Opción en desarrollo, contacte al administrador.');
         return;
         //vemos si este pedido está en alguna otra factura
         // $numfrasconestepedido=ModelsFacturaDetalle::where('pedido_id',$valorId)->count();
@@ -211,7 +211,7 @@ class Fdetalle extends Component
         $borrar = ModelsFacturaDetalle::find($valorId);
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+            $this->dispatch('notify', 'Línea eliminada!');
         }
     }
 

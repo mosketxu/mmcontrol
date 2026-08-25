@@ -58,7 +58,7 @@ class Roles extends Component
         $p=Role::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Role Actualizado.');
+        $this->dispatch('notify', 'Role Actualizado.');
     }
 
     public function editar($valorId)
@@ -76,9 +76,9 @@ class Roles extends Component
             'guard_name'=>$this->valorcampo1,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Role añadido con éxito');
+        $this->dispatch('notify', 'Role añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo2='';
         $this->valorcampo1='web';
     }
@@ -89,7 +89,7 @@ class Roles extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Role eliminado!');
+            $this->dispatch('notify', 'Role eliminado!');
         }
     }
 }

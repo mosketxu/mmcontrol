@@ -44,7 +44,7 @@ class EntidadesAccionesExport implements FromCollection, WithHeadings, WithEvent
         ];
     }
 
-    public function collection()
+    public function collection(): \Illuminate\Support\Enumerable
     {
         $this->groupRows = [];
 

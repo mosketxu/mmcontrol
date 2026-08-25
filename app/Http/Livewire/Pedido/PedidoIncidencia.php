@@ -137,7 +137,7 @@ class PedidoIncidencia extends Component
         $p=ModelsPedidoIncidencia::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Incidencia Actualizada.');
+        $this->dispatch('notify', 'Incidencia Actualizada.');
     }
 
     public function save()
@@ -158,7 +158,7 @@ class PedidoIncidencia extends Component
         $pedido->save();
 
 
-        $this->dispatchBrowserEvent('notify', 'Incidencia añadida con éxito');
+        $this->dispatch('notify', 'Incidencia añadida con éxito');
 
         $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
         $this->valorcampo2='0';
@@ -170,7 +170,7 @@ class PedidoIncidencia extends Component
         $this->campo3visible=1;
         $this->campo4visible=1;
         $this->campoimgvisible=0;
-        $this->emit('refresh');
+        $this->dispatch('refresh');
 
     }
 
@@ -184,7 +184,7 @@ class PedidoIncidencia extends Component
             $pedido->hayIncidencias=$pedido->hayIncidencias-1;
             $pedido->save();
 
-            $this->dispatchBrowserEvent('notify', 'Incidencia eliminada!');
+            $this->dispatch('notify', 'Incidencia eliminada!');
         }
     }
 }

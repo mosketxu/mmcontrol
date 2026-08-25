@@ -76,7 +76,7 @@ class PedidosPedido extends Component
         ->select('pedidos.*','entidades.entidad as cli', 'productos.isbn as isbn','productos.referencia as ref')
         ->find($this->pedido->id);
 
-        // $this->emit('refreshpedidospedido');
+        // $this->dispatch('refreshpedidospedido');
     }
 
     public function generarfactura(){
@@ -148,8 +148,8 @@ class PedidosPedido extends Component
         $pedido = Pedido::find($pedidoId);
         if ($pedido) {
             $pedido->delete();
-            $this->dispatchBrowserEvent('notify', 'pedido borrado. ');
-             $this->emit('pedidoEliminado');
+            $this->dispatch('notify', 'pedido borrado. ');
+             $this->dispatch('pedidoEliminado');
         }
 
     }

@@ -170,7 +170,7 @@ class Factura extends Component
         $this->titulo='Factura:';
         $factura=ModelsFactura::find($i);
 
-        $this->dispatchBrowserEvent('notify', $mensaje);
+        $this->dispatch('notify', $mensaje);
         return redirect()->route('facturacion.edit',$factura->id);
     }
 }

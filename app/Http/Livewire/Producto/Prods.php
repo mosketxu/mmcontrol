@@ -108,7 +108,7 @@ class Prods extends Component
         $producto = Producto::find($productoId);
         if ($producto) {
             $producto->delete();
-            $this->dispatchBrowserEvent('notify', 'El producto: '.$producto->referencia.' ha sido eliminado!');
+            $this->dispatch('notify', 'El producto: '.$producto->referencia.' ha sido eliminado!');
         }
     }
 

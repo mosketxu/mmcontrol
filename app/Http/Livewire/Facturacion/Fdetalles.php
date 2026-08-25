@@ -151,8 +151,8 @@ class Fdetalles extends Component
         }
 
         $mensaje="Actualizado con éxito";
-        $this->emit('refreshfactura');
-        $this->dispatchBrowserEvent('notify', $mensaje);
+        $this->dispatch('refreshfactura');
+        $this->dispatch('notify', $mensaje);
     }
 
     public function delete($valorId, $numpedido=''){
@@ -165,8 +165,8 @@ class Fdetalles extends Component
             else
                 Pedido::where('id', $numpedido)->update(['facturado' => '0']);
             $borrar->delete();
-            $this->emit('refreshfactura');
-            $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+            $this->dispatch('refreshfactura');
+            $this->dispatch('notify', 'Línea eliminada!');
         }
 
     }

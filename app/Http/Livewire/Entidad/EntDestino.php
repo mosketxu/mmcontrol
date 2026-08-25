@@ -116,7 +116,7 @@ class EntDestino extends Component
         $p=EntidadDestino::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Destino Actualizado.');
+        $this->dispatch('notify', 'Destino Actualizado.');
     }
 
 
@@ -147,7 +147,7 @@ class EntDestino extends Component
             $this->valorcampo7='';
             $this->valorcampo8='';
 
-        $this->dispatchBrowserEvent('notify', 'Destino añadido con éxito');
+        $this->dispatch('notify', 'Destino añadido con éxito');
 
     }
 
@@ -157,7 +157,7 @@ class EntDestino extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Destino eliminado!');
+            $this->dispatch('notify', 'Destino eliminado!');
         }
     }
 }

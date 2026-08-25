@@ -63,7 +63,7 @@ class Material extends Component
         if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Material Actualizado.');
+        $this->dispatch('notify', 'Material Actualizado.');
     }
 
     public function save(){
@@ -75,9 +75,9 @@ class Material extends Component
             'descripcion'=>$this->valorcampo3,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Material añadido con éxito');
+        $this->dispatch('notify', 'Material añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -89,7 +89,7 @@ class Material extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Material eliminado!');
+            $this->dispatch('notify', 'Material eliminado!');
         }
     }
 }

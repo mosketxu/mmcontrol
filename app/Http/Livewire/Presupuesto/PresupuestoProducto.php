@@ -103,7 +103,7 @@ class PresupuestoProducto extends Component
         $this->visible='1';
         $this->orden='0';
 
-        $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
+        $this->dispatch('notify', 'Guardado con éxito.');
     }
 
     public function delete($valorId)
@@ -114,7 +114,7 @@ class PresupuestoProducto extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+            $this->dispatch('notify', 'Línea eliminada!');
         }
     }
 

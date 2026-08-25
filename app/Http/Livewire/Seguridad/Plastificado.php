@@ -63,7 +63,7 @@ class Plastificado extends Component
         if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Plastificado Actualizado.');
+        $this->dispatch('notify', 'Plastificado Actualizado.');
     }
 
     public function save()
@@ -76,9 +76,9 @@ class Plastificado extends Component
             'descripcion'=>$this->valorcampo3,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Plastificado añadido con éxito');
+        $this->dispatch('notify', 'Plastificado añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -90,7 +90,7 @@ class Plastificado extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Plastificado eliminado!');
+            $this->dispatch('notify', 'Plastificado eliminado!');
         }
     }
 }

@@ -68,7 +68,7 @@ class Usuarios extends Component
         $p=User::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Usuario Actualizado.');
+        $this->dispatch('notify', 'Usuario Actualizado.');
     }
 
     public function editar($valorId){
@@ -85,9 +85,9 @@ class Usuarios extends Component
             'password'=>'',
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Usuario añadido con éxito');
+        $this->dispatch('notify', 'Usuario añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -104,7 +104,7 @@ class Usuarios extends Component
             }
             // $empresasclienteborrar->delete();
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Usuario eliminado!');
+            $this->dispatch('notify', 'Usuario eliminado!');
         }
     }
 }

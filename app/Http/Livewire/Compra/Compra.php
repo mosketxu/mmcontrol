@@ -226,7 +226,7 @@ public function save(){
         $this->compra_id = $compra->id; // guardamos el id real para futuras ediciones
     }
 
-    $this->dispatchBrowserEvent('notify', $mensaje);
+    $this->dispatch('notify', $mensaje);
 
     // NO hacemos redirect, nos quedamos en la página
 }

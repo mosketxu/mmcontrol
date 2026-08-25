@@ -132,7 +132,7 @@ class PedidoRetraso extends Component
         $p=ModelsPedidoRetraso::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Retraso Actualizado.');
+        $this->dispatch('notify', 'Retraso Actualizado.');
     }
 
     public function save()
@@ -153,7 +153,7 @@ class PedidoRetraso extends Component
         $pedido->save();
 
 
-        $this->dispatchBrowserEvent('notify', 'Retraso añadido con éxito');
+        $this->dispatch('notify', 'Retraso añadido con éxito');
 
         $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
         $this->valorcampo2='0';
@@ -165,7 +165,7 @@ class PedidoRetraso extends Component
         $this->campo3visible=1;
         $this->campo4visible=1;
         $this->campoimgvisible=0;
-        $this->emit('refresh');
+        $this->dispatch('refresh');
 
     }
 
@@ -179,7 +179,7 @@ class PedidoRetraso extends Component
             $pedido->hayRetrasos=$pedido->hayRetrasos-1;
             $pedido->save();
 
-            $this->dispatchBrowserEvent('notify', 'Retraso eliminado!');
+            $this->dispatch('notify', 'Retraso eliminado!');
         }
     }
 }

@@ -136,7 +136,7 @@ class PedidoParciales extends Component
         $p=ModelsPedidoParcial::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Parcial Actualizado.');
+        $this->dispatch('notify', 'Parcial Actualizado.');
     }
 
     public function editar($parcialid)
@@ -185,7 +185,7 @@ class PedidoParciales extends Component
             $pedido=Pedido::find($borrar->pedido_id);
             $pedido->hayParciales=$pedido->hayParciales-1;
             $pedido->save();
-            $this->dispatchBrowserEvent('notify', 'Parcial eliminado!');
+            $this->dispatch('notify', 'Parcial eliminado!');
         }
     }
 }

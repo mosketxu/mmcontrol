@@ -8,7 +8,7 @@
             </div>
             <div class="flex flex-row-reverse w-9/12 ">
                 <div class="flex">
-                    <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
+                    <input type="text" wire:model.live="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
                     @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                     @endif
@@ -131,31 +131,31 @@
                     <form wire:submit.prevent="save">
                         <div class="flex w-full text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                             <div class="flex-col w-2/12 p-1">
-                                <input type="text" wire:model.defer="tarea"
+                                <input type="text" wire:model="tarea"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1">
-                                <input type="number" wire:model.defer="unidades"
+                                <input type="number" wire:model="unidades"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-4/12 p-1">
-                                <input type="text" step="any" wire:model.defer="otros"
+                                <input type="text" step="any" wire:model="otros"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <input type="date" wire:model.defer="fecha_inicio"
+                                <input type="date" wire:model="fecha_inicio"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <input type="date" wire:model.defer="fecha_fin"
+                                <input type="date" wire:model="fecha_fin"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <input type="text" wire:model.defer="asignado_a"
+                                <input type="text" wire:model="asignado_a"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <select wire:model.defer="estado"
+                                <select wire:model="estado"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                     @foreach ($estados as $key=>$value)
                                     <option value="{{ $key }}">{{ $value }}</option>
@@ -173,18 +173,18 @@
         </div>
     </div>
     <div class="m-2">
-        {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
+        {{-- <x-jet::secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet::secondary-button> --}}
         @if(!Auth::user()->hasRole('Cliente'))
             @if($ruta=='i')
-                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @else
-                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @endif
         @else
             @if($ruta=='i')
-                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @else
-                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('cliente.pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @endif
         @endif
     </div>

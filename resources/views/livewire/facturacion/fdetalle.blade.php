@@ -69,12 +69,12 @@
         <div class="flex w-full py-0 my-0 space-x-1 text-left bg-green-100 border-t-0 border-y" wire:loading.class.delay="opacity-50">
             {{-- checkbox --}}
             <div class="w-1/12 ">
-                <input type="checkbox" wire:model.defer="visible"
+                <input type="checkbox" wire:model="visible"
                 class="ml-4 text-xs border-gray-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
             </div>
             {{-- orde --}}
             <div class="w-1/12">
-                <input type="number" wire:model.defer="orden"
+                <input type="number" wire:model="orden"
                 class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
             {{-- Pedido_id --}}
@@ -91,7 +91,7 @@
             </div>
             {{-- concepto --}}
             <div class="w-4/12">
-                <input type="text" wire:model.defer="concepto" placeholder="Introduce el concepto"
+                <input type="text" wire:model="concepto" placeholder="Introduce el concepto"
                 class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md placeholder:text-xs placeholder:text-gray-300 placeholder:italic"/>
             </div>
             {{-- cantidad --}}
@@ -106,7 +106,7 @@
             </div>
             {{-- subtotalsiniva --}}
             <div class="w-1/12">
-                <input type="text"  wire:model="subtotalsiniva"
+                <input type="text"  wire:model.live="subtotalsiniva"
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
                 disabled/>
             </div>
@@ -122,22 +122,22 @@
             </div>
             {{-- subtotaliva --}}
             <div class="w-1/12">
-                <input type="text"  wire:model="subtotaliva"
+                <input type="text"  wire:model.live="subtotaliva"
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
                 disabled/>
             </div>
             {{-- subtotal --}}
             <div class="w-1/12">
-                <input type="text"  wire:model="subtotal"
+                <input type="text"  wire:model.live="subtotal"
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
                 disabled/>
             </div>
             {{-- observaciones --}}
             <div class="w-3/12 ">
-                <textarea wire:model.defer="observaciones" rows="1"
+                <textarea wire:model="observaciones" rows="1"
                 class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"></textarea>
 
-                {{-- <input type="text"  wire:model.defer="observaciones"
+                {{-- <input type="text"  wire:model="observaciones"
                 class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"/> --}}
             </div>
             {{-- botones --}}

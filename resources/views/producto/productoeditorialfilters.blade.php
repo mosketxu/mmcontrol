@@ -34,7 +34,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <select wire:model="filtrocliente" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtrocliente" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value=""></option>
                     @foreach ($clientes as $cliente)
                     <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
@@ -52,7 +52,7 @@
                 Idioma
             </label>
             <div class="flex">
-                <select wire:model="filtroidioma" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtroidioma" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value=""></option>
                     @foreach ($idiomas as $idioma)
                     <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
@@ -70,7 +70,7 @@
                 Estado
             </label>
             <div class="flex">
-                <select wire:model="filtroproductoestado" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtroproductoestado" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value="">-- Selecciona Estado --</option>
                     @foreach($productosestado as $value => $label)
                         <option value="{{ $value }}"

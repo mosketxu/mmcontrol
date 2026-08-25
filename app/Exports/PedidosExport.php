@@ -106,7 +106,7 @@ class PedidosExport extends DefaultValueBinder implements FromCollection,WithHea
         return (string) $isbn;
     }
 
-    public function bindValue(Cell $cell, $value)
+    public function bindValue(Cell $cell, mixed $value): bool
     {
         $isbnColumn = $this->tipo == '1' ? 'R' : 'Q';
 
@@ -121,7 +121,7 @@ class PedidosExport extends DefaultValueBinder implements FromCollection,WithHea
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function collection(){
+    public function collection(): \Illuminate\Support\Enumerable{
         return $this->pedidos;
     }
 }

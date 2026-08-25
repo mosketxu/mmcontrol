@@ -5,7 +5,7 @@
                 Búsqueda
             </label>
             <div class="flex">
-                <input type="search" wire:model="search" class="w-full py-1 border border-blue-100 rounded-lg" placeholder="Búsqueda por nombre o nif..." autofocus/>
+                <input type="search" wire:model.live="search" class="w-full py-1 border border-blue-100 rounded-lg" placeholder="Búsqueda por nombre o nif..." autofocus/>
                 {{-- @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif --}}
@@ -18,7 +18,7 @@
                 Responsable
             </label>
             <div class="flex">
-                <input type="search" wire:model="filtroresponsable" class="w-full py-1 border border-blue-100 rounded-lg" placeholder="Búsqueda responsable"/>
+                <input type="search" wire:model.live="filtroresponsable" class="w-full py-1 border border-blue-100 rounded-lg" placeholder="Búsqueda responsable"/>
                 {{-- @if($filtroresponsable!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroresponsable', '')" class="pb-1" title="reset filter"/>
                 @endif --}}
@@ -32,7 +32,7 @@
                     F.Ini.
                 </label>
                 <div class="flex w-full">
-                    <input type="date" wire:model="filtrofini" class="w-full py-1 border border-blue-100 rounded-lg"/>
+                    <input type="date" wire:model.live="filtrofini" class="w-full py-1 border border-blue-100 rounded-lg"/>
                     {{-- @if($filtrofini!='')
                         <x-icon.filter-slash-a wire:click="$set('filtrofini', '')" class="pb-1" title="reset filter"/>
                     @endif --}}
@@ -43,7 +43,7 @@
                     F.Fin.
                 </label>
                 <div class="flex">
-                    <input type="date" wire:model="filtroffin" class="w-full py-1 border border-blue-100 rounded-lg"/>
+                    <input type="date" wire:model.live="filtroffin" class="w-full py-1 border border-blue-100 rounded-lg"/>
                     {{-- @if($filtroffin!='')
                         <x-icon.filter-slash-a wire:click="$set('filtroffin', '')" class="pb-1" title="reset filter"/>
                     @endif --}}

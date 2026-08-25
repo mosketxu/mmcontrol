@@ -63,7 +63,7 @@ class Encuadernacion extends Component
         if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Encuadernacion Actualizada.');
+        $this->dispatch('notify', 'Encuadernacion Actualizada.');
     }
 
 
@@ -77,9 +77,9 @@ class Encuadernacion extends Component
             'descripcion'=>$this->valorcampo3,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Encuadernacion añadida con éxito');
+        $this->dispatch('notify', 'Encuadernacion añadida con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -91,7 +91,7 @@ class Encuadernacion extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Encuadernacion eliminada!');
+            $this->dispatch('notify', 'Encuadernacion eliminada!');
         }
     }
 }

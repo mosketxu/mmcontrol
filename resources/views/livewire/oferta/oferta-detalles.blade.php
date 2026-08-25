@@ -49,17 +49,17 @@
             <div class="flex w-full py-0 my-0 space-x-1 text-left bg-green-100 border-t-0 border-y" wire:loading.class.delay="opacity-50">
                 {{-- orden --}}
                 <div class="w-1/12">
-                    <input type="number" wire:model.defer="orden"
+                    <input type="number" wire:model="orden"
                     class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
                 </div>
                 {{-- titulo --}}
                 <div class="w-2/12">
-                    <input type="text" wire:model.defer="titulo" placeholder="Introduce el titulo"
+                    <input type="text" wire:model="titulo" placeholder="Introduce el titulo"
                     class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md placeholder:text-xs placeholder:text-gray-300 placeholder:italic"/>
                 </div>
                 {{-- concepto --}}
                 <div class="w-4/12">
-                    <input type="text" wire:model.defer="concepto" placeholder="Introduce el concepto"
+                    <input type="text" wire:model="concepto" placeholder="Introduce el concepto"
                     class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md placeholder:text-xs placeholder:text-gray-300 placeholder:italic"/>
                 </div>
                 {{-- cantidad --}}
@@ -74,7 +74,7 @@
                 </div>
                 {{-- total --}}
                 <div class="w-1/12">
-                    <input type="text"  wire:model="total"
+                    <input type="text"  wire:model.live="total"
                     class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
                     disabled/>
                 </div>

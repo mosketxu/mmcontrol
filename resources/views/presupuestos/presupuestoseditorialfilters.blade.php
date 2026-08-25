@@ -6,7 +6,7 @@
                 Nº.Presup
             </label>
             <div class="flex">
-                <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <input type="text" wire:model.live="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
                 @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -20,7 +20,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <select wire:model="filtrocliente" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtrocliente" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value=""></option>
                     @foreach ($clientes as $cliente)
                     <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
@@ -40,7 +40,7 @@
                 Idioma
             </label>
             <div class="flex">
-                <select wire:model="filtroidioma" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtroidioma" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value=""></option>
                     @foreach ($idiomas as $idioma)
                     <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
@@ -59,7 +59,7 @@
                 Título
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroreferencia" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <input type="text" wire:model.live="filtroreferencia" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
                 @if($filtroreferencia!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -73,7 +73,7 @@
                 ISBN
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroisbn" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <input type="text" wire:model.live="filtroisbn" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
                 @if($filtroisbn!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -87,7 +87,7 @@
                 Proveedor
             </label>
             <div class="flex">
-                <select wire:model="filtroproveedor" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
+                <select wire:model.live="filtroproveedor" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value=""></option>
                     @foreach ($proveedores as $proveedor)
                     <option value="{{ $proveedor->id }}">{{ $proveedor->entidad }}</option>
@@ -106,7 +106,7 @@
                 Año
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroanyo"
+                <input type="text" wire:model.live="filtroanyo"
                     class="w-full py-1 text-sm text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
                     placeholder="Año" />
                 @if($filtroanyo!='')
@@ -122,7 +122,7 @@
                 Mes
             </label>
             <div class="flex">
-                <select wire:model="filtromes"
+                <select wire:model.live="filtromes"
                     class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value="">-- selecciona --</option>
                     @foreach ($meses as $mes )
@@ -142,7 +142,7 @@
                 Estado
             </label>
             <div class="flex">
-                <select wire:model="filtroestado"
+                <select wire:model.live="filtroestado"
                     class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value="">-- selecciona --</option>
                     <option value="0">Enviado</option>
@@ -161,7 +161,7 @@
                 Ok Externo
             </label>
             <div class="flex">
-                <select wire:model="filtrookexterno"
+                <select wire:model.live="filtrookexterno"
                     class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                     <option value="">-- selecciona --</option>
                     <option value="1">Ok Externo</option>

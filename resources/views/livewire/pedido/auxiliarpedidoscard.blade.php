@@ -8,7 +8,7 @@
             </div>
             <div class="flex flex-row-reverse w-9/12 ">
                 <div class="flex">
-                    <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
+                    <input type="text" wire:model.live="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
                     @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                     @endif
@@ -193,7 +193,7 @@
                         <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                             @if ($campofechavisible==1)
                                 <div class="flex-col {{ $longcampofecha }} text-left">
-                                    <input type="date" wire:model.defer="valorcampofecha"
+                                    <input type="date" wire:model="valorcampofecha"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $this->campofechadisabled }} />
                                 </div>
@@ -211,7 +211,7 @@
                                         </x-selectcolor>
                                     @else
                                         @if($campo2disabled=='1')
-                                        <input type="{{ $tipocampo2 }}" step="any" wire:model.defer="valorcampo2"
+                                        <input type="{{ $tipocampo2 }}" step="any" wire:model="valorcampo2"
                                             class="w-full text-xs {{ $textcampo2 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                             {{ $this->campo2disabled }} />
                                         @endif
@@ -230,7 +230,7 @@
                                             @endforelse
                                         </x-select>
                                     @else
-                                    <input type="{{ $tipocampo3 }}" step="any" wire:model.defer="valorcampo3"
+                                    <input type="{{ $tipocampo3 }}" step="any" wire:model="valorcampo3"
                                         class="w-full text-xs {{ $textcampo3 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{ $this->campo3disabled }} />
                                     @endif
@@ -240,23 +240,23 @@
                                 <div class="flex-col {{ $longcampo4 }} {{ $textcampo4 }}">
                                     @if($tipocampo4 =="textarea")
                                         <textarea  rows="2" cols="{{ $colstextarea4 }}"
-                                        wire:model.defer="valorcampo4" class="block text-xs font-thin text-gray-500 border-0 rounded-md"></textarea>
+                                        wire:model="valorcampo4" class="block text-xs font-thin text-gray-500 border-0 rounded-md"></textarea>
                                 @else
-                                    <input type="{{ $tipocampo4 }}" wire:model.defer="valorcampo4"
+                                    <input type="{{ $tipocampo4 }}" wire:model="valorcampo4"
                                     class="w-full text-xs {{ $textcampo4 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                     @endif
                                 </div>
                             @endif
                             @if ($campo5visible==1)
                             <div class="flex-col {{ $longcampo5 }} {{ $textcampo5 }}">
-                                <input type="{{ $tipocampo5 }}" step="any" wire:model.defer="valorcampo5"
+                                <input type="{{ $tipocampo5 }}" step="any" wire:model="valorcampo5"
                                 class="w-full text-xs {{ $textcampo5 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 {{ $this->campo5disabled }} />
                             </div>
                             @endif
                             @if ($campo6visible==1)
                                 <div class="flex-col {{ $longcampo6 }} {{ $textcampo6 }}">
-                                    <input type="{{ $tipocampo6 }}" step="any" wire:model.defer="valorcampo6"
+                                    <input type="{{ $tipocampo6 }}" step="any" wire:model="valorcampo6"
                                     class="w-full text-xs {{ $textcampo6 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $this->campo6disabled }} />
                                 </div>
@@ -264,7 +264,7 @@
                             @if ($campoimgvisible==1)
                                 <div class="flex-col {{ $longcampoimg }} ml-2 text-right">
                                     <input type="file" wire:model.lazy="valorcampoimg" />
-                                    {{-- <x-input.filepond wire:model="valorcampoimg" /> --}}
+                                    {{-- <x-input.filepond wire:model.live="valorcampoimg" /> --}}
                                 </div>
                             @endif
                             @if(isset($distribuciones))
@@ -286,18 +286,18 @@
         </div>
     </div>
     <div class="m-2">
-        {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
+        {{-- <x-jet::secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet::secondary-button> --}}
         @if(!Auth::user()->hasRole('Cliente'))
             @if($ruta=='i')
-                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @else
-                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @endif
         @else
             @if($ruta=='i')
-                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @else
-                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('cliente.pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @endif
         @endif
     </div>

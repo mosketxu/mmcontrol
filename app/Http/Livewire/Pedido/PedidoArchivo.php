@@ -143,7 +143,7 @@ class PedidoArchivo extends Component
         $p=ModelsPedidoArchivo::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
+        $this->dispatch('notify', 'Archivo Actualizado.');
     }
 
     public function updatedValorcampoimg()
@@ -157,7 +157,7 @@ class PedidoArchivo extends Component
     //     if ($existe)
     //         return Storage::disk('archivospedido')->download($parchivo->archivo);
     //     else{
-    //         $this->dispatchBrowserEvent('notifyred', 'Ha habido un problema con el fichero');
+    //         $this->dispatch('notifyred', 'Ha habido un problema con el fichero');
     //     }
     // }
 
@@ -189,7 +189,7 @@ class PedidoArchivo extends Component
         }
 
 
-        $this->dispatchBrowserEvent('notify', 'Archivo añadido con éxito');
+        $this->dispatch('notify', 'Archivo añadido con éxito');
 
         return redirect()->route('pedido.archivos',[$this->pedidoid,$this->ruta]);
     }
@@ -203,7 +203,7 @@ class PedidoArchivo extends Component
             $pedido=Pedido::find($borrar->pedido_id);
             $pedido->hayArchivos=$pedido->hayArchivos-1;
             $pedido->save();
-            $this->dispatchBrowserEvent('notify', 'Archivo eliminado!');
+            $this->dispatch('notify', 'Archivo eliminado!');
         }
     }
 }

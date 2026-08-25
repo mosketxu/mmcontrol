@@ -95,7 +95,7 @@ class ProductosExport extends DefaultValueBinder implements FromCollection,WithH
         return $this->columns;
     }
 
-    public function collection(){
+    public function collection(): \Illuminate\Support\Enumerable{
 
         $query = Producto::query()->with('proveedor', 'cliente', 'idioma', 'caja');
 
@@ -185,7 +185,7 @@ class ProductosExport extends DefaultValueBinder implements FromCollection,WithH
         return (string) $isbn;
     }
 
-    public function bindValue(Cell $cell, $value)
+    public function bindValue(Cell $cell, mixed $value): bool
     {
         if ($cell->getColumn() === 'E') {
             $cell->setValueExplicit((string) $value, DataType::TYPE_STRING);

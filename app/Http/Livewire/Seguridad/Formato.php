@@ -63,7 +63,7 @@ class Formato extends Component
         if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Formato Actualizado.');
+        $this->dispatch('notify', 'Formato Actualizado.');
     }
 
     public function editar($valorId)
@@ -82,9 +82,9 @@ class Formato extends Component
             'descripcion'=>$this->valorcampo3,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Formato añadido con éxito');
+        $this->dispatch('notify', 'Formato añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -96,7 +96,7 @@ class Formato extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Formato eliminado!');
+            $this->dispatch('notify', 'Formato eliminado!');
         }
     }
 }

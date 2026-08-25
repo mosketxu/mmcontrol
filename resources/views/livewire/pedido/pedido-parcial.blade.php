@@ -28,58 +28,58 @@
                         <div class="flex ">
                             <div class="flex w-full space-x-2">
                                 <label class="" for="">Destino: </label>
-                                <input type="text" wire:model="parcial.destino"
+                                <input type="text" wire:model.live="parcial.destino"
                                         class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                             <div class="flex w-full ml-2 space-x-2">
                                 <label class="" for="" >Atención:</label>
-                                <input type="text" wire:model="parcial.atencion"
+                                <input type="text" wire:model.live="parcial.atencion"
                                         class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex w-full space-x-2">
                                 <label class="" for="">Dirección: </label>
-                                <input type="text" wire:model="parcial.direccion"
+                                <input type="text" wire:model.live="parcial.direccion"
                                 class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex w-full space-x-2">
                                 <label for="">Población: </label>
-                                <input type="text" wire:model="parcial.localidad"
+                                <input type="text" wire:model.live="parcial.localidad"
                                     class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                             <div class="flex w-full ml-2 space-x-2">
                                 <label for="" >Cod.Postal:</label>
-                                <input type="text" wire:model="parcial.cp"
+                                <input type="text" wire:model.live="parcial.cp"
                                         class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex w-full space-x-2">
                                 <label for="" >Horario:</label>
-                                <input type="text" wire:model="parcial.horario"
+                                <input type="text" wire:model.live="parcial.horario"
                                     class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                             <div class="flex w-full ml-2 space-x-2">
                                 <label for="" >Tfno.:</label>
-                                <input type="text" wire:model="parcial.tfno"
+                                <input type="text" wire:model.live="parcial.tfno"
                                     class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"/>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex w-full space-x-2">
                                 <label for="" >Observaciones:</label>
-                                <textarea wire:model="parcial.observaciones" rows="1"
+                                <textarea wire:model.live="parcial.observaciones" rows="1"
                                 class="w-full py-1 my-0.5 text-sm font-thin text-left text-gray-500 border-gray-200 border-1 rounded-md"></textarea>
                             </div>
                         </div>
                         <div class="flex">
                             <div class="flex w-full mt-2 space-x-2">
-                                <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                                {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
-                                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.parciales',[$pedido,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                                <x-jet::button class="bg-blue-600">{{ __('Guardar') }}</x-jet::button>
+                                {{-- <x-jet::secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet::secondary-button> --}}
+                                <x-jet::secondary-button  onclick="location.href = '{{route('pedido.parciales',[$pedido,$ruta])}}'">{{ __('Volver') }}</x-jet::secondary-button>
                             </div>
                         </div>
                     </form>

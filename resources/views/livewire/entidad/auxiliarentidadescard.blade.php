@@ -8,7 +8,7 @@
             </div>
             <div class="flex flex-row-reverse w-2/12 ">
                 <div class="flex w-full">
-                    <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
+                    <input type="text" wire:model.live="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
                     @if($search!='')
                             <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                     @endif
@@ -159,63 +159,63 @@
                         <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                             @if ($campofechavisible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="date" wire:model.defer="valorcampofecha"
+                                    <input type="date" wire:model="valorcampofecha"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo1visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model.defer="valorcampo1"
+                                    <input type="text" wire:model="valorcampo1"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo2visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model.defer="valorcampo2"
+                                    <input type="text" wire:model="valorcampo2"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo3visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model.defer="valorcampo3"
+                                    <input type="text" wire:model="valorcampo3"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"{{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo4visible==1)
                                 <div class="flex-col w-1/12 text-left">
-                                    <input type="text" wire:model.defer="valorcampo4"
+                                    <input type="text" wire:model="valorcampo4"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo5visible==1)
                                 <div class="flex-col w-1/12 text-left">
-                                    <input type="text" wire:model.defer="valorcampo5"
+                                    <input type="text" wire:model="valorcampo5"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo6visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model.defer="valorcampo6"
+                                    <input type="text" wire:model="valorcampo6"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo7visible==1)
                                 <div class="flex-col w-1/12 text-left">
-                                    <input type="text" wire:model.defer="valorcampo7"
+                                    <input type="text" wire:model="valorcampo7"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo8visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model.defer="valorcampo8"
+                                    <input type="text" wire:model="valorcampo8"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campoimgvisible==1)
                                 <div class="flex-col w-2/12 text-left">
                                     <input type="file" wire:model.lazy="valorcampoimg" />
-                                    {{-- <x-input.filepond wire:model="valorcampoimg" /> --}}
+                                    {{-- <x-input.filepond wire:model.live="valorcampoimg" /> --}}
                                 </div>
                             @endif
                             <div class="flex-col w-1/12 text-left">
@@ -228,11 +228,11 @@
         </div>
     </div>
     <div class="m-2">
-        {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
+        {{-- <x-jet::secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet::secondary-button> --}}
         @if($ruta=='i')
-            <x-jet-secondary-button  onclick="location.href = '{{route('entidad.tipo','1')}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet::secondary-button  onclick="location.href = '{{route('entidad.tipo','1')}}'">{{ __('Volver') }}</x-jet::secondary-button>
         @else
-            <x-jet-secondary-button  onclick="location.href = '{{route('entidad.tipo',$ent->id)}}'">{{ __('Volver') }}</x-jet-secondary-button>
+            <x-jet::secondary-button  onclick="location.href = '{{route('entidad.tipo',$ent->id)}}'">{{ __('Volver') }}</x-jet::secondary-button>
         @endif
     </div>
 </div>

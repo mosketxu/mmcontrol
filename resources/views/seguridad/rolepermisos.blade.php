@@ -60,11 +60,11 @@
                                     @endforeach
                                 </div>
                                     <div class="card-footer">
-                                        {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
-                                        <x-jet-secondary-button  onclick="location.href = '{{route('seguridad')}}'">{{ __('Volver') }}</x-jet-secondary-button>
-                                        <x-jet-button class="bg-blue-600">
+                                        {{-- <x-jet::secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet::secondary-button> --}}
+                                        <x-jet::secondary-button  onclick="location.href = '{{route('seguridad')}}'">{{ __('Volver') }}</x-jet::secondary-button>
+                                        <x-jet::button class="bg-blue-600">
                                             {{ __('Actualizar') }}
-                                        </x-jet-button>
+                                        </x-jet::button>
                                     </div>
 
                             </div>

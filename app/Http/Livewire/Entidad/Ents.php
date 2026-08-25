@@ -48,7 +48,7 @@ class Ents extends Component
         }
 
         $entidad->update([$campo=>$valor]);
-        $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
+        $this->dispatch('notify', 'Actualizada con éxito.');
     }
 
     public function ordenar($campo){
@@ -96,7 +96,7 @@ class Ents extends Component
 
         if ($mensaje1!='' || $mensaje2!='' || $mensaje3!='' || $mensaje4!='' || $mensaje5!=''  ) {
             $mensaje=$mensaje5 . $mensaje6 . $mensaje1 . $mensaje2 . $mensaje3 ;
-            $this->dispatchBrowserEvent('notifyred', $mensaje);
+            $this->dispatch('notifyred', $mensaje);
         }
 
         if ($entidad && $mensaje=='') {
@@ -104,7 +104,7 @@ class Ents extends Component
             if($entidad->destinos->count()>0) EntidadDestino::where('entidad_id',$entidadId)->delete();
             if($entidad->acciones->count()>0) EntidadAccion::where('entidad_id',$entidadId)->delete();
             $entidad->delete();
-            $this->dispatchBrowserEvent('notify', 'La entidad: '.$entidad->entidad.' ha sido eliminada!');
+            $this->dispatch('notify', 'La entidad: '.$entidad->entidad.' ha sido eliminada!');
         }
     }
 

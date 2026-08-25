@@ -82,7 +82,7 @@ class OfertaDetalles extends Component
         //     'total'=>round($this->cantidad * $this->importe,4)
         //     ]);
 
-        $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
+        $this->dispatch('notify', 'Actualizado con éxito.');
     }
 
     public function save(){
@@ -112,7 +112,7 @@ class OfertaDetalles extends Component
         $this->orden='0';
         $this->observaciones='';
 
-        $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
+        $this->dispatch('notify', 'Guardado con éxito.');
     }
 
     public function delete($valorId)
@@ -125,7 +125,7 @@ class OfertaDetalles extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+            $this->dispatch('notify', 'Línea eliminada!');
         }
     }
 }

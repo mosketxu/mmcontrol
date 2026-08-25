@@ -17,7 +17,7 @@ class FacturacionExport implements FromQuery, WithHeadings, WithMapping, ShouldA
         $this->filters = $filters;
     }
 
-    public function query()
+    public function query(): \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation
     {
         return Factura::query()
             ->join('entidades','facturas.cliente_id','=','entidades.id')

@@ -63,7 +63,7 @@ class Tinta extends Component
         if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Tinta Actualizada.');
+        $this->dispatch('notify', 'Tinta Actualizada.');
     }
 
 
@@ -77,9 +77,9 @@ class Tinta extends Component
             'descripcion'=>$this->valorcampo3,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Tinta añadida con éxito');
+        $this->dispatch('notify', 'Tinta añadida con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -91,7 +91,7 @@ class Tinta extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Tinta eliminada!');
+            $this->dispatch('notify', 'Tinta eliminada!');
         }
     }
 }

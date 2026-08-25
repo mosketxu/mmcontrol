@@ -14,9 +14,9 @@
                         <div class="">
                             <div class="flex p-1 rounded-md bg-blue-50">
                                 <h3 class="w-1/12 pl-1 font-semibold">Datos generales</h3>
-                                <input  wire:model.defer="presupuestoid" type="hidden"/>
+                                <input  wire:model="presupuestoid" type="hidden"/>
                                 @if($tipo!='1')
-                                <select wire:model.defer="tipo"
+                                <select wire:model="tipo"
                                     class="w-11/12 py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{$escliente}} {{$deshabilitado}}>
                                     <option value="2">Packaging</option>
@@ -27,12 +27,12 @@
                             {{-- fecha-cliente-contacto-estado- --}}
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Fecha') }}</x-jet-label>
+                                    <x-jet::label >{{ __('Fecha') }}</x-jet::label>
                                     <input  wire:model.lazy="fecha" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{$escliente}} {{$deshabilitado}}/>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Cliente') }}</x-jet-label>
+                                    <x-jet::label >{{ __('Cliente') }}</x-jet::label>
                                     <select wire:model.lazy="cliente_id"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{$escliente}} {{$deshabilitado}}>
@@ -43,7 +43,7 @@
                                     </select>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Contacto') }}</x-jet-label>
+                                    <x-jet::label >{{ __('Contacto') }}</x-jet::label>
                                     <select wire:model.lazy="contacto_id"
                                     class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{$escliente}} {{$deshabilitado}}>
@@ -58,7 +58,7 @@
                                     </select>
                                 </div>
                                 <div class="w-full">
-                                    <x-jet-label >{{ __('Estado') }}</x-jet-label>
+                                    <x-jet::label >{{ __('Estado') }}</x-jet::label>
                                     <select wire:model.lazy="estado"
                                     class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{$escliente}} {{$deshabilitado}}>
@@ -71,11 +71,11 @@
                             {{-- Descrip-isbn titulo --}}
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Descripción') }}</x-jet-label>
-                                    <textarea wire:model.defer="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
+                                    <x-jet::label >{{ __('Descripción') }}</x-jet::label>
+                                    <textarea wire:model="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('ISBN') }}</x-jet-label>
+                                    <x-jet::label >{{ __('ISBN') }}</x-jet::label>
                                     <select wire:model.lazy="producto_id"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{$escliente}} {{$deshabilitado}}>
@@ -90,7 +90,7 @@
                                     </select>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Título') }} </x-jet-label>
+                                    <x-jet::label >{{ __('Título') }} </x-jet::label>
                                     <select wire:model.lazy="producto_id"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{$escliente}} {{$deshabilitado}}>
@@ -108,74 +108,74 @@
                             {{-- manipulacion-entrega-obs --}}
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Manipulación') }}</x-jet-label>
-                                    <textarea wire:model.defer="manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('manipulacion') }} </textarea>
+                                    <x-jet::label >{{ __('Manipulación') }}</x-jet::label>
+                                    <textarea wire:model="manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('manipulacion') }} </textarea>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Entrega') }}</x-jet-label>
-                                    <textarea wire:model.defer="entrega" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('entrega') }} </textarea>
+                                    <x-jet::label >{{ __('Entrega') }}</x-jet::label>
+                                    <textarea wire:model="entrega" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('entrega') }} </textarea>
                                 </div>
                                 <div class="w-full mt-1 form-item">
-                                    <x-jet-label >{{ __('Observaciones') }}</x-jet-label>
-                                    <textarea wire:model.defer="observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('observaciones') }} </textarea>
+                                    <x-jet::label >{{ __('Observaciones') }}</x-jet::label>
+                                    <textarea wire:model="observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('observaciones') }} </textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="px-1 bg-gray-50">
                             <div class="p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Descripción Producto</h3>
-                                <input  wire:model.defer="pedidoid" type="hidden"/>
+                                <input  wire:model="pedidoid" type="hidden"/>
                             </div>
                             <div class="flex flex-col mx-1 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
                                     <div class="">
-                                        <x-jet-label  class="font-bold">{{ __('Paginas') }} <span class="font-light"> {{ $prod->paginas ?? '' }}</span></x-jet-label>
-                                        <x-jet-label  class="font-bold" >{{ __('Plastificado') }}<span class="font-light"> {{ $prod->plastificado ?? '' }}</span></x-jet-label>
-                                        <x-jet-label  class="font-bold">{{ __('Encuadernado') }}<span class="font-light" > {{ $prod->encuadernado ?? ''  }}</span></x-jet-label>
+                                        <x-jet::label  class="font-bold">{{ __('Paginas') }} <span class="font-light"> {{ $prod->paginas ?? '' }}</span></x-jet::label>
+                                        <x-jet::label  class="font-bold" >{{ __('Plastificado') }}<span class="font-light"> {{ $prod->plastificado ?? '' }}</span></x-jet::label>
+                                        <x-jet::label  class="font-bold">{{ __('Encuadernado') }}<span class="font-light" > {{ $prod->encuadernado ?? ''  }}</span></x-jet::label>
                                     </div>
                                 </div>
                                 <div class="w-full form-item">
                                     <div class="">
-                                        <x-jet-label  class="font-bold">Papel Int. <span class="font-light"> {{ $prod->materialinterior  ?? ''}} </span></x-jet-label>
-                                        <x-jet-label  class="font-bold">Tintas Int.<span class="font-light">  {{ $prod->tintainterior  ?? ''}}</span> </x-jet-label>
-                                        <x-jet-label  class="font-bold">Gr. Int. <span class="font-light"> {{  $prod->gramajeinterior  ?? ''}} </span></x-jet-label>
+                                        <x-jet::label  class="font-bold">Papel Int. <span class="font-light"> {{ $prod->materialinterior  ?? ''}} </span></x-jet::label>
+                                        <x-jet::label  class="font-bold">Tintas Int.<span class="font-light">  {{ $prod->tintainterior  ?? ''}}</span> </x-jet::label>
+                                        <x-jet::label  class="font-bold">Gr. Int. <span class="font-light"> {{  $prod->gramajeinterior  ?? ''}} </span></x-jet::label>
                                     </div>
                                 </div>
                                 <div class="w-full form-item">
                                     <div class="">
-                                        <x-jet-label  class="font-bold">Papel Cub. <span class="font-light"> {{ $prod->materialcubierta  ?? ''}} </span></x-jet-label>
-                                        <x-jet-label  class="font-bold">Tintas Cub.<span class="font-light">  {{ $prod->tintacubierta  ?? ''}}</span> </x-jet-label>
-                                        <x-jet-label  class="font-bold">Gr. Cub. <span class="font-light"> {{  $prod->gramajecubierta  ?? ''}} </span></x-jet-label>
+                                        <x-jet::label  class="font-bold">Papel Cub. <span class="font-light"> {{ $prod->materialcubierta  ?? ''}} </span></x-jet::label>
+                                        <x-jet::label  class="font-bold">Tintas Cub.<span class="font-light">  {{ $prod->tintacubierta  ?? ''}}</span> </x-jet::label>
+                                        <x-jet::label  class="font-bold">Gr. Cub. <span class="font-light"> {{  $prod->gramajecubierta  ?? ''}} </span></x-jet::label>
                                     </div>
                                 </div>
                                 <div class="w-full form-item">
                                     @if ($prod && $prod->solapa=='1')
                                     <div class="">
-                                        <x-jet-label class="font-bold">{{ __('Solapa') }}<span class="font-light"> {{ $prod->descripsolapa  ?? '' }}</span></x-jet-label>
+                                        <x-jet::label class="font-bold">{{ __('Solapa') }}<span class="font-light"> {{ $prod->descripsolapa  ?? '' }}</span></x-jet::label>
                                     </div>
                                     @endif
                                     @if ($prod && $prod->guardas=='1')
                                     <div class="">
-                                        <x-jet-label class="font-bold">{{ __('Guardas') }}<span class="font-light"> {{ $prod->descripguardas  ?? '' }}</span></x-jet-label>
+                                        <x-jet::label class="font-bold">{{ __('Guardas') }}<span class="font-light"> {{ $prod->descripguardas  ?? '' }}</span></x-jet::label>
                                     </div>
                                     @endif
                                     @if ($prod && $prod->cd=='1')
                                     <div class="">
-                                        <x-jet-label class="font-bold">{{ __('CD') }}<span class="font-light"> {{ $prod->descripcd  ?? '' }}</span></x-jet-label>
+                                        <x-jet::label class="font-bold">{{ __('CD') }}<span class="font-light"> {{ $prod->descripcd  ?? '' }}</span></x-jet::label>
                                     </div>
                                     @endif
                                 </div>
                                 <div class="w-full form-item">
                                     @if ($prod && $prod->novedad=='1')
                                     <div class="">
-                                        <x-jet-label class="font-bold">{{ __('Novedad') }}<span class="font-light"> {{ $prod->descripnovedad  ?? '' }}</span></x-jet-label>
+                                        <x-jet::label class="font-bold">{{ __('Novedad') }}<span class="font-light"> {{ $prod->descripnovedad  ?? '' }}</span></x-jet::label>
                                     </div>
                                     @endif
                                     <div class="">
-                                        <x-jet-label class="font-bold">{{ __('Caja') }}<span class="font-light"> {{ $prod->caja->name ?? ''  }} </span></x-jet-label>
+                                        <x-jet::label class="font-bold">{{ __('Caja') }}<span class="font-light"> {{ $prod->caja->name ?? ''  }} </span></x-jet::label>
                                     </div>
                                     <div class="">
-                                        <x-jet-label class="font-bold">{{ __('Udx x Caja') }}<span class="font-light"> {{ $prod->udxcaja  ?? ''}}</span></x-jet-label>
+                                        <x-jet::label class="font-bold">{{ __('Udx x Caja') }}<span class="font-light"> {{ $prod->udxcaja  ?? ''}}</span></x-jet::label>
                                     </div>
                                 </div>
                             </div>
@@ -184,14 +184,14 @@
                     <div class="px-1 py-0 pb-1 mx-2 ">
                         @if(!Auth::user()->hasRole('Cliente'))
                             <div class="flex flex-col mx-2 mb-2 md:space-y-0 md:flex-row md:space-x-2">
-                                <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
-                                {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
-                                <x-jet-secondary-button  onclick="location.href = '{{route('oferta.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                                <x-jet::button class="bg-blue-600">{{ __('Guardar') }}</x-jet::button>
+                                {{-- <x-jet::secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet::secondary-button> --}}
+                                <x-jet::secondary-button  onclick="location.href = '{{route('oferta.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet::secondary-button>
                             </div>
                         @else
                             <div class="flex flex-col mx-2 mb-2 md:space-y-0 md:flex-row md:space-x-2">
-                                {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
-                                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.oferta.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                                {{-- <x-jet::secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet::secondary-button> --}}
+                                <x-jet::secondary-button  onclick="location.href = '{{route('cliente.oferta.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }}</x-jet::secondary-button>
                             </div>
                         @endif
                     </div>

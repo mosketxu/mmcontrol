@@ -92,7 +92,7 @@ class ProductoArchivo extends Component
         $p=ModelsProductoArchivo::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
+        $this->dispatch('notify', 'Archivo Actualizado.');
     }
 
     public function updatedValorcampoimg(){
@@ -121,7 +121,7 @@ class ProductoArchivo extends Component
         }
 
 
-        $this->dispatchBrowserEvent('notify', 'Archivo añadido con éxito');
+        $this->dispatch('notify', 'Archivo añadido con éxito');
 
         return redirect()->route('producto.archivos',[$this->productoid,$this->ruta]);
     }
@@ -132,7 +132,7 @@ class ProductoArchivo extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Archivo eliminado!');
+            $this->dispatch('notify', 'Archivo eliminado!');
         }
     }
 }

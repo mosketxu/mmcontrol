@@ -115,9 +115,9 @@ class PedidoProductos extends Component
             'visible'=>$this->visible,
             'orden'=>$this->orden,
         ]);
-        $this->dispatchBrowserEvent('notify', 'Guardado con éxito.');
+        $this->dispatch('notify', 'Guardado con éxito.');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
     }
 
     public function delete($valorId)
@@ -128,10 +128,10 @@ class PedidoProductos extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+            $this->dispatch('notify', 'Línea eliminada!');
         }
 
-        $this->emit('refreshpedido');
+        $this->dispatch('refreshpedido');
     }
 
     private function validarIdiomaProducto(){

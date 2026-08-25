@@ -79,7 +79,7 @@ class PedidoSubpedido extends Component{
         $p=ModelsPedidoSubpedido::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Subpedido Actualizado.');
+        $this->dispatch('notify', 'Subpedido Actualizado.');
     }
 
     public function save()
@@ -96,7 +96,7 @@ class PedidoSubpedido extends Component{
             'fecha_entrega'=> $this->fecha_entrega
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Subpedido añadido con éxito');
+        $this->dispatch('notify', 'Subpedido añadido con éxito');
 
         $pedido=Pedido::find($this->pedidoid);
         $pedido->haySubpedidos=$pedido->haySubpedidos+1;
@@ -115,7 +115,7 @@ class PedidoSubpedido extends Component{
             if($pedido->haySubpedidos>0)
                 $pedido->haySubpedidos=$pedido->haySubpedidos-1;
             $pedido->save();
-            $this->dispatchBrowserEvent('notify', 'Subpedido eliminado!');
+            $this->dispatch('notify', 'Subpedido eliminado!');
         }
     }
 }

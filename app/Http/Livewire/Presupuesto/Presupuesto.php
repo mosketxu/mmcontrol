@@ -332,7 +332,7 @@ class Presupuesto extends Component
             if($this->idioma_id && $p && (string) $p->idioma_id !== (string) $this->idioma_id){
                 $this->productoeditorialid='';
                 $this->precio_ud=0;
-                $this->dispatchBrowserEvent('notify', 'El producto no coincide con el idioma del presupuesto.');
+                $this->dispatch('notify', 'El producto no coincide con el idioma del presupuesto.');
                 return;
             }
             $this->precio_ud=$p->precio_ud;
@@ -484,7 +484,7 @@ class Presupuesto extends Component
         else
             return redirect()->route('cliente.presupuesto.editar', [$presup,'e'])->with($notification);
 
-        // $this->dispatchBrowserEvent('notify', $mensaje);
+        // $this->dispatch('notify', $mensaje);
     }
 
     public function pedido(?ModelsPresupuesto $presupuesto = null){
@@ -492,8 +492,8 @@ class Presupuesto extends Component
         // Livewire puede no resolver el model si la pantalla conserva un estado
         // anterior. Avisamos y recargamos para recuperar el estado actual.
         if (!$presupuesto || !$presupuesto->exists) {
-            $this->dispatchBrowserEvent('notifyred', 'El presupuesto se ha actualizado. La página se recargará automáticamente.');
-            $this->dispatchBrowserEvent('presupuesto-recargar');
+            $this->dispatch('notifyred', 'El presupuesto se ha actualizado. La página se recargará automáticamente.');
+            $this->dispatch('presupuesto-recargar');
             return;
         }
 

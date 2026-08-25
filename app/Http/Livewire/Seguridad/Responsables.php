@@ -66,7 +66,7 @@ class Responsables extends Component
         $p=Responsable::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Responsable Actualizado.');
+        $this->dispatch('notify', 'Responsable Actualizado.');
     }
 
     public function editar($valorId){
@@ -83,9 +83,9 @@ class Responsables extends Component
             'password'=>'',
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Responsable añadido con éxito');
+        $this->dispatch('notify', 'Responsable añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -97,7 +97,7 @@ class Responsables extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Responsable eliminado!');
+            $this->dispatch('notify', 'Responsable eliminado!');
         }
     }
 

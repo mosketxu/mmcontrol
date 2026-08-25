@@ -83,7 +83,7 @@ class PedidoTarea extends Component
         $p=ModelsPedidoTarea::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Tarea Actualizada.');
+        $this->dispatch('notify', 'Tarea Actualizada.');
     }
 
     public function save()
@@ -104,7 +104,7 @@ class PedidoTarea extends Component
         $pedido->hayTareas=$pedido->hayTareas+1;
         $pedido->save();
 
-        $this->dispatchBrowserEvent('notify', 'Tarea añadida con éxito');
+        $this->dispatch('notify', 'Tarea añadida con éxito');
 
         return redirect()->route('pedido.tareas',[$this->pedidoid,$this->ruta]);
     }
@@ -117,7 +117,7 @@ class PedidoTarea extends Component
                 $pedido->hayTareas=$pedido->hayTareas-1;
             $pedido->save();
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Tarea eliminada!');
+            $this->dispatch('notify', 'Tarea eliminada!');
         }
     }
 }

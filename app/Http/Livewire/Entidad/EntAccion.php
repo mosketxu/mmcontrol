@@ -83,7 +83,7 @@ class EntAccion extends Component
         $accion->$campo = $valor === '' ? null : $valor;
         $accion->save();
 
-        $this->dispatchBrowserEvent('notify', 'Accion actualizada.');
+        $this->dispatch('notify', 'Accion actualizada.');
     }
 
     public function save()
@@ -107,7 +107,7 @@ class EntAccion extends Component
         $this->fechaaccion = now()->format('Y-m-d');
         $this->proximaaccion = '';
 
-        $this->dispatchBrowserEvent('notify', 'Accion anadida con exito');
+        $this->dispatch('notify', 'Accion anadida con exito');
     }
 
     public function delete($accionId)
@@ -116,7 +116,7 @@ class EntAccion extends Component
 
         if ($accion) {
             $accion->delete();
-            $this->dispatchBrowserEvent('notify', 'Accion eliminada!');
+            $this->dispatch('notify', 'Accion eliminada!');
         }
     }
 }

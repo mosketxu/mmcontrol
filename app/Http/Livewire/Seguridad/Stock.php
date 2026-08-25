@@ -63,7 +63,7 @@ class Stock extends Component
         // if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Producto Stock  Actualizado.');
+        $this->dispatch('notify', 'Producto Stock  Actualizado.');
     }
 
 
@@ -76,9 +76,9 @@ class Stock extends Component
             'descripcion'=>$this->valorcampo2,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Producto Stock añadido con éxito');
+        $this->dispatch('notify', 'Producto Stock añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -90,7 +90,7 @@ class Stock extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Producto Stock eliminado!');
+            $this->dispatch('notify', 'Producto Stock eliminado!');
         }
     }
 }

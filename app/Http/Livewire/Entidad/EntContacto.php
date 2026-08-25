@@ -79,6 +79,6 @@ class EntContacto extends Component
         else
             $men= "Contacto Creado";
 
-        $this->dispatchBrowserEvent('notify', $men);
+        $this->dispatch('notify', $men);
     }
 }

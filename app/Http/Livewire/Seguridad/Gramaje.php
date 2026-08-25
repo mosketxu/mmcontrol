@@ -62,7 +62,7 @@ class Gramaje extends Component
         if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Gramaje Actualizado.');
+        $this->dispatch('notify', 'Gramaje Actualizado.');
     }
 
 
@@ -76,9 +76,9 @@ class Gramaje extends Component
             'descripcion'=>$this->valorcampo3,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Gramaje añadido con éxito');
+        $this->dispatch('notify', 'Gramaje añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -90,7 +90,7 @@ class Gramaje extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Gramaje eliminado!');
+            $this->dispatch('notify', 'Gramaje eliminado!');
         }
     }
 }

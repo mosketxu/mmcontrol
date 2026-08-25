@@ -138,7 +138,7 @@ class PedidoDistribucion extends Component
         $p=ModelsPedidoDistribucion::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Distribución Actualizada.');
+        $this->dispatch('notify', 'Distribución Actualizada.');
     }
 
     public function updatedDistribucion(){
@@ -164,7 +164,7 @@ class PedidoDistribucion extends Component
         $pedido->hayDistribuciones=$pedido->hayDistribuciones+1;
         $pedido->save();
 
-        $this->dispatchBrowserEvent('notify', 'Distribución añadida con éxito');
+        $this->dispatch('notify', 'Distribución añadida con éxito');
 
         $this->valorcampofecha=$this->valorcampofecha=now()->format('Y-m-d');
         $this->valorcampo2='0';
@@ -176,7 +176,7 @@ class PedidoDistribucion extends Component
         $this->campo3visible=1;
         $this->campo4visible=1;
         $this->campoimgvisible=0;
-        $this->emit('refresh');
+        $this->dispatch('refresh');
 
     }
 
@@ -187,7 +187,7 @@ class PedidoDistribucion extends Component
             $pedido=Pedido::find($borrar->pedido_id);
             $pedido->hayDistribuciones=$pedido->hayDistribuciones-1;
             $pedido->save();
-            $this->dispatchBrowserEvent('notify', 'Distribución eliminada!');
+            $this->dispatch('notify', 'Distribución eliminada!');
         }
     }
 }

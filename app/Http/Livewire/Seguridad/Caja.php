@@ -69,7 +69,7 @@ class Caja extends Component
         if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Caja Actualizada.');
+        $this->dispatch('notify', 'Caja Actualizada.');
     }
 
     public function editar($valorId)
@@ -89,9 +89,9 @@ class Caja extends Component
             'descripcion'=>$this->valorcampo3,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Caja añadida con éxito');
+        $this->dispatch('notify', 'Caja añadida con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo1='';
         $this->valorcampo2='';
         $this->valorcampo3='';
@@ -103,7 +103,7 @@ class Caja extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Caja eliminada!');
+            $this->dispatch('notify', 'Caja eliminada!');
         }
     }
 }

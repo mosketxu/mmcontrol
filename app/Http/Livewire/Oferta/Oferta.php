@@ -212,7 +212,7 @@ class Oferta extends Component
         ]);
 
 
-        $this->dispatchBrowserEvent('notify', $mensaje);
+        $this->dispatch('notify', $mensaje);
         return redirect()->route('oferta.editar',[$ofe,'i']);
     }
 }

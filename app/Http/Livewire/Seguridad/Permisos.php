@@ -60,7 +60,7 @@ class Permisos extends Component
         $p=Permission::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Permiso Actualizado.');
+        $this->dispatch('notify', 'Permiso Actualizado.');
     }
 
 
@@ -73,9 +73,9 @@ class Permisos extends Component
             'guard_name'=>$this->valorcampo1,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Permiso añadido con éxito');
+        $this->dispatch('notify', 'Permiso añadido con éxito');
 
-        $this->emit('refresh');
+        $this->dispatch('refresh');
         $this->valorcampo2='';
         $this->valorcampo1='web';
     }
@@ -86,7 +86,7 @@ class Permisos extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Permiso eliminado!');
+            $this->dispatch('notify', 'Permiso eliminado!');
         }
     }
 }

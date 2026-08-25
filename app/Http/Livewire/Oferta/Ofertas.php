@@ -70,7 +70,7 @@ class Ofertas extends Component
     public function changeValor(Oferta $oferta,$campo,$valor)
     {
         $oferta->update([$campo=>$valor]);
-        $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
+        $this->dispatch('notify', 'Actualizado con éxito.');
     }
 
     public function getRowsQueryProperty(){
@@ -131,7 +131,7 @@ class Ofertas extends Component
         $this->selectedRowsQuery->delete();
         $this->showDeleteModal = false;
 
-        $this->dispatchBrowserEvent('notify', $deleteCount . ' ofertas eliminadas!');
+        $this->dispatch('notify', $deleteCount . ' ofertas eliminadas!');
     }
 
 
@@ -141,7 +141,7 @@ class Ofertas extends Component
         $oferta = Oferta::find($ofertaId);
         if ($oferta) {
             $oferta->delete();
-            $this->dispatchBrowserEvent('notify', 'oferta borrada. ');
+            $this->dispatch('notify', 'oferta borrada. ');
         }
     }
 

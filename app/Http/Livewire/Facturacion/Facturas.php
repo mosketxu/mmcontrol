@@ -70,7 +70,7 @@ class Facturas extends Component
 
         if ($factura) {
             $factura->update([$campo=>$valor]);
-            $this->dispatchBrowserEvent('notify', 'Actualizada con éxito.');
+            $this->dispatch('notify', 'Actualizada con éxito.');
         }
     }
 
@@ -108,7 +108,7 @@ class Facturas extends Component
     }
 
     public function exportSelected(){
-        $this->dispatchBrowserEvent('notifyred', 'Opción en desarrollo, contacte al administrador.');
+        $this->dispatch('notifyred', 'Opción en desarrollo, contacte al administrador.');
         return;
 
         //toCsv es una macro a n AppServiceProvider
@@ -116,7 +116,7 @@ class Facturas extends Component
             echo $this->selectedRowsQuery->toCsv();
         },'facturas.csv');
 
-        $this->dispatchBrowserEvent('notify', 'CSV facturas descargado!');
+        $this->dispatch('notify', 'CSV facturas descargado!');
     }
 
     public function deleteSelected(){
@@ -124,14 +124,14 @@ class Facturas extends Component
         $this->selectedRowsQuery->delete();
         $this->showDeleteModal = false;
 
-        $this->dispatchBrowserEvent('notify', $deleteCount . ' facturas eliminados!');
+        $this->dispatch('notify', $deleteCount . ' facturas eliminados!');
     }
 
     public function delete($facturaId){
         $factura = Factura::find($facturaId);
         if ($factura) {
             $factura->delete();
-            $this->dispatchBrowserEvent('notify', 'factura borrado, ');
+            $this->dispatch('notify', 'factura borrado, ');
         }
     }
 

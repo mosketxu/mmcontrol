@@ -57,7 +57,7 @@ class PedidoparcialDetalle extends Component
         $p->save();
         $p->total=$p->cantidad*$p->precio_ud;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
+        $this->dispatch('notify', 'Archivo Actualizado.');
     }
 
     public function save(){
@@ -70,13 +70,13 @@ class PedidoparcialDetalle extends Component
             'total'=>$this->precio_ud * $this->cantidad,
         ]);
 
-        $this->dispatchBrowserEvent('notify', 'Línea añadida con éxito');
+        $this->dispatch('notify', 'Línea añadida con éxito');
 
         $this->concepto='';
         $this->cantidad='0';
         $this->precio_ud='0';
         $this->total='0';
-        $this->emit('refresh');
+        $this->dispatch('refresh');
 
     }
 
@@ -84,7 +84,7 @@ class PedidoparcialDetalle extends Component
         $borrar = PedidoPedidoparcialDetalle::find($valorId);
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
+            $this->dispatch('notify', 'Línea eliminada!');
         }
     }
 

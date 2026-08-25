@@ -110,13 +110,13 @@ class ClientePresupuestos extends Component
             $campo=>$valor,
             'estado'=>$presupuesto->estado,
         ]);
-        $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
+        $this->dispatch('notify', 'Actualizado con éxito.');
     }
 
     public function changeEspedido(Presupuesto $presupuesto,$espedido){
         $presupuesto->espedido= $presupuesto->espedido=='1' ? '0' : '1';
         $presupuesto->update(['espedido'=>$presupuesto->espedido]);
-        $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
+        $this->dispatch('notify', 'Actualizado con éxito.');
     }
 
     public function getRowsQueryProperty(){
@@ -169,12 +169,12 @@ class ClientePresupuestos extends Component
 
     //     $pedidocount=Pedido::where('presupuesto_id',$presupuestoId)->count();
     //     if($pedidocount>0)
-    //         $this->dispatchBrowserEvent('notifyred', 'Este presupuesto tiene un pedido asociado. No se puede eliminar. ');
+    //         $this->dispatch('notifyred', 'Este presupuesto tiene un pedido asociado. No se puede eliminar. ');
     //     else{
     //         $presupuesto = Presupuesto::find($presupuestoId);
     //         if ($presupuesto) {
     //             $presupuesto->delete();
-    //             $this->dispatchBrowserEvent('notify', 'presupuesto borrado. ');
+    //             $this->dispatch('notify', 'presupuesto borrado. ');
     //         }
     //     }
     // }

@@ -19,7 +19,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
         $this->filters = $filters;
     }
 
-    public function query()
+    public function query(): \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation
     {
         $query = Presupuesto::query()
             ->with(['cliente', 'proveedor', 'idioma', 'presupuestoproductos.producto']);

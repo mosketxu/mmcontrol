@@ -8,7 +8,7 @@
             </div>
             <div class="flex flex-row-reverse w-9/12 ">
                 <div class="flex">
-                    <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
+                    <input type="text" wire:model.live="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" placeholder="Búsqueda" autofocus/>
                     @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                     @endif
@@ -118,27 +118,27 @@
                     <form wire:submit.prevent="save">
                         <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                             <div class="flex-col w-1/12">
-                                <input type="text" step="any" wire:model.defer="referencia"
+                                <input type="text" step="any" wire:model="referencia"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-2/12">
-                                <input type="number" wire:model.defer="unidades"
+                                <input type="number" wire:model="unidades"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-2/12">
-                                <input type="text" step="any" wire:model.defer="otros"
+                                <input type="text" step="any" wire:model="otros"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-2/12 text-left">
-                                <input type="date" wire:model.defer="fecha_archivos"
+                                <input type="date" wire:model="fecha_archivos"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-2/12 text-left">
-                                <input type="date" wire:model.defer="fecha_plotters"
+                                <input type="date" wire:model="fecha_plotters"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-2/12 text-left">
-                                <input type="date" wire:model.defer="fecha_entrega"
+                                <input type="date" wire:model="fecha_entrega"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 text-right">
@@ -152,18 +152,18 @@
         </div>
     </div>
     <div class="m-2">
-        {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
+        {{-- <x-jet::secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet::secondary-button> --}}
         @if(!Auth::user()->hasRole('Cliente'))
             @if($ruta=='i')
-                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @else
-                <x-jet-secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @endif
         @else
             @if($ruta=='i')
-                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('cliente.pedido.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @else
-                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet::secondary-button  onclick="location.href = '{{route('cliente.pedido.editar',[$pedidoid,$ruta])}}'">{{ __('Volver') }} </x-jet::secondary-button>
             @endif
         @endif
     </div>

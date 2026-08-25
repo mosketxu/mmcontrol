@@ -158,7 +158,7 @@ class Pedidos extends Component
 
     public function changeValor(Pedido $pedido,$campo,$valor){
         $pedido->update([$campo=>$valor]);
-        $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
+        $this->dispatch('notify', 'Actualizado con éxito.');
     }
 
     public function getRowsQuery1Property(){
@@ -397,7 +397,7 @@ class Pedidos extends Component
         $pedido = Pedido::find($pedidoId);
         if ($pedido) {
             $pedido->delete();
-            $this->dispatchBrowserEvent('notify', 'pedido borrado. ');
+            $this->dispatch('notify', 'pedido borrado. ');
         }
     }
 }

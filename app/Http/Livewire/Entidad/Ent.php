@@ -165,10 +165,10 @@ class Ent extends Component
                  'departamento'=>$this->departamento,
                  'comentarios'=>$this->comentario,
             ]);
-            $this->dispatchBrowserEvent('notify', 'Contacto añadido con éxito');
+            $this->dispatch('notify', 'Contacto añadido con éxito');
         }
 
-        $this->emitSelf('notify-saved');
-        $this->dispatchBrowserEvent('notify', $mensaje);
+        $this->dispatch('notify-saved')->self();
+        $this->dispatch('notify', $mensaje);
     }
 }

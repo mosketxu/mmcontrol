@@ -62,8 +62,8 @@ class EmpresasCliente extends Component{
     public function save(){
         $this->validate();
         UserEmpresa::create(['user_id'=>$this->cliente->id,'entidad_id'=>$this->empresaId,]);
-        $this->dispatchBrowserEvent('notify', 'Empresa añadida con éxito');
-        $this->emit('refresh');
+        $this->dispatch('notify', 'Empresa añadida con éxito');
+        $this->dispatch('refresh');
         $this->empresaId='';
     }
 
@@ -71,7 +71,7 @@ class EmpresasCliente extends Component{
         $borrar = UserEmpresa::find($id);
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Empresa eliminada!');
+            $this->dispatch('notify', 'Empresa eliminada!');
         }
     }
 }

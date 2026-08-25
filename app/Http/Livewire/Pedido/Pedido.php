@@ -298,7 +298,7 @@ class Pedido extends Component
             if($this->idioma_id && (string) $p->idioma_id !== (string) $this->idioma_id){
                 $this->productoeditorialid='';
                 $this->precio=0;
-                $this->dispatchBrowserEvent('notify', 'El producto no coincide con el idioma del pedido.');
+                $this->dispatch('notify', 'El producto no coincide con el idioma del pedido.');
                 return;
             }
             $this->precio=$p->precioventa;
@@ -435,7 +435,7 @@ class Pedido extends Component
 
         // $this->titulo= $this->tipo='1' ? 'Pedido Editorial:': 'Pedido Packaging/Propios:';
         $pedido=ModeloPedido::find($ped->id);
-        $this->dispatchBrowserEvent('notify', $mensaje);
+        $this->dispatch('notify', $mensaje);
         return redirect()->route('pedido.editar',[$pedido,$this->ruta,$this->titulo]);
     }
 

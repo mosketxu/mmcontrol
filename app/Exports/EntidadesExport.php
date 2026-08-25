@@ -40,7 +40,7 @@ class EntidadesExport implements FromCollection,WithHeadings,WithMapping,WithEve
         ];
     }
 
-    public function collection(){
+    public function collection(): \Illuminate\Support\Enumerable{
         return Entidad::query()
             ->with([
                 'entidadtipo',

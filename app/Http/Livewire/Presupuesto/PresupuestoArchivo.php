@@ -146,7 +146,7 @@ class PresupuestoArchivo extends Component
         $p=ModelsPresupuestoArchivo::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
-        $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
+        $this->dispatch('notify', 'Archivo Actualizado.');
     }
 
     public function updatedValorcampoimg(){
@@ -159,7 +159,7 @@ class PresupuestoArchivo extends Component
     //     if ($existe)
     //         return Storage::disk('archivospresupuesto')->download($parchivo->archivo);
     //     else{
-    //         $this->dispatchBrowserEvent('notifyred', 'Ha habido un problema con el fichero');
+    //         $this->dispatch('notifyred', 'Ha habido un problema con el fichero');
     //     }
     // }
 
@@ -186,7 +186,7 @@ class PresupuestoArchivo extends Component
 
         $this->enviamail($this->presupuesto);
 
-        $this->dispatchBrowserEvent('notify', 'Archivo añadido con éxito');
+        $this->dispatch('notify', 'Archivo añadido con éxito');
 
         return redirect()->route('presupuesto.archivos',[$this->presupuestoid,$this->ruta]);
     }
@@ -219,7 +219,7 @@ class PresupuestoArchivo extends Component
 
         if ($borrar) {
             $borrar->delete();
-            $this->dispatchBrowserEvent('notify', 'Archivo eliminado!');
+            $this->dispatch('notify', 'Archivo eliminado!');
         }
     }
 }

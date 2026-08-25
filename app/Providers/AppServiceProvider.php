@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\EntidadTipo;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,16 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot(){
+        // Jetstream 2.x registraba sus componentes con el prefijo "jet-" (ej.
+        // <x-jet-button>). Jetstream 5 espera que se publiquen sin prefijo en
+        // resources/views/components, pero esta app ya tiene sus propios
+        // componentes genericos con esos mismos nombres (button, modal, dropdown,
+        // input...) usados fuera de las paginas de auth/Jetstream. Para no
+        // colisionar, mantenemos las vistas publicadas de Jetstream en
+        // resources/views/vendor/jetstream/components y las registramos bajo el
+        // prefijo "jet-" como antes.
+        Blade::anonymousComponentPath(resource_path('views/vendor/jetstream/components'), 'jet');
+
         // Using view composer to set following variables globally
         // view()->composer('*',function($view) {
         //         $view->with('tiposentidad', EntidadTipo::orderBy('id')->get());

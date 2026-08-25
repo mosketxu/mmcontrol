@@ -17,7 +17,7 @@ class OfertasExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoS
         $this->filters = $filters;
     }
 
-    public function query()
+    public function query(): \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation
     {
         return Oferta::query()
             ->with(['cliente', 'ofertaproducto'])

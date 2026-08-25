@@ -261,9 +261,9 @@ class Prod extends Component
         );
 
         $mensaje=$this->producto->referencia . " creado satisfactoriamente";
-        $this->dispatchBrowserEvent('notify', $mensaje);
+        $this->dispatch('notify', $mensaje);
 
         return redirect()->route('producto.edit',$prod);
-        // $this->emit('refreshproducto');
+        // $this->dispatch('refreshproducto');
     }
 }

@@ -17,7 +17,7 @@
                 {{ $deshabilitado }}/>
             </div>
         <div class="w-2/12">
-            <select wire:model='pedido_id'
+            <select wire:model.live='pedido_id'
                 class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 {{ $deshabilitado }}>
                 @if(!$pedido_id)
