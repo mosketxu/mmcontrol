@@ -155,4 +155,21 @@ return [
 
     'render_on_redirect' => false,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Legacy Model Binding
+    |--------------------------------------------------------------------------
+    |
+    | Livewire 3 por defecto ya no permite hacer wire:model="modelo.campo"
+    | directamente sobre atributos de un modelo Eloquent publico (asi
+    | trabajaba Livewire 2, y asi lo usa esta app en decenas de componentes,
+    | p.ej. Http/Livewire/Entidad/Ent.php con wire:model="entidad.entidad").
+    | Sin esto, esos campos fallan en el navegador con errores como
+    | "Cannot set properties of null". Activarlo restaura el comportamiento
+    | v2 sin tener que reescribir todos esos componentes.
+    |
+    */
+
+    'legacy_model_binding' => true,
+
 ];
