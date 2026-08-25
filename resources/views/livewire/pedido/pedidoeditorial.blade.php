@@ -12,7 +12,7 @@
                     <div class="p-2 m-2 space-y-2">
                         <div class="p-1 rounded-md bg-blue-50">
                             <h3 class="pl-1 font-semibold">Datos generales</h3>
-                            <input  wire:model="pedidoid" type="hidden"/
+                            <input  wire:model.live="pedidoid" type="hidden"/
                             {{$escliente}} {{$deshabilitado}}/>
                         </div>
                         <div class="flex flex-col mx-2 space-y-2 md:space-y-0 md:flex-row md:space-x-4">
@@ -296,7 +296,7 @@
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-8/12 form-item">
                                 <x-jet::label for="otros">{{ __('Otros') }}</x-jet::label>
-                                <textarea wire:model="otros" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('observaciones') }} </textarea>
+                                <textarea wire:model.live="otros" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('observaciones') }} </textarea>
                                 <input-error for="otros" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                             </div>
                             <div class="w-4/12">
@@ -316,7 +316,7 @@
                         </div>
                         <div class="p-1 rounded-md bg-blue-50">
                             <h3 class="pl-1 font-semibold">Estado del pedido</h3>
-                            <input  wire:model="pedidoid" type="hidden"/>
+                            <input  wire:model.live="pedidoid" type="hidden"/>
                         </div>
                         <div class="flex flex-col mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                             {{-- facturado por --}}

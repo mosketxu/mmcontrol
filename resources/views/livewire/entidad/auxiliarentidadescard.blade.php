@@ -159,56 +159,56 @@
                         <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                             @if ($campofechavisible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="date" wire:model="valorcampofecha"
+                                    <input type="date" wire:model.live="valorcampofecha"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo1visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model="valorcampo1"
+                                    <input type="text" wire:model.live="valorcampo1"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo2visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model="valorcampo2"
+                                    <input type="text" wire:model.live="valorcampo2"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo3visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model="valorcampo3"
+                                    <input type="text" wire:model.live="valorcampo3"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"{{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo4visible==1)
                                 <div class="flex-col w-1/12 text-left">
-                                    <input type="text" wire:model="valorcampo4"
+                                    <input type="text" wire:model.live="valorcampo4"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo5visible==1)
                                 <div class="flex-col w-1/12 text-left">
-                                    <input type="text" wire:model="valorcampo5"
+                                    <input type="text" wire:model.live="valorcampo5"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo6visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model="valorcampo6"
+                                    <input type="text" wire:model.live="valorcampo6"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo7visible==1)
                                 <div class="flex-col w-1/12 text-left">
-                                    <input type="text" wire:model="valorcampo7"
+                                    <input type="text" wire:model.live="valorcampo7"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo8visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="text" wire:model="valorcampo8"
+                                    <input type="text" wire:model.live="valorcampo8"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif

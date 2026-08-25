@@ -8,8 +8,8 @@
             <div class="space-y-2">
                 <div class="flex items-center p-2 space-x-2 rounded-md bg-blue-50">
                     <h3 class="font-semibold">{{ $nuevaCompra ? 'Datos generales de la compra nueva:' : 'Datos generales de la compra:' }}</h3>
-                    <input wire:model="compraid" type="number" class="w-20 text-xs border-gray-300 rounded-md bg-gray-50" readonly/>
-                    <input wire:model="codigo" type="text" class="text-xs bg-gray-100 border-gray-300 rounded-md w-44" readonly/>
+                    <input wire:model.live="compraid" type="number" class="w-20 text-xs border-gray-300 rounded-md bg-gray-50" readonly/>
+                    <input wire:model.live="codigo" type="text" class="text-xs bg-gray-100 border-gray-300 rounded-md w-44" readonly/>
                 </div>
 
                 <div class="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">

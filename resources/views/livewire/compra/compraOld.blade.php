@@ -11,7 +11,7 @@
                         <div class="">
                             <div class="flex p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Datos generales de la compra:</h3>
-                                <input  wire:model="compraid" type="number"/>
+                                <input  wire:model.live="compraid" type="number"/>
                             </div>
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                                 {{-- fecha --}}
@@ -64,7 +64,7 @@
                         <div class="space-y-1">
                             <div class="p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Detalle</h3>
-                                <input  wire:model="compraid" type="hidden"/>
+                                <input  wire:model.live="compraid" type="hidden"/>
                             </div>
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                                 {{-- Proveedor --}}

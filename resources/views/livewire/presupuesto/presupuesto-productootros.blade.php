@@ -48,13 +48,13 @@
         <div class="flex w-full py-0 my-0 space-x-1 text-left bg-green-100 border-t-0 border-y" wire:loading.class.delay="opacity-50">
             {{-- checkbox --}}
             <div class="w-1/12 ">
-                <input type="checkbox" wire:model="visible"
+                <input type="checkbox" wire:model.live="visible"
                 class="ml-4 text-xs border-gray-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 {{$escliente}}/>
             </div>
             {{-- orde --}}
             <div class="w-1/12">
-                <input type="number" wire:model="orden"
+                <input type="number" wire:model.live="orden"
                 class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"
                 {{$escliente}}/>
             </div>
@@ -89,7 +89,7 @@
             </div>
             {{-- observaciones --}}
             <div class="w-4/12 ">
-                <textarea wire:model="observaciones" rows="1"
+                <textarea wire:model.live="observaciones" rows="1"
                 class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md" {{$escliente}}></textarea>
             </div>
             {{-- botones --}}

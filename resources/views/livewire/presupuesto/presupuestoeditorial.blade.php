@@ -11,9 +11,9 @@
                         <div class="">
                             <div class="flex p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Datos generales</h3>
-                                <input  wire:model="presupuestoid" type="hidden"/>
+                                <input  wire:model.live="presupuestoid" type="hidden"/>
                                 @if($tipo!='1')
-                                <x-select wire:model="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
+                                <x-select wire:model.live="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
                                     <option value="2">Packaging</option>
                                     <option value="3">Propios</option>
                                 </x-select>
@@ -117,7 +117,7 @@
                         <div class="space-y-1">
                             <div class="p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Detalle</h3>
-                                <input  wire:model="presupuestoid" type="hidden"/>
+                                <input  wire:model.live="presupuestoid" type="hidden"/>
                             </div>
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                                 {{-- Proveedor --}}
@@ -202,22 +202,22 @@
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
                                     <x-jet::label for="manipulacion">{{ __('Manipulación') }}</x-jet::label>
-                                    <textarea wire:model="manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                    <textarea wire:model.live="manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet::label for="transporte">{{ __('Distribución') }}</x-jet::label>
-                                    <textarea wire:model="transporte" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                    <textarea wire:model.live="transporte" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet::label for="especificacioneslogisticas">{{ __('Especificaciones Logísticas') }}</x-jet::label>
-                                    <textarea wire:model="especificacioneslogisticas" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                    <textarea wire:model.live="especificacioneslogisticas" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
                                 </div>
                             </div>
                             {{-- otros --}}
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
                                     <x-jet::label for="otros">{{ __('Otros') }}</x-jet::label>
-                                    <textarea wire:model="otros" class="w-full py-1 text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                    <textarea wire:model.live="otros" class="w-full py-1 text-xs border-gray-300 rounded-md" rows="2" {{ $escliente }} {{$deshabilitado}}> </textarea>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +225,7 @@
                         <div class="">
                             <div class="p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Control del pedido</h3>
-                                <input  wire:model="presupuestoid" type="hidden"/>
+                                <input  wire:model.live="presupuestoid" type="hidden"/>
                             </div>
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                                 {{-- facturado Por --}}

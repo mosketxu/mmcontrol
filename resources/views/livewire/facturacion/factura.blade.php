@@ -10,9 +10,9 @@
                     <div class="p-1 m-1 space-y-1">
                         <div class="flex p-1 rounded-md bg-blue-50">
                             <h3 class="pl-1 font-semibold">Datos de la factura</h3>
-                            <input  wire:model="facturaid" type="hidden"/>
+                            <input  wire:model.live="facturaid" type="hidden"/>
                             {{-- @if($tipo!='1') --}}
-                            <x-select wire:model="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" required >
+                            <x-select wire:model.live="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" required >
                                 <option value="">--Selecciona--</option>
                                 <option value="1">Editorial</option>
                                 <option value="2">Packaging</option>
@@ -46,7 +46,7 @@
                                 <div class="w-full form-item">
                                     <x-jet::label for="contacto_id">{{ __('Contacto') }}</x-jet::label>
                                     @if($bloqueado=='0')
-                                    <x-selectcolor wire:model="contacto_id" selectname="contacto_id" class="w-full py-1" >
+                                    <x-selectcolor wire:model.live="contacto_id" selectname="contacto_id" class="w-full py-1" >
                                         @if (isset($contactos))
                                             <option value="">-- Selecciona un contacto --</option>
                                             @foreach ($contactos as $contacto)
@@ -66,7 +66,7 @@
                                 <div class="w-full form-item">
                                     <x-jet::label for="pedidocliente">{{ __('Su Pedido') }}</x-jet::label>
                                     @if($bloqueado=='0')
-                                    <x-selectcolor wire:model="pedidocliente" selectname="pedidocliente" class="w-full py-1" >
+                                    <x-selectcolor wire:model.live="pedidocliente" selectname="pedidocliente" class="w-full py-1" >
                                         @if (isset($pedidos))
                                             <option value="">-- Selecciona un pedido --</option>
                                             @foreach ($pedidos as $pedido)
@@ -124,7 +124,7 @@
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-full form-item">
                                 <x-jet::label for="observaciones">{{ __('Observaciones') }}</x-jet::label>
-                                <textarea wire:model="observaciones"
+                                <textarea wire:model.live="observaciones"
                                 class="w-full py-1 text-xs border-gray-300 rounded-md" rows="2" {{ $deshabilitado }}>{{ old('observaciones') }} </textarea>
                                 <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                             </div>

@@ -91,40 +91,40 @@
                 </div>
             @endif
                 <form class="flex items-center w-full py-1 text-sm text-left border-t-0 border-y hover:bg-gray-100" wire:submit.prevent="savecontacto">
-                    <input type="hidden" wire:model="entidadId"/>
+                    <input type="hidden" wire:model.live="entidadId"/>
 
                     <div class="w-2/12 px-1 form-item">
                         <input type="text"
                             class="w-full text-sm font-thin text-gray-500 border-2 rounded-md hover:bg-gray-100"
-                            wire:model="nombre" id="nombre" />
+                            wire:model.live="nombre" id="nombre" />
                         <x-jet::input-error for="nombre" />
                     </div>
 
                     <div class="w-1/12 px-1 form-item">
                         <input type="text"
                             class="w-full text-sm font-thin text-gray-500 border-2 rounded-md hover:bg-gray-100"
-                            wire:model="tfno" id="tfno" />
+                            wire:model.live="tfno" id="tfno" />
                         <x-jet::input-error for="tfno" />
                     </div>
 
                     <div class="w-3/12 px-1 form-item">
                         <input type="email"
                             class="w-full text-sm font-thin text-gray-500 border-2 rounded-md hover:bg-gray-100"
-                            wire:model="emailgral" id="emailgral"/>
+                            wire:model.live="emailgral" id="emailgral"/>
                         <x-jet::input-error for="emailgral" />
                     </div>
 
                     <div class="w-2/12 px-1 form-item">
                         <input
                             type="text" class="w-full text-sm font-thin text-gray-500 border-2 rounded-md hover:bg-gray-100"
-                            wire:model="departamento" id="departamento"/>
+                            wire:model.live="departamento" id="departamento"/>
                         <x-jet::input-error for="departamento" />
                     </div>
 
                     <div class="w-3/12 px-1 form-item">
                         <textarea rows="1"
                             class="w-full text-sm font-thin text-gray-500 border-gray-300 rounded-md"
-                            wire:model="comentarios" ></textarea>
+                            wire:model.live="comentarios" ></textarea>
                         <x-jet::input-error for="comentarios" />
                     </div>
 

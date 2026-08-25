@@ -2,8 +2,8 @@
     <div class="p-1 m-2 ">
         <div class="p-1 rounded-md bg-blue-50">
             <h3 class="pl-1 font-semibold">Datos generales</h3>
-            <input  wire:model="producto.id" type="hidden"/>
-            <input  wire:model="tipo" type="hidden"/>
+            <input  wire:model.live="producto.id" type="hidden"/>
+            <input  wire:model.live="tipo" type="hidden"/>
         </div>
         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-4">
             {{-- Cod/ref --}}
@@ -148,12 +148,12 @@
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="procesospack">{{ __('Procesos') }}</x-jet::label>
-                        <textarea wire:model="producto.procesospack" class="w-full text-xs border-gray-300 rounded-md" rows="3" {{$escliente}} {{$deshabilitado}}>>{{ old('procesospack') }} </textarea>
+                        <textarea wire:model.live="producto.procesospack" class="w-full text-xs border-gray-300 rounded-md" rows="3" {{$escliente}} {{$deshabilitado}}>>{{ old('procesospack') }} </textarea>
                         <input-error for="procesospack" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="manipulacion">{{ __('Manipulación') }}</x-jet::label>
-                    <textarea wire:model="producto.manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="3" {{$escliente}} {{$deshabilitado}}>>{{ old('manipulacion') }} </textarea>
+                    <textarea wire:model.live="producto.manipulacion" class="w-full text-xs border-gray-300 rounded-md" rows="3" {{$escliente}} {{$deshabilitado}}>>{{ old('manipulacion') }} </textarea>
                     <input-error for="manipulacion" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                 </div>
             </div>
@@ -162,7 +162,7 @@
         {{-- observaciones --}}
         <div class="w-full pt-2 form-item">
             <x-jet::label for="observaciones">{{ __('Observaciones') }}</x-jet::label>
-            <textarea wire:model="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{$escliente}} {{$deshabilitado}}>>{{ old('observaciones') }} </textarea>
+            <textarea wire:model.live="producto.observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="2" {{$escliente}} {{$deshabilitado}}>>{{ old('observaciones') }} </textarea>
             <input-error for="observaciones" class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
         </div>
     </div>

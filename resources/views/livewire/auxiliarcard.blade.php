@@ -92,14 +92,14 @@
                             <tr >
                                 @if ($campo1visible==1)
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                    <input type="text" wire:model="valorcampo1"
+                                    <input type="text" wire:model.live="valorcampo1"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 @endif
                                 @if ($campo2visible==1)
                                  @if($titcampo1=='Caja')
                                         <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                            <select wire:model="valorcampo2"
+                                            <select wire:model.live="valorcampo2"
                                                 class="py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
                                                 <option value="1" {{$valor->valorcampo2=='1' ? 'selected' : ''}}>Editorial</option>
                                                 <option value="2" {{$valor->valorcampo2=='2' ? 'selected' : ''}}>Packaging/Otros</option>
@@ -107,14 +107,14 @@
                                         </td>
                                     @else
                                         <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                            <input type="text" wire:model="valorcampo2"
+                                            <input type="text" wire:model.live="valorcampo2"
                                             class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                         </td>
                                     @endif
                                 @endif
                                 @if ($campo3visible==1)
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                    <input type="text" wire:model="valorcampo3"
+                                    <input type="text" wire:model.live="valorcampo3"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 @endif

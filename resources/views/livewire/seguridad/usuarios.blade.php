@@ -89,11 +89,11 @@
                         <tbody>
                             <tr>
                                 <td class="w-2/6 p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                    <input type="text" wire:model="name"
+                                    <input type="text" wire:model.live="name"
                                     class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 <td class="w-4/6 p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                    <input type="email" wire:model="email"
+                                    <input type="email" wire:model.live="email"
                                     class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 <td  class="p-2">

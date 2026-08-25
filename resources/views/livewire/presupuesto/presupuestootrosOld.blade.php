@@ -13,9 +13,9 @@
                     <div class="p-1 m-1 space-y-1">
                         <div class="flex p-1 rounded-md bg-blue-50">
                             <h3 class="pl-1 font-semibold">Datos generales</h3>
-                            <input  wire:model="presupuestoid" type="hidden"/>
+                            <input  wire:model.live="presupuestoid" type="hidden"/>
                             @if($tipo!='1')
-                            <x-select wire:model="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
+                            <x-select wire:model.live="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
                                 <option value="2">Packaging</option>
                                 <option value="3">Propios</option>
                             </x-select>
@@ -101,7 +101,7 @@
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
                                 <x-jet::label for="descripcion">{{ __('Descripcion') }}</x-jet::label>
-                                <textarea wire:model="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                <textarea wire:model.live="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{ $escliente }} {{$deshabilitado}}> </textarea>
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
@@ -164,7 +164,7 @@
                             <div class="w-1/12 form-item">
                                 <div class="w-full form-item">
                                     <x-jet::label for="precio_ud">{{ __('Moneda') }}</x-jet::label>
-                                    <select wire:model="tipo" selectname="tipo"
+                                    <select wire:model.live="tipo" selectname="tipo"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                         <option value="€">€</option>
                                         <option value="$">$</option>
@@ -256,7 +256,7 @@
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                             <div class="w-full form-item">
                                 <x-jet::label for="otros">{{ __('Otros') }}</x-jet::label>
-                                <textarea wire:model="otros" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{ $escliente }} {{$deshabilitado}}> </textarea>
+                                <textarea wire:model.live="otros" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{ $escliente }} {{$deshabilitado}}> </textarea>
                             </div>
                         </div>
                     </div>

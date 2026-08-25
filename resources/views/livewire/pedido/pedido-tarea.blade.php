@@ -131,31 +131,31 @@
                     <form wire:submit.prevent="save">
                         <div class="flex w-full text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                             <div class="flex-col w-2/12 p-1">
-                                <input type="text" wire:model="tarea"
+                                <input type="text" wire:model.live="tarea"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1">
-                                <input type="number" wire:model="unidades"
+                                <input type="number" wire:model.live="unidades"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-4/12 p-1">
-                                <input type="text" step="any" wire:model="otros"
+                                <input type="text" step="any" wire:model.live="otros"
                                     class="w-full text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <input type="date" wire:model="fecha_inicio"
+                                <input type="date" wire:model.live="fecha_inicio"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <input type="date" wire:model="fecha_fin"
+                                <input type="date" wire:model.live="fecha_fin"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <input type="text" wire:model="asignado_a"
+                                <input type="text" wire:model.live="asignado_a"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <select wire:model="estado"
+                                <select wire:model.live="estado"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                     @foreach ($estados as $key=>$value)
                                     <option value="{{ $key }}">{{ $value }}</option>

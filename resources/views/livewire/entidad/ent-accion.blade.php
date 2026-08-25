@@ -75,11 +75,11 @@
                 <form wire:submit.prevent="save">
                     <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md" wire:loading.class.delay="opacity-50">
                         <div class="flex-col w-1/12 text-left">
-                            <input type="date" wire:model="fechaaccion"
+                            <input type="date" wire:model.live="fechaaccion"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <select wire:model="contacto_id"
+                            <select wire:model.live="contacto_id"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                 <option value="">-- Contacto --</option>
                                 @foreach ($contactos as $contacto)
@@ -88,19 +88,19 @@
                             </select>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <input type="text" wire:model="nombre"
+                            <input type="text" wire:model.live="nombre"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <textarea rows="1" wire:model="accion"
+                            <textarea rows="1" wire:model.live="accion"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <textarea rows="1" wire:model="descripcion"
+                            <textarea rows="1" wire:model.live="descripcion"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"></textarea>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <input type="text" wire:model="proximaaccion"
+                            <input type="text" wire:model.live="proximaaccion"
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                         <div class="flex-col w-1/12 text-left">

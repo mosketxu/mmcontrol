@@ -14,9 +14,9 @@
                         <div class="">
                             <div class="flex p-1 rounded-md bg-blue-50">
                                 <h3 class="w-1/12 pl-1 font-semibold">Datos Oferta</h3>
-                                <input  wire:model="ofertaid" type="hidden"/>
+                                <input  wire:model.live="ofertaid" type="hidden"/>
                                 @if($tipo!='1')
-                                <select wire:model="tipo"
+                                <select wire:model.live="tipo"
                                     class="w-11/12 py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{$escliente}} {{$deshabilitado}}>
                                     <option value="2">Packaging</option>
@@ -72,7 +72,7 @@
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">
                                 <div class="w-full form-item">
                                     <x-jet::label >{{ __('Descripción') }}</x-jet::label>
-                                    <textarea wire:model="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
+                                    <textarea wire:model.live="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet::label >{{ __('Cód.Prod') }}</x-jet::label>
@@ -114,18 +114,18 @@
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet::label >{{ __('Entrega') }}</x-jet::label>
-                                    <textarea wire:model="entrega" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('entrega') }} </textarea>
+                                    <textarea wire:model.live="entrega" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('entrega') }} </textarea>
                                 </div>
                                 <div class="w-full mt-1 form-item">
                                     <x-jet::label >{{ __('Observaciones') }}</x-jet::label>
-                                    <textarea wire:model="observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('observaciones') }} </textarea>
+                                    <textarea wire:model.live="observaciones" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('observaciones') }} </textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="px-1 bg-gray-50">
                             <div class="p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Descripción Producto</h3>
-                                <input  wire:model="pedidoid" type="hidden"/>
+                                <input  wire:model.live="pedidoid" type="hidden"/>
                             </div>
                             @if($prod)
                             <div class="flex flex-col mx-1 md:space-y-0 md:flex-row md:space-x-2">

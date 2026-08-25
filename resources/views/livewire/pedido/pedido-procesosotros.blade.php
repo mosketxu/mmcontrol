@@ -8,25 +8,25 @@
         <div class="flex w-full py-0 my-0 space-x-1 text-left border-t-0 border-y" wire:loading.class.delay="opacity-50">
             {{-- checkbox --}}
             <div class="w-1/12 ">
-                <input type="checkbox" wire:model="visible"
+                <input type="checkbox" wire:model.live="visible"
                 class="ml-4 text-xs border-gray-300 rounded-sm shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- orde --}}
             <div class="w-1/12">
-                <input type="number" wire:model="orden"
+                <input type="number" wire:model.live="orden"
                 class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"
                 {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- proceso --}}
             <div class="w-3/12">
-                <input type="text" wire:model="proceso"
+                <input type="text" wire:model.live="proceso"
                 class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"
                 {{$escliente}} {{ $deshabilitado }}/>
             </div>
             {{-- descripcion --}}
             <div class="w-3/12">
-                <input type="text" wire:model="descripcion"
+                <input type="text" wire:model.live="descripcion"
                 class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"
                 {{$escliente}} {{ $deshabilitado }}/>
             </div>

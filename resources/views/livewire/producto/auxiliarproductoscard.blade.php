@@ -108,26 +108,26 @@
                         <div class="flex w-full p-2 my-0 text-sm text-left bg-blue-200 rounded-b-md hover:bg-gray-100" wire:loading.class.delay="opacity-50">
                             @if ($campofechavisible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="date" wire:model="valorcampofecha"
+                                    <input type="date" wire:model.live="valorcampofecha"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     {{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo2visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="number" step="any" wire:model="valorcampo2"
+                                    <input type="number" step="any" wire:model.live="valorcampo2"
                                     class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif
                             @if ($campo3visible==1)
                                 <div class="flex-col w-2/12 text-left">
-                                    <input type="number" step="any" wire:model="valorcampo3"
+                                    <input type="number" step="any" wire:model.live="valorcampo3"
                                     class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"{{ $this->campofechadisabled }} />
                                 </div>
                             @endif
                             @if ($campo4visible==1)
                                 <div class="flex-col w-4/12 text-left">
-                                    <input type="text" wire:model="valorcampo4"
+                                    <input type="text" wire:model.live="valorcampo4"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>
                             @endif

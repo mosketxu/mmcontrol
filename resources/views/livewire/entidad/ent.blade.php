@@ -41,23 +41,23 @@
         <form wire:submit.prevent="save" class="">
             <div class="px-2 mx-2 my-1 rounded-md bg-blue-50">
                 <h3 class="font-semibold ">Datos generales</h3>
-                <x-jet::input  wire:model="entidad.id" type="hidden"/>
+                <x-jet::input  wire:model.live="entidad.id" type="hidden"/>
                 <hr>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 <div class="w-full form-item">
                     <x-jet::label for="entidad">{{ $entidadtipo->nombre }}</x-jet::label>
-                    <x-jet::input wire:model="entidad.entidad" type="text" class="w-full " id="entidad" name="entidad" :value="old('entidad') "/>
+                    <x-jet::input wire:model.live="entidad.entidad" type="text" class="w-full " id="entidad" name="entidad" :value="old('entidad') "/>
                     <x-jet::input-error for="entidad" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="nif">{{ __('Nif') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.nif" type="text" id="nif" name="nif" :value="old('nif')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.nif" type="text" id="nif" name="nif" :value="old('nif')" class="w-full"/>
                     <x-jet::input-error for="nif" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="responsable">{{ __('Responsable') }}</x-jet::label>
-                    <x-select wire:model="entidad.responsable" selectname="responsable" class="w-full">
+                    <x-select wire:model.live="entidad.responsable" selectname="responsable" class="w-full">
                         <option value="">-- Selecciona el responsable --</option>
                         @foreach ($responsables as $responsable )
                             <option value="{{ $responsable->responsable}}">{{ $responsable->responsable}}</option>
@@ -67,48 +67,48 @@
                 </div>
                 <div class="w-4/12 form-item">
                     <x-jet::label for="fechaIni">{{ __('F.Ini') }}</x-jet::label>
-                    <x-jet::input wire:model="fechaIni" type="date" id="fechaIni" name="fechaIni" class="w-full"/>
+                    <x-jet::input wire:model.live="fechaIni" type="date" id="fechaIni" name="fechaIni" class="w-full"/>
                     <x-jet::input-error for="fechaIni" class="mt-2" />
                 </div>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 <div class="w-full form-item">
                     <x-jet::label for="emailgral">{{ __('Email Gral') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.emailgral" type="text" id="emailgral" name="emailgral" :value="old('emailgral')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.emailgral" type="text" id="emailgral" name="emailgral" :value="old('emailgral')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="emailadm">{{ __('Email Adm') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.emailadm" type="text" id="emailadm" name="emailadm" :value="old('emailadm')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.emailadm" type="text" id="emailadm" name="emailadm" :value="old('emailadm')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="emailadm">{{ __('Email Aux') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.emailaux" type="text" id="emailaux" name="emailaux" :value="old('emailaux')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.emailaux" type="text" id="emailaux" name="emailaux" :value="old('emailaux')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="web">{{ __('Web') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.web" type="text" id="web" name="web" :value="old('web')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.web" type="text" id="web" name="web" :value="old('web')" class="w-full"/>
                 </div>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 <div class="w-5/12 form-item">
                     <x-jet::label for="tfno">{{ __('Tfno.') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.tfno" type="text" id="tfno" name="tfno" :value="old('tfno')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.tfno" type="text" id="tfno" name="tfno" :value="old('tfno')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="direccion">{{ __('Dirección') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.direccion" type="text" id="direccion" name="direccion" :value="old('direccion')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.direccion" type="text" id="direccion" name="direccion" :value="old('direccion')" class="w-full"/>
                 </div>
                 <div class="w-2/12 form-item">
                     <x-jet::label for="cp">{{ __('C.P.') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.cp" type="text" id="cp" name="cp" :value="old('cp')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.cp" type="text" id="cp" name="cp" :value="old('cp')" class="w-full"/>
                 </div>
                 <div class="w-4/12 form-item">
                     <x-jet::label for="localidad">{{ __('Localidad') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.localidad" type="text" id="localidad" name="localidad" :value="old('localidad')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.localidad" type="text" id="localidad" name="localidad" :value="old('localidad')" class="w-full"/>
                 </div>
                 <div class="w-4/12 form-item">
                     <x-jet::label for="provincia">{{ __('Provincia') }}</x-jet::label>
-                    <x-select wire:model="entidad.provincia_id" selectname="provincia_id" class="w-full">
+                    <x-select wire:model.live="entidad.provincia_id" selectname="provincia_id" class="w-full">
                         <option value="">-- choose --</option>
                         @foreach ($provincias as $provincia)
                         <option value="{{ $provincia->id }}">{{ $provincia->provincia }}</option>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="w-3/12 form-item">
                     <x-jet::label for="pais">{{ __('Pais') }}</x-jet::label>
-                    <x-select wire:model="entidad.pais_id" selectname="pais_id" class="w-full">
+                    <x-select wire:model.live="entidad.pais_id" selectname="pais_id" class="w-full">
                         <option value="">-- choose --</option>
                         @foreach ($paises as $pais)
                             <option value="{{ $pais->id }}">{{ $pais->pais }}</option>
@@ -131,23 +131,23 @@
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 {{-- <div class="w-full form-item">
                     <x-jet::label for="banco1" >{{ __('Banco 1') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.banco1" type="text" id="banco1" name="banco1" :value="old('banco1')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.banco1" type="text" id="banco1" name="banco1" :value="old('banco1')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="iban1" >{{ __('Iban 1') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.iban1" type="text" id="iban1" name="iban1" :value="old('iban1')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.iban1" type="text" id="iban1" name="iban1" :value="old('iban1')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="banco2"  title="Banco a la que el cliente hará la transferencia">{{ __('Transferencia a:') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.banco2" type="text" id="banco2" name="banco2" :value="old('banco2')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.banco2" type="text" id="banco2" name="banco2" :value="old('banco2')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="iban2" title="Cuenta a la que el cliente hará la transferencia">{{ __('Iban Transferencia 2') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.iban2" type="text" id="iban2" name="iban2" :value="old('iban2')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.iban2" type="text" id="iban2" name="iban2" :value="old('iban2')" class="w-full"/>
                 </div> --}}
                 {{-- <div class="w-full form-item">
                     <x-jet::label for="metodopago_id">{{ __('Método Pago') }}</x-jet::label>
-                    <x-select wire:model="entidad.metodopago_id" class="w-full" selectname="metodopago_id">
+                    <x-select wire:model.live="entidad.metodopago_id" class="w-full" selectname="metodopago_id">
                         <option value="">-- choose --</option>
                         @foreach ($metodopagos as $metodopago)
                         <option value="{{ $metodopago->id }}">{{ $metodopago->nombrecorto }}</option>
@@ -156,7 +156,7 @@
                 </div> --}}
                 {{-- <div class="w-full form-item">
                     <x-jet::label for="vencimientofechafactura">{{ __('Vto. Factura') }}</x-jet::label>
-                    <x-select wire:model="entidad.vencimientofechafactura" class="w-full" selectname="vencimientofechafactura">
+                    <x-select wire:model.live="entidad.vencimientofechafactura" class="w-full" selectname="vencimientofechafactura">
                         <option value="">-- choose --</option>
                         <option value="30">30</option>
                         <option value="60">60</option>
@@ -170,26 +170,26 @@
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="empresacredito" >{{ __('Empresa Crédito') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.empresacredito" type="text" id="empresacredito" name="empresacredito" :value="old('empresacredito')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.empresacredito" type="text" id="empresacredito" name="empresacredito" :value="old('empresacredito')" class="w-full"/>
                     <x-jet::input-error for="empresacredito" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="importecredito" >{{ __('Importe Crédito') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.importecredito" type="number" step="any" id="importecredito" name="importecredito" :value="old('importecredito')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.importecredito" type="number" step="any" id="importecredito" name="importecredito" :value="old('importecredito')" class="w-full"/>
                     <x-jet::input-error for="importecredito" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="vigenciacredito" >{{ __('Vigencia Crédito') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.vigenciacredito" type="text" id="vigenciacredito" name="vigenciacredito" :value="old('vigenciacredito')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.vigenciacredito" type="text" id="vigenciacredito" name="vigenciacredito" :value="old('vigenciacredito')" class="w-full"/>
                     <x-jet::input-error for="vigenciacredito" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="metodopago"  title="Método de pago">{{ __('Método Pago:') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.metodopago" type="text" id="metodopago" name="metodopago" :value="old('metodopago')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.metodopago" type="text" id="metodopago" name="metodopago" :value="old('metodopago')" class="w-full"/>
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="vencimientofechafactura"  title="Método de pago">{{ __('Fecha Vencimiento:') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.vencimientofechafactura" type="text" id="vencimientofechafactura" name="vencimientofechafactura" :value="old('vencimientofechafactura')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.vencimientofechafactura" type="text" id="vencimientofechafactura" name="vencimientofechafactura" :value="old('vencimientofechafactura')" class="w-full"/>
                 </div>
             </div>
             {{-- <div class="px-2 mx-2 my-2 rounded-md bg-blue-50">
@@ -203,17 +203,17 @@
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="empresacredito" >{{ __('Empresa Crédito') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.empresacredito" type="text" id="empresacredito" name="empresacredito" :value="old('empresacredito')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.empresacredito" type="text" id="empresacredito" name="empresacredito" :value="old('empresacredito')" class="w-full"/>
                     <x-jet::input-error for="empresacredito" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="importecredito" >{{ __('Importe Crédito') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.importecredito" type="number" step="any" id="importecredito" name="importecredito" :value="old('importecredito')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.importecredito" type="number" step="any" id="importecredito" name="importecredito" :value="old('importecredito')" class="w-full"/>
                     <x-jet::input-error for="importecredito" class="mt-2" />
                 </div>
                 <div class="w-full form-item">
                     <x-jet::label for="vigenciacredito" >{{ __('Vigencia Crédito') }}</x-jet::label>
-                    <x-jet::input  wire:model="entidad.vigenciacredito" type="text" id="vigenciacredito" name="vigenciacredito" :value="old('vigenciacredito')" class="w-full"/>
+                    <x-jet::input  wire:model.live="entidad.vigenciacredito" type="text" id="vigenciacredito" name="vigenciacredito" :value="old('vigenciacredito')" class="w-full"/>
                     <x-jet::input-error for="vigenciacredito" class="mt-2" />
                 </div>
             </div> --}}
@@ -221,7 +221,7 @@
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 <div class="w-full form-item">
                     <x-jet::label for="observaciones">{{ __('Observaciones') }}</x-jet::label>
-                    <textarea wire:model="entidad.observaciones" class="w-full text-sm border-gray-300 rounded-md" rows="3">{{ old('observaciones') }} </textarea>
+                    <textarea wire:model.live="entidad.observaciones" class="w-full text-sm border-gray-300 rounded-md" rows="3">{{ old('observaciones') }} </textarea>
                     <x-jet::input-error for="observaciones" class="mt-2" />
                 </div>
             </div>
