@@ -50,7 +50,7 @@ class Compra extends Component
         'fechaentrega'=>'nullable|date',
         'proveedor_id'=>'required',
         'descripcion'=>'nullable',
-        'productoid'=>'nullable',
+        'productoid'=>'required',
         'precio'=>'nullable|numeric',
         'ud_precio'=>'nullable|numeric',
         'cantidad'=>'nullable|numeric',
@@ -63,6 +63,7 @@ class Compra extends Component
         return [
             'compraid.required'=>'El número de compra es necesario',
             'proveedor_id.required'=>'El proveedor es necesario',
+            'productoid.required'=>'El producto es necesario',
             'precio.required'=>'El precio es necesaria',
             'cantidad.required'=>'La cantidad es necesaria',
             'ud_precio.required'=>'La unidad precio es necesaria',
@@ -90,7 +91,7 @@ class Compra extends Component
                 $this->fechaentrega = $compra->fechaentrega->format('Y-m-d');
                 $this->proveedor_id = $compra->proveedor_id;
                 $this->descripcion = $compra->descripcion;
-                $this->productoid = $compra->productoid;
+                $this->productoid = $compra->producto_id;
                 $this->precio = $compra->precio;
                 $this->ud_precio = $compra->ud_precio;
                 $this->cantidad = $compra->cantidad;
@@ -184,6 +185,18 @@ class Compra extends Component
         $this->total = $this->precio * $this->cantidad;
     }
 
+    // compras.id no es autoincremental (mismo patron que Pedido::numpedido()/
+    // Factura::numfactura()), asi que hay que generarlo aqui antes de crear.
+    public function numcompra(){
+        $anyo = substr($this->fecha, 0, 4);
+        $anyo2 = substr($anyo, -2);
+        $com = ModelsCompra::inYear($anyo)->max('id');
+        $com = !isset($com) ? ($anyo2 * 100000 + 1) : $com + 1;
+        $comMax = ModelsCompra::max('id');
+        $com = $comMax > $com ? $comMax + 1 : $com;
+        return $com;
+    }
+
 public function save(){
     $this->validate();
 
@@ -196,7 +209,12 @@ public function save(){
         $this->anyo     = $numcompra['anyo'];
     }
 
+    if (!$this->compra_id) {
+        $this->compra_id = $this->numcompra();
+    }
+
     $data = [
+        'id'           => $this->compra_id,
         'tipo'         => $this->tipo,
         'anyo'         => $this->anyo,
         'numero'       => $this->compraid,
@@ -214,17 +232,7 @@ public function save(){
     ];
 
 
-    if ($this->compra_id) {
-        // editar
-        $compra = ModelsCompra::find($this->compra_id);
-        if($compra){
-            $compra->update($data);
-        }
-    } else {
-        // nueva compra
-        $compra = ModelsCompra::create($data);
-        $this->compra_id = $compra->id; // guardamos el id real para futuras ediciones
-    }
+    ModelsCompra::updateOrCreate(['id' => $this->compra_id], $data);
 
     $this->dispatch('notify', $mensaje);
 
