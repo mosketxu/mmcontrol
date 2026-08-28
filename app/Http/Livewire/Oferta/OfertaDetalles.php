@@ -4,13 +4,12 @@ namespace App\Http\Livewire\Oferta;
 
 use Livewire\Component;
 
-use App\Models\{Entidad,Oferta,OfertaDetalle};
+use App\Models\{Entidad,OfertaDetalle};
 use Illuminate\Support\Facades\Auth;
 
 class OfertaDetalles extends Component
 {
 
-    public $oferta;
     public $oferta_id;
     public $titulo='';
     public $concepto='';
@@ -51,14 +50,16 @@ class OfertaDetalles extends Component
 
     public function mount($ofertaid)
     {
-        $this->oferta=Oferta::find($ofertaid);
+        // El componente padre ya carga la oferta; aquí solo hace falta su id,
+        // que llega como parámetro de montaje. Guardar el modelo entero en una
+        // propiedad pública forzaba un Oferta::find() extra por petición.
         $this->oferta_id=$ofertaid;
         $this->escliente=Auth::user()->hasRole('Cliente')? 'disabled' :'';
     }
 
     public function render()
     {
-        $odetalles=OfertaDetalle::where('oferta_id',$this->oferta->id)->orderBy('orden')->get();
+        $odetalles=OfertaDetalle::where('oferta_id',$this->oferta_id)->orderBy('orden')->get();
 
         return view('livewire.oferta.oferta-detalles',compact('odetalles'));
     }
