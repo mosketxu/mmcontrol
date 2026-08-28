@@ -146,6 +146,12 @@ class Oferta extends Component
         }
 
 
+        public function updatedProductoId(){
+        // Al cambiar el desplegable de ISBN/producto, refrescar el bloque
+        // "Descripción Producto" sin esperar a guardar.
+        $this->prod = $this->producto_id ? Producto::find($this->producto_id) : null;
+    }
+
         public function updatedClienteId(){
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id', $this->cliente_id)->get();
         if(!$this->fecha) $this->fecha=now()->format('Y-m-d');

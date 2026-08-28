@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet::label >{{ __('ISBN') }}</x-jet::label>
-                                    <select wire:model.lazy="producto_id"
+                                    <select wire:model.live="producto_id"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{$escliente}} {{$deshabilitado}}>
                                         @if (isset($productos))
@@ -91,7 +91,7 @@
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet::label >{{ __('Título') }} </x-jet::label>
-                                    <select wire:model.lazy="producto_id"
+                                    <select wire:model.live="producto_id"
                                         class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         {{$escliente}} {{$deshabilitado}}>
                                         @if (isset($productos))
@@ -123,7 +123,9 @@
                         </div>
                         <div class="px-1 bg-gray-50">
                             <div class="p-1 rounded-md bg-blue-50">
-                                <h3 class="pl-1 font-semibold">Descripción Producto</h3>
+                                <h3 class="pl-1 font-semibold">Descripción Producto
+                                    <span class="text-xs font-normal text-gray-500">(vista previa; no se guarda hasta pulsar Guardar)</span>
+                                </h3>
                                 <input  wire:model.live="pedidoid" type="hidden"/>
                             </div>
                             <div class="flex flex-col mx-1 md:space-y-0 md:flex-row md:space-x-2">
