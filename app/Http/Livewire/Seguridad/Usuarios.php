@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Seguridad;
 
+use App\Http\Livewire\Concerns\CampoEditable;
 use App\Models\User;
 use App\Models\UserEmpresa;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,6 +12,7 @@ use Livewire\WithPagination;
 class Usuarios extends Component
 {
     use WithPagination;
+    use CampoEditable;
 
     public $titulo='Usuarios';
     public $valorcampo1='';
@@ -35,7 +36,7 @@ class Usuarios extends Component
     {
         return [
             'valorcampo1'=>'required|unique:users,name',
-            'valorcampo2'=>'email|required|unique:users,email',
+            'valorcampo2'=>'email|required',
         ];
     }
 
@@ -43,7 +44,6 @@ class Usuarios extends Component
         return [
             'valorcampo1.required' => 'El nombre del usuario es necesario',
             'valorcampo1.unique' => 'El nombre del usuario ya existe',
-            'valorcampo2.unique' => 'El mail ya existe. Elige otro.',
             'valorcampo2.required' => 'El mail es necesario.',
             'valorcampo2.email' => 'El mail debe ser válido.',
         ];
@@ -61,13 +61,21 @@ class Usuarios extends Component
     }
 
     public function changeCampo(User $valor,$campo,$valorcampo){
-        Validator::make(['valorcampo'=>$valorcampo],[
-            'valorcampo'=>'required',
-        ])->validate();
+        $this->validarInline(['valorcampo'=>$valorcampo], ['valorcampo'=>'required']);
+
+        if ($campo === 'email') {
+            $duplicado=$this->usuarioConEmail($valorcampo, $valor->id);
+            if ($duplicado) {
+                $this->addError('valorcampo2', $this->mensajeDuplicado($duplicado));
+                $this->nonce++; // repinta la fila: el input recupera el correo original
+                return;
+            }
+        }
 
         $p=User::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
+
         $this->dispatch('notify', 'Usuario Actualizado.');
     }
 
@@ -78,6 +86,12 @@ class Usuarios extends Component
 
     public function save(){
         $this->validate();
+
+        $duplicado=$this->usuarioConEmail($this->valorcampo2);
+        if ($duplicado) {
+            $this->addError('valorcampo2', $this->mensajeDuplicado($duplicado));
+            return;
+        }
 
         User::create([
             'name'=>$this->valorcampo1,
@@ -106,5 +120,16 @@ class Usuarios extends Component
             $borrar->delete();
             $this->dispatch('notify', 'Usuario eliminado!');
         }
+    }
+
+    /** Devuelve el usuario que ya tiene ese correo (o null), excluyendo un id. */
+    private function usuarioConEmail($email, $exceptoId=null){
+        return User::where('email',$email)
+            ->when($exceptoId, fn($q)=>$q->where('id','!=',$exceptoId))
+            ->first();
+    }
+
+    private function mensajeDuplicado(User $duplicado){
+        return 'Ese correo ya está en uso por el usuario "'.$duplicado->name.'". Elige otro.';
     }
 }

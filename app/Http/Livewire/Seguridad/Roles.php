@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Seguridad;
 
+use App\Http\Livewire\Concerns\CampoEditable;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Roles extends Component
 {
+    use CampoEditable;
+
     public $titulo='Roles';
     public $valorcampo1='web';
     public $valorcampo2='';
@@ -52,9 +54,14 @@ class Roles extends Component
 
     public function changeCampo(Role $valor,$campo,$valorcampo)
     {
-        Validator::make(['valorcampo'=>$valorcampo],[
-            'valorcampo'=>'required|unique:roles,name',
-        ])->validate();
+        $this->validarInline(
+            ['valorcampo'=>$valorcampo],
+            ['valorcampo'=>'required|unique:roles,name'],
+            [
+                'valorcampo.required'=>'El nombre del rol es necesario',
+                'valorcampo.unique'=>'Ese rol ya existe. Elige otro nombre para el rol.',
+            ]
+        );
         $p=Role::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();

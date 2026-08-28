@@ -43,7 +43,10 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
 
     //Seguridad
-    Route::get('/seguridad', function () {return view('seguridad.seguridad');})->middleware('can:seguridad.index')->name('seguridad');
+    Route::get('/seguridad/{tab?}', function ($tab = 'usuarios') {
+        abort_unless(in_array($tab, ['usuarios', 'roles', 'responsables', 'permisos']), 404);
+        return view('seguridad.seguridad', compact('tab'));
+    })->middleware('can:seguridad.index')->name('seguridad');
 
     //caracteristicas
     Route::get('/caracteristicas/{tipo?}', function ($tipo = 'gramaje') {return view('seguridad.caracteristicas',compact('tipo'));})->middleware('can:caracteristicas.index')->name('caracteristicas');

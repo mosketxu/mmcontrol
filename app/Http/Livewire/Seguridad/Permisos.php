@@ -2,12 +2,15 @@
 
 namespace App\Http\Livewire\Seguridad;
 
+use App\Http\Livewire\Concerns\CampoEditable;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
 class Permisos extends Component
 {
+    use CampoEditable;
+
     public $titulo='Permisos';
     public $valorcampo1='web';
     public $valorcampo2='';
@@ -42,20 +45,26 @@ class Permisos extends Component
     }
     public function render()
     {
-        $valores=Permission::query()
-        ->search('name',$this->search)
-        ->select('id','name as valorcampo2','guard_name as valorcampo1')
-        ->orderBy('name')
-        ->get();
+        $grupos = Permission::query()
+            ->search('name', $this->search)
+            ->orderBy('name')
+            ->get()
+            ->groupBy(fn ($p) => Str::before($p->name, '.'))
+            ->sortKeys();
 
-        return view('livewire.auxiliarcard',compact('valores'));
+        return view('livewire.seguridad.permisos', compact('grupos'));
     }
 
     public function changeCampo(Permission $valor,$campo,$valorcampo)
     {
-        $validator=Validator::make(['valorcampo'=>$valorcampo],[
-            'valorcampo'=>'required|unique:permissions,name',
-        ])->validate();
+        $this->validarInline(
+            ['valorcampo'=>$valorcampo],
+            ['valorcampo'=>'required|unique:permissions,name'],
+            [
+                'valorcampo.required'=>'El nombre del permiso es necesario',
+                'valorcampo.unique'=>'Ese permiso ya existe. Elige otro nombre para el permiso.',
+            ]
+        );
 
         $p=Permission::find($valor->id);
         $p->$campo=$valorcampo;
