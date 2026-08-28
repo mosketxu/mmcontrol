@@ -18,6 +18,8 @@ class Oferta extends Component
     public $fecha='';
     public $producto_id='';
     public $prod;
+    // true cuando se cambia el desplegable de producto y aún no se ha guardado
+    public $prodDirty=false;
     public $tipo='';
     public $acabado='';
     public $manipulacion='';
@@ -150,6 +152,7 @@ class Oferta extends Component
         // Al cambiar el desplegable de ISBN/producto, refrescar el bloque
         // "Descripción Producto" sin esperar a guardar.
         $this->prod = $this->producto_id ? Producto::find($this->producto_id) : null;
+        $this->prodDirty = true;
     }
 
         public function updatedClienteId(){

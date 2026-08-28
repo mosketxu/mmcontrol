@@ -124,7 +124,9 @@
                         <div class="px-1 bg-gray-50">
                             <div class="p-1 rounded-md bg-blue-50">
                                 <h3 class="pl-1 font-semibold">Descripción Producto
-                                    <span class="text-xs font-normal text-gray-500">(vista previa; no se guarda hasta pulsar Guardar)</span>
+                                    @if($ofertaid && $prodDirty)
+                                        <span class="text-xs font-bold text-red-600">Atención: Esta descripción del producto no se aplicará hasta pulsar el botón guardar.</span>
+                                    @endif
                                 </h3>
                                 <input  wire:model.live="pedidoid" type="hidden"/>
                             </div>
