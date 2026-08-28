@@ -37,6 +37,11 @@
                             <div class="mx-auto ">
                                 @csrf
                                 @method('PUT')
+                                @php
+                                    // ids de los permisos que ya tiene el rol, cargados una sola vez
+                                    // (antes se consultaba a BD dentro del bucle: una query por permiso).
+                                    $permisosDelRol = $role->permissions->pluck('id')->all();
+                                @endphp
                                 <div class="flex flex-row flex-wrap -mx-2">
                                     @foreach($permissions->sortBy('name')->groupBy(fn($p) => \Illuminate\Support\Str::before($p->name, '.'))->sortKeys() as $chunk)
                                         <div class="w-full px-2 mb-4 sm:w-1/2 md:w-1/4">
@@ -47,7 +52,7 @@
                                                             @foreach ($chunk as $permission )
                                                             <tr>
                                                                 <td class="pl-1"><input type="checkbox" name="permisos[]" value="{{$permission->id}}"
-                                                                    {{ (in_array($permission->id, old('permissions', [])) || isset($role) && $role->permissions()->pluck('name', 'permissions.id')->contains($permission->name)) ? 'checked' : '' }}></td>
+                                                                    {{ (in_array($permission->id, old('permisos', [])) || in_array($permission->id, $permisosDelRol)) ? 'checked' : '' }}></td>
                                                                 <td class="px-3">{{$permission->name}}</td>
                                                                 <td class="text-sm italic tracking-tighter text-gray-600">{{$permission->description}}</td>
                                                             </tr>
