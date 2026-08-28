@@ -34,7 +34,7 @@
                             <div class="w-2/12 pr-2 mr-2 font-light text-right ">{{ __($titcampo3)}} </div>
                         @endif
                         @if ($campo4visible==1)
-                            <div class="w-4/12 pl-2 ml-2 font-light text-left ">{{ __($titcampo4)}} </div>
+                            <div class="w-3/12 pl-2 ml-2 font-light text-left ">{{ __($titcampo4)}} </div>
                         @endif
                         @if ($campoimgvisible==1)
                             <div class="w-2/12 font-light text-left">{{ __($titcampoimg)}} </div>
@@ -68,7 +68,7 @@
                         </div>
                         @endif
                         @if ($campo4visible==1)
-                        <div class="flex-col w-4/12 text-left">
+                        <div class="flex-col w-3/12 text-left">
                             <input type="text" value="{{ $valor->valorcampo4 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo4 }}',$event.target.value)"
                                 class="w-full pl-2 ml-2 text-sm font-thin text-left text-gray-500 border-0 rounded-md"/>
@@ -126,7 +126,7 @@
                                 </div>
                             @endif
                             @if ($campo4visible==1)
-                                <div class="flex-col w-4/12 text-left">
+                                <div class="flex-col w-3/12 text-left">
                                     <input type="text" wire:model.live="valorcampo4"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                                 </div>

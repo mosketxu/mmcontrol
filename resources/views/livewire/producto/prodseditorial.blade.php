@@ -15,11 +15,10 @@
                     </div>
                     <div class="flex w-full py-1 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
                         <div class="flex w-11/12">
-                            <div class="w-2/12 ml-2" >{{ __('ISBN') }}</div>
-                            <div class="w-4/12 " >{{ __('Título') }}</div>
-                            <div class="w-2/12 " >{{ __('Cliente') }} </div>
+                            <div class="w-3/12 ml-2" >{{ __('ISBN') }}</div>
+                            <div class="w-5/12 " >{{ __('Título') }}</div>
+                            <div class="w-3/12 " >{{ __('Cliente') }} </div>
                             <div class="w-1/12 " >{{ __('Estado') }}</div>
-                            <div class="w-4/12 " >{{ __('Observaciones') }}</div>
                         </div>
                         <div class="flex w-1/12 ">
                             <div class="w-full" ></div>
@@ -30,11 +29,11 @@
                         <div class="hover:bg-gray-100 hover:cursor-pointer">
                             <div class="flex items-center w-full text-sm text-gray-500 border-t-0 border-y" wire:loading.class.delay="opacity-50" >
                                 <div class="flex items-center w-11/12" onclick="location.href = '{{ route('producto.edit',$producto) }}'">
-                                    <div class="w-2/12 ml-2">
+                                    <div class="w-3/12 ml-2">
                                         {{ $producto->isbn_completo }}
                                     </div>
-                                    <div class="w-4/12">{{ $producto->referencia }}</div>
-                                    <div class="w-2/12">{{ $producto->cliente->entidad }}</div>
+                                    <div class="w-5/12">{{ $producto->referencia }}</div>
+                                    <div class="w-3/12">{{ $producto->cliente->entidad }}</div>
                                     <div class="w-1/12">
                                         @php
                                             $icon = \App\Enums\ProductoEstado::iconData($producto->productoestado);
@@ -43,9 +42,6 @@
                                             :component="$icon['component']"
                                             class="{{ $icon['class'] }}"
                                         />
-                                    </div>
-                                    <div class="w-4/12">
-                                            <textarea rows="1" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" disabled>{{ $producto->observaciones }}</textarea>
                                     </div>
                                 </div>
                                 <div class="items-center flex-none w-1/12 md:flex">
