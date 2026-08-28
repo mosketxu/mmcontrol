@@ -72,11 +72,12 @@
                                     <div class="px-2 mx-2 my-1 bg-blue-100 rounded-md">
                                         <h3 class="font-semibold ">Roles del Usuario</h3>
                                     </div>
+                                    @php $rolesDelUsuario = $user->roles->pluck('id')->all(); @endphp
                                     @foreach ($roles as $role)
                                     <div class="ml-4">
                                         {{ $role->id }}
                                         <input type="checkbox" name="roles[]" value="{{$role->id}}"
-                                            {{ (in_array($role->id, old('roles', [])) || isset($user) && $user->roles()->pluck('name', 'roles.id')->contains($role->name)) ? 'checked' : '' }}>&nbsp {{$role->name}}
+                                            {{ (in_array($role->id, old('roles', [])) || in_array($role->id, $rolesDelUsuario)) ? 'checked' : '' }}>&nbsp {{$role->name}}
                                     </div>
                                     @endforeach
                                 </div>

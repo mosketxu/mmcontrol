@@ -66,7 +66,14 @@ class Fdetalles extends Component
     }
 
     public function render(){
-        $pedidos=Pedido::where('cliente_id',$this->factura->cliente_id)->select('id')->get();
+        // Cada línea de factura monta un componente Fdetalles y todas piden la
+        // misma lista de pedidos del cliente -> N consultas idénticas. Se memoriza
+        // por cliente durante la petición (en un update parcial vuelve a consultar
+        // una sola vez, que es lo correcto).
+        static $pedidosPorCliente = [];
+        $cid = $this->factura->cliente_id;
+        $pedidos = $pedidosPorCliente[$cid] ??= Pedido::where('cliente_id',$cid)->select('id')->get();
+
         return view('livewire.facturacion.fdetalles',compact('pedidos'));
     }
 
