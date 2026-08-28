@@ -16,7 +16,7 @@
                 class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"
                 {{ $deshabilitado }}/>
             </div>
-        <div class="w-2/12">
+        <div class="w-1/12">
             <select wire:model.live='pedido_id'
                 class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 {{ $deshabilitado }}>
@@ -30,12 +30,12 @@
                 @endforelse
             </select>
         </div>
-        <div class="w-4/12">
+        <div class="w-2/12">
             <input type="text" wire:model.lazy='concepto'
             class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"
             {{ $deshabilitado }}/>
         </div>
-        <div class="w-2/12">
+        <div class="w-1/12">
             <input type="number" step="any" wire:model.lazy='cantidad'
             class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 border-0 rounded-md"
             {{ $deshabilitado }}/>
@@ -70,11 +70,6 @@
             <input type="text" value="{{ number_format($subtotal,2,',','.') }}"
             class="w-full py-1 mr-2 text-xs font-thin text-right text-gray-500 bg-gray-100 border-0 rounded-md"
             disabled/>
-        </div>
-        <div class="w-3/12">
-            <textarea wire:model.lazy='observaciones' rows="1"
-                class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"
-                {{ $deshabilitado }}></textarea>
         </div>
         <div class="w-1/12 text-center">
             @if ($deshabilitado=='')

@@ -14,17 +14,17 @@
             class="w-full py-1 text-xs font-thin text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
-        <div class="w-2/12 ">
+        <div class="w-1/12 ">
             <input type="text" value="Pedido"
             class="w-full py-1 text-xs font-thin text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
-        <div class="w-4/12 ">
+        <div class="w-2/12 ">
             <input type="text" value="Concepto"
             class="w-full py-1 text-xs font-thin text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
-        <div class="w-2/12 ">
+        <div class="w-1/12 ">
             <input type="text" value="Cantidad"
             class="w-full py-1 text-xs font-thin text-right text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
@@ -54,12 +54,6 @@
             class="w-full py-1 text-xs font-thin text-right text-gray-500 bg-blue-100 border-0 rounded-md"
             disabled/>
         </div>
-
-        <div class="w-3/12">
-            <input type="text" value="Observaciones"
-            class="w-full py-1 text-xs font-thin text-left text-gray-500 bg-blue-100 border-0 rounded-md"
-            disabled/>
-        </div>
         <div class="w-1/12"></div>
     </div>
 
@@ -78,7 +72,7 @@
                 class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
             {{-- Pedido_id --}}
-            <div class="w-2/12">
+            <div class="w-1/12">
                 <x-selectcolor wire:model.lazy="pedido_id" selectname="pedido_id" color="bg-green-100"
                     class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-none shadow-none">
                     <option value="" >-Selecciona- </option>
@@ -90,12 +84,12 @@
                 </x-selectcolor>
             </div>
             {{-- concepto --}}
-            <div class="w-4/12">
+            <div class="w-2/12">
                 <input type="text" wire:model.live="concepto" placeholder="Introduce el concepto"
                 class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-0 rounded-md placeholder:text-xs placeholder:text-gray-300 placeholder:italic"/>
             </div>
             {{-- cantidad --}}
-            <div class="w-2/12">
+            <div class="w-1/12">
                 <input type="number" step="any" wire:model.lazy="cantidad"
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-100 border-0 rounded-md"/>
             </div>
@@ -131,14 +125,6 @@
                 <input type="text"  wire:model.live="subtotal"
                 class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
                 disabled/>
-            </div>
-            {{-- observaciones --}}
-            <div class="w-3/12 ">
-                <textarea wire:model.live="observaciones" rows="1"
-                class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"></textarea>
-
-                {{-- <input type="text"  wire:model.live="observaciones"
-                class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"/> --}}
             </div>
             {{-- botones --}}
             <div class="w-1/12 text-center">

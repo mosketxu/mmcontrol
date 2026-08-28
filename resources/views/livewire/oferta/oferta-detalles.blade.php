@@ -35,11 +35,6 @@
             disabled/>
         </div>
 
-        <div class="w-3/12">
-            <input type="text" value="Observaciones"
-            class="w-full py-1 text-xs font-thin text-left text-gray-500 bg-blue-100 border-0 rounded-md"
-            disabled/>
-        </div>
         <div class="w-1/12"></div>
     </div>
 
@@ -77,11 +72,6 @@
                     <input type="text"  wire:model.live="total"
                     class="w-full py-1 pr-2 text-xs font-thin text-right text-gray-500 bg-green-200 border-0 rounded-md"
                     disabled/>
-                </div>
-                {{-- observaciones --}}
-                <div class="w-3/12 ">
-                    <textarea wire:model.lazy='observaciones' rows="1"
-                    class="w-full py-1 pr-2 text-xs font-thin text-left text-gray-500 bg-green-100 border-0 rounded-md"></textarea>
                 </div>
                 {{-- botones --}}
                 <div class="w-1/12 text-center">
@@ -122,14 +112,6 @@
                 <input type="text" value="{{ number_format($odetalle->total,2,',','.') }}"
                 class="w-full py-1 mr-2 text-xs font-thin text-right text-gray-500 bg-gray-100 border-0 rounded-md"
                 disabled/>
-            </div>
-            <div class="w-3/12">
-                <textarea rows="1"
-                class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"
-                wire:change="changeValor('{{ $odetalle->id }}','observaciones',$event.target.value)" {{$escliente}} {{$deshabilitado}}>{{ $odetalle->observaciones }}</textarea>
-                {{-- <input type="text" value="{{ $odetalle->observaciones }}"
-                wire:change="changeValor('{{ $odetalle->id }}','observaciones',$event.target.value)"
-                class="w-full py-1 text-xs font-thin text-gray-500 border-0 rounded-md"/> --}}
             </div>
             <div class="w-1/12 text-center">
                 @if(!$escliente)
