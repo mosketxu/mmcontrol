@@ -38,7 +38,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="flex flex-row flex-wrap -mx-2">
-                                    @foreach($permissions->chunk(5) as $chunk)
+                                    @foreach($permissions->sortBy('name')->groupBy(fn($p) => \Illuminate\Support\Str::before($p->name, '.'))->sortKeys() as $chunk)
                                         <div class="w-full px-2 mb-4 sm:w-1/2 md:w-1/4">
                                             <div class="relative bg-white border rounded">
                                                 <div class="p-4 ">
