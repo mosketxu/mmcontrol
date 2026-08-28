@@ -146,7 +146,7 @@
             </div>
             <div class="">
                 @if($facturaid)
-                    @livewire('facturacion.fdetalle',['facturaid'=>$facturaid,'deshabilitado'=>$deshabilitado],key($facturaid.now()))
+                    @livewire('facturacion.fdetalle',['facturaid'=>$facturaid,'factura'=>$fac,'deshabilitado'=>$deshabilitado],key($facturaid.now()))
                 @endif
             </div>
         </div>

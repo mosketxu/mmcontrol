@@ -56,8 +56,10 @@ class Fdetalle extends Component
         ];
     }
 
-    public function mount($facturaid,$deshabilitado){
-        $this->factura=Factura::find($facturaid);
+    public function mount($facturaid,$deshabilitado,$factura=null){
+        // El componente padre (Factura) ya tiene la factura cargada y la pasa
+        // como parámetro; así se evita repetir el mismo Factura::find() aquí.
+        $this->factura=$factura ?: Factura::find($facturaid);
         $this->bloqueado= $this->factura->estado =='0' ? '0' : '1';
         $this->deshabilitado= $deshabilitado;
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
