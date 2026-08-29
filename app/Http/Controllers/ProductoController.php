@@ -22,17 +22,6 @@ class ProductoController extends Controller
 
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function index()
-    // {
-    //     $tipo='';
-    //     return view('producto.index',compact('tipo'));
-    // }
-
     public function tipo($tipo){
         $titulo=$tipo=='1'? 'Productos Editoriales' : 'Productos Packaging y Propios';
         return view('producto.index',compact('tipo','titulo'));

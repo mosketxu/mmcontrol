@@ -59,26 +59,24 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
 
     // Entidades
-    Route::get('/entidad/editar/{entidad}', [EntidadController::class, 'edita'])->name('entidad.edita');
     Route::get('/entidad/contactos/{entidad}', [EntidadController::class, 'contactos'])->name('entidad.contactos');
     Route::get('/entidad/{entidad}/destinos/{ruta}', [EntidadController::class, 'destinos'])->name('entidad.destinos');
     Route::get('/entidad/{entidad}/acciones/{ruta}', [EntidadController::class, 'acciones'])->name('entidad.acciones');
     Route::get('/entidad/nuevocontacto/{entidad}', [EntidadController::class, 'createcontacto'])->name('entidad.createcontacto');
     Route::get('entidad/{tipo}/tipo', [EntidadController::class,'tipo'])->middleware('can:entidad.index')->name('entidad.tipo'); //
     Route::get('entidad/{entidadtipo_id}/nueva', [EntidadController::class,'nueva'])->name('entidad.nueva');
-    Route::resource('entidad', EntidadController::class)->only(['index','create', 'edit']); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
+    Route::resource('entidad', EntidadController::class)->only(['index','edit']); //cuando es resource para aplicar seguridad can hay que hacerlo en el controller
     Route::get('/entidades/export', [EntidadController::class, 'exportEntidad'])->name('entidad.export');
     Route::get('/entidades/acciones/export', [EntidadController::class, 'exportEntidadAcciones'])->name('entidad.acciones.export');
     Route::get('/entidades/contactos/export', [EntidadController::class, 'exportEntidadContactos'])->name('entidad.contactos.export');
 
     // Producto
-    // Route::get('producto/{producto}/adjunto', [ProductoController::class,'adjunto'])->name('producto.adjunto');
     Route::get('/producto/export', [ProductoController::class, 'exportProducto'])->name('producto.export');
     Route::get('producto/{prodId}/ficha/{tipo}/{tipopdf}', [ProductoController::class,'ficha'])->name('producto.ficha');
     Route::get('producto/{tipo}', [ProductoController::class,'tipo'])->middleware('can:producto.index')->name('producto.tipo');
     Route::get('/producto/{producto}/archivos/{ruta}', [ProductoController::class, 'archivos'])->name('producto.archivos');
     Route::get('/producto/{tipo}/nuevo', [ProductoController::class, 'nuevo'])->name('producto.nuevo');
-    Route::resource('producto', ProductoController::class);
+    Route::resource('producto', ProductoController::class)->only(['edit']);
 
     //Presupuestos
     Route::get('/presupuesto/export', [PresupuestoController::class, 'exportPresupuesto'])->name('presupuesto.export');
@@ -89,9 +87,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/presupuesto/{presupuesto}/archivos/{ruta}', [PresupuestoController::class, 'archivos'])->name('presupuesto.archivos');
 
     //Pedidos
-    // Route::get('/pedido/contadores', [PedidoController::class, 'contadores'])->name('pedido.contadores');
     Route::get('/pedido/{tipo}/{search?}/{fref?}/{fisbn?}/{fresp?}/{fcli?}/{fprov?}/{flamplast?}/{fanyo?}/{fmes?}/{festado?}/{ffact?}/export', [PedidoController::class, 'export'])->name('pedido.export');
-    // Route::get('/pedido/{tipo}/export', [PedidoController::class, 'export'])->name('pedido.export');
     Route::get('/pedido/{pedido}/entrada/{tipo}/{ruta}', [PedidoController::class, 'entrada'])->name('pedido.entrada');
     Route::get('/pedido/{pedido}/editar/{ruta}', [PedidoController::class, 'editar'])->name('pedido.editar');
     Route::get('/pedido/{pedido}/retrasos/{ruta}', [PedidoController::class, 'retrasos'])->name('pedido.retrasos');
@@ -99,7 +95,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/pedido/{pedido}/parciales/{ruta}', [PedidoController::class, 'parciales'])->name('pedido.parciales');
     Route::get('/pedido/{pedido}/parciales/{ruta}/parcial/{parcialid}', [PedidoController::class, 'parcial'])->name('pedido.parcial');
     Route::get('/pedido/parcial/{pedidoid}/{ruta}/albaran/{parcialid}', [PedidoController::class, 'albaran'])->name('pedido.albaran');
-    Route::get('/pedido/{pedido}/facturaciones/{ruta}', [PedidoController::class, 'facturaciones'])->name('pedido.facturaciones');
     Route::get('/pedido/{pedido}/distribuciones/{ruta}', [PedidoController::class, 'distribuciones'])->name('pedido.distribuciones');
     Route::get('/pedido/{pedido}/archivos/{ruta}', [PedidoController::class, 'archivos'])->name('pedido.archivos');
     Route::get('/pedido/{pedido}/subpedidos/{ruta}', [PedidoController::class, 'subpedidos'])->name('pedido.subpedidos');
@@ -107,24 +102,13 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/pedido/{tipo}/nuevo/{ruta}', [PedidoController::class, 'nuevo'])->name('pedido.nuevo');
     Route::get('pedido/{tipo}/ruta/{ruta}', [PedidoController::class,'tipo'])->middleware('can:pedido.index')->name('pedido.tipo');
     Route::get('stock/{tipo}/ruta/{ruta}', [PedidoController::class,'stock'])->middleware('can:pedido.index')->name('pedido.stock');
-    Route::resource('pedido', PedidoController::class);
 
-    //Compras
-    // Route::get('/compra/{tipo}/{search?}/{fref?}/{fisbn?}/{fresp?}/{fcli?}/{fprov?}/{flamplast?}/{fanyo?}/{fmes?}/{festado?}/{ffact?}/export', [CompraController::class, 'export'])->name('compra.export');
-    // Route::get('compra/{tipo}/tipo', [CompraController::class,'tipo'])->middleware('can:compra.index')->name('compra.tipo');
-    Route::get('/compra/{compra}/entrada/{tipo}/{ruta}', [CompraController::class, 'entrada'])->name('compra.entrada');
+    //Compras (modulo parcial: solo listado + alta + edicion de cabecera)
     Route::get('/compra/{compra}/editar/{ruta}', [CompraController::class, 'editar'])->name('compra.editar');
-    Route::get('/compra/{compra}/albaranes/{ruta}', [CompraController::class, 'albaranes'])->name('compra.albaranes');
-    // Route::get('/compra/{compra}/albaranes/{ruta}/albaran/{albaranid}', [CompraController::class, 'albaran'])->name('compra.albaran');
-    Route::get('/compra/albaran/{compraid}/{ruta}/albaran/{albaranid}', [CompraController::class, 'albaran'])->name('compra.albaran');
-    Route::get('/compra/{compra}/distribuciones/{ruta}', [CompraController::class, 'distribuciones'])->name('compra.distribuciones');
-    Route::get('/compra/{compra}/archivos/{ruta}', [CompraController::class, 'archivos'])->name('compra.archivos');
     Route::get('/compra/{tipo}/nuevo/{ruta}', [CompraController::class, 'nuevo'])->name('compra.nuevo');
     Route::get('compra/{tipo}/ruta/{ruta}', [CompraController::class,'tipo'])->middleware('can:compra.index')->name('compra.tipo');
-    Route::resource('compra', CompraController::class);
 
     //Facturacion
-     Route::get('/facturacion/export', [FacturacionController::class, 'exportFacturacion'])->name('facturacion.export');
     Route::resource('facturacion', FacturacionController::class);
 
     //Oferta
@@ -133,7 +117,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('oferta/{ofertaId}/ficha/{tipo}', [OfertaController::class,'ficha'])->name('oferta.ficha');
     Route::get('/oferta/{tipo}/nuevo/{ruta}', [OfertaController::class, 'nuevo'])->name('oferta.nuevo');
     Route::get('oferta/{tipo}', [OfertaController::class,'tipo'])->middleware('can:oferta.index')->name('oferta.tipo');
-    Route::resource('oferta', OfertaController::class);
+    Route::resource('oferta', OfertaController::class)->only(['edit']);
 
     //Cliente
 
