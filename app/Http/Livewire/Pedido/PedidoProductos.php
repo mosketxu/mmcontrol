@@ -7,7 +7,6 @@ use App\Models\PedidoProducto;
 use App\Models\Pedido as ModelsPedido;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
 
 class PedidoProductos extends Component
 {
@@ -68,10 +67,8 @@ class PedidoProductos extends Component
     }
 
     public function render(){
+        // Packaging/Propios: el idioma no aplica a estos productos.
         $productos=Producto::where('tipo','2')
-            ->when($this->pedido?->idioma_id, function ($query) {
-                $query->where('idioma_id', $this->pedido->idioma_id);
-            })
             ->orderBy('referencia')
             ->get();
 
@@ -82,8 +79,8 @@ class PedidoProductos extends Component
         if($this->producto_id!='') {
             $p=Producto::find($this->producto_id);
             $this->precio_ud=$p->preciocoste;
-            $this->tirada=$p->cantidad;
-            $this->preciototal=$p->precio_ud * $this->tirada;
+            $this->tirada=0; // el usuario indica la cantidad para esta línea
+            $this->preciototal=$this->precio_ud * $this->tirada;
         }else{
             $this->precio_ud='0';
             $this->tirada='0';
@@ -101,7 +98,6 @@ class PedidoProductos extends Component
         if(!$this->preciototal) $this->preciototal=0;
 
         $this->validate();
-        $this->validarIdiomaProducto();
         $pprod=PedidoProducto::updateOrCreate([
             'id'=>$this->pproductoid
             ],
@@ -132,17 +128,6 @@ class PedidoProductos extends Component
         }
 
         $this->dispatch('refreshpedido');
-    }
-
-    private function validarIdiomaProducto(){
-        if(!$this->producto_id || !$this->pedido?->idioma_id) return;
-
-        $producto=Producto::find($this->producto_id);
-        if($producto && (string) $producto->idioma_id !== (string) $this->pedido->idioma_id){
-            throw ValidationException::withMessages([
-                'producto_id' => 'El producto seleccionado debe tener el mismo idioma que el pedido.',
-            ]);
-        }
     }
 
 }

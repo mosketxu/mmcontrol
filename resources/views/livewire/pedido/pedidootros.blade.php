@@ -90,34 +90,6 @@
                             </div>
                         </div>
                         <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-4">
-                            {{-- Cod --}}
-                            <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet::label >{{ __('Cód.') }} </x-jet::label>
-                                    <select wire:model.lazy="productoeditorialid"
-                                        class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        <option value=''>-- Selecciona Cód. --</option>
-                                        @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->isbn_completo }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            {{-- titulo --}}
-                            <div class="w-full form-item">
-                                <div class="w-full form-item">
-                                    <x-jet::label >{{ __('Título/Ref.') }}</x-jet::label>
-                                    <select wire:model.lazy="productoeditorialid"
-                                        class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        <option value="">-- Selecciona Referencia --</option>
-                                        @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                             <div class="w-full form-item">
                                 <x-jet::label for="descripcion">{{ __('Descripción') }}</x-jet::label>
                                 <textarea wire:model.live="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
@@ -352,18 +324,23 @@
                 </form>
             </div>
 
-            {{-- <div class="">
+            {{-- Procesos: sigue desactivado, no forma parte de esta petición.
+            <div class="">
                 @if($pedidoid)
                     <div class="p-1 border rounded-md">
                         Procesos
                         @livewire('pedido.pedido-proceso',['pedidoid'=>$pedidoid,'deshabilitado'=>$deshabilitado],key($pedidoid.now()))
                     </div>
+                @endif
+            </div> --}}
+            <div class="">
+                @if($pedidoid)
                     <div class="p-1 border rounded-md">
                         Productos
                         @livewire('pedido.pedido-producto',['pedidoid'=>$pedidoid,'deshabilitado'=>$deshabilitado],key($pedidoid.now()))
                     </div>
                 @endif
-            </div> --}}
+            </div>
         </div>
     </div>
 </div>

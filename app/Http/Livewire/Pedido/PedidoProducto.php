@@ -66,8 +66,8 @@ class PedidoProducto extends Component
         if($this->producto_id!='') {
             $p=Producto::find($this->producto_id);
             $this->precio_ud=$p->preciocoste;
-            $this->tirada=$p->cantidad;
-            $this->preciototal=$p->precio_ud * $this->tirada;
+            $this->tirada=0; // el usuario indica la cantidad para esta línea
+            $this->preciototal=$this->precio_ud * $this->tirada;
         }else{
             $this->precio_ud='0';
             $this->tirada='0';
@@ -85,7 +85,7 @@ class PedidoProducto extends Component
         $this->validate();
         $this->validarIdiomaProducto();
 
-        $pprod=ModelsPedidoProducto::create([
+        ModelsPedidoProducto::create([
             'pedido_id'=>$this->pedido_id,
             'producto_id'=>$this->producto_id,
             'tirada'=>$this->tirada,
