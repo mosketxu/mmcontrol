@@ -118,8 +118,7 @@ class Pedido extends Component
             'uds_caja'=>'nullable',
             'transporte'=>'nullable',
             'otros'=>'nullable',
-            'productoeditorialid'=>'nullable',
-            // 'productoeditorialid'=>'required_if:tipo,1'
+            'productoeditorialid'=>'required_if:tipo,1',
         ];
     }
 
@@ -142,7 +141,7 @@ class Pedido extends Component
             'tiradareal.numeric'=>'El valor de la tirada real debe ser numérico',
             'precio.numeric'=>'El valor del precio de venta debe ser numérico',
             'preciototal.numeric'=>'El valor del precio total debe ser numérico',
-            // 'productoeditorialid.required_if'=>'El Producto es necesario',
+            'productoeditorialid.required_if'=>'El Producto es necesario',
         ];
     }
 
@@ -200,8 +199,10 @@ class Pedido extends Component
                 $this->ofertas=Oferta::where('cliente_id', '=', $this->cliente_id)->orderBy('id')->get();
             }
 
-            //desde febrero 2026 se comportan los editoria y otros igual
-            // if ($tipo=='1') {
+            // Packaging/Propios gestiona sus productos (varias líneas, cada una con su
+            // cantidad) en la pestaña Productos, no aquí. Editorial sigue con un único
+            // producto por pedido.
+            if ($this->tipo=='1') {
                 $prod = $pedido->pedidoproductos->first();
 
                 if($prod && $prod->producto){
@@ -209,11 +210,7 @@ class Pedido extends Component
                     $this->prod = $prod->producto;
                     $this->pedidoproductoid = $prod->id;
                 }
-
-                // $this->productoeditorialid=$pedido->pedidoproductos->first()->producto->id;
-                // $this->prod=$pedido->pedidoproductos->first()->producto;
-                // $this->pedidoproductoid=$pedido->pedidoproductos->first()->id;
-            // }
+            }
         }
             $this->facturas = $this->pedidoid
                 ? FacturaDetalle::where('pedido_id',$this->pedidoid)->get()
@@ -415,8 +412,10 @@ class Pedido extends Component
             'transporte'=>$this->transporte,
             'otros'=>$this->otros,
         ]);
-        //desde febrero 2026 actuan igual editorial y otros
-        // if ($this->tipo=='1') {
+        // Editorial: un único producto por pedido, sincronizado desde la cabecera.
+        // Packaging/Propios: varias líneas de producto, cada una gestionada por su
+        // cuenta desde la pestaña Productos (no se tocan aquí).
+        if ($this->tipo=='1') {
             $pprod=PedidoProducto::where('pedido_id',$ped->id)->first();    // miro si ya hay un producto. Si lo hay modifico o actualizo la linea
             if($pprod) $i=$pprod->id;                                       // si no lo creo. Si habia uno el producto es otro lo modifico. No añado
             $pedidopprod=PedidoProducto::updateOrCreate(
@@ -431,7 +430,7 @@ class Pedido extends Component
                 'preciototal'=>$this->preciototal,
             ]
             );
-        // }
+        }
 
         // $this->titulo= $this->tipo='1' ? 'Pedido Editorial:': 'Pedido Packaging/Propios:';
         $pedido=ModeloPedido::find($ped->id);

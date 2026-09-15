@@ -140,26 +140,19 @@ class PedidoController extends Controller
         $p=Pedido::find($pedidoid);
         app()->setLocale(strtolower($p->idioma?->nombre ?? 'es'));
 
-        // $productos=PedidoProducto::where('pedido_id',$pedidoid)->first()->producto;
-        $pedProd = PedidoProducto::with('producto')
-        ->where('pedido_id',$pedidoid)
-        ->first();
-
-        $productos = $pedProd?->producto;
-
-// );
-
         $pedido = Pedido::with(['cliente','contacto','idioma','distribuciones','subpedidos','tareas','laminado','caja',])->find($pedidoid);
 
-        $pedidoproductos=PedidoProducto::where('pedido_id',$pedidoid)->pluck('producto_id');
-
-        //desde febrero 2026 editorial y otros son iguales
-        if($tipo=='1')
+        if($tipo=='1'){
+            // Editorial: un único producto por pedido.
             $vista='pedidos.fichaentradaeditorialpdf';
-        else
+            $productos = PedidoProducto::with('producto')->where('pedido_id',$pedidoid)->first()?->producto;
+            $pdf = \PDF::loadView($vista, compact('pedido','productos'));
+        }else{
+            // Packaging/Propios: varias líneas de producto, cada una con su propia cantidad.
             $vista='pedidos.fichaentradaotrospdf';
-
-        $pdf = \PDF::loadView($vista, compact('pedido','productos'));
+            $pedidoproductos = PedidoProducto::with('producto')->where('pedido_id',$pedidoid)->get();
+            $pdf = \PDF::loadView($vista, compact('pedido','pedidoproductos'));
+        }
 
         $pdf->setPaper('a4','portrait');
         return $pdf->stream('pedido.pdf'); //asi lo muestra por pantalla

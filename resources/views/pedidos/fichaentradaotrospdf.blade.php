@@ -57,15 +57,6 @@
                             </td>
                         </tr>
                         <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.codigo_producto')}}</td>
-                            <td  width=75% style="padding-left:10px;background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $productos?->isbn }}</td>
-                        </tr>
-                        <tr style="">
-                            <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.referencia')}}</td>
-                            <td  width=75% style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $productos?->referencia }}</td>
-                        </tr>
-
-                        <tr style="">
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.descripcion')}}</td>
                             <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">
                                 <p>{!! nl2br(e($pedido->descripcion)) !!}</p>
@@ -127,33 +118,36 @@
                         </tr>
                     </table>
                     {{-- Productos --}}
-                    {{-- @if($productos->count()>0)
+                    @if($pedidoproductos->count()>0)
                     <div class="mx-20 mt-8 border ">
                         <table  width="100%" style="" cellspacing="0" cellpadding="2" class="mx-auto text-xs" >
-                            <tr >
-                                <td class="pl-2 bg-blue-300" style="background-color: #e0f3bc; font-weight:bold;" colspan="7"  >Productos:</td>
-                            </tr>
-                            <tr>
-                                <td class="pl-1 font-bold">Cod./Ref.</td>
-                                <td class="font-bold">Descripción</td>
-                                <td class="font-bold">Material</td>
-                                <td class="font-bold">Medidas</td>
-                                <td class="pr-2 font-bold text-right">Cantidad</td>
-                            </tr>
-
-                            @foreach ($productos as $producto)
-
-                            <tr>
-                                <td class="text-center">{{ $producto->isbn}}</td>
-                                <td>{{ $producto->referencia }}</td>
-                                <td>{{ $producto->material}}</td>
-                                <td>{{ $producto->medidas }}</td>
-                                <td style="text-align: right;" class="pr-2">{{ $producto->tirada}} </td>
-                            </tr>
-                            @endforeach
+                            <thead>
+                                <tr >
+                                    <td class="pl-2 bg-blue-300" style="background-color: #e0f3bc; font-weight:bold;" colspan="5"  >Productos:</td>
+                                </tr>
+                                <tr>
+                                    <td class="pl-1 font-bold">Ref.</td>
+                                    <td class="font-bold">Descripción</td>
+                                    <td class="font-bold">Material</td>
+                                    <td class="font-bold">Medidas</td>
+                                    <td class="pr-2 font-bold text-right">Cantidad</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pedidoproductos as $pedidoproducto)
+                                @php $producto = $pedidoproducto->producto; @endphp
+                                <tr style="page-break-inside: avoid;">
+                                    <td class="text-center">{{ $producto->referencia ?? '' }}</td>
+                                    <td>{{ $producto->isbn ?? '' }}</td>
+                                    <td>{{ $producto->material ?? '' }}</td>
+                                    <td>{{ $producto->medidas ?? '' }}</td>
+                                    <td style="text-align: right;" class="pr-2">{{ $pedidoproducto->tirada }} </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
-                    @endif --}}
+                    @endif
                     <table width="80%" style="margin-top:20px; " cellspacing="0" cellpadding="2" class="mx-auto ">
                         @foreach ($pedido->subpedidos as $subpedido )
                         <tr>
