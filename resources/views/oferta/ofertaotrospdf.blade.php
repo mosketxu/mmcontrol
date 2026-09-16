@@ -143,7 +143,7 @@
                             @if($countbloques > 0)
                             <table width="80%" align="center" style="margin-top:4px; font-size:12px;">
                                 <tr>
-                                    <td colspan="{{ $countbloques }}" style="background-color:#FEFCE8; border-bottom:1px solid #FDE047; padding:3px 4px;"><strong>Otros</strong></td>
+                                    <td colspan="{{ $countbloques }}"><span style="background-color:#F1F5F9; padding:2px 7px; border-radius:3px;"><strong>Otros</strong></span></td>
                                 </tr>
                                 <tr>
                                     @foreach($bloques as $titulo => $contenido)
