@@ -1,26 +1,28 @@
+@php
+    // "0" es el valor por defecto cuando no se ha rellenado (ver comentario
+    // en ofertaotrospdftablacaja.blade.php).
+    $campos = array_filter([
+        'Medidas' => $p->medidasnido,
+        'Material' => $p->materialnido,
+        'Impresión' => $p->impresionnido,
+    ], fn($v) => $v !== null && $v !== '' && $v !== '0');
+@endphp
+@if(count($campos) > 0)
 <table width="100%" cellpadding="2" cellspacing="0" style="page-break-inside: avoid;">
     <tr>
-        <td colspan="2"><strong>Datos Nido</strong></td>
+        <td colspan="4"><strong>Datos Nido</strong></td>
     </tr>
-
-    @if($p->medidasnido!='')
+    @foreach(array_chunk($campos, 2, true) as $par)
     <tr>
-        <td width="30%"><strong>Medidas:</strong></td>
-        <td>{{ $p->medidasnido }}</td>
+        @foreach($par as $etiqueta => $valor)
+        <td width="20%" valign="top"><strong>{{ $etiqueta }}:</strong></td>
+        <td width="30%" valign="top">{{ $valor }}</td>
+        @endforeach
+        @if(count($par) == 1)
+        <td width="20%"></td>
+        <td width="30%"></td>
+        @endif
     </tr>
-    @endif
-
-    @if($p->materialnido!='')
-    <tr>
-        <td><strong>Material:</strong></td>
-        <td>{{ $p->materialnido }}</td>
-    </tr>
-    @endif
-
-    @if($p->impresionnido!='')
-    <tr>
-        <td><strong>Impresión:</strong></td>
-        <td>{{ $p->impresionnido }}</td>
-    </tr>
-    @endif
+    @endforeach
 </table>
+@endif
