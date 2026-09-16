@@ -1,55 +1,33 @@
+@php
+    // "0" es el valor por defecto de estos campos cuando no se han rellenado
+    // (igual que la cantidad de una linea nueva empieza en '0'), asi que se
+    // trata como "vacio" y no se muestra su etiqueta.
+    $campos = array_filter([
+        'Caja' => $p->caja?->name,
+        'Medidas caja' => $p->medidas,
+        'Desarrollo caja' => $p->desarrollocaja,
+        'Material' => $p->material,
+        'Gramaje' => $p->gramajecaja,
+        'Impresión' => $p->impresion,
+        'Acabado' => $p->acabadocaja,
+    ], fn($v) => $v !== null && $v !== '' && $v !== '0');
+@endphp
+@if(count($campos) > 0)
 <table width="100%" cellpadding="2" cellspacing="0" style="page-break-inside: avoid;">
     <tr>
-        <td colspan="2"><strong>Datos Caja</strong></td>
+        <td colspan="4"><strong>Datos Caja</strong></td>
     </tr>
-
-    {{-- @if($p->caja->name!='') --}}
-    @if($p->caja?->name)
+    @foreach(array_chunk($campos, 2, true) as $par)
     <tr>
-        <td width="30%"><strong>Caja:</strong></td>
-        <td>{{ $p->caja->name }}</td>
+        @foreach($par as $etiqueta => $valor)
+        <td width="20%" valign="top"><strong>{{ $etiqueta }}:</strong></td>
+        <td width="30%" valign="top">{{ $valor }}</td>
+        @endforeach
+        @if(count($par) == 1)
+        <td width="20%"></td>
+        <td width="30%"></td>
+        @endif
     </tr>
-    @endif
-
-    @if($p->medidas!='')
-    <tr>
-        <td><strong>Medidas caja:</strong></td>
-        <td>{{ $p->medidas }}</td>
-    </tr>
-    @endif
-
-    @if($p->desarrollocaja!='')
-    <tr>
-        <td><strong>Desarrollo caja:</strong></td>
-        <td>{{ $p->desarrollocaja }}</td>
-    </tr>
-    @endif
-
-    @if($p->material!='')
-    <tr>
-        <td><strong>Material:</strong></td>
-        <td>{{ $p->material }}</td>
-    </tr>
-    @endif
-
-    @if($p->gramajecaja!='')
-    <tr>
-        <td><strong>Gramaje:</strong></td>
-        <td>{{ $p->gramajecaja }}</td>
-    </tr>
-    @endif
-
-    @if($p->impresion!='')
-    <tr>
-        <td><strong>Impresión:</strong></td>
-        <td>{{ $p->impresion }}</td>
-    </tr>
-    @endif
-
-    @if($p->acabadocaja!='')
-    <tr>
-        <td><strong>Acabado:</strong></td>
-        <td>{{ $p->acabadocaja }}</td>
-    </tr>
-    @endif
+    @endforeach
 </table>
+@endif

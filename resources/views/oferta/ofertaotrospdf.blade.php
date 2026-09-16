@@ -93,14 +93,18 @@
                     para cada uno. --}}
                     @forelse ($oferta->ofertaproductos as $op)
                         @php
+                            // "0" es el valor por defecto cuando un campo no se ha rellenado
+                            // (igual que la tirada de una linea nueva empieza en '0'): se
+                            // trata como "vacio" en todas estas comprobaciones.
+                            $relleno = fn($v) => $v !== null && $v !== '' && $v !== '0';
                             $p = $op->producto;
-                            $hayCaja = $p && ($p->caja_id!='' || $p->medidas!='' || $p->desarrollocaja!='' || $p->material!='' || $p->gramajecaja!='' || $p->impresion!='' || $p->acabadocaja!='');
-                            $hayNido = $p && ($p->medidasnido!='' || $p->materialnido!='' || $p->impresionnido!='');
+                            $hayCaja = $p && ($relleno($p->caja?->name) || $relleno($p->medidas) || $relleno($p->desarrollocaja) || $relleno($p->material) || $relleno($p->gramajecaja) || $relleno($p->impresion) || $relleno($p->acabadocaja));
+                            $hayNido = $p && ($relleno($p->medidasnido) || $relleno($p->materialnido) || $relleno($p->impresionnido));
                             $bloques = [];
                             if($p){
-                                if($p->procesospack!='') {$bloques['Procesos'] = nl2br(e($p->procesospack));}
-                                if($p->manipulacion!='') {$bloques['Manipulación'] = nl2br(e($p->manipulacion));}
-                                if($p->observaciones!='') {$bloques['Observaciones'] = nl2br(e($p->observaciones));}
+                                if($relleno($p->procesospack)) {$bloques['Procesos'] = nl2br(e($p->procesospack));}
+                                if($relleno($p->manipulacion)) {$bloques['Manipulación'] = nl2br(e($p->manipulacion));}
+                                if($relleno($p->observaciones)) {$bloques['Observaciones'] = nl2br(e($p->observaciones));}
                             }
                             $countbloques = count($bloques);
                         @endphp
