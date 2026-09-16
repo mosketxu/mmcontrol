@@ -10,7 +10,7 @@
 @if(count($campos) > 0)
 <table width="100%" cellpadding="2" cellspacing="0" style="page-break-inside: avoid;">
     <tr>
-        <td colspan="4"><strong>Datos Nido</strong></td>
+        <td colspan="4" style="background-color:#F0FDF4; border-bottom:1px solid #86EFAC; padding:3px 4px;"><strong>Datos Nido</strong></td>
     </tr>
     @foreach(array_chunk($campos, 2, true) as $par)
     <tr>
