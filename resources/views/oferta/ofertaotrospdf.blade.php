@@ -143,6 +143,9 @@
                             @if($countbloques > 0)
                             <table width="80%" align="center" style="margin-top:4px; font-size:12px;">
                                 <tr>
+                                    <td colspan="{{ $countbloques }}"><strong>Otros</strong></td>
+                                </tr>
+                                <tr>
                                     @foreach($bloques as $titulo => $contenido)
                                         <td width="{{ 100 / $countbloques }}%" valign="top" style="padding-right:10px;">
                                             <strong>{{ $titulo }}</strong><br>
