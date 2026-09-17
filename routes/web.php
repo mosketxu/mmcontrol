@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     //Seguridad
     Route::get('/seguridad/{tab?}', function ($tab = 'usuarios') {
-        abort_unless(in_array($tab, ['usuarios', 'roles', 'responsables', 'permisos']), 404);
+        abort_unless(in_array($tab, ['usuarios', 'roles', 'responsables', 'permisos', 'cuentasbancarias']), 404);
         return view('seguridad.seguridad', compact('tab'));
     })->middleware('can:seguridad.index')->name('seguridad');
 
