@@ -40,7 +40,6 @@ class CuentasBancarias extends Component
     {
         $cuentas=ModelsCuentaBancaria::query()
             ->search('iban',$this->search)
-            ->orderByDesc('es_defecto')
             ->orderBy('id')
             ->get();
         return view('livewire.seguridad.cuentas-bancarias',compact('cuentas'));
