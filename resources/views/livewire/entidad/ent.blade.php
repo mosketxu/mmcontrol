@@ -129,6 +129,16 @@
                 <h3 class="font-semibold ">Datos Facturación</h3>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+                @if(in_array($entidad->entidadtipo_id,[1,2]))
+                <div class="w-full form-item">
+                    <x-jet-label for="cuenta_bancaria_id" title="Cuenta a la que el cliente hará la transferencia">{{ __('Cuenta Bancaria') }}</x-jet-label>
+                    <x-select wire:model.lazy="entidad.cuenta_bancaria_id" selectname="cuenta_bancaria_id" class="w-full">
+                        @foreach ($cuentasbancarias as $cuentabancaria)
+                        <option value="{{ $cuentabancaria->id }}">{{ $cuentabancaria->moneda }} - {{ $cuentabancaria->iban }}</option>
+                        @endforeach
+                    </x-select>
+                </div>
+                @endif
                 {{-- <div class="w-full form-item">
                     <x-jet-label for="banco1" >{{ __('Banco 1') }}</x-jet-label>
                     <x-jet-input  wire:model.defer="entidad.banco1" type="text" id="banco1" name="banco1" :value="old('banco1')" class="w-full"/>

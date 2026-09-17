@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Entidad;
 
-use App\Models\{Entidad, EntidadContacto, EntidadTipo,  MetodoPago,Pais,Provincia, Responsable};
+use App\Models\{CuentaBancaria, Entidad, EntidadContacto, EntidadTipo,  MetodoPago,Pais,Provincia, Responsable};
 // use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
@@ -43,6 +43,7 @@ class Ent extends Component
             'entidad.banco2'=>'nullable',
             'entidad.iban1'=>'nullable',
             'entidad.iban2'=>'nullable',
+            'entidad.cuenta_bancaria_id'=>'nullable',
             'entidad.metodopago_id'=>'nullable',
             'entidad.metodopago'=>'nullable',
             'entidad.diavencimiento'=>'numeric|nullable',
@@ -75,6 +76,9 @@ class Ent extends Component
         $this->fechaIni=$this->entidad->fecha_ini ? Carbon::parse($this->entidad->fecha_ini)->format('Y-m-d') : now()->format('Y-m-d');
         $this->entidad->entidadtipo_id=$entidadtipoId;
         $this->entidadtipo=EntidadTipo::find($entidadtipoId);
+        if(!$this->entidad->id && !$this->entidad->cuenta_bancaria_id){
+            $this->entidad->cuenta_bancaria_id=CuentaBancaria::where('es_defecto',true)->value('id');
+        }
     }
 
     public function render(){
@@ -88,7 +92,8 @@ class Ent extends Component
         $metodopagos=MetodoPago::all();
         $provincias=Provincia::orderBy('provincia')->get();
         $paises=Pais::all();
-        return view('livewire.entidad.ent',compact('responsables','metodopagos','provincias','paises','tiposentidad'));
+        $cuentasbancarias=CuentaBancaria::orderBy('id')->get();
+        return view('livewire.entidad.ent',compact('responsables','metodopagos','provincias','paises','tiposentidad','cuentasbancarias'));
     }
 
     public function save(){
@@ -140,6 +145,7 @@ class Ent extends Component
             'banco2'=>$this->entidad->banco2,
             'iban1'=>$this->entidad->iban1,
             'iban2'=>$this->entidad->iban2,
+            'cuenta_bancaria_id'=>$this->entidad->cuenta_bancaria_id,
             'metodopago_id'=>$this->entidad->metodopago_id,
             'metodopago'=>$this->entidad->metodopago,
             'diavencimiento'=>$this->entidad->diavencimiento,
