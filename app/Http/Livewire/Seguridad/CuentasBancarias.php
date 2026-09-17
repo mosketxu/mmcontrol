@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Seguridad;
 
 use App\Models\CuentaBancaria as ModelsCuentaBancaria;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
 
@@ -14,16 +15,6 @@ class CuentasBancarias extends Component
     public $valorcampo1='';
     public $valorcampo2='';
     public $valorcampo3='';
-    public $titcampo1='IBAN';
-    public $titcampo2='BIC';
-    public $titcampo3='Moneda';
-    public $campo1='iban';
-    public $campo2='bic';
-    public $campo3='moneda';
-    public $campo1visible=1;
-    public $campo2visible=1;
-    public $campo3visible=1;
-    public $editarvisible=0;
     public $search='';
 
     protected $listeners = [ 'refresh' => '$refresh'];
@@ -47,12 +38,12 @@ class CuentasBancarias extends Component
 
     public function render()
     {
-        $valores=ModelsCuentaBancaria::query()
+        $cuentas=ModelsCuentaBancaria::query()
             ->search('iban',$this->search)
-            ->select('id','iban as valorcampo1','bic as valorcampo2','moneda as valorcampo3')
+            ->orderByDesc('es_defecto')
             ->orderBy('id')
             ->get();
-        return view('livewire.auxiliarcard',compact('valores'));
+        return view('livewire.seguridad.cuentas-bancarias',compact('cuentas'));
     }
 
     public function changeCampo(ModelsCuentaBancaria $valor,$campo,$valorcampo)
@@ -73,6 +64,15 @@ class CuentasBancarias extends Component
         $this->dispatchBrowserEvent('notify', 'Cuenta Bancaria Actualizada.');
     }
 
+    public function setDefecto($valorId)
+    {
+        DB::transaction(function () use ($valorId) {
+            ModelsCuentaBancaria::where('es_defecto',true)->update(['es_defecto'=>false]);
+            ModelsCuentaBancaria::where('id',$valorId)->update(['es_defecto'=>true]);
+        });
+        $this->dispatch('notify', 'Cuenta marcada como predeterminada.');
+    }
+
     public function save()
     {
         $this->validate();
@@ -81,6 +81,7 @@ class CuentasBancarias extends Component
             'iban'=>$this->valorcampo1,
             'bic'=>$this->valorcampo2,
             'moneda'=>$this->valorcampo3,
+            'es_defecto'=>false,
         ]);
 
         $this->dispatchBrowserEvent('notify', 'Cuenta Bancaria añadida con éxito');
@@ -96,6 +97,10 @@ class CuentasBancarias extends Component
         $borrar = ModelsCuentaBancaria::find($valorId);
 
         if ($borrar) {
+            if ($borrar->es_defecto) {
+                $this->dispatch('notify', 'No se puede eliminar la cuenta predeterminada: marca otra como predeterminada primero.');
+                return;
+            }
             try {
                 $borrar->delete();
                 $this->dispatchBrowserEvent('notify', 'Cuenta Bancaria eliminada!');
