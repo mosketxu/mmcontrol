@@ -5,7 +5,7 @@
                     <h3 class="text-lg font-bold">{{ $titulo }}</h3>
                 </div>
                 <div>
-                    <input type="text" wire:model.live="search" class="w-full py-2 mb-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" placeholder="Búsqueda" autofocus/>
+                    <input type="text" wire:model="search" class="w-full py-2 mb-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" placeholder="Búsqueda" autofocus/>
                 </div>
             </div>
             <div class="">
@@ -68,15 +68,15 @@
                         <form wire:submit.prevent="save">
                             <tr>
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
-                                    <input type="text" wire:model.live="valorcampo1" placeholder="IBAN"
+                                    <input type="text" wire:model.defer="valorcampo1" placeholder="IBAN"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
-                                    <input type="text" wire:model.live="valorcampo2" placeholder="BIC"
+                                    <input type="text" wire:model.defer="valorcampo2" placeholder="BIC"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
-                                    <input type="text" wire:model.live="valorcampo3" placeholder="Moneda"
+                                    <input type="text" wire:model.defer="valorcampo3" placeholder="Moneda"
                                     class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </td>
                                 <td class="p-2 text-xs text-center text-gray-400">—</td>

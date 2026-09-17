@@ -70,7 +70,7 @@ class CuentasBancarias extends Component
             ModelsCuentaBancaria::where('es_defecto',true)->update(['es_defecto'=>false]);
             ModelsCuentaBancaria::where('id',$valorId)->update(['es_defecto'=>true]);
         });
-        $this->dispatch('notify', 'Cuenta marcada como predeterminada.');
+        $this->dispatchBrowserEvent('notify', 'Cuenta marcada como predeterminada.');
     }
 
     public function save()
@@ -98,7 +98,7 @@ class CuentasBancarias extends Component
 
         if ($borrar) {
             if ($borrar->es_defecto) {
-                $this->dispatch('notify', 'No se puede eliminar la cuenta predeterminada: marca otra como predeterminada primero.');
+                $this->dispatchBrowserEvent('notify', 'No se puede eliminar la cuenta predeterminada: marca otra como predeterminada primero.');
                 return;
             }
             try {
