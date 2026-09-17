@@ -6,7 +6,7 @@
             </h2>
 
             <nav class="flex flex-wrap gap-2 ml-6">
-                @foreach (['usuarios' => 'Usuarios', 'roles' => 'Roles', 'responsables' => 'Responsables', 'permisos' => 'Permisos'] as $slug => $label)
+                @foreach (['usuarios' => 'Usuarios', 'roles' => 'Roles', 'responsables' => 'Responsables', 'permisos' => 'Permisos', 'cuentasbancarias' => 'Cuentas Bancarias'] as $slug => $label)
                     <a href="{{ route('seguridad', $slug) }}"
                         class="px-4 py-1.5 text-sm font-medium rounded-md transition
                             {{ $tab === $slug
@@ -35,6 +35,9 @@
                             @break
                         @case('permisos')
                             @livewire('seguridad.permisos')
+                            @break
+                        @case('cuentasbancarias')
+                            @livewire('seguridad.cuentas-bancarias')
                             @break
                     @endswitch
                 </div>

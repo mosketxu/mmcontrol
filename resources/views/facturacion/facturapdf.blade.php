@@ -121,12 +121,13 @@
                         <td class="font-bold text-right">IMPORTE IVA</td>
                         <td class="font-bold text-right">TOTAL FACTURA</td>
                     </tr>
+                    @php $cuentabancaria = $factura->cliente->cuentaBancaria; @endphp
                     @foreach ($totales as $total)
                     <tr >
                         <td class="text-right">{{ number_format($total->subtotalsiniva,2,',','.') }}</td>
                         <td class="text-right">% {{ number_format($total->iva*100,0)  }} </td>
                         <td class="text-right">{{ number_format($total->subtotaliva,2,',','.') }}</td>
-                        <td class="text-right">{{ number_format($total->subtotal,2,',','.') }}</td>
+                        <td class="text-right">{{ number_format($total->subtotal,2,',','.') }} {{ $cuentabancaria->moneda ?? '' }}</td>
                     </tr>
                     @endforeach
                     @if($totales->count()>1)
@@ -134,7 +135,7 @@
                         <td class="font-bold text-right">{{ number_format($factura->importe,3,',','.') }}</td>
                         <td></td >
                         <td class="font-bold text-right">{{ number_format($factura->iva,2,',','.') }}</td>
-                        <td class="font-bold text-right">{{ number_format($factura->total,2,',','.') }}</td>
+                        <td class="font-bold text-right">{{ number_format($factura->total,2,',','.') }} {{ $cuentabancaria->moneda ?? '' }}</td>
                     </tr>
                     @endif
                 </table>
@@ -143,8 +144,8 @@
                     <tr>
                         <td width="30%" class="text-xs italic text-right"  >Vto: {{ $factura->ffacturavto }}</td>
                         <td width="10%" class="text-xs italic text-right"  ></td>
-                        @if($factura->cliente->iban2!='')
-                        <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN {{ $factura->cliente->iban2 }}</td>
+                        @if($cuentabancaria)
+                        <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN {{ $cuentabancaria->iban }}@if($cuentabancaria->bic) - BIC {{ $cuentabancaria->bic }}@endif</td>
                         @else
                         <td width="60%" class="text-xs italic text-left"  >TRANSFERENCIA A: IBAN ES47 0182 8611 7602 0010 3154</td>
                         @endif

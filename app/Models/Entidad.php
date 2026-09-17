@@ -14,7 +14,7 @@ class Entidad extends Model
     protected $table = 'entidades';
     protected $fillable=['entidad','entidadtipo_id','fecha_ini','responsable','direccion','cp','localidad','provincia_id','pais_id',
                         'nif','tfno','emailgral','emailadm','emailaux','web',
-                        'banco1','iban1','banco2','iban2',
+                        'banco1','iban1','banco2','iban2','cuenta_bancaria_id',
                         'vencimientofechafactura','credito','empresacredito','importecredito','vigenciacredito',
                         'metodopago_id','metodopago','diavencimiento','observaciones'];
 
@@ -25,6 +25,7 @@ class Entidad extends Model
     public function pais(){ return $this->belongsTo(Pais::class);}
     public function provincia(){return $this->belongsTo(Provincia::class);}
     public function metodopago(){return $this->belongsTo(MetodoPago::class);}
+    public function cuentaBancaria(){return $this->belongsTo(CuentaBancaria::class);}
     public function contactos(){return $this->hasMany(EntidadContacto::class,'contacto_id');}
     public function contactosEntidad(){return $this->hasMany(EntidadContacto::class,'entidad_id');}
     public function destinos(){return $this->hasMany(EntidadDestino::class);}
