@@ -37,7 +37,7 @@
                     <td> </td>
                     <td class="text-right"></td>
                     <td class="italic font-bold text-right"> Total</td>
-                    <td class="italic font-bold text-right">{{ number_format(round($detalle->sum('total'),2),2) }}</td>
+                    <td class="italic font-bold text-right">{{ number_format(round($detalles->sum('total'),2),2) }}</td>
 
                 </tr>
             </table>

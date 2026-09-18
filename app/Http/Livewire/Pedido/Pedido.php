@@ -347,7 +347,7 @@ class Pedido extends Component
         if($this->ctrentrega =='') $this->ctrentrega='0';
         if($this->ctrplotter =='') $this->ctrplotter='0';
         if($this->contacto_id =='') $this->contacto_id=null;
-        if($this->idioma_id =='') $this->idioma_id=null;
+        if($this->idioma_id =='') $this->idioma_id=1;
 
         if($this->precio=='') $this->precio='0';
         if($this->consumo=='') $this->consumo='0';

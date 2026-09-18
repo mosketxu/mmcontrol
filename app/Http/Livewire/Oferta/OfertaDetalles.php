@@ -67,6 +67,8 @@ class OfertaDetalles extends Component
 
     public function changeValor(OfertaDetalle $odetalle,$campo,$valor){
         // dd($odetalle,$campo,$valor);
+        if($campo=='cantidad' || $campo=='importe')
+            $valor=str_replace(',','.',$valor);
         if($campo=='cantidad')
             $this->total=round($valor * $odetalle->importe,4);
         elseif($campo=='importe')
