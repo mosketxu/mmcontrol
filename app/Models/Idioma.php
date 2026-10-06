@@ -11,6 +11,11 @@ class Idioma extends Model
 
     protected $fillable = ['codigo','nombre',];
 
+    // Idioma por defecto (Español) para presupuestos, pedidos y productos
+    public static function idEspanol(){
+        return static::where('codigo','ES')->value('id') ?? 1;
+    }
+
     public function productos(){return $this->hasMany(Producto::class, 'idioma_id');}
     public function presupuestos(){return $this->hasMany(Presupuesto::class, 'idioma_id');}
     public function pedidos(){return $this->hasMany(Pedido::class, 'idioma_id');}

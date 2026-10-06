@@ -31,15 +31,16 @@ class Gramaje extends Component
     protected function rules()
     {
         return [
-            'valorcampo2'=>'required|unique:gramajes,name',
+            'valorcampo1'=>'required|unique:gramajes,name',
+            'valorcampo2'=>'nullable',
             'valorcampo3'=>'nullable',
         ];
     }
     public function messages()
     {
         return [
-            'valorcampo2.required' => 'El nombre del Gramaje es necesario,',
-            'valorcampo2.unique' => 'El Gramaje ya existe. Elige otro nombre,',
+            'valorcampo1.required' => 'El nombre del Gramaje es necesario.',
+            'valorcampo1.unique' => 'El Gramaje ya existe. Elige otro nombre.',
         ];
     }
 
@@ -55,9 +56,12 @@ class Gramaje extends Component
 
     public function changeCampo(ModelsGramaje $valor,$campo,$valorcampo)
     {
-        Validator::make(['valorcampo'=>$valorcampo],[
-            'valorcampo'=>'required|unique:gramajes,name',
-            ])->validate();
+        if($campo=='name')
+            Validator::make(['valorcampo'=>$valorcampo],[
+                'valorcampo'=>'required|unique:gramajes,name,'.$valor->id,
+                ],[
+                'valorcampo.unique'=>'El Gramaje ya existe. Elige otro nombre.',
+                ])->validate();
         $p=ModelsGramaje::find($valor->id);
         if($campo=='familia') $valorcampo=strtoupper($valorcampo);
         $p->$campo=$valorcampo;

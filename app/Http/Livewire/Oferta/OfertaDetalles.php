@@ -62,17 +62,23 @@ class OfertaDetalles extends Component
 
         return view('livewire.oferta.oferta-detalles',compact('odetalles'));
     }
-    public function UpdatedCantidad(){ $this->total=round($this->cantidad * $this->importe,4);}
-    public function UpdatedImporte(){ $this->total=round($this->cantidad * $this->importe,4);}
+    // Convierte lo escrito en el formulario (vacío, con coma decimal...) en número
+    private function num($v){
+        $v=str_replace(',','.',trim((string) $v));
+        return is_numeric($v) ? (float) $v : 0;
+    }
+
+    public function UpdatedCantidad(){ $this->total=round($this->num($this->cantidad) * $this->num($this->importe),4);}
+    public function UpdatedImporte(){ $this->total=round($this->num($this->cantidad) * $this->num($this->importe),4);}
 
     public function changeValor(OfertaDetalle $odetalle,$campo,$valor){
         // dd($odetalle,$campo,$valor);
         if($campo=='cantidad' || $campo=='importe')
-            $valor=str_replace(',','.',$valor);
+            $valor=$this->num($valor);
         if($campo=='cantidad')
-            $this->total=round($valor * $odetalle->importe,4);
+            $this->total=round($valor * $this->num($odetalle->importe),4);
         elseif($campo=='importe')
-            $this->total=round($valor * $odetalle->cantidad,4);
+            $this->total=round($valor * $this->num($odetalle->cantidad),4);
         $this->oferta_id=$odetalle->oferta_id;
         $this->validate();
         // $this->oferta_id='';
