@@ -380,6 +380,7 @@ class Presupuesto extends Component
         $this->okexterno=$this->okexterno=='' ? '0' : $this->okexterno;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
         if($this->contacto_id =='') $this->contacto_id=null;
+        if($this->proveedor_id =='') $this->proveedor_id=null;
         if($this->idioma_id =='') $this->idioma_id=Idioma::idEspanol();
         $this->validarIdiomaProducto($this->productoeditorialid);
         $this->validarIdiomaProductosPresupuesto();

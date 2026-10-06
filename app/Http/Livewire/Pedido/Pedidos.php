@@ -157,6 +157,8 @@ class Pedidos extends Component
     public function updatingFiltrofacturado(){$this->resetPage();}
 
     public function changeValor(Pedido $pedido,$campo,$valor){
+        // un desplegable en blanco (proveedor_id...) debe guardarse como NULL, no como ''
+        if($valor==='' && str_ends_with($campo,'_id')) $valor=null;
         $pedido->update([$campo=>$valor]);
         $this->dispatchBrowserEvent('notify', 'Actualizado con éxito.');
     }
