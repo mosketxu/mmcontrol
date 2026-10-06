@@ -112,6 +112,7 @@ class Prod extends Component
 
     public function mount(Producto $producto,$tipo,$titulo){
         $this->producto=$producto;
+        if(!$this->producto->id && !$this->producto->idioma_id) $this->producto->idioma_id=Idioma::idEspanol();
         $this->tipo=$tipo;
         $this->titulo=$titulo;
         $this->returnUrl = session('producto_index_url', route('producto.tipo', $tipo));
@@ -182,7 +183,7 @@ class Prod extends Component
     public function save(){
         if($this->producto->cliente_id=='') $this->producto->cliente_id=null;
         if($this->producto->caja_id=='') $this->producto->caja_id=null;
-        if($this->producto->idioma_id=='') $this->producto->idioma_id=null;
+        if($this->producto->idioma_id=='') $this->producto->idioma_id=Idioma::idEspanol();
         if($this->producto->productoestado=='') $this->producto->productoestado='1';
         if($this->tipo) $this->producto->tipo=$this->tipo;
         if($this->producto->id){

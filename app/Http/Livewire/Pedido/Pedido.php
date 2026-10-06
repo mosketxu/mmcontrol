@@ -150,6 +150,7 @@ class Pedido extends Component
         $this->titulo=$titulo;
         $this->tipo=$tipo;
         $this->ruta=$ruta;
+        $this->idioma_id=Idioma::idEspanol();
 
         if ($pedidoid!='') {
             // $pedido=ModeloPedido::find($pedidoid);
@@ -159,7 +160,7 @@ class Pedido extends Component
             $this->pedidoid=$pedido->id;
             $this->responsable=$pedido->responsable;
             $this->cliente_id=$pedido->cliente_id;
-            $this->idioma_id=$pedido->idioma_id;
+            $this->idioma_id=$pedido->idioma_id ?: Idioma::idEspanol();
             $this->descripcion=$pedido->descripcion;
             $this->pedidocliente=$pedido->pedidocliente;
             $this->oferta_id=$pedido->oferta_id;
@@ -281,7 +282,7 @@ class Pedido extends Component
     }
 
     public function updatedIdiomaId(){
-        if($this->idioma_id=='') $this->idioma_id=null;
+        if($this->idioma_id=='') $this->idioma_id=Idioma::idEspanol();
         $this->limpiarProductoSiNoCoincideIdioma();
     }
 
@@ -347,7 +348,7 @@ class Pedido extends Component
         if($this->ctrentrega =='') $this->ctrentrega='0';
         if($this->ctrplotter =='') $this->ctrplotter='0';
         if($this->contacto_id =='') $this->contacto_id=null;
-        if($this->idioma_id =='') $this->idioma_id=1;
+        if($this->idioma_id =='') $this->idioma_id=Idioma::idEspanol();
 
         if($this->precio=='') $this->precio='0';
         if($this->consumo=='') $this->consumo='0';

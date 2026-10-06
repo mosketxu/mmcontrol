@@ -125,6 +125,7 @@ class Presupuesto extends Component
         $this->titulo=$titulo;
         $this->tipo=$tipo;
         $this->ruta=$ruta;
+        $this->idioma_id=Idioma::idEspanol();
 
         if ($presupuestoid!='') {
             // $presupuesto=ModelsPresupuesto::find($presupuestoid);
@@ -133,7 +134,7 @@ class Presupuesto extends Component
             $this->presupuestoid=$presupuesto->id;
             $this->responsable=$presupuesto->responsable;
             $this->cliente_id=$presupuesto->cliente_id;
-            $this->idioma_id=$presupuesto->idioma_id;
+            $this->idioma_id=$presupuesto->idioma_id ?: Idioma::idEspanol();
             $this->descripcion=$presupuesto->descripcion;
             $this->contacto_id=$presupuesto->contacto_id;
             $this->proveedor_id=$presupuesto->proveedor_id;
@@ -243,7 +244,7 @@ class Presupuesto extends Component
 
         $resp = $this->entidades->firstWhere('id', $this->cliente_id);
 
-        if($resp->responsable!='') $this->responsable=$resp->responsable;
+        if($resp && $resp->responsable!='') $this->responsable=$resp->responsable;
 
         $this->cargarPedidos();
         $this->cargarProductos();
@@ -251,7 +252,7 @@ class Presupuesto extends Component
     }
 
     public function updatedIdiomaId(){
-        if($this->idioma_id=='') $this->idioma_id=null;
+        if($this->idioma_id=='') $this->idioma_id=Idioma::idEspanol();
         $this->cargarProductos();
         $this->limpiarProductoSiNoCoincideIdioma();
     }
@@ -379,7 +380,7 @@ class Presupuesto extends Component
         $this->okexterno=$this->okexterno=='' ? '0' : $this->okexterno;
         $this->espedido=$this->espedido=='' ? '0' : $this->espedido;
         if($this->contacto_id =='') $this->contacto_id=null;
-        if($this->idioma_id =='') $this->idioma_id=1;
+        if($this->idioma_id =='') $this->idioma_id=Idioma::idEspanol();
         $this->validarIdiomaProducto($this->productoeditorialid);
         $this->validarIdiomaProductosPresupuesto();
         $mensaje="Presupuesto creado satisfactoriamente";

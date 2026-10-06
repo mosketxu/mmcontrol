@@ -99,15 +99,24 @@ class Fdetalle extends Component
         }
     }
 
-    public function calculos(){
-        $this->subtotalsiniva=round($this->importe * $this->cantidad ,4);
-        $this->subtotaliva=round($this->importe * $this->cantidad * $this->iva ,4);
-        $this->subtotal=round($this->importe *$this->cantidad * (1+$this->iva) ,4);
+    // Convierte lo escrito en el formulario (vacío, con coma decimal...) en número
+    private function num($v){
+        $v=str_replace(',','.',trim((string) $v));
+        return is_numeric($v) ? (float) $v : 0;
     }
 
-    public function UpdatedCantidad(){ if($this->cantidad=='') $this->cantidad=='0'; $this->calculos(); }
-    public function UpdatedIva(){  if($this->iva=='') $this->iva=='0'; $this->calculos();}
-    public function UpdatedImporte(){  if($this->importe=='') $this->importe=='0'; $this->calculos(); }
+    public function calculos(){
+        $importe=$this->num($this->importe);
+        $cantidad=$this->num($this->cantidad);
+        $iva=$this->num($this->iva);
+        $this->subtotalsiniva=round($importe * $cantidad ,4);
+        $this->subtotaliva=round($importe * $cantidad * $iva ,4);
+        $this->subtotal=round($importe * $cantidad * (1+$iva) ,4);
+    }
+
+    public function UpdatedCantidad(){ $this->calculos(); }
+    public function UpdatedIva(){ $this->calculos(); }
+    public function UpdatedImporte(){ $this->calculos(); }
 
     public function changeValor(ModelsFacturaDetalle $facturadetalle,$campo,$valor){
         $this->validate();
