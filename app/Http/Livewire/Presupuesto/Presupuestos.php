@@ -89,6 +89,8 @@ class Presupuestos extends Component
 
 
     public function changeValor(Presupuesto $presupuesto,$campo,$valor){
+        // un desplegable en blanco (proveedor_id...) debe guardarse como NULL, no como ''
+        if($valor==='' && str_ends_with($campo,'_id')) $valor=null;
         if($campo=='okexterno'){
             $valor=$presupuesto->okexterno=='on' ? '0' : '1';
             // dd($valor);
