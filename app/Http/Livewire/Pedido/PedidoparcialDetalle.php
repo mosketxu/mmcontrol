@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Pedido;
 
+use App\Models\Pedido;
+use App\Models\PedidoParcial;
 use App\Models\PedidoparcialDetalle as PedidoPedidoparcialDetalle;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -41,7 +43,8 @@ class PedidoparcialDetalle extends Component
 
     public function render(){
         $detalles=PedidoPedidoparcialDetalle::where('parcial_id',$this->parcialid)->get();
-        return view('livewire.pedido.pedidoparcial-detalle',compact('detalles'));
+        $facturado=\App\Models\FacturaDetalle::where('parcial_id',$this->parcialid)->first();
+        return view('livewire.pedido.pedidoparcial-detalle',compact('detalles','facturado'));
     }
 
     public function updatedCantidad(){
@@ -78,6 +81,39 @@ class PedidoparcialDetalle extends Component
         $this->total='0';
         $this->emit('refresh');
 
+    }
+
+    // Copia al albarán las líneas del pedido (concepto, cantidad y precio); las cantidades se pueden editar después.
+    public function cargarDelPedido(){
+        $parcial=PedidoParcial::find($this->parcialid);
+        if(!$parcial) return;
+        if($parcial->facturadetalles()->exists()){
+            $this->dispatchBrowserEvent('notifyred', 'El albarán ya está facturado.');
+            return;
+        }
+        $pedido=Pedido::find($parcial->pedido_id);
+        if(!$pedido) return;
+
+        $lineas=[];
+        foreach($pedido->pedidoproductos()->orderBy('orden')->orderBy('id')->get() as $pp){
+            $concepto=optional($pp->producto)->referencia ?: $pedido->descripcion;
+            $precio=(float)$pp->precio_ud>0 ? $pp->precio_ud : $pedido->precio;
+            $lineas[]=['concepto'=>$concepto,'cantidad'=>$pp->tirada,'precio_ud'=>$precio];
+        }
+        if(!$lineas){
+            $lineas[]=['concepto'=>$pedido->descripcion,'cantidad'=>$parcial->cantidad ?: $pedido->tiradareal,'precio_ud'=>$pedido->precio];
+        }
+        foreach($lineas as $l){
+            PedidoPedidoparcialDetalle::create([
+                'parcial_id'=>$parcial->id,
+                'concepto'=>$l['concepto'] ?: 'Pedido '.$pedido->id,
+                'cantidad'=>$l['cantidad'] ?: 0,
+                'precio_ud'=>$l['precio_ud'] ?: 0,
+                'total'=>round(($l['cantidad'] ?: 0)*($l['precio_ud'] ?: 0),6),
+            ]);
+        }
+        $this->dispatchBrowserEvent('notify', 'Líneas cargadas del pedido.');
+        $this->emit('refresh');
     }
 
     public function delete($valorId){

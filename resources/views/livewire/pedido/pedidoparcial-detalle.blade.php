@@ -2,6 +2,15 @@
     <div class="">
         @include('errores')
     </div>
+    @if($facturado)
+        <div class="px-2 py-1 text-xs text-green-800 bg-green-100 rounded-md">Albarán facturado en la factura {{ $facturado->factura_id }}.</div>
+    @elseif($escliente=='')
+        <div class="flex justify-end">
+            <button type="button" wire:click="cargarDelPedido"
+                @if($detalles->count()) onclick="confirm('El albarán ya tiene líneas; se añadirán las del pedido. ¿Continuar?') || event.stopImmediatePropagation()" @endif
+                class="px-2 py-1 text-xs text-white bg-blue-500 rounded-md hover:bg-blue-600">Cargar líneas del pedido</button>
+        </div>
+    @endif
     <div class="flex w-full text-sm text-gray-500 bg-blue-100 rounded-t-md">
         <div class="w-5/12 mr-1 font-light text-center rounded-md">{{ __('Conceptos')}} </div>
         <div class="w-2/12 pr-6 mr-1 font-light text-right rounded-md">{{ __('Cantidad')}} </div>
