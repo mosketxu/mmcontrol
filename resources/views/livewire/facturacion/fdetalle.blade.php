@@ -150,7 +150,7 @@
 
     {{-- Albaranes pendientes de facturar --}}
     @if($albaranes->count())
-        <div class="p-2 space-y-1 text-xs bg-yellow-50 border border-yellow-200 rounded-md">
+        <div style="padding:8px;font-size:12px;background:#fefce8;border:1px solid #fde68a;border-radius:6px">
             <div class="font-medium text-gray-600">Albaranes pendientes de facturar de este cliente</div>
             @foreach ($albaranes as $alb)
                 @php $totalalb=$alb->parcialdetalles->sum('total'); @endphp
@@ -161,7 +161,7 @@
                     </span>
                     <button type="button" wire:click="traerAlbaran({{ $alb->id }})"
                         onclick="confirm('¿Traer el albarán {{ $alb->id }} a la factura?') || event.stopImmediatePropagation()"
-                        class="px-2 py-1 text-white bg-blue-500 rounded-md hover:bg-blue-600">Traer a la factura</button>
+                        style="padding:4px 10px;font-size:12px;color:#fff;background:#2563eb;border-radius:6px;cursor:pointer">Traer a la factura</button>
                 </div>
             @endforeach
         </div>
