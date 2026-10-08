@@ -18,6 +18,8 @@ class PedidoParcial extends Model
     public function pedido(){return $this->belongsTo(Pedido::class,'pedido_id');}
     public function parcialdetalles(){return $this->hasMany(PedidoparcialDetalle::class,'parcial_id');}
 
+    public function facturadetalles(){return $this->hasMany(FacturaDetalle::class,'parcial_id');}
+
     public function getFfechaAttribute(){
         if ($this->fecha) {
             return Carbon::parse($this->fecha)->format('d/m/Y');

@@ -8,6 +8,7 @@ use App\Models\Entidad;
 use App\Models\Factura;
 use App\Models\FacturaDetalle as ModelsFacturaDetalle;
 use App\Models\Pedido;
+use App\Models\PedidoParcial;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,7 +75,79 @@ class Fdetalle extends Component
         ->get();
         $pedidos=$pedidostodos->where('facturado','!=','1');
         $fdetalles=ModelsFacturaDetalle::where('factura_id',$this->factura->id)->orderBy('orden')->orderBy('pedido_id')->get();
-        return view('livewire.facturacion.fdetalle',compact(['fdetalles','entidad','pedidostodos','pedidos']));
+        $albaranes=$this->bloqueado=='0' ? $this->albaranesPendientes() : collect();
+        return view('livewire.facturacion.fdetalle',compact(['fdetalles','entidad','pedidostodos','pedidos','albaranes']));
+    }
+
+    // Albaranes del cliente con líneas y sin facturar.
+    protected function albaranesPendientes(){
+        return PedidoParcial::query()
+            ->whereHas('pedido',function($q){
+                $q->where('cliente_id',$this->factura->cliente_id)
+                  ->when($this->factura->pedidocliente!='',function($q2){
+                      $q2->where('pedidocliente',$this->factura->pedidocliente);
+                  });
+            })
+            ->whereHas('parcialdetalles')
+            ->whereDoesntHave('facturadetalles')
+            ->with(['pedido','parcialdetalles'])
+            ->orderBy('id')
+            ->get();
+    }
+
+    // Copia las líneas de un albarán a la factura y lo marca como facturado (parcial_id).
+    public function traerAlbaran($parcialId){
+        if($this->bloqueado!='0'){
+            $this->dispatchBrowserEvent('notifyred', 'La factura ya se ha enviado. Debe desbloquearla.');
+            return;
+        }
+        $parcial=PedidoParcial::with(['pedido','parcialdetalles'])->find($parcialId);
+        if(!$parcial || !$parcial->pedido || $parcial->pedido->cliente_id!=$this->factura->cliente_id) return;
+        if($parcial->facturadetalles()->exists()){
+            $this->dispatchBrowserEvent('notifyred', 'Ese albarán ya está facturado.');
+            return;
+        }
+
+        DB::transaction(function() use ($parcial){
+            foreach($parcial->parcialdetalles as $l){
+                $cantidad=(float)$l->cantidad;
+                $importe=(float)$l->precio_ud;
+                ModelsFacturaDetalle::create([
+                    'factura_id'=>$this->factura->id,
+                    'pedido_id'=>$parcial->pedido_id,
+                    'parcial_id'=>$parcial->id,
+                    'concepto'=>$l->concepto,
+                    'cantidad'=>$cantidad,
+                    'iva'=>0.21,
+                    'importe'=>$importe,
+                    'subtotalsiniva'=>round($importe*$cantidad,4),
+                    'subtotaliva'=>round($importe*$cantidad*0.21,4),
+                    'subtotal'=>round($importe*$cantidad*1.21,4),
+                    'orden'=>0,
+                    'visible'=>true,
+                    'observaciones'=>'Albarán '.$parcial->id,
+                ]);
+            }
+
+            $totales=ModelsFacturaDetalle::where('factura_id',$this->factura->id)
+                ->select(DB::raw('SUM(subtotalsiniva) as subtotalsiniva'),DB::raw('SUM(subtotaliva) as subtotaliva'),DB::raw('SUM(subtotal) as subtotal'))
+                ->first();
+            $this->factura->update([
+                'importe'=>$totales->subtotalsiniva,
+                'iva'=>$totales->subtotaliva,
+                'total'=>$totales->subtotal,
+            ]);
+
+            // Pedido: facturado del todo (1) o parcialmente (2, si quedan albaranes con líneas sin facturar).
+            $quedan=PedidoParcial::where('pedido_id',$parcial->pedido_id)
+                ->whereHas('parcialdetalles')
+                ->whereDoesntHave('facturadetalles')
+                ->exists();
+            Pedido::where('id',$parcial->pedido_id)->update(['facturado'=>$quedan ? '2' : '1']);
+        });
+
+        $this->emitUp('refreshfactura');
+        $this->dispatchBrowserEvent('notify', 'Albarán '.$parcial->id.' traído a la factura.');
     }
 
     public function UpdatedPedidoId(){

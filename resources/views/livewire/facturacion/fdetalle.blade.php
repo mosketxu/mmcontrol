@@ -148,6 +148,25 @@
     </form>
     @endif
 
+    {{-- Albaranes pendientes de facturar --}}
+    @if($albaranes->count())
+        <div class="p-2 space-y-1 text-xs bg-yellow-50 border border-yellow-200 rounded-md">
+            <div class="font-medium text-gray-600">Albaranes pendientes de facturar de este cliente</div>
+            @foreach ($albaranes as $alb)
+                @php $totalalb=$alb->parcialdetalles->sum('total'); @endphp
+                <div class="flex items-center justify-between py-0.5 border-t border-yellow-100">
+                    <span class="text-gray-600">
+                        Albarán {{ $alb->id }} · Pedido {{ $alb->pedido_id }} · {{ $alb->ffecha }}
+                        · {{ $alb->parcialdetalles->count() }} línea(s) · {{ number_format($totalalb,2,',','.') }} € sin IVA
+                    </span>
+                    <button type="button" wire:click="traerAlbaran({{ $alb->id }})"
+                        onclick="confirm('¿Traer el albarán {{ $alb->id }} a la factura?') || event.stopImmediatePropagation()"
+                        class="px-2 py-1 text-white bg-blue-500 rounded-md hover:bg-blue-600">Traer a la factura</button>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
     {{-- Lista detalles --}}
     @forelse ($fdetalles as $fdetalle)
         @livewire('facturacion.fdetalles',['factura'=>$factura,'fdetalle'=>$fdetalle,'deshabilitado'=>$deshabilitado],key($fdetalle->id))
