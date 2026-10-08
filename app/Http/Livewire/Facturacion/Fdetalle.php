@@ -92,7 +92,9 @@ class Fdetalle extends Component
             ->whereDoesntHave('facturadetalles')
             ->with(['pedido','parcialdetalles'])
             ->orderBy('id')
-            ->get();
+            ->get()
+            ->filter(fn($a)=>$a->parcialdetalles->sum('total')>0) // sin valorar (importe 0): no hay nada que facturar
+            ->values();
     }
 
     // Copia las líneas de un albarán a la factura y lo marca como facturado (parcial_id).

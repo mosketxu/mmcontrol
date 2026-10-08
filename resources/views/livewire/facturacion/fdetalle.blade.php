@@ -2,6 +2,25 @@
     <div class="">
         @include('errores')
     </div>
+    {{-- Albaranes pendientes de facturar --}}
+    @if($albaranes->count())
+        <div style="padding:8px;font-size:12px;background:#fefce8;border:1px solid #fde68a;border-radius:6px">
+            <div class="font-medium text-gray-600">Albaranes pendientes de facturar de este cliente</div>
+            @foreach ($albaranes as $alb)
+                @php $totalalb=$alb->parcialdetalles->sum('total'); @endphp
+                <div class="flex items-center justify-between py-0.5 border-t border-yellow-100">
+                    <span class="text-gray-600">
+                        Albarán {{ $alb->id }} · Pedido {{ $alb->pedido_id }} · {{ $alb->ffecha }}
+                        · {{ $alb->parcialdetalles->count() }} línea(s) · {{ number_format($totalalb,2,',','.') }} € sin IVA
+                    </span>
+                    <button type="button" wire:click="traerAlbaran({{ $alb->id }})"
+                        onclick="confirm('¿Traer el albarán {{ $alb->id }} a la factura?') || event.stopImmediatePropagation()"
+                        style="padding:4px 10px;font-size:12px;color:#fff;background:#2563eb;border-radius:6px;cursor:pointer">Traer a la factura</button>
+                </div>
+            @endforeach
+        </div>
+    @endif
+
     {{-- Titulos --}}
     <div class="flex w-full py-0 my-0 space-x-1 text-left text-gray-500 bg-blue-100 rounded-t-md" wire:loading.class.delay="opacity-50">
         <div class="w-1/12 ">
@@ -146,25 +165,6 @@
             </div>
         </div>
     </form>
-    @endif
-
-    {{-- Albaranes pendientes de facturar --}}
-    @if($albaranes->count())
-        <div style="padding:8px;font-size:12px;background:#fefce8;border:1px solid #fde68a;border-radius:6px">
-            <div class="font-medium text-gray-600">Albaranes pendientes de facturar de este cliente</div>
-            @foreach ($albaranes as $alb)
-                @php $totalalb=$alb->parcialdetalles->sum('total'); @endphp
-                <div class="flex items-center justify-between py-0.5 border-t border-yellow-100">
-                    <span class="text-gray-600">
-                        Albarán {{ $alb->id }} · Pedido {{ $alb->pedido_id }} · {{ $alb->ffecha }}
-                        · {{ $alb->parcialdetalles->count() }} línea(s) · {{ number_format($totalalb,2,',','.') }} € sin IVA
-                    </span>
-                    <button type="button" wire:click="traerAlbaran({{ $alb->id }})"
-                        onclick="confirm('¿Traer el albarán {{ $alb->id }} a la factura?') || event.stopImmediatePropagation()"
-                        style="padding:4px 10px;font-size:12px;color:#fff;background:#2563eb;border-radius:6px;cursor:pointer">Traer a la factura</button>
-                </div>
-            @endforeach
-        </div>
     @endif
 
     {{-- Lista detalles --}}
