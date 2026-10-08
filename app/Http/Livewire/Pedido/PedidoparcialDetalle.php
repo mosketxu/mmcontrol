@@ -113,7 +113,6 @@ class PedidoparcialDetalle extends Component
             ]);
         }
         $this->dispatchBrowserEvent('notify', 'Líneas cargadas del pedido.');
-        $this->emit('refresh');
     }
 
     public function delete($valorId){
