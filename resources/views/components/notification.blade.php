@@ -11,15 +11,22 @@
 <div
     x-data="{
         messages: [],
-        last: { m: null, t: 0 },
-        remove(message) {
-            this.messages.splice(this.messages.indexOf(message), 1)
+        seq: 0,
+        add(text) {
+            let m = this.messages.find(x => x.text === text);
+            if (m) { clearTimeout(m.timer); }
+            else { m = { id: ++this.seq, text: text }; this.messages.push(m); }
+            m.timer = setTimeout(() => this.remove(m), 5000);
+        },
+        remove(m) {
+            clearTimeout(m.timer);
+            this.messages = this.messages.filter(x => x.id !== m.id);
         },
     }"
-    @notify.window="let message = $event.detail; if (last.m === message && Date.now() - last.t < 700) return; last = { m: message, t: Date.now() }; messages.push(message); setTimeout(() => { remove(message) }, 5000)"
+    @notify.window="add($event.detail)"
     class="fixed inset-0 flex flex-col items-center justify-center px-4 py-6 space-y-4 pointer-events-none sm:p-6 sm:justify-start"
 >
-    <template x-for="(message, messageIndex) in messages" :key="messageIndex" hidden>
+    <template x-for="(message, messageIndex) in messages" :key="message.id" hidden>
         <div
             x-transition:enter="transform ease-out duration-300 transition"
             x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
@@ -38,7 +45,7 @@
                             </svg>
                         </div>
                         <div class="ml-3 w-0 flex-1 pt-0.5">
-                            <p x-text="message" class="text-sm font-medium leading-5 text-white"></p>
+                            <p x-text="message.text" class="text-sm font-medium leading-5 text-white"></p>
                         </div>
                         <div class="flex flex-shrink-0 ml-4">
                             <button @click="remove(message)" class="inline-flex text-white transition duration-150 ease-in-out focus:outline-none focus:text-white">
