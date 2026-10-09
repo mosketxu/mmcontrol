@@ -75,6 +75,9 @@
                             <td style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.tirada')}}</td>
                             <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->tiradaprevista }}</td>
                         </tr>
+                        {{-- 9-oct-2026 (petición del cliente): ocultados los campos entre «Tirada» y «Otros» (fecha archivos, fecha entrega,
+                             prueba de color, laminado, caja, etiqueta, uds/caja y distribuciones). Para volver a mostrarlos, quitar el @if(false) y su @endif. --}}
+                        @if(false)
                         <tr style="">
                         </tr>
                         <tr style="">
@@ -119,6 +122,7 @@
                             </td>
                         </tr>
                         @endforeach
+                        @endif
                         <tr style="">
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.otros')}}</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
