@@ -2,20 +2,30 @@
     <div class="">
         @include('errores')
     </div>
-    {{-- Albaranes pendientes de facturar --}}
+    {{-- Albaranes pendientes de facturar: se marcan las líneas que entran en esta factura; las demás quedan pendientes --}}
     @if($albaranes->count())
         <div style="padding:8px;font-size:12px;background:#fefce8;border:1px solid #fde68a;border-radius:6px">
-            <div class="font-medium text-gray-600">Albaranes pendientes de facturar de este cliente</div>
+            <div class="font-medium text-gray-600">Albaranes pendientes de facturar de este cliente · marca las líneas que quieres incluir</div>
             @foreach ($albaranes as $alb)
-                @php $totalalb=$alb->parcialdetalles->sum('total'); @endphp
-                <div class="flex items-center justify-between py-0.5 border-t border-yellow-100">
-                    <span class="text-gray-600">
-                        Albarán {{ $alb->id }} · Pedido {{ $alb->pedido_id }} · {{ $alb->ffecha }}
-                        · {{ $alb->parcialdetalles->count() }} línea(s) · {{ number_format($totalalb,2,',','.') }} € sin IVA
-                    </span>
-                    <button type="button" wire:click="traerAlbaran({{ $alb->id }})"
-                        onclick="confirm('¿Traer el albarán {{ $alb->id }} a la factura?') || event.stopImmediatePropagation()"
-                        style="padding:4px 10px;font-size:12px;color:#fff;background:#2563eb;border-radius:6px;cursor:pointer">Traer a la factura</button>
+                @php $total=!$alb->parcialdetalles()->whereHas('facturadetalle')->exists(); @endphp
+                <div style="margin-top:6px;padding-top:4px;border-top:1px solid #fef3c7">
+                    <div class="flex items-center justify-between">
+                        <span class="font-medium text-gray-700">
+                            Albarán {{ $alb->id }} · Pedido {{ $alb->pedido_id }} · {{ $alb->ffecha }}
+                            @if(!$total)<em style="color:#b45309"> · facturado en parte, quedan {{ $alb->parcialdetalles->count() }} línea(s)</em>@endif
+                        </span>
+                        <button type="button" wire:click="traerAlbaran({{ $alb->id }})"
+                            style="padding:4px 10px;font-size:12px;color:#fff;background:#2563eb;border-radius:6px;cursor:pointer">Traer las marcadas</button>
+                    </div>
+                    @foreach($alb->parcialdetalles as $l)
+                        <label class="flex items-center" style="gap:8px;padding:1px 0">
+                            <input type="checkbox" wire:model="sel" value="{{ $l->id }}">
+                            <span style="flex:1">{{ $l->concepto }}</span>
+                            <span style="width:90px;text-align:right">{{ $l->cantidad }} ud</span>
+                            <span style="width:90px;text-align:right">{{ number_format($l->precio_ud,2,',','.') }} €/ud</span>
+                            <span style="width:90px;text-align:right">{{ number_format($l->total,2,',','.') }} €</span>
+                        </label>
+                    @endforeach
                 </div>
             @endforeach
         </div>

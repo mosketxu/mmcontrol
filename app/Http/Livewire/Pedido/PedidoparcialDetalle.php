@@ -43,7 +43,10 @@ class PedidoparcialDetalle extends Component
 
     public function render(){
         $detalles=PedidoPedidoparcialDetalle::where('parcial_id',$this->parcialid)->get();
-        $facturado=\App\Models\FacturaDetalle::where('parcial_id',$this->parcialid)->first();
+        $parcial=PedidoParcial::find($this->parcialid);
+        $estadofact=$parcial ? $parcial->estadoFacturacion() : 'no';
+        $facturas=\App\Models\FacturaDetalle::where('parcial_id',$this->parcialid)->distinct()->pluck('factura_id');
+        $facturado=$estadofact=='no' ? null : (object)['estado'=>$estadofact,'facturas'=>$facturas];
         return view('livewire.pedido.pedidoparcial-detalle',compact('detalles','facturado'));
     }
 
@@ -87,8 +90,8 @@ class PedidoparcialDetalle extends Component
     public function cargarDelPedido(){
         $parcial=PedidoParcial::find($this->parcialid);
         if(!$parcial) return;
-        if($parcial->facturadetalles()->exists()){
-            $this->dispatchBrowserEvent('notifyred', 'El albarán ya está facturado.');
+        if($parcial->parcialdetalles()->whereHas('facturadetalle')->exists()){
+            $this->dispatchBrowserEvent('notifyred', 'El albarán ya está (en parte) facturado.');
             return;
         }
         $pedido=Pedido::find($parcial->pedido_id);

@@ -85,7 +85,7 @@ class Factura extends Component
             $this->estado=$factura->estado;
             $this->tipo=$factura->tipo;
             $this->observaciones=$factura->observaciones;
-            $this->bloqueado=$this->estado!='0' ? '1' : '0';
+            $this->bloqueado=($this->estado!='0' || $factura->estaCerrada()) ? '1' : '0';
             $this->deshabilitado=$this->bloqueado=='1' ? 'disabled' : '';
 
             $pedidossinfacturar=Pedido::select('pedidocliente','facturado')
@@ -116,6 +116,19 @@ class Factura extends Component
         if(!$this->fecha) $this->fecha=now()->format('Y-m-d');
         $this->contactos=EntidadContacto::with('entidadcontacto')->where('entidad_id',$this->cliente_id)->get();
         $this->pedidos=Pedido::select('pedidocliente')->where('cliente_id',$this->cliente_id)->where('estado','<>','1')->where('pedidocliente','<>','')->groupBy('pedidocliente')->get();
+    }
+
+    // «Crear factura»: la prefactura pasa a factura. Seguirá editable hasta la fecha de cierre (config/facturacion.php).
+    public function crearFactura(){
+        $f=ModelsFactura::find($this->facturaid);
+        if(!$f || !$f->esPrefactura()) return;
+        if($f->facturadetalles()->count()==0){
+            $this->dispatchBrowserEvent('notifyred', 'La prefactura no tiene líneas.');
+            return;
+        }
+        $f->update(['validada_at'=>now()]);
+        $this->dispatchBrowserEvent('notify', 'Factura creada. Se podrá modificar hasta el '.\Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y').'.');
+        $this->mount($this->facturaid);
     }
 
     public function updatedContactoId(){if($this->contacto_id=='') $this->contacto_id=null;}

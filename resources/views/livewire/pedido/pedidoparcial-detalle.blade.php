@@ -3,8 +3,12 @@
         @include('errores')
     </div>
     @if($facturado)
-        <div class="px-2 py-1 text-xs text-green-800 bg-green-100 rounded-md">Albarán facturado en la factura {{ $facturado->factura_id }}.</div>
-    @elseif($escliente=='')
+        <div style="padding:4px 8px;font-size:12px;border-radius:6px;{{ $facturado->estado=='total' ? 'background:#dcfce7;color:#166534' : 'background:#fef3c7;color:#92400e' }}">
+            {{ $facturado->estado=='total' ? 'Albarán facturado' : 'Albarán facturado en parte (quedan líneas pendientes)' }}
+            en la(s) factura(s) {{ $facturado->facturas->implode(', ') }}.
+        </div>
+    @endif
+    @if(!$facturado && $escliente=='')
         <div style="display:flex;justify-content:flex-end">
             <button type="button" wire:click="cargarDelPedido"
                 @if($detalles->count()) onclick="confirm('El albarán ya tiene líneas; se añadirán las del pedido. ¿Continuar?') || event.stopImmediatePropagation()" @endif
