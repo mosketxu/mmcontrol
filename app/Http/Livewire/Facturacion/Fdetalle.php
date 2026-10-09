@@ -26,6 +26,7 @@ class Fdetalle extends Component
     public $bloqueado=false;
     public $deshabilitado='';
     public $escliente='';
+    public $sel=[]; // ids de líneas de albarán marcadas para traer
 
     public $fdetalle;
     public $subtotalsiniva=0;
@@ -59,7 +60,8 @@ class Fdetalle extends Component
 
     public function mount($facturaid,$deshabilitado){
         $this->factura=Factura::find($facturaid);
-        $this->bloqueado= $this->factura->estado =='0' ? '0' : '1';
+        $this->bloqueado= ($this->factura->estado =='0' && !$this->factura->estaCerrada()) ? '0' : '1';
+        $this->seleccionarTodo();
         $this->deshabilitado= $deshabilitado;
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
     }
@@ -79,7 +81,7 @@ class Fdetalle extends Component
         return view('livewire.facturacion.fdetalle',compact(['fdetalles','entidad','pedidostodos','pedidos','albaranes']));
     }
 
-    // Albaranes del cliente con líneas y sin facturar.
+    // Albaranes del cliente con líneas aún sin facturar (con importe). Cada uno lleva solo sus líneas pendientes.
     protected function albaranesPendientes(){
         return PedidoParcial::query()
             ->whereHas('pedido',function($q){
@@ -88,36 +90,43 @@ class Fdetalle extends Component
                       $q2->where('pedidocliente',$this->factura->pedidocliente);
                   });
             })
-            ->whereHas('parcialdetalles')
-            ->whereDoesntHave('facturadetalles')
-            ->with(['pedido','parcialdetalles'])
+            ->whereHas('lineasPendientes',fn($q)=>$q->where('total','>',0))
+            ->with(['pedido','parcialdetalles'=>fn($q)=>$q->whereDoesntHave('facturadetalle')->where('total','>',0)->orderBy('id')])
+            ->withCount('parcialdetalles')
             ->orderBy('id')
-            ->get()
-            ->filter(fn($a)=>$a->parcialdetalles->sum('total')>0) // sin valorar (importe 0): no hay nada que facturar
-            ->values();
+            ->get();
     }
 
-    // Copia las líneas de un albarán a la factura y lo marca como facturado (parcial_id).
+    // Marca todas las líneas pendientes como seleccionadas (la prefactura parte de «todo»; se desmarca lo que no se quiere).
+    protected function seleccionarTodo(){
+        $this->sel=\App\Models\PedidoparcialDetalle::whereHas('parcial.pedido',fn($q)=>$q->where('cliente_id',$this->factura->cliente_id))
+            ->whereDoesntHave('facturadetalle')->where('total','>',0)->pluck('id')->map(fn($i)=>(string)$i)->all();
+    }
+
+    // Copia a la factura las líneas marcadas de un albarán. Las no marcadas quedan pendientes para otra factura.
     public function traerAlbaran($parcialId){
         if($this->bloqueado!='0'){
-            $this->dispatchBrowserEvent('notifyred', 'La factura ya se ha enviado. Debe desbloquearla.');
+            $this->dispatchBrowserEvent('notifyred', 'La factura está cerrada o ya se ha enviado. Debe desbloquearla.');
             return;
         }
-        $parcial=PedidoParcial::with(['pedido','parcialdetalles'])->find($parcialId);
+        $parcial=PedidoParcial::with('pedido')->find($parcialId);
         if(!$parcial || !$parcial->pedido || $parcial->pedido->cliente_id!=$this->factura->cliente_id) return;
-        if($parcial->facturadetalles()->exists()){
-            $this->dispatchBrowserEvent('notifyred', 'Ese albarán ya está facturado.');
+
+        $lineas=$parcial->lineasPendientes()->where('total','>',0)->whereIn('id',$this->sel)->orderBy('id')->get();
+        if($lineas->isEmpty()){
+            $this->dispatchBrowserEvent('notifyred', 'Marca al menos una línea del albarán '.$parcial->id.'.');
             return;
         }
 
-        DB::transaction(function() use ($parcial){
-            foreach($parcial->parcialdetalles as $l){
+        DB::transaction(function() use ($parcial,$lineas){
+            foreach($lineas as $l){
                 $cantidad=(float)$l->cantidad;
                 $importe=(float)$l->precio_ud;
                 ModelsFacturaDetalle::create([
                     'factura_id'=>$this->factura->id,
                     'pedido_id'=>$parcial->pedido_id,
                     'parcial_id'=>$parcial->id,
+                    'parcialdetalle_id'=>$l->id,
                     'concepto'=>$l->concepto,
                     'cantidad'=>$cantidad,
                     'iva'=>0.21,
@@ -140,16 +149,15 @@ class Fdetalle extends Component
                 'total'=>$totales->subtotal,
             ]);
 
-            // Pedido: facturado del todo (1) o parcialmente (2, si quedan albaranes con líneas sin facturar).
-            $quedan=PedidoParcial::where('pedido_id',$parcial->pedido_id)
-                ->whereHas('parcialdetalles')
-                ->whereDoesntHave('facturadetalles')
-                ->exists();
+            // Pedido: facturado del todo (1) o parcialmente (2, si quedan líneas de albarán con importe sin facturar).
+            $quedan=\App\Models\PedidoparcialDetalle::whereHas('parcial',fn($q)=>$q->where('pedido_id',$parcial->pedido_id))
+                ->whereDoesntHave('facturadetalle')->where('total','>',0)->exists();
             Pedido::where('id',$parcial->pedido_id)->update(['facturado'=>$quedan ? '2' : '1']);
         });
 
+        $this->sel=array_values(array_diff($this->sel,$lineas->pluck('id')->map(fn($i)=>(string)$i)->all()));
         $this->emitUp('refreshfactura');
-        $this->dispatchBrowserEvent('notify', 'Albarán '.$parcial->id.' traído a la factura.');
+        $this->dispatchBrowserEvent('notify', $lineas->count().' línea(s) del albarán '.$parcial->id.' traídas a la factura.');
     }
 
     public function UpdatedPedidoId(){

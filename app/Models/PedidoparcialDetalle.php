@@ -11,6 +11,8 @@ class PedidoparcialDetalle extends Model
 
     protected $fillable = ['parcial_id','concepto','cantidad','precio_ud','total'];
 
+    public function facturadetalle(){return $this->hasOne(FacturaDetalle::class,'parcialdetalle_id');}
+
     public function parcial()
     {
         return $this->belongsTo(PedidoParcial::class,'parcial_id');

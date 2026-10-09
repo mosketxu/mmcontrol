@@ -9,7 +9,16 @@
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 space-y-1">
                         <div class="flex p-1 rounded-md bg-blue-50">
-                            <h3 class="pl-1 font-semibold">Datos de la factura</h3>
+                            <h3 class="pl-1 font-semibold">Datos de la {{ ($fac && $fac->esPrefactura()) ? 'prefactura' : 'factura' }}</h3>
+                            @if($fac)
+                                @if($fac->esPrefactura())
+                                    <span style="margin-left:8px;padding:2px 8px;font-size:12px;background:#fef3c7;color:#92400e;border-radius:6px">PREFACTURA · borrador</span>
+                                @elseif($fac->estaCerrada())
+                                    <span style="margin-left:8px;padding:2px 8px;font-size:12px;background:#e5e7eb;color:#374151;border-radius:6px">Factura cerrada · no modificable</span>
+                                @else
+                                    <span style="margin-left:8px;padding:2px 8px;font-size:12px;background:#dcfce7;color:#166534;border-radius:6px">Factura creada · modificable hasta el {{ \Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y') }}</span>
+                                @endif
+                            @endif
                             <input  wire:model.defer="facturaid" type="hidden"/>
                             {{-- @if($tipo!='1') --}}
                             <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" required >
@@ -135,6 +144,11 @@
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
                             <x-jet-secondary-button  onclick="location.href = '{{route('facturacion.index')}}'">{{ __('Volver') }}</x-jet-secondary-button>
                             {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
+                            @if($fac && $fac->esPrefactura() && $escliente=='')
+                                <button type="button" wire:click="crearFactura"
+                                    onclick="confirm('¿Crear la factura? Podrá modificarse hasta el {{ \Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y') }}.') || event.stopImmediatePropagation()"
+                                    style="padding:6px 14px;font-size:12px;color:#fff;background:#16a34a;border-radius:6px;font-weight:600;text-transform:uppercase">Crear factura</button>
+                            @endif
                             @if($bloqueado!='0')
                                 <x-icon.lock/>
                                 @else

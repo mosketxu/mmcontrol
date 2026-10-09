@@ -20,6 +20,19 @@ class PedidoParcial extends Model
 
     public function facturadetalles(){return $this->hasMany(FacturaDetalle::class,'parcial_id');}
 
+    // Líneas del albarán aún sin pasar a ninguna factura (cuenta solo las que tienen vínculo por línea).
+    public function lineasPendientes(){
+        return $this->parcialdetalles()->whereDoesntHave('facturadetalle');
+    }
+
+    // 'no' | 'parcial' | 'total'
+    public function estadoFacturacion(){
+        $tot=$this->parcialdetalles()->count();
+        if(!$tot) return 'no';
+        $fact=$tot-$this->lineasPendientes()->count();
+        return $fact==0 ? 'no' : ($fact==$tot ? 'total' : 'parcial');
+    }
+
     public function getFfechaAttribute(){
         if ($this->fecha) {
             return Carbon::parse($this->fecha)->format('d/m/Y');

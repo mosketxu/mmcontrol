@@ -16,11 +16,21 @@ class Factura extends Model
         '2' => ['green-200', 'Cobrada'],
     ];
 
-    protected $fillable = ['id','cliente_id','contacto_id','fecha','fechavencimiento','pedidocliente','importe','iva','total','estado','tipo','observaciones'];
+    protected $fillable = ['id','cliente_id','contacto_id','fecha','fechavencimiento','pedidocliente','importe','iva','total','estado','tipo','observaciones','validada_at'];
+
+    protected $casts = ['validada_at' => 'datetime'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id');}
     public function facturadetalles(){return $this->hasMany(FacturaDetalle::class,'factura_id');}
+
+    // Prefactura = borrador (aún sin «Crear factura»).
+    public function esPrefactura(){ return $this->validada_at === null; }
+
+    // Factura creada y ya pasada la fecha de cierre: no se puede modificar.
+    public function estaCerrada(){
+        return $this->validada_at !== null && now()->gte(Carbon::parse(config('facturacion.cierre'))->startOfDay());
+    }
 
     public function getStatusColorAttribute(){
         return self::ESTADOS[$this->estado] ?? ['gray-100',''];
