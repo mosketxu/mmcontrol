@@ -28,7 +28,7 @@ class PedidoParcialEmail extends Component
     public $nuevoEmail = '';
     public $asunto = '';
     public $mensaje = '';
-    public $valorado = false;     // al proveedor, por defecto sin precios
+    public $valorado = '0';       // al proveedor, por defecto sin precios
     public $adjuntos = [];        // ficheros subidos desde el ordenador
     public $confirmando = false;  // segundo paso: resumen antes del envío real
     public $enviadoOk = false;
