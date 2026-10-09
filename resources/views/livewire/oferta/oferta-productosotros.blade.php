@@ -19,14 +19,7 @@
             </div>
             {{-- producto_id --}}
             <div class="w-2/12">
-                <select wire:model.lazy="producto_id"
-                    class="w-full py-1 text-xs font-thin text-gray-500 border-gray-300 border-none rounded-md shadow-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                    {{$escliente}} {{$deshabilitado}}>
-                    <option value="" >-Selecciona- </option>
-                    @foreach ($productos as $producto)
-                    <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="producto_id" :options="($productos ?? collect())->map(fn($p)=>['id'=>$p->id,'label'=>trim(($p->isbn ?? '').' · '.($p->referencia ?? ''), ' ·')])->values()->all()" placeholder="-Código o ref.-" :disabled="trim(($escliente ?? '').($deshabilitado ?? ''))!=''" class="w-full py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md" />
             </div>
             {{-- cantidad --}}
             <div class="w-1/12">

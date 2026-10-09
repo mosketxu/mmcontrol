@@ -24,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot(){
+        // Solo VPS de pruebas: si MAIL_ALWAYS_TO está definido, todo correo va a esa
+        // dirección (sin CC/BCC), para no escribir nunca a clientes/proveedores reales.
+        if (config('mail.always_to')) {
+            \Illuminate\Support\Facades\Mail::alwaysTo(config('mail.always_to'));
+        }
         // Using view composer to set following variables globally
         // view()->composer('*',function($view) {
         //         $view->with('tiposentidad', EntidadTipo::orderBy('id')->get());
