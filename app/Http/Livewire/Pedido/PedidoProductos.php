@@ -118,8 +118,7 @@ class PedidoProductos extends Component
 
     public function delete($valorId)
     {
-        $this->validate();
-
+        // Sin validate(): una línea huérfana (sin producto) también se debe poder borrar.
         $borrar = PedidoProducto::find($valorId);
 
         if ($borrar) {
