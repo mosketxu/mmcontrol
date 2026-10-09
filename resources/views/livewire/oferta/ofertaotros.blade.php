@@ -33,29 +33,11 @@
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Cliente') }}</x-jet-label>
-                                    <select wire:model.lazy="cliente_id"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        <option value="">-- Selecciona cliente --</option>
-                                        @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
-                                        @endforeach
-                                    </select>
+                                    <x-combo wire:model="cliente_id" :options="($clientes ?? collect())->map(fn($cliente)=>['id'=>$cliente->id,'label'=>$cliente->entidad])->values()->all()" placeholder="-- Selecciona cliente --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </div>
                                 <div class="w-full form-item">
                                     <x-jet-label >{{ __('Contacto') }}</x-jet-label>
-                                    <select wire:model.lazy="contacto_id"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        @if (isset($contactos))
-                                            <option value="">-- Selecciona contacto --</option>
-                                            @foreach ($contactos as $contacto)
-                                            <option value="{{ $contacto->contacto_id }}">{{ $contacto->entidadcontacto->entidad ?? '-'}}</option>
-                                            @endforeach
-                                        @else
-                                            <option value="">-- Selecciona primero un cliente --</option>
-                                        @endif
-                                    </select>
+                                    <x-combo wire:model="contacto_id" :options="($contactos ?? collect())->map(fn($contacto)=>['id'=>$contacto->contacto_id,'label'=>$contacto->entidadcontacto->entidad ?? '-'])->values()->all()" placeholder="-- Selecciona contacto --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </div>
                                 <div class="w-full">
                                     <x-jet-label >{{ __('Estado') }}</x-jet-label>
@@ -75,35 +57,10 @@
                                     <textarea wire:model.defer="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Cód.Prod') }}</x-jet-label>
-                                    <select wire:model.lazy="producto_id"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        @if (isset($productos))
-                                            <option value="">-- Selecciona producto --</option>
-                                            @foreach ($productos as $producto)
-                                            <option value="{{ $producto->id }}">{{ $producto->isbn }}</option>
-                                            @endforeach
-                                        @else
-                                            <option value="">-- Selecciona primero un producto --</option>
-                                        @endif
-                                    </select>
+                                    <x-jet-label >{{ __('Código / Título / Ref.') }}</x-jet-label>
+                                    <x-combo wire:model="producto_id" :options="($productos ?? collect())->map(fn($p)=>['id'=>$p->id,'label'=>trim(($p->isbn ?? '').' · '.($p->referencia ?? ''), ' ·')])->values()->all()" placeholder="-- Escribe código o título --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm" />
                                 </div>
-                                <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Ref.Prod.') }} </x-jet-label>
-                                    <select wire:model.lazy="producto_id"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        @if (isset($productos))
-                                            <option value="">-- Selecciona un producto --</option>
-                                            @foreach ($productos as $producto)
-                                            <option value="{{ $producto->id }}" {{ $producto->id == $producto_id ? 'selected' : '' }}>{{ $producto->referencia }}</option>
-                                            @endforeach
-                                        @else
-                                            <option value="">-- Selecciona primero un cliente --</option>
-                                        @endif
-                                    </select>
-                                </div>
+                                
                             </div>
                             {{-- manipulacion-entrega-obs --}}
                             <div class="flex flex-col mx-2 md:space-y-0 md:flex-row md:space-x-2">

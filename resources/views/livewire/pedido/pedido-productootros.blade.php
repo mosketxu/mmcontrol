@@ -59,13 +59,7 @@
                 </div>
                 {{-- producto_id --}}
                 <div class="w-2/12">
-                    <x-selectcolor wire:model.lazy="producto_id" selectname="producto_id" color="bg-green-100"
-                        class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-none shadow-none">
-                        <option value="" >-Selecciona- </option>
-                        @foreach ($productos as $producto)
-                        <option value="{{ $producto->id }}">{{ $producto->referencia}}</option>
-                        @endforeach
-                    </x-selectcolor>
+                    <x-combo wire:model="producto_id" :options="($productos ?? collect())->map(fn($p)=>['id'=>$p->id,'label'=>trim(($p->isbn ?? '').' · '.($p->referencia ?? ''), ' ·')])->values()->all()" placeholder="-Código o ref.-" :disabled="trim(($escliente ?? '').($deshabilitado ?? ''))!=''" class="w-full py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md" />
                 </div>
                 {{-- cantidad --}}
                 <div class="w-1/12">

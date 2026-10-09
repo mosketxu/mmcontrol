@@ -69,8 +69,9 @@ class PedidoProductos extends Component
 
     public function render(){
         $productos=Producto::where('tipo','2')
-            ->when($this->pedido?->idioma_id, function ($query) {
-                $query->where('idioma_id', $this->pedido->idioma_id);
+            ->where(function ($q) {
+                $q->when($this->pedido?->idioma_id, fn ($q2) => $q2->where('idioma_id', $this->pedido->idioma_id), fn ($q2) => $q2->whereRaw('1=1'))
+                  ->when($this->producto_id, fn ($q2) => $q2->orWhere('id', $this->producto_id));
             })
             ->orderBy('referencia')
             ->get();

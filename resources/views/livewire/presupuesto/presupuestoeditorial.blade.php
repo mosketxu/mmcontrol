@@ -33,32 +33,14 @@
                                     <div class="flex py-2">
                                         <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
                                     </div>
-                                    <select wire:model.lazy="cliente_id"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }} {{$deshabilitado}}>
-                                        <option value="">-- Selecciona cliente --</option>
-                                        @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
-                                        @endforeach
-                                    </select>
+                                    <x-combo wire:model="cliente_id" :options="($clientes ?? collect())->map(fn($cliente)=>['id'=>$cliente->id,'label'=>$cliente->entidad])->values()->all()" placeholder="-- Selecciona cliente --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </div>
                                 {{-- contacto --}}
                                 <div class="w-full form-item">
                                     <div class="flex py-2">
                                         <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
                                     </div>
-                                    <select wire:model.lazy="contacto_id"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }} {{$deshabilitado}}>
-                                        @if (isset($contactos))
-                                            @if(!$contacto_id) <option value="">-- Selecciona contacto --</option> @endif
-                                            @foreach ($contactos as $contacto)
-                                            <option value="{{ $contacto->contacto_id }}" {{ $contacto->contacto_id == $this->contacto_id ? "selected" : ""}}>{{ $contacto->entidadcontacto->entidad ?? '-'}}</option>
-                                            @endforeach
-                                        @else
-                                            <option value="">-- Selecciona primero un cliente --</option>
-                                        @endif
-                                    </select>
+                                    <x-combo wire:model="contacto_id" :options="($contactos ?? collect())->map(fn($contacto)=>['id'=>$contacto->contacto_id,'label'=>$contacto->entidadcontacto->entidad ?? ($contacto->id.'-')])->values()->all()" placeholder="-- Selecciona contacto --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </div>
                                 {{-- idioma --}}
                                 <div class="w-full form-item">
@@ -76,41 +58,12 @@
                                 </div>
                                 {{-- producto ISBN --}}
                                 <div class="w-full form-item">
-                                    <div class="flex py-2">
-                                        <x-jet-label class="h-5 px-2">{{ __('ISBN/Cód.') }}</x-jet-label>
-                                        <input type="search" wire:model="filtroisbn" class="w-full h-5 px-2 py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
-                                        @if($filtroisbn!='')
-                                        <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
-                                        @endif
-                                    </div>
-                                    <select wire:model.lazy="productoeditorialid"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }} {{$deshabilitado}}>
-                                        <option value=''>-- Selecciona ISBN --</option>
-                                        @foreach ($productos as $producto)
-                                            <option value="{{ $producto->id }}" >{{ $producto->isbn_completo }}</option>
-                                        @endforeach
-                                    </select>
+                                    <x-jet-label >{{ __('Código / Título / Ref.') }}</x-jet-label>
+                                    <x-combo wire:model="productoeditorialid" :options="($productos ?? collect())->map(fn($p)=>['id'=>$p->id,'label'=>trim(($p->isbn_completo ?? '').' · '.($p->referencia ?? ''), ' ·')])->values()->all()" placeholder="-- Escribe código o título --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm" />
                                 </div>
 
                                 {{-- producto titulo --}}
-                                <div class="w-full form-item">
-                                    <div class="flex py-2">
-                                        <x-jet-label class="h-5 px-2">{{ __('Título/Ref.') }}</x-jet-label>
-                                        <input type="search" wire:model="filtroreferencia" class="w-full h-5 px-2 py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
-                                        @if($filtroreferencia!='')
-                                        <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
-                                        @endif
-                                    </div>
-                                    <select wire:model.lazy="productoeditorialid"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }} {{$deshabilitado}}>
-                                        <option value="">-- Selecciona Referencia --</option>
-                                        @foreach ($productos as $producto)
-                                        <option value="{{ $producto->id }}">{{ $producto->referencia }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                
                             </div>
                         </div>
                         {{-- Detalle presupuesto --}}
@@ -123,14 +76,7 @@
                                 {{-- Proveedor --}}
                                 <div class="w-full form-item">
                                     <x-jet-label for="proveedor_id">{{ __('Proveedor') }}</x-jet-label>
-                                    <select wire:model.lazy="proveedor_id"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{ $escliente }} {{$deshabilitado}}>
-                                        <option value="">-- Selecciona proveedor --</option>
-                                        @foreach ($proveedores as $proveedor)
-                                        <option value="{{ $proveedor->id }}">{{ $proveedor->entidad }}</option>
-                                        @endforeach
-                                    </select>
+                                    <x-combo wire:model="proveedor_id" :options="($proveedores ?? collect())->map(fn($proveedor)=>['id'=>$proveedor->id,'label'=>$proveedor->entidad])->values()->all()" placeholder="-- Selecciona proveedor --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                                 </div>
                                 {{-- Tirada --}}
                                 <div class="w-full form-item">
