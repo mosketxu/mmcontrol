@@ -39,10 +39,14 @@
                                         @php
                                             $icon = \App\Enums\ProductoEstado::iconData($producto->productoestado);
                                         @endphp
+                                        {{-- clic en el pulgar: activo ⇄ descatalogado sin entrar en el producto --}}
+                                        <span wire:click.stop="toggleEstado({{ $producto->id }})" onclick="event.stopPropagation()" style="cursor:pointer;display:inline-block"
+                                            title="{{ ($producto->productoestado?->value)=='1' ? 'Activo: clic para descatalogar' : 'Descatalogado: clic para activar' }}">
                                         <x-dynamic-component
                                             :component="$icon['component']"
                                             class="{{ $icon['class'] }}"
                                         />
+                                        </span>
                                     </div>
                                     <div class="w-4/12">
                                             <textarea rows="1" class="w-full p-1 text-sm font-thin text-gray-500 border-0 rounded-md hover:bg-gray-100" disabled>{{ $producto->observaciones }}</textarea>

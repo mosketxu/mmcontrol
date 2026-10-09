@@ -9,6 +9,7 @@ use Livewire\WithPagination;
 
 
 use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
 
 class Prods extends Component
 {
@@ -99,6 +100,17 @@ class Prods extends Component
         public function updatingFiltroimpresion(){$this->resetPage();}
         public function updatingFiltrocaja(){$this->resetPage();}
 
+
+    // Cambia el estado desde el listado: activo (1) ⇄ descatalogado (2).
+    public function toggleEstado($productoId)
+    {
+        if(Auth::user()->hasRole('Cliente')) return;
+        $producto=Producto::find($productoId);
+        if(!$producto) return;
+        $nuevo=$producto->productoestado===ProductoEstado::ACTIVO ? ProductoEstado::DESCATALOGADO : ProductoEstado::ACTIVO;
+        $producto->update(['productoestado'=>$nuevo]);
+        $this->dispatchBrowserEvent('notify', $producto->referencia.': '.$nuevo->label());
+    }
 
     public function delete($productoId)
     {

@@ -38,7 +38,10 @@
                             <div class="w-4/12 ">{{ $producto->observaciones }}</div>
                             <div class="w-1/12 ">
                                 @php $icon = \App\Enums\ProductoEstado::iconData($producto->productoestado); @endphp
-                                <x-dynamic-component :component="$icon['component']" class="{{ $icon['class'] }}"/>
+                                <span wire:click.stop="toggleEstado({{ $producto->id }})" onclick="event.stopPropagation()" style="cursor:pointer;display:inline-block"
+                                    title="{{ ($producto->productoestado?->value)=='1' ? 'Activo: clic para descatalogar' : 'Descatalogado: clic para activar' }}">
+                                    <x-dynamic-component :component="$icon['component']" class="{{ $icon['class'] }}"/>
+                                </span>
                             </div>
                         </div>
                         <div class="items-center flex-none w-1/12 md:flex">
