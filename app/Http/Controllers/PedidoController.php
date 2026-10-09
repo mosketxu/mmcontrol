@@ -24,7 +24,7 @@ class PedidoController extends Controller
 
     public function __construct(){
         $this->middleware('can:pedido.index')->only('index');;
-        $this->middleware('can:pedido.edit')->only('nuevo','editar','update','parcial');
+        $this->middleware('can:pedido.edit')->only('nuevo','editar','update','parcial','albaranEmail');
     }
 
     public function tipo($tipo,$ruta,Request $request ){
@@ -131,16 +131,19 @@ class PedidoController extends Controller
     // ?v=1 (por defecto) albarán valorado; ?v=0 sin valorar (sin precios ni importes).
     public function albaran(Request $request,$pedidoid,$ruta,$parcialid){
         $valorado=$request->query('v','1')!=='0';
+        return $this->albaranPdf($parcialid,$valorado)->stream('albaran'.($valorado ? '' : '-sin-valorar').'.pdf'); //asi lo muestra por pantalla
+    }
+
+    // PDF del albarán (también lo usa el envío por email).
+    public function albaranPdf($parcialid,$valorado=true){
         $parcial=PedidoParcial::find($parcialid);
         $pedido=Pedido::find($parcial->pedido_id);
         $entidad=Entidad::find($pedido->cliente_id);
         $detalles=PedidoparcialDetalle::where('parcial_id',$parcialid)->get();
-        $pdf = new Dompdf();
-
         $pedidoproductos=PedidoProducto::with('producto')->where('pedido_id',$pedido->id)->orderBy('orden')->orderBy('id')->get();
         $pdf = \PDF::loadView('pedidos.albaranpdf', compact('pedido','parcial','entidad','detalles','valorado','pedidoproductos'));
         $pdf->setPaper('a4','portrait');
-        return $pdf->stream('albaran'.($valorado ? '' : '-sin-valorar').'.pdf'); //asi lo muestra por pantalla
+        return $pdf;
     }
 
     public function entrada($pedidoid,$tipo,$ruta){
@@ -188,6 +191,12 @@ class PedidoController extends Controller
     public function parcial(Pedido $pedido, $ruta,$parcialid){
         $tipo=$pedido->tipo;
         return view('pedidos.parcial',compact('pedido','ruta','parcialid','tipo'));
+    }
+
+    public function albaranEmail(Pedido $pedido, $ruta,$parcialid){
+        abort_if(Auth::user()->hasRole('Cliente'),403);
+        abort_unless(PedidoParcial::where('id',$parcialid)->where('pedido_id',$pedido->id)->exists(),404);
+        return view('pedidos.albaranemail',compact('pedido','ruta','parcialid'));
     }
 
     public function archivos(Pedido $pedido, $ruta){

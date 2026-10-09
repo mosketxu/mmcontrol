@@ -95,6 +95,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
     Route::get('/pedido/{pedido}/incidencias/{ruta}', [PedidoController::class, 'incidencias'])->name('pedido.incidencias');
     Route::get('/pedido/{pedido}/parciales/{ruta}', [PedidoController::class, 'parciales'])->name('pedido.parciales');
     Route::get('/pedido/{pedido}/parciales/{ruta}/parcial/{parcialid}', [PedidoController::class, 'parcial'])->name('pedido.parcial');
+    Route::get('/pedido/{pedido}/parciales/{ruta}/parcial/{parcialid}/email', [PedidoController::class, 'albaranEmail'])->name('pedido.albaran.email');
     Route::get('/pedido/parcial/{pedidoid}/{ruta}/albaran/{parcialid}', [PedidoController::class, 'albaran'])->name('pedido.albaran');
     Route::get('/pedido/{pedido}/facturaciones/{ruta}', [PedidoController::class, 'facturaciones'])->name('pedido.facturaciones');
     Route::get('/pedido/{pedido}/distribuciones/{ruta}', [PedidoController::class, 'distribuciones'])->name('pedido.distribuciones');

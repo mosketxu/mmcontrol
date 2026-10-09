@@ -15,6 +15,10 @@
                         style="padding:4px 10px;font-size:12px;color:#fff;background:#2563eb;border-radius:6px">Albarán valorado</a>
                     <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid,'v'=>0])}}" target="_blank" title="Albarán sin precios (para producción)"
                         style="padding:4px 10px;font-size:12px;color:#374151;background:#e5e7eb;border-radius:6px">Sin valorar</a>
+                    @if(!Auth::user()->hasRole('Cliente'))
+                    <a href="{{route('pedido.albaran.email',[$pedido->id,$ruta,$parcialid])}}" title="Enviar el albarán por email a los contactos del proveedor"
+                        style="padding:4px 10px;font-size:12px;color:#fff;background:#16a34a;border-radius:6px">✉ Enviar al proveedor</a>
+                    @endif
                 </div>
                 <div class="mr-5">
                 {{-- @if($tipo=='1') --}}
