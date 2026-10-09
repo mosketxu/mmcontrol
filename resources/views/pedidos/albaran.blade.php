@@ -117,7 +117,7 @@
                 @endif
             </table>
             @endif
-            <div class="mt-24">
+            <div class="{{ $packaging ? 'mt-10' : 'mt-24' }}">
                 <div class="w-24 ml-2 font-bold">Enviar a: {{ $parcial->destino }} </div>
                 <div class="ml-2">Att.: {{ $parcial->atencion }}</div>
                 <div class="ml-2">Dirección: {{ $parcial->direccion }}</div>
