@@ -57,7 +57,9 @@ class FacturacionExport implements FromQuery, WithHeadings, WithMapping, ShouldA
             'Cliente',
             'NIF',
             'Estado',
-            'Importe',
+            'Base imponible',
+            'IVA',
+            'Total (IVA inc.)',
         ];
     }
 
@@ -70,6 +72,8 @@ class FacturacionExport implements FromQuery, WithHeadings, WithMapping, ShouldA
             $factura->nif ?? '',
             $factura->status_color[1],
             $factura->importe ?? '',
+            $factura->iva ?? '',
+            $factura->total ?? '',
         ];
     }
 }
