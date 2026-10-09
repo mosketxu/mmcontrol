@@ -32,6 +32,7 @@ class PedidoController extends Controller
         $search=$request->search;
         $filtroreferencia=$request->filtroreferencia;
         $filtroisbn=$request->filtroisbn;
+        $filtroalbaran=trim((string)$request->filtroalbaran); // nº de albarán: localiza su pedido (ignora estado y fechas)
         $filtroresponsable=$request->filtroresponsable == '0' ? '' : $request->filtroresponsable;
         $filtrocliente=$request->filtrocliente;
         $filtroidioma=$request->filtroidioma;
@@ -81,7 +82,14 @@ class PedidoController extends Controller
             ->when($filtrocliente!='', function ($query) use($filtrocliente) {$query->where('pedidos.cliente_id',$filtrocliente);})
             ->when($filtroidioma!='', function ($query) use($filtroidioma) {$query->where('pedidos.idioma_id',$filtroidioma);})
             ->when($filtroproveedor!='', function ($query) use($filtroproveedor) {$query->where('pedidos.proveedor_id',$filtroproveedor);})
-            ->when($filtroestado!='' && $filtroestado!='3', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
+            ->when($filtroalbaran!='', function ($query) use($filtroalbaran) {
+                $query->whereExists(function($q) use($filtroalbaran){
+                    $q->select(\DB::raw(1))->from('pedido_parciales')
+                      ->whereColumn('pedido_parciales.pedido_id','pedidos.id')
+                      ->where('pedido_parciales.id',(int)$filtroalbaran);
+                });
+            })
+            ->when($filtroestado!='' && $filtroestado!='3' && $filtroalbaran=='', function ($query) use($filtroestado) {$query->where('pedidos.estado',$filtroestado);})
             ->when($filtrofacturado!='', function ($query) use($filtrofacturado) {$query->where('pedidos.facturado',$filtrofacturado);})
             ->when($filtroarchivos!='', function ($query) use($filtroarchivos) {$query->where('pedidos.ctrarchivos',$filtroarchivos);})
             ->when($filtromaqueta!='', function ($query) use($filtromaqueta) {$query->where('pedidos.ctrmaqueta',$filtromaqueta);})
@@ -89,8 +97,7 @@ class PedidoController extends Controller
             ->when($filtroentrega!='', function ($query) use($filtroentrega) {$query->where('pedidos.ctrentrega',$filtroentrega);})
             // ->when($filtrolaminadoplastico!='', function ($query) use($filtrolaminadoplastico) {$query->where('pedidos.laminadoplastico',$filtrolaminadoplastico);})
             ->when($filtrolaminado!='', function ($query) use($filtrolaminado) {$query->where('pedidos.laminado_id',$filtrolaminado);})
-            ->searchYear('fechapedido',$filtroanyo)
-            ->searchMes('fechapedido',$filtromes)
+            ->when($filtroalbaran=='',fn($q)=>$q->searchYear('fechapedido',$filtroanyo)->searchMes('fechapedido',$filtromes))
             ->orderBy('pedidos.estado','asc')
             ->orderBy('entidades.entidad','asc')
             ->orderBy('pedidos.fechaentrega','asc')
@@ -99,7 +106,7 @@ class PedidoController extends Controller
             ->paginate(30);
 
         return view('pedidos.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados','idiomas',
-        'search','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtroidioma','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+        'search','filtroalbaran','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtroidioma','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function stock($tipo,$ruta){

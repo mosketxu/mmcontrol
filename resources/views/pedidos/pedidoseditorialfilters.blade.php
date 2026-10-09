@@ -17,6 +17,17 @@
                 </div>
             </div>
         </div>
+        {{-- Nº de albarán: lleva al pedido que lo contiene --}}
+        <div class="flex w-1/12 ">
+            <div class="w-full">
+                <label class="px-1 text-sm text-gray-600" title="Busca el pedido que contiene este albarán">
+                    Albarán
+                </label>
+                <div class="flex">
+                    <input type="search" name="filtroalbaran" value="{{ old('filtroalbaran',$filtroalbaran ?? '') }}" class="w-full py-1 text-sm border border-blue-100 rounded-lg" onchange="this.form.submit()"/>
+                </div>
+            </div>
+        </div>
         {{-- Referencia --}}
         <div class="flex w-2/12 ">
             <div class="w-full">
