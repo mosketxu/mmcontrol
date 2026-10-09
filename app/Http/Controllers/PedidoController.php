@@ -121,16 +121,19 @@ class PedidoController extends Controller
         return $pdf->stream('ficha.pdf'); //asi lo muestra por pantalla
     }
 
-    public function albaran($pedidoid,$ruta,$parcialid){
+    // ?v=1 (por defecto) albarán valorado; ?v=0 sin valorar (sin precios ni importes).
+    public function albaran(Request $request,$pedidoid,$ruta,$parcialid){
+        $valorado=$request->query('v','1')!=='0';
         $parcial=PedidoParcial::find($parcialid);
         $pedido=Pedido::find($parcial->pedido_id);
         $entidad=Entidad::find($pedido->cliente_id);
         $detalles=PedidoparcialDetalle::where('parcial_id',$parcialid)->get();
         $pdf = new Dompdf();
 
-        $pdf = \PDF::loadView('pedidos.albaranpdf', compact('pedido','parcial','entidad','detalles'));
+        $pedidoproductos=PedidoProducto::with('producto')->where('pedido_id',$pedido->id)->orderBy('orden')->orderBy('id')->get();
+        $pdf = \PDF::loadView('pedidos.albaranpdf', compact('pedido','parcial','entidad','detalles','valorado','pedidoproductos'));
         $pdf->setPaper('a4','portrait');
-        return $pdf->stream('albaran.pdf'); //asi lo muestra por pantalla
+        return $pdf->stream('albaran'.($valorado ? '' : '-sin-valorar').'.pdf'); //asi lo muestra por pantalla
     }
 
     public function entrada($pedidoid,$tipo,$ruta){

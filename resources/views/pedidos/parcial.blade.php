@@ -10,7 +10,12 @@
             </div> --}}
             <div class="flex flex-row-reverse w-9/12">
                 <x-button.button  onclick="location.href = ''" color="blue" class="py-1 ">{{ __('Nuevo') }}</x-button.button>
-                <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid])}}" target="_blank" ><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
+                <div class="flex items-center mr-5 space-x-2">
+                    <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid,'v'=>1])}}" target="_blank" title="Albarán con precios e importes"
+                        style="padding:4px 10px;font-size:12px;color:#fff;background:#2563eb;border-radius:6px">Albarán valorado</a>
+                    <a href="{{route('pedido.albaran',[$pedido->id,$ruta,$parcialid,'v'=>0])}}" target="_blank" title="Albarán sin precios (para producción)"
+                        style="padding:4px 10px;font-size:12px;color:#374151;background:#e5e7eb;border-radius:6px">Sin valorar</a>
+                </div>
                 <div class="mr-5">
                 {{-- @if($tipo=='1') --}}
                     @include('pedidos.pedidoeditorial-menu' )
