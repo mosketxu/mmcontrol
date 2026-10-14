@@ -54,6 +54,7 @@ class FacturacionExport implements FromQuery, WithHeadings, WithMapping, ShouldA
         return [
             'ID',
             'Fecha',
+            'Fecha vencimiento',
             'Cliente',
             'NIF',
             'Estado',
@@ -68,6 +69,7 @@ class FacturacionExport implements FromQuery, WithHeadings, WithMapping, ShouldA
         return [
             $factura->id,
             $factura->fecha,
+            $factura->fechavencimiento ?? '',
             $factura->entidad ?? '',
             $factura->nif ?? '',
             $factura->status_color[1],
