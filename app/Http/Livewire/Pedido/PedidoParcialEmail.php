@@ -9,6 +9,7 @@ use App\Models\Entidad;
 use App\Models\EntidadContacto;
 use App\Models\Pedido;
 use App\Models\PedidoParcial;
+use App\Support\CorreoUsuario;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
@@ -32,6 +33,9 @@ class PedidoParcialEmail extends Component
     public $adjuntos = [];        // ficheros subidos desde el ordenador
     public $confirmando = false;  // segundo paso: resumen antes del envío real
     public $enviadoOk = false;
+    public $pedirClave = false;   // primera vez: pedir la contraseña de su correo (o «ahora no»)
+    public $claveMail = '';
+    public $errorClave = '';
 
     public function mount($pedidoid, $parcialid, $ruta)
     {
@@ -118,6 +122,12 @@ class PedidoParcialEmail extends Component
         $this->adjuntos = array_values($this->adjuntos);
     }
 
+    // Cuenta con la que saldrá el correo (para enseñarla en el resumen).
+    public function getDesdeProperty(): string
+    {
+        return CorreoUsuario::desde(Auth::user());
+    }
+
     protected function emailsActivos(): array
     {
         return collect($this->destinatarios)->where('activo', true)->pluck('email')->unique()->values()->all();
@@ -136,6 +146,33 @@ class PedidoParcialEmail extends Component
             'mensaje' => 'required',
             'adjuntos.*' => 'file|max:10240',
         ], ['asunto.required' => 'El asunto es necesario.', 'mensaje.required' => 'El mensaje es necesario.', 'adjuntos.*.max' => 'Cada adjunto puede pesar hasta 10 MB.']);
+        // Primera vez que envía: se le ofrece usar su propio correo (la contraseña se guarda encriptada)
+        if (CorreoUsuario::debePreguntar(Auth::user())) {
+            $this->pedirClave = true;
+            return;
+        }
+        $this->confirmando = true;
+    }
+
+    public function guardarClave()
+    {
+        $u = Auth::user();
+        $this->errorClave = '';
+        if (trim($this->claveMail) === '') { $this->errorClave = 'Escribe la contraseña de tu correo.'; return; }
+        $error = CorreoUsuario::probar($u->email, $this->claveMail);
+        if ($error) { $this->errorClave = $error; return; }
+        $u->forceFill(['mail_password' => $this->claveMail, 'mail_rechazado' => false])->save();
+        $this->claveMail = '';
+        $this->pedirClave = false;
+        $this->confirmando = true;
+    }
+
+    public function ahoraNo()
+    {
+        Auth::user()->forceFill(['mail_rechazado' => true])->save();
+        $this->claveMail = '';
+        $this->errorClave = '';
+        $this->pedirClave = false;
         $this->confirmando = true;
     }
 
@@ -159,7 +196,7 @@ class PedidoParcialEmail extends Component
             $extras[] = ['path' => $f->getRealPath(), 'name' => $f->getClientOriginalName(), 'mime' => $f->getMimeType()];
         }
 
-        Mail::to($emails)->send(new AlbaranMail($this->asunto, $this->mensaje, $pdf, $nombrePdf, $extras, (string) Auth::user()->name));
+        $res = CorreoUsuario::enviar(Auth::user(), $emails, new AlbaranMail($this->asunto, $this->mensaje, $pdf, $nombrePdf, $extras, (string) Auth::user()->name));
 
         AlbaranEnvio::create([
             'parcial_id' => $this->parcialid,
@@ -174,6 +211,7 @@ class PedidoParcialEmail extends Component
 
         $this->confirmando = false;
         $this->adjuntos = [];
-        $this->dispatchBrowserEvent('notify', 'Albarán enviado a ' . count($emails) . ' destinatario(s).');
+        $this->dispatchBrowserEvent('notify', 'Albarán enviado a ' . count($emails) . ' destinatario(s)' . ($res['copia'] ? ' (copia en Enviados de ' . $res['desde'] . ').' : '.'));
+        if ($res['aviso']) $this->dispatchBrowserEvent('notifyred', $res['aviso']);
     }
 }

@@ -69,11 +69,27 @@
 
     {{-- Envío en dos pasos --}}
     <div>
-        @if(!$confirmando)
+        @if($pedirClave)
+            <div style="padding:12px;border:1px solid #bfdbfe;background:#eff6ff;border-radius:6px;max-width:560px">
+                <div class="font-semibold">¿Enviar con tu propio correo?</div>
+                <div style="font-size:12px;margin:4px 0 8px">
+                    Si me das la contraseña de tu correo ({{ auth()->user()->email }}), el albarán saldrá desde tu cuenta y quedará en tu carpeta de Enviados.
+                    Se guarda encriptada y la puedes cambiar o quitar en tu perfil. Si prefieres no hacerlo, saldrá con el correo por defecto
+                    ({{ config('mail.from.address') }}) y la copia quedará en la bandeja de enviados de ese buzón.
+                </div>
+                <input type="password" wire:model.defer="claveMail" wire:keydown.enter="guardarClave" autocomplete="new-password" placeholder="Contraseña de tu correo" class="py-1 text-sm border-gray-300 rounded-md" style="width:60%">
+                @if($errorClave)<div style="font-size:12px;color:#dc2626;margin-top:4px">{{ $errorClave }}</div>@endif
+                <div style="margin-top:8px">
+                    <button type="button" wire:click="guardarClave" wire:loading.attr="disabled" style="padding:6px 14px;font-size:13px;color:#fff;background:#2563eb;border-radius:6px;font-weight:600">Guardar y usar mi correo</button>
+                    <button type="button" wire:click="ahoraNo" style="padding:6px 14px;font-size:13px;color:#374151;background:#e5e7eb;border-radius:6px;margin-left:6px">Ahora no</button>
+                </div>
+            </div>
+        @elseif(!$confirmando)
             <button type="button" wire:click="preparar" style="padding:6px 16px;font-size:13px;color:#fff;background:#16a34a;border-radius:6px;font-weight:600">Revisar y enviar</button>
         @else
             <div style="padding:10px;border:1px solid #fde68a;background:#fefce8;border-radius:6px">
                 <div class="font-semibold">Confirma el envío</div>
+                <div>Saldrá desde: <b>{{ $this->desde }}</b>@if($this->desde !== auth()->user()->email) <span style="font-size:12px;color:#6b7280">(correo por defecto; la copia queda en la bandeja de enviados de ese buzón)</span>@endif</div>
                 <div>Para: {{ collect($destinatarios)->where('activo',true)->pluck('email')->implode(', ') }}</div>
                 <div>Asunto: {{ $asunto }}</div>
                 <div>Adjuntos: albarán {{ $parcialid }} ({{ $valorado ? 'valorado' : 'sin valorar' }}){{ count($adjuntos) ? ' + '.count($adjuntos).' fichero(s)' : '' }}</div>
