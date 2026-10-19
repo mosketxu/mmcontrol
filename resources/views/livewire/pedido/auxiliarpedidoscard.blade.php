@@ -61,7 +61,7 @@
                                 <input type="text" value="{{ $titcampoimg }}" class="w-full text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
                             </div>
                         @endif
-                        <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
+                        <div class="flex flex-row-reverse pr-2 mt-2 {{ $routepdf=='pedido.albaran' ? '' : 'w-1/12' }}" @if($routepdf=='pedido.albaran') style="min-width:9rem;flex:0 0 auto;align-items:center" @endif>
                             <p></p>
                         </div>
                     </div>
@@ -165,7 +165,15 @@
                                 <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 mx-1"  title="Eliminar detalle"/>
                             @endif
                             @if($pdfvisible=='1')
+                                @if($routepdf=='pedido.albaran')
+                                    <x-icon.albaran-sinvalorar href="{{route($routepdf,[$pedidoid,$ruta,$valor->id,'v'=>0])}}"/>
+                                    <x-icon.albaran-valorado href="{{route($routepdf,[$pedidoid,$ruta,$valor->id,'v'=>1])}}"/>
+                                    @if(!Auth::user()->hasRole('Cliente'))
+                                        <x-icon.enviar-mail href="{{route('pedido.albaran.email',[$pedidoid,$ruta,$valor->id])}}"/>
+                                    @endif
+                                @else
                                 <a href="{{route($routepdf,[$pedidoid,$ruta,$valor->id])}}" target="_blank" ><x-icon.pdf class="mx-1 text-red-500 hover:text-red-700 "/></a>
+                                @endif
                             @endif
                             @if(!Auth::user()->hasRole('Cliente'))
                                 @if($editarvisible=='1')
