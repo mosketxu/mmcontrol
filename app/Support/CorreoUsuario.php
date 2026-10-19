@@ -80,7 +80,9 @@ class CorreoUsuario
         $sent = $mailer->to($emails)->send($mailable);
         $res = ['desde' => $propia ? $u->email : (string) config('mail.from.address'), 'copia' => false, 'aviso' => null];
 
-        if (config('mail.usuario.imap_host') && $user && $clave && $sent) {
+        // La copia solo se guarda si la cuenta con la que se envía es un buzón de ese servidor IMAP
+        $mismoServidor = $propia || config('mail.mailers.smtp.host') === config('mail.usuario.imap_host');
+        if (config('mail.usuario.imap_host') && $mismoServidor && $user && $clave && $sent) {
             try {
                 $imap = new ImapMinimo(config('mail.usuario.imap_host'), (int) config('mail.usuario.imap_port'));
                 $imap->login($user, $clave);
