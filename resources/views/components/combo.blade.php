@@ -13,29 +13,30 @@
     x-data="{
         value: @entangle($attributes->wire('model')),
         options: {{ \Illuminate\Support\Js::from($opts) }},
-        open: false, q: '', typed: false, hi: 0,
+        open: false, q: '', typed: false, hi: 0, st: '',
+        calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = 'position:fixed;z-index:80;left:' + r.left + 'px;min-width:' + r.width + 'px;max-height:' + mh + 'px;' + (up ? 'bottom:' + (h - r.top + 2) + 'px;' : 'top:' + (r.bottom + 2) + 'px;') },
         norm(t) { return (t || '').toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase() },
         get label() { const o = this.options.find(o => o.id == this.value); return o ? o.label : '' },
         get filtered() {
             const t = this.typed ? this.norm(this.q).split(/\s+/).filter(Boolean) : [];
             return this.options.filter(o => { const n = this.norm(o.label); return t.every(w => n.includes(w)) }).slice(0, 300)
         },
-        abrir(el) { this.open = true; this.typed = false; this.q = this.label; this.hi = 0; this.$nextTick(() => el.select()) },
-        escribir(v) { this.q = v; this.typed = true; this.open = true; this.hi = 0 },
+        abrir(el) { this.calc(); this.open = true; this.typed = false; this.q = this.label; this.hi = 0; this.$nextTick(() => el.select()) },
+        escribir(v) { this.calc(); this.q = v; this.typed = true; this.open = true; this.hi = 0 },
         elegir(o) { this.value = o ? o.id : ''; this.open = false; this.typed = false },
         cerrar() { this.open = false; this.typed = false },
         mover(d) { const n = this.filtered.length; if (!n) return; this.hi = (this.hi + d + n) % n; this.$nextTick(() => { const e = this.$refs.lista.querySelector('[data-hi]'); if (e) e.scrollIntoView({ block: 'nearest' }) }) },
     }"
     @click.outside="cerrar()">
-    <input type="text" autocomplete="off" {{ $disabled ? 'disabled' : '' }}
+    <input type="text" x-ref="inp" autocomplete="off" {{ $disabled ? 'disabled' : '' }}
         :value="open ? q : label" :placeholder="'{{ $placeholder }}'"
         @focus="abrir($event.target)" @input="escribir($event.target.value)"
         @keydown.arrow-down.prevent="mover(1)" @keydown.arrow-up.prevent="mover(-1)"
         @keydown.enter.prevent="open && filtered[hi] && elegir(filtered[hi])"
         @keydown.escape="cerrar()" @keydown.tab="cerrar()"
         {{ $attributes->whereDoesntStartWith('wire:')->merge(['class' => 'w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm']) }}>
-    <div x-show="open" x-ref="lista" x-cloak
-        style="position:absolute;left:0;right:0;z-index:60;margin-top:2px;max-height:15rem;overflow:auto;background:#fff;border:1px solid #d1d5db;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.15);font-size:13px">
+    <div x-show="open" x-ref="lista" x-cloak :style="st" @scroll.window="open && calc()" @resize.window="open && calc()"
+        style="overflow:auto;background:#fff;border:1px solid #d1d5db;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.15);font-size:13px">
         <div @mousedown.prevent="elegir(null)" style="padding:4px 8px;color:#9ca3af;cursor:pointer">{{ $placeholder }}</div>
         <template x-for="(o, i) in filtered" :key="o.id">
             <div @mousedown.prevent="elegir(o)" @mouseenter="hi = i" :data-hi="i === hi ? '' : null"
