@@ -6,7 +6,25 @@
                 Factura
             </label>
             <div class="flex">
-                <input type="text" wire:model="search" class="w-full py-1 text-xs border border-blue-100 rounded-lg" autofocus/>
+                <div wire:ignore style="position:relative;width:100%"
+                    x-data="{ value: @entangle('search'), q: @js((string) $search), open: false, hi: 0, options: @js($facturasopciones ?? []),
+                        norm(t){ return (t||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase() },
+                        get filtered(){ const t=this.norm(this.q).split(/\s+/).filter(Boolean); return this.options.filter(o=>{const n=this.norm(o.label); return t.every(w=>n.includes(w))}).slice(0,100) },
+                        elegir(o){ this.q=o.id; this.value=o.id; this.open=false } }"
+                    x-effect="if (value === '' && q !== '') q = ''"
+                    @click.outside="open=false">
+                    <input type="text" autocomplete="off" x-model="q" placeholder="Nº factura..."
+                        @focus="open=true" @input="open=true; hi=0" @input.debounce.500ms="value = q"
+                        @keydown.arrow-down.prevent="hi=Math.min(hi+1,filtered.length-1)" @keydown.arrow-up.prevent="hi=Math.max(hi-1,0)"
+                        @keydown.enter.prevent="open && filtered[hi] ? elegir(filtered[hi]) : (value = q, open=false)"
+                        @keydown.escape="open=false" @keydown.tab="open=false"
+                        class="w-full py-1 text-xs border border-blue-100 rounded-lg" autofocus/>
+                    <div x-show="open && filtered.length" x-cloak style="position:absolute;left:0;top:100%;z-index:60;min-width:22rem;max-height:15rem;overflow:auto;background:#fff;border:1px solid #d1d5db;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.15);font-size:12px;white-space:nowrap">
+                        <template x-for="(o,i) in filtered" :key="o.id">
+                            <div @mousedown.prevent="elegir(o)" @mouseenter="hi=i" :style="'padding:4px 8px;cursor:pointer;color:#374151;'+(i===hi?'background:#dbeafe':'')" x-text="o.label"></div>
+                        </template>
+                    </div>
+                </div>
                 @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -19,12 +37,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <select wire:model="filtrocliente" class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($clientes as $cliente)
-                    <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
-                    @endforeach
-                </select>
+                <div style="width:100%"><x-combo wire:model="filtrocliente" :options="$clientes->map(fn($c)=>['id'=>$c->id,'label'=>$c->entidad])->values()->all()" placeholder="-- Todos --" class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm"/></div>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif

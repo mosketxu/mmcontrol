@@ -53,7 +53,12 @@ class Facturas extends Component
         if($this->selectAll) $this->selectPageRows();
         $facturas = $this->rows;
 
-        return view('livewire.facturacion.facturas',compact('facturas','clientes','meses','estados'));
+        // Opciones del combo «Factura» (nº · cliente · fecha)
+        $facturasopciones=Factura::join('entidades','facturas.cliente_id','=','entidades.id')->orderByDesc('facturas.id')
+            ->get(['facturas.id','entidades.entidad','facturas.fecha'])
+            ->map(fn($f)=>['id'=>(string)$f->id,'label'=>$f->id.' · '.$f->entidad.' · '.($f->fecha ? \Carbon\Carbon::parse($f->fecha)->format('d/m/Y') : '')])->values()->all();
+
+        return view('livewire.facturacion.facturas',compact('facturas','clientes','meses','estados','facturasopciones'));
     }
 
     // public function updatingSearch(){$this->resetPage();}
