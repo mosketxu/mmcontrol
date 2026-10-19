@@ -159,7 +159,7 @@ class PedidoParcialEmail extends Component
             $extras[] = ['path' => $f->getRealPath(), 'name' => $f->getClientOriginalName(), 'mime' => $f->getMimeType()];
         }
 
-        Mail::to($emails)->send(new AlbaranMail($this->asunto, $this->mensaje, $pdf, $nombrePdf, $extras));
+        Mail::to($emails)->send(new AlbaranMail($this->asunto, $this->mensaje, $pdf, $nombrePdf, $extras, (string) Auth::user()->name));
 
         AlbaranEnvio::create([
             'parcial_id' => $this->parcialid,

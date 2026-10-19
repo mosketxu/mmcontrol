@@ -12,6 +12,7 @@ class AlbaranMail extends Mailable
         public string $pdfData,
         public string $pdfNombre,
         public array $extras = [], // [['path'=>..., 'name'=>..., 'mime'=>...]]
+        public string $firma = '', // nombre de quien envía (usuario conectado), para la firma
     ) {}
 
     public function build()
