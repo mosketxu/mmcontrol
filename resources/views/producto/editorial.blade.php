@@ -33,14 +33,7 @@
             {{-- cliente --}}
             <div class="w-full form-item md:w-4/12">
                 <x-jet-label for="entidad_id">{{ __('Cliente') }}</x-jet-label>
-                <select wire:model.lazy="producto.cliente_id"
-                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                    {{$escliente}} {{$deshabilitado}} >
-                    <option value=''>-- Selecciona cliente --</option>
-                    @foreach ($clientes as $cliente)
-                    <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="producto.cliente_id" :options="$clientes->map(fn($i)=>['id'=>$i->id,'label'=>$i->entidad])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona cliente --"/>
             </div>
             {{-- estadoproducto --}}
             <div class="w-full form-item md:w-4/12">
@@ -66,38 +59,17 @@
                 {{-- formatos --}}
                 <div class="w-full form-item">
                     <x-jet-label for="formato">{{ __('Formato') }}</x-jet-label>
-                        <select wire:model.lazy="producto.formato"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                            {{$escliente}} {{$deshabilitado}} >
-                            <option value="">--Selecciona--</option>
-                            @foreach($formatos as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        <select>
+                        <x-combo wire:model="producto.formato" :options="collect($formatos)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 {{-- Encuadernación --}}
                 <div class="w-full form-item">
                     <x-jet-label for="encuadernado">{{ __('Encuadernación') }}</x-jet-label>
-                        <select wire:model.lazy="producto.encuadernado"
-                            class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                            {{$escliente}} {{$deshabilitado}} >
-                            <option value="">--Selecciona--</option>
-                            @foreach($encuadernaciones as $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                            @endforeach
-                        </select>
+                        <x-combo wire:model="producto.encuadernado" :options="collect($encuadernaciones)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 {{-- plastificado --}}
                 <div class="w-full form-item">
                     <x-jet-label for="plastificado">{{ __('Plastificado') }}</x-jet-label>
-                    <select wire:model.lazy="producto.plastificado"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                        {{$escliente}} {{$deshabilitado}} >
-                        <option value="">--Selecciona--</option>
-                        @foreach($plastificados as $item)
-                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                        @endforeach
-                    <select>
+                    <x-combo wire:model="producto.plastificado" :options="collect($plastificados)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 {{-- varios --}}
                 <div class="flex flex-row space-x-4">
@@ -145,38 +117,17 @@
                 {{-- gramaje interior   --}}
                 <div class="w-full form-item">
                     <x-jet-label for="gramajeinterior">{{ __('Gramaje Interior') }}</x-jet-label>
-                    <select wire:model.lazy="producto.gramajeinterior"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                        {{$escliente}} {{$deshabilitado}} >
-                        <option value="">--Selecciona--</option>
-                        @foreach($gramajesinterior as $item)
-                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo wire:model="producto.gramajeinterior" :options="collect($gramajesinterior)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 {{-- tinta interior --}}
                 <div class="w-full form-item">
                     <x-jet-label for="tintainterior">{{ __('Tinta Interior') }}</x-jet-label>
-                    <select wire:model.lazy="producto.tintainterior"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                        {{$escliente}} {{$deshabilitado}} >
-                        <option value="">--Selecciona--</option>
-                        @foreach($tintasinterior as $item)
-                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo wire:model="producto.tintainterior" :options="collect($tintasinterior)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 {{-- Material interior  --}}
                 <div class="w-full form-item">
                     <x-jet-label for="materialinterior">{{ __('Material Interior') }}</x-jet-label>
-                    <select wire:model.lazy="producto.materialinterior"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                        {{$escliente}} {{$deshabilitado}}/>
-                        <option value="">--Selecciona--</option>
-                        @foreach($materialesinterior as $item)
-                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo wire:model="producto.materialinterior" :options="collect($materialesinterior)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 <div class="flex flex-row space-x-4">
                     <div class="form-item">
@@ -207,38 +158,17 @@
                 {{-- Gramaje Cubierta --}}
                 <div class="w-full form-item">
                     <x-jet-label for="gramajecubierta">{{ __('Gramaje Cubierta') }}</x-jet-label>
-                    <select wire:model.lazy="producto.gramajecubierta"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                        {{$escliente}} {{$deshabilitado}}/>
-                        <option value="">--Selecciona--</option>
-                        @foreach($gramajescubierta as $item)
-                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo wire:model="producto.gramajecubierta" :options="collect($gramajescubierta)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 {{-- Tinta Cubierta --}}
                 <div class="w-full form-item">
                     <x-jet-label for="tintacubierta">{{ __('Tinta Cubierta') }}</x-jet-label>
-                    <select wire:model.lazy="producto.tintacubierta"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                        {{$escliente}} {{$deshabilitado}} >
-                        <option value="">--Selecciona--</option>
-                        @foreach($tintascubierta as $item)
-                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo wire:model="producto.tintacubierta" :options="collect($tintascubierta)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 {{-- Material Cubierta --}}
                 <div class="w-full form-item">
                     <x-jet-label for="materialcubierta">{{ __('Material Cubierta') }}</x-jet-label>
-                    <select wire:model.lazy="producto.materialcubierta"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                        {{$escliente}} {{$deshabilitado}} >
-                        <option value="">--Selecciona--</option>
-                        @foreach($materialescubierta as $item)
-                            <option value="{{ $item->name }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo wire:model="producto.materialcubierta" :options="collect($materialescubierta)->map(fn($i)=>['id'=>$i->name,'label'=>$i->name.$i->descripcion])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona --"/>
                 </div>
                 {{-- Solapas --}}
                 <div class="flex flex-row space-x-4">
