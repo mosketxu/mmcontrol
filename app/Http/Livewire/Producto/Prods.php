@@ -25,6 +25,8 @@ class Prods extends Component
     public $filtromaterial='';
     public $filtroimpresion='';
     public $filtrocaja='';
+    // Productos cuyo estado se ha cambiado desde el listado: se quedan a la vista (con su pulgar nuevo) aunque ya no cumplan el filtro de estado
+    public $tocados=[];
     public $tipo;
     public $titulo;
     public $ordenarpor1='';
@@ -76,7 +78,9 @@ class Prods extends Component
 
         if($this->tipo) $datos->where('tipo',$this->tipo);
         if($this->filtroisbn) $datos->where('isbn', 'like', '%'.$this->filtroisbn.'%');
-        if($this->filtroproductoestado) $datos->where('productoestado', $this->filtroproductoestado);
+        if($this->filtroproductoestado) $datos->where(function($q){
+            $q->where('productoestado', $this->filtroproductoestado)->orWhereIn('productos.id', $this->tocados);
+        });
         if($this->filtroreferencia) $datos->where('referencia', 'like', '%'.$this->filtroreferencia.'%');
         if($this->filtrocliente) $datos->where('cliente_id',$this->filtrocliente);
         if($this->filtroidioma) $datos->where('idioma_id',$this->filtroidioma);
@@ -114,6 +118,7 @@ class Prods extends Component
         if(!$producto) return;
         $nuevo=$producto->productoestado===ProductoEstado::ACTIVO ? ProductoEstado::DESCATALOGADO : ProductoEstado::ACTIVO;
         $producto->update(['productoestado'=>$nuevo]);
+        $this->tocados[]=$producto->id;
         $this->dispatchBrowserEvent('notify', $producto->referencia.': '.$nuevo->label());
     }
 
