@@ -61,7 +61,7 @@
                                 <input type="text" value="{{ $titcampoimg }}" class="w-full text-sm font-thin text-gray-500 bg-blue-100 border-none" readonly />
                             </div>
                         @endif
-                        <div class="flex flex-row-reverse pr-2 mt-2 {{ $routepdf=='pedido.albaran' ? '' : 'w-1/12' }}" @if($routepdf=='pedido.albaran') style="min-width:9rem;flex:0 0 auto;align-items:center" @endif>
+                        <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
                             <p></p>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                             @endif
                         </div>
                         @endif
-                        <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
+                        <div class="flex flex-row-reverse pr-2 mt-2 {{ $routepdf=='pedido.albaran' ? '' : 'w-1/12' }}" @if($routepdf=='pedido.albaran') style="min-width:9rem;flex:0 0 auto;align-items:center" @endif>
                             @if(!Auth::user()->hasRole('Cliente'))
                                 <x-icon.delete-a wire:click.prevent="delete({{ $valor->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-6 mx-1"  title="Eliminar detalle"/>
                             @endif
