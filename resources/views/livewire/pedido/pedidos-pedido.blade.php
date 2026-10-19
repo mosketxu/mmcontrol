@@ -159,8 +159,8 @@
                     <x-icon.euro-a class="w-6 {{ $pedido->facturadocolor[0] }} hover:{{ $pedido->facturadocolor[1] }} " title="Facturación"
                         wire:click.prevent="generarfactura" onclick="confirm('¿Quieres generar un factura con este pedido?') || event.stopImmediatePropagation()"/>
                 @endif
-                <x-icon.folder-tree-a class="{{ $pedido->subpedidoscolor[0] }} hover:{{ $pedido->subpedidoscolor[1] }}" onclick="location.href = '{{route('pedido.subpedidos',[$pedido,'i'])}}'" title="subpedidos" target="_blank"/>
-                <x-icon.calendar-day-a class="{{ $pedido->tareascolor[0] }} hover:{{ $pedido->tareascolor[1] }}" onclick="location.href = '{{route('pedido.tareas',[$pedido,'i'])}}'" title="tareas" target="_blank"/>
+                <x-icon.folder-tree-a class="{{ $pedido->subpedidoscolor[0] }} hover:{{ $pedido->subpedidoscolor[1] }}" onclick="location.href = '{{route('pedido.subpedidos',[$pedido,'i'])}}'" title="Subpedidos" target="_blank"/>
+                <x-icon.calendar-day-a class="{{ $pedido->tareascolor[0] }} hover:{{ $pedido->tareascolor[1] }}" onclick="location.href = '{{route('pedido.tareas',[$pedido,'i'])}}'" title="Tareas" target="_blank"/>
                 <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank"/>
                 <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $pedido->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Borrar"/>
             @else

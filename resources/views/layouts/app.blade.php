@@ -50,6 +50,7 @@
             .accfila-grid > a::after{content:attr(title);color:#374151;font-weight:500}
             nav .lg\:ml-20{margin-left:clamp(4px,3vw,5rem)!important}
             @media (max-width:1100px){nav .h-9{height:1.4rem!important}nav button{font-size:.78rem!important}nav .sm\:ml-6{margin-left:.25rem!important}nav .lg\:ml-20{margin-left:2px!important}}
+            @media (min-width:640px) and (max-width:900px){nav .sm\:flex{display:none!important}nav .-mr-2.sm\:hidden{display:flex!important}nav > div.sm\:hidden.block{display:block!important}}
             nav .lg\:space-x-8>*+*{margin-left:clamp(4px,2vw,2rem)!important}
         </style>
     </head>
