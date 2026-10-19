@@ -44,10 +44,13 @@
             .accfila-titulo{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#374151;margin-bottom:8px}
             .accfila-x{color:#6b7280;font-size:16px;padding:0 4px}
             .accfila-grid{display:flex;flex-direction:column;gap:2px}
-            .accfila-grid > a,.accfila-grid > *{display:flex!important;align-items:center;gap:12px;width:100%!important;margin:0!important;padding:8px 6px;border-radius:6px;cursor:pointer;transform:none!important;font-size:14px;color:#374151}
+            .accfila-grid > a,.accfila-grid > *{display:flex!important;align-items:center;gap:12px;width:100%!important;margin:0!important;padding:8px 6px;border-radius:6px;cursor:pointer;transform:none!important;font-size:14px}
             .accfila-grid > *:hover{background:#f3f4f6}
             .accfila-grid > a > svg{width:22px!important;height:22px!important;flex:none}
-            .accfila-grid > a::after{content:attr(title);color:#374151}
+            .accfila-grid > a::after{content:attr(title);color:#374151;font-weight:500}
+            nav .lg\:ml-20{margin-left:clamp(4px,3vw,5rem)!important}
+            @media (max-width:1100px){nav .h-9{height:1.4rem!important}nav button{font-size:.78rem!important}nav .sm\:ml-6{margin-left:.25rem!important}nav .lg\:ml-20{margin-left:2px!important}}
+            nav .lg\:space-x-8>*+*{margin-left:clamp(4px,2vw,2rem)!important}
         </style>
     </head>
     <body class="font-sans antialiased">
