@@ -44,7 +44,7 @@
             .accfila-titulo{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#374151;margin-bottom:8px}
             .accfila-x{color:#6b7280;font-size:16px;padding:0 4px}
             .accfila-grid{display:flex;flex-direction:column;gap:2px}
-            .accfila-grid > a,.accfila-grid > *{display:flex!important;align-items:center;gap:12px;width:100%!important;margin:0!important;padding:8px 6px;border-radius:6px;cursor:pointer;transform:none!important;font-size:14px}
+            .accfila-grid > a,.accfila-grid > *{display:flex!important;align-items:center;gap:12px;width:100%!important;margin:0!important;padding:6px;min-height:38px;border-radius:6px;cursor:pointer;transform:none!important;font-size:14px}
             .accfila-grid > *:hover{background:#f3f4f6}
             .accfila-grid > a > svg{width:22px!important;height:22px!important;flex:none}
             .accfila-grid > a::after{content:attr(title);color:#374151;font-weight:500}
