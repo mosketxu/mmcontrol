@@ -44,14 +44,7 @@
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
                                     <x-jet-label for="idioma_id">{{ __('Idioma') }}</x-jet-label>
-                                    <select wire:model.lazy="idioma_id"
-                                        class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        <option value="">-- Selecciona idioma --</option>
-                                        @foreach ($idiomas as $idioma)
-                                        <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
-                                        @endforeach
-                                    </select>
+                                    <x-combo wire:model="idioma_id" :options="collect($idiomas)->map(fn($idioma)=>['id'=>$idioma->id,'label'=>($idioma->nombre)])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona idioma --"/>
                                 </div>
                             </div>
                             <div class="w-full form-item">
@@ -183,14 +176,7 @@
                             </div>
                             <div class="w-full form-item">
                                 <x-jet-label for="laminado_id">{{ __('Laminado') }}</x-jet-label>
-                                <select wire:model.lazy="laminado_id"
-                                    class="w-full py-1.5 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{$escliente}} {{$deshabilitado}} required>
-                                    <option value="">--Selecciona Laminado--</option>
-                                    @foreach ($laminados as $laminado )
-                                        <option value="{{ $laminado->id }}">{{ $laminado->name }}</option>
-                                    @endforeach
-                                </select>
+                                <x-combo wire:model="laminado_id" :options="collect($laminados)->map(fn($laminado)=>['id'=>$laminado->id,'label'=>($laminado->name)])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="--Selecciona Laminado--"/>
                             </div>
                             <div class="w-full form-item">
                                 <x-jet-label for="consumo">{{ __('Consumo/Stock') }}</x-jet-label>
@@ -246,14 +232,7 @@
                             {{-- responsable --}}
                             <div class="w-full form-item">
                                 <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
-                                <select wire:model.lazy="responsable"
-                                class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                    <option value="">-- Selecciona el responsable --</option>
-                                    @foreach ($responsables as $responsable )
-                                    <option value="{{ $responsable->responsable}}">{{ $responsable->responsable}}</option>
-                                @endforeach
-                                </select>
+                                <x-combo wire:model="responsable" :options="collect($responsables)->map(fn($responsable)=>['id'=>$responsable->responsable,'label'=>($responsable->responsable)])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona el responsable --"/>
                             </div>
                             {{-- estado --}}
                             <div class="w-full form-item">

@@ -155,12 +155,7 @@
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                             </div>
                             <div class="flex-col w-1/12 p-1 text-left">
-                                <select wire:model.defer="estado"
-                                    class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                    @foreach ($estados as $key=>$value)
-                                    <option value="{{ $key }}">{{ $value }}</option>
-                                    @endforeach
-                                </select>
+                                <x-combo wire:model="estado" :options="collect($estados)->map(fn($value,$key)=>['id'=>$key,'label'=>($value)])->values()->all()" placeholder="-- Selecciona --"/>
                             </div>
                             <div class="flex-col w-1/12 text-right">
                                 <button type="submit" class="items-center pl-1 mx-0 mt-2 text-center w-7 "><x-icon.save-a class="text-blue"></x-icon.save-a></button>

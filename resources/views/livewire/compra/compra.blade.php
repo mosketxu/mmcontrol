@@ -37,24 +37,13 @@
                             <input type="search" wire:model="filtroreferencia" placeholder="Filtrar Ref..." class="w-full px-2 py-1 mb-1 text-xs border border-blue-100 rounded-md"/>
                         </div>
 
-                        <select wire:model="productoid" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                wire:change="productoSeleccionado">
-                            <option value="">-- Selecciona producto --</option>
-                            @foreach($productos as $producto)
-                                <option value="{{ $producto->id }}">{{ $producto->isbn }} - {{ $producto->referencia }}</option>
-                            @endforeach
-                        </select>
+                        <x-combo wire:model="productoid" :options="collect($productos)->map(fn($producto)=>['id'=>$producto->id,'label'=>($producto->isbn).' - '.($producto->referencia)])->values()->all()" placeholder="-- Selecciona producto --"/>
                     </div>
 
                     {{-- Proveedor --}}
                     <div class="flex-1">
                         <x-jet-label for="proveedor_id">{{ __('Proveedor') }}</x-jet-label>
-                        <select wire:model.lazy="proveedor_id" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                            <option value="">-- Selecciona proveedor --</option>
-                            @foreach ($proveedores as $proveedor)
-                                <option value="{{ $proveedor->id }}">{{ $proveedor->entidad }}</option>
-                            @endforeach
-                        </select>
+                        <x-combo wire:model="proveedor_id" :options="collect($proveedores)->map(fn($proveedor)=>['id'=>$proveedor->id,'label'=>($proveedor->entidad)])->values()->all()" placeholder="-- Selecciona proveedor --"/>
                     </div>
                 </div>
             </div>
