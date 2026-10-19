@@ -13,10 +13,12 @@ class AlbaranMail extends Mailable
         public string $pdfNombre,
         public array $extras = [], // [['path'=>..., 'name'=>..., 'mime'=>...]]
         public string $firma = '', // nombre de quien envía (usuario conectado), para la firma
+        public array $desde = [],  // ['email'=>, 'name'=>] si se envía desde la cuenta del usuario
     ) {}
 
     public function build()
     {
+        if ($this->desde) $this->from($this->desde['email'], $this->desde['name'] ?? null);
         $m = $this->subject($this->asunto)
             ->view('emails.albaran')
             ->attachData($this->pdfData, $this->pdfNombre, ['mime' => 'application/pdf']);

@@ -41,6 +41,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
+        'mail_password',
         'password',
         'remember_token',
         'two_factor_recovery_codes',
@@ -53,6 +54,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
+        'mail_password' => 'encrypted',
         'email_verified_at' => 'datetime',
     ];
 
