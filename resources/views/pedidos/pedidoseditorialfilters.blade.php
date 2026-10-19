@@ -23,8 +23,26 @@
                 <label class="px-1 text-sm text-gray-600" title="Busca el pedido que contiene este albarán">
                     Albarán
                 </label>
-                <div class="flex">
-                    <input type="search" name="filtroalbaran" value="{{ old('filtroalbaran',$filtroalbaran ?? '') }}" class="w-full py-1 text-sm border border-blue-100 rounded-lg" onchange="this.form.submit()"/>
+                <div class="flex" style="position:relative"
+                    x-data="{ q: @js($filtroalbaran ?? ''), open: false, hi: 0, options: @js($albaranes ?? []),
+                        norm(t){ return (t||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase() },
+                        get filtered(){ const t=this.norm(this.q).split(/\s+/).filter(Boolean); return this.options.filter(o=>{const n=this.norm(o.label); return t.every(w=>n.includes(w))}).slice(0,100) },
+                        ir(v){ this.q=v; this.open=false; this.$nextTick(()=>{ this.$refs.val.value=v; this.$refs.val.form.submit() }) } }"
+                    @click.outside="open=false">
+                    <input type="hidden" name="filtroalbaran" x-ref="val" value="{{ old('filtroalbaran',$filtroalbaran ?? '') }}"/>
+                    <input type="text" autocomplete="off" placeholder="Escribe..." x-model="q"
+                        @focus="open=true; $el.select()" @input="open=true; hi=0"
+                        @keydown.arrow-down.prevent="hi=Math.min(hi+1,filtered.length-1)" @keydown.arrow-up.prevent="hi=Math.max(hi-1,0)"
+                        @keydown.enter.prevent="ir(open && filtered[hi] ? filtered[hi].id : q.trim())"
+                        @keydown.escape="open=false"
+                        class="w-full py-1 text-sm border border-blue-100 rounded-lg"/>
+                    <div x-show="open" x-cloak style="position:absolute;left:0;top:100%;z-index:60;min-width:20rem;max-height:15rem;overflow:auto;background:#fff;border:1px solid #d1d5db;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.15);font-size:13px">
+                        <div @mousedown.prevent="ir('')" style="padding:4px 8px;color:#9ca3af;cursor:pointer">-- Todos --</div>
+                        <template x-for="(o,i) in filtered" :key="o.id">
+                            <div @mousedown.prevent="ir(o.id)" @mouseenter="hi=i" :style="'padding:4px 8px;cursor:pointer;color:#374151;'+(i===hi?'background:#dbeafe':'')" x-text="o.label"></div>
+                        </template>
+                        <div x-show="!filtered.length" style="padding:4px 8px;color:#9ca3af">Sin resultados</div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -33,6 +33,22 @@
 
 
 
+        <style>
+            [x-cloak]{display:none!important}
+            .accfila{container-type:inline-size;container-name:accfila;width:100%}
+            .accfila-inline{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;white-space:nowrap}
+            .accfila-btn{display:none;margin:0 auto;padding:0 12px;font-size:20px;line-height:26px;font-weight:700;color:#374151;background:#e5e7eb;border-radius:6px;cursor:pointer}
+            .accfila-btn:hover{background:#d1d5db}
+            .accfila-modal{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);padding:16px}
+            .accfila-panel{background:#fff;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.3);width:100%;max-width:340px;max-height:90vh;overflow:auto;padding:12px 14px}
+            .accfila-titulo{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:#374151;margin-bottom:8px}
+            .accfila-x{color:#6b7280;font-size:16px;padding:0 4px}
+            .accfila-grid{display:flex;flex-direction:column;gap:2px}
+            .accfila-grid > a,.accfila-grid > *{display:flex!important;align-items:center;gap:12px;width:100%!important;margin:0!important;padding:8px 6px;border-radius:6px;cursor:pointer;transform:none!important;font-size:14px;color:#374151}
+            .accfila-grid > *:hover{background:#f3f4f6}
+            .accfila-grid > a > svg{width:22px!important;height:22px!important;flex:none}
+            .accfila-grid > a::after{content:attr(title);color:#374151}
+        </style>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />

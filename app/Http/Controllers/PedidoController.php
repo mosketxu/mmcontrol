@@ -60,6 +60,14 @@ class PedidoController extends Controller
         $responsables=Responsable::where('activo','1')->get();
         $laminados=Laminado::get();
         $idiomas=Idioma::orderBy('nombre')->get();
+        // Opciones del combo «Albarán» (nº de albarán · pedido · cliente)
+        $albaranes=\DB::table('pedido_parciales')
+            ->join('pedidos','pedido_parciales.pedido_id','=','pedidos.id')
+            ->join('entidades','pedidos.cliente_id','=','entidades.id')
+            ->where('pedidos.tipo',$tipo)
+            ->orderByDesc('pedido_parciales.id')
+            ->get(['pedido_parciales.id','pedidos.id as pedido','entidades.entidad'])
+            ->map(fn($a)=>['id'=>(string)$a->id,'label'=>$a->id.' · pedido '.$a->pedido.' · '.$a->entidad])->values();
 
         $pedidos= Pedido::query()
             ->with('cliente','proveedor','laminado')
@@ -106,7 +114,7 @@ class PedidoController extends Controller
             ->paginate(30);
 
         return view('pedidos.index',compact(['tipo','ruta','entidades','clientes','proveedores','meses','responsables','pedidos','laminados','idiomas',
-        'search','filtroalbaran','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtroidioma','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
+        'search','filtroalbaran','albaranes','filtroreferencia','filtroisbn','filtroresponsable','filtrocliente','filtroidioma','filtroproveedor','filtroestado','filtrolaminado','filtrofacturado','filtroarchivos','filtromaqueta','filtroplotter','filtroentrega','filtroanyo','filtromes']));
     }
 
     public function stock($tipo,$ruta){

@@ -72,6 +72,7 @@
                                     @endif
                                 </div>
                                 <div class="w-full space-x-2 text-center md:w-4/12">
+<x-acciones-fila :min="140" :titulo="'Presupuesto '.$presupuesto->id">
                                     @if(!Auth::user()->hasRole('Cliente'))
                                     <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('presupuesto.archivos',[$presupuesto->id,'i'])}}'" title="Archivo"/>
                                     @endif
@@ -80,6 +81,7 @@
                                     @if(!Auth::user()->hasRole('Cliente'))
                                     <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
                                     @endif
+</x-acciones-fila>
                                 </div>
                             </div>
                         </div>
