@@ -47,12 +47,7 @@
                 Caja
             </label>
             <div class="flex">
-                <select wire:model="filtrocaja" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($cajas as $caja)
-                    <option value="{{ $caja->id }}">{{ $caja->name }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtrocaja" :options="collect($cajas)->map(fn($caja)=>['id'=>$caja->id,'label'=>($caja->name)])->values()->all()" placeholder="-- Todos --"/>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -65,12 +60,7 @@
                 Idioma
             </label>
             <div class="flex">
-                <select wire:model="filtroidioma" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($idiomas as $idioma)
-                    <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtroidioma" :options="collect($idiomas)->map(fn($idioma)=>['id'=>$idioma->id,'label'=>($idioma->nombre)])->values()->all()" placeholder="-- Todos --"/>
                 @if($filtroidioma!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroidioma', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -83,13 +73,7 @@
                 Estado
             </label>
             <div class="flex">
-                <select wire:model="filtroproductoestado" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value="">-- Seleccionar --</option>
-                    @foreach($productosestado as $value => $label)
-                        <option value="{{ $value }}"
-                        {{ old('estadoproducto', $producto->estadoproducto?->value ?? '') == $value ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtroproductoestado" :options="collect($productosestado)->map(fn($label,$value)=>['id'=>$value,'label'=>($label)])->values()->all()" placeholder="-- Seleccionar --"/>
                 @if($filtroproductoestado!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroproductoestado', '')" class="pb-1" title="reset filter"/>
                 @endif

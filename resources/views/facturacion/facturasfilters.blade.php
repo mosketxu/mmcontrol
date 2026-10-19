@@ -32,12 +32,7 @@
                 Tipo
             </label>
             <div class="flex">
-                <select wire:model="filtroTipo" class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value="">Todos</option>
-                    <option value="1">Editorial</option>
-                    <option value="2">Packaging</option>
-                    <option value="3">Propios</option>
-                </select>
+                <x-combo wire:model="filtroTipo" :options="[['id'=>'1','label'=>'Editorial'],['id'=>'2','label'=>'Packaging'],['id'=>'3','label'=>'Propios']]" placeholder="Todos"/>
                 @if($filtroTipo!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroTipo', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -51,9 +46,7 @@
                 Año Factura
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroanyo"
-                    class="w-full py-1 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                    placeholder="Año" />
+                <x-buscador wire:model="filtroanyo" sugerir="anyos" :tipo="$tipo ?? null" placeholder="Año"/>
                 @if($filtroanyo!='')
                 <x-icon.filter-slash-a wire:click="$set('filtroanyo', '')" class="pb-1" title="reset filter" />
                 @endif
@@ -66,13 +59,7 @@
                 Mes Factura
             </label>
             <div class="flex">
-                <select wire:model="filtromes"
-                    class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value="">-- selecciona --</option>
-                    @foreach ($meses as $mes )
-                    <option value={{ $mes->id}}>{{ $mes->mesmayus }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtromes" :options="collect($meses)->map(fn($mes)=>['id'=>$mes->id,'label'=>($mes->mesmayus)])->values()->all()" placeholder="-- selecciona --"/>
                 @if($filtromes!='')
                 <x-icon.filter-slash-a wire:click="$set('filtromes', '')" class="pb-1" title="reset filter" />
                 @endif
@@ -104,13 +91,7 @@
                 Estado
             </label>
             <div class="flex">
-                <select wire:model="filtroestado"
-                    class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value="">-- selecciona --</option>
-                    @foreach ($estados as $valor => $estado)
-                        <option value="{{ $valor }}">{{ $estado[1] }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtroestado" :options="collect($estados)->map(fn($estado,$valor)=>['id'=>$valor,'label'=>($estado[1])])->values()->all()" placeholder="-- selecciona --"/>
                 @if($filtroestado!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroestado', '')" class="pb-1" title="reset filter" />
                 @endif
