@@ -57,7 +57,9 @@
                                     <textarea wire:model.defer="descripcion" class="w-full text-xs border-gray-300 rounded-md" rows="1" {{$escliente}} {{$deshabilitado}}>{{ old('descripcion') }} </textarea>
                                 </div>
                                 <div class="w-full form-item">
-                                    <x-jet-label >{{ __('Código / Título / Ref.') }}</x-jet-label>
+                                    <div class="flex py-2">
+                                        <x-jet-label>{{ __('Código / Título / Ref.') }}</x-jet-label>
+                                    </div>
                                     <x-combo wire:model="producto_id" :options="($productos ?? collect())->map(fn($p)=>['id'=>$p->id,'label'=>trim(($p->isbn ?? '').' · '.($p->referencia ?? ''), ' ·')])->values()->all()" placeholder="-- Escribe código o título --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm" />
                                 </div>
                                 

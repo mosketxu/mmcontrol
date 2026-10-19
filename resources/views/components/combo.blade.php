@@ -13,8 +13,8 @@
     x-data="{
         value: @entangle($attributes->wire('model')),
         options: {{ \Illuminate\Support\Js::from($opts) }},
-        open: false, q: '', typed: false, hi: 0, st: '',
-        calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = 'position:fixed;z-index:80;left:' + r.left + 'px;min-width:' + r.width + 'px;max-height:' + mh + 'px;' + (up ? 'bottom:' + (h - r.top + 2) + 'px;' : 'top:' + (r.bottom + 2) + 'px;') },
+        open: false, q: '', typed: false, hi: 0, st: {},
+        calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = { position: 'fixed', zIndex: 80, left: r.left + 'px', minWidth: r.width + 'px', maxHeight: mh + 'px', top: up ? 'auto' : (r.bottom + 2) + 'px', bottom: up ? (h - r.top + 2) + 'px' : 'auto' } },
         norm(t) { return (t || '').toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase() },
         get label() { const o = this.options.find(o => o.id == this.value); return o ? o.label : '' },
         get filtered() {
