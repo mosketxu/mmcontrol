@@ -36,8 +36,8 @@
         <style>
             [x-cloak]{display:none!important}
             .accfila{container-type:inline-size;container-name:accfila;width:100%}
-            .accfila-inline{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;white-space:nowrap}
-            .accfila-btn{display:none;margin:0 auto;padding:0 12px;font-size:20px;line-height:26px;font-weight:700;color:#374151;background:#e5e7eb;border-radius:6px;cursor:pointer}
+            .accfila-inline{gap:8px;display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;white-space:nowrap}
+            .accfila-btn{display:none;margin:5px auto;padding:2px 14px;font-size:20px;line-height:26px;font-weight:700;color:#374151;background:#e5e7eb;border-radius:6px;cursor:pointer}
             .accfila-btn:hover{background:#d1d5db}
             .accfila-modal{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);padding:16px}
             .accfila-panel{background:#fff;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.3);width:100%;max-width:340px;max-height:90vh;overflow:auto;padding:12px 14px}
