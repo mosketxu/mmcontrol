@@ -1,3 +1,4 @@
+@php $fx = \App\Support\Facetas::desde($__data); @endphp
 <div class="flex justify-between space-x-1">
     <div class="flex w-2/12 ">
         <div class="w-full">
@@ -5,7 +6,7 @@
                 ISBN/Código
             </label>
             <div class="flex">
-                <x-buscador wire:model="filtroisbn" sugerir="isbn" :tipo="$tipo ?? null" placeholder=""/>
+                <x-buscador wire:model="filtroisbn" faceta="isbn" contexto="pedidos" :filtros="$fx" :tipo="$tipo ?? null" placeholder=""/>
                 @if($filtroisbn!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -18,7 +19,7 @@
                 Titulo/Referencia
             </label>
             <div class="flex">
-                <x-buscador wire:model="filtroreferencia" sugerir="referencia" :tipo="$tipo ?? null" placeholder="Búsqueda Entidad/Factura"/>
+                <x-buscador wire:model="filtroreferencia" faceta="referencia" contexto="pedidos" :filtros="$fx" :tipo="$tipo ?? null" placeholder="Búsqueda Entidad/Factura"/>
                 @if($filtroreferencia!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
                 @endif

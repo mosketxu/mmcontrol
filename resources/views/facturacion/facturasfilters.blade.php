@@ -1,3 +1,4 @@
+@php $fx = \App\Support\Facetas::desde($__data); @endphp
 <div class="flex justify-between space-x-2 text-xs">
     {{-- Factura --}}
     <div class="flex w-1/12 ">
@@ -6,7 +7,7 @@
                 Factura
             </label>
             <div class="flex">
-                <x-buscador wire:model="search" solo="id" :options="$facturasopciones ?? []" placeholder="Nº factura..." texto="text-xs"/>
+                <x-buscador wire:model="search" faceta="numero" contexto="facturas" :filtros="$fx" placeholder="Nº factura..." texto="text-xs"/>
                 @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -19,7 +20,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <div style="width:100%"><x-combo wire:model="filtrocliente" :options="$clientes->map(fn($c)=>['id'=>$c->id,'label'=>$c->entidad])->values()->all()" placeholder="-- Todos --" class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm"/></div>
+                <div style="width:100%"><x-combo wire:model="filtrocliente" faceta="cliente" contexto="facturas" :filtros="$fx" placeholder="-- Todos --" class="w-full py-1 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm"/></div>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif

@@ -1,3 +1,4 @@
+@php $fx = \App\Support\Facetas::desde($__data); @endphp
 
 @if(!Auth::user()->hasRole('Cliente'))
     <form method="GET" action="{{ route('pedido.tipo',[$tipo,'i']) }}">
@@ -13,7 +14,7 @@
                     Pedido
                 </label>
                 <div class="flex">
-                    <x-buscador name="search" :valor="$search" sugerir="pedido" :tipo="$tipo ?? null" placeholder=""/>
+                    <x-buscador name="search" :valor="$search" faceta="numero" contexto="pedidos" :filtros="$fx" :tipo="$tipo ?? null" placeholder=""/>
                 </div>
             </div>
         </div>
@@ -37,7 +38,7 @@
                     @endif
                 </label>
                 <div class="flex">
-                    <x-buscador name="filtroreferencia" :valor="$filtroreferencia" sugerir="referencia" :tipo="$tipo ?? null" placeholder=""/>
+                    <x-buscador name="filtroreferencia" :valor="$filtroreferencia" faceta="referencia" contexto="pedidos" :filtros="$fx" :tipo="$tipo ?? null" placeholder=""/>
                 </div>
             </div>
         </div>
@@ -49,7 +50,7 @@
                     ISBN
                 </label>
                 <div class="flex">
-                    <x-buscador name="filtroisbn" :valor="$filtroisbn" sugerir="isbn" :tipo="$tipo ?? null" placeholder=""/>
+                    <x-buscador name="filtroisbn" :valor="$filtroisbn" faceta="isbn" contexto="pedidos" :filtros="$fx" :tipo="$tipo ?? null" placeholder=""/>
                 </div>
             </div>
         </div>

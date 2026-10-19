@@ -1,10 +1,11 @@
+@php $fx = \App\Support\Facetas::desde($__data); @endphp
 <div class="flex justify-between space-x-1">
     <div class="flex w-2/12">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Nombre
             </label>
-            <x-buscador wire:model="search" :options="$opcnombres ?? []" placeholder="Nombre..."/>
+            <x-buscador wire:model="search" faceta="numero" contexto="entidades" :tipo="$entidadtipo_id ?? null" :filtros="$fx" placeholder="Nombre..."/>
         </div>
     </div>
     <div class="flex w-1/12">
@@ -12,7 +13,7 @@
             <label class="px-1 text-sm text-gray-600">
                 NIF
             </label>
-            <x-buscador wire:model="filtronif" :options="$opcnifs ?? []" placeholder="NIF..." ancho="20rem"/>
+            <x-buscador wire:model="filtronif" faceta="nif" contexto="entidades" :tipo="$entidadtipo_id ?? null" :filtros="$fx" placeholder="NIF..." ancho="20rem"/>
         </div>
     </div>
     <div class="flex w-2/12">
@@ -20,7 +21,7 @@
             <label class="px-1 text-sm text-gray-600">
                 Responsable
             </label>
-            <x-buscador wire:model="filtroresponsable" :options="$opcresponsables ?? []" placeholder="Responsable..." ancho="14rem"/>
+            <x-buscador wire:model="filtroresponsable" faceta="responsable" contexto="entidades" :tipo="$entidadtipo_id ?? null" :filtros="$fx" placeholder="Responsable..." ancho="14rem"/>
         </div>
     </div>
     <div class="flex w-5/12">

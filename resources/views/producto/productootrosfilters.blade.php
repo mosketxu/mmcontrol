@@ -1,3 +1,4 @@
+@php $fx = \App\Support\Facetas::desde($__data); @endphp
 <div class="flex justify-between space-x-1">
     <div class="w-10 mt-8 text-gray-300">
         <x-icon.filter/>
@@ -8,7 +9,7 @@
                 Cod./Ref.
             </label>
             <div class="flex">
-                <x-buscador wire:model="filtroisbn" :options="$opcisbn ?? []" placeholder="ISBN / Código..." texto="text-xs" ancho="24rem" class="w-full py-2 text-xs text-gray-600 bg-white border border-blue-300 rounded-md shadow-sm"/>
+                <x-buscador wire:model="filtroisbn" faceta="isbn" contexto="productos" :tipo="$tipo ?? null" :filtros="$fx" placeholder="ISBN / Código..." texto="text-xs" ancho="24rem" class="w-full py-2 text-xs text-gray-600 bg-white border border-blue-300 rounded-md shadow-sm"/>
                 @if($filtroisbn!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -21,7 +22,7 @@
                 Referencia
             </label>
             <div class="flex">
-                <x-buscador wire:model="filtroreferencia" :options="$opcreferencia ?? []" placeholder="Título / Referencia..." texto="text-xs" ancho="30rem" class="w-full py-2 text-xs text-gray-600 bg-white border border-blue-300 rounded-md shadow-sm"/>
+                <x-buscador wire:model="filtroreferencia" faceta="referencia" contexto="productos" :tipo="$tipo ?? null" :filtros="$fx" placeholder="Título / Referencia..." texto="text-xs" ancho="30rem" class="w-full py-2 text-xs text-gray-600 bg-white border border-blue-300 rounded-md shadow-sm"/>
                 @if($filtroreferencia!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -34,7 +35,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <div style="width:100%"><x-combo wire:model="filtrocliente" :options="isset($clientes) ? $clientes->map(fn($c)=>['id'=>$c->id,'label'=>$c->entidad])->values()->all() : []" placeholder="-- Todos --" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm"/></div>
+                <div style="width:100%"><x-combo wire:model="filtrocliente" faceta="cliente" contexto="productos" :tipo="$tipo ?? null" :filtros="$fx" placeholder="-- Todos --" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm"/></div>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -60,7 +61,7 @@
                 Idioma
             </label>
             <div class="flex">
-                <x-combo wire:model="filtroidioma" :options="collect($idiomas)->map(fn($idioma)=>['id'=>$idioma->id,'label'=>($idioma->nombre)])->values()->all()" placeholder="-- Todos --"/>
+                <x-combo wire:model="filtroidioma" faceta="idioma" contexto="productos" :tipo="$tipo ?? null" :filtros="$fx" placeholder="-- Todos --"/>
                 @if($filtroidioma!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroidioma', '')" class="pb-1" title="reset filter"/>
                 @endif
