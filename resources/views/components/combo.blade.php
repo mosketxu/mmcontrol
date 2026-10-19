@@ -7,9 +7,11 @@
     Va dentro de wire:ignore: las opciones se fijan al pintar; si cambian (p. ej. contactos al cambiar de cliente) la clave
     wire:key lleva un hash de las opciones y Livewire repinta el combo.
 --}}
-@props(['options' => [], 'placeholder' => '-- Selecciona --', 'disabled' => false, 'name' => null, 'valor' => ''])
+@props(['options' => [], 'placeholder' => '-- Selecciona --', 'disabled' => false, 'name' => null, 'valor' => '', 'faceta' => null, 'contexto' => null, 'tipo' => null, 'filtros' => []])
 @php
     $wm = $attributes->wire('model')->value();
+    // Con faceta, las opciones salen de los registros que cumplen los demás filtros (App\Support\Facetas)
+    if ($faceta) $options = \App\Support\Facetas::opciones($contexto, $tipo, $faceta, $filtros);
     $opts = collect($options)->map(fn ($o) => ['id' => (string) $o['id'], 'label' => (string) $o['label']])->values()->all();
 @endphp
 <div wire:ignore wire:key="combo-{{ $wm ?: $name }}-{{ md5(json_encode($opts)) }}" style="position:relative;width:100%"

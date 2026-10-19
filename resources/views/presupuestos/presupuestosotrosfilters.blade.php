@@ -1,3 +1,4 @@
+@php $fx = \App\Support\Facetas::desde($__data); @endphp
 <div class="flex justify-between space-x-2 ">
     {{-- Pedido --}}
     <div class="flex w-1/12 ">
@@ -6,7 +7,7 @@
                 Nº.Presup
             </label>
             <div class="flex">
-                <x-buscador wire:model="search" sugerir="presupuesto" :tipo="$tipo ?? null" placeholder=""/>
+                <x-buscador wire:model="search" faceta="numero" contexto="presupuestos" :filtros="$fx" :tipo="$tipo ?? null" placeholder=""/>
                 @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -49,7 +50,7 @@
                 Descripción
             </label>
             <div class="flex">
-                <x-buscador wire:model="filtroreferencia" sugerir="referencia" :tipo="$tipo ?? null" placeholder=""/>
+                <x-buscador wire:model="filtroreferencia" faceta="referencia" contexto="presupuestos" :filtros="$fx" :tipo="$tipo ?? null" placeholder=""/>
                 @if($filtroreferencia!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -64,7 +65,7 @@
                     Cod./Ref.
                 </label>
                 <div class="flex">
-                    <x-buscador wire:model="filtroisbn" sugerir="isbn" :tipo="$tipo ?? null" placeholder=""/>
+                    <x-buscador wire:model="filtroisbn" faceta="isbn" contexto="presupuestos" :filtros="$fx" :tipo="$tipo ?? null" placeholder=""/>
                     @if($filtroisbn!='')
                         <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                     @endif

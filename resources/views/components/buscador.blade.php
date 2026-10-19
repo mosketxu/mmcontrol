@@ -7,15 +7,15 @@
     En Livewire:  <x-buscador wire:model="filtroisbn" sugerir="isbn" :tipo="$tipo" placeholder="ISBN..." />
     En GET:       <x-buscador name="filtroisbn" :valor="$filtroisbn" sugerir="isbn" :tipo="$tipo" />  (envía el formulario al elegir o con Enter)
 --}}
-@props(['options' => null, 'sugerir' => null, 'tipo' => null, 'placeholder' => '', 'name' => null, 'valor' => '', 'ancho' => '22rem', 'solo' => null])
+@props(['options' => null, 'sugerir' => null, 'tipo' => null, 'placeholder' => '', 'name' => null, 'valor' => '', 'ancho' => '22rem', 'solo' => null, 'contexto' => null, 'faceta' => null, 'filtros' => []])
 @php
     $wm = $attributes->wire('model')->value();
     // solo='id': se busca únicamente en el valor (p. ej. el nº de factura), no en el texto que acompaña (cliente...)
-    $solo = $solo ?? (in_array($sugerir, ['presupuesto', 'pedido', 'oferta']) ? 'id' : null);
-    $lista = $options ?? ($sugerir ? \App\Support\Sugerencias::de($sugerir, $tipo) : []);
+    $solo = $solo ?? ((in_array($sugerir, ['presupuesto', 'pedido', 'oferta']) || ($faceta === 'numero' && in_array($contexto, ['presupuestos', 'pedidos', 'ofertas', 'facturas']))) ? 'id' : null);
+    $lista = $faceta ? \App\Support\Facetas::opciones($contexto, $tipo, $faceta, $filtros) : ($options ?? ($sugerir ? \App\Support\Sugerencias::de($sugerir, $tipo, $contexto) : []));
     $opts = collect($lista)->map(fn ($o) => ['id' => (string) $o['id'], 'label' => (string) $o['label']])->values()->all();
 @endphp
-<div wire:ignore style="position:relative;width:100%"
+<div wire:ignore wire:key="busc-{{ $wm ?: $name }}-{{ md5(json_encode($opts)) }}" style="position:relative;width:100%"
     x-data="{ @if($wm) value: @entangle($attributes->wire('model')), @else value: {{ \Illuminate\Support\Js::from((string) $valor) }}, @endif
         enviar: {{ $wm ? 'false' : 'true' }}, solo: {{ \Illuminate\Support\Js::from($solo) }}, q: '', open: false, hi: 0, st: {}, options: {{ \Illuminate\Support\Js::from($opts) }},
         calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = { position: 'fixed', zIndex: 80, left: r.left + 'px', minWidth: 'max(' + r.width + 'px, {{ $ancho }})', maxHeight: mh + 'px', width: 'max-content', maxWidth: (window.innerWidth - r.left - 8) + 'px', top: up ? 'auto' : (r.bottom + 2) + 'px', bottom: up ? (h - r.top + 2) + 'px' : 'auto' } },
