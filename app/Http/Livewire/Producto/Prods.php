@@ -88,7 +88,12 @@ class Prods extends Component
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
 
-        return view($vista,compact('productos','clientes','cajas','idiomas'));
+        // Sugerencias de los combos de búsqueda (ISBN/código y título/referencia de los productos de este tipo)
+        $base=Producto::where('tipo',$this->tipo)->orderBy('referencia')->get(['isbn','referencia']);
+        $opcisbn=$base->filter(fn($x)=>$x->isbn)->map(fn($x)=>['id'=>$x->isbn,'label'=>$x->isbn.' · '.$x->referencia])->values()->all();
+        $opcreferencia=$base->filter(fn($x)=>$x->referencia)->map(fn($x)=>['id'=>$x->referencia,'label'=>$x->referencia])->unique('id')->values()->all();
+
+        return view($vista,compact('productos','clientes','cajas','idiomas','opcisbn','opcreferencia'));
     }
 
         public function updatingFiltroisbn(){$this->resetPage();}

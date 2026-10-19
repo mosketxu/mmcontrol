@@ -2,27 +2,25 @@
     <div class="flex w-2/12">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Búsqueda
+                Nombre
             </label>
-            <div class="flex">
-                <input type="search" wire:model="search" class="w-full py-1 border border-blue-100 rounded-lg" placeholder="Búsqueda por nombre o nif..." autofocus/>
-                {{-- @if($search!='')
-                    <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
-                @endif --}}
-            </div>
+            <x-buscador wire:model="search" :options="$opcnombres ?? []" placeholder="Nombre..."/>
         </div>
     </div>
-    <div class="flex w-3/12">
+    <div class="flex w-1/12">
+        <div class="w-full">
+            <label class="px-1 text-sm text-gray-600">
+                NIF
+            </label>
+            <x-buscador wire:model="filtronif" :options="$opcnifs ?? []" placeholder="NIF..." ancho="20rem"/>
+        </div>
+    </div>
+    <div class="flex w-2/12">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
                 Responsable
             </label>
-            <div class="flex">
-                <input type="search" wire:model="filtroresponsable" class="w-full py-1 border border-blue-100 rounded-lg" placeholder="Búsqueda responsable"/>
-                {{-- @if($filtroresponsable!='')
-                    <x-icon.filter-slash-a wire:click="$set('filtroresponsable', '')" class="pb-1" title="reset filter"/>
-                @endif --}}
-            </div>
+            <x-buscador wire:model="filtroresponsable" :options="$opcresponsables ?? []" placeholder="Responsable..." ancho="14rem"/>
         </div>
     </div>
     <div class="flex w-5/12">
@@ -59,6 +57,7 @@
         <div class="">
             <x-icon.xls-a href="{{ route('entidad.export',[
                     'search' => $search,
+                    'filtronif' => $filtronif,
                     'filtroresponsable' => $filtroresponsable,
                     'entidadtipo_id' => $entidadtipo_id,
                     'filtrofini' => $filtrofini,
@@ -71,6 +70,7 @@
         <div class="">
             <x-icon.xls-a href="{{ route('entidad.acciones.export',[
                     'search' => $search,
+                    'filtronif' => $filtronif,
                     'filtroresponsable' => $filtroresponsable,
                     'entidadtipo_id' => $entidadtipo_id,
                     'filtrofini' => $filtrofini,
@@ -83,6 +83,7 @@
         <div class="">
             <x-icon.xls-a href="{{ route('entidad.contactos.export',[
                     'search' => $search,
+                    'filtronif' => $filtronif,
                     'filtroresponsable' => $filtroresponsable,
                     'entidadtipo_id' => $entidadtipo_id,
                     'filtrofini' => $filtrofini,

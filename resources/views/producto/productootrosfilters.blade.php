@@ -8,7 +8,7 @@
                 Cod./Ref.
             </label>
             <div class="flex">
-                <input type="text" wire:model.lazy="filtroisbn" class="w-full py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" autofocus/>
+                <x-buscador wire:model="filtroisbn" :options="$opcisbn ?? []" placeholder="ISBN / Código..." texto="text-xs" ancho="24rem" class="w-full py-2 text-xs text-gray-600 bg-white border border-blue-300 rounded-md shadow-sm"/>
                 @if($filtroisbn!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -21,7 +21,7 @@
                 Referencia
             </label>
             <div class="flex">
-                <input type="text" wire:model.lazy="filtroreferencia" class="w-full py-2 text-xs text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" placeholder="Búsqueda Entidad/Factura" autofocus/>
+                <x-buscador wire:model="filtroreferencia" :options="$opcreferencia ?? []" placeholder="Título / Referencia..." texto="text-xs" ancho="30rem" class="w-full py-2 text-xs text-gray-600 bg-white border border-blue-300 rounded-md shadow-sm"/>
                 @if($filtroreferencia!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -34,12 +34,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <select wire:model="filtrocliente" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($clientes as $cliente)
-                    <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
-                    @endforeach
-                </select>
+                <div style="width:100%"><x-combo wire:model="filtrocliente" :options="isset($clientes) ? $clientes->map(fn($c)=>['id'=>$c->id,'label'=>$c->entidad])->values()->all() : []" placeholder="-- Todos --" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm"/></div>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif

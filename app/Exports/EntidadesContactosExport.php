@@ -21,7 +21,8 @@ class EntidadesContactosExport implements FromCollection, WithHeadings, WithEven
         public $filtrofini,
         public $filtroffin,
         public $ordenarpor,
-        public $orden
+        public $orden,
+        public $filtronif = ''
     ) {}
 
     public function headings(): array
@@ -58,7 +59,8 @@ class EntidadesContactosExport implements FromCollection, WithHeadings, WithEven
                 $this->filtroresponsable,
                 $this->entidadtipo_id,
                 $this->filtrofini,
-                $this->filtroffin
+                $this->filtroffin,
+                $this->filtronif
             )
             ->orderBy($this->ordenarpor, $this->orden)
             ->get();

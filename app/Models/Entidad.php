@@ -36,7 +36,7 @@ class Entidad extends Model
     public function ofertas(){return $this->hasMany(Oferta::class,'cliente_id');}
 
 
-    public function scopeFiltrosEntidad(Builder $query, $search, $filtroresponsable, $entidadtipo_id,$fini,$ffin) : Builder
+    public function scopeFiltrosEntidad(Builder $query, $search, $filtroresponsable, $entidadtipo_id,$fini,$ffin,$nif='') : Builder
     {
         //creo que ya no lo uso porque meto las v
         return $query ->search('entidad',$search)
@@ -66,7 +66,9 @@ class Entidad extends Model
         ->when($fini && $ffin, function ($query) use($fini,$ffin){
             $query->whereBetween('created_at', [$fini, $ffin]);
         })
-        ->orSearch('nif',$search);
+        ->when($nif!='', function ($query) use($nif){
+            $query->where('nif','like','%'.$nif.'%');
+        });
     }
 
     public function getFechacliAttribute()

@@ -77,7 +77,8 @@ class EntidadController extends Controller
                 $request->filtrofini,
                 $request->filtroffin,
                 $request->ordenarpor ?? 'entidad',
-                $request->orden ?? 'asc'
+                $request->orden ?? 'asc',
+                $request->filtronif ?? ''
             ),
             'entidades.xlsx'
         );
@@ -93,7 +94,8 @@ class EntidadController extends Controller
                 $request->filtrofini,
                 $request->filtroffin,
                 $request->ordenarpor ?? 'entidad',
-                $request->orden ?? 'asc'
+                $request->orden ?? 'asc',
+                $request->filtronif ?? ''
             ),
             'acciones_entidades.xlsx'
         );
@@ -109,7 +111,8 @@ class EntidadController extends Controller
                 $request->filtrofini,
                 $request->filtroffin,
                 $request->ordenarpor ?? 'entidad',
-                $request->orden ?? 'asc'
+                $request->orden ?? 'asc',
+                $request->filtronif ?? ''
             ),
             'contactos_entidades.xlsx'
         );
