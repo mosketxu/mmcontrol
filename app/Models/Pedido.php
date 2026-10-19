@@ -60,7 +60,7 @@ class Pedido extends Model
             '0'=>['text-gray-300','text-gray-500'],
             '1'=>['text-red-500','text-red-800'],
         // ][$hay] ?? ['gray-500',''];
-        ][$this->hayIncidencias] ?? ['text-gray-500',''];
+        ][(int) $this->hayIncidencias > 0 ? "1" : "0"] ?? ['text-gray-500',''];
     }
 
     public function getRetrasosColorAttribute(){
@@ -69,7 +69,7 @@ class Pedido extends Model
             '0'=>['text-gray-300','text-gray-500'],
             '1'=>['text-red-500','text-red-800'],
         // ][$hay] ?? ['gray-500',''];
-        ][$this->hayRetrasos] ?? ['text-gray-500',''];
+        ][(int) $this->hayRetrasos > 0 ? "1" : "0"] ?? ['text-gray-500',''];
     }
 
     public function getParcialesColorAttribute(){
@@ -78,7 +78,7 @@ class Pedido extends Model
             '0'=>['text-gray-300','text-gray-500'],
             '1'=>['text-pink-500','text-pink-800'],
         // ][$hay] ?? ['gray-500',''];
-        ][$this->hayParciales] ?? ['text-gray-500',''];
+        ][(int) $this->hayParciales > 0 ? "1" : "0"] ?? ['text-gray-500',''];
     }
 
     public function getDistribucionesColorAttribute(){
@@ -87,7 +87,7 @@ class Pedido extends Model
             '0'=>['text-gray-300','text-gray-500'],
             '1'=>['text-orange-500','text-orange-800'],
         // ][$hay] ?? ['gray-500',''];
-        ][$this->hayDistribuciones] ?? ['text-blue-500',''];
+        ][(int) $this->hayDistribuciones > 0 ? "1" : "0"] ?? ['text-blue-500',''];
     }
 
     public function getArchivosColorAttribute(){
@@ -96,7 +96,7 @@ class Pedido extends Model
             '0'=>['text-gray-300','text-gray-500'],
             '1'=>['text-green-500','text-green-800'],
         // ][$hay] ?? ['gray-500',''];
-        ][$this->hayArchivos] ?? ['text-gray-500',''];
+        ][(int) $this->hayArchivos > 0 ? "1" : "0"] ?? ['text-gray-500',''];
     }
 
     public function getSubpedidosColorAttribute(){
@@ -105,7 +105,7 @@ class Pedido extends Model
             '0'=>['text-gray-300','text-gray-500'],
             '1'=>['text-red-400','text-red-700'],
         // ][$hay] ?? ['gray-500',''];
-        ][$this->haySubpedidos] ?? ['text-gray-500',''];
+        ][(int) $this->haySubpedidos > 0 ? "1" : "0"] ?? ['text-gray-500',''];
     }
 
     public function getTareasColorAttribute(){
@@ -114,7 +114,7 @@ class Pedido extends Model
             '0'=>['text-gray-300','text-gray-500'],
             '1'=>['text-green-500','text-green-800'],
         // ][$hay] ?? ['gray-500',''];
-        ][$this->hayTareas] ?? ['text-gray-500',''];
+        ][(int) $this->hayTareas > 0 ? "1" : "0"] ?? ['text-gray-500',''];
     }
 
     public function getCtrlArchivosColorAttribute(){
