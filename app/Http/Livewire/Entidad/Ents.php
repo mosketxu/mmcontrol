@@ -11,6 +11,7 @@ class Ents extends Component
     use WithPagination;
 
     public $search='';
+    public $filtronif='';
     public $filtroresponsable='';
     public $filtrofini='';
     public $filtroffin='';
@@ -18,7 +19,7 @@ class Ents extends Component
     public $orden='asc';
     public $entidadtipo_id='';
 
-    protected $queryString=['search','filtroresponsable','filtrofini','filtroffin','entidadtipo_id','ordenarpor','orden'];
+    protected $queryString=['search','filtronif','filtroresponsable','filtrofini','filtroffin','entidadtipo_id','ordenarpor','orden'];
 
     public Entidad $entidad;
 
@@ -27,13 +28,19 @@ class Ents extends Component
 
         $entidades=Entidad::query()
             ->with('entidadtipo')
-            ->filtrosEntidad($this->search, $this->filtroresponsable, $this->entidadtipo_id, $this->filtrofini, $this->filtroffin)
+            ->filtrosEntidad($this->search, $this->filtroresponsable, $this->entidadtipo_id, $this->filtrofini, $this->filtroffin, $this->filtronif)
             ->orderBy($this->ordenarpor,$this->orden)
             ->orderBy('created_at', 'asc')
             ->get();
 
 
-        return view('livewire.entidad.ents', compact('entidades', 'entidadtipo'));
+        // Sugerencias de los combos de búsqueda (nombre, NIF y responsable de las entidades de este tipo)
+        $base=Entidad::query()->filtrosEntidad('', '', $this->entidadtipo_id, '', '')->orderBy('entidad')->get(['entidad','nif','responsable']);
+        $opcnombres=$base->map(fn($x)=>['id'=>$x->entidad,'label'=>$x->entidad])->values()->all();
+        $opcnifs=$base->filter(fn($x)=>$x->nif)->map(fn($x)=>['id'=>$x->nif,'label'=>$x->nif.' · '.$x->entidad])->values()->all();
+        $opcresponsables=$base->pluck('responsable')->filter()->unique()->sort()->map(fn($r)=>['id'=>$r,'label'=>$r])->values()->all();
+
+        return view('livewire.entidad.ents', compact('entidades', 'entidadtipo','opcnombres','opcnifs','opcresponsables'));
     }
 
     public function updatingSearch(){
@@ -117,7 +124,8 @@ class Ents extends Component
                 $this->filtrofini,
                 $this->filtroffin,
                 $this->ordenarpor,
-                $this->orden
+                $this->orden,
+                $this->filtronif
             ),
             'entidades.xlsx'
         );

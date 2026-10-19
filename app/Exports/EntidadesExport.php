@@ -23,7 +23,8 @@ class EntidadesExport implements FromCollection,WithHeadings,WithMapping,WithEve
         public $filtrofini,
         public $filtroffin,
         public $ordenarpor,
-        public $orden
+        public $orden,
+        public $filtronif = ''
     ) {}
 
     public function headings(): array{
@@ -53,7 +54,8 @@ class EntidadesExport implements FromCollection,WithHeadings,WithMapping,WithEve
                 $this->filtroresponsable,
                 $this->entidadtipo_id,
                 $this->filtrofini,
-                $this->filtroffin
+                $this->filtroffin,
+                $this->filtronif
             )
             ->orderBy($this->ordenarpor, $this->orden)
             ->get();

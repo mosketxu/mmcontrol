@@ -21,7 +21,8 @@ class EntidadesAccionesExport implements FromCollection, WithHeadings, WithEvent
         public $filtrofini,
         public $filtroffin,
         public $ordenarpor,
-        public $orden
+        public $orden,
+        public $filtronif = ''
     ) {}
 
     public function headings(): array
@@ -60,7 +61,8 @@ class EntidadesAccionesExport implements FromCollection, WithHeadings, WithEvent
                 $this->filtroresponsable,
                 $this->entidadtipo_id,
                 $this->filtrofini,
-                $this->filtroffin
+                $this->filtroffin,
+                $this->filtronif
             )
             ->orderBy($this->ordenarpor, $this->orden)
             ->get();
