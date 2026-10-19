@@ -7,7 +7,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <x-combo wire:model="filtrocliente" :options="collect($clientes)->map(fn($cliente)=>['id'=>$cliente->id,'label'=>($cliente->entidad)])->values()->all()" placeholder="-- Todos --"/>
+                <x-combo faceta="cliente" contexto="presupuestos" :tipo="$tipo ?? null" :filtros="$fx" wire:model="filtrocliente" placeholder="-- Todos --"/>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -50,7 +50,7 @@
                 Proveedor
             </label>
             <div class="flex">
-                <x-combo wire:model="filtroproveedor" :options="collect($proveedores)->map(fn($proveedor)=>['id'=>$proveedor->id,'label'=>($proveedor->entidad)])->values()->all()" placeholder="-- Todos --"/>
+                <x-combo faceta="proveedor" contexto="presupuestos" :tipo="$tipo ?? null" :filtros="$fx" wire:model="filtroproveedor" placeholder="-- Todos --"/>
                 @if($filtroproveedor!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroproveedor', '')" class="pb-1" title="reset filter"/>
                 @endif

@@ -48,7 +48,7 @@
                 Rpble.
             </label>
             <div class="flex">
-                <x-combo wire:model="filtroresponsable" :options="collect($responsables)->map(fn($responsable)=>['id'=>$responsable->responsable,'label'=>($responsable->responsable)])->values()->all()" placeholder="Todos"/>
+                <x-combo faceta="responsable" contexto="pedidos" :tipo="$tipo ?? null" :filtros="$fx" wire:model="filtroresponsable" placeholder="Todos"/>
                 @if($filtroresponsable!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroresponsable', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -62,7 +62,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <x-combo wire:model="filtrocliente" :options="collect($clientes)->map(fn($cliente)=>['id'=>$cliente->id,'label'=>($cliente->entidad)])->values()->all()" placeholder="-- Todos --"/>
+                <x-combo faceta="cliente" contexto="pedidos" :tipo="$tipo ?? null" :filtros="$fx" wire:model="filtrocliente" placeholder="-- Todos --"/>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -76,7 +76,7 @@
                 Proveedor
             </label>
             <div class="flex">
-                <x-combo wire:model="filtroproveedor" :options="collect($proveedores)->map(fn($proveedor)=>['id'=>$proveedor->id,'label'=>($proveedor->entidad)])->values()->all()" placeholder="-- Todos --"/>
+                <x-combo faceta="proveedor" contexto="pedidos" :tipo="$tipo ?? null" :filtros="$fx" wire:model="filtroproveedor" placeholder="-- Todos --"/>
                 @if($filtroproveedor!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroproveedor', '')" class="pb-1" title="reset filter"/>
                 @endif
