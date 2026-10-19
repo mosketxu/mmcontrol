@@ -23,7 +23,7 @@
                 <label class="px-1 text-sm text-gray-600" title="Busca el pedido que contiene este albarán">
                     Albarán
                 </label>
-                                <x-buscador name="filtroalbaran" :valor="$filtroalbaran ?? ''" :options="$albaranes ?? []" placeholder="Escribe..."/>
+                                <x-buscador name="filtroalbaran" solo="id" :valor="$filtroalbaran ?? ''" :options="$albaranes ?? []" placeholder="Escribe..."/>
             </div>
         </div>
         {{-- Referencia --}}

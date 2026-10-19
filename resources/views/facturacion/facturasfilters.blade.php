@@ -6,7 +6,7 @@
                 Factura
             </label>
             <div class="flex">
-                <x-buscador wire:model="search" :options="$facturasopciones ?? []" placeholder="Nº factura..." texto="text-xs"/>
+                <x-buscador wire:model="search" solo="id" :options="$facturasopciones ?? []" placeholder="Nº factura..." texto="text-xs"/>
                 @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif

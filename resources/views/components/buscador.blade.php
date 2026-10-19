@@ -2,22 +2,25 @@
     Cuadro de búsqueda con sugerencias (combo en el que se puede escribir): al escribir se filtra el listado y se sugieren
     valores; elegir uno lo pone en el campo. A diferencia de x-combo, lo escrito vale como filtro aunque no se elija nada.
     Aspecto único: config/ui.php.
+    solo="id": filtra las sugerencias solo por el valor (nº), no por el texto que lo acompaña.
     Sugerencias: :options="[['id'=>'valor que se pone','label'=>'texto que se ve'], ...]"  o  sugerir="isbn" (ver App\Support\Sugerencias).
     En Livewire:  <x-buscador wire:model="filtroisbn" sugerir="isbn" :tipo="$tipo" placeholder="ISBN..." />
     En GET:       <x-buscador name="filtroisbn" :valor="$filtroisbn" sugerir="isbn" :tipo="$tipo" />  (envía el formulario al elegir o con Enter)
 --}}
-@props(['options' => null, 'sugerir' => null, 'tipo' => null, 'placeholder' => '', 'name' => null, 'valor' => '', 'ancho' => '22rem'])
+@props(['options' => null, 'sugerir' => null, 'tipo' => null, 'placeholder' => '', 'name' => null, 'valor' => '', 'ancho' => '22rem', 'solo' => null])
 @php
     $wm = $attributes->wire('model')->value();
+    // solo='id': se busca únicamente en el valor (p. ej. el nº de factura), no en el texto que acompaña (cliente...)
+    $solo = $solo ?? (in_array($sugerir, ['presupuesto', 'pedido', 'oferta']) ? 'id' : null);
     $lista = $options ?? ($sugerir ? \App\Support\Sugerencias::de($sugerir, $tipo) : []);
     $opts = collect($lista)->map(fn ($o) => ['id' => (string) $o['id'], 'label' => (string) $o['label']])->values()->all();
 @endphp
 <div wire:ignore style="position:relative;width:100%"
     x-data="{ @if($wm) value: @entangle($attributes->wire('model')), @else value: {{ \Illuminate\Support\Js::from((string) $valor) }}, @endif
-        enviar: {{ $wm ? 'false' : 'true' }}, q: '', open: false, hi: 0, st: {}, options: {{ \Illuminate\Support\Js::from($opts) }},
+        enviar: {{ $wm ? 'false' : 'true' }}, solo: {{ \Illuminate\Support\Js::from($solo) }}, q: '', open: false, hi: 0, st: {}, options: {{ \Illuminate\Support\Js::from($opts) }},
         calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = { position: 'fixed', zIndex: 80, left: r.left + 'px', minWidth: 'max(' + r.width + 'px, {{ $ancho }})', maxHeight: mh + 'px', width: 'max-content', maxWidth: (window.innerWidth - r.left - 8) + 'px', top: up ? 'auto' : (r.bottom + 2) + 'px', bottom: up ? (h - r.top + 2) + 'px' : 'auto' } },
         norm(t){ return (t||'').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase() },
-        get filtered(){ const t=this.norm(this.q).split(/\s+/).filter(Boolean); return this.options.filter(o=>{const n=this.norm(o.label); return t.every(w=>n.includes(w))}).slice(0,100) },
+        get filtered(){ const t=this.norm(this.q).split(/\s+/).filter(Boolean); return this.options.filter(o=>{const n=this.norm(this.solo === 'id' ? o.id : o.label); return t.every(w=>n.includes(w))}).slice(0,100) },
         poner(v){ this.value = v; if (this.enviar) this.$nextTick(() => this.$root.closest('form').submit()) },
         elegir(o){ this.q=o.id; this.open=false; this.poner(o.id) } }"
     x-init="q = value || ''; $watch('value', v => { if (!v) q = '' })"
