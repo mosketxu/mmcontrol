@@ -11,7 +11,7 @@
                         norm(t){ return (t||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase() },
                         get filtered(){ const t=this.norm(this.q).split(/\s+/).filter(Boolean); return this.options.filter(o=>{const n=this.norm(o.label); return t.every(w=>n.includes(w))}).slice(0,100) },
                         elegir(o){ this.q=o.id; this.value=o.id; this.open=false } }"
-                    x-effect="if (value === '' && q !== '') q = ''"
+                    x-init="$watch('value', v => { if (v === '' || v === null) q = '' })"
                     @click.outside="open=false">
                     <input type="text" autocomplete="off" x-model="q" placeholder="Nº factura..."
                         @focus="open=true" @input="open=true; hi=0" @input.debounce.500ms="value = q"
