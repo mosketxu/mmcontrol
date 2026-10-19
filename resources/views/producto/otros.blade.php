@@ -15,14 +15,7 @@
             {{-- idioma --}}
             <div class="w-1/10 form-item sm:w-2/12">
                 <x-jet-label for="idioma_id">{{ __('Idioma') }}</x-jet-label>
-                <select wire:model.lazy="producto.idioma_id"
-                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                    {{$escliente}} {{$deshabilitado}}>
-                    <option value=''>-- Selecciona idioma --</option>
-                    @foreach ($idiomas as $idioma)
-                    <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="producto.idioma_id" :options="collect($idiomas)->map(fn($idioma)=>['id'=>$idioma->id,'label'=>($idioma->nombre)])->values()->all()" :disabled="(bool) ($escliente ?: $deshabilitado)" placeholder="-- Selecciona idioma --"/>
             </div>
             {{-- Descripcion --}}
             <div class="w-full form-item sm:w-4/12">

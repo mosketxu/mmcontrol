@@ -79,13 +79,7 @@
                                 class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <select wire:model.defer="contacto_id"
-                                class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <option value="">-- Contacto --</option>
-                                @foreach ($contactos as $contacto)
-                                    <option value="{{ $contacto->id }}">{{ $contacto->entidadcontacto->entidad ?? '' }}</option>
-                                @endforeach
-                            </select>
+                            <x-combo wire:model="contacto_id" :options="collect($contactos)->map(fn($contacto)=>['id'=>$contacto->id,'label'=>($contacto->entidadcontacto->entidad ?? '')])->values()->all()" placeholder="-- Contacto --"/>
                         </div>
                         <div class="flex-col w-2/12 text-left">
                             <input type="text" wire:model.defer="nombre"
