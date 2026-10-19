@@ -10,7 +10,7 @@
 @endphp
 <div wire:ignore style="position:relative;width:100%"
     x-data="{ value: @entangle($attributes->wire('model')), q: '', open: false, hi: 0, st: {},
-        calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = { position: 'fixed', zIndex: 80, left: r.left + 'px', minWidth: 'max(' + r.width + 'px, {{ $ancho }})', maxHeight: mh + 'px', top: up ? 'auto' : (r.bottom + 2) + 'px', bottom: up ? (h - r.top + 2) + 'px' : 'auto' } }, options: {{ \Illuminate\Support\Js::from($opts) }},
+        calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = { position: 'fixed', zIndex: 80, left: r.left + 'px', minWidth: 'max(' + r.width + 'px, {{ $ancho }})', maxHeight: mh + 'px', width: 'max-content', maxWidth: (window.innerWidth - r.left - 8) + 'px', top: up ? 'auto' : (r.bottom + 2) + 'px', bottom: up ? (h - r.top + 2) + 'px' : 'auto' } }, options: {{ \Illuminate\Support\Js::from($opts) }},
         norm(t){ return (t||'').toString().normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase() },
         get filtered(){ const t=this.norm(this.q).split(/\s+/).filter(Boolean); return this.options.filter(o=>{const n=this.norm(o.label); return t.every(w=>n.includes(w))}).slice(0,100) },
         elegir(o){ this.q=o.id; this.value=o.id; this.open=false } }"

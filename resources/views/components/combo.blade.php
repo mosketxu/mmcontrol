@@ -14,7 +14,7 @@
         value: @entangle($attributes->wire('model')),
         options: {{ \Illuminate\Support\Js::from($opts) }},
         open: false, q: '', typed: false, hi: 0, st: {},
-        calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = { position: 'fixed', zIndex: 80, left: r.left + 'px', minWidth: r.width + 'px', maxHeight: mh + 'px', top: up ? 'auto' : (r.bottom + 2) + 'px', bottom: up ? (h - r.top + 2) + 'px' : 'auto' } },
+        calc() { const r = this.$refs.inp.getBoundingClientRect(); const h = window.innerHeight; const below = h - r.bottom - 8, above = r.top - 8; const up = below < 200 && above > below; const mh = Math.max(120, Math.min(260, up ? above : below)); this.st = { position: 'fixed', zIndex: 80, left: r.left + 'px', minWidth: r.width + 'px', maxHeight: mh + 'px', width: 'max-content', maxWidth: (window.innerWidth - r.left - 8) + 'px', top: up ? 'auto' : (r.bottom + 2) + 'px', bottom: up ? (h - r.top + 2) + 'px' : 'auto' } },
         norm(t) { return (t || '').toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase() },
         get label() { const o = this.options.find(o => o.id == this.value); return o ? o.label : '' },
         get filtered() {
@@ -36,7 +36,7 @@
         @keydown.escape="cerrar()" @keydown.tab="cerrar()"
         {{ $attributes->whereDoesntStartWith('wire:')->merge(['class' => 'w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm']) }}>
     <div x-show="open" x-ref="lista" x-cloak :style="st" @scroll.window="open && calc()" @resize.window="open && calc()"
-        style="overflow:auto;background:#fff;border:1px solid #d1d5db;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.15);font-size:13px">
+        style="white-space:nowrap;overflow:auto;background:#fff;border:1px solid #d1d5db;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.15);font-size:13px">
         <div @mousedown.prevent="elegir(null)" style="padding:4px 8px;color:#9ca3af;cursor:pointer">{{ $placeholder }}</div>
         <template x-for="(o, i) in filtered" :key="o.id">
             <div @mousedown.prevent="elegir(o)" @mouseenter="hi = i" :data-hi="i === hi ? '' : null"
