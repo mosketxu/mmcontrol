@@ -61,7 +61,7 @@
                     Rpble.
                 </label>
                 <div class="flex">
-                    <x-combo name="filtroresponsable" :valor="$filtroresponsable" :options="collect($responsables)->map(fn($responsable)=>['id'=>$responsable->responsable,'label'=>$responsable->responsable])->values()->all()" placeholder="Todos"/>
+                    <x-combo faceta="responsable" contexto="pedidos" :tipo="$tipo ?? null" :filtros="$fx" name="filtroresponsable" :valor="$filtroresponsable" placeholder="Todos"/>
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
                     Cliente
                 </label>
                 <div class="flex">
-                    <x-combo name="filtrocliente" :valor="$filtrocliente" :options="collect($clientes)->map(fn($cliente)=>['id'=>$cliente->id,'label'=>($cliente->entidad)])->values()->all()" placeholder="-- Todos --"/>
+                    <x-combo faceta="cliente" contexto="pedidos" :tipo="$tipo ?? null" :filtros="$fx" name="filtrocliente" :valor="$filtrocliente" placeholder="-- Todos --"/>
                 </div>
             </div>
         </div>
@@ -82,7 +82,7 @@
                     Idioma
                 </label>
                 <div class="flex">
-                    <x-combo name="filtroidioma" :valor="$filtroidioma" :options="collect($idiomas)->map(fn($idioma)=>['id'=>$idioma->id,'label'=>($idioma->nombre)])->values()->all()" placeholder="-- Todos --"/>
+                    <x-combo faceta="idioma" contexto="pedidos" :tipo="$tipo ?? null" :filtros="$fx" name="filtroidioma" :valor="$filtroidioma" placeholder="-- Todos --"/>
                 </div>
             </div>
         </div>
@@ -93,7 +93,7 @@
                     Proveedor
                 </label>
                 <div class="flex">
-                    <x-combo name="filtroproveedor" :valor="$filtroproveedor" :options="collect($proveedores)->map(fn($proveedor)=>['id'=>$proveedor->id,'label'=>($proveedor->entidad)])->values()->all()" placeholder="-- Todos --"/>
+                    <x-combo faceta="proveedor" contexto="pedidos" :tipo="$tipo ?? null" :filtros="$fx" name="filtroproveedor" :valor="$filtroproveedor" placeholder="-- Todos --"/>
                 </div>
             </div>
         </div>
