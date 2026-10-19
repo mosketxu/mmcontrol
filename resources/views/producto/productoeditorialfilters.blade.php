@@ -47,12 +47,7 @@
                 Idioma
             </label>
             <div class="flex">
-                <select wire:model="filtroidioma" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($idiomas as $idioma)
-                    <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtroidioma" :options="collect($idiomas)->map(fn($idioma)=>['id'=>$idioma->id,'label'=>($idioma->nombre)])->values()->all()" placeholder="-- Todos --"/>
                 @if($filtroidioma!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroidioma', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -65,13 +60,7 @@
                 Estado
             </label>
             <div class="flex">
-                <select wire:model="filtroproductoestado" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value="">-- Selecciona Estado --</option>
-                    @foreach($productosestado as $value => $label)
-                        <option value="{{ $value }}"
-                        {{ old('estadoproducto', $producto->estadoproducto?->value ?? '') == $value ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtroproductoestado" :options="collect($productosestado)->map(fn($label,$value)=>['id'=>$value,'label'=>($label)])->values()->all()" placeholder="-- Selecciona Estado --"/>
                 @if($filtroproductoestado!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroproductoestado', '')" class="pb-1" title="reset filter"/>
                 @endif

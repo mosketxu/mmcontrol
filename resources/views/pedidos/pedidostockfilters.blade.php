@@ -9,12 +9,7 @@
                 Categoria
             </label>
             <div class="flex">
-                <select wire:model="filtrocategoria" class="w-full py-2 text-xs text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    {{-- <option value="">Todos</option> --}}
-                    @foreach ($categorias as $categoria)
-                        <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtrocategoria" :options="collect($categorias)->map(fn($categoria)=>['id'=>$categoria->id,'label'=>($categoria->name)])->values()->all()" placeholder="Todos"/>
                 @if($filtrocategoria!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocategoria', '')" class="pb-1" title="reset filter"/>
                 @endif

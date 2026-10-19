@@ -6,7 +6,7 @@
                 Nº.Presup
             </label>
             <div class="flex">
-                <input type="text" wire:model="search" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <x-buscador wire:model="search" sugerir="presupuesto" :tipo="$tipo ?? null" placeholder=""/>
                 @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -20,12 +20,7 @@
                 Cliente
             </label>
             <div class="flex">
-                <select wire:model="filtrocliente" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($clientes as $cliente)
-                    <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtrocliente" :options="collect($clientes)->map(fn($cliente)=>['id'=>$cliente->id,'label'=>($cliente->entidad)])->values()->all()" placeholder="-- Todos --"/>
                 @if($filtrocliente!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrocliente', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -40,12 +35,7 @@
                 Idioma
             </label>
             <div class="flex">
-                <select wire:model="filtroidioma" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($idiomas as $idioma)
-                    <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtroidioma" :options="collect($idiomas)->map(fn($idioma)=>['id'=>$idioma->id,'label'=>($idioma->nombre)])->values()->all()" placeholder="-- Todos --"/>
                 @if($filtroidioma!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroidioma', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -59,7 +49,7 @@
                 Descripción
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroreferencia" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                <x-buscador wire:model="filtroreferencia" sugerir="referencia" :tipo="$tipo ?? null" placeholder=""/>
                 @if($filtroreferencia!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroreferencia', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -74,7 +64,7 @@
                     Cod./Ref.
                 </label>
                 <div class="flex">
-                    <input type="text" wire:model="filtroisbn" class="w-full py-1 text-sm border border-blue-100 rounded-lg" autofocus/>
+                    <x-buscador wire:model="filtroisbn" sugerir="isbn" :tipo="$tipo ?? null" placeholder=""/>
                     @if($filtroisbn!='')
                         <x-icon.filter-slash-a wire:click="$set('filtroisbn', '')" class="pb-1" title="reset filter"/>
                     @endif
@@ -88,12 +78,7 @@
                 Proveedor
             </label>
             <div class="flex">
-                <select wire:model="filtroproveedor" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value=""></option>
-                    @foreach ($proveedores as $proveedor)
-                    <option value="{{ $proveedor->id }}">{{ $proveedor->entidad }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtroproveedor" :options="collect($proveedores)->map(fn($proveedor)=>['id'=>$proveedor->id,'label'=>($proveedor->entidad)])->values()->all()" placeholder="-- Todos --"/>
                 @if($filtroproveedor!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroproveedor', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -107,9 +92,7 @@
                 Año
             </label>
             <div class="flex">
-                <input type="text" wire:model="filtroanyo"
-                    class="w-full py-1 text-sm text-gray-600 placeholder-gray-300 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                    placeholder="Año" />
+                <x-buscador wire:model="filtroanyo" sugerir="anyos" :tipo="$tipo ?? null" placeholder="Año"/>
                 @if($filtroanyo!='')
                 <x-icon.filter-slash-a wire:click="$set('filtroanyo', '')" class="pb-1" title="reset filter" />
                 @endif
@@ -123,13 +106,7 @@
                 Mes
             </label>
             <div class="flex">
-                <select wire:model="filtromes"
-                    class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value="">-- selecciona --</option>
-                    @foreach ($meses as $mes )
-                    <option value={{ $mes->id}}>{{ $mes->mesmayus }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model="filtromes" :options="collect($meses)->map(fn($mes)=>['id'=>$mes->id,'label'=>($mes->mesmayus)])->values()->all()" placeholder="-- selecciona --"/>
                 @if($filtromes!='')
                 <x-icon.filter-slash-a wire:click="$set('filtromes', '')" class="pb-1" title="reset filter" />
                 @endif
@@ -143,13 +120,7 @@
                 Estado
             </label>
             <div class="flex">
-                <select wire:model="filtroestado"
-                    class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value="">-- selecciona --</option>
-                    <option value="0">Enviado</option>
-                    <option value="1">Aceptado</option>
-                    <option value="2">Rechazado</option>
-                </select>
+                <x-combo wire:model="filtroestado" :options="[['id'=>'0','label'=>'Enviado'],['id'=>'1','label'=>'Aceptado'],['id'=>'2','label'=>'Rechazado']]" placeholder="-- selecciona --"/>
                 @if($filtroestado!='')
                     <x-icon.filter-slash-a wire:click="$set('filtroestado', '')" class="pb-1" title="reset filter" />
                 @endif
@@ -162,11 +133,7 @@
                 Ok Externo
             </label>
             <div class="flex">
-                <select wire:model="filtrookexterno"
-                    class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                    <option value="">-- selecciona --</option>
-                    <option value="1">Ok Externo</option>
-                </select>
+                <x-combo wire:model="filtrookexterno" :options="[['id'=>'1','label'=>'Ok Externo']]" placeholder="-- selecciona --"/>
                 @if($filtrookexterno!='')
                     <x-icon.filter-slash-a wire:click="$set('filtrookexterno', '')" class="pb-1" title="reset filter" />
                 @endif
