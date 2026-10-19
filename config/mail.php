@@ -83,6 +83,29 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Solo entornos de pruebas: todo correo sale únicamente a esta dirección
+    |--------------------------------------------------------------------------
+    */
+
+    'always_to' => env('MAIL_ALWAYS_TO'),
+
+    /*
+    | Correo de envío por usuario (App\Support\CorreoUsuario): cada usuario con buzón en `dominio` puede enviar con su propia cuenta
+    | y que la copia quede en su carpeta de Enviados (IMAP). Si falta smtp_host o imap_host, la función está apagada y todo sale
+    | por el correo por defecto (MAIL_*). Sin contraseña del usuario, también se usa el correo por defecto.
+    */
+    'usuario' => [
+        'dominio' => env('MAIL_USER_DOMAIN', 'milimetrica.es'),
+        'smtp_host' => env('MAIL_USER_SMTP_HOST'),
+        'smtp_port' => env('MAIL_USER_SMTP_PORT', 587),
+        'encryption' => env('MAIL_USER_ENCRYPTION', 'tls'),
+        'imap_host' => env('MAIL_IMAP_HOST'),
+        'imap_port' => env('MAIL_IMAP_PORT', 993),
+        'carpeta_enviados' => env('MAIL_SENT_FOLDER'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Global "From" Address
     |--------------------------------------------------------------------------
     |
