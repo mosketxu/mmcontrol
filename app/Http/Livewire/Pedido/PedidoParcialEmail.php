@@ -152,7 +152,7 @@ class PedidoParcialEmail extends Component
         if (!$emails) { $this->confirmando = false; return; }
 
         $pdf = app(PedidoController::class)->albaranPdf($this->parcialid, (bool) $this->valorado)->output();
-        $nombrePdf = 'albaran-' . $this->parcialid . ($this->valorado ? '' : '-sin-valorar') . '.pdf';
+        $nombrePdf = 'albaran-' . $this->parcialid . '.pdf';
 
         $extras = [];
         foreach ($this->adjuntos as $f) {
