@@ -53,10 +53,12 @@
                                     <div class="w-1/12 ">{{ $entidad->fecha_ini_vista }}</div>
                                 </div>
                                 <div class="items-center w-1/12 text-center ">
+<x-acciones-fila :min="130" :titulo="$entidad->entidad">
                                     <x-icon.usergroup-a href="{{ route('entidad.contactos',$entidad) }}" title="Contactos"/>
                                     <x-icon.plane-a class="text-gray-900 transform hover:text-black" href="{{ route('entidad.destinos',[$entidad,'i']) }}" title="Destinos"/>
                                     <x-icon.clipboard-a style="color: #f97316;" href="{{ route('entidad.acciones',[$entidad,'i']) }}" title="Acciones"/>
                                     <x-icon.delete-a wire:click.prevent="delete({{ $entidad->id }})" onclick="confirm('Estas seguro?') || event.stopImmediatePropagation()" class="w-6"/>
+</x-acciones-fila>
                                 </div>
                             </div>
                         </div>

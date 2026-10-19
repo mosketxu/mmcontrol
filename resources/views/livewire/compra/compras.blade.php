@@ -54,11 +54,13 @@
                                 </div>
                                 <div class="items-center flex-none w-3/12 md:flex">
                                     <div class="w-full space-x-2 text-center md:w-4/12">
+<x-acciones-fila :min="130" :titulo="'Compra '.$compra->id">
                                         {{-- <x-icon.pdf-a class="w-4 text-red-500 hover:text-red-700" href="{{route('compra.compraPDF',[$compra,'n','ES'])}}" target="_blank" title="PDF compra"/> --}}
                                         <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('compra.albaranes',[$compra->id,'i'])}}'" title="Albaranes"/>
                                         <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('compra.archivos',[$compra->id,'i'])}}'" title="Archivos"/>
                                         <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('compra.distribuciones',[$compra->id,'i'])}}'" title="Distribuciones"/>
                                         <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $compra->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
+</x-acciones-fila>
                                     </div>
                                 </div>
                             </div>

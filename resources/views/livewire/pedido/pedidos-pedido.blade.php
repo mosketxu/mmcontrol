@@ -146,6 +146,7 @@
             </div>
         </div>
         <div class="w-9/12 space-x-1 text-center lg:space-x-2">
+<x-acciones-fila :min="$escliente ? 100 : 330" :titulo="'Pedido '.$pedido->id">
             @if(!$escliente)
                 <x-icon.truck-a class="w-5 {{ $pedido->parcialescolor[0] }} hover:{{ $pedido->parcialescolor[1] }} " onclick="location.href = '{{route('pedido.parciales',[$pedido->id,'i'])}}'" title="Albaranes: {{ $pedido->hayParciales }}"/>
                 <x-icon.building-circle-arrow-right-a class="w-5 {{ $pedido->distribucionescolor[0] }} hover:{{ $pedido->distribucionescolor[1] }} " onclick="location.href = '{{route('pedido.distribuciones',[$pedido->id,'i'])}}'" title="Distribuciones: {{ $pedido->hayDistribuciones }}"/>
@@ -167,6 +168,7 @@
                 <x-icon.sandwatch-a class="w-4 {{ $pedido->retrasoscolor[0] }} hover:{{ $pedido->retrasoscolor[1] }} " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos: {{ $pedido->hayRetrasos }}"/>
                 <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{route('pedido.entrada',[$pedido,$tipo,'i'])}}" target="_blank"/>
             @endif
+</x-acciones-fila>
         </div>
     </div>
 </div>
