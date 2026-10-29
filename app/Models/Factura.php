@@ -16,11 +16,18 @@ class Factura extends Model
         '2' => ['green-200', 'Cobrada'],
     ];
 
+    protected $casts = ['datos_congelados_at' => 'datetime', 'pdf_generado_at' => 'datetime'];
+
     protected $fillable = ['id','cliente_id','contacto_id','fecha','fechavencimiento','pedidocliente','importe','iva','total','estado','tipo','observaciones'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id');}
     public function facturadetalles(){return $this->hasMany(FacturaDetalle::class,'factura_id');}
+
+    // Pasada la fecha de cierre (config/facturacion.php) el PDF queda fijo: se genera una vez y se guarda.
+    public function estaCerrada(){
+        return now()->gte(Carbon::parse(config('facturacion.cierre'))->startOfDay());
+    }
 
     // Foto de los datos del cliente con los que sale la factura (se toma al crearla o al cambiar de cliente).
     public function congelarDatosCliente($origen='emision'){
