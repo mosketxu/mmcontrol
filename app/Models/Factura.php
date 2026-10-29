@@ -32,6 +32,20 @@ class Factura extends Model
         return $this->validada_at !== null && now()->gte(Carbon::parse(config('facturacion.cierre'))->startOfDay());
     }
 
+    // Huella del contenido que sale en el PDF (cabecera, líneas y datos del cliente). No cuenta el estado de cobro.
+    public function huellaContenido(){
+        $cab=collect($this->only(['cliente_id','contacto_id','fecha','fechavencimiento','pedidocliente','importe','iva','total','tipo','observaciones',
+            'cli_entidad','cli_direccion','cli_cp','cli_localidad','cli_nif','cli_iban','cli_bic','cli_moneda']))->map(fn($v)=>(string)$v)->all();
+        $lineas=$this->facturadetalles()->orderBy('id')->get()->map(fn($d)=>collect($d->only(['pedido_id','concepto','cantidad','importe','iva',
+            'subtotalsiniva','subtotaliva','subtotal','orden','visible','observaciones']))->map(fn($v)=>(string)$v)->all())->all();
+        return sha1(json_encode([$cab,$lineas]));
+    }
+
+    // PDF ya fijado y la factura se ha modificado después: el PDF guardado no refleja los cambios hasta validarla.
+    public function pdfDesactualizado(){
+        return $this->pdf_path && $this->pdf_huella && $this->pdf_huella !== $this->huellaContenido();
+    }
+
     // Foto de los datos del cliente con los que sale la factura (se toma al crearla o al cambiar de cliente).
     public function congelarDatosCliente($origen='emision'){
         $c=$this->cliente()->first();

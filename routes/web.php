@@ -124,6 +124,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])-
 
     //Facturacion
      Route::get('/facturacion/export', [FacturacionController::class, 'exportFacturacion'])->name('facturacion.export');
+    Route::post('/facturacion/{id}/validar-pdf', [FacturacionController::class, 'validarPdf'])->name('facturacion.validarpdf');
     Route::resource('facturacion', FacturacionController::class);
 
     //Oferta

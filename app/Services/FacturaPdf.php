@@ -41,9 +41,23 @@ class FacturaPdf
         $factura->forceFill([
             'pdf_path' => $ruta,
             'pdf_sha256' => hash('sha256', $contenido),
+            'pdf_huella' => $factura->huellaContenido(),
             'pdf_generado_at' => now(),
         ])->save();
         return $factura;
+    }
+
+    // Validar una factura modificada tras fijar su PDF: el PDF anterior se conserva como factura_ID_old_vN.pdf y se genera uno nuevo.
+    public function validar(Factura $factura): Factura
+    {
+        $disco = Storage::disk('local');
+        if ($factura->pdf_path && $disco->exists($factura->pdf_path)) {
+            $base = preg_replace('/\.pdf$/', '', $factura->pdf_path);
+            $n = 1;
+            while ($disco->exists($base.'_old_v'.$n.'.pdf')) $n++;
+            $disco->copy($factura->pdf_path, $base.'_old_v'.$n.'.pdf');
+        }
+        return $this->guardar($factura, true);
     }
 
     public function render(Factura $factura): string
