@@ -5,17 +5,23 @@
                 @include('errores')
             </div>
             @if($avisoPdf)
-            <div class="p-3 text-sm text-yellow-800 bg-yellow-100 border border-yellow-300 rounded">
-                <b>El PDF de esta factura ya está generado ({{ $avisoPdf->pdf_generado_at->format('d/m/Y H:i') }}) y no refleja las últimas modificaciones.</b>
-                El PDF que se descarga o se envía sigue siendo el anterior. Para que incluya los cambios hay que validar la factura:
-                se generará un PDF nuevo y el anterior se guardará como <i>factura_{{ $avisoPdf->id }}_old_vN.pdf</i>.
-                @can('facturacion.edit')
-                <form method="POST" action="{{ route('facturacion.validarpdf',$avisoPdf->id) }}" class="mt-2"
-                      onsubmit="return confirm('¿Validar la factura {{ $avisoPdf->id }}? Se generará un PDF nuevo y el anterior se guardará como copia _old.')">
-                    @csrf
-                    <button type="submit" class="px-3 py-1 text-xs font-semibold text-white bg-yellow-600 rounded hover:bg-yellow-700">Validar y regenerar PDF</button>
-                </form>
-                @endcan
+            <div style="padding:12px; font-size:14px; color:#92400e; background:#fef3c7; border:1px solid #fcd34d; border-radius:6px;">
+                <b>Esta factura ha cambiado desde que se guardó su PDF ({{ $avisoPdf->pdf_generado_at->format('d/m/Y H:i') }}).</b>
+                Al pulsar el icono del PDF podrás elegir entre la versión guardada y generar una nueva; la anterior se conserva como copia.
+            </div>
+            @endif
+            @if($modalDesbloqueo)
+            <div style="position:fixed; top:0; left:0; right:0; bottom:0; z-index:60; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.45);">
+                <div style="width:100%; max-width:480px; padding:24px; background:#fff; border-radius:10px; box-shadow:0 10px 25px rgba(0,0,0,.3);">
+                    <h3 style="margin:0 0 8px; font-size:18px; font-weight:600; color:#111827;">¿Desbloquear la factura {{ $facturaid }}?</h3>
+                    <p style="margin:0; font-size:14px; color:#4b5563;">
+                        Está enviada o cobrada y ya tiene su PDF guardado. Si la desbloqueas y la modificas, al pedir el PDF podrás generar una nueva versión; la versión actual se conserva como copia.
+                    </p>
+                    <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                        <button type="button" wire:click="cancelarDesbloqueo" style="padding:8px 14px; font-size:14px; color:#374151; background:#f3f4f6; border:0; border-radius:6px; cursor:pointer;">Cancelar</button>
+                        <button type="button" wire:click="desbloquear" style="padding:8px 14px; font-size:14px; font-weight:600; color:#fff; background:#d97706; border:0; border-radius:6px; cursor:pointer;">Sí, desbloquear</button>
+                    </div>
+                </div>
             </div>
             @endif
             {{-- datos de la factura --}}

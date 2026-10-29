@@ -39,20 +39,17 @@ class FacturasDatosHistoricos extends Command
         $filas = [];
         $saltadas = 0;
         foreach ($facturas as $f) {
-            if ($f->pdf_path) {
-                $saltadas++;
-                $filas[] = [$f->id, (string) $f->fecha, 'PDF YA FIJADO: no se toca', ''];
-                continue;
-            }
             $antes = collect(array_keys($nuevos))->map(fn($k) => $f->$k)->implode(' | ');
             $despues = implode(' | ', $nuevos);
             $filas[] = [$f->id, (string) $f->fecha, $antes, $despues];
             if ($this->option('aplicar')) {
                 $f->forceFill($nuevos + ['datos_origen' => 'historico', 'datos_congelados_at' => $f->datos_congelados_at ?? now()])->save();
+                // Con PDF ya guardado: nueva versión, la anterior queda como factura_ID_old_vN.pdf
+                if ($f->pdf_path) app(\App\Services\FacturaPdf::class)->validar($f->fresh());
             }
         }
         $this->table(['Factura', 'Fecha', 'Antes', 'Después'], $filas);
-        $this->info(count($filas) - $saltadas.' factura(s) '.($this->option('aplicar') ? 'corregidas.' : 'se corregirían (añade --aplicar).').($saltadas ? " $saltadas con PDF ya fijado, sin tocar." : ''));
+        $this->info(count($filas).' factura(s) '.($this->option('aplicar') ? 'corregidas (las que tenían PDF guardado, con nueva versión y la anterior conservada).' : 'se corregirían (añade --aplicar).'));
         return 0;
     }
 }

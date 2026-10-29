@@ -8,16 +8,11 @@ use Illuminate\Console\Command;
 
 class FacturasCongelarPdf extends Command
 {
-    protected $signature = 'facturas:congelar-pdf {--id= : solo esta factura} {--antes-de-cierre : generar también si aún no ha llegado la fecha de cierre (pruebas)} {--forzar : regenerar aunque ya haya PDF guardado}';
-    protected $description = 'Genera y guarda el PDF fijo de las facturas creadas una vez pasada la fecha de cierre';
+    protected $signature = 'facturas:congelar-pdf {--id= : solo esta factura} {--forzar : regenerar aunque ya haya PDF guardado}';
+    protected $description = 'Genera y guarda la primera versión del PDF de las facturas que aún no tienen ninguno';
 
     public function handle(FacturaPdf $servicio)
     {
-        $cierre = \Carbon\Carbon::parse(config('facturacion.cierre'))->startOfDay();
-        if (now()->lt($cierre) && !$this->option('antes-de-cierre')) {
-            $this->line('Aún no ha llegado la fecha de cierre ('.$cierre->format('d/m/Y').'): nada que hacer.');
-            return 0;
-        }
         $q = Factura::query();
         if ($this->option('id')) $q->where('id', $this->option('id'));
         if (!$this->option('forzar')) $q->whereNull('pdf_path');
@@ -26,6 +21,7 @@ class FacturasCongelarPdf extends Command
             foreach ($facturas as $f) {
                 $servicio->guardar($f, (bool) $this->option('forzar'));
                 $n++;
+                usleep(150000); // no cargar el servidor
             }
         });
         $this->info("$n PDF generados y guardados.");
