@@ -32,6 +32,31 @@ class Factura extends Model
         return $this->validada_at !== null && now()->gte(Carbon::parse(config('facturacion.cierre'))->startOfDay());
     }
 
+    // Foto de los datos del cliente con los que sale la factura (se toma al crearla o al cambiar de cliente).
+    public function congelarDatosCliente($origen='emision'){
+        $c=$this->cliente()->first();
+        $cb=$c ? $c->cuentaBancaria : null;
+        $this->forceFill([
+            'cli_entidad'=>$c->entidad ?? null, 'cli_direccion'=>$c->direccion ?? null, 'cli_cp'=>$c->cp ?? null,
+            'cli_localidad'=>$c->localidad ?? null, 'cli_nif'=>$c->nif ?? null,
+            'cli_iban'=>$cb->iban ?? null, 'cli_bic'=>$cb->bic ?? null, 'cli_moneda'=>$cb->moneda ?? null,
+            'datos_origen'=>$origen, 'datos_congelados_at'=>now(),
+        ])->save();
+    }
+
+    // Datos del cliente para el PDF: la foto si existe; si no, los del cliente en vivo.
+    public function datosCliente(){
+        if($this->datos_congelados_at){
+            return (object)['entidad'=>$this->cli_entidad,'direccion'=>$this->cli_direccion,'cp'=>$this->cli_cp,
+                'localidad'=>$this->cli_localidad,'nif'=>$this->cli_nif,
+                'iban'=>$this->cli_iban,'bic'=>$this->cli_bic,'moneda'=>$this->cli_moneda];
+        }
+        $c=$this->cliente; $cb=$c ? $c->cuentaBancaria : null;
+        return (object)['entidad'=>$c->entidad ?? null,'direccion'=>$c->direccion ?? null,'cp'=>$c->cp ?? null,
+            'localidad'=>$c->localidad ?? null,'nif'=>$c->nif ?? null,
+            'iban'=>$cb->iban ?? null,'bic'=>$cb->bic ?? null,'moneda'=>$cb->moneda ?? null];
+    }
+
     public function getStatusColorAttribute(){
         return self::ESTADOS[$this->estado] ?? ['gray-100',''];
     }

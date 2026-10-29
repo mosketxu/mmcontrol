@@ -180,6 +180,9 @@ class Factura extends Component
             'observaciones'=>$this->observaciones,
         ]);
 
+        // Foto de los datos del cliente: al crear la factura y solo si se cambia el cliente (no si cambia la dirección del cliente).
+        if($nuevo || !$fac->datos_congelados_at || $fac->wasChanged('cliente_id')) $fac->congelarDatosCliente();
+
         $this->titulo='Factura:';
         $factura=ModelsFactura::find($i);
 
