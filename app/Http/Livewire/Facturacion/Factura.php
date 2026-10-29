@@ -109,7 +109,9 @@ class Factura extends Component
     public function render(){
         $clientes=Entidad::orderBy('entidad')->whereIn('entidadtipo_id',['1','2'])->get();
         $estados=ModelsFactura::ESTADOS;
-        return view('livewire.facturacion.factura',compact(['clientes','estados']));
+        $avisoPdf=$this->facturaid ? ModelsFactura::find($this->facturaid) : null;
+        if($avisoPdf && !$avisoPdf->pdfDesactualizado()) $avisoPdf=null;
+        return view('livewire.facturacion.factura',compact(['clientes','estados','avisoPdf']));
     }
 
     public function updatedClienteId(){

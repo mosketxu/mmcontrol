@@ -15,7 +15,7 @@ class FacturacionController extends Controller
     public function __construct()
     {
         $this->middleware('can:facturacion.index')->only('index','show');
-        $this->middleware('can:facturacion.edit')->only('create');
+        $this->middleware('can:facturacion.edit')->only('create','validarPdf');
     }
 
     /**
@@ -55,6 +55,17 @@ class FacturacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // «Validar y regenerar PDF»: el PDF anterior queda como factura_ID_old_vN.pdf.
+    public function validarPdf($id)
+    {
+        $factura = Factura::findOrFail($id);
+        if (!$factura->pdf_path) {
+            return redirect()->route('facturacion.edit', $id)->withErrors(['pdf' => 'Esta factura aún no tiene PDF fijado.']);
+        }
+        app(\App\Services\FacturaPdf::class)->validar($factura);
+        return redirect()->route('facturacion.edit', $id)->with('message', 'Factura validada: PDF regenerado (el anterior se ha guardado como _old).');
+    }
+
     public function show($id)
     {
         return app(\App\Services\FacturaPdf::class)->respuesta(Factura::findOrFail($id));

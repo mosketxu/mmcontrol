@@ -4,6 +4,20 @@
             <div class="">
                 @include('errores')
             </div>
+            @if($avisoPdf)
+            <div class="p-3 text-sm text-yellow-800 bg-yellow-100 border border-yellow-300 rounded">
+                <b>El PDF de esta factura ya está generado ({{ $avisoPdf->pdf_generado_at->format('d/m/Y H:i') }}) y no refleja las últimas modificaciones.</b>
+                El PDF que se descarga o se envía sigue siendo el anterior. Para que incluya los cambios hay que validar la factura:
+                se generará un PDF nuevo y el anterior se guardará como <i>factura_{{ $avisoPdf->id }}_old_vN.pdf</i>.
+                @can('facturacion.edit')
+                <form method="POST" action="{{ route('facturacion.validarpdf',$avisoPdf->id) }}" class="mt-2"
+                      onsubmit="return confirm('¿Validar la factura {{ $avisoPdf->id }}? Se generará un PDF nuevo y el anterior se guardará como copia _old.')">
+                    @csrf
+                    <button type="submit" class="px-3 py-1 text-xs font-semibold text-white bg-yellow-600 rounded hover:bg-yellow-700">Validar y regenerar PDF</button>
+                </form>
+                @endcan
+            </div>
+            @endif
             {{-- datos de la factura --}}
             <div class="flex-col text-gray-500 border border-blue-300 rounded shadow-md">
                 <form wire:submit.prevent="save" class="text-sm">
