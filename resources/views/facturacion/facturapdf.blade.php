@@ -60,10 +60,10 @@
                     <table width="90%" style="margin-top:10px; " cellspacing="0" cellpadding="0" class="mx-auto ">
                         <tr>
                             <td width=50%>
-                                <p>{{ $factura->cliente->entidad }}</p>
-                                <p>{{ $factura->cliente->direccion}}</p>
-                                <p>{{ $factura->cliente->cp}} {{ $factura->cliente->localidad}} </p>
-                                <p>{{ $factura->cliente->nif}} </p>
+                                <p>{{ $datos->entidad }}</p>
+                                <p>{{ $datos->direccion}}</p>
+                                <p>{{ $datos->cp}} {{ $datos->localidad}} </p>
+                                <p>{{ $datos->nif}} </p>
                             </td>
                             <td width=50%>
                                 <p>Fra Num: {{ $factura->id }}</p>
@@ -121,7 +121,7 @@
                         <td class="font-bold text-right">IMPORTE IVA</td>
                         <td class="font-bold text-right">TOTAL FACTURA</td>
                     </tr>
-                    @php $cuentabancaria = $factura->cliente->cuentaBancaria; @endphp
+                    @php $cuentabancaria = $datos->iban ? $datos : null; @endphp
                     @foreach ($totales as $total)
                     <tr >
                         <td class="text-right">{{ number_format($total->subtotalsiniva,2,',','.') }}</td>
