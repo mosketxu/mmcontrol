@@ -26,6 +26,8 @@ class Factura extends Component
 
     public $mesagge;
     public $bloqueado='0';
+    public $modalDesbloqueo=false;   // pide confirmar el desbloqueo de una factura enviada/cobrada con PDF guardado
+    public $confirmaDesbloqueo=false;
     public $deshabilitado='';
     public $escliente='';
     public $filtrocliente;
@@ -148,6 +150,18 @@ class Factura extends Component
 
     }
 
+    public function desbloquear(){
+        $this->confirmaDesbloqueo=true;
+        return $this->save();
+    }
+
+    public function cancelarDesbloqueo(){
+        $this->modalDesbloqueo=false;
+        $this->confirmaDesbloqueo=false;
+        $f=ModelsFactura::find($this->facturaid);
+        if($f) $this->estado=$f->estado;
+    }
+
     public function save(){
         $mensaje="Factura creada satisfactoriamente";
         $i="";
@@ -167,6 +181,15 @@ class Factura extends Component
             $i=$this->facturaid;
             $nuevo=true;
         }
+        // Desbloquear (volver a «Sin enviar») una factura enviada/cobrada que ya tiene PDF guardado: primero se confirma en un modal.
+        if(!$nuevo){
+            $actual=ModelsFactura::find($this->facturaid);
+            if($actual && $actual->estado!='0' && ($this->estado=='' || $this->estado=='0') && $actual->pdf_path && !$this->confirmaDesbloqueo){
+                $this->modalDesbloqueo=true;
+                return;
+            }
+        }
+        $this->modalDesbloqueo=false; $this->confirmaDesbloqueo=false;
         $fac=ModelsFactura::updateOrCreate([
             'id'=>$i
             ],
