@@ -18,7 +18,7 @@ class Factura extends Model
 
     protected $fillable = ['id','cliente_id','contacto_id','fecha','fechavencimiento','pedidocliente','importe','iva','total','estado','tipo','observaciones','validada_at'];
 
-    protected $casts = ['validada_at' => 'datetime'];
+    protected $casts = ['validada_at' => 'datetime', 'datos_congelados_at' => 'datetime', 'pdf_generado_at' => 'datetime'];
 
     public function cliente(){return $this->belongsTo(Entidad::class,'cliente_id','id');}
     public function contacto(){return $this->belongsTo(Entidad::class,'contacto_id','id');}
