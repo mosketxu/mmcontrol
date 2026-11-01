@@ -51,9 +51,17 @@ class Sugerencias
             $col = substr($clave, 6);
             $permitidas = ['medidas', 'desarrollocaja', 'material', 'gramajecaja', 'impresion', 'acabadocaja', 'medidasnido', 'materialnido', 'impresionnido'];
             if (!in_array($col, $permitidas, true)) return [];
-            return DB::table('productos')->when($tipo, fn ($x) => $x->where('tipo', $tipo))
-                ->whereNotNull($col)->where($col, '!=', '')->where($col, '!=', '0')
-                ->distinct()->orderBy($col)->pluck($col)->map(fn ($v) => trim($v))->unique()->values()->all();
+            // El nido usa el mismo vocabulario que la caja: sus sugerencias incluyen también las de la caja
+            $columnas = [$col];
+            $deCaja = ['medidasnido' => 'medidas', 'materialnido' => 'material', 'impresionnido' => 'impresion'];
+            if (isset($deCaja[$col])) $columnas[] = $deCaja[$col];
+            $valores = collect();
+            foreach ($columnas as $c) {
+                $valores = $valores->merge(DB::table('productos')->when($tipo, fn ($x) => $x->where('tipo', $tipo))
+                    ->whereNotNull($c)->where($c, '!=', '')->where($c, '!=', '0')->distinct()->pluck($c));
+            }
+            return $valores->map(fn ($v) => trim($v))->filter()->unique()
+                ->sort(fn ($a, $b) => strcasecmp($a, $b))->values()->all();
         }
         switch ($clave) {
             case 'anyos':
