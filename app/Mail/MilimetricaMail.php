@@ -31,8 +31,16 @@ class MilimetricaMail extends Mailable
      *
      * @return $this
      */
+
+    /** Correo del negocio: en la réplica va a MAIL_ALWAYS_TO (App\Listeners\RedirigirCorreoPruebas). */
+    private function marcarNegocio(): void
+    {
+        $this->withSymfonyMessage(fn ($m) => $m->getHeaders()->addTextHeader('X-MM-Tipo', 'negocio'));
+    }
+
     public function build()
     {
+        $this->marcarNegocio();
         if($this->details['origen']=='Presupuesto')
             return $this->to($this->details['emailmilimetrica'])
                 ->subject($this->details['subject'])

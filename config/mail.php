@@ -96,7 +96,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'always_to' => env('MAIL_ALWAYS_TO'),
+    'always_to' => env('MAIL_ALWAYS_TO'),          // réplica: correos del negocio → aquí (Mireia)
+    'tecnico_to' => env('MAIL_TECNICO_TO'),        // réplica: pruebas y fallos de la aplicación → aquí (Alex)
+    'dominios_internos' => env('MAIL_DOMINIOS_INTERNOS', 'milimetrica.es,sumaempresa.com'), // réplica: «olvidé contraseña» sí llega a estos
 
     /*
     | Correo de envío por usuario (App\Support\CorreoUsuario): cada usuario con buzón en `dominio` puede enviar con su propia cuenta

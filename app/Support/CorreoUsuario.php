@@ -67,7 +67,7 @@ class CorreoUsuario
                 'transport' => 'smtp', 'host' => $cfg['smtp_host'], 'port' => $cfg['smtp_port'], 'encryption' => $cfg['encryption'],
                 'username' => $u->email, 'password' => $u->mail_password, 'timeout' => 30, 'verify_peer' => false,
             ]);
-            if (config('mail.always_to')) $mailer->alwaysTo(config('mail.always_to')); // las pruebas nunca salen a terceros
+            // réplica: las pruebas nunca salen a terceros (App\Listeners\RedirigirCorreoPruebas)
             $mailable->desde = ['email' => $u->email, 'name' => $u->name];
             $user = $u->email;
             $clave = $u->mail_password;

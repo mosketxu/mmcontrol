@@ -26,11 +26,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(){
         // Transporte de correo por Microsoft Graph (MAIL_MAILER=graph), igual que Appmos
         \Illuminate\Support\Facades\Mail::extend('graph', fn (array $config) => new \App\Support\GraphTransport($config));
-        // Solo VPS de pruebas: si MAIL_ALWAYS_TO está definido, todo correo va a esa
-        // dirección (sin CC/BCC), para no escribir nunca a clientes/proveedores reales.
-        if (config('mail.always_to')) {
-            \Illuminate\Support\Facades\Mail::alwaysTo(config('mail.always_to'));
-        }
+        // Solo VPS de pruebas (MAIL_ALWAYS_TO definido): nunca se escribe a clientes/proveedores reales;
+        // negocio → MAIL_ALWAYS_TO, aplicación → MAIL_TECNICO_TO (ver App\Listeners\RedirigirCorreoPruebas)
+        \Illuminate\Support\Facades\Event::listen(\Illuminate\Mail\Events\MessageSending::class, [\App\Listeners\RedirigirCorreoPruebas::class, 'handle']);
         // Using view composer to set following variables globally
         // view()->composer('*',function($view) {
         //         $view->with('tiposentidad', EntidadTipo::orderBy('id')->get());
