@@ -63,6 +63,15 @@ return [
             'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -t -i'),
         ],
 
+        // Microsoft Graph (como Appmos): MAIL_MAILER=graph; credenciales GRAPH_* del .env
+        'graph' => [
+            'transport' => 'graph',
+            'tenant_id' => env('GRAPH_TENANT_ID'),
+            'client_id' => env('GRAPH_CLIENT_ID'),
+            'client_secret' => env('GRAPH_CLIENT_SECRET'),
+            'sender' => env('GRAPH_SENDER', env('MAIL_FROM_ADDRESS')),
+        ],
+
         'log' => [
             'transport' => 'log',
             'channel' => env('MAIL_LOG_CHANNEL'),
