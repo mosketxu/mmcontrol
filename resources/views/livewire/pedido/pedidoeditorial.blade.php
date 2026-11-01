@@ -52,9 +52,7 @@
                             </div>
                             {{-- isbn --}}
                             <div class="w-full form-item">
-                                <div class="flex py-2">
-                                    <x-jet-label>{{ __('Código / Título / Ref.') }}</x-jet-label>
-                                </div>
+                                <x-jet-label>{{ __('Código / Título / Ref.') }}</x-jet-label>
                                 <x-combo wire:model="productoeditorialid" :options="($productos ?? collect())->map(fn($p)=>['id'=>$p->id,'label'=>trim(($p->isbn_completo ?? '').' · '.($p->referencia ?? ''), ' ·')])->values()->all()" placeholder="-- Escribe código o título --" :disabled="trim($escliente.$deshabilitado)!=''" class="w-full py-1 text-sm text-gray-600 bg-white border-gray-300 rounded-md shadow-sm" />
                             </div>
                             {{-- titulo --}}
