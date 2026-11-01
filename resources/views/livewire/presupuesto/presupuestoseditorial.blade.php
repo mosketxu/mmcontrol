@@ -49,13 +49,7 @@
                                 </div>
                                 <div class="items-center flex-none w-3/12 md:flex">
                                     <div class="w-full md:w-2/12">
-                                        <select wire:change="changeValor({{ $presupuesto }},'estado',$event.target.value)"
-                                        class="w-full text-left py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $presupuesto->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        <option value="0" {{ $presupuesto->estado== '0'? 'selected' : '' }}>Enviado</option>
-                                        <option value="1" {{ $presupuesto->estado== '1'? 'selected' : '' }}>Aceptado</option>
-                                        <option value="2" {{ $presupuesto->estado== '2'? 'selected' : '' }}>Rechazado</option>
-                                        </select>
+                                        <x-combo accion="changeValor({{ $presupuesto->id }},'estado',v)" :valor="$presupuesto->estado" :options="[['id'=>'0','label'=>'Enviado'],['id'=>'1','label'=>'Aceptado'],['id'=>'2','label'=>'Rechazado']]" clase="bg-{{ $presupuesto->status_color[0] }}" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                                     </div>
                                     <div class="w-full text-center md:w-2/12">
                                         <input type="checkbox" {{$presupuesto->okexterno == '1' ? 'checked' : ''}} wire:change="changeValor({{ $presupuesto }},'okexterno',$event.target.value)"

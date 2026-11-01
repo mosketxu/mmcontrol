@@ -13,10 +13,7 @@
                                 <h3 class="pl-1 font-semibold">Datos generales</h3>
                                 <input  wire:model.defer="presupuestoid" type="hidden"/>
                                 @if($tipo!='1')
-                                <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" >
-                                    <option value="2">Packaging</option>
-                                    <option value="3">Propios</option>
-                                </x-select>
+                                <div class="w-32 ml-2"><x-combo wire:model.defer="tipo" :options="[['id'=>'2','label'=>'Packaging'],['id'=>'3','label'=>'Propios']]" /></div>
                                 @endif
                             </div>
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
@@ -93,11 +90,7 @@
                                 <div class="w-full form-item">
                                     <div class="w-full form-item">
                                         <x-jet-label for="moneda">{{ __('Moneda') }}</x-jet-label>
-                                        <select wire:model.lazy="moneda"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                            <option value="€">€</option>
-                                            <option value="$">$</option>
-                                        </select>
+                                        <x-combo wire:model.lazy="moneda" :options="[['id'=>'€','label'=>'€'],['id'=>'$','label'=>'$']]" />
                                     </div>
                                 </div>
                                 {{-- Precio tot --}}
@@ -165,13 +158,7 @@
                                 {{-- facturado Por --}}
                                 <div class="w-2/12 form-item">
                                     <x-jet-label for="facturadopor">{{ __('Facturado x') }}</x-jet-label>
-                                    <select wire:model.lazy="facturadopor"
-                                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{ $escliente }} {{$deshabilitado}}>
-                                        <option value="">- ¿Quién factura? -</option>
-                                        <option value="1">Milimetrica</option>
-                                        <option value="0">Proveedor</option>
-                                    </select>
+                                    <x-combo wire:model.lazy="facturadopor" :options="[['id'=>'1','label'=>'Milimetrica'],['id'=>'0','label'=>'Proveedor']]" placeholder="- ¿Quién factura? -" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                                 </div>
                                 {{-- responsable MM --}}
                                 <div class="w-2/12 form-item">
@@ -182,13 +169,7 @@
                                 <div class="flex w-5/12 mx-auto ">
                                     <div class="w-3/12 mx-auto">
                                         <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
-                                        <select wire:model.lazy="estado"
-                                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        <option value="0">Enviado</option>
-                                        <option value="1">Aceptado</option>
-                                        <option value="2">Rechazado</option>
-                                        </select>
+                                        <x-combo wire:model.lazy="estado" :options="[['id'=>'0','label'=>'Enviado'],['id'=>'1','label'=>'Aceptado'],['id'=>'2','label'=>'Rechazado']]" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                                     </div>
                                     <div class="w-2/12 mx-auto text-center">
                                         <x-jet-label for="okexterno">{{ __('OK Externo') }}</x-jet-label>
@@ -212,12 +193,7 @@
                                             </div>
                                             <div class=" form-item">
                                                 <x-jet-label for="asignarpedido">{{ __('Asignar otro pedido') }}</x-jet-label>
-                                                <x-select class="w-full" selectname="pedido" wire:model.lazy="pedido">
-                                                    <option value="">-- Selecciona un pedido --</option>
-                                                    @foreach ($pedidos as $ped )
-                                                    <option value="{{ $ped->id }}">{{ $ped->id }}</option>
-                                                    @endforeach
-                                                </x-select>
+                                                <x-combo wire:model.lazy="pedido" :options="collect($pedidos)->map(fn($p)=>['id'=>$p->id,'label'=>(string) $p->id])->values()->all()" placeholder="-- Selecciona un pedido --" />
                                             </div>
                                         </div>
                                         @else

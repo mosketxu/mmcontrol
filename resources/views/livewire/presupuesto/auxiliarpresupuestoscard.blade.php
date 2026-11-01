@@ -82,12 +82,7 @@
                         @if ($campo2visible==1)
                         <div class="flex-col {{ $longcampo2 }} {{ $textcampo2 }}">
                             @if($tipocampo2=='combo')
-                            <x-selectcolor wire:model.lazy="valor.valorcampo2" selectname="valorcampo2" color="blue" class="w-full hover:bg-gray-100"
-                                wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)">
-                                @foreach ($seleccionables2 as $seleccion)
-                                <option value="{{ $seleccion->id }}">{{ $seleccion->referencia }}</option>
-                                @endforeach
-                            </x-selectcolor>
+                            <x-combo accion="changeCampo({{ $valor->id }},'{{ $campo2 }}',v)" :valor="$valor->valorcampo2" :options="collect($seleccionables2)->map(fn($s)=>['id'=>$s->id,'label'=>$s->referencia])->values()->all()" />
                             @else
                             <input type="{{ $tipocampo2 }}" value="{{ $valor->valorcampo2 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)"
@@ -99,12 +94,7 @@
                         @if ($campo3visible==1)
                         <div class="flex-col {{ $longcampo3 }} {{ $textcampo3 }}">
                             @if($tipocampo3=='combo')
-                                <x-select selectname="valorcampo3" class="w-full mt-1 border-none hover:bg-gray-100"
-                                    wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)">
-                                    @foreach ($seleccionables3 as $seleccion)
-                                        <option value="{{ $seleccion->id }}" {{ $seleccion->id==$valor->valorcampo3 ? 'selected' :''  }}>{{ $seleccion->$campo3selectname }}</option>
-                                    @endforeach
-                                </x-select>
+                                <x-combo accion="changeCampo({{ $valor->id }},'{{ $campo3 }}',v)" :valor="$valor->valorcampo3" :options="collect($seleccionables3)->map(fn($seleccion)=>['id'=>$seleccion->id,'label'=>($seleccion->$campo3selectname)])->values()->all()" />
                             @else
                             <input type="{{ $tipocampo3 }}" value="{{ $valor->valorcampo3 }}"
                                 wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
@@ -200,14 +190,7 @@
                             @if ($campo2visible==1)
                                 <div class="flex-col {{ $longcampo2 }} {{ $textcampo2 }}">
                                     @if($tipocampo2=='combo')
-                                        <x-selectcolor wire:model.lazy="valorcampo2" selectname="valorcampo2" color="blue" class="w-full" >
-                                            <option value="">-- Selecciona --</option>
-                                            @forelse ($seleccionables2 as $seleccion)
-                                                <option value="{{ $seleccion->id }}">{{ $seleccion->referencia }}</option>
-                                            @empty
-                                                <option value=""></option>
-                                            @endforelse
-                                        </x-selectcolor>
+                                        <x-combo wire:model.lazy="valorcampo2" :options="collect($seleccionables2)->map(fn($seleccion)=>['id'=>$seleccion->id,'label'=>($seleccion->referencia)])->values()->all()" placeholder="-- Selecciona --" />
                                     @else
                                         <input type="{{ $tipocampo2 }}" step="any" wire:model.defer="valorcampo2"
                                             class="w-full text-xs {{ $textcampo2 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -218,14 +201,7 @@
                             @if ($campo3visible==1)
                                 <div class="flex-col {{ $longcampo3 }} {{ $textcampo3 }}">
                                     @if($tipocampo3=='combo')
-                                        <x-select wire:model.lazy="valorcampo3" selectname="valorcampo3"  class="w-full h-8 " >
-                                            <option value="">-- Selecciona --</option>
-                                            @forelse ( $seleccionables3 as $seleccion )
-                                                <option value="{{ $seleccion->id }}">{{ $seleccion->$campo3selectname }}</option>
-                                            @empty
-                                                <option value=""></option>
-                                            @endforelse
-                                        </x-select>
+                                        <x-combo wire:model.lazy="valorcampo3" :options="collect($seleccionables3)->map(fn($seleccion)=>['id'=>$seleccion->id,'label'=>($seleccion->$campo3selectname)])->values()->all()" placeholder="-- Selecciona --" />
                                     @else
                                     <input type="{{ $tipocampo3 }}" step="any" wire:model.defer="valorcampo3"
                                         class="w-full text-xs {{ $textcampo3 }} border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"

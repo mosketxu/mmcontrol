@@ -15,14 +15,7 @@
             {{-- idioma --}}
             <div class="w-full form-item md:w-2/12">
                 <x-jet-label for="idioma_id">{{ __('Idioma') }}</x-jet-label>
-                <select wire:model.lazy="producto.idioma_id"
-                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                    {{$escliente}} {{$deshabilitado}} >
-                    <option value=''>-- Selecciona idioma --</option>
-                    @foreach ($idiomas as $idioma)
-                    <option value="{{ $idioma->id }}">{{ $idioma->nombre }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model.lazy="producto.idioma_id" :options="collect($idiomas)->map(fn($idioma)=>['id'=>$idioma->id,'label'=>($idioma->nombre)])->values()->all()" placeholder="-- Selecciona idioma --" :disabled="(bool) ($escliente ?: $deshabilitado)" />
             </div>
             {{-- titulo --}}
             <div class="w-full form-item md:w-4/12">
@@ -38,15 +31,7 @@
             {{-- estadoproducto --}}
             <div class="w-full form-item md:w-4/12">
                 <x-jet-label for="entidad_id">{{ __('Estado') }}</x-jet-label>
-                <select wire:model.lazy="producto.productoestado"
-                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                    {{$escliente}} {{$deshabilitado}} >
-                    <option value=''>-- Selecciona Estado --</option>
-                   @foreach($productosestado as $value => $label)
-                        <option value="{{ $value }}"
-                        {{ old('estadoproducto', $producto->estadoproducto?->value ?? '') == $value ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model.lazy="producto.productoestado" :options="collect($productosestado)->except([''])->map(fn($l, $v)=>['id'=>$v,'label'=>$l])->values()->all()" placeholder="-- Selecciona Estado --" :disabled="(bool) ($escliente ?: $deshabilitado)" />
             </div>
         </div>
     </div>
@@ -80,13 +65,7 @@
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="tipoimpresion">{{ __('Tipo Impresion') }}</x-jet-label>
-                        <select wire:model.lazy="producto.tipoimpresion"
-                            class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                            {{$escliente}} {{$deshabilitado}} >
-                            <option value="">--Selecciona--</option>
-                            <option value="Estandár">Estandár</option>
-                            <option value="Premium">Premium</option>
-                        <select>
+                        <x-combo wire:model.lazy="producto.tipoimpresion" :options="[['id'=>'Estandár','label'=>'Estandár'],['id'=>'Premium','label'=>'Premium']]" placeholder="--Selecciona--" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                     </div>
 
                     <div class="form-item">
@@ -188,14 +167,7 @@
             {{-- cajas --}}
             <div class="w-full form-item md:w-2/12">
                 <x-jet-label for="caja">{{ __('Caja') }}</x-jet-label>
-                    <select wire:model.lazy="producto.caja_id"
-                        class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                        {{$escliente}} {{$deshabilitado}} >
-                        <option value="">--Selecciona--</option>
-                        @foreach($cajas as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}{{ $item->descripcion }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo wire:model.lazy="producto.caja_id" :options="collect($cajas)->map(fn($item)=>['id'=>$item->id,'label'=>($item->name) . ($item->descripcion)])->values()->all()" placeholder="--Selecciona--" :disabled="(bool) ($escliente ?: $deshabilitado)" />
             </div>
             {{-- etiqueta --}}
             <div class="w-full form-item md:w-1/12 ">

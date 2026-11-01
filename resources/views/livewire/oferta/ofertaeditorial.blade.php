@@ -16,12 +16,7 @@
                                 <h3 class="w-1/12 pl-1 font-semibold">Datos generales</h3>
                                 <input  wire:model.defer="presupuestoid" type="hidden"/>
                                 @if($tipo!='1')
-                                <select wire:model.defer="tipo"
-                                    class="w-11/12 py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    {{$escliente}} {{$deshabilitado}}>
-                                    <option value="2">Packaging</option>
-                                    <option value="3">Propios</option>
-                                </select>
+                                <x-combo wire:model.defer="tipo" :options="[['id'=>'2','label'=>'Packaging'],['id'=>'3','label'=>'Propios']]" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                                 @endif
                             </div>
                             {{-- fecha-cliente-contacto-estado- --}}
@@ -41,13 +36,7 @@
                                 </div>
                                 <div class="w-full">
                                     <x-jet-label >{{ __('Estado') }}</x-jet-label>
-                                    <select wire:model.lazy="estado"
-                                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                        {{$escliente}} {{$deshabilitado}}>
-                                        <option value="0">En Espera</option>
-                                        <option value="1">Aceptada</option>
-                                        <option value="2">Rechazada</option>
-                                    </select>
+                                    <x-combo wire:model.lazy="estado" :options="[['id'=>'0','label'=>'En Espera'],['id'=>'1','label'=>'Aceptada'],['id'=>'2','label'=>'Rechazada']]" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                                 </div>
                             </div>
                             {{-- Descrip-isbn titulo --}}

@@ -17,12 +17,7 @@
                         <div class="flex">
                             <div class="flex w-full space-x-2 font-bold">
                                 <label class="">Enviar a: </label>
-                                <x-selectcolor wire:model.lazy="destinocalculado" selectname="destino" color="blue" class="w-8/12 " >
-                                    <option value="">-- Selecciona un destino  --</option>
-                                    @foreach ($destinos as $destino)
-                                    <option value="{{ $destino->id }}">{{ $destino->destino }}</option>
-                                    @endforeach
-                                </x-selectcolor>
+                                <div class="w-8/12"><x-combo wire:model.lazy="destinocalculado" :options="collect($destinos)->map(fn($destino)=>['id'=>$destino->id,'label'=>($destino->destino)])->values()->all()" placeholder="-- Selecciona un destino  --" /></div>
                             </div>
                         </div>
                         <div class="flex ">

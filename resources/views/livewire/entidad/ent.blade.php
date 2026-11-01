@@ -11,11 +11,7 @@
                         @endif
                     </div>
                     <div class="ml-3">
-                        <x-select wire:model.lazy="entidad.entidadtipo_id" class="py-1 text-xl" selectname="entidadtipo_id" required>
-                            @foreach ($tiposentidad as $tipoentidad)
-                            <option value="{{ $tipoentidad->id }}">{{ $tipoentidad->nombre }}</option>
-                            @endforeach
-                        </x-select>
+                        <x-combo wire:model.lazy="entidad.entidadtipo_id" :options="collect($tiposentidad)->map(fn($tipoentidad)=>['id'=>$tipoentidad->id,'label'=>($tipoentidad->nombre)])->values()->all()" />
                     </div>
                 </div>
             </div>
@@ -57,12 +53,7 @@
                 </div>
                 <div class="w-full form-item">
                     <x-jet-label for="responsable">{{ __('Responsable') }}</x-jet-label>
-                    <x-select wire:model.defer="entidad.responsable" selectname="responsable" class="w-full">
-                        <option value="">-- Selecciona el responsable --</option>
-                        @foreach ($responsables as $responsable )
-                            <option value="{{ $responsable->responsable}}">{{ $responsable->responsable}}</option>
-                        @endforeach
-                    </x-select>
+                    <x-combo wire:model.defer="entidad.responsable" :options="collect($responsables)->map(fn($responsable)=>['id'=>$responsable->responsable,'label'=>($responsable->responsable)])->values()->all()" placeholder="-- Selecciona el responsable --" />
                     <x-jet-input-error for="responsable" class="mt-2" />
                 </div>
                 <div class="w-4/12 form-item">
@@ -108,21 +99,11 @@
                 </div>
                 <div class="w-4/12 form-item">
                     <x-jet-label for="provincia">{{ __('Provincia') }}</x-jet-label>
-                    <x-select wire:model.defer="entidad.provincia_id" selectname="provincia_id" class="w-full">
-                        <option value="">-- choose --</option>
-                        @foreach ($provincias as $provincia)
-                        <option value="{{ $provincia->id }}">{{ $provincia->provincia }}</option>
-                        @endforeach
-                    </x-select>
+                    <x-combo wire:model.defer="entidad.provincia_id" :options="collect($provincias)->map(fn($provincia)=>['id'=>$provincia->id,'label'=>($provincia->provincia)])->values()->all()" placeholder="-- choose --" />
                 </div>
                 <div class="w-3/12 form-item">
                     <x-jet-label for="pais">{{ __('Pais') }}</x-jet-label>
-                    <x-select wire:model.defer="entidad.pais_id" selectname="pais_id" class="w-full">
-                        <option value="">-- choose --</option>
-                        @foreach ($paises as $pais)
-                            <option value="{{ $pais->id }}">{{ $pais->pais }}</option>
-                        @endforeach
-                    </x-select>
+                    <x-combo wire:model.defer="entidad.pais_id" :options="collect($paises)->map(fn($pais)=>['id'=>$pais->id,'label'=>($pais->pais)])->values()->all()" placeholder="-- choose --" />
                 </div>
             </div>
             <div class="px-2 mx-2 my-2 rounded-md bg-blue-50">
@@ -132,11 +113,7 @@
                 @if(in_array($entidad->entidadtipo_id,[1,2]))
                 <div class="w-full form-item">
                     <x-jet-label for="cuenta_bancaria_id" title="Cuenta a la que el cliente hará la transferencia">{{ __('Cuenta Bancaria') }}</x-jet-label>
-                    <x-select wire:model.lazy="entidad.cuenta_bancaria_id" selectname="cuenta_bancaria_id" class="w-full">
-                        @foreach ($cuentasbancarias as $cuentabancaria)
-                        <option value="{{ $cuentabancaria->id }}">{{ $cuentabancaria->moneda }} - {{ $cuentabancaria->iban }}</option>
-                        @endforeach
-                    </x-select>
+                    <x-combo wire:model.lazy="entidad.cuenta_bancaria_id" :options="collect($cuentasbancarias)->map(fn($c)=>['id'=>$c->id,'label'=>$c->moneda.' - '.$c->iban])->values()->all()" />
                 </div>
                 @endif
                 {{-- <div class="w-full form-item">
@@ -157,21 +134,11 @@
                 </div> --}}
                 {{-- <div class="w-full form-item">
                     <x-jet-label for="metodopago_id">{{ __('Método Pago') }}</x-jet-label>
-                    <x-select wire:model.defer="entidad.metodopago_id" class="w-full" selectname="metodopago_id">
-                        <option value="">-- choose --</option>
-                        @foreach ($metodopagos as $metodopago)
-                        <option value="{{ $metodopago->id }}">{{ $metodopago->nombrecorto }}</option>
-                        @endforeach
-                    </x-select>
+                    <x-combo wire:model.defer="entidad.metodopago_id" :options="collect($metodopagos)->map(fn($metodopago)=>['id'=>$metodopago->id,'label'=>($metodopago->nombrecorto)])->values()->all()" placeholder="-- choose --" />
                 </div> --}}
                 {{-- <div class="w-full form-item">
                     <x-jet-label for="vencimientofechafactura">{{ __('Vto. Factura') }}</x-jet-label>
-                    <x-select wire:model.defer="entidad.vencimientofechafactura" class="w-full" selectname="vencimientofechafactura">
-                        <option value="">-- choose --</option>
-                        <option value="30">30</option>
-                        <option value="60">60</option>
-                        <option value="90">90</option>
-                    </x-select>
+                    <x-combo wire:model.defer="entidad.vencimientofechafactura" :options="[['id'=>'30','label'=>'30'],['id'=>'60','label'=>'60'],['id'=>'90','label'=>'90']]" placeholder="-- choose --" />
                 </div> --}}
                 <div class="w-1/12 form-item">
                     <x-jet-label for="credito" >{{ __('Crédito') }}</x-jet-label>

@@ -41,13 +41,7 @@
                             </div>
                             <div class="flex items-center w-2/12 " >
                                 <div class="w-6/12 pl-2">
-                                    <select
-                                        class="w-full text-center py-1 my-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $factura->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                                        disabled>
-                                        @foreach ($estados as $valor => $estado)
-                                            <option value="{{ $valor }}" {{ $factura->estado == $valor ? 'selected' : '' }}>{{ $estado[1] }}</option>
-                                        @endforeach
-                                    </select>
+                                    <x-combo :valor="$factura->estado" :options="collect($estados)->map(fn($e, $k)=>['id'=>$k,'label'=>$e[1]])->values()->all()" clase="bg-{{ $factura->status_color[0] }}" :disabled="true" />
                                 </div>
                                 <div class="w-6/12 text-center ">
                                     <x-icon.pdf-a href="{{ route('cliente.facturacion.show',[$factura->id]) }}" target="_blank" title="Imprimir factura"  title="PDF Factura"/>

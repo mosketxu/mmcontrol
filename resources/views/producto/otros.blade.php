@@ -31,15 +31,7 @@
             {{-- estadoproducto --}}
             <div class="w-full form-item md:w-4/12">
                 <x-jet-label for="entidad_id">{{ __('Estado') }}</x-jet-label>
-                <select wire:model.lazy="producto.productoestado"
-                    class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                    {{$escliente}} {{$deshabilitado}} >
-                    <option value=''>-- Selecciona Estado --</option>
-                   @foreach($productosestado as $value => $label)
-                        <option value="{{ $value }}"
-                        {{ old('estadoproducto', $producto->estadoproducto?->value ?? '') == $value ? 'selected' : '' }}>{{ $label }}</option>
-                    @endforeach
-                </select>
+                <x-combo wire:model.lazy="producto.productoestado" :options="collect($productosestado)->except([''])->map(fn($l, $v)=>['id'=>$v,'label'=>$l])->values()->all()" placeholder="-- Selecciona Estado --" :disabled="(bool) ($escliente ?: $deshabilitado)" />
             </div>
         </div>
     </div>
@@ -55,49 +47,36 @@
                 <div class="flex flex-row space-x-4">
                     <div class="w-full form-item">
                         <x-jet-label for="caja">{{ __('Caja') }}</x-jet-label>
-                        <select wire:model.lazy="producto.caja_id"
-                            class="w-full py-1 text-xs text-gray-600 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 "
-                            {{$escliente}} {{$deshabilitado}} >
-                            <option value="">--Selecciona--</option>
-                            @foreach($cajas as $caja)
-                                <option value="{{ $caja->id }}">{{ $caja->name }}</option>
-                            @endforeach
-                        <select>
+                        <x-combo wire:model.lazy="producto.caja_id" :options="collect($cajas)->map(fn($caja)=>['id'=>$caja->id,'label'=>($caja->name)])->values()->all()" placeholder="--Selecciona--" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="medidas">{{ __('Medidas (LxAxH)') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.medidas" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.medidas" :options="\App\Support\Sugerencias::de('campo:medidas')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                     </div>
                 </div>
                 {{-- Caja --}}
                 <div class="flex flex-row space-x-4">
                     <div class="w-full form-item">
                         <x-jet-label for="desarrollocaja">{{ __('Desarrollo') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.desarrollocaja" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.desarrollocaja" :options="\App\Support\Sugerencias::de('campo:desarrollocaja')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="material">{{ __('Material') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.material" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.material" :options="\App\Support\Sugerencias::de('campo:material')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="gramajecaja">{{ __('Gramaje') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.gramajecaja" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.gramajecaja" :options="\App\Support\Sugerencias::de('campo:gramajecaja')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                     </div>
                 </div>
                 <div class="flex flex-row space-x-4">
                     <div class="w-full form-item">
                         <x-jet-label for="impresion">{{ __('Impresión') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.impresion" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.impresion" :options="\App\Support\Sugerencias::de('campo:impresion')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                     </div>
                     <div class="w-full form-item">
                         <x-jet-label for="acabadocaja">{{ __('Acabado') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.acabadocaja" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.acabadocaja" :options="\App\Support\Sugerencias::de('campo:acabadocaja')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                     </div>
 
                 </div>
@@ -111,20 +90,17 @@
                 {{-- Medidas nido   --}}
                 <div class="w-full form-item">
                     <x-jet-label for="medidasnido">{{ __('Medidas') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.medidasnido" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.medidasnido" :options="\App\Support\Sugerencias::de('campo:medidasnido')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                 </div>
                 {{-- Material nido --}}
                 <div class="w-full form-item">
                     <x-jet-label for="materialnido">{{ __('Material') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.materialnido" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.materialnido" :options="\App\Support\Sugerencias::de('campo:materialnido')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                 </div>
                 {{-- Material nido --}}
                 <div class="w-full form-item">
                     <x-jet-label for="impresionnido">{{ __('Impresión') }}</x-jet-label>
-                        <input  wire:model.lazy="producto.impresionnido" type="text" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        {{$escliente}} {{$deshabilitado}}/>
+                        <x-sugerido wire:model.defer="producto.impresionnido" :options="\App\Support\Sugerencias::de('campo:impresionnido')" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                 </div>
             </div>
             {{-- Otros --}}

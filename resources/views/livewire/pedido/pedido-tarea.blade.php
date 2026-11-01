@@ -93,14 +93,7 @@
                                 {{$escliente}}/>
                         </div>
                         <div class="w-1/12">
-                            <select name="estado"
-                                wire:change="changeCampo({{ $tarea }},'estado',$event.target.value)"
-                                class="w-full text-sm font-thin text-gray-500 border-0 rounded-md"
-                                {{$escliente}}>
-                                @foreach ($estados as $key=>$value)
-                                <option value="{{ $key }}" {{$key== $tarea->estado ? 'selected': '' }}>{{ $value }}</option>
-                                @endforeach
-                            </select>
+                            <x-combo accion="changeCampo({{ $tarea->id }},'estado',v)" :valor="$tarea->estado" :options="collect($estados)->map(fn($v, $k)=>['id'=>$k,'label'=>$v])->values()->all()" :disabled="(bool) $escliente" />
                         </div>
                         <div class="flex flex-row-reverse w-1/12 pr-2 mt-2">
                             @if(!Auth::user()->hasRole('Cliente'))

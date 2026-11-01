@@ -108,15 +108,7 @@
             </div>
             {{-- Pedido_id --}}
             <div class="w-2/12">
-                <x-selectcolor wire:model.lazy="pedido_id" selectname="pedido_id" color="bg-green-100"
-                    class="w-full py-1 text-xs font-thin text-gray-500 bg-green-100 border-none shadow-none">
-                    <option value="" >-Selecciona- </option>
-                    @forelse ($pedidos as $pedido)
-                    <option value="{{ $pedido->id }}">{{ $pedido->id }}</option>
-                    @empty
-                    <option value="">No hay pedidos pendientes</option>
-                    @endforelse
-                </x-selectcolor>
+                <x-combo wire:model.lazy="pedido_id" clase="bg-green-100" :options="collect($pedidos)->map(fn($pedido)=>['id'=>$pedido->id,'label'=>($pedido->id)])->values()->all()" placeholder="-Selecciona-" />
             </div>
             {{-- concepto --}}
             <div class="w-4/12">
@@ -141,13 +133,7 @@
             </div>
             {{-- iva --}}
             <div class="w-1/12">
-                <x-selectcolor wire:model.debounce.500ms="iva" selectname="iva" color="bg-green-100"
-                class="w-full px-0 py-1 text-xs font-thin text-center text-gray-500 bg-green-100 border-none shadow-none">
-                    <option value="0.00"> 0%</option>
-                    <option value="0.04"> 4%</option>
-                    <option value="0.10">10%</option>
-                    <option value="0.21">21%</option>
-                </x-selectcolor>
+                <x-combo wire:model.lazy="iva" clase="bg-green-100 text-center" :options="[['id'=>'0.00','label'=>'0%'],['id'=>'0.04','label'=>'4%'],['id'=>'0.10','label'=>'10%'],['id'=>'0.21','label'=>'21%']]" />
             </div>
             {{-- subtotaliva --}}
             <div class="w-1/12">

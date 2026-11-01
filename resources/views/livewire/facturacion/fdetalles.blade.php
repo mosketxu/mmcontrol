@@ -17,18 +17,7 @@
                 {{ $deshabilitado }}/>
             </div>
         <div class="w-2/12">
-            <select wire:model='pedido_id'
-                class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                {{ $deshabilitado }}>
-                @if(!$pedido_id)
-                    <option value="" >-</option>
-                @endif
-                @forelse ($pedidos as $ped)
-                    <option value="{{ $ped->id }}" >{{  $ped->id }}</option>
-                @empty
-                    <option value="">No hay pedidos pendientes</option>
-                @endforelse
-            </select>
+            <x-combo wire:model="pedido_id" :options="collect($pedidos)->map(fn($p)=>['id'=>$p->id,'label'=>(string) $p->id])->values()->all()" placeholder="{{ count($pedidos) ? '-' : 'No hay pedidos pendientes' }}" :disabled="(bool) $deshabilitado" />
         </div>
         <div class="w-4/12">
             <input type="text" wire:model.lazy='concepto'
@@ -52,14 +41,7 @@
             disabled/>
         </div>
         <div class="w-1/12">
-            <select wire:model.lazy='iva'
-            class="w-full py-1 text-xs font-thin text-gray-500 border-none rounded-md shadow-none focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-            {{ $deshabilitado }}>
-            <option value="0.00" > 0%</option>
-            <option value="0.04" > 4%</option>
-            <option value="0.1" >10%</option>
-            <option value="0.21" >21%</option>
-            </select>
+            <x-combo wire:model.lazy="iva" :options="[['id'=>'0.00','label'=>'0%'],['id'=>'0.04','label'=>'4%'],['id'=>'0.1','label'=>'10%'],['id'=>'0.21','label'=>'21%']]" :disabled="(bool) $deshabilitado" />
         </div>
         <div class="w-1/12">
             <input type="text" value="{{ number_format($subtotaliva,2,',','.') }}"

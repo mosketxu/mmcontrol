@@ -70,10 +70,7 @@
                     {{-- Unidad --}}
                     <div class="flex-1">
                         <x-jet-label for="ud_precio">{{ __('Ud.') }}</x-jet-label>
-                        <select wire:model.lazy="ud_precio" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm">
-                            <option value="1">Ud.</option>
-                            <option value="2">Kg</option>
-                        </select>
+                        <x-combo wire:model.lazy="ud_precio" :options="[['id'=>'1','label'=>'Ud.'],['id'=>'2','label'=>'Kg']]" />
                     </div>
 
                     {{-- Total --}}

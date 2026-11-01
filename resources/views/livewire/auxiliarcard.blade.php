@@ -40,12 +40,7 @@
                                 @if ($campo2visible==1)
                                     @if($titcampo1=='Caja')
                                         <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
-                                            <select name="{{$valor->campo2}}" id="{{$valor->campo2}}"
-                                                wire:change="changeCampo({{ $valor }},'{{ $campo2 }}',$event.target.value)"
-                                                class="py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                                                <option value="1" {{$valor->valorcampo2=='1' ? 'selected' : ''}}>Editorial</option>
-                                                <option value="2" {{$valor->valorcampo2=='2' ? 'selected' : ''}}>Packaging/Otros</option>
-                                            </select>
+                                            <x-combo accion="changeCampo({{ $valor->id }},'{{ $campo2 }}',v)" :valor="$valor->valorcampo2" :options="[['id'=>'1','label'=>'Editorial'],['id'=>'2','label'=>'Packaging/Otros']]" />
                                         </td>
                                     @else
                                     <td class="px-1 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap">
@@ -67,12 +62,7 @@
                                         wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
                                         class="w-full text-xs font-thin text-gray-500 border-0 rounded-md"/>
                                     @else
-                                        <select name="{{$valor->campo3}}" id="{{$valor->campo3}}"
-                                            wire:change="changeCampo({{ $valor }},'{{ $campo3 }}',$event.target.value)"
-                                            class="py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                                            <option value="1" {{$valor->valorcampo3=='1' ? 'selected' : ''}}>Sí</option>
-                                            <option value="0" {{$valor->valorcampo3=='0' ? 'selected' : ''}}>No</option>
-                                        </select>
+                                        <x-combo accion="changeCampo({{ $valor->id }},'{{ $campo3 }}',v)" :valor="$valor->valorcampo3" :options="[['id'=>'1','label'=>'Sí'],['id'=>'0','label'=>'No']]" />
                                     @endif --}}
                                 </td>
                                 @endif
@@ -99,11 +89,7 @@
                                 @if ($campo2visible==1)
                                  @if($titcampo1=='Caja')
                                         <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >
-                                            <select wire:model.defer="valorcampo2"
-                                                class="py-1 text-xs text-gray-600 bg-white border-gray-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none">
-                                                <option value="1" {{$valor->valorcampo2=='1' ? 'selected' : ''}}>Editorial</option>
-                                                <option value="2" {{$valor->valorcampo2=='2' ? 'selected' : ''}}>Packaging/Otros</option>
-                                            </select>
+                                            <x-combo wire:model.defer="valorcampo2" :options="[['id'=>'1','label'=>'Editorial'],['id'=>'2','label'=>'Packaging/Otros']]" />
                                         </td>
                                     @else
                                         <td class="p-2 text-xs leading-5 tracking-tighter text-gray-600 whitespace-no-wrap" >

@@ -20,12 +20,7 @@
                     Proveedor
                 </label>
                 <div class="flex">
-                    <select name="filtroproveedor" class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" onchange="this.form.submit()">
-                        <option value="">-- Todos --</option>
-                        @foreach ($proveedores as $proveedor)
-                        <option value="{{ $proveedor->id }}" {{ $proveedor->id == $filtroproveedor ? 'selected' : ''  }}>{{ $proveedor->entidad }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo name="filtroproveedor" :valor="$filtroproveedor" :options="collect($proveedores)->map(fn($p)=>['id'=>$p->id,'label'=>$p->entidad])->values()->all()" placeholder="-- Todos --" />
                 </div>
             </div>
         </div>
@@ -73,13 +68,7 @@
                     Mes
                 </label>
                 <div class="flex">
-                    <select name="filtromes"
-                        class="w-full py-1 text-sm text-gray-600 bg-white border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none" onchange="this.form.submit()">
-                        <option value="">-- Todos --</option>
-                        @foreach ($meses as $mes )
-                        <option value={{ $mes->id}} {{ $mes->id == $filtromes ? 'selected' : ''  }}>{{ $mes->mesmayus }}</option>
-                        @endforeach
-                    </select>
+                    <x-combo name="filtromes" :valor="$filtromes" :options="collect($meses)->map(fn($m)=>['id'=>$m->id,'label'=>$m->mesmayus])->values()->all()" placeholder="-- Todos --" />
                 </div>
             </div>
         </div>

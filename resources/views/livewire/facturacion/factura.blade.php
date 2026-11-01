@@ -21,12 +21,7 @@
                             @endif
                             <input  wire:model.defer="facturaid" type="hidden"/>
                             {{-- @if($tipo!='1') --}}
-                            <x-select wire:model.defer="tipo" selectname="tipo" class="w-1/12 py-0 ml-2" required >
-                                <option value="">--Selecciona--</option>
-                                <option value="1">Editorial</option>
-                                <option value="2">Packaging</option>
-                                <option value="3">Propios</option>
-                            </x-select>
+                            <div class="w-40 ml-2"><x-combo wire:model.defer="tipo" :options="[['id'=>'1','label'=>'Editorial'],['id'=>'2','label'=>'Packaging'],['id'=>'3','label'=>'Propios']]" placeholder="--Selecciona--" /></div>
                             {{-- @endif --}}
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-4">
@@ -39,12 +34,7 @@
                                 <div class="w-full form-item">
                                     <x-jet-label for="cliente_id">{{ __('Cliente') }}</x-jet-label>
                                     @if($bloqueado=='0')
-                                    <x-selectcolor wire:model.lazy="cliente_id" selectname="cliente_id" class="w-full py-1" >
-                                        <option value="">-- Selecciona cliente --</option>
-                                        @foreach ($clientes as $cliente)
-                                        <option value="{{ $cliente->id }}">{{ $cliente->entidad }}</option>
-                                        @endforeach
-                                    </x-selectcolor>
+                                    <x-combo wire:model.lazy="cliente_id" :options="collect($clientes)->map(fn($cliente)=>['id'=>$cliente->id,'label'=>($cliente->entidad)])->values()->all()" placeholder="-- Selecciona cliente --" />
                                     @else
                                         <input  type="text" value="{{ $fac->cliente->entidad ?? '' }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         disabled/>
@@ -55,16 +45,7 @@
                                 <div class="w-full form-item">
                                     <x-jet-label for="contacto_id">{{ __('Contacto') }}</x-jet-label>
                                     @if($bloqueado=='0')
-                                    <x-selectcolor wire:model.defer="contacto_id" selectname="contacto_id" class="w-full py-1" >
-                                        @if (isset($contactos))
-                                            <option value="">-- Selecciona un contacto --</option>
-                                            @foreach ($contactos as $contacto)
-                                            <option value="{{ $contacto->contacto_id }}">{{ $contacto->entidadcontacto->entidad ?? '-' }}</option>
-                                            @endforeach
-                                        @else
-                                            <option value="">-- Selecciona primero un contacto --</option>
-                                        @endif
-                                    </x-selectcolor>
+                                    <x-combo wire:model.defer="contacto_id" :options="collect($contactos ?? [])->map(fn($c)=>['id'=>$c->contacto_id,'label'=>$c->entidadcontacto->entidad ?? '-'])->values()->all()" placeholder="{{ isset($contactos) ? '-- Selecciona un contacto --' : '-- Selecciona primero un cliente --' }}" />
                                     @else
                                         <input  type="text" value="{{ $fac->contacto->entidad ?? '' }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                         disabled/>
@@ -75,16 +56,7 @@
                                 <div class="w-full form-item">
                                     <x-jet-label for="pedidocliente">{{ __('Su Pedido') }}</x-jet-label>
                                     @if($bloqueado=='0')
-                                    <x-selectcolor wire:model.defer="pedidocliente" selectname="pedidocliente" class="w-full py-1" >
-                                        @if (isset($pedidos))
-                                            <option value="">-- Selecciona un pedido --</option>
-                                            @foreach ($pedidos as $pedido)
-                                            <option value="{{ $pedido['pedidocliente'] }}">{{ $pedido['pedidocliente'] }}</option>
-                                            @endforeach
-                                        @else
-                                            <option value="">-- Selecciona primero un cliente --</option>
-                                        @endif
-                                    </x-selectcolor>
+                                    <x-combo wire:model.defer="pedidocliente" :options="collect($pedidos ?? [])->map(fn($p)=>['id'=>$p['pedidocliente'],'label'=>$p['pedidocliente']])->values()->all()" placeholder="{{ isset($pedidos) ? '-- Selecciona un pedido --' : '-- Selecciona primero un cliente --' }}" />
                                     @else
                                     <input  type="text" value="{{ $pedidocliente }}" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                     disabled/>
@@ -122,11 +94,7 @@
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
                                 <div class="w-full form-item">
                                     <x-jet-label for="estado">{{ __('Estado') }}</x-jet-label>
-                                    <x-selectcolor wire:model.lazy="estado" selectname="estado" class="w-full" >
-                                        @foreach ($estados as $valor => $estado)
-                                            <option value="{{ $valor }}">{{ $estado[1] }}</option>
-                                        @endforeach
-                                    </x-selectcolor>
+                                    <x-combo wire:model.lazy="estado" :options="collect($estados)->map(fn($estado, $valor)=>['id'=>$valor,'label'=>($estado[1])])->values()->all()" />
                                 </div>
                             </div>
                         </div>

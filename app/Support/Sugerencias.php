@@ -46,6 +46,15 @@ class Sugerencias
 
     private static function calcular(string $clave, $tipo, $contexto = null): array
     {
+        // Valores ya escritos en un campo de texto libre de productos (x-sugerido): 'campo:material'
+        if (str_starts_with($clave, 'campo:')) {
+            $col = substr($clave, 6);
+            $permitidas = ['medidas', 'desarrollocaja', 'material', 'gramajecaja', 'impresion', 'acabadocaja', 'medidasnido', 'materialnido', 'impresionnido'];
+            if (!in_array($col, $permitidas, true)) return [];
+            return DB::table('productos')->when($tipo, fn ($x) => $x->where('tipo', $tipo))
+                ->whereNotNull($col)->where($col, '!=', '')->where($col, '!=', '0')
+                ->distinct()->orderBy($col)->pluck($col)->map(fn ($v) => trim($v))->unique()->values()->all();
+        }
         switch ($clave) {
             case 'anyos':
                 return collect(range((int) date('Y') + 1, 2018))->map(fn ($a) => ['id' => (string) $a, 'label' => (string) $a])->all();

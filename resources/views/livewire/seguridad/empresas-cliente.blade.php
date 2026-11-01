@@ -49,13 +49,7 @@
                 <tfoot class="bg-blue-100">
                     <tr >
                         <td>
-                            <select wire:model.lazy="empresaId"
-                            class="w-full text-xs text-left border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <option value="">--Selecciona Empresa--</option>
-                                @foreach ($empresasdisponibles as $empresa )
-                                    <option value="{{ $empresa->id }}">{{ $empresa->entidad }}</option>
-                                @endforeach
-                            </select>
+                            <x-combo wire:model.lazy="empresaId" :options="collect($empresasdisponibles)->map(fn($empresa)=>['id'=>$empresa->id,'label'=>($empresa->entidad)])->values()->all()" placeholder="--Selecciona Empresa--" />
                         </td>
                         <td class="p-2 "><x-icon.save-a wire:click="save()" class="text-blue"></x-icon.save-a></button></td>
                     </tr>

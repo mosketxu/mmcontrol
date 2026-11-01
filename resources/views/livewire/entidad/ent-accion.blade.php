@@ -38,15 +38,7 @@
                                 class="w-full px-0 mx-0 text-sm font-thin text-gray-500 border-0 rounded-md"/>
                         </div>
                         <div class="flex-col w-2/12 text-left">
-                            <select wire:change="changeCampo({{ $accionItem->id }},'contacto_id',$event.target.value)"
-                                class="w-full text-sm font-thin text-gray-500 border-0 rounded-md">
-                                <option value="">--</option>
-                                @foreach ($contactos as $contacto)
-                                    <option value="{{ $contacto->id }}" @selected($accionItem->contacto_id == $contacto->id)>
-                                        {{ $contacto->entidadcontacto->entidad ?? '' }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <x-combo accion="changeCampo({{ $accionItem->id }},'contacto_id',v)" :valor="$accionItem->contacto_id" :options="collect($contactos)->map(fn($c)=>['id'=>$c->id,'label'=>$c->entidadcontacto->entidad ?? ''])->values()->all()" placeholder="--" />
                         </div>
                         <div class="flex-col w-2/12 text-left">
                             <input type="text" value="{{ $accionItem->nombre }}"

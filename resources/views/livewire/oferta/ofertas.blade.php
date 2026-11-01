@@ -50,13 +50,7 @@
                             </div>
                             <div class="items-center flex-none w-3/12 md:flex md:w-2/12">
                                 <div class="w-full text-center md:w-7/12">
-                                    <select wire:change="changeValor({{ $oferta }},'estado',$event.target.value)"
-                                        class="w-full text-left py-1 text-xs text-gray-600 placeholder-gray-300 bg-{{ $oferta->status_color[0] }} border-blue-300 rounded-md shadow-sm appearance-none hover:border-gray-400 focus:outline-none"
-                                        {{$escliente}}>
-                                        <option value="0" {{ $oferta->estado== '0'? 'selected' : '' }}>Espera</option>
-                                        <option value="1" {{ $oferta->estado== '1'? 'selected' : '' }}>Aceptada</option>
-                                        <option value="2" {{ $oferta->estado== '2'? 'selected' : '' }}>Rechazada</option>
-                                    </select>
+                                    <x-combo accion="changeValor({{ $oferta->id }},'estado',v)" :valor="$oferta->estado" :options="[['id'=>'0','label'=>'Espera'],['id'=>'1','label'=>'Aceptada'],['id'=>'2','label'=>'Rechazada']]" clase="bg-{{ $oferta->status_color[0] }}" :disabled="(bool) $escliente" />
                                 </div>
                                 <div class="w-full text-center md:w-5/12">
                                     <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{ route('oferta.ficha',[$oferta->id,$oferta->tipo]) }}"  target="_blank" title="Imprimir Oferta"/>
