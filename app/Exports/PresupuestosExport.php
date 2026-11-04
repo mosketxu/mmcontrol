@@ -83,7 +83,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
         if (($this->filters['tipo'] ?? null) == '1') {
             return [
                 'Presupuesto Editorial',
-                'Facturado por',
+                pf('Facturado por'),
                 'Fecha',
                 'Cliente',
                 'Idioma',
@@ -98,7 +98,7 @@ class PresupuestosExport implements FromQuery, WithHeadings, WithMapping, Should
         }else{
             return [
                 'Presupuesto Otros',
-                'Facturado por',
+                pf('Facturado por'),
                 'Fecha',
                 'Cliente',
                 'Idioma',

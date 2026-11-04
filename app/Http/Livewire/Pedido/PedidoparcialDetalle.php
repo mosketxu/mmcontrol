@@ -91,7 +91,7 @@ class PedidoparcialDetalle extends Component
         $parcial=PedidoParcial::find($this->parcialid);
         if(!$parcial) return;
         if($parcial->parcialdetalles()->whereHas('facturadetalle')->exists()){
-            $this->dispatchBrowserEvent('notifyred', 'El albarán ya está (en parte) facturado.');
+            $this->dispatchBrowserEvent('notifyred', pf('El albarán ya está (en parte) facturado.'));
             return;
         }
         $pedido=Pedido::find($parcial->pedido_id);

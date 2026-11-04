@@ -54,7 +54,7 @@ class Fdetalle extends Component
             'iva.numeric'=>'El iva debe ser numérico.',
             'importe.required'=>'El importe es necesario.',
             'importe.numeric'=>'El importe debe ser numérico.',
-            'bloqueado.size'=>'La factura ya se ha enviado. Debe desbloquearla.',
+            'bloqueado.size'=>pf('La factura ya se ha enviado. Debe desbloquearla.'),
         ];
     }
 
@@ -106,7 +106,7 @@ class Fdetalle extends Component
     // Copia a la factura las líneas marcadas de un albarán. Las no marcadas quedan pendientes para otra factura.
     public function traerAlbaran($parcialId){
         if($this->bloqueado!='0'){
-            $this->dispatchBrowserEvent('notifyred', 'La factura está cerrada o ya se ha enviado. Debe desbloquearla.');
+            $this->dispatchBrowserEvent('notifyred', pf('La factura está cerrada o ya se ha enviado. Debe desbloquearla.'));
             return;
         }
         $parcial=PedidoParcial::with('pedido')->find($parcialId);
@@ -157,7 +157,7 @@ class Fdetalle extends Component
 
         $this->sel=array_values(array_diff($this->sel,$lineas->pluck('id')->map(fn($i)=>(string)$i)->all()));
         $this->emitUp('refreshfactura');
-        $this->dispatchBrowserEvent('notify', $lineas->count().' línea(s) del albarán '.$parcial->id.' traídas a la factura.');
+        $this->dispatchBrowserEvent('notify', $lineas->count().' línea(s) del albarán '.$parcial->id.pf(' traídas a la factura.'));
     }
 
     public function UpdatedPedidoId(){

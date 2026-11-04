@@ -61,9 +61,9 @@ class Factura extends Component
 
     public function messages(){
         return [
-            'facturaid.required'=>'El número de factura es necesario.',
+            'facturaid.required'=>pf('El número de factura es necesario.'),
             'cliente_id.required'=>'El cliente es necesario.',
-            'tipo.required'=>'Es obligatorio el tipo de factura.',
+            'tipo.required'=>pf('Es obligatorio el tipo de factura.'),
             'fecha.required'=>'La fecha es necesaria.',
             'fecha.date'=>'La fecha debe ser válida.',
             'fechavencimiento.date'=>'La fecha de vencimiento debe ser válida.',
@@ -71,7 +71,7 @@ class Factura extends Component
     }
 
     public function mount($facturaid){
-        $this->titulo='Nueva Factura:';
+        $this->titulo=pf('Nueva Factura:');
         if ($facturaid!='') {
             $factura=ModelsFactura::find($facturaid);
             $this->fac=$factura;
@@ -131,7 +131,7 @@ class Factura extends Component
             return;
         }
         $f->update(['validada_at'=>now()]);
-        $this->dispatchBrowserEvent('notify', 'Factura creada. Se podrá modificar hasta el '.\Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y').'.');
+        $this->dispatchBrowserEvent('notify', pf('Factura creada. Se podrá modificar hasta el ').\Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y').'.');
         $this->mount($this->facturaid);
     }
 
@@ -163,13 +163,13 @@ class Factura extends Component
     }
 
     public function save(){
-        $mensaje="Factura creada satisfactoriamente";
+        $mensaje=pf('Factura creada satisfactoriamente');
         $i="";
         if($this->fechavencimiento=='') $this->fechavencimiento=null;
         $this->validate();
         if ($this->facturaid!='') {
             $i=$this->facturaid;
-            $mensaje="Factura actualizada satisfactoriamente";
+            $mensaje=pf('Factura actualizada satisfactoriamente');
             $nuevo=false;
             $this->validate([
                 'facturaid'=>[
@@ -208,7 +208,7 @@ class Factura extends Component
         // Foto de los datos del cliente: al crear la factura y solo si se cambia el cliente (no si cambia la dirección del cliente).
         if($nuevo || !$fac->datos_congelados_at || $fac->wasChanged('cliente_id')) $fac->congelarDatosCliente();
 
-        $this->titulo='Factura:';
+        $this->titulo=pf('Factura:');
         $factura=ModelsFactura::find($i);
 
         $this->dispatchBrowserEvent('notify', $mensaje);

@@ -154,10 +154,10 @@
                 <x-icon.triangleexclamation-a class="w-6 mb-1 {{ $pedido->incidenciascolor[0] }} hover:{{ $pedido->incidenciascolor[1] }} " onclick="location.href = '{{route('pedido.incidencias',[$pedido,'i'])}}'" title="Incidencias: {{ $pedido->hayIncidencias }}"/>
                 <x-icon.sandwatch-a class="w-4 {{ $pedido->retrasoscolor[0] }} hover:{{ $pedido->retrasoscolor[1] }} " onclick="location.href = '{{route('pedido.retrasos',[$pedido,'i'])}}'" title="Retrasos: {{ $pedido->hayRetrasos }}"/>
                 @if($pedido->facturado!='0')
-                    <x-icon.euro-a class="w-6 {{ $pedido->facturadocolor[0] }} hover:{{ $pedido->facturadocolor[1] }} " wire:click="generarfactura" title="Facturación"/>
+                    <x-icon.euro-a class="w-6 {{ $pedido->facturadocolor[0] }} hover:{{ $pedido->facturadocolor[1] }} " wire:click="generarfactura" title="{{ pf('Facturación') }}"/>
                 @else
-                    <x-icon.euro-a class="w-6 {{ $pedido->facturadocolor[0] }} hover:{{ $pedido->facturadocolor[1] }} " title="Facturación"
-                        wire:click.prevent="generarfactura" onclick="confirm('¿Quieres generar un factura con este pedido?') || event.stopImmediatePropagation()"/>
+                    <x-icon.euro-a class="w-6 {{ $pedido->facturadocolor[0] }} hover:{{ $pedido->facturadocolor[1] }} " title="{{ pf('Facturación') }}"
+                        wire:click.prevent="generarfactura" onclick="confirm('{{ pf('¿Quieres generar una factura con este pedido?') }}') || event.stopImmediatePropagation()"/>
                 @endif
                 <x-icon.folder-tree-a class="{{ $pedido->subpedidoscolor[0] }} hover:{{ $pedido->subpedidoscolor[1] }}" onclick="location.href = '{{route('pedido.subpedidos',[$pedido,'i'])}}'" title="Subpedidos" target="_blank"/>
                 <x-icon.calendar-day-a class="{{ $pedido->tareascolor[0] }} hover:{{ $pedido->tareascolor[1] }}" onclick="location.href = '{{route('pedido.tareas',[$pedido,'i'])}}'" title="Tareas" target="_blank"/>

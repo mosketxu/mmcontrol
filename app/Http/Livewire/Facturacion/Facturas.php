@@ -121,7 +121,7 @@ class Facturas extends Component
             echo $this->selectedRowsQuery->toCsv();
         },'facturas.csv');
 
-        $this->dispatchBrowserEvent('notify', 'CSV facturas descargado!');
+        $this->dispatchBrowserEvent('notify', pf('CSV facturas descargado!'));
     }
 
     public function deleteSelected(){
@@ -129,14 +129,14 @@ class Facturas extends Component
         $this->selectedRowsQuery->delete();
         $this->showDeleteModal = false;
 
-        $this->dispatchBrowserEvent('notify', $deleteCount . ' facturas eliminados!');
+        $this->dispatchBrowserEvent('notify', $deleteCount . pf(' facturas eliminados!'));
     }
 
     public function delete($facturaId){
         $factura = Factura::find($facturaId);
         if ($factura) {
             $factura->delete();
-            $this->dispatchBrowserEvent('notify', 'factura borrado, ');
+            $this->dispatchBrowserEvent('notify', pf('factura borrado, '));
         }
     }
 
@@ -156,7 +156,7 @@ class Facturas extends Component
     public function exportFacturacion(){
         return Excel::download(
             new FacturacionExport($this->filters()),
-            'facturas.xlsx'
+            pf('facturas').'.xlsx'
         );
 }
 }

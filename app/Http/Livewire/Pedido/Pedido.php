@@ -127,7 +127,7 @@ class Pedido extends Component
             'pedidoid.required'=>'El número de pedido es necesario',
             'responsable.required'=>'El responsable del pedido es necesario',
             'cliente_id.required'=>'El cliente es necesario',
-            'facturadopor.required'=>'Debe estar definido quién facturará el pedido',
+            'facturadopor.required'=>pf('Debe estar definido quién facturará el pedido'),
             'proveedor_id.nullable'=>'',
             'fechapedido.date'=>'La fecha del pedido debe ser válida',
             'fechapedido.required'=>'La fecha del pedido es necesaria',

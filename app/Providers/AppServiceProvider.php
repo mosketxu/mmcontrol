@@ -15,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // función global pf() para el nombre «Prefactura» (ver App\Support\Prefactura)
+        require_once app_path('Support/pf.php');
     }
 
     /**

@@ -210,7 +210,7 @@
                 @can('facturacion.index')
                 <div class="hidden text-left sm:flex lg:flex lg:ml-20 lg:space-x-8 ">
                     <x-jet-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
-                        {{ __('Facturación') }}
+                        {{ pf(__('Facturación')) }}
                     </x-jet-nav-link>
                 </div>
                 @endcan
@@ -471,7 +471,7 @@
             @endcan
             @can('facturacion.index')
             <x-jet-responsive-nav-link href="{{ route('facturacion.index') }}" :active="request()->routeIs('facturacion.index')">
-                {{ __('Facturación') }}
+                {{ pf(__('Facturación')) }}
             </x-jet-responsive-nav-link>
             @endcan
             @can('seguridad.index')

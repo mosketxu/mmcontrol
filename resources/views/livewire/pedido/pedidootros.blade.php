@@ -164,14 +164,14 @@
                             </div>
                             <div class="w-4/12">
                                 @if(!Auth::user()->hasRole('Cliente'))
-                                <x-jet-label>Facturas del pedido</x-jet-label>
+                                <x-jet-label>{{ pf('Facturas del pedido') }}</x-jet-label>
                                 <div class="flex">
                                     @forelse ($facturas as $factura )
                                         <div class="mr-2 text-xs text-blue-700 underline border-gray-300 rounded-md hover:text-xl hover:text-white hover:bg-blue-900 hover:p-2 hover:m-2 ">
                                             <a class="" href="{{ route('facturacion.edit',$factura->factura) }}"  title="Ir a {{ $factura->factura->id }}">{{ $factura->factura->id }}</a>
                                         </div>
                                     @empty
-                                        No hay facturas asociadas a este pedido
+                                        {{ pf('No hay facturas asociadas a este pedido') }}
                                     @endforelse
                                 </div>
                                 @endif
@@ -185,8 +185,8 @@
                             {{-- facturado por --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="facturadopor">{{ __('Factura') }}</x-jet-label>
-                                    <x-combo wire:model.lazy="facturadopor" :options="[['id'=>'1','label'=>'Milimetrica'],['id'=>'0','label'=>'Proveedor']]" placeholder="- ¿Quién factura? -" :disabled="(bool) ($escliente ?: $deshabilitado)" />
+                                    <x-jet-label for="facturadopor">{{ pf(__('Factura')) }}</x-jet-label>
+                                    <x-combo wire:model.lazy="facturadopor" :options="[['id'=>'1','label'=>'Milimetrica'],['id'=>'0','label'=>'Proveedor']]" placeholder="{{ pf('- ¿Quién factura? -') }}" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                                 </div>
                             </div>
                             {{-- responsable --}}
@@ -204,7 +204,7 @@
                             {{-- facturado --}}
                             <div class="w-full form-item">
                                 <div class="w-full form-item">
-                                    <x-jet-label for="facturado">{{ __('Facturado') }}</x-jet-label>
+                                    <x-jet-label for="facturado">{{ pf(__('Facturado')) }}</x-jet-label>
                                     <x-combo wire:model.lazy="facturado" :options="[['id'=>'0','label'=>__('No')],['id'=>'1','label'=>__('Sí')],['id'=>'2','label'=>__('Parcial')]]" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                                 </div>
                             </div>

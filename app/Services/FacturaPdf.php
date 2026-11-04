@@ -25,7 +25,7 @@ class FacturaPdf
         }
         return response(Storage::disk('local')->get($factura->pdf_path), 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="factura_'.$factura->id.'.pdf"',
+            'Content-Disposition' => 'inline; filename="'.(\App\Support\Prefactura::activa() ? 'prefactura_' : 'factura_').$factura->id.'.pdf"',
         ]);
     }
 

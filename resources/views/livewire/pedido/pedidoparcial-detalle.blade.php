@@ -4,7 +4,7 @@
     </div>
     @if($facturado)
         <div style="padding:4px 8px;font-size:12px;border-radius:6px;{{ $facturado->estado=='total' ? 'background:#dcfce7;color:#166534' : 'background:#fef3c7;color:#92400e' }}">
-            {{ $facturado->estado=='total' ? 'Albarán facturado' : 'Albarán facturado en parte (quedan líneas pendientes)' }}
+            {{ $facturado->estado=='total' ? pf('Albarán facturado') : pf('Albarán facturado en parte (quedan líneas pendientes)') }}
             en la(s) factura(s) {{ $facturado->facturas->implode(', ') }}.
         </div>
     @endif

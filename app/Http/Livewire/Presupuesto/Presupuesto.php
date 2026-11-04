@@ -113,7 +113,7 @@ class Presupuesto extends Component
             'cliente_id.required'=>'El cliente es necesario',
             'proveedor_id.required'=>'El proveedor es necesario',
             'tirada.required'=>'La tirada es necesaria',
-            'facturadopor.required'=>'Definir quien facturará es necesario',
+            'facturadopor.required'=>pf('Definir quien facturará es necesario'),
             'fechapresupuesto.required'=>'La fecha del presupuesto es necesaria',
             'fechapresupuesto.date'=>'La fecha debe ser válida',
             'espedido.required'=>'Definir si es pedido es necesario',

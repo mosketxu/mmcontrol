@@ -107,7 +107,7 @@
                 </div>
             </div>
             <div class="px-2 mx-2 my-2 rounded-md bg-blue-50">
-                <h3 class="font-semibold ">Datos Facturación</h3>
+                <h3 class="font-semibold ">{{ pf('Datos Facturación') }}</h3>
             </div>
             <div class="flex flex-col pl-2 mx-2 space-y-4 md:space-y-0 md:flex-row md:space-x-4">
                 @if(in_array($entidad->entidadtipo_id,[1,2]))
@@ -137,7 +137,7 @@
                     <x-combo wire:model.defer="entidad.metodopago_id" :options="collect($metodopagos)->map(fn($metodopago)=>['id'=>$metodopago->id,'label'=>($metodopago->nombrecorto)])->values()->all()" placeholder="-- choose --" />
                 </div> --}}
                 {{-- <div class="w-full form-item">
-                    <x-jet-label for="vencimientofechafactura">{{ __('Vto. Factura') }}</x-jet-label>
+                    <x-jet-label for="vencimientofechafactura">{{ pf(__('Vto. Factura')) }}</x-jet-label>
                     <x-combo wire:model.defer="entidad.vencimientofechafactura" :options="[['id'=>'30','label'=>'30'],['id'=>'60','label'=>'60'],['id'=>'90','label'=>'90']]" placeholder="-- choose --" />
                 </div> --}}
                 <div class="w-1/12 form-item">

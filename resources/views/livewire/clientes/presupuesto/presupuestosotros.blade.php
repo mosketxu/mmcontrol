@@ -14,7 +14,7 @@
                         <div class="flex w-full pt-2 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md ">
                             <div class="flex w-9/12">
                                 <div class="w-2/12 pl-2 text-left" >{{ __('N.Pres') }}</div>
-                                <div class="w-1/12 text-left" >{{ __('Factura') }}</div>
+                                <div class="w-1/12 text-left" >{{ pf(__('Factura')) }}</div>
                                 <div class="w-2/12 text-left" >{{ __('Cliente') }}</div>
                                 <div class="w-5/12 text-left" >{{ __('Descripción') }}</div>
                                 <div class="w-2/12 text-left">{{ __('F.Presup') }}</div>

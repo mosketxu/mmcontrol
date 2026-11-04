@@ -165,8 +165,8 @@
                             <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-2">
                                 {{-- facturado Por --}}
                                 <div class="w-2/12 form-item">
-                                    <x-jet-label for="facturadopor">{{ __('Facturado x') }}</x-jet-label>
-                                    <x-combo wire:model.lazy="facturadopor" :options="[['id'=>'1','label'=>'Milimetrica'],['id'=>'0','label'=>'Proveedor']]" placeholder="- ¿Quién factura? -" :disabled="(bool) ($escliente ?: $deshabilitado)" />
+                                    <x-jet-label for="facturadopor">{{ pf(__('Facturado x')) }}</x-jet-label>
+                                    <x-combo wire:model.lazy="facturadopor" :options="[['id'=>'1','label'=>'Milimetrica'],['id'=>'0','label'=>'Proveedor']]" placeholder="{{ pf('- ¿Quién factura? -') }}" :disabled="(bool) ($escliente ?: $deshabilitado)" />
                                 </div>
                                 {{-- responsable MM --}}
                                 <div class="w-2/12 form-item">

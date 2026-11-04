@@ -4,10 +4,10 @@
     <div class="flex w-1/12 ">
         <div class="w-full">
             <label class="px-1 text-xs text-gray-600">
-                Factura
+                {{ pf('Factura') }}
             </label>
             <div class="flex">
-                <x-buscador wire:model="search" faceta="numero" contexto="facturas" :filtros="$fx" placeholder="Nº factura..." texto="text-xs"/>
+                <x-buscador wire:model="search" faceta="numero" contexto="facturas" :filtros="$fx" placeholder="{{ pf('Nº factura...') }}" texto="text-xs"/>
                 @if($search!='')
                     <x-icon.filter-slash-a wire:click="$set('search', '')" class="pb-1" title="reset filter"/>
                 @endif
@@ -44,7 +44,7 @@
     <div class="flex w-1/12">
         <div class="w-full">
             <label class="px-1 text-xs text-gray-600">
-                Año Factura
+                {{ pf('Año Factura') }}
             </label>
             <div class="flex">
                 <x-buscador wire:model="filtroanyo" sugerir="anyos" :tipo="$tipo ?? null" placeholder="Año"/>
@@ -57,7 +57,7 @@
     <div class="flex w-1/12">
         <div class="w-full">
             <label class="px-1 text-xs text-gray-600">
-                Mes Factura
+                {{ pf('Mes Factura') }}
             </label>
             <div class="flex">
                 <x-combo wire:model="filtromes" :options="collect($meses)->map(fn($mes)=>['id'=>$mes->id,'label'=>($mes->mesmayus)])->values()->all()" placeholder="-- selecciona --"/>
@@ -71,7 +71,7 @@
     <div class="flex w-3/12 lg:w-4/12">
         <div class="w-full px-2 pb-1 mx-auto bg-gray-100 rounded-md">
             <div class="text-center">
-                <label class="px-1 text-xs text-gray-600">Periodo de facturación:</label>
+                <label class="px-1 text-xs text-gray-600">{{ pf('Periodo de facturación:') }}</label>
             </div>
             <div class="justify-between flex-none lg:flex">
                 <div class="flex mx-auto ">

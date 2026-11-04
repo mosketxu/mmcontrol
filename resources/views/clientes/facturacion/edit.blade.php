@@ -3,11 +3,11 @@
         <div class="flex justify-between space-x-1">
             <div class="flex w-3/12 py-0 mt-0">
                 <div class="w-full py-0 mt-0">
-                    <h2 class="text-2xl font-semibold text-gray-900"> {{ __('Factura:') }} {{ $factura->id }} </h2>
+                    <h2 class="text-2xl font-semibold text-gray-900"> {{ pf(__('Factura:')) }} {{ $factura->id }} </h2>
                 </div>
             </div>
             <div class="flex flex-row-reverse w-9/12 ">
-                <a href="{{route('facturacion.show',[$factura->id])}}" target="_blank" title="Imprimir factura"><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
+                <a href="{{route('facturacion.show',[$factura->id])}}" target="_blank" title="{{ pf('Imprimir factura') }}"><x-icon.pdf class="mr-5 text-red-500 hover:text-red-700 "/></a>
 
                 <div class="flex">
                     {{-- @include('pedidos.pedido-menu' ) --}}

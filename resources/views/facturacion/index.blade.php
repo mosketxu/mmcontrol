@@ -3,7 +3,7 @@
         <div class="flex">
             <div class="w-full">
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                    Facturación
+                    {{ pf('Facturación') }}
                 </h2>
             </div>
             {{-- <div class="w-full">
@@ -15,7 +15,7 @@
             </div>
                 <div onclick="Livewire.emit('exportFacturacion')"
                     class="cursor-pointer mr-10"
-                    title="Exportar facturas">
+                    title="{{ pf('Exportar facturas') }}">
                     <x-icon.xls class="text-green-600 w-7" />
                 </div>
         </div>

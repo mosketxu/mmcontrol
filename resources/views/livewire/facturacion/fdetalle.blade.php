@@ -5,14 +5,14 @@
     {{-- Albaranes pendientes de facturar: se marcan las líneas que entran en esta factura; las demás quedan pendientes --}}
     @if($albaranes->count())
         <div style="padding:8px;font-size:12px;background:#fefce8;border:1px solid #fde68a;border-radius:6px">
-            <div class="font-medium text-gray-600">Albaranes pendientes de facturar de este cliente · marca las líneas que quieres incluir</div>
+            <div class="font-medium text-gray-600">{{ pf('Albaranes pendientes de facturar de este cliente') }} · marca las líneas que quieres incluir</div>
             @foreach ($albaranes as $alb)
                 @php $total=!$alb->parcialdetalles()->whereHas('facturadetalle')->exists(); @endphp
                 <div style="margin-top:6px;padding-top:4px;border-top:1px solid #fef3c7">
                     <div class="flex items-center justify-between">
                         <span class="font-medium text-gray-700">
                             Albarán {{ $alb->id }} · Pedido {{ $alb->pedido_id }} · {{ $alb->ffecha }}
-                            @if(!$total)<em style="color:#b45309"> · facturado en parte, quedan {{ $alb->parcialdetalles->count() }} línea(s)</em>@endif
+                            @if(!$total)<em style="color:#b45309"> · {{ pf('facturado en parte') }}, quedan {{ $alb->parcialdetalles->count() }} línea(s)</em>@endif
                         </span>
                         <button type="button" wire:click="traerAlbaran({{ $alb->id }})"
                             style="padding:4px 10px;font-size:12px;color:#fff;background:#2563eb;border-radius:6px;cursor:pointer">Traer las marcadas</button>

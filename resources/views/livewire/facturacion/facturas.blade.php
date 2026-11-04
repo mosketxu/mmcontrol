@@ -11,7 +11,7 @@
                 <div>
                     <div class="flex w-full py-1 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md">
                         <div class="flex w-10/12">
-                            <div class="w-1/12 pl-2 text-left" >{{ __('Nº.Factura') }}</div>
+                            <div class="w-1/12 pl-2 text-left" >{{ pf(__('Nº.Factura')) }}</div>
                             <div class="w-3/12 text-left" >{{ __('Cliente') }}</div>
                             <div class="w-1/12 text-right" >{{ __('Fecha') }}</div>
                             <div class="w-1/12 text-right" >{{ __('F.Vto') }}</div>
@@ -43,7 +43,7 @@
                                     <x-combo accion="changeValor({{ $factura->id }},'estado',v)" :valor="$factura->estado" :options="collect($estados)->map(fn($e, $k)=>['id'=>$k,'label'=>$e[1]])->values()->all()" clase="bg-{{ $factura->status_color[0] }}" />
                                 </div>
                                 <div class="w-6/12 text-center ">
-                                    <x-icon.pdf-a href="{{ route('facturacion.show',[$factura->id]) }}" target="_blank" title="Imprimir factura"  title="PDF Factura"/>
+                                    <x-icon.pdf-a href="{{ route('facturacion.show',[$factura->id]) }}" target="_blank" title="{{ pf('Imprimir factura') }}"/>
                                     <x-icon.delete-a wire:click.prevent="delete({{ $factura->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" class="w-7"/>
                                 </div>
                             </div>

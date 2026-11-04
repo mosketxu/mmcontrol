@@ -125,7 +125,7 @@
     <div class="flex w-1/12">
         <div class="w-full">
             <label class="px-1 text-sm text-gray-600">
-                Facturado
+                {{ pf('Facturado') }}
             </label>
             <div class="flex">
                 <x-combo wire:model="filtrofacturado" :options="[['id'=>'0','label'=>'No'],['id'=>'1','label'=>'Sí'],['id'=>'2','label'=>'Parcial']]" placeholder="-- selecciona --"/>

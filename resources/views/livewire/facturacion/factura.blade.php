@@ -6,14 +6,14 @@
             </div>
             @if($avisoPdf)
             <div style="padding:12px; font-size:14px; color:#92400e; background:#fef3c7; border:1px solid #fcd34d; border-radius:6px;">
-                <b>Esta factura ha cambiado desde que se guardó su PDF ({{ $avisoPdf->pdf_generado_at->format('d/m/Y H:i') }}).</b>
+                <b>{{ pf('Esta factura ha cambiado desde que se guardó su PDF') }} ({{ $avisoPdf->pdf_generado_at->format('d/m/Y H:i') }}).</b>
                 Al pulsar el icono del PDF podrás elegir entre la versión guardada y generar una nueva; la anterior se conserva como copia.
             </div>
             @endif
             @if($modalDesbloqueo)
             <div style="position:fixed; top:0; left:0; right:0; bottom:0; z-index:60; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.45);">
                 <div style="width:100%; max-width:480px; padding:24px; background:#fff; border-radius:10px; box-shadow:0 10px 25px rgba(0,0,0,.3);">
-                    <h3 style="margin:0 0 8px; font-size:18px; font-weight:600; color:#111827;">¿Desbloquear la factura {{ $facturaid }}?</h3>
+                    <h3 style="margin:0 0 8px; font-size:18px; font-weight:600; color:#111827;">{{ pf('¿Desbloquear la factura') }} {{ $facturaid }}?</h3>
                     <p style="margin:0; font-size:14px; color:#4b5563;">
                         Está enviada o cobrada y ya tiene su PDF guardado. Si la desbloqueas y la modificas, al pedir el PDF podrás generar una nueva versión; la versión actual se conserva como copia.
                     </p>
@@ -29,14 +29,14 @@
                 <form wire:submit.prevent="save" class="text-sm">
                     <div class="p-1 m-1 space-y-1">
                         <div class="flex p-1 rounded-md bg-blue-50">
-                            <h3 class="pl-1 font-semibold">Datos de la {{ ($fac && $fac->esPrefactura()) ? 'prefactura' : 'factura' }}</h3>
+                            <h3 class="pl-1 font-semibold">Datos de la {{ ($fac && $fac->esPrefactura()) ? 'prefactura' : pf('factura') }}</h3>
                             @if($fac)
                                 @if($fac->esPrefactura())
                                     <span style="margin-left:8px;padding:2px 8px;font-size:12px;background:#fef3c7;color:#92400e;border-radius:6px">PREFACTURA · borrador</span>
                                 @elseif($fac->estaCerrada())
-                                    <span style="margin-left:8px;padding:2px 8px;font-size:12px;background:#e5e7eb;color:#374151;border-radius:6px">Factura cerrada · no modificable</span>
+                                    <span style="margin-left:8px;padding:2px 8px;font-size:12px;background:#e5e7eb;color:#374151;border-radius:6px">{{ pf('Factura cerrada · no modificable') }}</span>
                                 @else
-                                    <span style="margin-left:8px;padding:2px 8px;font-size:12px;background:#dcfce7;color:#166534;border-radius:6px">Factura creada · modificable hasta el {{ \Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y') }}</span>
+                                    <span style="margin-left:8px;padding:2px 8px;font-size:12px;background:#dcfce7;color:#166534;border-radius:6px">{{ pf('Factura creada') }} · modificable hasta el {{ \Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y') }}</span>
                                 @endif
                             @endif
                             <input  wire:model.defer="facturaid" type="hidden"/>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="flex flex-col mx-2 space-y-1 md:space-y-0 md:flex-row md:space-x-4">
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
-                                <x-jet-label for="facturaid">{{ __('Nº Factura') }}</x-jet-label>
+                                <x-jet-label for="facturaid">{{ pf(__('Nº Factura')) }}</x-jet-label>
                                 <input  wire:model.lazy="facturaid" type="number" class="w-full px-0 py-1 text-xs text-center border-gray-300 rounded-md shadow-sm bg-blue-50 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                                 disabled/>
                             </div>
@@ -84,7 +84,7 @@
                                 </div>
                             </div>
                             <div class="w-full form-item md:w-1/12 lg:w-1/12">
-                                <x-jet-label for="fecha">{{ __('Fecha Factura') }}</x-jet-label>
+                                <x-jet-label for="fecha">{{ pf(__('Fecha Factura')) }}</x-jet-label>
                                 <input  wire:model.lazy="fecha" type="date" class="w-full py-1 text-xs border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"/
                                 {{ $bloqueado!='0' ? 'disabled' :'' }}>
                             </div>
@@ -134,8 +134,8 @@
                             {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
                             @if($fac && $fac->esPrefactura() && $escliente=='')
                                 <button type="button" wire:click="crearFactura"
-                                    onclick="confirm('¿Crear la factura? Podrá modificarse hasta el {{ \Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y') }}.') || event.stopImmediatePropagation()"
-                                    style="padding:6px 14px;font-size:12px;color:#fff;background:#16a34a;border-radius:6px;font-weight:600;text-transform:uppercase">Crear factura</button>
+                                    onclick="confirm('{{ pf('¿Crear la factura?') }} Podrá modificarse hasta el {{ \Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y') }}.') || event.stopImmediatePropagation()"
+                                    style="padding:6px 14px;font-size:12px;color:#fff;background:#16a34a;border-radius:6px;font-weight:600;text-transform:uppercase">{{ pf('Crear factura') }}</button>
                             @endif
                             @if($bloqueado!='0')
                                 <x-icon.lock/>

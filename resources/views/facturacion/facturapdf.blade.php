@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>Factura {{ $factura->id }}</title>
+        <title>{{ pf('Factura') }} {{ $factura->id }}</title>
         <link rel="stylesheet" href="{{ asset('css/app.css')}}">
 
 
@@ -39,7 +39,7 @@
         </header>
         <footer style="position:fixed;left:0px;bottom:0px;height:180px;width:100%">
                 <div class="text-center" style="font-size: 0.7rem;text-align: justify; margin-left:40px; margin-right:40px">
-                    Sus datos personales expuestos en este documento y facilitados por usted, sólo serán utilizados para el control administrativo, facturación y contacto promocional.
+                    Sus datos personales expuestos en este documento y facilitados por usted, sólo serán utilizados para el control administrativo, {{ pf('facturación') }} y contacto promocional.
                     Se procederá a tratar los datos de manera lícita, leal, transparente, adecuada, pertinente, limitada, exacta y actualizada.
                     De acuerdo con los derechos que le confiere la normativa vigente podrá ejercer los derechos de acceso, rectificación, limitación de tratamiento, supresión,
                     portabilidad y oposición al tratamiento de sus datos de carácter personal, dirigiéndose a la dirección arriba indicada mediante escrito y al que acompañe fotocopia de su Documento Nacional de Identidad.
@@ -67,7 +67,7 @@
                                 <p>{{ $datos->nif}} </p>
                             </td>
                             <td width=50%>
-                                <p>Fra Num: {{ $factura->id }}</p>
+                                <p>{{ pf('Fra') }} Num: {{ $factura->id }}</p>
                                 <p>Fecha: {{ $factura->ffactura4 }}</p>
                                 <p>Su pedido:  {{ $factura->pedidocliente }} </p>
                                 <p>Solicitado por: {{ $factura->contacto->entidad ?? ''}}</p>
@@ -120,7 +120,7 @@
                         <td class="font-bold text-right">IMPORTE</td>
                         <td class="font-bold text-right">%IVA</td>
                         <td class="font-bold text-right">IMPORTE IVA</td>
-                        <td class="font-bold text-right">TOTAL FACTURA</td>
+                        <td class="font-bold text-right">{{ pf('TOTAL FACTURA') }}</td>
                     </tr>
                     @php $cuentabancaria = $datos->iban ? $datos : null; @endphp
                     @foreach ($totales as $total)
