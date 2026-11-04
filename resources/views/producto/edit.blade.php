@@ -25,4 +25,7 @@
             </div>
         </div>
     </div>
+    @if(session('status'))
+        <script>setTimeout(function(){ window.dispatchEvent(new CustomEvent('notify',{detail:@json(session('status'))})); }, 700);</script>
+    @endif
 </x-app-layout>

@@ -17,7 +17,7 @@ class ProductoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:producto.edit')->only('nuevo','edit','update');
+        $this->middleware('can:producto.edit')->only('nuevo','edit','update','duplicar');
         $this->middleware('can:producto.index')->only('tipo','ficha');
 
     }
@@ -41,6 +41,28 @@ class ProductoController extends Controller
     public function nuevo($tipo){
         $titulo=$tipo=='1'? 'Nuevo producto Editorial' : 'Nuevo producto de Packaging/Propio';
         return view('producto.create',compact('tipo','titulo'));
+    }
+
+    /**
+     * Duplica un producto (misma ficha y procesos, otro ID) para reutilizar sus características.
+     * La copia queda con la referencia terminada en « (copia)» y, en editorial, sin ISBN
+     * (para no repetirlo). No se copian los archivos adjuntos.
+     */
+    public function duplicar(Producto $producto){
+        $copia = \Illuminate\Support\Facades\DB::transaction(function () use ($producto) {
+            $copia = $producto->replicate();
+            if ($copia->referencia !== null && $copia->referencia !== '') {
+                $copia->referencia = $copia->referencia.' (copia)';
+            }
+            if ($producto->tipo == '1') { $copia->isbn = null; }
+            $copia->save();
+            foreach ($producto->procesos as $proceso) {
+                $copia->procesos()->create($proceso->only(['proceso','descripcion']));
+            }
+            return $copia;
+        });
+        return redirect()->route('producto.edit', $copia)
+            ->with('status', 'Producto duplicado desde el '.$producto->id.'. Ahora estás editando la copia ('.$copia->id.').');
     }
 
     public function archivos(Producto $producto, $ruta){
