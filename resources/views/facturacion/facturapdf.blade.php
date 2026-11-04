@@ -89,7 +89,7 @@
                         @foreach ($factura->facturadetalles as $detalle)
                         <tr>
                             <td>{{ $detalle->pedido->oferta_id ?? '' }} </td>
-                            <td>{{ $detalle->concepto }}</td>
+                            <td>{{ pf($detalle->concepto) }}</td>
                             <td class="text-right">{{ number_format($detalle->cantidad,0,',','.') }}</td>
                             <td class="text-right">{{ number_format($detalle->importe,3,',','.') }}</td>
                             <td class="text-right">{{ number_format($detalle->subtotalsiniva,2,',','.') }}</td>
