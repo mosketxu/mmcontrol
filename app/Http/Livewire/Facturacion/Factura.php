@@ -127,7 +127,6 @@ class Factura extends Component
             return;
         }
         $f->update(['validada_at'=>now()]);
-        $f->congelarDatosCliente();
         $this->dispatchBrowserEvent('notify', 'Factura creada. Se podrá modificar hasta el '.\Carbon\Carbon::parse(config('facturacion.cierre'))->format('d/m/Y').'.');
         $this->mount($this->facturaid);
     }
@@ -183,8 +182,6 @@ class Factura extends Component
 
         $this->titulo='Factura:';
         $factura=ModelsFactura::find($i);
-        // Factura creada y aún modificable: la foto de datos sigue al cliente solo si se cambia el cliente de la factura.
-        if($factura->validada_at && !$factura->estaCerrada() && (!$factura->datos_congelados_at || $fac->wasChanged('cliente_id'))) $factura->congelarDatosCliente();
 
         $this->dispatchBrowserEvent('notify', $mensaje);
         return redirect()->route('facturacion.edit',$factura->id);

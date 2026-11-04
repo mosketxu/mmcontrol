@@ -242,6 +242,19 @@ class ClienteController extends Controller
 
     public function facturacionshow($id)
     {
-        return app(\App\Services\FacturaPdf::class)->respuesta(Factura::findOrFail($id));
+        $factura=Factura::with('facturadetalles','cliente')->find($id);
+        $totales = FacturaDetalle::where('factura_id',$factura->id)
+        ->select('iva',
+            DB::raw('SUM(subtotalsiniva) as subtotalsiniva'),
+            DB::raw('SUM(subtotaliva) as subtotaliva'),
+            DB::raw('SUM(subtotal) as subtotal'))
+        ->groupBy("iva")
+        ->get();
+
+        $pdf = new Dompdf();
+
+        $pdf = \PDF::loadView('facturacion.facturapdf', compact('factura','totales'));
+        $pdf->setPaper('a4','portrait');
+        return $pdf->stream('factura_'.$id.'.pdf'); //asi lo muestra por pantalla
     }
 }

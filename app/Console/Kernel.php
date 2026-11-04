@@ -16,8 +16,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        // PDF fijo de las facturas creadas (no hace nada hasta la fecha de cierre de config/facturacion.php).
-        $schedule->command('facturas:congelar-pdf')->dailyAt('03:00');
     }
 
     /**
