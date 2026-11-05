@@ -62,6 +62,23 @@ class PedidoParcialEmail extends Component
             }
         }
 
+        // Si el proveedor es la propia Milimétrica (info@…) o no hay destinatarios, se propone el email del cliente y sus contactos.
+        if ($pedido && (!$this->destinatarios || (int) $pedido->proveedor_id === 1)) {
+            $this->destinatarios = [];
+            $cli = Entidad::find($pedido->cliente_id);
+            if ($cli && $cli->emailgral) {
+                $this->destinatarios[] = ['nombre' => $cli->entidad . ' (cliente)', 'email' => $cli->emailgral, 'activo' => true];
+            }
+            if ($cli && $cli->emailadm && !collect($this->destinatarios)->contains('email', $cli->emailadm)) {
+                $this->destinatarios[] = ['nombre' => $cli->entidad . ' (administración)', 'email' => $cli->emailadm, 'activo' => false];
+            }
+            $ct = $pedido->contacto_id ? Entidad::find($pedido->contacto_id) : null;
+            $mailct = $ct ? ($ct->emailgral ?: ($ct->emailadm ?: $ct->emailaux)) : null;
+            if ($mailct && !collect($this->destinatarios)->contains('email', $mailct)) {
+                $this->destinatarios[] = ['nombre' => trim($ct->entidad) . ' (contacto del pedido)', 'email' => $mailct, 'activo' => true];
+            }
+        }
+
         $cfg = config('albaran_email');
         $r = $this->marcadores($pedido, $parcial);
         $this->asunto = strtr($cfg['asunto'], $r);
