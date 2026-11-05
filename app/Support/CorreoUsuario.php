@@ -73,6 +73,11 @@ class CorreoUsuario
             $clave = $u->mail_password;
         } else {
             $mailer = Mail::mailer();
+            // Sale por la cuenta por defecto, pero se ve quién lo envía: nombre del usuario y «responder a» su email
+            if (property_exists($mailable, 'desde') && !$mailable->desde) {
+                $mailable->desde = ['email' => (string) config('mail.from.address'), 'name' => $u->name . ' · Milimétrica'];
+                if (property_exists($mailable, 'responderA')) $mailable->responderA = (string) $u->email;
+            }
             $user = config('mail.mailers.smtp.username');
             $clave = config('mail.mailers.smtp.password');
         }

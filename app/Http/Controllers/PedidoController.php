@@ -149,6 +149,23 @@ class PedidoController extends Controller
         $entidad=Entidad::find($pedido->cliente_id);
         $detalles=PedidoparcialDetalle::where('parcial_id',$parcialid)->get();
         $pedidoproductos=PedidoProducto::with('producto')->where('pedido_id',$pedido->id)->orderBy('orden')->orderBy('id')->get();
+        // Albarán valorado: la línea sin precio propio toma el del pedido (misma referencia; o la única línea del pedido).
+        // Solo para mostrar: no se guarda nada en las líneas del albarán.
+        if($valorado){
+            foreach($detalles as $d){
+                if((float)$d->precio_ud>0) continue;
+                $pp=$pedidoproductos->first(function($x) use($d){
+                    $ref=trim((string)optional($x->producto)->referencia);
+                    return $ref!=='' && stripos((string)$d->concepto,$ref)===0;
+                });
+                if(!$pp && $pedidoproductos->count()===1) $pp=$pedidoproductos->first();
+                $precio=$pp ? ((float)$pp->precio_ud>0 ? (float)$pp->precio_ud : (float)$pedido->precio) : 0;
+                if($precio>0){
+                    $d->precio_ud=$precio;
+                    $d->total=round($d->cantidad*$precio,2);
+                }
+            }
+        }
         $pdf = \PDF::loadView('pedidos.albaranpdf', compact('pedido','parcial','entidad','detalles','valorado','pedidoproductos'));
         $pdf->setPaper('a4','portrait');
         return $pdf;

@@ -14,6 +14,7 @@ class AlbaranMail extends Mailable
         public array $extras = [], // [['path'=>..., 'name'=>..., 'mime'=>...]]
         public string $firma = '', // nombre de quien envía (usuario conectado), para la firma
         public array $desde = [],  // ['email'=>, 'name'=>] si se envía desde la cuenta del usuario
+        public string $responderA = '', // email del usuario cuando sale por la cuenta por defecto
     ) {}
 
 
@@ -27,6 +28,7 @@ class AlbaranMail extends Mailable
     {
         $this->marcarNegocio();
         if ($this->desde) $this->from($this->desde['email'], $this->desde['name'] ?? null);
+        if ($this->responderA) $this->replyTo($this->responderA, $this->desde['name'] ?? null);
         $m = $this->subject($this->asunto)
             ->view('emails.albaran')
             ->attachData($this->pdfData, $this->pdfNombre, ['mime' => 'application/pdf']);
