@@ -45,8 +45,7 @@ class ProductoController extends Controller
 
     /**
      * Duplica un producto (misma ficha y procesos, otro ID) para reutilizar sus características.
-     * La copia queda con la referencia terminada en « (copia)» y, en editorial, sin ISBN
-     * (para no repetirlo). No se copian los archivos adjuntos.
+     * La copia queda con la referencia terminada en « (copia)» y el Código/ISBN también terminado en « (copia)». No se copian los archivos adjuntos.
      */
     public function duplicar(Producto $producto){
         $copia = \Illuminate\Support\Facades\DB::transaction(function () use ($producto) {
@@ -54,7 +53,8 @@ class ProductoController extends Controller
             if ($copia->referencia !== null && $copia->referencia !== '') {
                 $copia->referencia = $copia->referencia.' (copia)';
             }
-            if ($producto->tipo == '1') { $copia->isbn = null; }
+            // Código (packaging) / ISBN (editorial): también termina en « (copia)» para distinguirlo; se corrige a mano
+            $copia->isbn = ($copia->isbn !== null && $copia->isbn !== '') ? $copia->isbn.' (copia)' : 'copia';
             $copia->save();
             foreach ($producto->procesos as $proceso) {
                 $copia->procesos()->create($proceso->only(['proceso','descripcion']));
