@@ -154,12 +154,7 @@ class PedidoController extends Controller
         if($valorado){
             foreach($detalles as $d){
                 if((float)$d->precio_ud>0) continue;
-                $pp=$pedidoproductos->first(function($x) use($d){
-                    $ref=trim((string)optional($x->producto)->referencia);
-                    return $ref!=='' && stripos((string)$d->concepto,$ref)===0;
-                });
-                if(!$pp && $pedidoproductos->count()===1) $pp=$pedidoproductos->first();
-                $precio=$pp ? ((float)$pp->precio_ud>0 ? (float)$pp->precio_ud : (float)$pedido->precio) : 0;
+                $precio=$parcial->precioDelPedido($d->concepto);
                 if($precio>0){
                     $d->precio_ud=$precio;
                     $d->total=round($d->cantidad*$precio,2);
