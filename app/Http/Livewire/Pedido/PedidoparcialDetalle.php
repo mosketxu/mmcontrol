@@ -61,6 +61,8 @@ class PedidoparcialDetalle extends Component
         $p=PedidoPedidoparcialDetalle::find($valor->id);
         $p->$campo=$valorcampo;
         $p->save();
+        // Línea sin precio: se guarda el del pedido (el albarán queda valorado y se puede facturar).
+        if($campo!='precio_ud' && !(float)$p->precio_ud && $p->parcial) $p->precio_ud=$p->parcial->precioDelPedido($p->concepto);
         $p->total=$p->cantidad*$p->precio_ud;
         $p->save();
         $this->dispatchBrowserEvent('notify', 'Archivo Actualizado.');
@@ -68,6 +70,11 @@ class PedidoparcialDetalle extends Component
 
     public function save(){
         $this->validate();
+        // Sin precio: se guarda el del pedido (el albarán queda valorado y se puede facturar).
+        if(!(float)$this->precio_ud){
+            $parcial=PedidoParcial::find($this->parcialid);
+            $this->precio_ud=$parcial ? $parcial->precioDelPedido($this->concepto) : 0;
+        }
         PedidoPedidoparcialDetalle::create([
             'parcial_id'=>$this->parcialid,
             'concepto'=>$this->concepto,
