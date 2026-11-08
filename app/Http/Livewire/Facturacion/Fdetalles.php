@@ -164,7 +164,17 @@ class Fdetalles extends Component
                 Pedido::where('id', $numpedido)->update(['facturado' => '2']);
             else
                 Pedido::where('id', $numpedido)->update(['facturado' => '0']);
+            $facturaId=$borrar->factura_id;
             $borrar->delete();
+            // Al borrar una línea se recalculan los totales de la cabecera (antes no se hacía y la cabecera conservaba el importe de la línea borrada).
+            $totales=FacturaDetalle::where('factura_id',$facturaId)
+                ->select(DB::raw('COALESCE(SUM(subtotalsiniva),0) as subtotalsiniva'),DB::raw('COALESCE(SUM(subtotaliva),0) as subtotaliva'),DB::raw('COALESCE(SUM(subtotal),0) as subtotal'))
+                ->first();
+            \App\Models\Factura::where('id',$facturaId)->update([
+                'importe'=>$totales->subtotalsiniva,
+                'iva'=>$totales->subtotaliva,
+                'total'=>$totales->subtotal,
+            ]);
             $this->emit('refreshfactura');
             $this->dispatchBrowserEvent('notify', 'Línea eliminada!');
         }
