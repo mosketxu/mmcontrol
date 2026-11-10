@@ -67,7 +67,7 @@
                             <td style="padding-left:10px; background-color: #EAF1DD;border-style: solid; border-width: .6; border-color: gray" colspan="2">{{ $pedido->tiradaprevista }}</td>
                         </tr>
                         {{-- 9-oct-2026 (petición del cliente): ocultados los campos entre «Tirada» y «Otros» (fecha archivos, fecha entrega,
-                             prueba de color, laminado, caja, etiqueta, uds/caja y distribuciones). Para volver a mostrarlos, quitar el @if(false) y su @endif. --}}
+                             prueba de color, laminado, caja, etiqueta y uds/caja; las distribuciones se volvieron a mostrar el 10-nov-2026). Para volver a mostrarlos, quitar el @if(false) y su @endif. --}}
                         @if(false)
                         <tr style="">
                         </tr>
@@ -104,6 +104,8 @@
                             </tr>
                         @endif
 
+                        @endif
+                        {{-- 10-nov-2026 (Mireia): las distribuciones vuelven a mostrarse en la ficha de entrada de pedido (siguen ocultos los demás campos) --}}
                         @foreach ($pedido->distribuciones as $distribucion )
                         <tr>
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.distribucion')}} {{ $loop->index +1 }}</td>
@@ -113,7 +115,6 @@
                             </td>
                         </tr>
                         @endforeach
-                        @endif
                         <tr style="">
                             <td  width=25% style="font-weight:bold; padding-left:3px;background-color: #C2D69B;border-style: solid; border-width: .6; border-color: gray">{{__('milimetrica_pdf.otros')}}</td>
                             <td  width=75% style="padding-left:10px;background-color: white;border-style: solid; border-width: .6; border-color: gray" colspan="2">
