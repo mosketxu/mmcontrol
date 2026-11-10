@@ -48,6 +48,10 @@
             .accfila-grid > *:hover{background:#f3f4f6}
             .accfila-grid > a > svg{width:22px!important;height:22px!important;flex:none}
             .accfila-grid > a::after{content:attr(title);color:#374151;font-weight:500}
+            /* Iconos de acción sin tamaño propio: los navegadores recientes los pintan a todo el ancho de la celda */
+            a:not([class*="w-"])>svg:not([class*="w-"]){width:1.5rem;height:1.5rem}
+            a[class*="w-"]{display:inline-block}
+            a[class*="w-"]>svg:not([class*="w-"]){width:100%;height:auto}
             nav .lg\:ml-20{margin-left:clamp(4px,3vw,5rem)!important}
             @media (max-width:1100px){nav .h-9{height:1.4rem!important}nav button{font-size:.78rem!important}nav .sm\:ml-6{margin-left:.25rem!important}nav .lg\:ml-20{margin-left:2px!important}}
             @media (min-width:640px) and (max-width:900px){nav .sm\:flex{display:none!important}nav .-mr-2.sm\:hidden{display:flex!important}nav > div.sm\:hidden.block{display:block!important}}
