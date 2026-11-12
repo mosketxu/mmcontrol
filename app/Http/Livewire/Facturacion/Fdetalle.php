@@ -62,8 +62,16 @@ class Fdetalle extends Component
         $this->factura=Factura::find($facturaid);
         $this->bloqueado= ($this->factura->estado =='0' && !$this->factura->estaCerrada()) ? '0' : '1';
         $this->seleccionarTodo();
+        $this->iva=$this->ivaPorDefecto();
         $this->deshabilitado= $deshabilitado;
         $this->escliente=Auth::user()->hasRole('Cliente') ? 'disabled' : '';
+    }
+
+    // IVA de una línea nueva: 0 si el cliente es de fuera de España (país informado y distinto de ES); 21 % en cualquier otro caso.
+    // Se puede cambiar a mano en cada línea.
+    protected function ivaPorDefecto(){
+        $pais=optional(Entidad::find($this->factura->cliente_id))->pais_id;
+        return ($pais && $pais!='ES') ? '0.00' : '0.21';
     }
 
     public function render(){
@@ -122,6 +130,7 @@ class Fdetalle extends Component
             foreach($lineas as $l){
                 $cantidad=(float)$l->cantidad;
                 $importe=(float)$l->precio_ud;
+                $iva=(float)$this->ivaPorDefecto();
                 ModelsFacturaDetalle::create([
                     'factura_id'=>$this->factura->id,
                     'pedido_id'=>$parcial->pedido_id,
@@ -129,11 +138,11 @@ class Fdetalle extends Component
                     'parcialdetalle_id'=>$l->id,
                     'concepto'=>$l->concepto,
                     'cantidad'=>$cantidad,
-                    'iva'=>0.21,
+                    'iva'=>$iva,
                     'importe'=>$importe,
                     'subtotalsiniva'=>round($importe*$cantidad,4),
-                    'subtotaliva'=>round($importe*$cantidad*0.21,4),
-                    'subtotal'=>round($importe*$cantidad*1.21,4),
+                    'subtotaliva'=>round($importe*$cantidad*$iva,4),
+                    'subtotal'=>round($importe*$cantidad*(1+$iva),4),
                     'orden'=>0,
                     'visible'=>true,
                     'observaciones'=>'Albarán '.$parcial->id,
