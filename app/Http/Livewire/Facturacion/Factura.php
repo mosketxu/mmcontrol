@@ -137,29 +137,23 @@ class Factura extends Component
 
     public function updatedContactoId(){if($this->contacto_id=='') $this->contacto_id=null;}
 
+    // Número de factura = 2 cifras del año de la fecha + 5 cifras correlativas (la correlación NO se reinicia cada año: JM, enero 2024).
+    // 12-nov-2026: antes se tomaba el máximo de TODAS las facturas; una factura creada con fecha de otro año (2702756) hacía que
+    // todas las siguientes salieran con el mismo número (2602757) y se pisaran entre sí. Ahora el correlativo sale del año de la
+    // fecha y, si el número ya existe, se salta al siguiente libre: nunca se reutiliza un número.
     public function numfactura(){
-        $anyo= substr($this->fecha, 0,4);
-        $anyo2= substr($anyo, -2);
-        // quieren el la facturacion no empieza de 1 cada año sino que siga la numeracion del año anterior. Segun JM en enero 2024
-        // $fac=ModelsFactura::inYear($anyo)->max('id') ;
-        // return !isset($fac) ? ($anyo2 * 100000 +1961) :$fac + 1 ;
-
-        // lo calculo sin iniciar de 1
-        $fac=$anyo2.substr(ModelsFactura::max('id')+1, -5);
-        return !isset($fac) ? ($anyo2 * 100000 +1961) :$fac  ;
-
-    }
-
-    public function desbloquear(){
-        $this->confirmaDesbloqueo=true;
-        return $this->save();
-    }
-
-    public function cancelarDesbloqueo(){
-        $this->modalDesbloqueo=false;
-        $this->confirmaDesbloqueo=false;
-        $f=ModelsFactura::find($this->facturaid);
-        if($f) $this->estado=$f->estado;
+        $anyo2=(int) substr(substr((string) $this->fecha, 0, 4), -2);
+        $desde=$anyo2*100000;
+        $ultimoAnyo=ModelsFactura::whereBetween('id',[$desde,$desde+99999])->max('id');
+        if($ultimoAnyo){
+            $num=$ultimoAnyo+1;
+        }else{
+            // primera factura del año: sigue el correlativo del último número anterior a este año
+            $previo=ModelsFactura::where('id','<',$desde)->max('id');
+            $num=$desde + ($previo ? ($previo % 100000)+1 : 1961);
+        }
+        while(ModelsFactura::whereKey($num)->exists()) $num++;
+        return $num;
     }
 
     public function save(){
@@ -190,20 +184,40 @@ class Factura extends Component
             }
         }
         $this->modalDesbloqueo=false; $this->confirmaDesbloqueo=false;
-        $fac=ModelsFactura::updateOrCreate([
-            'id'=>$i
-            ],
-            [
-            'id'=>$this->facturaid,
-            'cliente_id'=>$this->cliente_id,
-            'contacto_id'=>$this->contacto_id,
-            'pedidocliente'=>$this->pedidocliente,
-            'fecha'=>$this->fecha,
-            'fechavencimiento'=>$this->fechavencimiento,
-            'estado'=>$this->estado == '' ? '0' : $this->estado,
-            'tipo'=>$this->tipo == '' ? '1' : $this->tipo,
-            'observaciones'=>$this->observaciones,
-        ]);
+        if($nuevo){
+            // create, no updateOrCreate: si el número ya existiera, antes se sobrescribía la factura de otro cliente sin avisar
+            if(ModelsFactura::whereKey($i)->exists()){
+                $this->facturaid='';
+                $this->dispatchBrowserEvent('notifyred', 'Ese número de factura ya existe. No se ha guardado nada; vuelve a intentarlo.');
+                return;
+            }
+            $fac=ModelsFactura::create([
+                'id'=>$i,
+                'cliente_id'=>$this->cliente_id,
+                'contacto_id'=>$this->contacto_id,
+                'pedidocliente'=>$this->pedidocliente,
+                'fecha'=>$this->fecha,
+                'fechavencimiento'=>$this->fechavencimiento,
+                'estado'=>$this->estado == '' ? '0' : $this->estado,
+                'tipo'=>$this->tipo == '' ? '1' : $this->tipo,
+                'observaciones'=>$this->observaciones,
+            ]);
+        }else{
+            $fac=ModelsFactura::updateOrCreate([
+                'id'=>$i
+                ],
+                [
+                'id'=>$this->facturaid,
+                'cliente_id'=>$this->cliente_id,
+                'contacto_id'=>$this->contacto_id,
+                'pedidocliente'=>$this->pedidocliente,
+                'fecha'=>$this->fecha,
+                'fechavencimiento'=>$this->fechavencimiento,
+                'estado'=>$this->estado == '' ? '0' : $this->estado,
+                'tipo'=>$this->tipo == '' ? '1' : $this->tipo,
+                'observaciones'=>$this->observaciones,
+            ]);
+        }
 
         // Foto de los datos del cliente: al crear la factura y solo si se cambia el cliente (no si cambia la dirección del cliente).
         if($nuevo || !$fac->datos_congelados_at || $fac->wasChanged('cliente_id')) $fac->congelarDatosCliente();
