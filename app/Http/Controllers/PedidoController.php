@@ -236,19 +236,19 @@ class PedidoController extends Controller
         return view('pedidos.distribuciones',compact('pedido','ruta'));
     }
 
-   public function export($tipo,$search,$filtroreferencia,$filtroisbn,$filtroresponsable,$filtrocliente,$filtroproveedor,$filtrolaminado,$filtroanyo,$filtromes,$filtroestado,$filtrofacturado){
-
-        $search=$search=='@' ? '' : $search;
-        $filtroreferencia=$filtroreferencia=='@' ? '' : $filtroreferencia;
-        $filtroisbn=$filtroisbn=='@' ? '' : $filtroisbn;
-        $filtroresponsable=$filtroresponsable=='@' ? '' : $filtroresponsable;
-        $filtrocliente=$filtrocliente=='@' ? '' : $filtrocliente;
-        $filtroproveedor=$filtroproveedor=='@' ? '' : $filtroproveedor;
-        $filtrolaminado=$filtrolaminado=='@' ? '' : $filtrolaminado;
-        $filtroanyo=$filtroanyo=='@' ? '' : $filtroanyo;
-        $filtromes=$filtromes=='@' ? '' : $filtromes;
-        $filtroestado=$filtroestado=='@' ? '' : $filtroestado;
-        $filtrofacturado=$filtrofacturado=='@' ? '' : $filtrofacturado;
+   public function export(\Illuminate\Http\Request $request,$tipo){
+        // Los filtros llegan en la query string (los mismos nombres que en la lista); vacío = sin filtrar
+        $search=(string) $request->query('search','');
+        $filtroreferencia=(string) $request->query('filtroreferencia','');
+        $filtroisbn=(string) $request->query('filtroisbn','');
+        $filtroresponsable=(string) $request->query('filtroresponsable','');
+        $filtrocliente=(string) $request->query('filtrocliente','');
+        $filtroproveedor=(string) $request->query('filtroproveedor','');
+        $filtrolaminado=(string) $request->query('filtrolaminado','');
+        $filtroanyo=(string) $request->query('filtroanyo','');
+        $filtromes=(string) $request->query('filtromes','');
+        $filtroestado=(string) $request->query('filtroestado','');
+        $filtrofacturado=(string) $request->query('filtrofacturado','');
 
         if($tipo=='1')
             $pedidos= Pedido::query()

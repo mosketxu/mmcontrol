@@ -220,7 +220,7 @@
                     style="display: none;"
                     class="p-2 m-2 text-gray-500 rounded-lg bg-green-50"
                     >Saved!</span>
-                    <x-jet-secondary-button  onclick="location.href = '{{route('entidad.tipo',$entidadtipo )}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                    <x-jet-secondary-button  onclick="volverLista('{{route('entidad.tipo',$entidadtipo )}}')">{{ __('Volver') }}</x-jet-secondary-button>
                     {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
                 </div>
             </div>
