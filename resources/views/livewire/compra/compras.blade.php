@@ -59,7 +59,7 @@
                                         <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('compra.albaranes',[$compra->id,'i'])}}'" title="Albaranes"/>
                                         <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('compra.archivos',[$compra->id,'i'])}}'" title="Archivos"/>
                                         <x-icon.clip-a class="w-5 text-green-500 hover:text-green-700 " onclick="location.href = '{{route('compra.distribuciones',[$compra->id,'i'])}}'" title="Distribuciones"/>
-                                        <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $compra->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
+                                        <x-icon.delete-a wire:click.prevent="delete({{ $compra->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
 </x-acciones-fila>
                                     </div>
                                 </div>

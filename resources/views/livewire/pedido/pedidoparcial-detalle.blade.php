@@ -71,7 +71,7 @@
                         class="w-full text-xs text-right border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50" readonly/>
                 </div>
                 <div class="w-1/12 mr-1 text-center border-blue-800 rounded-md">
-                        <button type="submit" class="items-center"><x-icon.save-a class="w-6 text-blue"/></button>
+                        <button type="submit" class="items-center"><x-icon.save-a class="text-blue"/></button>
                     </div>
                 </div>
             </div>

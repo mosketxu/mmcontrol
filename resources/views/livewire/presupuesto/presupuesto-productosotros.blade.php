@@ -50,7 +50,7 @@
             {{-- <div class="flex w-1/12 text-right"> --}}
             <div class="flex flex-row-reverse w-1/12">
                 @if(!Auth::user()->hasRole('Cliente'))
-                <x-icon.delete-a  class="w-6" wire:click.prevent="delete({{ $pproductoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+                <x-icon.delete-a  wire:click.prevent="delete({{ $pproductoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
                 @endif
             </div>

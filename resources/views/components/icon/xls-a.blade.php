@@ -1,5 +1,5 @@
 <a {{ $attributes->merge(['type' => 'button', 'class' => 'text-green-500 transform hover:text-green-700 hover:scale-125']) }}  title="XLS">
-<svg svg aria-hidden="true" focusable="false" class="" role="img" xmlns="http://www.w3.org/2000/svg"
+<svg svg aria-hidden="true" focusable="false" class="w-5" role="img" xmlns="http://www.w3.org/2000/svg"
 viewBox="0 0 384 512">
 <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
     <path
