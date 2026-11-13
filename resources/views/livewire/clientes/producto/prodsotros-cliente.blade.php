@@ -37,7 +37,7 @@
                         </div>
                         <div class="items-center flex-none w-1/12 md:flex">
                             <div class="w-full text-center">
-                                <x-icon.clip-a  class="text-green-500 hover:text-green-700"  href="{{route('cliente.producto.archivos',[$producto,'i'])}}"title="Archivos Producto"/>
+                                <x-icon.clip-a  class="text-green-500 hover:text-green-700"  href="{{route('cliente.producto.archivos',[$producto,'i'])}}" title="Archivos Producto"/>
                                 <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " href="{{route('cliente.producto.ficha',[$producto->id,$tipo,'n'])}}" target="_blank"   title="Ficha Producto"/>
                             </div>
                         </div>
