@@ -5,7 +5,7 @@
     min = ancho en px que necesitan los iconos en línea; por debajo (ancho de la celda, no de la ventana) pasa al modal.
     Las reglas visuales están en layouts/app.blade.php (clases accfila-*). El slot se pinta dos veces: en línea y en el modal.
 --}}
-@props(['min' => 140, 'titulo' => 'Acciones'])
+@props(['min' => 140, 'titulo' => 'Acciones', 'fila' => false])
 <div x-data="{ open: false }" style="width:100%">
     <style>
         @container accfila (max-width: {{ (int) $min }}px) {
@@ -23,7 +23,7 @@
                 <span>{{ $titulo }}</span>
                 <button type="button" class="accfila-x" @click.stop="open = false" title="Cerrar">✕</button>
             </div>
-            <div class="accfila-grid">{{ $slot }}</div>
+            <div class="accfila-grid{{ $fila ? ' accfila-fila' : '' }}">{{ $slot }}</div>
         </div>
     </div>
 </div>
