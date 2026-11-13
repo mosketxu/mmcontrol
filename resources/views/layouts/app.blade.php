@@ -56,7 +56,7 @@
             /* pantalla estrecha (móvil): iconos en horizontal y sin etiqueta */
             @media (max-width:520px){
                 .accfila-grid{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:6px}
-                .accfila-grid > *{width:auto!important;min-height:0}
+                .accfila-grid > a,.accfila-grid > *{width:auto!important;min-height:0}
                 .accfila-grid > a::after,.accfila-grid .accfila-txt{display:none!important;content:none}
                 .accfila-grid > form > button{width:auto}
             }
