@@ -48,11 +48,13 @@
             .accfila-grid > *:hover{background:#f3f4f6}
             .accfila-grid > a > svg{width:22px!important;height:22px!important;flex:none}
             .accfila-grid > a::after{content:attr(title);color:#374151;font-weight:500}
-            /* Iconos SVG sin tamaño propio: los navegadores recientes los pintan a todo el ancho de la celda.
+            /* Iconos SVG sin tamaño propio (una clase «fa-w-12» de FontAwesome NO es un tamaño: por eso se mira que «w-» sea una clase entera): los navegadores recientes los pintan a todo el ancho de la celda.
                1) sin tamaño en ningún sitio -> 1,5 rem; 2) el contenedor (a, div, span, button) lleva w-N -> el SVG lo rellena */
-            svg:not([class*="w-"]):not([class*="h-"]):not([width]):not([height]):not([style*="width"]){width:1.5rem;height:1.5rem}
-            :is(a,div,span,button)[class*="w-"]>svg:not([class*="w-"]):not([class*="h-"]):not([width]):not([height]):not([style*="width"]){width:100%;height:auto}
-            :is(a,span)[class*="w-"]:not(.flex):not(.block):not(.inline-flex):not(.inline-block):has(>svg:not([class*="w-"])){display:inline-block}
+            svg:not([class^="w-"]):not([class*=" w-"]):not([class^="h-"]):not([class*=" h-"]):not([width]):not([height]):not([style*="width"]){width:1.5rem;height:1.5rem}
+            :is(a,div,span,button)[class*="w-"]>svg:not([class^="w-"]):not([class*=" w-"]):not([class^="h-"]):not([class*=" h-"]):not([width]):not([height]):not([style*="width"]){width:100%;height:auto}
+            :is(a,span)[class*="w-"]:not(.flex):not(.block):not(.inline-flex):not(.inline-block):has(>svg:not([class^="w-"]):not([class*=" w-"])){display:inline-flex;vertical-align:middle}
+            /* Botones-icono (PDF, papelera, ficha...): el preflight de Tailwind pone svg{display:block} y un svg dentro de un <a> en línea lo partía en otra línea (PDF arriba, papelera abajo) */
+            a[class*="transform"]:has(>svg){display:inline-flex;vertical-align:middle}
             nav .lg\:ml-20{margin-left:clamp(4px,3vw,5rem)!important}
             @media (max-width:1100px){nav .h-9{height:1.4rem!important}nav button{font-size:.78rem!important}nav .sm\:ml-6{margin-left:.25rem!important}nav .lg\:ml-20{margin-left:2px!important}}
             @media (min-width:640px) and (max-width:900px){nav .sm\:flex{display:none!important}nav .-mr-2.sm\:hidden{display:flex!important}nav > div.sm\:hidden.block{display:block!important}}
