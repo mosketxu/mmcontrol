@@ -49,7 +49,7 @@
                                 <div class="w-full text-center md:w-5/12">
                                     <x-icon.pdf-a class="text-red-500 hover:text-red-700" href="{{ route('cliente.oferta.ficha',[$oferta->id,$oferta->tipo]) }}"  target="_blank" title="Imprimir Oferta"/>
                                     @if(!$escliente)
-                                        <x-icon.delete-a  class="w-7" wire:click.prevent="delete({{ $oferta->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
+                                        <x-icon.delete-a  wire:click.prevent="delete({{ $oferta->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
                                     @endif
                                 </div>
                             </div>

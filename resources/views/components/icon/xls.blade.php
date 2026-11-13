@@ -1,4 +1,4 @@
-<svg
+<svg class="w-5"
     {{ $attributes->merge(['class' => 'w-10 h-10']) }}
     aria-hidden="true"
     focusable="false"

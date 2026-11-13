@@ -53,7 +53,7 @@
             <div class="flex w-1/12 pl-2 space-x-1">
                 @if(!$escliente)
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
-                <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $pprocesoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+                <x-icon.delete-a wire:click.prevent="delete({{ $pprocesoid }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
                 @endif
             </div>
         </div>

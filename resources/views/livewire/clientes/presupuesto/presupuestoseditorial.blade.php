@@ -69,7 +69,7 @@
                                         <x-icon.pdf-a class="w-4 text-red-500 hover:text-red-700" href="{{route('cliente.presupuesto.presupuestoPDF',[$presupuesto,'n'])}}" target="_blank" title="PDF Presupuesto"/>
                                         <x-icon.pdf-a class="w-4 text-green-500 hover:text-orange-700" href="{{route('cliente.presupuesto.presupuestoPDF',[$presupuesto,'r'])}}" target="_blank" title="PDF Presupuesto reducido"/>
                                         {{-- @if(!Auth::user()->hasRole('Cliente'))
-                                        <x-icon.delete-a class="w-7" wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
+                                        <x-icon.delete-a wire:click.prevent="delete({{ $presupuesto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()"/>
                                         @endif --}}
                                     </div>
                                 </div>

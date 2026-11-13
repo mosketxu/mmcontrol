@@ -46,7 +46,7 @@
             <div class="w-1/12 pr-2 text-right">
                 @if(!Auth::user()->hasRole('Cliente'))
                 <button type="submit"><x-icon.save-a class="text-blue"></x-icon.save-a></button>
-                <x-icon.delete-a class="w-6" wire:click.prevent="delete({{ $pproducto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
+                <x-icon.delete-a wire:click.prevent="delete({{ $pproducto->id }})" onclick="confirm('¿Estás seguro?') || event.stopImmediatePropagation()" title="Eliminar detalle"/>
                 @endif
             </div>
         </div>

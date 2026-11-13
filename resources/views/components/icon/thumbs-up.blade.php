@@ -1,5 +1,5 @@
 <div {{ $attributes->merge(['type' => 'button', 'class' => 'w-5 h-5 mr-2 ' ]) }}  title="PDF">
-    <svg xmlns="http://www.w3.org/2000/svg"
+    <svg class="w-5" xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512">
         <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
         <path
