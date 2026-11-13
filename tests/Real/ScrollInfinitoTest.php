@@ -19,7 +19,7 @@ class ScrollInfinitoTest extends RealTestCase
 
     private function mostrando(string $html): array
     {
-        $this->assertSame(1, preg_match('/Mostrando (\d+) de (\d+) resultados/', $html, $m), 'falta el contador «Mostrando N de M»');
+        $this->assertSame(1, preg_match('/Mostrando (\d+) de (\d+) resultados/', strip_tags($html), $m), 'falta el contador «Mostrando N de M»');
         return [(int) $m[1], (int) $m[2]];
     }
 
