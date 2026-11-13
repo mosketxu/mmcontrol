@@ -140,7 +140,7 @@
                 <div class="space-x-3">
                     {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
                     {{-- <x-jet-secondary-button  onclick="location.href = '{{route('entidad.index' )}}'">{{ __('Volver') }}</x-jet-secondary-button> --}}
-                    <x-jet-secondary-button onclick="location.href='{{ $ruta }}'">{{ __('Volver') }}</x-jet-secondary-button>
+                    <x-jet-secondary-button onclick="volverLista('{{ $ruta }}')">{{ __('Volver') }}</x-jet-secondary-button>
                 </div>
             </div>
         </div>

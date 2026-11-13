@@ -220,9 +220,9 @@
                             <x-jet-button class="bg-blue-600">{{ __('Guardar') }}</x-jet-button>
                             {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
                             @if(!Auth::user()->hasRole('Cliente'))
-                                <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                                <x-jet-secondary-button  onclick="volverLista('{{route('presupuesto.tipo',[$tipo,'e'])}}')">{{ __('Volver') }}</x-jet-secondary-button>
                             @else
-                                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.presupuesto.tipo',[$tipo,'e'])}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                                <x-jet-secondary-button  onclick="volverLista('{{route('cliente.presupuesto.tipo',[$tipo,'e'])}}')">{{ __('Volver') }}</x-jet-secondary-button>
                             @endif
                             @if($presupuestoid)
                                 @if($escliente=='disabled' || $deshabilitado=='disabled')

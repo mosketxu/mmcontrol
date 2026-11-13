@@ -91,7 +91,7 @@
                         {{ __('Guardar') }}
                     </x-jet-button>
                     {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
-                    <x-jet-secondary-button  onclick="location.href = '{{route('entidad.contactos',$entidad )}}'">{{ __('Volver') }}</x-jet-secondary-button>
+                    <x-jet-secondary-button  onclick="volverLista('{{route('entidad.contactos',$entidad )}}')">{{ __('Volver') }}</x-jet-secondary-button>
                 </div>
             </div>
         </form>

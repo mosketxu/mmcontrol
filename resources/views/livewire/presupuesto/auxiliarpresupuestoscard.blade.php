@@ -255,15 +255,15 @@
         {{-- <x-jet-secondary-button  onclick="history.back()">{{ __('Volver') }}</x-jet-secondary-button> --}}
         @if($ruta=='i')
             @if(!Auth::user()->hasRole('Cliente'))
-                <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet-secondary-button  onclick="volverLista('{{route('presupuesto.tipo',[$tipo,$ruta])}}')">{{ __('Volver') }} </x-jet-secondary-button>
             @else
-                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.presupuesto.tipo',[$tipo,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet-secondary-button  onclick="volverLista('{{route('cliente.presupuesto.tipo',[$tipo,$ruta])}}')">{{ __('Volver') }} </x-jet-secondary-button>
             @endif
         @else
             @if(!Auth::user()->hasRole('Cliente'))
-                <x-jet-secondary-button  onclick="location.href = '{{route('presupuesto.editar',[$presupuestoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet-secondary-button  onclick="volverLista('{{route('presupuesto.editar',[$presupuestoid,$ruta])}}')">{{ __('Volver') }} </x-jet-secondary-button>
             @else
-                <x-jet-secondary-button  onclick="location.href = '{{route('cliente.presupuesto.editar',[$presupuestoid,$ruta])}}'">{{ __('Volver') }} </x-jet-secondary-button>
+                <x-jet-secondary-button  onclick="volverLista('{{route('cliente.presupuesto.editar',[$presupuestoid,$ruta])}}')">{{ __('Volver') }} </x-jet-secondary-button>
             @endif
         @endif
     </div>

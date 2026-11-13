@@ -72,6 +72,30 @@
             @media (min-width:640px) and (max-width:900px){nav .sm\:flex{display:none!important}nav .-mr-2.sm\:hidden{display:flex!important}nav > div.sm\:hidden.block{display:block!important}}
             nav .lg\:space-x-8>*+*{margin-left:clamp(4px,2vw,2rem)!important}
         </style>
+        <script>
+            /* Volver con los mismos filtros: cada página guarda en sessionStorage su URL actual (con filtros, que Livewire/los formularios dejan en la query string)
+               y los botones «Volver» usan volverLista(url): van a la última URL que tuvo esa lista, no a la ruta pelada. Sin datos guardados, usan la ruta de siempre. */
+            (function () {
+                var K = 'lista:';
+                function clave(path) { return K + path.replace(/\/ruta\/[^\/]+$/, '/ruta'); }
+                function guardar() { try { sessionStorage.setItem(clave(location.pathname), location.pathname + location.search); } catch (e) {} }
+                ['pushState', 'replaceState'].forEach(function (m) {
+                    var o = history[m];
+                    history[m] = function () { var r = o.apply(this, arguments); guardar(); return r; };
+                });
+                guardar();
+                window.addEventListener('pagehide', guardar);
+                window.volverLista = function (url) {
+                    var destino = url;
+                    try {
+                        var u = new URL(url, location.origin);
+                        var g = sessionStorage.getItem(clave(u.pathname));
+                        if (g) destino = g;
+                    } catch (e) {}
+                    location.href = destino;
+                };
+            })();
+        </script>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />

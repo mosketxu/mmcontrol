@@ -4,14 +4,14 @@ namespace App\Http\Livewire\Presupuesto;
 
 use App\Models\{Entidad, Idioma, Mes, Pedido, Presupuesto};
 use Illuminate\Support\Facades\Storage;
-use Livewire\WithPagination;
+use App\Http\Livewire\DataTable\WithScrollInfinito;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Presupuestos extends Component
 {
-    use WithPagination, WithBulkActions;
+    use WithScrollInfinito, WithBulkActions;
 
     public $presupuesto;
     public $espedido;
@@ -158,7 +158,7 @@ class Presupuestos extends Component
 
     public function getRowsProperty(){
         // return $this->rowsQuery->get();
-        return $this->rowsQuery->paginate(50);
+        return $this->paginar($this->rowsQuery);
     }
 
     public function delete($presupuestoId){

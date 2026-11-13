@@ -155,21 +155,11 @@
         </div>
         @endif
         <div class="w-1/12 text-center">
-            <x-icon.xls-a href="{{ route('pedido.export',[
-                $tipo,
-                $search=='' ? '@' : $search ,
-                $filtroreferencia=='' ? '@' : $filtroreferencia,
-                $filtroisbn=='' ? '@' : $filtroisbn,
-                $filtroresponsable=='' ? '@' : $filtroresponsable,
-                $filtrocliente=='' ? '@' : $filtrocliente,
-                $filtroproveedor=='' ? '@' : $filtroproveedor,
-                // $filtrolaminadoplastico=='' ? '@' : $filtrolaminadoplastico,
-                $filtrolaminado=='' ? '@' : $filtrolaminado,
-                $filtroanyo=='' ? '@' : $filtroanyo,
-                $filtromes=='' ? '@' : $filtromes,
-                $filtroestado=='' ? '@' : $filtroestado,
-                $filtrofacturado=='' ? '@' : $filtrofacturado,
-                ]) }}"
+            <x-icon.xls-a href="{{ route('pedido.export', ['tipo'=>$tipo] + array_filter([
+                'search'=>$search, 'filtroreferencia'=>$filtroreferencia, 'filtroisbn'=>$filtroisbn, 'filtroresponsable'=>$filtroresponsable,
+                'filtrocliente'=>$filtrocliente, 'filtroproveedor'=>$filtroproveedor, 'filtrolaminado'=>$filtrolaminado, 'filtroanyo'=>$filtroanyo,
+                'filtromes'=>$filtromes, 'filtroestado'=>$filtroestado, 'filtrofacturado'=>$filtrofacturado,
+                ], fn($v)=>$v!==null && $v!=='')) }}"
                 class="mt-3 mr-1 text-green-400 w-7" title="Exportar pedidos"/>
         </div>
     </div>
