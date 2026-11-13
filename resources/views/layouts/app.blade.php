@@ -48,11 +48,18 @@
             .accfila-grid > *:hover{background:#f3f4f6}
             .accfila-grid > a > svg{width:22px!important;height:22px!important;flex:none}
             .accfila-grid > a::after{content:attr(title);color:#374151;font-weight:500}
-            /* variante en fila (Productos): iconos juntos a la izquierda, papelera (último) a la derecha, sin textos */
-            .accfila-grid.accfila-fila{flex-direction:row;align-items:center;gap:6px}
-            .accfila-grid.accfila-fila > *{width:auto!important;min-height:0}
-            .accfila-grid.accfila-fila > a::after{content:none}
-            .accfila-grid.accfila-fila > :last-child{margin-left:auto!important}
+            /* botón duplicar (form > button con texto propio): como los <a>, con su etiqueta */
+            .accfila-txt{display:none}
+            .accfila-grid .accfila-txt{display:inline;color:#374151;font-weight:500}
+            .accfila-grid > form > button{display:flex;align-items:center;gap:12px;width:100%;margin:0!important;transform:none!important}
+            .accfila-grid > form > button > svg{width:22px!important;height:22px!important;flex:none}
+            /* pantalla estrecha (móvil): iconos en horizontal y sin etiqueta */
+            @media (max-width:520px){
+                .accfila-grid{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:6px}
+                .accfila-grid > *{width:auto!important;min-height:0}
+                .accfila-grid > a::after,.accfila-grid .accfila-txt{display:none!important;content:none}
+                .accfila-grid > form > button{width:auto}
+            }
             /* Iconos SVG sin tamaño propio (una clase «fa-w-12» de FontAwesome NO es un tamaño: por eso se mira que «w-» sea una clase entera): los navegadores recientes los pintan a todo el ancho de la celda.
                1) sin tamaño en ningún sitio -> 1,5 rem; 2) el contenedor (a, div, span, button) lleva w-N -> el SVG lo rellena */
             svg:not([class^="w-"]):not([class*=" w-"]):not([class^="h-"]):not([class*=" h-"]):not([width]):not([height]):not([style*="width"]){width:1.5rem;height:1.5rem}
