@@ -46,7 +46,7 @@
                         </div>
                         <div class="items-center flex-none w-1/12 md:flex">
                             <div class="w-full text-center">
-<x-acciones-fila :min="130" :titulo="'Producto '.$producto->id">
+<x-acciones-fila :min="130" :fila="true" :titulo="trim($producto->isbn_completo.' · '.$producto->referencia,' ·')">
                                 <x-icon.clip-a  class="text-green-500 hover:text-green-700"  href="{{route('producto.archivos',[$producto,'i'])}}"title="Archivos Producto"/>
                                 <x-icon.clipboard-a class="text-pink-500 hover:text-pink-700 " href="{{route('producto.ficha',[$producto->id,$tipo,'n'])}}" target="_blank"   title="Ficha Producto"/>
                                 <x-icon.clipboard-a class="text-orange-500 hover:text-orange-700 " href="{{route('producto.ficha',[$producto->id,$tipo,'r'])}}" target="_blank"   title="Ficha Producto Reducida"/>
