@@ -50,8 +50,8 @@ class FacturasTest extends RealTestCase
 
     public function test_iva_por_defecto_cero_fuera_de_espana_y_21_en_espana(): void
     {
-        $extranjero = Entidad::whereIn('entidadtipo_id', [1, 2])->whereNotNull('pais_id')->where('pais_id', '!=', 'ES')->where('pais_id', '!=', '')->firstOrFail();
-        $es = $this->cliente();
+        $extranjero = Entidad::whereIn('entidadtipo_id', [1, 2])->whereNotNull('pais_id')->where('pais_id', '!=', 'ES')->where('pais_id', '!=', '')->whereIn('id', Factura::select('cliente_id'))->firstOrFail();
+        $es = Entidad::whereIn('entidadtipo_id', [1, 2])->where('pais_id', 'ES')->whereIn('id', Factura::select('cliente_id'))->firstOrFail();
         foreach ([[$extranjero, '0.00'], [$es, '0.21']] as [$ent, $esperado]) {
             $f = Factura::where('cliente_id', $ent->id)->first();
             if (! $f) { $this->markTestIncomplete("sin facturas de {$ent->entidad}"); continue; }
