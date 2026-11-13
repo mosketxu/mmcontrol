@@ -26,7 +26,7 @@
                             </div>
                             <div class="">
                                 @include('compras.comprasfilters')
-                                {{ $compras->appends(request()->except('page'))->links() }}
+                                <x-scroll-infinito-info :n="$compras->count()" :total="$compras->total()"/>
                             </div>
                             <div class="flex-col space-y-4">
                                 <div>
@@ -41,7 +41,7 @@
                                             <div class="w-2/12 text-left md:w-1/12" >{{ __('Cantidad') }} </div>
                                         </div>
                                     </div>
-                                <div>
+                                <div data-lista-filas>
                                     @forelse ($compras as $compra)
                                     <div class="" wire:loading.class.delay="opacity-50">
                                         @livewire('compra.compras',['compra'=>$compra,'tipo'=>$tipo],key("$compra->id"))
@@ -59,6 +59,7 @@
                                     </div>
                                     @endforelse
                             </div>
+<x-scroll-infinito-pagina :siguiente="$compras->appends(request()->except('page'))->nextPageUrl()"/>
                         </div>
                     </div>
                 </div>

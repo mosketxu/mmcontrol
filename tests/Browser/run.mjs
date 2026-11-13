@@ -35,6 +35,27 @@ try {
     await nav.eval(() => window.scrollTo(0, 0));
   }
 
+  // 1b) Pedidos y Compras (paginados por el controlador): al bajar se añade la página siguiente sin recargar
+  for (const [nombre, ruta] of [['Pedidos', '/pedido/1/ruta/i?filtroestado=3&filtroanyo=2026'], ['Compras', '/compra/1/ruta/i']]) {
+    await nav.ir(BASE + ruta);
+    const [m0, mt] = await nav.eval(contador);
+    if (!(mt > m0)) { ok(true, `${nombre}: solo ${mt} registros (sin segunda página)`); continue; }
+    const f0 = await nav.eval(() => document.querySelectorAll('[data-lista-filas] > *').length);
+    await nav.eval(() => window.scrollTo(0, document.body.scrollHeight));
+    await nav.esperar(() => document.querySelectorAll('[data-lista-filas] > *').length > 30, 15000).catch(() => {});
+    const f1 = await nav.eval(() => document.querySelectorAll('[data-lista-filas] > *').length);
+    ok(f1 > f0, `${nombre}: ${f0} filas y tras bajar ${f1}`);
+    const [m1] = await nav.eval(contador);
+    ok(m1 === f1, `${nombre}: el contador (${m1}) coincide con las filas (${f1})`);
+    const botones = await nav.eval(() => document.querySelectorAll('[data-lista-filas] .accfila').length);
+    ok(botones === f1, `${nombre}: las filas nuevas traen sus botones de acciones (${botones})`);
+    // las filas añadidas están «vivas» (Alpine/Livewire): el modal de la última fila se abre
+    await nav.eval(() => { const b = [...document.querySelectorAll('[data-lista-filas] .accfila-btn')].pop(); b.click(); });
+    const abre = await nav.esperar(() => { const m = [...document.querySelectorAll('[data-lista-filas] .accfila-modal')].pop(); return getComputedStyle(m).display !== 'none'; }, 5000).then(() => true, () => false);
+    ok(abre, `${nombre}: el modal de una fila cargada por scroll se abre`);
+    await nav.eval(() => { const m = [...document.querySelectorAll('[data-lista-filas] .accfila-modal')].pop(); m.click(); });
+  }
+
   // 2) Volver conserva los filtros
   await nav.ir(BASE + '/producto/1?filtroreferencia=Aula');
   const [nf, tf] = await nav.eval(contador);

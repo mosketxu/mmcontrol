@@ -96,6 +96,37 @@
                 };
             })();
         </script>
+        <script>
+            /* Scroll infinito de los listados que pagina el controlador (Pedidos, Compras): al llegar al final pide la página siguiente y añade sus filas. */
+            window.scrollInfinitoPagina = function (el) {
+                var cargando = false, obs = null;
+                function pedir() {
+                    var url = el.dataset.scrollSiguiente;
+                    if (cargando || !url) return;
+                    cargando = true;
+                    fetch(url, { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+                        .then(function (html) {
+                            var doc = new DOMParser().parseFromString(html, 'text/html');
+                            var origen = doc.querySelector('[data-lista-filas]'), destino = document.querySelector('[data-lista-filas]');
+                            if (!origen || !destino) throw new Error('sin filas');
+                            Array.prototype.slice.call(origen.children).forEach(function (c) { destino.appendChild(document.importNode(c, true)); });
+                            var sig = doc.querySelector('[data-scroll-siguiente]');
+                            var n = document.querySelector('[data-scroll-n]'); if (n) n.textContent = destino.children.length;
+                            if (sig && sig.dataset.scrollSiguiente) { el.dataset.scrollSiguiente = sig.dataset.scrollSiguiente; }
+                            else { if (obs) obs.disconnect(); el.remove(); }
+                            if (window.livewire && window.livewire.rescan) window.livewire.rescan();
+                        })
+                        .catch(function () { el.querySelector('button').textContent = 'No se pudo cargar. Pulsa para reintentar'; })
+                        .then(function () { cargando = false; });
+                }
+                el.addEventListener('mm-pedir', pedir);
+                if ('IntersectionObserver' in window) {
+                    obs = new IntersectionObserver(function (e) { if (e[0].isIntersecting) pedir(); }, { rootMargin: '400px' });
+                    obs.observe(el);
+                }
+            };
+        </script>
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
