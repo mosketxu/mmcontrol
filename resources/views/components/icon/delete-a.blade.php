@@ -1,8 +1,8 @@
     <a {{ $attributes->merge(['type' => 'button', 'class' => 'text-red-500 transform hover:text-red-700 hover:scale-125']) }}  title="Eliminar">
         <svg xmlns="http://www.w3.org/2000/svg"
-            class="w-6 h-6"
+            style="width:1.3rem;height:1.3rem"
             fill="none"
-            viewBox="0 0 24 24"
+            viewBox="3 2 18 20" preserveAspectRatio="xMidYMid meet"
             stroke="currentColor">
             <path
                 stroke-linecap="round"
