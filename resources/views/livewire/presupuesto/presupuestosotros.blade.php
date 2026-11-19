@@ -12,7 +12,7 @@
                 <div>
                     <div class="">
                         <div>
-                            <x-scroll-infinito-info :n="$presupuestos->count()" :total="$presupuestos->total()"/>
+                            {{ $presupuestos->links() }}
                         </div>
                         <div class="flex w-full pt-2 text-sm font-bold text-gray-500 bg-blue-100 rounded-t-md ">
                             <div class="flex w-9/12">
@@ -91,7 +91,6 @@
                             </div>
                         </div>
                         @endforelse
-                        <x-scroll-infinito :mas="$presupuestos->hasMorePages()" :n="$presupuestos->count()"/>
                     </div>
                 </div>
             

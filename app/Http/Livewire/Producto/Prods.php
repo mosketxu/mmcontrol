@@ -5,7 +5,7 @@ namespace App\Http\Livewire\Producto;
 use App\Enums\ProductoEstado;
 use App\Models\{Caja, Entidad, Idioma, Producto};
 use Illuminate\Support\Facades\Storage;
-use App\Http\Livewire\DataTable\WithScrollInfinito;
+use Livewire\WithPagination;
 
 
 use Livewire\Component;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class Prods extends Component
 {
 
-    use WithScrollInfinito;
+    use WithPagination;
 
     // public $search='';
     public $filtroisbn='';
@@ -88,7 +88,7 @@ class Prods extends Component
         if($this->filtroimpresion) $datos->search('productos.impresion',$this->filtroimpresion);
         if($this->filtrocaja) $datos->search('productos.caja_id',$this->filtrocaja);
 
-        $productos=$this->paginar($datos);
+        $productos=$datos->paginate(50);
 
         $vista= $this->tipo=='1' ? 'livewire.producto.prodseditorial' : 'livewire.producto.prodsotros';
 

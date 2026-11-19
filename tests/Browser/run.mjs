@@ -18,21 +18,14 @@ try {
   try { await nav.esperar(() => !location.pathname.includes('login'), 15000); } catch (e) { console.log('URL: ' + await nav.eval(() => location.href) + ' | ' + (await nav.eval(() => document.body.innerText)).slice(0, 300)); throw e; }
   ok(true, 'login');
 
-  const contador = () => (document.body.innerText.match(/Mostrando (\d+) de (\d+) resultados/) || []).slice(1).map(Number);
+  const contador = () => (() => { const m = document.body.innerText.match(/(\d+)\s+(?:a|to)\s+(\d+)\s+(?:de|of)\s+(\d+)/); return m ? [+m[2] - +m[1] + 1, +m[3]] : []; })();
   const filas = () => document.querySelectorAll('.accfila').length;
 
-  // 1) Scroll infinito en Productos (editorial) y Presupuestos (editorial)
+  // 1) Paginación por páginas en Productos (editorial) y Presupuestos (editorial)
   for (const [nombre, ruta] of [['Productos', '/producto/1'], ['Presupuestos', '/presupuesto/1/ruta/i']]) {
     await nav.ir(BASE + ruta);
-    const [n0, total] = await nav.eval(contador);
-    ok(n0 === 50 && total > 50, `${nombre}: primer lote ${n0} de ${total}`);
-    await nav.eval(() => window.scrollTo(0, document.body.scrollHeight));
-    await nav.esperar(() => (document.body.innerText.match(/Mostrando (\d+)/) || [])[1] >= 100, 15000);
-    const [n1] = await nav.eval(contador);
-    ok(n1 === 100, `${nombre}: tras bajar, ${n1} cargados`);
-    ok((await nav.eval(filas)) === 100, `${nombre}: 100 filas en pantalla`);
-    // un filtro vuelve al primer lote
-    await nav.eval(() => window.scrollTo(0, 0));
+    ok((await nav.eval(filas)) === 50, `${nombre}: 50 filas en la primera página`);
+    ok(await nav.eval(() => !!document.querySelector('nav[role=navigation] [wire\\:click*="gotoPage"], nav[role=navigation] a[href*="page=2"], nav[role=navigation] button[wire\\:click*="nextPage"]')), `${nombre}: hay enlaces de páginas`);
   }
 
   // 2) Volver conserva los filtros
