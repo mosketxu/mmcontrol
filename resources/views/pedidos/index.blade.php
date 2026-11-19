@@ -26,7 +26,7 @@
                             </div>
                             <div class="">
                                 @include('pedidos.pedidoseditorialfilters')
-                                <x-scroll-infinito-info :n="$pedidos->count()" :total="$pedidos->total()"/>
+                                {{ $pedidos->appends(request()->except('page'))->links() }}
                             </div>
                             <div class="flex-col space-y-4">
                                 <div>
@@ -78,7 +78,7 @@
                                             <div class="w-9/12" ></div>
                                         </div>
                                     </div>
-                                <div data-lista-filas>
+                                <div>
                                     @forelse ($pedidos as $pedido)
                                     <div class="" wire:loading.class.delay="opacity-50">
                                         @livewire('pedido.pedidos-pedido',['pedido'=>$pedido,'tipo'=>$tipo],key("'ped-'.$pedido->id"))
@@ -96,7 +96,6 @@
                                     </div>
                                     @endforelse
                             </div>
-<x-scroll-infinito-pagina :siguiente="$pedidos->appends(request()->except('page'))->nextPageUrl()"/>
                         </div>
                     </div>
                 </div>
