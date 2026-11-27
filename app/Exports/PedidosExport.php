@@ -24,69 +24,73 @@ class PedidosExport extends DefaultValueBinder implements FromCollection,WithHea
             $this->tipo = $tipo;
     }
 
+    /**
+     * Columnas: [cabecera, clave(s) del campo en la consulta]. Se mapea por NOMBRE
+     * (no por posición) para que cabecera y contenido no se desalineen.
+     */
+    protected function columnas(): array
+    {
+        $c = [
+            ['ClienteId', 'entidadId'],
+            ['Cliente', 'entidad|cliente'],
+            ['Pedido', 'id'],
+            ['Descripcion', 'descripcion'],
+            ['Responsable', 'responsable'],
+        ];
+        if ($this->tipo == '1') $c[] = ['Imprenta', 'imprenta'];
+        $c = array_merge($c, [
+            [pf('Facturado Por'), 'facturadopor'],
+            ['Idioma', 'idioma'],
+            ['fechapedido', 'fechapedido'],
+            ['fechaarchivos', 'fechaarchivos'],
+            ['fechamaqueta', 'fechamaqueta'],
+            ['ctrarchivos', 'ctrarchivos'],
+            ['ctrmaqueta', 'ctrmaqueta'],
+            ['fechaplotter', 'fechaplotter'],
+            ['ctrplotter', 'ctrplotter'],
+            ['fechaentrega', 'fechaentrega'],
+            ['ctrentrega', 'ctrentrega'],
+            ['ISBN', 'isbn'],
+            ['Referencia', 'referencia'],
+        ]);
+        if ($this->tipo == '1') {
+            $c = array_merge($c, [
+                ['Tirada Prevista', 'tiradaprevista'],
+                ['Tirada Real', 'tiradareal'],
+            ]);
+        }
+        $c = array_merge($c, [
+            ['estado', 'estado'],
+            ['facturado', 'facturado'],
+        ]);
+        if ($this->tipo == '1') {
+            $c = array_merge($c, [
+                ['laminado', 'name'],
+                ['consumo', 'consumo'],
+                ['ud_consumo', 'unidad_consumo'],
+            ]);
+        }
+        $c[] = ['otros', 'otros'];
+        return $c;
+    }
+
+    protected function columnaIsbn(): string
+    {
+        foreach ($this->columnas() as $i => $col) {
+            if ($col[0] === 'ISBN') return \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($i + 1);
+        }
+        return 'R';
+    }
+
     public function headings(): array
     {
-        if($this->tipo=='1')
-        return [
-            'ClienteId',
-            'Cliente',
-            'Pedido',
-            'Descripcion',
-            'Responsable',
-            'Imprenta',
-            pf('Facturado Por'),
-            'Idioma',
-            'fechapedido',
-            'fechaarchivos',
-            'fechamaqueta',
-            'ctrarchivos',
-            'ctrmaqueta',
-            'fechaplotter',
-            'ctrplotter',
-            'fechaentrega',
-            'ctrentrega',
-            'ISBN',
-            'Referencia',
-            'Tirada Prevista',
-            'Tirada Real',
-            'estado',
-            'facturado',
-            'laminado',
-            'consumo',
-            'ud_consumo',
-            'otros',
-        ];
-        else
-        return [
-            'ClienteId',
-            'Cliente',
-            'Pedido',
-            'Descripcion',
-            'Responsable',
-            pf('Facturado Por'),
-            'Idioma',
-            'fechapedido',
-            'fechaarchivos',
-            'fechamaqueta',
-            'ctrarchivos',
-            'ctrmaqueta',
-            'fechaplotter',
-            'ctrplotter',
-            'fechaentrega',
-            'ctrentrega',
-            'ISBN',
-            'Referencia',
-            'estado',
-            'facturado',
-            'otros',
-        ];
-
+        return array_column($this->columnas(), 0);
     }
 
     public function columnFormats(): array
     {
         return [
-            $this->tipo == '1' ? 'R' : 'Q' => NumberFormat::FORMAT_TEXT,
+            $this->columnaIsbn() => NumberFormat::FORMAT_TEXT,
         ];
     }
 
@@ -94,11 +98,16 @@ class PedidosExport extends DefaultValueBinder implements FromCollection,WithHea
     {
         $row = method_exists($pedido, 'getAttributes') ? $pedido->getAttributes() : (array) $pedido;
 
-        if (array_key_exists('isbn', $row)) {
-            $row['isbn'] = $this->formatIsbn($row['isbn']);
+        $out = [];
+        foreach ($this->columnas() as [$cab, $claves]) {
+            $v = '';
+            foreach (explode('|', $claves) as $k) {
+                if (array_key_exists($k, $row)) { $v = $row[$k]; break; }
+            }
+            if ($claves === 'isbn') $v = $this->formatIsbn($v);
+            $out[] = $v;
         }
-
-        return array_values($row);
+        return $out;
     }
 
     protected function formatIsbn($isbn): string
@@ -108,7 +117,7 @@ class PedidosExport extends DefaultValueBinder implements FromCollection,WithHea
 
     public function bindValue(Cell $cell, $value)
     {
-        $isbnColumn = $this->tipo == '1' ? 'R' : 'Q';
+        $isbnColumn = $this->columnaIsbn();
 
         if ($cell->getColumn() === $isbnColumn) {
             $cell->setValueExplicit((string) $value, DataType::TYPE_STRING);
