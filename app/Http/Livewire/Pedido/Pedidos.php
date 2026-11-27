@@ -301,10 +301,11 @@ class Pedidos extends Component
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
                 ->leftjoin('entidades as imprenta','pedidos.proveedor_id','=','imprenta.id')
-                ->leftjoin('laminados as laminado','pedidos.laminado_id','=','laminados.id')
-                ->select('clientes.entidad as cliente',
+                ->leftjoin('laminados','pedidos.laminado_id','=','laminados.id')
+                ->leftjoin('idiomas','pedidos.idioma_id','=','idiomas.id')
+                ->select('clientes.id as entidadId','clientes.entidad as cliente','idiomas.nombre as idioma',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','imprenta.entidad as imprenta',
-                'pedidos.facturadopor',
+                'pedidos.facturadopor','pedidos.tiradaprevista','pedidos.tiradareal','pedidos.consumo','pedidos.unidad_consumo',
                 'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
                 'productos.isbn','productos.referencia',
                 'laminados.name',
@@ -348,9 +349,10 @@ class Pedidos extends Component
                 ->join('entidades','pedidos.cliente_id','=','entidades.id')
                 ->leftjoin('pedido_productos','pedido_productos.pedido_id','=','pedidos.id')
                 ->leftjoin('productos','pedido_productos.producto_id','=','productos.id')
-                ->select('entidades.entidad',
+                ->leftjoin('idiomas','pedidos.idioma_id','=','idiomas.id')
+                ->select('entidades.id as entidadId','entidades.entidad','idiomas.nombre as idioma',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
-                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
                 'productos.isbn','productos.referencia',
                 'pedidos.estado','pedidos.facturado','otros',
                 )
