@@ -53,12 +53,10 @@ class PedidosExport extends DefaultValueBinder implements FromCollection,WithHea
             ['ISBN', 'isbn'],
             ['Referencia', 'referencia'],
         ]);
-        if ($this->tipo == '1') {
-            $c = array_merge($c, [
-                ['Tirada Prevista', 'tiradaprevista'],
-                ['Tirada Real', 'tiradareal'],
-            ]);
-        }
+        $c = array_merge($c, [
+            ['Tirada Prevista', 'tiradaprevista'],
+            ['Tirada Real', 'tiradareal'],
+        ]);
         $c = array_merge($c, [
             ['estado', 'estado'],
             ['facturado', 'facturado'],
