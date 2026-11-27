@@ -352,7 +352,7 @@ class Pedidos extends Component
                 ->leftjoin('idiomas','pedidos.idioma_id','=','idiomas.id')
                 ->select('entidades.id as entidadId','entidades.entidad','idiomas.nombre as idioma',
                 'pedidos.id','pedidos.descripcion','pedidos.responsable','pedidos.facturadopor',
-                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega',
+                'pedidos.fechapedido','pedidos.fechaarchivos','pedidos.fechamaqueta','pedidos.ctrarchivos','pedidos.ctrmaqueta','pedidos.fechaplotter','pedidos.ctrplotter','pedidos.fechaentrega','pedidos.ctrentrega','pedidos.tiradaprevista','pedidos.tiradareal',
                 'productos.isbn','productos.referencia',
                 'pedidos.estado','pedidos.facturado','otros',
                 )
